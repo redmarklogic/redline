@@ -1,0 +1,174 @@
+ci:
+  autofix_prs: false
+repos:
+  - repo: https://github.com/tsvikas/sync-with-uv
+    rev: v0.4.0
+    hooks:
+      - id: sync-with-uv
+        priority: 0
+  - repo: local
+    hooks:
+      # Prevent committing .rej files from copier
+      - id: forbidden-copier-rej-files
+        name: forbidden copier rej files
+        entry: found Copier update rejection files; review them and remove them
+        language: fail
+        files: \.rej$
+        priority: 0
+  - repo: local
+    hooks:
+      # Prevent committing test.py files within the tests directory
+      - id: forbidden-testpy-files
+        name: forbidden testpy files
+        entry: found test.py file inside tests directory; rename or remove them
+        language: fail
+        files: ((./tests/.*/test.py)|(./tests/test.py))$
+        priority: 0
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.24.1
+    hooks:
+      - id: validate-pyproject
+        priority: 0
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.9.9
+    hooks:
+      - id: uv-lock
+        priority: 0
+      - id: uv-sync
+        priority: 0
+      - id: uv-export
+        args: ["--quiet"]
+        priority: 0
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.21.0
+    hooks:
+      - id: pyproject-fmt
+        priority: 1
+  - repo: https://github.com/python-formate/flake8-dunder-all
+    rev: v0.5.0
+    hooks:
+      - id: ensure-dunder-all
+        files: .*/__init__\.py$
+        exclude: tests/assets/
+        priority: 1
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.8
+    hooks:
+      - id: ruff-check
+        args: ["--fix", "--ignore", "FIX", "--unsafe-fixes"]
+        priority: 0
+      - id: ruff-format
+        priority: 2
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=100000]
+        priority: 0
+      - id: check-merge-conflict
+        args: [--assume-in-merge]
+        priority: 0
+  - repo: local
+    hooks:
+      - id: deptry
+        name: deptry
+        entry: uv run --frozen --offline deptry src
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 3
+  - repo: local
+    hooks:
+      - id: import-linter
+        name: import-linter
+        entry: uv run --frozen --offline lint-imports
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 3
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.2
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
+        priority: 3
+  - repo: local
+    hooks:
+      - id: check-skills-documented
+        name: check-skills-documented
+        entry: uv run --frozen --offline hooks/check-skills-documented.py
+        args: ["--prefix=redline-"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-banned-words
+        name: check-banned-words
+        entry: uv run --frozen --offline hooks/check-banned-words.py
+        args: ["--hooks-dir=hooks", "redline"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-dataclass-in-domain
+        name: check-no-dataclass-in-domain
+        entry: uv run --frozen --offline hooks/check-no-dataclass-in-domain.py
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: export-skills-directory
+        name: export-skills-directory
+        entry: uv run --frozen --offline hooks/export-skills-directory.py
+        args: ["--skills-dir=.agents/skills", "--output-file=docs/skills-directory.txt", "--prefix=redline-"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: export-module-tree
+        name: export-module-tree
+        entry: uv run --frozen --offline hooks/export-module-tree.py
+        args: ["--source-root=src/rl", "--output-file=docs/module-tree.txt"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: export-functions
+        name: export-functions
+        entry: uv run --frozen --offline hooks/export-functions.py
+        args: ["--source-root=src/rl", "--output-file=docs/functions.txt"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-overused-underscore
+        name: Check overused underscores
+        entry: uv run hooks/check_overused_underscore.py
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: fix-doc-sync
+        name: fix-doc-sync
+        entry: uv run --frozen --offline hooks/fix-doc-sync.py
+        args: ["AGENTS.md"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 1
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: rst-backticks
+        priority: 0
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+  - post-checkout
+  - post-merge
+  - post-rewrite
+default_stages:
+  - pre-commit
+  - pre-push
