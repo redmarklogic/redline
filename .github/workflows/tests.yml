@@ -1,0 +1,50 @@
+name: Tests
+permissions: {}
+on:
+    workflow_dispatch:
+    push:
+        branches: ["main"]
+        paths-ignore:
+            - "docs/**"
+            - "**/*.md"
+            - ".github/workflows/copilot-setup-steps.yml"
+            - ".github/workflows/static-checks.yml"
+            - "hooks/**"
+    pull_request:
+        paths-ignore:
+            - "docs/**"
+            - "**/*.md"
+            - ".github/workflows/copilot-setup-steps.yml"
+            - ".github/workflows/static-checks.yml"
+            - "hooks/**"
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+jobs:
+    tests:
+        name: Run
+        runs-on: "ubuntu-latest"
+        permissions:
+            contents: read # Required to checkout the test suite
+        env:
+            PYTHONIOENCODING: utf-8
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
+
+            - name: Set up uv
+              uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+              with:
+                  version: latest
+
+            - name: Setup dependencies
+              run: uv sync
+
+            - name: Run pytest
+              uses: pavelzw/pytest-action@510c5e90c360a185039bea56ce8b3e7e51a16507 # v2.2.0
+              with:
+                  emoji: false
+                  job-summary: false
+                  custom-pytest: uv run --frozen pytest --cov

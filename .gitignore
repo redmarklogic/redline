@@ -205,3 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Agent config
+# .agents/skills/*
+# !.agents/skills/redline-*
+docs/functions.txt
+docs/module-tree.txt
+docs/skills-directory.txt
+data/projects/
+docs/**/*.html
+data/**/*.html
