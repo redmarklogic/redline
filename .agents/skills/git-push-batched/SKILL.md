@@ -1,0 +1,161 @@
+---
+name: git-push-batched
+description: When asked to push changes to git, inspect all dirty files and organise them into thematically cohesive commits, then stage and commit each batch before pushing. By default, proceeds automatically; pauses for confirmation only when the user explicitly asks to review first.
+---
+
+# Git Push — Batched Commits
+
+This skill is applied whenever the user says anything like:
+"push changes", "commit and push", "push to git", or "push my work".
+
+It prevents the anti-pattern of a single giant commit ("WIP", "save", "misc changes")
+by grouping related changes before anything is staged.
+
+**Default mode — auto-commit**: Display the proposed batch plan, then immediately execute
+it without waiting for a reply. Only pause for confirmation if the user explicitly says
+something like "show me the batches first", "let me review", or "don't commit yet".
+
+For general commit hygiene, pre-commit, and push checklist, see the `version-control` skill.
+
+## Context & Guidelines
+
+- **Scope**: Any time the user wants to push uncommitted changes to a remote branch.
+- **Auto-commit by default**: Show the batch plan, then execute immediately. Only wait
+  for confirmation when the user explicitly requests a review step.
+- **Never amend published commits**: Only create new commits on the current branch.
+- **Commit message style**: Use conventional commits — `type(scope): short imperative summary`.
+  Permitted types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `style`, `perf`.
+- **Batch size**: Aim for 1–5 files per commit; split large features into logical sub-batches.
+  Never put unrelated files in the same commit.
+- **Tests travel with their subject**: If a source file and its test file both changed, they
+  belong in the same `feat`/`fix`/`refactor` commit unless the test change is purely
+  structural (then a separate `test:` commit is fine).
+- **Config/tooling changes** (pyproject.toml, .pre-commit-config.yaml, mkdocs.yml, etc.)
+  form their own `chore:` commit unless they are mechanically caused by the same feature,
+  in which case they may be grouped with it.
+- **Docs and skills** always form a separate `docs:` commit.
+
+## Procedure
+
+### 1. Discover Changes
+
+Run the following to get the full picture of dirty files:
+
+```powershell
+git status --short
+git diff --stat HEAD
+```
+
+Also run to capture untracked files:
+
+```powershell
+git ls-files --others --exclude-standard
+```
+
+### 2. Read the Diffs
+
+For each changed file, read `git diff HEAD -- <file>` (or the full file content for
+untracked files) to understand *what* changed, not just *that* it changed.
+
+### 3. Display Plan and Execute
+
+Print the batch plan **before touching the index**. Format:
+
+```
+Proposed commits
+================
+
+Batch 1  feat(readers): add timber-pole wall reader
+  src/rl/functions/readers/timber_pole.py   (new)
+  tests/functions/readers/test_timber_pole.py  (new)
+
+Batch 2  test(calculators): add edge-case tests for timber pole
+  tests/calculators/test_timber_pole.py   (modified)
+
+Batch 3  docs: update functions codebook and codemap
+  docs/CODEMAPS/functions.md   (modified)
+  docs/codebooks/retaining_walls/timber_pole.md  (new)
+
+Batch 4  chore: update pyproject.toml dependencies
+  pyproject.toml   (modified)
+
+Push to: origin/<current-branch>
+```
+
+**Default (auto-commit)**: Proceed immediately to Step 4 without waiting.
+
+**Confirmation mode** (only when user explicitly requested a review step): Ask:
+> "Does this grouping look right? You can rename commit messages, merge batches, or
+> exclude files. Reply with adjustments or 'go' to proceed."
+
+### 4. Execute
+
+For each confirmed batch in order:
+
+```powershell
+# Stage only the files in this batch
+git add <file1> <file2> ...
+
+# Run pre-commit on staged files only
+uv run pre-commit run --files <file1> <file2> ...
+
+# If pre-commit auto-fixes files, re-stage them
+git add <file1> <file2> ...
+
+# Commit
+git commit -m "<type>(<scope>): <summary>"
+```
+
+If pre-commit fails with a blocking error (not an auto-fix), stop, report the error,
+and ask the user how to proceed before continuing to the next batch.
+
+### 5. Push
+
+After all batches are committed:
+
+```powershell
+git push origin <current-branch>
+```
+
+Report the push output to the user.
+
+## Thematic Grouping Heuristics
+
+| File pattern | Likely commit type |
+|---|---|
+| `src/<pkg>/**/*.py` (new feature logic) | `feat` or `refactor` |
+| `src/<pkg>/**/*.py` (bug fix) | `fix` |
+| `tests/**/*.py` | `test` (or bundle with source) |
+| `docs/**`, `*.md` (not skills) | `docs` |
+| `.agents/skills/**` | `docs` |
+| `pyproject.toml`, `uv.lock`, `.pre-commit-config.yaml` | `chore` |
+| `*.css`, `*.qmd` (style only) | `style` |
+| `src/scripts/**` | `feat` or `chore` depending on purpose |
+| `data/**` | `chore` (data updates) |
+| `hooks/**` | `chore` |
+
+## Examples
+
+### Good — tight, themed batches
+
+```
+feat(readers): parse timber-pole wall schedule from Excel
+  src/rl/functions/readers/timber_pole.py
+  tests/functions/readers/test_timber_pole.py
+
+docs: add timber-pole codebook and update functions codemap
+  docs/codebooks/retaining_walls/timber_pole.md
+  docs/CODEMAPS/functions.md
+
+chore: add openpyxl to dependencies
+  pyproject.toml
+  uv.lock
+```
+
+### Bad — single monolithic commit
+
+```
+# NEVER do this
+git add .
+git commit -m "updates"
+```
