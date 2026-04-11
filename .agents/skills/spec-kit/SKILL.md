@@ -1,0 +1,280 @@
+---
+name: spec-kit
+description: Use when planning a feature, writing a specification, breaking work into tasks, or executing an implementation plan - wraps GitHub Spec Kit CLI for specification-driven development
+---
+
+# Spec Kit
+
+Thin orchestrator around the [GitHub Spec Kit](https://github.com/github/spec-kit) CLI.
+Ensures the CLI is installed, initialises project infrastructure, installs the project
+preset, and delegates to spec-kit's command templates for specification-driven development.
+
+Replaces the former `spec-planning`, `writing-plans`, and `executing-plans` skills with a
+single end-to-end workflow.
+
+## When to Use
+
+- Planning a new feature, pipeline, or multi-phase project
+- Converting a brainstorm or research doc into structured deliverables
+- Breaking an existing plan into executable tasks
+- Reviewing specs for completeness before implementation
+- Executing a plan task-by-task
+
+## Setup (automated on first use)
+
+The agent runs these steps silently when any spec-kit command is invoked.
+
+### 1. CLI check
+
+```powershell
+specify version
+```
+
+If `specify` is not found:
+
+```powershell
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+```
+
+### 2. Project init
+
+If `.specify/` does not exist:
+
+```powershell
+specify init --here --ai copilot --script ps --force --no-git
+```
+
+This installs agent mode files in `.github/agents/speckit.*.agent.md` and prompt
+files in `.github/prompts/speckit.*.prompt.md` (usable as slash commands in Copilot Chat).
+
+### 3. Preset install
+
+If the project preset is not already installed (`specify preset list` does not show it):
+
+```powershell
+specify preset add --dev .agents/skills/spec-kit/presets/
+```
+
+### Upgrade
+
+When the user asks to upgrade spec-kit:
+
+```powershell
+uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
+specify init --here --ai copilot --script ps --force --no-git
+```
+
+Then re-check the project preset is still installed.
+
+## Command Workflow
+
+Seven commands, used in this order. Each maps to a spec-kit command template.
+
+| Step | Command       | Human Input                             | Automated by Preset                                    |
+| ---- | ------------- | --------------------------------------- | ------------------------------------------------------ |
+| 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.12, layered arch, TDD, single-dev   |
+| 2    | specify       | Feature description (chat or .md file)  | RICE scoring for scenario prioritisation                |
+| 3    | clarify       | Answers to ambiguity questions (if any) | Triggers only if spec has NEEDS CLARIFICATION markers   |
+| 4    | plan          | Minimal -- preset fills tech context    | Tech context, MoSCoW, Domain Impact section             |
+| 5    | tasks         | None                                    | Vertical slice sizing, behaviour-based phases           |
+| 6    | analyze       | None                                    | Read-only consistency check, max 30 findings            |
+| 7    | implement     | None                                    | Execute tasks in order, mark completed                  |
+
+### Spec input modes
+
+The `specify` command accepts feature descriptions from two sources:
+
+- **Conversation context**: The user describes the feature in Copilot chat. The agent
+  extracts requirements from the conversation.
+- **External .md file**: The user references a markdown file (e.g., a research doc or
+  concept doc in `docs/`). The agent reads it and uses it as the specification input.
+
+### Conditional clarification
+
+After `specify`, check the generated `spec.md` for `[NEEDS CLARIFICATION]` markers.
+If any exist, trigger `clarify` automatically. If the spec is clean, proceed to `plan`.
+
+## Preset Conventions
+
+The project preset lives in `.agents/skills/spec-kit/presets/` and overrides spec-kit
+defaults with project-specific conventions.
+
+### RICE Scoring (spec-template)
+
+Each scenario in the specification gets a RICE score:
+
+$$Score = \frac{Reach \times Impact \times Confidence}{Effort}$$
+
+- **Reach**: How many users/workflows does this affect?
+- **Impact**: How much improvement? (scale 0.5 to 3)
+- **Confidence**: How sure are the estimates? (percentage)
+- **Effort**: How much time/resources? (person-days for this single-dev repo)
+
+Scenarios are ordered by RICE score (highest first) to drive prioritisation.
+
+### MoSCoW (plan-template)
+
+The plan includes a MoSCoW section recording scope decisions:
+
+| Category                 | Rule                                                        |
+| ------------------------ | ----------------------------------------------------------- |
+| **Must have**            | Without it, the deliverable is unusable or the system fails |
+| **Should have**          | Painful to omit, but the system is functional without it    |
+| **Could have**           | Useful but a delighter -- no pain if absent                 |
+| **Won't have (this time)** | Explicitly out of scope for this iteration                |
+
+Naming Won't Have items is as important as naming Must Haves. An unnamed deferred
+item is scope creep waiting to happen.
+
+### Vertical Slice Task Sizing (tasks-template)
+
+> A well-sized task is a **vertical slice**: front-to-back, one complete new
+> behaviour, nothing left dangling. Do not split by technical layer (schema +
+> logic + UI as three tasks) -- split by user-visible behaviour.
+
+Each task delivers one observable behaviour end-to-end through the layers, rather
+than "create all models, then all services, then all endpoints."
+
+### Pre-filled Technical Context (plan-template)
+
+The plan template pre-fills these values so the agent does not need to ask:
+
+- **Language**: Python 3.12
+- **Package manager**: uv
+- **Testing**: pytest (TDD workflow per `test-driven-development` skill)
+- **Architecture**: Layered (domain > enrichment > schemas > functions > calculators)
+- **Dev OS**: Windows
+- **Deploy OS**: Linux
+- **Domain modeling**: Pydantic BaseModel, Pandera DataFrameModel
+
+## Domain Impact Section (plan phase)
+
+Every plan MUST include a **Domain Impact** section assessing whether the feature
+changes the project's architectural structure. This catches drift at design-time.
+
+### When to include
+
+Always. Even if the answer is "no domain impact", state that explicitly.
+
+### What to assess
+
+1. **New packages or layers**: Does this feature introduce a new subpackage under an
+   `exhaustive = true` import-linter container? If yes, state which contract is
+   affected and what the updated `layers` list looks like.
+
+2. **New bounded contexts**: Does this feature introduce a new domain area that should
+   be independent from existing ones? If yes, propose an `independence` contract.
+
+3. **Layer splits**: Does an existing layer need sub-layering? If yes, propose a
+   nested `[[tool.importlinter.contracts]]` block.
+
+4. **Cross-cutting concerns**: Does this feature add a utility package that multiple
+   layers need? If yes, add it to `exhaustive_ignores` or as the lowest layer.
+
+5. **Subdomain classification**: Is this Core (competitive advantage, custom code),
+   Supporting (necessary but not differentiating), or Generic (commodity, off-the-shelf)?
+   This drives the tactical pattern choice:
+   - **Core**: Full DDD -- aggregates, domain events, rich domain model
+   - **Supporting**: Simpler patterns -- transaction scripts, thin domain layer
+   - **Generic**: Off-the-shelf libraries, no custom domain model
+
+6. **Ubiquitous Language**: Does this feature introduce new domain terms? List them
+   with definitions. These should be added to `docs/architecture/domain-model.md`.
+
+### Template
+
+```markdown
+## Domain Impact
+
+**New packages**: [None / list with target contract]
+**Bounded context changes**: [None / describe]
+**Import-linter contract updates**: [None / show proposed TOML]
+**Subdomain classification**: [Core / Supporting / Generic]
+**New domain terms**: [None / term: definition]
+```
+
+For import-linter contract details, see the reference at
+`.agents/skills/spec-kit/references/import-linter.md`.
+
+## Plan Rules
+
+1. Every phase has: Goal, TDD approach, Deliverables, Verification command, Acceptance Gate.
+2. Verification must be a runnable command (`.venv\Scripts\activate; python -m ...`).
+3. Acceptance Gates are hard pass/fail stops. The next phase MUST NOT start until both
+   acceptance gate items are checked off.
+4. Every phase MUST end with working, runnable code. Stubs, pseudocode, or placeholder
+   implementations are NOT permitted as phase deliverables.
+5. If a phase modifies or introduces any function file, running pytest on the affected
+   test modules is a mandatory gate item.
+6. All new or modified functions MUST be written test-first (Red -> Green -> Refactor)
+   following the `test-driven-development` skill.
+7. File Inventory lists every new and deleted file, grouped by phase.
+8. Design Decisions table captures choices with rationale (not just the choice).
+9. Domain model sketches include module path, class name, and key fields.
+
+### Post-Plan Step: Library Best Practices (mandatory)
+
+After the initial plan draft, use Context7 MCP to fetch best practices and latest
+documentation for every third-party package listed in Technical Context. Append a
+`## Library Best Practices` section to the plan file with one subsection per package.
+
+Skip condition: well-known stdlib modules or packages already reviewed in this plan.
+
+## Task Rules
+
+1. Task IDs are globally sequential (T001 through TXXX) -- no resets per phase.
+2. Every task has: checkbox + ID + phase label + file path.
+3. TDD is mandatory for function work: write the failing test first, confirm it
+   fails, implement to green, then refactor.
+4. Every phase that touches function files MUST include an Acceptance Gate with a
+   pytest task. The Gate is a hard stop.
+5. Use `[P]` only when tasks are truly independent (different files, no data dependency).
+6. Commit after each task or logical group.
+
+### Task format
+
+```
+- [ ] T### [P?] [Phase?] Description with exact file path
+```
+
+## Analyze Rules
+
+1. Read-only -- never modify any file.
+2. Run 6 detection passes: Duplication, Ambiguity, Underspecification, Skill alignment,
+   Coverage gaps, Inconsistency. Max 30 findings.
+3. Severity levels: CRITICAL, HIGH, MEDIUM, LOW.
+4. After reporting, offer: "Want me to suggest fixes for the top N issues?"
+
+## Implement Phase
+
+When executing the plan:
+
+1. Use `subagent-driven-development` skill (preferred) or execute tasks directly.
+2. Follow each task exactly as specified.
+3. Run `python-static-checks` before declaring implementation complete.
+4. Use `finishing-a-development-branch` skill to complete the work.
+
+## Relationship to Other Skills
+
+| Skill                        | Relationship                                                    |
+| ---------------------------- | --------------------------------------------------------------- |
+| `brainstorming`              | Transitions to `spec-kit` as terminal state                     |
+| `test-driven-development`    | Tasks enforce test-first order                                  |
+| `python-domain-modeling`     | Spec-template references entity/VO conventions (tactical DDD)   |
+| `python-class-design`        | Plan-template references architectural decisions                |
+| `python-static-checks`       | Run before declaring implement complete                         |
+| `subagent-driven-development`| Preferred execution mode for implement phase                    |
+| `finishing-a-development-branch` | Terminal step after implement phase                          |
+| `verification-before-completion` | Gates completion claims on fresh verification               |
+
+## Constraints
+
+- Output location defaults to `specs/<NNN>-<feature-slug>/` (auto-numbered by spec-kit).
+  Spec files: `specs/001-feature-name/spec.md`, `plan.md`, `tasks.md`.
+  Note: this differs from the old `docs/specs/` convention -- use spec-kit's default.
+- All artifacts are plain markdown -- no tooling dependencies beyond spec-kit CLI.
+- Do not duplicate project principles already captured in other skills. Reference them.
+- Use RFC-2119 language (MUST, SHOULD, MAY) for requirements.
+- Never use emoji or unicode that emulates emoji.
+- Spec-kit's agent templates in `.github/agents/` and prompt templates in `.github/prompts/`
+  are the canonical implementation. The skill file orchestrates setup and workflow order only.
