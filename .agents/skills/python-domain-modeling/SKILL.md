@@ -5,7 +5,10 @@ description: Domain modeling conventions (value objects, Pandera/Pydantic, DataF
 
 # Python Domain Modeling
 
-This skill defines how to model domain data in this repo.
+This skill defines **tactical DDD** conventions: how to implement domain objects in
+Python. For **strategic DDD** decisions (subdomain classification, bounded context
+identification, EventStorming, context maps), use the `spec-kit` skill's plan phase
+and `docs/architecture/domain-model.md`.
 
 ## Architectural stance
 
@@ -210,3 +213,61 @@ For baseline unit test conventions, use the `python-testing-unit` skill.
 ## Imports
 
 - When importing internal modules, do not include the `src` folder in the import path.
+
+## Subdomain classification
+
+Not every domain area needs full DDD treatment. Classify each subdomain before choosing
+tactical patterns:
+
+| Classification | Pattern choice                                      | Example                           |
+| -------------- | --------------------------------------------------- | --------------------------------- |
+| **Core**       | Full DDD: aggregates, domain events, rich model     | Geotechnical analysis engine      |
+| **Supporting** | Simpler: transaction scripts, thin domain layer     | Report formatting, data ingestion |
+| **Generic**    | Off-the-shelf libraries, no custom domain model     | Authentication, email delivery    |
+
+The `spec-kit` skill's plan phase includes a Domain Impact section where subdomain
+classification is recorded for each feature.
+
+## Bounded contexts
+
+A bounded context is a boundary within which a domain model is consistent and terms
+have a single meaning. In Python, bounded contexts map to packages:
+
+- Each bounded context gets its own package under `src/<package>/`.
+- Bounded contexts must not import from each other directly. Use an
+  `independence` contract in `pyproject.toml` to enforce this.
+- If two bounded contexts need to communicate, use shared domain events
+  (frozen Pydantic models) or a published language (shared value objects
+  in a common package).
+
+See `.agents/skills/spec-kit/references/import-linter.md` for contract examples.
+
+## Ubiquitous Language
+
+Domain terms must be used consistently in code, docs, and conversation:
+
+- Class names, method names, and variable names use domain terms, not technical terms.
+- New domain terms introduced during planning should be added to
+  `docs/architecture/domain-model.md` under the Ubiquitous Language section.
+- When domain terms conflict with Python builtins or stdlib names (e.g., `statistics`),
+  suppress `A005` and document the reason inline.
+
+## Multi-package layout
+
+This repo may contain multiple top-level packages under `src/`:
+
+- `src/rl/` -- core domain package
+- `src/base/` -- supporting/generic utilities (if needed)
+
+When adding a new top-level package, add it to `root_packages` in the import-linter
+config and create its own layer contracts. See the import-linter reference for details.
+
+## Layer enforcement
+
+Import-linter contracts in `pyproject.toml` enforce the dependency direction at the
+module level. When adding a new subpackage under an `exhaustive = true` container:
+
+1. Add it to the `layers` list in the corresponding contract.
+2. Or add it to `exhaustive_ignores` if it is cross-cutting.
+
+See `.agents/skills/spec-kit/references/import-linter.md` for the full reference.
