@@ -77,7 +77,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
 - **`notebooklm-mcp`**: NotebookLM MCP setup and usage (querying notebooks from Copilot Agent)
-- **`spec-planning`**: Spec-driven planning (specs, phased plans, task lists)
+- **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
 
 ### Redline Project Research
@@ -92,9 +92,8 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 
 Source: <https://github.com/obra/superpowers>
 
-- **`brainstorming`**: Socratic design refinement --- activates before writing code; teases out a spec through questions, explores alternatives, and presents design in sections for validation.
+- **`brainstorming`**: Socratic design refinement --- activates before writing code; teases out a spec through questions, explores alternatives, and presents design in sections for validation. Terminal state invokes `spec-kit`.
 - **`dispatching-parallel-agents`**: Concurrent subagent workflows --- dispatches multiple agents in parallel to work on independent tasks.
-- **`executing-plans`**: Batch execution with checkpoints --- executes implementation plans in batches with human checkpoints.
 - **`finishing-a-development-branch`**: Merge/PR decision workflow --- verifies tests, presents options (merge/PR/keep/discard), cleans up worktrees.
 - **`receiving-code-review`**: Responding to feedback --- structured process for addressing code review comments.
 - **`requesting-code-review`**: Pre-review checklist --- reviews against plan, reports issues by severity before submitting for review.
@@ -103,7 +102,6 @@ Source: <https://github.com/obra/superpowers>
 - **`using-git-worktrees`**: Parallel development branches --- creates isolated workspaces on new branches, runs project setup, verifies clean test baseline.
 - **`using-superpowers`**: Introduction to the skills system --- explains how to load and use skills effectively.
 - **`verification-before-completion`**: Ensure it's actually fixed --- verifies that errors are truly resolved before declaring success.
-- **`writing-plans`**: Detailed implementation plans --- breaks work into bite-sized tasks (2--5 minutes each) with exact file paths, complete code, and verification steps.
 - **`writing-skills`**: Create new skills following best practices --- includes testing methodology for skill creation.
 
 ## General Style
