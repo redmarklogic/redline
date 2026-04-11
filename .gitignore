@@ -215,3 +215,8 @@ docs/skills-directory.txt
 data/projects/
 docs/**/*.html
 data/**/*.html
+
+# Spec-kit: installed preset copies (regenerate with: specify preset add --dev .agents/skills/spec-kit/presets/)
+.specify/presets/
+# Spec-kit: transient current-feature state
+.specify/memory/feature.json
