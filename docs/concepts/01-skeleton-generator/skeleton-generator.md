@@ -68,16 +68,23 @@ skeleton approval gate. It does not bypass human review.
 The skeleton is "done" when an intermediate or senior engineer can open
 the Word document and confirm:
 
-| #  | Criterion | Verification |
-|----|-----------|--------------|
-| AC1 | Every mandatory section and subsection for the target document type (starting with GIR) is present, correctly numbered, in the right order. | Compare against the standard skeleton headings in the incumbent process. |
-| AC2 | Project metadata (number, client name, address, date, document naming) is populated from the contract/RFP -- no `[INSERT X]` for information that existed in the inputs. | Spot-check against source documents. |
-| AC3 | A traceability matrix maps every RFP/LOE deliverable to a report section. No deliverable is orphaned. | Review the matrix; flag any unmapped items. |
-| AC4 | Each incomplete section has **specific, actionable questions** the author needs to answer -- not generic `[TODO]`. Example: Section 2.4 should ask *"What is the site subsoil class per NZS 1170.5? What is the design PGA for the return period specified in the brief?"* | Read placeholders; confirm they are section-specific and answerable. |
-| AC5 | Each section names the applicable standards and highlights the specific clauses relevant to this project type and location. | Cross-check against the standards registry (see [02-standards-registry](../02-standards-registry/standards-registry.md)). |
-| AC6 | Boilerplate clauses (Applicability, disclaimers, document control, version table) are present and tailored to the project type. | Compare against the Style Reference Guide requirements. |
-| AC7 | The output uses the company Word template (`.dotx`), not a generic style. | Visual inspection. |
-| AC8 | The author's first action is editing, not writing. They refine existing content, answer specific questions, and delete irrelevant sections. | Author feedback. |
+| #   | Criterion | Category | Verification | Step |
+|-----|-----------|----------|--------------|------|
+| AC1 | **Client Summary (default) or Executive Summary (only if LOE requests it)** is present as front matter. Client Summary is max 1 page, plain language, with placeholders for: LOE reference, report purpose, proposed works, cost/programme impacts, geotechnical risks, and further work statement. | Structure | Automated check on heading name; manual review of placeholder prompts. | 1 |
+| AC2 | **All mandatory GIR sections** are present, correctly numbered, in the standard order: Document Control, ToC, Client Summary, Sections 1--6, References, Appendices A--D. No mandatory section is missing. | Structure | Diff against the canonical section list. | 1 |
+| AC3 | **Conditional sections** (liquefaction, slope stability, fault rupture, ground improvement, foundation assessment) are included or excluded based on explicit rules tied to project scope, location, and infrastructure type. The inclusion decision is logged. | Structure | Review processing log for inclusion/exclusion rationale. | 1 |
+| AC4 | **Geotechnical Model Table** in Section 2.1.4 is present as an empty table with mandatory column headers (Layer/Unit, Description, Depth, RL, Thickness, Typical Test Values). No text-only soil profile placeholder is used. | Structure | Automated check for table presence and header names. | 1 |
+| AC5 | **Project metadata** (project number, client name, site address, date, document naming per `[JobNo]-RPT-GT-[Element]-[Seq]`) is populated from the RFP/LOE. No `[INSERT X]` remains for data that existed in the inputs. | Metadata | Spot-check against source documents. | 2 |
+| AC6 | **Traceability matrix** maps every RFP/LOE deliverable to a report section. Unmapped deliverables are flagged. This matrix acts as the "touchstone" for the PD/PM skeleton review gate. | Traceability | Review matrix; verify no orphaned deliverables. | 3 |
+| AC7 | **Legal boilerplate** (Applicability section) contains all mandatory clauses: Exclusive Use (with client name, project scope, temporal boundary), Inferred Conditions, Observation Disclaimer. Council/Regulatory Authority clause is included when the RFP indicates a consent application. | Liability | Automated check for clause presence; manual review of tailoring. | 7 |
+| AC8 | **Residual Geotechnical Risk** section (Section 4) is present with a domain-specific placeholder prompt requiring the author to explicitly evaluate and articulate site-specific residual risks. No generic boilerplate is used for this section. | Liability | Read placeholder; confirm it requires project-specific risk articulation. | 8 |
+| AC9 | **Section-specific placeholder questions** are present in every incomplete section. Questions are domain-specific (sourced from the standards registry and industry guidance), not generic `[TODO]`. Each question names the relevant standard and clause. | Content quality | Read placeholders in Sections 2 and 3; confirm they match the domain prompts from the Workflows notebook. | 8 |
+| AC10 | **Standards references** per section are present, citing specific clause numbers from NZS 3604, NZS 1170.5, NZGS guidelines, and applicable council requirements. Standards are sourced from the Standards Registry. | Compliance | Cross-check per-section standards against the registry. | 6 |
+| AC11 | **Formatting compliance**: Calibri 11pt body, Calibri Bold headings, sentence case headings, flush-left numbering, three-level bullet hierarchy (bullet/dash/hollow circle), NZ English spelling, one-space-before-units, labels above tables and below figures. | Style | Automated style check or manual review against structural checkpoints. | 0 |
+| AC12 | **No structural defects**: No stacked headings (two consecutive headings without intervening text), no lone subdivisions, no widowed headings, no undefined acronyms. | Style | Automated or manual structural review. | 1 |
+| AC13 | **Appendix ordering** matches the order of first reference in the main text. If a separate GFR exists, appendices cross-reference the GFR rather than duplicating raw data. | Structure | Manual check of cross-references. | 1 |
+| AC14 | **Company Word template** (`.dotx`) is used as the base. Cover page, styles, and brand identity come from the template, not from generic formatting. | Template | Visual inspection. | 0 |
+| AC15 | **The author's first action is editing, not writing.** The skeleton provides enough structure, metadata, standards references, and actionable questions that an intermediate engineer can begin refining immediately without needing to add sections or research which standards apply. | Value | Qualitative feedback from at least one practising engineer. | All |
 
 ---
 
@@ -120,30 +127,31 @@ each builds on the output of the previous one.
 | 7 | **Applicability clauses** | Select and insert the correct combination of boilerplate clauses based on project type, client, and regulatory context. | DOCX with legal boilerplate tailored to the project. |
 | 8 | **Actionable placeholders** | For every section that cannot be completed without field data or desktop study, insert specific questions the author must answer. Emphasise relevant standards and industry guidelines. | Complete skeleton meeting all acceptance criteria. |
 
-### Section inclusion rules (Step 1 detail -- to be refined)
+### Section inclusion rules (Step 1 detail)
 
 For the GIR document type, the following sections are **always included**:
 
 ```
 Document Control
 Table of Contents
-Executive Summary
+Client Summary  (use "Executive Summary" only if the LOE explicitly requests it)
 
 1   Introduction
-    1.1  Scope of Work
+    1.1  Scope of Work  (required unless Introduction adequately covers scope; default: include)
     1.2  Site Description
     1.3  Proposed Development
 
 2   Assessment and Interpretation of Site Conditions
     2.1  Ground and Groundwater Conditions
-    2.2  Geotechnical Model
-    2.3  Groundwater
-    2.4  Seismic Hazard
-    2.5  Geotechnical Issues Identified
-
-3   Foundation Assessment
-    3.1  Foundation Options
-    3.2  Foundation Design Parameters
+        2.1.1  Geology
+        2.1.2  Previous Investigations
+        2.1.3  Current Investigations
+        2.1.4  Geotechnical Model  [empty table: Layer/Unit | Description | Depth | RL | Thickness | Typical Test Values]
+        2.1.5  Groundwater
+    2.2  Seismic Hazard
+        2.2.1  Seismic Site Subsoil Class
+        2.2.2  Ground Shaking Hazard
+    2.3  Liquefaction Assessment  (mandatory for most NZ sites)
 
 4   Residual Geotechnical Risk
 5   Further Work
@@ -151,22 +159,23 @@ Executive Summary
 
 References
 
-Appendices
+Appendices  (ordered by first reference in main text)
     Appendix A  Figures
     Appendix B  Previous Investigations
     Appendix C  Investigation Logs
     Appendix D  Geotechnical Laboratory Test Results
 ```
 
-**Conditional sections** (included based on scope/project type):
+**Conditional sections** (included based on scope/project type -- inclusion decision logged):
 
-- 2.X Liquefaction Assessment -- when site is in a liquefaction-prone area
-- 2.X Slope Stability -- when slopes are within the project footprint
-- 2.X Fault Rupture Hazard -- when active faults are mapped near the site
-- 3.X Ground Improvement -- when natural ground is inadequate for the proposed loads
-
-The conditions for including or excluding these sections will be refined
-through research and author feedback.
+- **Section 2.4: Other Geotechnical Hazards** -- include when relevant; sub-sections for slope
+  stability and/or fault rupture hazard added as applicable.
+- **Section 2.5: Geotechnical Issues Identified** -- optional summary table.
+- **Section 3: Foundation Assessment** -- only when the LOE specifically requires foundation
+  design or engineering parameters.
+  - 3.1  Foundation Options
+  - 3.2  Foundation Design Parameters
+  - 3.X  Ground Improvement (when natural ground is inadequate for proposed loads)
 
 ---
 
@@ -279,8 +288,11 @@ It implements automation opportunities:
 
 | #  | Question | Impact |
 |----|----------|--------|
-| Q1 | Which conditional sections should be included/excluded by default for a standard residential GIR? | Affects Step 1 section rules. |
-| Q2 | What is the minimum viable set of standards for the initial registry? NZS 3604, NZS 1170.5, and what else? | Affects Step 6 quality. |
-| Q3 | How should confidence be communicated to the author? (e.g., "AI-extracted -- verify" vs. "Confirmed from contract") | Affects trust and adoption. |
-| Q4 | What MSG/EML parsing quality is achievable? Are client emails structured enough to extract useful scope clarifications? | Affects Step 5 reliability. |
-| Q5 | Should the traceability matrix be a separate document or embedded in the skeleton? | Affects PD/PM review workflow. |
+| Q1 | Should the Client Summary placeholder include a maximum word count (vs. "one page") since page length depends on formatting? | Affects AC1 verification. |
+| Q2 | How should the skeleton handle Canterbury-specific requirements (MBIE Part D, CCC Appendix I/II) -- as conditional sections triggered by location, or as a separate Canterbury GIR variant? | Affects Step 1 section rules and Standards Registry scope. |
+| Q3 | Section 1.1 (Scope of Work) is conditional -- "required unless the Introduction adequately covers the scope." How should the AI decide this? Default to including it? | Affects Step 1 section rules. |
+| Q4 | Should formatting compliance (AC11) be checked by the skeleton generator itself, or deferred to a separate QA tool? | Architecture decision affecting Step 0 scope. |
+| Q5 | How will the Residual Geotechnical Risk placeholder prevent the engineer from relying on generic automated text? Should there be a "this section requires site-specific content" watermark? | Affects AC8 design and liability exposure. |
+| Q6 | How should confidence be communicated to the author? (e.g., "AI-extracted -- verify" vs. "Confirmed from contract") | Affects trust and adoption. |
+| Q7 | What MSG/EML parsing quality is achievable? Are client emails structured enough to extract useful scope clarifications? | Affects Step 5 reliability. |
+| Q8 | Should the traceability matrix be a separate document or embedded in the skeleton? | Affects PD/PM review workflow. |
