@@ -22,18 +22,22 @@ the reverse. Indirect imports (A -> B -> C) are also checked.
 
 ```toml
 [[tool.importlinter.contracts]]
-name = "rl layers"
+name = "<package> layers"
 type = "layers"
-layers = ["calculators", "functions", "schemas", "enrichment", "domain"]
-containers = ["rl"]
+layers = ["functions", "schemas", "domain"]
+containers = ["<package>"]
 exhaustive = true
 ```
+
+The generic baseline layers are `domain` (lowest), `schemas`, and `functions` (highest).
+Add project-specific higher layers above `functions` when the project warrants them
+(e.g., `scripts`, `cli`, `api`). Do not add layers speculatively.
 
 **Key options:**
 
 | Option               | Purpose                                                                 |
 | -------------------- | ----------------------------------------------------------------------- |
-| `layers`             | Ordered list, highest first. `calculators` may import `functions`, etc. |
+| `layers`             | Ordered list, highest first. `functions` may import `schemas`, etc.     |
 | `containers`         | The parent package(s). Layers are resolved relative to each container.  |
 | `exhaustive`         | Every sibling subpackage must appear in `layers`. New packages FAIL.    |
 | `exhaustive_ignores` | Exempt specific siblings from `exhaustive` (e.g. `utils`, `_internal`). |
@@ -92,7 +96,7 @@ boundaries (e.g. domain must never import from infrastructure).
 name = "domain isolation"
 type = "forbidden"
 source_modules = ["rl.domain"]
-forbidden_modules = ["rl.functions", "rl.calculators"]
+forbidden_modules = ["rl.functions", "rl.schemas"]
 ```
 
 ### Independence

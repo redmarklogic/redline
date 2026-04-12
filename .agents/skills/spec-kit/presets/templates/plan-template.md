@@ -5,14 +5,17 @@
 
 ## Summary
 
-[One paragraph: what we are building and the technical approach]
+[One paragraph: what we are building and the technical approach.
+Write as if the reader has never seen this codebase before: explain acronyms,
+name the affected layers, and state *why* this change matters before *how* it works.]
 
 ## Technical Context
 
 **Language**: Python 3.12
 **Package manager**: uv
 **Testing**: pytest (TDD workflow per `test-driven-development` skill)
-**Architecture**: Layered (domain > enrichment > schemas > functions > calculators)
+**Project layout**: [Read from `.specify/architecture.yml`: `monorepo` or `single-package`]
+**Architecture**: [Monorepo: sibling packages under `src/`, each with optional internal layers (domain > schemas > functions). Single-package: layered (domain > schemas > functions). Add project-specific higher layers above `functions` only when needed.]
 **Dev OS**: Windows | **Deploy OS**: Linux
 **Domain modeling**: Pydantic BaseModel, Pandera DataFrameModel
 **Layer enforcement**: import-linter contracts in `pyproject.toml` (see `.agents/skills/spec-kit/references/import-linter.md`)
@@ -26,6 +29,10 @@
 
 ## Domain Impact
 
+**Modularity assessment**: [Monorepo projects only: new top-level package under `src/`
+or subpackage of existing package -- state which signals from the `python-domain-modeling`
+decision matrix drove the choice (language boundary, conceptual cohesion, general vs
+special, rate of change, future extraction). Single-package projects: N/A]
 **New packages**: [None / list with target import-linter contract]
 **Bounded context changes**: [None / describe]
 **Import-linter contract updates**: [None / show proposed TOML block]
@@ -122,3 +129,13 @@ Code sketches are fine here -- they will become real code in implementation.]
 | Risk       | Mitigation  |
 | ---------- | ----------- |
 | [...]      | [...]       |
+
+## Glossary
+
+<!-- Problem-domain terms only: concepts from the business or analytical domain
+     this project is solving (e.g. "skeleton", "GIR", "acceptance criteria").
+     Do NOT include technical stack terms (pytest, Pydantic, import-linter, etc.) -->
+
+| Term | Definition |
+| ---- | ---------- |
+| [term] | [plain-English definition, one sentence max] |

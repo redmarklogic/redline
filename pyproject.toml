@@ -95,7 +95,7 @@ root_packages = [ "rl" ]
 [[tool.importlinter.contracts]]
 name = "rl layers"
 type = "layers"
-layers = [ "calculators", "functions", "schemas", "enrichment", "domain" ]
+layers = [ "functions", "schemas", "domain" ]
 containers = [ "rl" ]
 exhaustive = true
 

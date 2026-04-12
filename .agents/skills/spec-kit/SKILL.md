@@ -55,6 +55,36 @@ If the project preset is not already installed (`specify preset list` does not s
 specify preset add --dev .agents/skills/spec-kit/presets/
 ```
 
+### 4. Architecture decision (greenfield only)
+
+On first-time setup (no existing `src/` directory or only one package exists and declared in pyproject.toml), ask the
+developer:
+
+> **Will this project use a monorepo layout with multiple independent packages under
+> `src/`, or a single package?**
+>
+> - **Monorepo (sibling packages)**: Each bounded context is a top-level package under
+>   `src/`. One package acts as the integration hub, others are independent tools that
+>   may graduate to standalone PyPI packages. New features trigger a modularity
+>   assessment (new package vs. subpackage).
+> - **Single package**: All code lives under one top-level package (e.g., `src/rl/`).
+>   New features add subpackages within the existing layer hierarchy.
+
+Record the answer in `.specify/architecture.yml`:
+
+```yaml
+# Architecture decision recorded during spec-kit init
+layout: monorepo   # or: single-package
+hub_package: rl    # the integration hub (monorepo only)
+```
+
+If the file already exists, skip this step.
+
+This decision affects:
+- The **Architecture** line in the plan template's Technical Context
+- Whether the **Domain Impact** section requires a modularity assessment
+- How `constitution` pre-fills project principles
+
 ### Upgrade
 
 When the user asks to upgrade spec-kit:
@@ -72,7 +102,7 @@ Seven commands, used in this order. Each maps to a spec-kit command template.
 
 | Step | Command       | Human Input                             | Automated by Preset                                    |
 | ---- | ------------- | --------------------------------------- | ------------------------------------------------------ |
-| 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.12, layered arch, TDD, single-dev   |
+| 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.12, layout from architecture.yml, TDD, single-dev |
 | 2    | specify       | Feature description (chat or .md file)  | RICE scoring for scenario prioritisation                |
 | 3    | clarify       | Answers to ambiguity questions (if any) | Triggers only if spec has NEEDS CLARIFICATION markers   |
 | 4    | plan          | Minimal -- preset fills tech context    | Tech context, MoSCoW, Domain Impact section             |
@@ -142,7 +172,8 @@ The plan template pre-fills these values so the agent does not need to ask:
 - **Language**: Python 3.12
 - **Package manager**: uv
 - **Testing**: pytest (TDD workflow per `test-driven-development` skill)
-- **Architecture**: Layered (domain > enrichment > schemas > functions > calculators)
+- **Project layout**: Read from `.specify/architecture.yml` (`monorepo` or `single-package`)
+- **Architecture**: Monorepo: sibling packages under `src/`, each with optional internal layers. Single-package: layered (domain > schemas > functions). Add project-specific higher layers above `functions` only when the project warrants them.
 - **Dev OS**: Windows
 - **Deploy OS**: Linux
 - **Domain modeling**: Pydantic BaseModel, Pandera DataFrameModel
@@ -158,27 +189,36 @@ Always. Even if the answer is "no domain impact", state that explicitly.
 
 ### What to assess
 
-1. **New packages or layers**: Does this feature introduce a new subpackage under an
+1. **Modularity -- new package or subpackage?**: Check `.specify/architecture.yml`.
+   If the project layout is `monorepo`, apply the decision matrix from the
+   `python-domain-modeling` skill to determine whether this feature warrants a new
+   top-level sibling package under `src/` (new bounded context) or a subpackage
+   within an existing package. If the project layout is `single-package`, skip the
+   modularity assessment and add to the existing package's layer hierarchy.
+
+2. **New layers**: Does this feature introduce a new subpackage under an
    `exhaustive = true` import-linter container? If yes, state which contract is
    affected and what the updated `layers` list looks like.
 
-2. **New bounded contexts**: Does this feature introduce a new domain area that should
-   be independent from existing ones? If yes, propose an `independence` contract.
+3. **New bounded contexts**: Does this feature introduce a new domain area that should
+   be independent from existing ones? If yes, propose an `independence` contract
+   between the new top-level package and existing bounded context packages.
 
-3. **Layer splits**: Does an existing layer need sub-layering? If yes, propose a
+4. **Layer splits**: Does an existing layer need sub-layering? If yes, propose a
    nested `[[tool.importlinter.contracts]]` block.
 
-4. **Cross-cutting concerns**: Does this feature add a utility package that multiple
-   layers need? If yes, add it to `exhaustive_ignores` or as the lowest layer.
+5. **Cross-cutting concerns**: Does this feature add a utility package that multiple
+   layers or packages need? If yes, add it to `exhaustive_ignores` or as the lowest
+   layer, or create a fine-grained shared kernel package.
 
-5. **Subdomain classification**: Is this Core (competitive advantage, custom code),
+6. **Subdomain classification**: Is this Core (competitive advantage, custom code),
    Supporting (necessary but not differentiating), or Generic (commodity, off-the-shelf)?
    This drives the tactical pattern choice:
    - **Core**: Full DDD -- aggregates, domain events, rich domain model
    - **Supporting**: Simpler patterns -- transaction scripts, thin domain layer
    - **Generic**: Off-the-shelf libraries, no custom domain model
 
-6. **Ubiquitous Language**: Does this feature introduce new domain terms? List them
+7. **Ubiquitous Language**: Does this feature introduce new domain terms? List them
    with definitions. These should be added to `docs/architecture/domain-model.md`.
 
 ### Template
@@ -186,7 +226,9 @@ Always. Even if the answer is "no domain impact", state that explicitly.
 ```markdown
 ## Domain Impact
 
-**New packages**: [None / list with target contract]
+**Modularity assessment**: [New top-level package / subpackage of existing -- state
+which signals from the decision matrix drove the choice]
+**New packages**: [None / list with target import-linter contract]
 **Bounded context changes**: [None / describe]
 **Import-linter contract updates**: [None / show proposed TOML]
 **Subdomain classification**: [Core / Supporting / Generic]
@@ -211,6 +253,12 @@ For import-linter contract details, see the reference at
 7. File Inventory lists every new and deleted file, grouped by phase.
 8. Design Decisions table captures choices with rationale (not just the choice).
 9. Domain model sketches include module path, class name, and key fields.
+10. Write for the uninitiated: every **problem-domain** term or acronym that appears in the
+    plan MUST be defined in a `## Glossary` section at the end of the file. Problem-domain
+    terms are concepts from the business or analytical domain the project is solving (e.g.
+    "skeleton", "GIR", "acceptance criteria"). Technical stack terms (pytest, Pydantic,
+    import-linter, uv, etc.) do not belong in the Glossary. The plan body must expand
+    domain acronyms on first use and state why a decision matters before stating what it is.
 
 ### Post-Plan Step: Library Best Practices (mandatory)
 

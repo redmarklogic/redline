@@ -30,16 +30,14 @@ foundation and retaining wall assessments for New Zealand council compliance.
 ## Layer Architecture
 
 ```
-calculators    (highest -- orchestration, scripts)
-    |
-functions      (business logic, readers)
+functions      (highest -- business logic, readers, orchestration)
     |
 schemas        (Pandera DataFrameModels for boundaries)
     |
-enrichment     (data enrichment, transformations)
-    |
 domain         (lowest -- entities, value objects, events)
 ```
+
+Add project-specific higher layers (e.g., `scripts`, `cli`) above `functions` when needed.
 
 Enforced by import-linter contracts in `pyproject.toml`. See
 `.agents/skills/spec-kit/references/import-linter.md` for the full reference.
