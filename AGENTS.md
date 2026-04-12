@@ -147,7 +147,13 @@ Source: <https://github.com/obra/superpowers>
 
 - **ALWAYS** report which skills from `.agents/skills/` were used and for what purpose in your final response using the format **skill-name**: <what did you apply> on what **element**, and link to `.agents/skills/<skill-name>/SKILL.md`. IF you did not use any skills, explicitly state "No skills applied".
 - Document reusable knowledge (e.g., library versions, fixes, corrections) in the `Lessons` section of `scratchpad.md`.
-- Never reference `scratchpad.md` in ADRs or other persistent documentation; scratchpad is ephemeral and cleared between features. Include any relevant research findings directly in the ADR itself.
+- ADRs are immutable decision records, not project management tools. They sit at
+  the bottom of the documentation hierarchy. Rules:
+  - **Include**: Decision, Status, Context, Options Considered, Rationale, Consequences,
+    References (other ADRs, external docs, RFCs, library docs only).
+  - **Exclude**: follow-up actions or task checklists (belong in tasks.md); links to specs,
+    plans, or tasks (upward dependencies); scratchpad notes (ephemeral). Embed any
+    relevant research findings directly in the ADR body instead.
 
 ## Refactors
 

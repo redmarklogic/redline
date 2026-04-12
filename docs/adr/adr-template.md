@@ -26,10 +26,13 @@ Explain why the selected option best meets the context, considering trade-offs a
 
 Detail the positive and negative outcomes expected from this decision.
 
-## Follow-up Actions
-
-List any tasks required to implement the decision or monitor its impact.
-
 ## References
 
-Provide links to code, issues, or documentation that informed the decision.
+Provide links to other ADRs, external standards, or library documentation that
+informed the decision.
+
+ADR content rules:
+- **Include**: Decision, Status, Context, Options Considered, Rationale, Consequences, References.
+- **Exclude**: follow-up actions (belong in tasks.md); links to specs, plans, or tasks
+  (they sit above ADRs and must not be referenced from here); scratchpad notes (ephemeral).
+- ADRs are immutable once accepted — do not embed transient project-management content.

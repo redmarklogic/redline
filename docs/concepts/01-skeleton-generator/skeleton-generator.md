@@ -137,7 +137,7 @@ Table of Contents
 Client Summary  (use "Executive Summary" only if the LOE explicitly requests it)
 
 1   Introduction
-    1.1  Scope of Work  (required unless Introduction adequately covers scope; default: include)
+    1.1  Scope of Work  (always included by default)
     1.2  Site Description
     1.3  Proposed Development
 
@@ -151,7 +151,7 @@ Client Summary  (use "Executive Summary" only if the LOE explicitly requests it)
     2.2  Seismic Hazard
         2.2.1  Seismic Site Subsoil Class
         2.2.2  Ground Shaking Hazard
-    2.3  Liquefaction Assessment  (mandatory for most NZ sites)
+    2.3  Liquefaction Assessment  (mandatory -- included for all NZ sites by default)
 
 4   Residual Geotechnical Risk
 5   Further Work
@@ -168,14 +168,19 @@ Appendices  (ordered by first reference in main text)
 
 **Conditional sections** (included based on scope/project type -- inclusion decision logged):
 
-- **Section 2.4: Other Geotechnical Hazards** -- include when relevant; sub-sections for slope
-  stability and/or fault rupture hazard added as applicable.
+- **Section 2.4: Other Geotechnical Hazards** -- auto-created as a parent H2 heading
+  when any of its child sections are enabled. Sub-sections inserted as H3 headings:
+  - 2.4.1  Slope Stability (when `slope_stability=True`)
+  - 2.4.2  Fault Rupture Hazard (when `fault_rupture=True`)
+  If neither child is enabled, the parent heading is omitted entirely.
 - **Section 2.5: Geotechnical Issues Identified** -- optional summary table.
 - **Section 3: Foundation Assessment** -- only when the LOE specifically requires foundation
-  design or engineering parameters.
+  design or engineering parameters (when `foundation_assessment=True`).
   - 3.1  Foundation Options
   - 3.2  Foundation Design Parameters
-  - 3.X  Ground Improvement (when natural ground is inadequate for proposed loads)
+  - 3.X  Ground Improvement (only when `ground_improvement=True` AND
+    `foundation_assessment=True` -- `ground_improvement` is ignored when
+    `foundation_assessment=False` because it is a child of Foundation Assessment)
 
 ---
 
@@ -215,9 +220,12 @@ Appendices  (ordered by first reference in main text)
                              |
                              v
                    +---------+----------+
-                   |  DOCX Generator    |
-                   |  (python-docx /    |
-                   |   docxtpl)         |
+                   |  marker package    |
+                   |  (DocumentFacade)  |
+                   |   |               |
+                   |   +- python-docx   |
+                   |   +- (future       |
+                   |      engines)      |
                    +---------+----------+
                              |
                              v
@@ -232,10 +240,15 @@ Appendices  (ordered by first reference in main text)
 - **Document parsing is the hard part.** Reliable extraction from messy
   contractual PDFs is where most debugging time will be spent. The LLM
   calls are comparatively straightforward.
-- **python-docx or docxtpl** for Word generation -- must support company
-  template styles, not just content insertion.
+- **python-docx** for Word generation, accessed through a `DocumentFacade`
+  protocol in the `marker` sibling package. The facade decouples business
+  logic from engine specifics, allowing future engine swaps (e.g.,
+  ONLYOFFICE document-builder for post-processing). See
+  [ADR-001](../../adr/adr-001-docx-generation-engine-facade.md).
 - **CrewAI** orchestrates the multi-step pipeline with specialised agents
-  for extraction, section building, and formatting.
+  for extraction, section building, and formatting. Note: CrewAI is
+  deferred for the initial phases (0-3) which use pure DOCX generation
+  with no LLM. CrewAI enters when LLM agents are introduced in Phase 4+.
 
 ---
 
@@ -290,7 +303,7 @@ It implements automation opportunities:
 |----|----------|--------|
 | Q1 | Should the Client Summary placeholder include a maximum word count (vs. "one page") since page length depends on formatting? | Affects AC1 verification. |
 | Q2 | How should the skeleton handle Canterbury-specific requirements (MBIE Part D, CCC Appendix I/II) -- as conditional sections triggered by location, or as a separate Canterbury GIR variant? | Affects Step 1 section rules and Standards Registry scope. |
-| Q3 | Section 1.1 (Scope of Work) is conditional -- "required unless the Introduction adequately covers the scope." How should the AI decide this? Default to including it? | Affects Step 1 section rules. |
+| Q3 | ~~Section 1.1 (Scope of Work) is conditional -- "required unless the Introduction adequately covers the scope." How should the AI decide this? Default to including it?~~ **Resolved**: Always include Section 1.1 by default. The AI cannot reliably judge whether the Introduction "adequately covers" scope. The author can remove it during editing if redundant. | ~~Affects Step 1 section rules.~~ |
 | Q4 | Should formatting compliance (AC11) be checked by the skeleton generator itself, or deferred to a separate QA tool? | Architecture decision affecting Step 0 scope. |
 | Q5 | How will the Residual Geotechnical Risk placeholder prevent the engineer from relying on generic automated text? Should there be a "this section requires site-specific content" watermark? | Affects AC8 design and liability exposure. |
 | Q6 | How should confidence be communicated to the author? (e.g., "AI-extracted -- verify" vs. "Confirmed from contract") | Affects trust and adoption. |

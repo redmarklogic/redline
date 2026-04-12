@@ -99,9 +99,12 @@ Then re-check the project preset is still installed.
 ## Command Workflow
 
 Seven commands, used in this order. Each maps to a spec-kit command template.
+Artifacts are validated incrementally: each artifact is analyzed against its
+predecessors before the next one is written (see Incremental Analysis below).
 
 | Step | Command       | Human Input                             | Automated by Preset                                    |
 | ---- | ------------- | --------------------------------------- | ------------------------------------------------------ |
+| 0    | reconcile     | None (automated)                        | Source document reconciliation (see above)              |
 | 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.12, layout from architecture.yml, TDD, single-dev |
 | 2    | specify       | Feature description (chat or .md file)  | RICE scoring for scenario prioritisation                |
 | 3    | clarify       | Answers to ambiguity questions (if any) | Triggers only if spec has NEEDS CLARIFICATION markers   |
@@ -123,6 +126,72 @@ The `specify` command accepts feature descriptions from two sources:
 
 After `specify`, check the generated `spec.md` for `[NEEDS CLARIFICATION]` markers.
 If any exist, trigger `clarify` automatically. If the spec is clean, proceed to `plan`.
+
+## Source Document Reconciliation (before specify)
+
+When the spec input is an external `.md` file (concept doc, research doc), run a
+reconciliation pass **before** writing any spec content. This prevents silent drift
+between the source and the generated artifacts.
+
+### Steps
+
+1. **Identify authoritative sources.** List every document that defines concrete
+   data for this feature (concept doc, ADRs, existing plans, domain model docs).
+   Declare which is the primary authority when sources conflict.
+
+2. **Extract canonical data.** Build a reconciliation table of all concrete values:
+   field names, section lists, naming conventions, numbering schemes, domain terms,
+   acceptance criteria IDs. This table is the single reference for all downstream
+   artifacts.
+
+3. **Flag conflicts.** If two sources disagree (e.g., a naming convention differs
+   between a concept doc and an old plan), stop and resolve with the user before
+   proceeding. Do not silently pick one.
+
+4. **Flag ambiguities.** If a source uses vague language where the spec needs a
+   concrete value (e.g., "the correct position" without stating where), add it to
+   a clarification list.
+
+5. **Update source documents.** After reconciliation is complete and the spec is
+   written, propagate any clarifications or conflict resolutions back into the
+   original source documents. Remove contradictions, add missing precision. The
+   source docs should be cleaner after spec-kit runs, not staler.
+
+### When to skip
+
+Skip reconciliation when the spec input is a conversation (no external doc) or when
+the external doc was written in the same session and has not been reviewed by others.
+
+## Concept-to-Plan Phase Mapping (plan phase)
+
+When the spec input is a concept doc with numbered steps or phases, the plan MUST
+start with an explicit mapping table before the Phased Delivery section:
+
+```markdown
+## Concept-to-Plan Phase Mapping
+
+| Concept Step | Concept Name | Plan Phase | Notes |
+| ------------ | ------------ | ---------- | ----- |
+| Step 0       | [name]       | Phase 0    | [differences, if any] |
+| Step 1       | [name]       | Phase 1    | [combined with Step X] |
+| Step N       | [name]       | Deferred   | [reason] |
+```
+
+This prevents phase-numbering confusion and makes scope exclusions visible at a glance.
+
+## Existing Artifact Reconciliation (before specify)
+
+When a spec directory already contains prior artifacts (e.g., an old plan at
+`docs/specs/feature/plan.md` or a partially-filled `specs/NNN-feature/`), the
+agent MUST:
+
+1. Read the existing artifacts.
+2. Explicitly diff them against the current source document(s).
+3. Note what has changed, what is superseded, and what can be carried forward.
+4. Ask the user whether the old artifacts should be archived, updated, or replaced.
+
+Do NOT silently inherit decisions from old artifacts. They are drafts from a
+different context.
 
 ## Preset Conventions
 
@@ -292,6 +361,23 @@ Skip condition: well-known stdlib modules or packages already reviewed in this p
    Coverage gaps, Inconsistency. Max 30 findings.
 3. Severity levels: CRITICAL, HIGH, MEDIUM, LOW.
 4. After reporting, offer: "Want me to suggest fixes for the top N issues?"
+
+## Incremental Analysis (between artifacts)
+
+Do NOT write all three artifacts (spec, plan, tasks) and then analyze. Instead,
+validate each artifact against its predecessors before writing the next:
+
+1. **After spec**: Analyze spec against the source document(s) and reconciliation
+   table. Fix CRITICAL and HIGH issues before writing the plan.
+2. **After plan**: Analyze plan against the spec. Check that every spec scenario
+   maps to a plan phase, design decisions are consistent with requirements, and
+   domain models match. Fix issues before writing tasks.
+3. **After tasks**: Run the full 6-pass analysis across all three artifacts plus
+   the source document. This is the final consistency gate.
+
+This catches drift early: a naming convention error in the spec is fixed before it
+proliferates into the plan and tasks, instead of requiring cascading fixes across
+all three files.
 
 ## Implement Phase
 

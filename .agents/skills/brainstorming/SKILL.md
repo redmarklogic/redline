@@ -65,6 +65,42 @@ digraph brainstorming {
 
 **The terminal state is invoking spec-kit.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is spec-kit.
 
+## Concept Doc Review Path
+
+When the user provides a pre-written concept doc or design doc rather than
+describing a feature from scratch, skip the full Q&A loop but DO run a focused
+ambiguity review before transitioning to spec-kit.
+
+**When to use**: The user says "create a plan for [concept doc]" or references an
+existing `.md` file that already contains a design.
+
+**Steps**:
+
+1. **Read the concept doc** in full. Identify the scope, acceptance criteria,
+   architecture, and any open questions the doc itself flags.
+
+2. **Ask 3-5 targeted clarifying questions** about ambiguities, contradictions, or
+   underspecified areas. Focus on things that would block implementation:
+   - Naming conventions that appear in two forms
+   - Conditional logic without explicit rules (e.g., "include when relevant")
+   - Numbering or ordering gaps
+   - Interaction rules between flags/options
+   - Scope boundaries that are implied but not stated
+
+3. **Do NOT ask about things the concept doc explicitly defers** (open questions
+   the doc already acknowledges). Those are known unknowns.
+
+4. **Present a brief summary** of what you understood and what you resolved from
+   the Q&A, then transition to spec-kit.
+
+This path replaces steps 3-5 of the full checklist (Ask clarifying questions,
+Propose approaches, Present design). Steps 1-2 (Explore context, Visual companion)
+and steps 6-9 (Write doc, Review, Transition) still apply.
+
+**Anti-pattern**: Skipping the concept doc review entirely because "the design
+already exists." Even validated concept docs contain ambiguities that surface
+during planning -- the review catches them cheaply.
+
 ## The Process
 
 **Understanding the idea:**
