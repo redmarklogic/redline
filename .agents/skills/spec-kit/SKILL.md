@@ -181,8 +181,7 @@ This prevents phase-numbering confusion and makes scope exclusions visible at a 
 
 ## Existing Artifact Reconciliation (before specify)
 
-When a spec directory already contains prior artifacts (e.g., an old plan at
-`docs/specs/feature/plan.md` or a partially-filled `specs/NNN-feature/`), the
+When a spec directory already contains prior artifacts (e.g., a partially-filled `specs/NNN-feature/`), the
 agent MUST:
 
 1. Read the existing artifacts.
@@ -403,9 +402,9 @@ When executing the plan:
 
 ## Constraints
 
-- Output location defaults to `specs/<NNN>-<feature-slug>/` (auto-numbered by spec-kit).
+- Output location: `specs/<NNN>-<feature-slug>/` (auto-numbered by spec-kit).
   Spec files: `specs/001-feature-name/spec.md`, `plan.md`, `tasks.md`.
-  Note: this differs from the old `docs/specs/` convention -- use spec-kit's default.
+  Design docs from brainstorming: `specs/YYYY-MM-DD-<topic>-design.md`.
 - All artifacts are plain markdown -- no tooling dependencies beyond spec-kit CLI.
 - Do not duplicate project principles already captured in other skills. Reference them.
 - Use RFC-2119 language (MUST, SHOULD, MAY) for requirements.
