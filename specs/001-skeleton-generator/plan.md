@@ -21,7 +21,7 @@ tools.
 
 **Language**: Python 3.12
 **Package manager**: uv
-**Testing**: pytest (TDD workflow per `test-driven-development` skill)
+**Testing**: pytest (TDD workflow per `test-driven-development` skill; conventions per `python-testing-unit` skill)
 **Project layout**: Monorepo (from `.specify/architecture.yml`)
 **Architecture**: Sibling packages under `src/`: `rl` (hub, existing), `marker` (new --
 DOCX generation). Each package applies its own internal layers: domain > functions.
@@ -296,7 +296,14 @@ and a working `PythonDocxFacade` implementation that can create a minimal DOCX f
 
 **TDD approach**: Write tests for `PythonDocxFacade` methods (`add_heading`, `add_paragraph`,
 `add_table`, `save`) in `tests/marker/functions/test_engines.py`. Write tests for
-`SkeletonConfig` validation in `tests/marker/domain/test_models.py`.
+`SkeletonConfig` behavioral logic (`is_enabled`, flag validation) in
+`tests/marker/domain/test_models.py`.
+
+**Test strategy**: Focus on behavior, not value-object round-trips. Domain models
+(`SectionSpec`, `ReportDefinition`, `ProjectMetadata`) are frozen Pydantic models with no
+custom logic -- they are exercised indirectly through builders and config validation.
+Only `SkeletonConfig` has testable behavior (`is_enabled()`, unknown-flag validation).
+Use `tmp_path` for any test that writes DOCX files.
 
 **Deliverables**:
 
@@ -333,15 +340,26 @@ facade to produce all mandatory sections with correct headings, plus conditional
 based on flags, with sequential renumbering.
 
 **TDD approach**: Write tests for section builder functions in
-`tests/marker/functions/test_builders.py` using a `RecordingFacade` stub.
-Test all 16 flag combinations for correct section ordering and numbering.
+`tests/marker/functions/test_builders.py` using a `RecordingFacade` fake -- a
+purpose-built, protocol-conforming test double that records all facade calls for
+assertion (preferred over generic mocking per testing skill guidelines).
+
+**Test strategy**: Use equivalence classes and boundary values, not exhaustive
+combinations. Representative flag scenarios:
+- Default config (all flags off) -- baseline/happy path
+- Single conditional enabled (e.g. `foundation_assessment`) -- one flag on
+- Multiple conditionals interacting (e.g. `slope_stability` + `fault_rupture`) -- heading-wrapping edge case
+- Dependent flags (e.g. `foundation_assessment` + `ground_improvement`) -- subsection nesting
+
+These four equivalence classes cover the behavioral paths without testing all 16
+permutations. Also test error states and starting states (empty vs. populated
+definitions).
 
 **Deliverables**:
 
-1. `src/marker/functions/builders.py` -- `build_sections(config, facade)` and
-   `build_tables(facade)` functions
-2. `tests/marker/functions/test_builders.py` -- section builder tests with RecordingFacade
-3. `tests/marker/conftest.py` -- `RecordingFacade` fixture
+1. `src/marker/functions/builders.py` -- `build_sections(definition, config, facade)` function
+2. `tests/marker/functions/test_builders.py` -- section builder tests using RecordingFacade
+3. `tests/marker/conftest.py` -- `RecordingFacade` fixture (protocol-conforming fake, not a mock)
 
 **Verification**:
 
@@ -350,8 +368,8 @@ Test all 16 flag combinations for correct section ordering and numbering.
 ```
 
 **Acceptance Gate** (both must pass before Phase 2 starts):
-- [ ] Working code: all 16 flag combinations produce correctly ordered, sequentially
-  numbered sections
+- [ ] Working code: representative flag equivalence classes produce correctly ordered,
+  sequentially numbered sections
 - [ ] Run `.venv\Scripts\activate; python -m pytest tests/marker/ -v` -- all tests green
 
 ---
@@ -389,6 +407,11 @@ by reopening with python-docx.
 
 **TDD approach**: Write integration tests in `tests/marker/test_integration.py` that
 generate a real DOCX, reopen it, and assert on heading text and table structure.
+
+**Test strategy**: Start with a non-trivial happy path (default config, all mandatory
+sections). Then test different starting states (conditional flags enabled), verify
+end states (file exists, correct structure), and include at least one error-state test
+(e.g. invalid save path). Use `tmp_path` for all DOCX file output.
 
 **Deliverables**:
 
@@ -460,7 +483,7 @@ generate a real DOCX, reopen it, and assert on heading text and table structure.
 | Risk | Mitigation |
 | --- | --- |
 | python-docx heading levels don't map to corporate template styles | Facade encapsulates style mapping; test with real template when available |
-| Sequential renumbering has edge cases with nested conditionals under Section 2.4 | Exhaustive flag-combination tests cover all 16 combinations |
+| Sequential renumbering has edge cases with nested conditionals under Section 2.4 | Equivalence-class tests cover representative flag combinations; boundary cases (single hazard vs. multiple hazards, no conditionals vs. all conditionals) exercise the renumbering logic |
 | `marker` package name conflicts with an existing PyPI package | No conflict found; name is internal to the monorepo. If extracting later, rename. |
 | Pydantic version mismatch between marker and rl packages | Both use the same dependency from pyproject.toml; no version divergence possible in monorepo |
 | ReportDefinition model may grow complex as jurisdictions are added | Start with one definition (NZ_GIR). Validate the model shape with 2-3 hypothetical definitions before committing. |

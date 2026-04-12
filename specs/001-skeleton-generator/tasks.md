@@ -2,6 +2,7 @@
 
 **Input**: [plan.md](plan.md)
 **Prerequisites**: python-docx and pydantic installed via `uv add`
+**Testing conventions**: `python-testing-unit` skill (behavior-focused, equivalence classes, protocol-conforming fakes)
 
 ## Phase 0: Foundation -- DocumentFacade and PythonDocxFacade
 
@@ -16,12 +17,11 @@
 
 ### Domain layer (models, protocols, definitions)
 
-- [ ] T005 [Phase 0] Write failing tests in `tests/marker/domain/test_models.py`:
-  - Test `SectionSpec` round-trip: create with key/heading/level/children, verify frozen
-  - Test `ReportDefinition` has `condition_flags` listing valid flag names
-  - Test `SkeletonConfig.is_enabled()` returns `False` for absent flags
-  - Test `SkeletonConfig` with unknown flag name (not in definition's `condition_flags`) raises `ValueError`
-  - Test `ProjectMetadata` round-trip: create with all fields, verify frozen
+- [ ] T005 [Phase 0] Write failing tests in `tests/marker/domain/test_models.py` -- test behavior, not value-object round-trips:
+  - Test `SkeletonConfig.is_enabled()` returns `False` for absent flags (happy path)
+  - Test `SkeletonConfig.is_enabled()` returns `True` for explicitly enabled flags
+  - Test `SkeletonConfig` with unknown flag name (not in definition's `condition_flags`) raises `ValueError` (error state)
+  - Note: Do NOT test `SectionSpec`, `ReportDefinition`, or `ProjectMetadata` round-trips directly -- these are frozen Pydantic value objects exercised indirectly through builder tests
 - [ ] T006 [Phase 0] Confirm test fails: `.venv\Scripts\activate; python -m pytest tests/marker/domain/test_models.py -v`
 - [ ] T007 [Phase 0] Create `src/marker/domain/models.py` with frozen Pydantic models: `TableSpec`, `SectionSpec`, `ReportDefinition`, `SkeletonConfig` (dict-based `flags`), `ProjectMetadata`
 - [ ] T008 [Phase 0] Create `src/marker/domain/protocols.py` with `DocumentFacade` protocol (add_heading, add_paragraph, add_table, add_metadata_block, save) -- all parameters are primitive types only
@@ -29,7 +29,7 @@
 
 ### Functions layer (engine implementation)
 
-- [ ] T010 [Phase 0] Write failing test for `PythonDocxFacade` in `tests/marker/functions/test_engines.py`: test `add_heading` produces correct heading text and level; test `add_table` produces table with correct headers; test `save` produces a readable DOCX file (use `tmp_path` fixture)
+- [ ] T010 [Phase 0] Write failing test for `PythonDocxFacade` in `tests/marker/functions/test_engines.py`: test `add_heading` produces correct heading text and level (happy path); test `add_table` produces table with correct headers; test `save` produces a readable DOCX file (use `tmp_path` fixture); test `save` with invalid path raises an error (error state)
 - [ ] T011 [Phase 0] Confirm test fails: `.venv\Scripts\activate; python -m pytest tests/marker/functions/test_engines.py -v`
 - [ ] T012 [Phase 0] Create `src/marker/functions/engines.py` with `PythonDocxFacade` implementation
 
@@ -46,16 +46,16 @@
 
 ### Tests (write first)
 
-- [ ] T015 [Phase 1] Create `tests/marker/conftest.py` with `RecordingFacade` fixture (records all facade method calls with arguments)
-- [ ] T016 [Phase 1] Write failing tests for `build_sections()` in `tests/marker/functions/test_builders.py`:
-  - Test default config (all flags disabled): all mandatory sections present, no conditional sections, sections after Section 2 numbered 3/4/5 (Residual risk / Further work / Applicability)
-  - Test `flags={"foundation_assessment": True}`: Section 3 present, remaining sections numbered 4/5/6
-  - Test `flags={"slope_stability": True}` only: Section 2.4 heading is "Slope stability assessment" (no parent wrapper)
-  - Test `flags={"slope_stability": True, "fault_rupture": True}`: Section 2.4 heading is "Other geotechnical hazards" with subsections 2.4.1 and 2.4.2
-  - Test `flags={"foundation_assessment": True, "ground_improvement": True}`: ground improvement subsection present in Section 3
-  - Test Document Control version table has six mandatory columns
-  - Test Geotechnical Model Table has six mandatory columns
-  - Test appendix headings present in order A-D
+- [ ] T015 [Phase 1] Create `tests/marker/conftest.py` with `RecordingFacade` -- a protocol-conforming fake (not a mock) that implements `DocumentFacade` and records all method calls with arguments for later assertion
+- [ ] T016 [Phase 1] Write failing tests for `build_sections()` in `tests/marker/functions/test_builders.py` using equivalence classes (not exhaustive combinations):
+  - Happy path -- default config (all flags disabled): all mandatory sections present, no conditional sections, sections after Section 2 numbered 3/4/5 (Residual risk / Further work / Applicability)
+  - Single conditional -- `flags={"foundation_assessment": True}`: Section 3 present, remaining sections numbered 4/5/6
+  - Heading-wrapping boundary -- `flags={"slope_stability": True}` only: Section 2.4 heading is "Slope stability assessment" (no parent wrapper)
+  - Multiple conditionals interacting -- `flags={"slope_stability": True, "fault_rupture": True}`: Section 2.4 heading is "Other geotechnical hazards" with subsections 2.4.1 and 2.4.2
+  - Dependent flags -- `flags={"foundation_assessment": True, "ground_improvement": True}`: ground improvement subsection present in Section 3
+  - Table structure -- Document Control version table has six mandatory columns
+  - Table structure -- Geotechnical Model Table has six mandatory columns
+  - End state -- appendix headings present in order A-D
 - [ ] T017 [Phase 1] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/marker/functions/test_builders.py -v`
 
 ### Implementation
@@ -85,8 +85,9 @@
 ### Tests (write first)
 
 - [ ] T021 [Phase 2] Write failing tests for `build_metadata()` in `tests/marker/functions/test_builders.py`:
-  - Test that project number, client name, site address, date, and document code appear in facade calls
-  - Test that Document Control version table is populated with metadata fields
+  - Happy path -- project number, client name, site address, date, and document code appear in facade calls
+  - End state -- Document Control version table is populated with metadata fields
+  - Error state -- missing required metadata fields raise appropriate errors
 - [ ] T022 [Phase 2] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/marker/functions/test_builders.py::test_build_metadata -v`
 
 ### Implementation
@@ -106,13 +107,14 @@
 
 ### Tests (write first)
 
-- [ ] T026 [Phase 3] Write failing integration tests in `tests/marker/test_integration.py`:
-  - Test `build_skeleton()` with default config produces a DOCX file at the specified path
-  - Test reopening the DOCX with `Document()` finds all mandatory headings in order
-  - Test reopening the DOCX finds the Geotechnical Model Table with correct column headers
-  - Test reopening the DOCX finds project metadata values in the document text
-  - Test with `flags={"foundation_assessment": True}` produces correctly numbered sections
-  - Test with default flags (all disabled) produces renumbered sections (no gap)
+- [ ] T026 [Phase 3] Write failing integration tests in `tests/marker/test_integration.py` (use `tmp_path` for all DOCX output):
+  - Happy path -- `build_skeleton()` with default config produces a DOCX file at the specified path
+  - End state -- reopening the DOCX with `Document()` finds all mandatory headings in order
+  - End state -- reopening the DOCX finds the Geotechnical Model Table with correct column headers
+  - End state -- reopening the DOCX finds project metadata values in the document text
+  - Different starting state -- `flags={"foundation_assessment": True}` produces correctly numbered sections
+  - Different starting state -- default flags (all disabled) produces renumbered sections (no gap)
+  - Error state -- saving to an invalid/non-writable path raises an appropriate error
 - [ ] T027 [Phase 3] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/marker/test_integration.py -v`
 
 ### Implementation
@@ -144,6 +146,9 @@
 - `[P]` = parallelizable (different files, no dependencies)
 - `[Phase N]` = which plan phase the task belongs to
 - TDD is mandatory for all function work: write failing test (Red), confirm it fails, implement (Green), refactor
+- Follow `python-testing-unit` skill: behavior-focused tests, equivalence classes over exhaustive permutations, protocol-conforming fakes over mocks, happy path first then error states
+- Use `RecordingFacade` (protocol-conforming fake) for builder tests, not generic `mocker.patch`
+- Each test describes its equivalence class (happy path / single conditional / interacting conditionals / error state / end state / different starting state)
 - The Acceptance Gate at the end of each phase is a hard stop -- do not start the next phase until it passes
 - If any function file was modified or introduced, the pytest gate is mandatory
 - Commit after each task or logical group
