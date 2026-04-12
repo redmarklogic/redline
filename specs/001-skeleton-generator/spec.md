@@ -6,29 +6,29 @@
 
 ## Source Document Reconciliation
 
-| Source | Authority | Status |
-| --- | --- | --- |
-| [skeleton-generator.md](../../docs/concepts/01-skeleton-generator/skeleton-generator.md) | Primary -- concept doc | Updated with canonical headings |
-| [ADR-001](../../docs/adr/adr-001-docx-generation-engine-facade.md) | Binding -- facade pattern | No conflicts |
-| [20260411-gir-skeleton-acceptance-criteria.md](../../docs/research/20260411-gir-skeleton-acceptance-criteria.md) | Supporting -- AC research | Integrated into concept doc ACs |
+| Source                                                                                                          | Authority                     | Status                            |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------------------------------- |
+| [skeleton-generator.md](../../docs/concepts/01-skeleton-generator/skeleton-generator.md)                           | Primary -- concept doc        | Updated with canonical headings   |
+| [ADR-001](../../docs/adr/adr-001-docx-generation-engine-facade.md)                                                 | Binding -- facade pattern     | No conflicts                      |
+| [20260411-gir-skeleton-acceptance-criteria.md](../../docs/research/20260411-gir-skeleton-acceptance-criteria.md)   | Supporting -- AC research     | Integrated into concept doc ACs   |
 | [20260411-gir-skeleton-section-placeholders.md](../../docs/research/20260411-gir-skeleton-section-placeholders.md) | Supporting -- section content | Referenced for Phase 8 (deferred) |
-| [incumbent-process.md](../../docs/concepts/01-skeleton-generator/incumbent-process.md) | Supporting -- current process | Heading discrepancies resolved |
+| [incumbent-process.md](../../docs/concepts/01-skeleton-generator/incumbent-process.md)                             | Supporting -- current process | Heading discrepancies resolved    |
 
 ### Resolved Conflicts
 
-| Item | Concept doc (before) | Canonical source | Resolution |
-| --- | --- | --- | --- |
-| Section 2.1.1 heading | "Geology" | "Geology and faulting" | Updated concept doc |
-| Section 2.1.2 heading | "Previous Investigations" | "Previous geotechnical investigations" | Updated concept doc |
-| Section 2.1.3 heading | "Current Investigations" | "Current geotechnical investigations" | Updated concept doc |
-| Section 2.2 heading | "Seismic Hazard" | "Seismic shaking hazard" | Updated concept doc |
-| Appendix B name | "Previous Investigations" | "Previous ground investigation results" | Updated concept doc |
-| Appendix C name | "Investigation Logs" | "Current geotechnical investigation logs" | Updated concept doc |
-| Heading case | Title Case in places | Sentence case throughout | Updated concept doc |
-| Section numbering gaps | Sections 4/5/6 hard-coded | Sequential renumbering when conditionals excluded | Updated concept doc |
-| Slope stability heading | "Slope Stability" | "Slope stability assessment" | Updated concept doc |
-| Fault rupture heading | "Fault Rupture Hazard" | "Fault rupture hazard assessment" | Updated concept doc |
-| Section 3.2 heading | "Foundation Design Parameters" | "Foundation pile design parameters" | Updated concept doc |
+| Item                    | Concept doc (before)           | Canonical source                                  | Resolution          |
+| ----------------------- | ------------------------------ | ------------------------------------------------- | ------------------- |
+| Section 2.1.1 heading   | "Geology"                      | "Geology and faulting"                            | Updated concept doc |
+| Section 2.1.2 heading   | "Previous Investigations"      | "Previous geotechnical investigations"            | Updated concept doc |
+| Section 2.1.3 heading   | "Current Investigations"       | "Current geotechnical investigations"             | Updated concept doc |
+| Section 2.2 heading     | "Seismic Hazard"               | "Seismic shaking hazard"                          | Updated concept doc |
+| Appendix B name         | "Previous Investigations"      | "Previous ground investigation results"           | Updated concept doc |
+| Appendix C name         | "Investigation Logs"           | "Current geotechnical investigation logs"         | Updated concept doc |
+| Heading case            | Title Case in places           | Sentence case throughout                          | Updated concept doc |
+| Section numbering gaps  | Sections 4/5/6 hard-coded      | Sequential renumbering when conditionals excluded | Updated concept doc |
+| Slope stability heading | "Slope Stability"              | "Slope stability assessment"                      | Updated concept doc |
+| Fault rupture heading   | "Fault Rupture Hazard"         | "Fault rupture hazard assessment"                 | Updated concept doc |
+| Section 3.2 heading     | "Foundation Design Parameters" | "Foundation pile design parameters"               | Updated concept doc |
 
 ## Scope
 
@@ -177,34 +177,46 @@ verify the metadata values appear in the document text.
 
 ### Functional Requirements
 
-- **FR-001**: System MUST generate a DOCX file with all mandatory GIR sections in the
-  canonical order using sentence-case headings. (Addresses AC2, AC11.)
+- **FR-001**: System MUST generate a DOCX file with sections defined by a `ReportDefinition`
+  data object. The builder MUST NOT hard-code any section names, ordering, or heading
+  conventions. (Addresses AC2, AC11. Enables multi-jurisdiction and multi-report-type
+  evolution.)
 - **FR-002**: System MUST include or exclude conditional sections based on boolean flags
+  in `SkeletonConfig`, validated against the `ReportDefinition`'s allowed flags,
   and renumber remaining sections sequentially. (Addresses AC3.)
-- **FR-003**: System MUST insert an empty Geotechnical Model Table in Section 2.1.4 with
-  six mandatory column headers. (Addresses AC4.)
-- **FR-004**: System MUST insert a Document Control version table with six mandatory
-  columns (Date, Version, Description, Prepared by, Reviewed by, Authorised by).
-  (Addresses AC2.)
+- **FR-003**: System MUST insert mandatory tables (e.g., Geotechnical Model Table) as
+  defined by `TableSpec` objects within the `ReportDefinition`. (Addresses AC4.)
+- **FR-004**: System MUST insert a Document Control version table with columns
+  defined by the report definition. (Addresses AC2.)
 - **FR-005**: System MUST populate project metadata (project number, client name, site
-  address, date, document code) from a typed configuration object. (Addresses AC5.)
+  address, date, document code) from a typed `ProjectMetadata` object. (Addresses AC5.)
 - **FR-006**: System MUST access the DOCX engine exclusively through the `DocumentFacade`
-  protocol defined in ADR-001. (Addresses architectural constraint.)
-- **FR-007**: System MUST use a `.docx` copy of the company template when one is provided,
-  or create a blank document when none is provided. (Addresses AC14.)
-- **FR-008**: System MUST insert empty appendix headings (A through D) in the standard
-  order. (Addresses AC13.)
+  protocol defined in ADR-001. The facade MUST accept only primitive types (`str`, `int`,
+  `list[str]`). No domain value objects, Pydantic models, or enums may cross the facade
+  boundary. (Addresses architectural constraint.)
+- **FR-007**: System MUST use a `.docx` copy of the company template when one is provided
+  (clearing all content, keeping styles only), or create a blank document when none is
+  provided. (Addresses AC14.)
+- **FR-008**: System MUST insert appendix headings as defined by the report definition's
+  back matter section. (Addresses AC13.)
 
 ### Key Entities (if data is involved)
 
-- **SkeletonConfig**: Configuration object controlling which sections to include.
-  Key attributes: `foundation_assessment` (bool), `slope_stability` (bool),
-  `fault_rupture` (bool), `ground_improvement` (bool).
+- **ReportDefinition**: Data object describing a report type's section structure.
+  Key attributes: `report_type` (str), `jurisdiction` (str), `heading_case` (str),
+  `front_matter` (list[SectionSpec]), `body_sections` (list[SectionSpec]),
+  `back_matter` (list[SectionSpec]), `condition_flags` (list[str]).
+- **SectionSpec**: Data object describing one section. Key attributes: `key` (str),
+  `heading` (str), `level` (int), `mandatory` (bool), `condition_flag` (str | None),
+  `children` (list[SectionSpec]), `table` (TableSpec | None).
+- **SkeletonConfig**: Configuration object controlling which conditional sections
+  to include. Key attribute: `flags` (dict[str, bool]).
 - **ProjectMetadata**: Data object for project-level metadata. Key attributes:
   `project_number` (str), `client_name` (str), `site_address` (str), `date` (date),
   `document_code` (str).
 - **DocumentFacade**: Protocol for DOCX engine abstraction (from ADR-001).
   Key methods: `add_heading`, `add_paragraph`, `add_table`, `add_metadata_block`, `save`.
+  **Boundary rule**: accepts only primitive types.
 - **PythonDocxFacade**: Concrete implementation of `DocumentFacade` using python-docx.
 
 ## Success Criteria (mandatory)
@@ -219,21 +231,30 @@ verify the metadata values appear in the document text.
 ## Assumptions
 
 - The company Word template is not available yet. The initial implementation uses a blank
-  `Document()` or a mock `.docx` file. Real template integration is deferred. If the
-  template introduces style names that conflict with python-docx defaults, the facade
-  implementation will need updating.
+  `Document()` or a mock `.docx` file. When a template is provided, the "styles only"
+  strategy applies: clear all content, keep style definitions. Real template integration
+  is deferred.
 - Section 1.1 (Scope of work) is always included by default. The concept doc resolved
   this open question explicitly.
 - Liquefaction assessment (Section 2.3) is always included for NZ sites. It is treated
-  as mandatory, not conditional.
+  as mandatory in the NZ_GIR report definition.
 - Steps 4-8 of the concept doc (LLM extraction, standards mapping, placeholders) are
   out of scope for this spec and will be covered in a future iteration.
+- Only one `ReportDefinition` instance (NZ_GIR) is shipped. AU, US, UK, and other report
+  types are deferred but the architecture supports them without builder code changes.
+- Only "sentence" heading case is exercised. "title" case support is deferred but the
+  `heading_case` field on `ReportDefinition` ensures the architecture supports it.
+- Jinja templating for placeholder population is deferred. The facade pattern allows
+  introducing a `JinjaDocxFacade` later without changing builder code.
 
 ## Risks
 
-| Risk | Impact | Mitigation |
-| --- | --- | --- |
-| python-docx heading styles don't match corporate template styles | Generated headings render without formatting in the real template | Facade encapsulates style mapping; test with real template early |
-| Sequential renumbering logic has off-by-one errors with nested conditionals | Incorrectly numbered sections undermine trust | Exhaustive flag-combination tests (16 combinations) |
-| DocumentFacade protocol grows too large as features are added | Facade becomes a leaky abstraction | Keep facade minimal; add methods only when needed by a concrete scenario |
-| Template `.dotx` format not supported by python-docx | Cannot use the corporate template directly | ADR-001 documents this: use a `.docx` copy of the template |
+| Risk                                                                        | Impact                                                            | Mitigation                                                                        |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| python-docx heading styles don't match corporate template styles            | Generated headings render without formatting in the real template | Facade encapsulates style mapping; test with real template early                  |
+| Sequential renumbering logic has off-by-one errors with nested conditionals | Incorrectly numbered sections undermine trust                     | Exhaustive flag-combination tests (16 combinations)                               |
+| DocumentFacade protocol grows too large as features are added               | Facade becomes a leaky abstraction                                | Keep facade minimal; add methods only when needed by a concrete scenario          |
+| Template `.dotx` format not supported by python-docx                      | Cannot use the corporate template directly                        | ADR-001 documents this: use a `.docx` copy of the template                      |
+| ReportDefinition model may not generalise well to non-geotechnical reports  | Architecture rework needed when environmental reports are added    | Validate model shape with 2-3 hypothetical definitions before committing          |
+| Company template has existing content that conflicts with generated sections | Merge logic would be complex and error-prone                      | "Styles only" strategy: clear all content, keep styles. Defer merge scenario.   |
+| Jinja placeholder syntax in template collides with user template content    | Template rendering errors                                         | Defer Jinja entirely; use programmatic building for Phases 0-3                    |

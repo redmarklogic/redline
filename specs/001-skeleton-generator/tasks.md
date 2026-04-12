@@ -14,13 +14,18 @@
 - [ ] T003 [Phase 0] Create package structure: `src/marker/__init__.py`, `src/marker/py.typed`, `src/marker/domain/__init__.py`, `src/marker/functions/__init__.py`
 - [ ] T004 [Phase 0] Create test package structure: `tests/marker/__init__.py`, `tests/marker/domain/__init__.py`, `tests/marker/functions/__init__.py`
 
-### Domain layer (models, protocols, constants)
+### Domain layer (models, protocols, definitions)
 
-- [ ] T005 [Phase 0] Write failing test for `SkeletonConfig` validation in `tests/marker/domain/test_models.py`: test that `ground_improvement=True` with `foundation_assessment=False` raises `ValueError`; test default config has all flags False
+- [ ] T005 [Phase 0] Write failing tests in `tests/marker/domain/test_models.py`:
+  - Test `SectionSpec` round-trip: create with key/heading/level/children, verify frozen
+  - Test `ReportDefinition` has `condition_flags` listing valid flag names
+  - Test `SkeletonConfig.is_enabled()` returns `False` for absent flags
+  - Test `SkeletonConfig` with unknown flag name (not in definition's `condition_flags`) raises `ValueError`
+  - Test `ProjectMetadata` round-trip: create with all fields, verify frozen
 - [ ] T006 [Phase 0] Confirm test fails: `.venv\Scripts\activate; python -m pytest tests/marker/domain/test_models.py -v`
-- [ ] T007 [Phase 0] Create `src/marker/domain/models.py` with `SkeletonConfig` and `ProjectMetadata` frozen Pydantic models
-- [ ] T008 [Phase 0] Create `src/marker/domain/protocols.py` with `DocumentFacade` protocol (add_heading, add_paragraph, add_table, add_metadata_block, save)
-- [ ] T009 [Phase 0] Create `src/marker/domain/constants.py` with canonical heading strings and table column headers as module-level constants
+- [ ] T007 [Phase 0] Create `src/marker/domain/models.py` with frozen Pydantic models: `TableSpec`, `SectionSpec`, `ReportDefinition`, `SkeletonConfig` (dict-based `flags`), `ProjectMetadata`
+- [ ] T008 [Phase 0] Create `src/marker/domain/protocols.py` with `DocumentFacade` protocol (add_heading, add_paragraph, add_table, add_metadata_block, save) -- all parameters are primitive types only
+- [ ] T009 [Phase 0] Create `src/marker/domain/definitions.py` with `NZ_GIR` `ReportDefinition` instance: canonical heading strings, table column headers, condition flags, section tree as `SectionSpec` children
 
 ### Functions layer (engine implementation)
 
@@ -43,11 +48,11 @@
 
 - [ ] T015 [Phase 1] Create `tests/marker/conftest.py` with `RecordingFacade` fixture (records all facade method calls with arguments)
 - [ ] T016 [Phase 1] Write failing tests for `build_sections()` in `tests/marker/functions/test_builders.py`:
-  - Test default config (all flags False): all mandatory sections present, no conditional sections, sections after Section 2 numbered 3/4/5 (Residual risk / Further work / Applicability)
-  - Test `foundation_assessment=True`: Section 3 present, remaining sections numbered 4/5/6
-  - Test `slope_stability=True` only: Section 2.4 heading is "Slope stability assessment" (no parent wrapper)
-  - Test `slope_stability=True` + `fault_rupture=True`: Section 2.4 heading is "Other geotechnical hazards" with subsections 2.4.1 and 2.4.2
-  - Test `foundation_assessment=True` + `ground_improvement=True`: ground improvement subsection present in Section 3
+  - Test default config (all flags disabled): all mandatory sections present, no conditional sections, sections after Section 2 numbered 3/4/5 (Residual risk / Further work / Applicability)
+  - Test `flags={"foundation_assessment": True}`: Section 3 present, remaining sections numbered 4/5/6
+  - Test `flags={"slope_stability": True}` only: Section 2.4 heading is "Slope stability assessment" (no parent wrapper)
+  - Test `flags={"slope_stability": True, "fault_rupture": True}`: Section 2.4 heading is "Other geotechnical hazards" with subsections 2.4.1 and 2.4.2
+  - Test `flags={"foundation_assessment": True, "ground_improvement": True}`: ground improvement subsection present in Section 3
   - Test Document Control version table has six mandatory columns
   - Test Geotechnical Model Table has six mandatory columns
   - Test appendix headings present in order A-D
@@ -55,7 +60,7 @@
 
 ### Implementation
 
-- [ ] T018 [Phase 1] Create `src/marker/functions/builders.py` with `build_sections(config: SkeletonConfig, facade: DocumentFacade)` function implementing:
+- [ ] T018 [Phase 1] Create `src/marker/functions/builders.py` with `build_sections(definition: ReportDefinition, config: SkeletonConfig, facade: DocumentFacade)` function implementing:
   - Mandatory front matter headings (Document control, Table of contents, Client summary)
   - Mandatory Section 1 with subsections
   - Mandatory Section 2 with subsections (including Geotechnical Model Table)
@@ -106,14 +111,14 @@
   - Test reopening the DOCX with `Document()` finds all mandatory headings in order
   - Test reopening the DOCX finds the Geotechnical Model Table with correct column headers
   - Test reopening the DOCX finds project metadata values in the document text
-  - Test with `foundation_assessment=True` produces correctly numbered sections
-  - Test with `foundation_assessment=False` produces renumbered sections (no gap)
+  - Test with `flags={"foundation_assessment": True}` produces correctly numbered sections
+  - Test with default flags (all disabled) produces renumbered sections (no gap)
 - [ ] T027 [Phase 3] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/marker/test_integration.py -v`
 
 ### Implementation
 
-- [ ] T028 [Phase 3] Add `build_skeleton(config, metadata, facade, path)` orchestrator to `src/marker/functions/builders.py`
-- [ ] T029 [P] [Phase 3] Update `src/marker/__init__.py` exports: expose `build_skeleton`, `SkeletonConfig`, `ProjectMetadata`, `PythonDocxFacade`
+- [ ] T028 [Phase 3] Add `build_skeleton(definition, config, metadata, facade, path)` orchestrator to `src/marker/functions/builders.py`
+- [ ] T029 [P] [Phase 3] Update `src/marker/__init__.py` exports: expose `build_skeleton`, `ReportDefinition`, `SkeletonConfig`, `ProjectMetadata`, `PythonDocxFacade`, `NZ_GIR`
 
 ### Acceptance Gate
 

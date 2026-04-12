@@ -277,8 +277,11 @@ noted for future consideration.
 | Item | Rationale for deferral |
 |------|----------------------|
 | **Feedback mechanism** | Design the feedback loop (diffing skeleton vs. author's edited version, or structured feedback table) after real skeletons are being used by real authors. Learn from observation, not speculation. |
-| **GFR skeleton** | Start with GIR only. Extend to GFR and other document types after the GIR skeleton is validated. |
-| **Multi-jurisdiction support** | Start with NZ standards and a single council. Expand jurisdiction coverage via the standards registry. |
+| **GFR skeleton** | Start with GIR only. Extend to GFR and other document types after the GIR skeleton is validated. The architecture's `ReportDefinition` model already supports this -- adding a report type means creating a new definition, not changing builder code. |
+| **Multi-jurisdiction support** | Start with NZ standards and a single council. The `ReportDefinition` model is parameterised by jurisdiction, so adding AU/US/UK support means adding new definitions. Expand jurisdiction coverage via the standards registry. |
+| **Multi-company conventions** | Start with sentence-case headings. The `ReportDefinition` includes a `heading_case` field so company-specific conventions (title case, sentence case, etc.) can be supported without changing the builder. |
+| **Jinja templating** | Phase 0-3 builds DOCX content programmatically via `python-docx`. Jinja-based template rendering (e.g., `python-docx-template`) may be introduced later for placeholder injection, but only if programmatic building proves insufficient. The facade protocol already allows swapping the engine. |
+| **Template merge strategy** | Phase 0-3 uses a "styles-only" strategy: company templates provide formatting styles, and the skeleton generator clears content and rebuilds from scratch. A "merge" strategy (preserving template content and injecting around it) is deferred until a concrete use case emerges. |
 | **Automated template learning** | Automatically learning company template structure from examples rather than manual template configuration. |
 
 ---
