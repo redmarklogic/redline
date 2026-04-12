@@ -71,16 +71,16 @@ the Word document and confirm:
 | #   | Criterion | Category | Verification | Step |
 |-----|-----------|----------|--------------|------|
 | AC1 | **Client Summary (default) or Executive Summary (only if LOE requests it)** is present as front matter. Client Summary is max 1 page, plain language, with placeholders for: LOE reference, report purpose, proposed works, cost/programme impacts, geotechnical risks, and further work statement. | Structure | Automated check on heading name; manual review of placeholder prompts. | 1 |
-| AC2 | **All mandatory GIR sections** are present, correctly numbered, in the standard order: Document Control, ToC, Client Summary, Sections 1--6, References, Appendices A--D. No mandatory section is missing. | Structure | Diff against the canonical section list. | 1 |
-| AC3 | **Conditional sections** (slope stability, fault rupture, ground improvement, foundation assessment) are included or excluded based on explicit rules tied to project scope, location, and infrastructure type. Liquefaction Assessment is mandatory for all NZ sites and is always included. The inclusion decision is logged. | Structure | Review processing log for inclusion/exclusion rationale. | 1 |
-| AC4 | **Geotechnical Model Table** in Section 2.1.4 is present as an empty table with mandatory column headers (Layer/Unit, Description, Depth, RL, Thickness, Typical Test Values). No text-only soil profile placeholder is used. | Structure | Automated check for table presence and header names. | 1 |
+| AC2 | **All mandatory GIR sections** are present, correctly numbered, in the standard order: Document control, ToC, Client summary, Sections 1--6 (renumbered sequentially when conditionals excluded), References, Appendices A--D. No mandatory section is missing. | Structure | Diff against the canonical section list. | 1 |
+| AC3 | **Conditional sections** (slope stability assessment, fault rupture hazard assessment, ground improvement, foundation assessment) are included or excluded based on explicit rules tied to project scope, location, and infrastructure type. Liquefaction assessment is mandatory for all NZ sites and is always included. The inclusion decision is logged. | Structure | Review processing log for inclusion/exclusion rationale. | 1 |
+| AC4 | **Geotechnical model table** in Section 2.1.4 is present as an empty table with mandatory column headers (Layer/Unit, Description, Depth, RL, Thickness, Typical Test Values). No text-only soil profile placeholder is used. | Structure | Automated check for table presence and header names. | 1 |
 | AC5 | **Project metadata** (project number, client name, site address, date, document naming per `[JobNo]-RPT-GT-[Element]-[Seq]`) is populated from the RFP/LOE. No `[INSERT X]` remains for data that existed in the inputs. | Metadata | Spot-check against source documents. | 2 |
 | AC6 | **Traceability matrix** maps every RFP/LOE deliverable to a report section. Unmapped deliverables are flagged. This matrix acts as the "touchstone" for the PD/PM skeleton review gate. | Traceability | Review matrix; verify no orphaned deliverables. | 3 |
 | AC7 | **Legal boilerplate** (Applicability section) contains all mandatory clauses: Exclusive Use (with client name, project scope, temporal boundary), Inferred Conditions, Observation Disclaimer. Council/Regulatory Authority clause is included when the RFP indicates a consent application. | Liability | Automated check for clause presence; manual review of tailoring. | 7 |
-| AC8 | **Residual Geotechnical Risk** section (Section 4) is present with a domain-specific placeholder prompt requiring the author to explicitly evaluate and articulate site-specific residual risks. No generic boilerplate is used for this section. | Liability | Read placeholder; confirm it requires project-specific risk articulation. | 8 |
+| AC8 | **Residual geotechnical risk** section is present with a domain-specific placeholder prompt requiring the author to explicitly evaluate and articulate site-specific residual risks. No generic boilerplate is used for this section. | Liability | Read placeholder; confirm it requires project-specific risk articulation. | 8 |
 | AC9 | **Section-specific placeholder questions** are present in every incomplete section. Questions are domain-specific (sourced from the standards registry and industry guidance), not generic `[TODO]`. Each question names the relevant standard and clause. | Content quality | Read placeholders in Sections 2 and 3; confirm they match the domain prompts from the Workflows notebook. | 8 |
 | AC10 | **Standards references** per section are present, citing specific clause numbers from NZS 3604, NZS 1170.5, NZGS guidelines, and applicable council requirements. Standards are sourced from the Standards Registry. | Compliance | Cross-check per-section standards against the registry. | 6 |
-| AC11 | **Formatting compliance**: Calibri 11pt body, Calibri Bold headings, sentence case headings, flush-left numbering, three-level bullet hierarchy (bullet/dash/hollow circle), NZ English spelling, one-space-before-units, labels above tables and below figures. | Style | Automated style check or manual review against structural checkpoints. | 0 |
+| AC11 | **Formatting compliance**: Calibri 11pt body, Calibri Bold headings, sentence case headings (only first word and proper nouns capitalised), flush-left numbering, three-level bullet hierarchy (bullet/dash/hollow circle), NZ English spelling, one-space-before-units, labels above tables and below figures. | Style | Automated style check or manual review against structural checkpoints. | 0 |
 | AC12 | **No structural defects**: No stacked headings (two consecutive headings without intervening text), no lone subdivisions, no widowed headings, no undefined acronyms. | Style | Automated or manual structural review. | 1 |
 | AC13 | **Appendix ordering** matches the order of first reference in the main text. If a separate GFR exists, appendices cross-reference the GFR rather than duplicating raw data. | Structure | Manual check of cross-references. | 1 |
 | AC14 | **Company Word template** (`.dotx`) is used as the base. Cover page, styles, and brand identity come from the template, not from generic formatting. | Template | Visual inspection. | 0 |
@@ -132,55 +132,62 @@ each builds on the output of the previous one.
 For the GIR document type, the following sections are **always included**:
 
 ```
-Document Control
-Table of Contents
-Client Summary  (use "Executive Summary" only if the LOE explicitly requests it)
+Document control
+Table of contents
+Client summary  (use "Executive summary" only if the LOE explicitly requests it)
 
 1   Introduction
-    1.1  Scope of Work  (always included by default)
-    1.2  Site Description
-    1.3  Proposed Development
+    1.1  Scope of work  (always included by default)
+    1.2  Site description
+    1.3  Proposed development
 
-2   Assessment and Interpretation of Site Conditions
-    2.1  Ground and Groundwater Conditions
-        2.1.1  Geology
-        2.1.2  Previous Investigations
-        2.1.3  Current Investigations
-        2.1.4  Geotechnical Model  [empty table: Layer/Unit | Description | Depth | RL | Thickness | Typical Test Values]
+2   Assessment and interpretation of site conditions
+    2.1  Ground and groundwater conditions
+        2.1.1  Geology and faulting
+        2.1.2  Previous geotechnical investigations
+        2.1.3  Current geotechnical investigations
+        2.1.4  Geotechnical model  [empty table: Layer/Unit | Description | Depth | RL | Thickness | Typical Test Values]
         2.1.5  Groundwater
-    2.2  Seismic Hazard
-        2.2.1  Seismic Site Subsoil Class
-        2.2.2  Ground Shaking Hazard
-    2.3  Liquefaction Assessment  (mandatory -- included for all NZ sites by default)
+    2.2  Seismic shaking hazard
+        2.2.1  Seismic site subsoil class
+        2.2.2  Ground shaking hazard
+    2.3  Liquefaction assessment  (mandatory -- included for all NZ sites by default)
 
-4   Residual Geotechnical Risk
-5   Further Work
-6   Applicability
+*   Residual geotechnical risk
+*   Further work
+*   Applicability
 
 References
 
 Appendices  (ordered by first reference in main text)
     Appendix A  Figures
-    Appendix B  Previous Investigations
-    Appendix C  Investigation Logs
-    Appendix D  Geotechnical Laboratory Test Results
+    Appendix B  Previous ground investigation results
+    Appendix C  Current geotechnical investigation logs
+    Appendix D  Geotechnical laboratory test results
 ```
+
+> **Numbering rule**: Sections after the conditional blocks renumber
+> sequentially -- no gaps are left when a conditional section (e.g.,
+> Section 3) is excluded. The enterprise Word template uses automated
+> multi-level list styles that cascade numbering when a heading is removed.
 
 **Conditional sections** (included based on scope/project type -- inclusion decision logged):
 
-- **Section 2.4: Other Geotechnical Hazards** -- auto-created as a parent H2 heading
-  when any of its child sections are enabled. Sub-sections inserted as H3 headings:
-  - 2.4.1  Slope Stability (when `slope_stability=True`)
-  - 2.4.2  Fault Rupture Hazard (when `fault_rupture=True`)
+- **Section 2.4: Other geotechnical hazards** -- auto-created as a parent H2 heading
+  when any of its child sections are enabled. Sub-sections inserted as H3 headings.
+  When only one hazard is assessed, the parent heading is renamed to the specific
+  hazard name (e.g., "Slope stability assessment"):
+  - 2.4.1  Slope stability assessment (when `slope_stability=True`)
+  - 2.4.2  Fault rupture hazard assessment (when `fault_rupture=True`)
   If neither child is enabled, the parent heading is omitted entirely.
-- **Section 2.5: Geotechnical Issues Identified** -- optional summary table.
-- **Section 3: Foundation Assessment** -- only when the LOE specifically requires foundation
+- **Section 2.5: Geotechnical issues identified** -- optional summary table.
+- **Section 3: Foundation assessment** -- only when the LOE specifically requires foundation
   design or engineering parameters (when `foundation_assessment=True`).
-  - 3.1  Foundation Options
-  - 3.2  Foundation Design Parameters
-  - 3.X  Ground Improvement (only when `ground_improvement=True` AND
+  - 3.1  Foundation options
+  - 3.2  Foundation pile design parameters
+  - 3.X  Ground improvement (only when `ground_improvement=True` AND
     `foundation_assessment=True` -- `ground_improvement` is ignored when
-    `foundation_assessment=False` because it is a child of Foundation Assessment)
+    `foundation_assessment=False` because it is a child of Foundation assessment)
 
 ---
 
