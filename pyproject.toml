@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 [project]
 name = "redline"
 version = "0.1.0"
-description = "Redline Tools"
+description = "Redline is an automated quality gate that prevents costly project write-offs by giving small and medium-sized engineering firms the rigorous, enterprise-grade commercial risk mitigation of a top-tier global consultancy"
 readme = "README.md"
 keywords = [ "python" ]
 authors = [
