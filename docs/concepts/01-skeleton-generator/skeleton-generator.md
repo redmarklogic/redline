@@ -47,6 +47,14 @@ intermediate or senior engineer can open and immediately start editing.
 The author's first action is **editing and validating**, not writing.
 The skeleton replaces the blank canvas.
 
+### The Strategic Role of the Skeleton
+
+In the standard geotechnical workflow, the skeleton must be generated *before* any desktop study or fieldwork begins. It serves three critical functions that this automated pipeline must replicate digitally:
+
+1. **Establishing the "Touchstone"**: The skeleton explicitly defines what the client is seeking (from the RFP/LOE). It acts as a master checklist detailing the exact requirements, ensuring that all subsequent research and fieldwork are tightly focused on answering the client's specific questions.
+2. **Inserting Placeholders and Prompts**: The skeleton actively guides the engineer by providing instructional prompts and bolded placeholder questions. These placeholders act as a roadmap, telling the engineer exactly what data they need to hunt for during the desktop study and site investigations.
+3. **The "Sense Check" Quality Gate**: The skeleton provides the structured plan that a Project Director (PD) or Project Manager (PM) reviews *before* heavy drafting or factual data population begins. This "sense check" prevents the massive structural rework that happens when an engineer dives straight into writing without a plan.
+
 ### Scope boundary
 
 This tool produces a **Phase 2 artifact** (skeleton creation) -- not a

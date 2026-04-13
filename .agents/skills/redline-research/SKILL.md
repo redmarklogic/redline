@@ -24,6 +24,7 @@ in `docs/research/<YYYYMMDD>-<snakecase title of research>.md`.
 | **Product Roadmapping** | Strategic product roadmapping for product leaders: defining vision, prioritising customer opportunities, and achieving stakeholder buy-in. Covers Kano model, MoSCoW prioritisation, ROI scorecards, user journey maps, and opportunity-solution trees | `https://notebooklm.google.com/notebook/dfb04e76-20c3-44c3-872f-eef2f6c04bb7` |
 | **Writing Painless Product and Functional Specifications** | Software product management frameworks and specification writing: PRDs, functional specifications, OKRs, the Shape Up framework, product discovery vs delivery, and alternatives to traditional roadmaps | `https://notebooklm.google.com/notebook/fb7cbc5c-1ff2-44cc-a61f-bfcdee4519fb` |
 | **Engineers' Guide to Technical Communication and Writing** | Technical writing and editing best practices for engineering and scientific audiences: document design, audience analysis, ethics, citation standards (Chicago Manual of Style), and structure for reports, proposals, laboratory studies, specifications, and business correspondence | `https://notebooklm.google.com/notebook/c611ced9-393d-45ef-bc66-f2be77fbbf0c` |
+| **Information Architecture and Knowledge Management** | Explores the strategic design and management of information systems to make organizational knowledge assets findable, understandable, and actionable. Covers foundational concepts of Information Architecture, Knowledge Architectures, and Knowledge Management. | `https://notebooklm.google.com/notebook/94521cd4-5a7e-49d4-9559-b002254f3e52` |
 
 ## Context & Guidelines
 
@@ -78,7 +79,7 @@ Before querying, decide which notebooks are relevant by topic area:
 - **Engineering theory and standards** → Engineering Standards, Ground Engineering Magazine
 - **Geotechnical domain** → Geotechnical Baseline Reports (GBR), Geotechnical Engineering Report Workflows and Standard Procedures, Risk Assessment in Engineering
 - **AI and software architecture** → AI System Engineering, Software Architecture & Domain-Driven Design
-- **Process and product** → Business Process Management, Product Roadmapping, Writing Painless Product and Functional Specifications
+- **Process and product** → Business Process Management, Product Roadmapping, Writing Painless Product and Functional Specifications, Information Architecture and Knowledge Management
 - **Communication and documentation** → Engineers' Guide to Technical Communication and Writing
 
 Query all notebooks that apply; skip one only when it is clearly out of scope.

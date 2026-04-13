@@ -29,6 +29,15 @@ Apply these rules whenever you add or refactor Python functions/methods in `src/
 - Prefer linear, readable code over clever decomposition.
 - Do not use `print` unless the user explicitly requests execution-time feedback.
 
+### Principle of Least Astonishment
+
+A function's behavior must match what its name and signature promise. A developer reading
+the call site should be able to predict the outcome without reading the implementation.
+
+- If a function named `get_user()` also writes an audit log, it violates the principle.
+- Provide safe, intuitive defaults. If non-obvious behavior is unavoidable, document it
+  explicitly in the docstring.
+
 ### Do One Thing (One Level of Abstraction)
 
 "Do one thing" is about abstraction level, not line count.
@@ -59,6 +68,27 @@ Examples: `update_user_account`, `calculate_gdp`, `is_testing`.
 - Never return multiple DataFrames from a single function (e.g., as a tuple). Split into separate
   functions, each returning one DataFrame.
 - Apply Pandera `@pa.check_types` only on public methods; never on private methods or classes.
+
+#### Parameter Objects
+
+When a group of parameters always travel together across multiple function signatures,
+bundle them into a dataclass or Pydantic model. This reduces parameter count, gives the
+group a name, and eliminates connascence of position (where callers must remember the
+exact argument order).
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True, slots=True)
+class GeotechParams:
+    depth_m: float
+    unit_weight_kn_m3: float
+    cohesion_kpa: float
+
+
+def calculate_bearing_capacity(params: GeotechParams) -> float: ...
+```
 
 ### Input Validation with `@validate_call`
 
@@ -98,6 +128,13 @@ In functions that operate on a DataFrame, pass the data through the first argume
 - If you need a cross-cutting toggle (e.g., quiet/verbose), use a module-level configuration
   value.
 - Do not use `None` as a pseudo-boolean.
+
+#### Avoid Pass-Through Functions
+
+A pass-through function does nothing except forward its arguments to another function
+with an identical or near-identical signature. This adds a new interface for developers
+to learn without adding any abstraction or value. If a function's entire body is a single
+delegating call, either inline it or give the wrapper a genuinely different abstraction level.
 
 #### Avoid Pass-Through Variables for Same-Module Constants
 
@@ -214,6 +251,42 @@ def _detect_temp_col(row: tuple) -> int | None:   # placed BELOW its caller
 For helper placement rules after extraction, and the step-down ordering that applies
 to every module in `src/`, see the `python-module-structure` skill.
 
+### Command-Query Separation (CQS)
+
+Prefer functions that are strictly either a **query** or a **command**, not both.
+
+- **Query**: returns data to the caller, produces no side effects. A caller can invoke it
+  freely without worrying about mutating state.
+- **Command**: performs an action or modifies state, returns `None`.
+
+This makes code dramatically easier to reason about. If you find yourself writing a function
+that both mutates state and returns a value, consider splitting it into two functions.
+
+**Pragmatic exceptions**: well-known Python idioms like `list.pop()` or `dict.setdefault()`
+combine query and command. Do not split these into two calls when the combined form is
+the universally understood idiom. CQS is a design *preference*, not an absolute rule --
+apply it when it improves clarity, not when it forces awkward code.
+
+Bad:
+
+```python
+def pop_next_task(queue: list[Task]) -> Task:
+    """Remove and return the next task."""
+    return queue.pop(0)  # query + command in one
+```
+
+Good:
+
+```python
+def peek_next_task(queue: list[Task]) -> Task:
+    """Return the next task without removing it."""
+    return queue[0]
+
+def remove_next_task(queue: list[Task]) -> None:
+    """Remove the next task from the queue."""
+    queue.pop(0)
+```
+
 ### Have No Side Effects
 
 Prefer functions with no side effects (pure functions). When side effects are necessary,
@@ -277,6 +350,52 @@ This separation enables:
 - Library code stays reusable (no hardcoded business rules)
 - Scripts compose primitives to express intent
 - Easy to add new scripts with different selections without changing library code
+
+### Temporal Coupling
+
+Temporal coupling occurs when functions must be called in a specific order but nothing
+in the code enforces that order. This creates hidden dependencies.
+
+**How to fix:**
+
+- Make each function accept the output of the previous step as an explicit input parameter.
+  If function B requires the result of function A, make that result a required argument to B.
+- Use pipeline composition: pass the output of one function directly into the next.
+
+Bad (hidden order dependency):
+
+```python
+def load_config() -> None:
+    global _config
+    _config = read_toml("config.toml")
+
+def process_data() -> Result:
+    return transform(_config)  # fails if load_config() not called first
+```
+
+Good (explicit dependency via parameter):
+
+```python
+def load_config() -> Config:
+    return read_toml("config.toml")
+
+def process_data(config: Config) -> Result:
+    return transform(config)
+```
+
+### Define Errors Out of Existence
+
+Before adding error handling to a function, consider whether you can redefine the
+function's semantics so that the "error" case is handled as part of normal behavior.
+
+- A function that returns an empty list for "no results" is simpler than one that
+  raises `NoResultsError`.
+- Reserve exceptions for unrecoverable system errors (file not found, network down)
+  and true programmer mistakes.
+- For expected domain-level failures, prefer returning `None` or a typed result
+  rather than raising.
+
+See also: the `python-error-handling` skill for the full exception policy.
 
 ### Anonymous Functions
 
