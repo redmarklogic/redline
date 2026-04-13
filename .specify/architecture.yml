@@ -1,0 +1,3 @@
+# Architecture decision recorded during spec-kit init
+layout: monorepo
+hub_package: rl

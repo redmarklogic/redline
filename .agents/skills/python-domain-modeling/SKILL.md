@@ -5,7 +5,10 @@ description: Domain modeling conventions (value objects, Pandera/Pydantic, DataF
 
 # Python Domain Modeling
 
-This skill defines how to model domain data in this repo.
+This skill defines **tactical DDD** conventions: how to implement domain objects in
+Python. For **strategic DDD** decisions (subdomain classification, bounded context
+identification, EventStorming, context maps), use the `spec-kit` skill's plan phase
+and `docs/architecture/domain-model.md`.
 
 ## Architectural stance
 
@@ -210,3 +213,119 @@ For baseline unit test conventions, use the `python-testing-unit` skill.
 ## Imports
 
 - When importing internal modules, do not include the `src` folder in the import path.
+
+## Subdomain classification
+
+Not every domain area needs full DDD treatment. Classify each subdomain before choosing
+tactical patterns:
+
+| Classification | Pattern choice                                      | Example                           |
+| -------------- | --------------------------------------------------- | --------------------------------- |
+| **Core**       | Full DDD: aggregates, domain events, rich model     | Geotechnical analysis engine      |
+| **Supporting** | Simpler: transaction scripts, thin domain layer     | Report formatting, data ingestion |
+| **Generic**    | Off-the-shelf libraries, no custom domain model     | Authentication, email delivery    |
+
+The `spec-kit` skill's plan phase includes a Domain Impact section where subdomain
+classification is recorded for each feature.
+
+## Modularity vs. layering
+
+Modularity and layering are orthogonal architectural tools that complement each other:
+
+- **Layering** enforces dependency direction *within* a component (higher layers depend
+  on lower layers, never the reverse). It answers: "who can import whom inside this
+  boundary?"
+- **Modularity** decomposes the system into independent, replaceable components at the
+  *package* level. It answers: "what are the independently evolvable units?"
+
+Each top-level package under `src/` is a modular component. Each component may apply its
+own internal layered architecture. The integration hub (`src/rl/`) composes the
+independent components but does not own them.
+
+For the full research and citations, see `docs/research/20260412-modularity-vs-layering.md`.
+
+## Bounded contexts
+
+A bounded context is a boundary within which a domain model is consistent and terms
+have a single meaning. In DDD, bounded contexts map to **top-level packages**, not
+subpackages:
+
+- Each bounded context gets its own top-level package under `src/`.
+- Bounded contexts must not import from each other directly. Use an
+  `independence` contract in `pyproject.toml` to enforce this.
+- The integration hub (`src/rl/`) may import from bounded context packages, but they
+  must not import from `rl` or from each other.
+
+### Deciding: new top-level package vs. subpackage
+
+Use this decision matrix when introducing a new capability:
+
+| # | Signal | New top-level package | Keep as subpackage |
+|---|--------|-----------------------|--------------------|
+| 1 | **Language boundary** | Introduces new domain vocabulary or existing terms take on different meanings | Intrinsic part of existing Ubiquitous Language |
+| 2 | **Conceptual cohesion** | Does not share data or concepts with existing package | Shares information and is frequently used together with existing code |
+| 3 | **General vs. special** | Existing package is general-purpose; new capability is special-purpose application | Combining simplifies the overall interface |
+| 4 | **Rate of change** | New capability changes at a different rate or for different reasons | Both change at similar rates for similar reasons |
+| 5 | **Future extraction** | May graduate to a standalone PyPI package | Will always live in this repo |
+
+If the majority of signals point to "new top-level package", create a sibling under
+`src/`. If signals are mixed or point to subpackage, add a subpackage to the existing
+package and update its layer contract.
+
+### Context mapping between packages
+
+When bounded context packages need to share domain concepts:
+
+- **Shared kernel**: A small, stable shared package (`src/<shared>/`) that both contexts
+  import. Acceptable in this repo because all code is deployed together and retest cost
+  is minimal. Use for highly stable types shared across multiple contexts.
+- **Anti-Corruption Layer**: A translation layer built by the consuming context. Use
+  when the upstream model is volatile or when protecting a Core Domain from foreign
+  concepts.
+- **Duplication**: Accept that the same real-world concept means something slightly
+  different in each context and model it separately. Use when the concept genuinely
+  diverges across contexts.
+
+**Monorepo tradeoff**: In a monorepo with single-command deployment and minimal
+compilation time, the "retested and redeployed" argument against shared packages does
+not apply. A shared kernel is a reasonable default when types are stable and genuinely
+identical across contexts.
+
+See `.agents/skills/spec-kit/references/import-linter.md` for contract examples.
+
+## Ubiquitous Language
+
+Domain terms must be used consistently in code, docs, and conversation:
+
+- Class names, method names, and variable names use domain terms, not technical terms.
+- New domain terms introduced during planning should be added to
+  `docs/architecture/domain-model.md` under the Ubiquitous Language section.
+- When domain terms conflict with Python builtins or stdlib names (e.g., `statistics`),
+  suppress `A005` and document the reason inline.
+
+## Multi-package layout
+
+This repo contains multiple top-level packages under `src/`, one per bounded context:
+
+- `src/rl/` -- integration hub (thin orchestrator that composes tools)
+- Additional packages (e.g., `src/skeleton/`, `src/reviewer/`) are added as sibling
+  top-level packages when a new bounded context is identified.
+
+When adding a new top-level package:
+
+1. Add it to `root_packages` in the import-linter config.
+2. Create its own layer contracts (if it has internal layers).
+3. Add an `independence` contract between it and other bounded context packages.
+4. Add it to `build.targets.wheel.packages` in `pyproject.toml`.
+
+See the import-linter reference for details.
+
+## Layer enforcement
+
+Import-linter contracts in `pyproject.toml` enforce the dependency direction at the
+module level. When adding a new subpackage under an `exhaustive = true` container:
+
+1. Add it to the `layers` list in the corresponding contract.
+2. Or add it to `exhaustive_ignores` if it is cross-cutting.
+
+See `.agents/skills/spec-kit/references/import-linter.md` for the full reference.

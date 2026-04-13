@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 [project]
 name = "redline"
 version = "0.1.0"
-description = "Redline Tools"
+description = "Redline is an automated quality gate that prevents costly project write-offs by giving small and medium-sized engineering firms the rigorous, enterprise-grade commercial risk mitigation of a top-tier global consultancy"
 readme = "README.md"
 keywords = [ "python" ]
 authors = [
@@ -60,7 +60,7 @@ lint.per-file-ignores."tests/**" = [ "INP" ]
 
 [tool.codespell]
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
-ignore-words-list = [ "bund", "bunds", "linz", "superseeded", "te" ]
+ignore-words-list = [ "ags", "bund", "bunds", "fulfilment", "gir", "linz", "sme", "superseeded", "te" ]
 
 [tool.deptry]
 ignore_notebooks = false
@@ -95,7 +95,7 @@ root_packages = [ "rl" ]
 [[tool.importlinter.contracts]]
 name = "rl layers"
 type = "layers"
-layers = [ "calculators", "functions", "schemas", "enrichment", "domain" ]
+layers = [ "functions", "schemas", "domain" ]
 containers = [ "rl" ]
 exhaustive = true
 

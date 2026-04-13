@@ -1,0 +1,35 @@
+schema_version: "1.0"
+
+preset:
+  id: "redline"
+  name: "Redline Project Preset"
+  version: "1.0.0"
+  description: "RICE scoring, MoSCoW, Domain Impact, and vertical slice sizing for specs/plans/tasks."
+
+requires:
+  speckit_version: ">=0.1.0"
+
+provides:
+  templates:
+    - type: "template"
+      name: "spec-template"
+      file: "templates/spec-template.md"
+      description: "Spec template with RICE scoring for scenario prioritisation"
+      replaces: "spec-template"
+
+    - type: "template"
+      name: "plan-template"
+      file: "templates/plan-template.md"
+      description: "Plan template with pre-filled tech context, MoSCoW, and Domain Impact"
+      replaces: "plan-template"
+
+    - type: "template"
+      name: "tasks-template"
+      file: "templates/tasks-template.md"
+      description: "Tasks template with vertical slice sizing"
+      replaces: "tasks-template"
+
+tags:
+  - "geotechnical"
+  - "ddd"
+  - "rice-scoring"

@@ -138,15 +138,18 @@ def read_text(path: str) -> str:
         return handle.read()
 ```
 
-### Pure Library Code (No CLI Output)
+### No CLI Output in Library Code
 
 Library code under `src/<package>/` must not call `print()` or CLI formatting tools (like `ruru.cli.bullets`).
 
 **Rule:**
 
-- Library classes and functions **return data**; they do not display it.
+- Library functions **return data**; they do not display it.
 - Scripts under `src/scripts/` handle all user-facing output (printing, CLI formatting, progress bars).
 - Exception: Proper logging via `logging` module is acceptable in library code.
+- This rule targets **presentation** side effects (stdout, CLI formatting), not all
+  side effects. Library code that writes to files or databases (e.g., a Repository)
+  is fine -- it is the *intended* purpose of those classes.
 
 Good (library returns data):
 
@@ -234,6 +237,99 @@ def traced(func: Callable[P, R]) -> Callable[P, R]:
 
 Keep concurrency at the boundary; keep the core logic pure and testable.
 
+### Strategy pattern (function-based)
+
+When a function contains branching logic (`if/elif`) to select different algorithms,
+consider the Strategy pattern. In Python, you rarely need a class hierarchy for this --
+pass a callable (a first-class function) as a parameter instead.
+
+Bad (branching on a flag):
+
+```python
+def calculate_pressure(method: str, depth: float) -> float:
+    if method == "rankine":
+        return _rankine(depth)
+    elif method == "coulomb":
+        return _coulomb(depth)
+    ...
+```
+
+Good (strategy as a callable):
+
+```python
+from collections.abc import Callable
+
+PressureStrategy = Callable[[float], float]
+
+def calculate_pressure(strategy: PressureStrategy, depth: float) -> float:
+    return strategy(depth)
+
+# Caller picks the strategy
+result = calculate_pressure(_rankine, depth=5.0)
+```
+
+### Functional core, imperative shell
+
+Separate your code into two layers:
+
+- **Functional core**: pure functions that contain business logic and decision-making.
+  They depend only on the data passed in and produce no side effects. This core is
+  fast to test without mocks or I/O setup.
+- **Imperative shell**: thin orchestration that gathers inputs from the outside world
+  (files, databases, APIs), feeds them into the functional core, and applies the
+  resulting outputs (writes, network calls).
+
+This is the Python translation of the Onion / Hexagonal architecture. The critical
+rule is **dependency direction**: the shell depends on the core, but the core knows
+nothing about the shell.
+
+```python
+# Core (pure)
+def classify_soil(plasticity_index: float, liquid_limit: float) -> str:
+    if plasticity_index > 7 and liquid_limit > 50:
+        return "CH"
+    return "CL"
+
+# Shell (I/O)
+def run_classification(input_path: Path, output_path: Path) -> None:
+    data = pd.read_csv(input_path)
+    data["classification"] = data.apply(
+        lambda row: classify_soil(row["pi"], row["ll"]), axis=1
+    )
+    data.to_csv(output_path, index=False)
+```
+
+### Repository pattern (protocol-based)
+
+When domain logic needs to read or write persistent data, abstract the data access
+behind a `Protocol` interface. The domain code calls `repository.get()` or
+`repository.add()` without knowing whether the backing store is a database, a file,
+or an in-memory dict.
+
+This pattern makes domain logic trivially testable -- swap the real repository for
+a fake in-memory one in tests.
+
+```python
+from typing import Protocol
+
+
+class BoreholeRepository(Protocol):
+    def get(self, borehole_id: str) -> Borehole: ...
+    def add(self, borehole: Borehole) -> None: ...
+
+
+class InMemoryBoreholeRepository:
+    """Fake for tests."""
+    def __init__(self) -> None:
+        self._store: dict[str, Borehole] = {}
+
+    def get(self, borehole_id: str) -> Borehole:
+        return self._store[borehole_id]
+
+    def add(self, borehole: Borehole) -> None:
+        self._store[borehole.id] = borehole
+```
+
 ### Matplotlib: use mathtext for chemical/subscript notation
 
 DejaVu Sans (matplotlib's default font) lacks Unicode subscript characters such as
@@ -266,5 +362,9 @@ GAS_LABELS_PLOT = {"ch4": r"$\mathrm{CH_4}$", "n2o": r"$\mathrm{N_2O}$"}  # matp
 - Hidden side effects in imports
 - Bare `except:` or swallowing exceptions
 - Overly clever one-liners that obscure intent
+- **Connascence of meaning**: relying on magic values (`1` for True, `"A"` for active)
+  instead of named constants or enums
+- **Connascence of position**: fragile tuple unpacking or positional-only arguments
+  where keyword arguments would be clearer
 
 (For the repo-specific rules and lint constraints, use the `python-style` and `python-linting` skills.)

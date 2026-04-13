@@ -17,7 +17,7 @@ Apply these rules when writing or updating tests under `tests/`.
 
 **Test behavior, not implementation.** Tests should verify that code works correctly, not how it achieves that. If you refactor internal logic while preserving external behavior, tests should still pass.
 
-This approach prevents the **Fragile Test Problem**, where tests break every time code is refactored, turning the test suite from an asset into a burden. By focusing on observable behavior (outputs, state changes, exceptions) rather than internal mechanics (which private methods are called, in what order), you ensure tests enable refactoring rather than hinder it.
+This approach prevents the **Fragile Test Problem** (also called "change detector tests"), where tests break every time code is refactored, turning the test suite from an asset into a burden. By focusing on observable behavior (outputs, state changes, exceptions) rather than internal mechanics (which private methods are called, in what order), you ensure tests enable refactoring rather than hinder it.
 
 ### Testing Styles
 
@@ -25,16 +25,32 @@ This approach prevents the **Fragile Test Problem**, where tests break every tim
 
 **Interaction-based testing (Mockist approach)**: Verify that specific methods were called with specific arguments. Use this sparingly and only for external boundaries (APIs, databases, file I/O). Overusing this style couples tests to implementation and makes refactoring painful.
 
+**Mixed-layer testing**: Execute the real system where possible and verify end state through the public API rather than mocking internal layers. This tests true behavior, is less fragile, and can run faster than mock-heavy tests.
+
 ### Core Rules
 
 - Use pytest.
-- Prefer the arrange / act / assert structure.
+- Prefer the arrange / act / assert structure (equivalent to given / when / then from BDD).
 - Keep assertions at the end of the test; split tests if needed.
+- Never interleave actions and assertions (e.g. arrange-assert-act-assert). Each test validates exactly one behavior.
 - **Test essential functionality only** — one test per function/method is often sufficient.
 - **Avoid over-testing parameter variations** — don't test every possible input combination unless they represent distinct behavioral paths.
 - **Mock only external dependencies** — APIs, file I/O, databases, third-party services. Follow the principle: **"Don't mock what you don't own."** Don't mock internal functions unless necessary.
 - **Verify outcomes, not method calls** — prefer state-based testing (assert on return values and state changes) over interaction-based testing (verifying which internal methods were called).
 - **Use clear, concise test function names** in preference to docstrings or comments. Always avoid "block" comments e.g. `# ---------` to separate sections to preface before a function. Using `# Arrange`, `# Act`, `# Assert` is good practice within functions.
+- **Tests must be independent and deterministic** — no test should depend on the run order or state left behind by another test. Consider using `pytest-randomly` to detect hidden dependencies.
+
+## Test Strategy
+
+Prioritize what to test using this framework:
+
+- **Recent**: Newly added, repaired, or refactored code
+- **Core**: The application's essential functions (unique selling propositions)
+- **Risk**: Important areas relying on third-party code or rarely exercised by the team
+- **Problematic**: Code that frequently breaks or generates defect reports
+- **Expertise**: Features understood by only a limited subset of people
+
+Avoid writing tests merely to achieve 100% code coverage — this wastes development time and masks unused code.
 
 ## What to Test
 
@@ -42,8 +58,10 @@ This approach prevents the **Fragile Test Problem**, where tests break every tim
 
 - **Core functionality works** — the function/method produces expected outputs
 - **State changes correctly** — objects are modified as expected
-- **Error handling works** — exceptions are raised when appropriate
-- **Integration points work** — external dependencies are called (via mocks)
+- **Error handling works** — exceptions are raised when appropriate (use `pytest.raises()` with `match` for error message validation)
+- **Different starting states** — e.g. empty vs. populated inputs, default vs. custom config
+- **All possible error states** — not just the happy path
+- **Integration points work** — external dependencies produce the expected result when called (mock the boundary, assert on the returned outcome)
 
 ### DON'T Test
 
@@ -56,10 +74,41 @@ This approach prevents the **Fragile Test Problem**, where tests break every tim
 
 ## Procedure
 
-1. Select a concise test function name, avoiding verbose docstrings and comments unless absolutely needed for clarity.
-2. Arrange inputs and fixtures.
-3. Act by calling the function under test.
-4. Assert results at the end.
+1. Start with a non-trivial "happy path" test case — a scenario where the user does everything right and no errors occur.
+2. Select a concise test function name; avoid verbose docstrings and comments unless absolutely needed for clarity.
+3. Arrange inputs and fixtures (push complex setup into fixtures, keep the test body minimal).
+4. Act by calling the function under test.
+5. Assert results at the end (all assertions grouped together, never interleaved with further actions).
+6. Add additional test cases for: interesting starting states, boundary values, and all possible error states.
+
+## Test Case Generation Strategy
+
+When creating tests for a feature, follow this sequence:
+
+1. **Happy path first**: A non-trivial success scenario with representative inputs.
+2. **Different starting states**: e.g. empty vs. populated, default config vs. custom flags enabled.
+3. **Boundary values**: Edges where behavior changes (0, -1, empty list, max values).
+4. **Error states**: All exception paths, invalid inputs, missing data.
+5. **Interesting end states**: e.g. verifying a deletion leaves an empty result, or a conditional toggle changes output structure.
+
+## Fixture Best Practices
+
+- **Define shared fixtures in `conftest.py`** — pytest auto-discovers them; never explicitly import `conftest.py`.
+- **Prefer a single top-level `conftest.py`** — only add subdirectory `conftest.py` files when fixtures are genuinely specific to a sub-package.
+- **Fixtures local to one test file** may be defined directly in that test module.
+- **Use `yield` for teardown** — code before `yield` is setup; code after is guaranteed cleanup (runs even if the test fails).
+- **Use fixture scope wisely** — default `function` scope is safest for isolation. Only widen to `module`/`session` for expensive setup (e.g. database connections). Combine with a narrow-scope fixture that resets state per test to maintain isolation.
+- **Avoid `autouse=True`** unless the fixture must run for every test in scope (e.g. timing hooks). Prefer explicit fixture injection.
+- **Use `@pytest.mark.usefixtures` for side-effect-only fixtures** — fixtures that patch or configure but return no value the test body references. Never inject them as function parameters (triggers ARG001/ARG002).
+
+## Markers
+
+- **`@pytest.mark.skip(reason="...")`** — bypass a test entirely; always provide a `reason`.
+- **`@pytest.mark.skipif(condition, reason="...")`** — skip conditionally (e.g. platform-specific).
+- **`@pytest.mark.xfail(reason="...", strict=True)`** — mark a test as expected to fail. Use `strict=True` so unexpected passes are reported as failures.
+- **When to use `xfail`**: TDD (mark unimplemented features), tracking known defects.
+- **When NOT to use `skip`/`xfail`**: Do not use for brainstorming future behaviors — this violates YAGNI.
+- **Register custom markers** in `pyproject.toml` under `[tool.pytest.ini_options]` and use `--strict-markers` to catch typos.
 
 ## Examples
 
@@ -67,7 +116,6 @@ This approach prevents the **Fragile Test Problem**, where tests break every tim
 
 ```python
 def test_build_report_works() -> None:
-    """Test that build_report creates a report with expected data."""
     data = {"metric": 42}
 
     result = build_report(data)
@@ -111,7 +159,6 @@ def test_process_data_works() -> None:
 ```python
 # Mock only external dependencies
 def test_fetch_user_data_works(mocker) -> None:
-    """Test that fetch_user_data retrieves data from API."""
     mock_http = mocker.patch("module.requests.get")
     mock_http.return_value.json.return_value = {"name": "Alice"}
 
@@ -127,6 +174,7 @@ Write multiple tests for the same function only when:
 1. **Distinct behavioral paths exist** — success vs. error cases
 2. **Edge cases are critical** — empty inputs, boundary values, special states
 3. **Multiple integration points** — different external dependencies
+4. **Different starting states** — e.g. empty database vs. populated database produce fundamentally different behavior
 
 ### Example: Multiple Tests Justified
 
@@ -241,7 +289,7 @@ If every test in a class needs the same side-effect fixture, put `@pytest.mark.u
 
 Mock only code at the boundaries of your system:
 
-✅ **Good candidates for mocking:**
+**Good candidates for mocking:**
 
 - HTTP clients (requests, httpx)
 - Database connections (SQLAlchemy sessions)
@@ -249,11 +297,42 @@ Mock only code at the boundaries of your system:
 - External APIs (Stripe, SendGrid, AWS SDK)
 - Time/random functions (time.time, random.randint)
 
-❌ **Bad candidates for mocking:**
+**Bad candidates for mocking:**
 
-- Your own internal functions
+- Your own internal functions (but protocol-based architectural boundaries like `DocumentFacade` are NOT internal functions — they are deliberate abstraction seams suitable for recording fakes)
 - Domain model methods
 - Business logic
+
+### Always Use `autospec=True`
+
+When creating mocks, always use `autospec=True` to bind the mock to the real object's specification. Without it, mocks silently accept misspelled method names or invalid parameters (mock drift). The only exception is objects that dynamically add attributes at runtime.
+
+```python
+# Good: autospec catches interface mismatches
+mock_service = mocker.patch("module.MyService", autospec=True)
+
+# Bad: silent acceptance of any method name or argument
+mock_service = mocker.patch("module.MyService")
+```
+
+### Prefer `monkeypatch` for Simple Substitutions
+
+Use the built-in `monkeypatch` fixture for environment variables (`monkeypatch.setenv`), simple attribute replacement (`monkeypatch.setattr`), and dictionary patching (`monkeypatch.setitem`). Reserve `mocker.patch` for when you need return value configuration or call tracking.
+
+### Test Doubles for Protocol-Based Design
+
+When testing code that depends on a protocol (e.g. `DocumentFacade`), prefer a purpose-built recording fake over generic mocking. A recording fake (sometimes called a "spy" or "fake") implements the protocol and captures calls for later assertion. This approach tests behavior without coupling to mock library internals.
+
+```python
+class RecordingFacade:
+    """Captures all facade method calls for assertion."""
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, tuple, dict]] = []
+
+    def add_heading(self, text: str, *, level: int) -> None:
+        self.calls.append(("add_heading", (text,), {"level": level}))
+    # ... other protocol methods
+```
 
 ### Example: Proper Mocking Boundary
 
@@ -289,11 +368,24 @@ class TestCalculateDiscount:
 def test_calculate_discount_applies_percentage() -> None:
     """Test that calculate_discount applies the percentage correctly."""
     ...
-
-# Bad: using block comments to separate sections before a function
-# ---------
-# Test that calculate_discount applies the percentage correctly.
-# ---------
-def test_calculate_discount_applies_percentage() -> None:
-    ...
 ```
+
+## Built-in Fixtures
+
+Use these before reaching for third-party tools:
+
+- **`tmp_path`** (function scope): fresh temporary directory as `pathlib.Path`. Use for any test that writes files.
+- **`tmp_path_factory`** (session scope): call `.mktemp("name")` to create directories shared across tests.
+- **`capsys`**: capture `stdout`/`stderr`. Call `capsys.readouterr()` to get `.out` and `.err` strings.
+- **`monkeypatch`**: dynamic runtime substitution (environment variables, attributes, dict items). Automatically undone after the test.
+
+## Anti-Patterns
+
+| Anti-Pattern | Why It Hurts |
+| --- | --- |
+| **Change detector tests** | Over-mocking tests implementation, not behavior. Breaks on valid refactors. |
+| **Mock drift** | Forgetting `autospec=True` lets mocks accept invalid calls silently. |
+| **Coverage-driven tests** | Adding meaningless tests for 100% coverage masks unused code. |
+| **Duplicate test names** | Python silently ignores the first function — hidden gaps in the suite. |
+| **Interleaved assertions** | Arrange-Assert-Act-Assert obscures intent and makes failures hard to diagnose. |
+| **Testing only happy paths** | Ignoring error states, empty inputs, and boundary values leaves bugs hiding at the edges. |

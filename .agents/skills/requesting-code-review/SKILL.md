@@ -81,8 +81,8 @@ You: [Fix progress indicators]
 - Catch issues before they compound
 - Fix before moving to next task
 
-**Executing Plans:**
-- Review after each batch (3 tasks)
+**Spec-Kit Implement Phase:**
+- Review after each batch of tasks
 - Get feedback, apply, continue
 
 **Ad-Hoc Development:**

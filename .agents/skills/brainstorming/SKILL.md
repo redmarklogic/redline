@@ -26,10 +26,10 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md` and commit
+6. **Write design doc** — save to `specs/YYYY-MM-DD-<topic>-design.md` and commit
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+9. **Transition to implementation** — invoke spec-kit skill to create specification and implementation plan
 
 ## Process Flow
 
@@ -45,7 +45,7 @@ digraph brainstorming {
     "Write design doc" [shape=box];
     "Spec self-review\n(fix inline)" [shape=box];
     "User reviews spec?" [shape=diamond];
-    "Invoke writing-plans skill" [shape=doublecircle];
+    "Invoke spec-kit skill" [shape=doublecircle];
 
     "Explore project context" -> "Visual questions ahead?";
     "Visual questions ahead?" -> "Offer Visual Companion\n(own message, no other content)" [label="yes"];
@@ -59,11 +59,47 @@ digraph brainstorming {
     "Write design doc" -> "Spec self-review\n(fix inline)";
     "Spec self-review\n(fix inline)" -> "User reviews spec?";
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
+    "User reviews spec?" -> "Invoke spec-kit skill" [label="approved"];
 }
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**The terminal state is invoking spec-kit.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is spec-kit.
+
+## Concept Doc Review Path
+
+When the user provides a pre-written concept doc or design doc rather than
+describing a feature from scratch, skip the full Q&A loop but DO run a focused
+ambiguity review before transitioning to spec-kit.
+
+**When to use**: The user says "create a plan for [concept doc]" or references an
+existing `.md` file that already contains a design.
+
+**Steps**:
+
+1. **Read the concept doc** in full. Identify the scope, acceptance criteria,
+   architecture, and any open questions the doc itself flags.
+
+2. **Ask 3-5 targeted clarifying questions** about ambiguities, contradictions, or
+   underspecified areas. Focus on things that would block implementation:
+   - Naming conventions that appear in two forms
+   - Conditional logic without explicit rules (e.g., "include when relevant")
+   - Numbering or ordering gaps
+   - Interaction rules between flags/options
+   - Scope boundaries that are implied but not stated
+
+3. **Do NOT ask about things the concept doc explicitly defers** (open questions
+   the doc already acknowledges). Those are known unknowns.
+
+4. **Present a brief summary** of what you understood and what you resolved from
+   the Q&A, then transition to spec-kit.
+
+This path replaces steps 3-5 of the full checklist (Ask clarifying questions,
+Propose approaches, Present design). Steps 1-2 (Explore context, Visual companion)
+and steps 6-9 (Write doc, Review, Transition) still apply.
+
+**Anti-pattern**: Skipping the concept doc review entirely because "the design
+already exists." Even validated concept docs contain ambiguities that surface
+during planning -- the review catches them cheaply.
 
 ## The Process
 
@@ -108,7 +144,7 @@ digraph brainstorming {
 
 **Documentation:**
 
-- Write the validated design (spec) to `docs/specs/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design (spec) to `specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
@@ -132,8 +168,8 @@ Wait for the user's response. If they request changes, make them and re-run the 
 
 **Implementation:**
 
-- Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
+- Invoke the spec-kit skill to create a specification and implementation plan
+- Do NOT invoke any other skill. spec-kit is the next step.
 
 ## Key Principles
 
