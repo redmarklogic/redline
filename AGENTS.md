@@ -87,22 +87,19 @@ Two named personas. Invoke by name. Neither writes code — output restricted to
 before any artifact is produced.
 
 - **Ron** (`ron.agent.md`): Strategy & GTM Advisor. Vision, strategic bets, OKRs, positioning,
-  GTM motion. Has privileged access to the Founder Memos NotebookLM notebook. Every session
-  starts with a notebook query. Invoke: "Ron, [request]"
-  Skills: `pm-product-strategist`, `pm-structural-integrity-auditor`
+  GTM motion. Advisory Board access unlocks the Founder Memos notebook via `redline-research`.
+  Invoke: "Ron, [request]"
 
 - **Mark** (`mark.agent.md`): Principal Product Manager. Problem framing, hypotheses, PRDs,
-  decision architecture. Every PRD must reference a Ron-defined strategic bet. Invoke:
-  "Mark, [request]"
-  Skills: `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`,
-  `pm-decision-architect`, `pm-structural-integrity-auditor`
+  decision architecture. Every PRD must reference a Ron-defined strategic bet.
+  Invoke: "Mark, [request]"
 
 **Handoff chain (non-negotiable):**
 Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
-**Output directory:** `docs/product/` (strategy/, bets.md, okrs/, positioning.md, gtm/,
+**Output directory:** `docs/product/` (strategy/, strategic-bets.md, okrs/, positioning.md, gtm/,
 hypotheses/, initiatives/, prds/, problems/, decisions/)
 
 ### Redline Project Research

@@ -63,20 +63,6 @@ Lean-Product-Canvas (initiative structure — handled by separate agent)
 
 ---
 
-## Skill Map
-
-| Strategy Layer | Skill Invoked | When |
-|---|---|---|
-| Customer signal → structured insight | `Research-Synthesizer` | If raw research exists in `docs/product/resources/` |
-| User context | `Persona-Builder` | Before running JTBD — ensures job executor is grounded |
-| JTBD analysis | `JTBD-Mapper` | Always in Mode 1 — produces `docs/product/strategy/jtbd.md` |
-| Opportunity mapping | `Opportunity-Tree` | Always in Mode 2 — produces `docs/product/strategy/opportunity-tree.md` |
-| Opportunity ranking | `Priority-Stack` | When 4+ opportunities exist and ranking needs explicit criteria |
-| Goal-setting | `OKR-Partner` | Always in Mode 3 — sharpens outcomes per bet |
-| Decision escalation | `Decision-Architect` | When opportunity choice cannot be resolved by ranking alone |
-
----
-
 ## Activation Modes
 
 ### Mode 1: Job Definition (JTBD)
