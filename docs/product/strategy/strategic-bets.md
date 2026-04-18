@@ -1,4 +1,4 @@
-# Strategic Bets — H1 2026
+# Strategic Bets — H2 2026
 
 **Status**: Draft v2. **Owner**: Ron. **Period**: 2026-06-01 → 2026-11-30.
 
@@ -29,7 +29,7 @@ quota-exhausted user is $0.10–$1.
 **Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email signups OR
 fewer than 5% of quota-exhausted users respond to outbound. Either kills the wedge.
 
-**OKR ladder**: `okrs/2026-h1.md` → KR1 (signups), KR3 (signup-to-paid conversion).
+**OKR ladder**: `okrs/2026-h2.md` → KR1 (signups), KR3 (signup-to-paid conversion).
 
 ---
 
@@ -125,7 +125,7 @@ that threshold trips for NZ + AU geotech, every cross-segment opportunity dilute
 reference base that mainstream pragmatists demand. Adjacent segments come later via the
 *bowling pin* path (Moore): expand from geotech-NZ-AU into either (a) AU adjacent
 disciplines that share the same firms, or (b) a third geography that shares NZ/AU
-standards heritage. Both paths are Phase-2 conversations, not H1.
+standards heritage. Both paths are Phase-2 conversations, not H2.
 
 **Kill criterion**: A non-NZ/AU prospect signs an LOI worth ≥ $50k ARR before Sprint 6.
 At that point, re-evaluate. Until then, decline the geography.

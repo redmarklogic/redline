@@ -128,7 +128,7 @@ generated" CTA. That sequences the demo to a moment of high intent.
 
 ## Mark Handoff (Required Reading)
 
-This is the explicit handoff that closes Ron's H1 strategy pass:
+This is the explicit handoff that closes Ron's H2 strategy pass:
 
 1. **Framework custody.** Per-feature prioritisation is now Mark-owned. Load
    `pm-prioritization` skill before re-scoring this backlog or scoring any new

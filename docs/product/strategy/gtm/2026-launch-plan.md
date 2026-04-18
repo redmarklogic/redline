@@ -1,4 +1,4 @@
-# GTM — 2026 H1 Launch Plan
+# GTM — 2026 H2 Launch Plan
 
 **Status**: Draft v2. **Owner**: Ron. **Period**: Jun 1 → Nov 30, 2026.
 
@@ -10,7 +10,7 @@ proceed on personal time. All GTM clocks start June 1.
 ## Motion
 
 Single Product-Led Growth funnel with a Business expansion path. No enterprise
-sales motion. NZ + AU only. No paid acquisition spend in H1.
+sales motion. NZ + AU only. No paid acquisition spend in H2.
 
 ```
 Free Skeleton Generator (web upload → SSO-gated download, quota-capped)
@@ -43,7 +43,7 @@ email submission — users do not send anything to a Redline mailbox.
 | Discovery | Founder-led 30-minute call | Founder | KR2: 15 qualified conversations in 90 days |
 | Conversion | Pro trial → paid subscription | Founder + product | KR3: 5 paid OR 2 LOIs in 90 days |
 | Retention | Active in second billing cycle | Product | KR4: ≥ 60% second-cycle retention |
-| Expansion | Pro user requests Business tier for firm | Product (Justification Email Generator) | Tracked, not a KR in H1 |
+| Expansion | Pro user requests Business tier for firm | Product (Justification Email Generator) | Tracked, not a KR in H2 |
 
 ## Channel Plan
 
@@ -58,11 +58,11 @@ chapters, AGS branches), plus referrals from quota-exhausted users.
 specifies a Carbary *Content-Based Networking* hack: invite them to be interviewed
 for a piece of content rather than pitching them.
 
-**Why no paid in H1**: Bet 1 is "free wedge beats paid acquisition". Spending on Google
+**Why no paid in H2**: Bet 1 is "free wedge beats paid acquisition". Spending on Google
 Ads while the free wedge converts at unknown rate conflates two experiments and
 forfeits the falsification value of the bet.
 
-**Channels considered and rejected (or deferred) for H1:**
+**Channels considered and rejected (or deferred) for H2:**
 
 - **Reddit — rejected as a channel for the ICP.** r/civilengineering and r/geotech
   exist but are dominated by students, US-centric career questions, and memes — not
@@ -72,17 +72,17 @@ forfeits the falsification value of the bet.
   for adjacent personas (e.g. junior engineers in study programmes) at H2 strategy
   refresh, but not for the Day-1 ICP.
 - **Google Ads — deferred to H2.** Founder raised re-opening this in 2026-04-18 review.
-  Holding to the original commitment for H1 (non-goal #3): Bet 1 must produce a
+  Holding to the original commitment for H2 (non-goal #3): Bet 1 must produce a
   falsifiable organic CAC before we add paid as a second variable. If Bet 1 trips its
   kill criterion (KR1 < 50 signups in 60 days), paid acquisition becomes the recovery
   path — see P-016 and the new P-021 entry.
 - **Geographic expansion via paid Reddit/Google in AU/UK/CA — not needed.** LinkedIn is
   global; the founder LinkedIn channel reaches AU/UK/CA practitioners at zero marginal
-  cost. Adding paid English-speaking-market channels in H1 is premature.
+  cost. Adding paid English-speaking-market channels in H2 is premature.
 
 **Product-Led SEO (Schwartz) — deferred to H2**: The Skeleton Generator is
 structurally compatible with the Product-Led SEO pattern (a *product*, not blog posts,
-as the SEO surface). Not committed in H1 — patience requirement conflicts with KR1's
+as the SEO surface). Not committed in H2 — patience requirement conflicts with KR1's
 60-day window, and customer-document privacy bleeds into a zero-publication default.
 Logged under `decisions/parked-decisions.md` P-019.
 
@@ -93,9 +93,9 @@ terms unless they convert.
 
 ## Pricing
 
-Pricing is parked. See `pricing-methodology.md`. For H1 launch, Pro tier is positioned
+Pricing is parked. See `pricing-methodology.md`. For H2 launch, Pro tier is positioned
 as "founder-priced beta" with explicit price-discovery framing during founder
-conversations. No public price list in H1.
+conversations. No public price list in H2.
 
 ## Customer Onboarding
 

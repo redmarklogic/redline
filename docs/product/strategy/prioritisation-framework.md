@@ -59,11 +59,11 @@ knowledge to do it well?
 
 ### 5. GTM Alignment (Strategic Fit)
 
-Does this serve the immediate commercial goal (close NZ/AU beta clients in H1 2026)?
+Does this serve the immediate commercial goal (close NZ/AU beta clients in H2 2026)?
 
 - **5**: Exactly the missing piece to close the next 3 local beta clients.
-- **4**: Strong contributor; visible in the funnel within H1.
-- **3**: Useful, but not on the critical path for H1.
+- **4**: Strong contributor; visible in the funnel within H2.
+- **3**: Useful, but not on the critical path for H2.
 - **2**: Long-tail value; serves a Phase-2 segment.
 - **1**: Built for the wrong segment, wrong geography, or wrong time horizon.
 

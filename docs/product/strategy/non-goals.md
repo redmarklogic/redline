@@ -32,7 +32,7 @@ strategy drift.
    content remains allowed; LLM-as-Judge quality gate is required before publishing.
    See `gtm/content-engine.md`.
 
-## GTM Non-Goals (H1 2026)
+## GTM Non-Goals (H2 2026)
 
 1. **No third geography.** NZ and AU only. See `strategic-bets.md` Bet 5.
 2. **No enterprise sales motion.** Single PLG funnel from free wedge → Pro → Business.
@@ -40,7 +40,7 @@ strategy drift.
 3. **No paid acquisition spend before the wedge proves out.** Bet 1 must trip its kill
    criterion before we test paid channels. Spending on Google Ads while the free wedge
    converts at unknown rate is conflating two experiments.
-4. **No conference sponsorship in H1.** Founder-led conversations only.
+4. **No conference sponsorship in H2.** Founder-led conversations only.
 5. **No partnership channel.** No reseller, no Big-4 alliance, no software-vendor OEM.
    Partnerships are diluting until product-market fit is signed.
 6. **We do not claim engineering credentials we do not hold.** The founder is a data
@@ -56,7 +56,7 @@ strategy drift.
    (SOC 2, ISO 27001, HIPAA, etc.) are forbidden until formally attained. See
    `pricing-methodology.md` → Fake-Door Tier Discipline.
 
-## Engineering Non-Goals (H1 2026)
+## Engineering Non-Goals (H2 2026)
 
 1. **No model training on customer documents.** Zero-training perimeter is enforced.
    Customer documents are read in-session and not retained for fine-tuning. This is

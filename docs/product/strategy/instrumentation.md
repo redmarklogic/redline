@@ -1,7 +1,7 @@
-# Instrumentation — Measurement Spec for the H1 Wedge
+# Instrumentation — Measurement Spec for the H2 Wedge
 
 **Status**: Draft v2. **Owner**: Ron (spec); founder + Mark (implementation choice).
-**Anchored to**: `okrs/2026-h1.md` KR6 (cohort instrumentation in place by 2026-07-01).
+**Anchored to**: `okrs/2026-h2.md` KR6 (cohort instrumentation in place by 2026-07-01).
 
 > This is a measurement spec, not an implementation plan. It defines *what* we observe
 > and *why*, not *how* it is wired up. Implementation choice is the founder's; tooling
@@ -54,7 +54,7 @@ every Monday during the 30-minute LinkedIn-batch session.
 
 - **Disclose the analytics surface in the privacy policy** by name and purpose.
 - **No third-party advertising trackers, ever.** No Google Analytics + Ads remarketing
-  pixel, no Meta Pixel, no LinkedIn Insight Tag in H1.
+  pixel, no Meta Pixel, no LinkedIn Insight Tag in H2.
 - **Document deletion timeline**: uploaded source documents are deleted within 24
   hours of generation completion. Generated skeletons are retained for the user's
   account access only and deleted on account deletion. State this on the upload page,
@@ -70,7 +70,7 @@ every Monday during the 30-minute LinkedIn-batch session.
 - Self-hostable if regulated customers ask.
 - Funnel + cohort + retention dashboards out of the box; matches KR1–KR4 + KR6 needs
   with no custom dashboarding.
-- Free tier covers ≥ 1M events/month — comfortably above H1 volume.
+- Free tier covers ≥ 1M events/month — comfortably above H2 volume.
 
 **Plausible** is the runner-up — simpler and cheaper, but funnel/cohort tooling is
 weaker. Acceptable if the founder wants minimum complexity and is willing to
@@ -84,15 +84,15 @@ Tooling decision is the founder's. Whichever choice is made, KR6's "definition o
 done" must hold: KR1 reproducible from the analytics surface, founder can answer
 "of the last 20 signups, how many are senior NZ/AU engineers" in under 5 minutes.
 
-## Out of Scope for H1
+## Out of Scope for H2
 
 - A/B testing infrastructure.
-- Server-side event collection (client-side is sufficient at H1 volume).
+- Server-side event collection (client-side is sufficient at H2 volume).
 - Marketing-attribution modelling beyond first-touch (LinkedIn vs. forum vs. direct).
-- In-product surveys (founder-led conversations are the H1 qualitative channel).
+- In-product surveys (founder-led conversations are the H2 qualitative channel).
 
 ## Provenance
 
 Event list synthesised from the launch-plan funnel (`gtm/2026-launch-plan.md`) and
-the OKR set (`okrs/2026-h1.md`). Tooling recommendation is Ron's view based on
+the OKR set (`okrs/2026-h2.md`). Tooling recommendation is Ron's view based on
 privacy-respecting B2B analytics norms; no notebook query was run for this pass.

@@ -1,10 +1,10 @@
 # Discovery Interview Guide — KR2 Conversations
 
 **Status**: Draft v1. **Owner**: Mark (uses); Ron (custodian).
-**Anchored to**: `okrs/2026-h1.md` KR2 (15 qualified discovery conversations in 90 days)
+**Anchored to**: `okrs/2026-h2.md` KR2 (15 qualified discovery conversations in 90 days)
 and `jtbd.md`.
 
-> This guide exists because the H1 plan commits to founder-led discovery conversations
+> This guide exists because the H2 plan commits to founder-led discovery conversations
 > without specifying *how* to run one. The structure below is grounded in two
 > methodologies — Christensen / Moesta "Switch" interviews and Steve Blank Customer
 > Development — adapted to a solo founder targeting NZ/AU geotechnical engineers.
@@ -105,7 +105,7 @@ inside a small geographic niche.
 
 ## What Counts as a "Qualified" Conversation (KR2 Definition)
 
-Per `okrs/2026-h1.md`, KR2 requires:
+Per `okrs/2026-h2.md`, KR2 requires:
 
 - ≥ 30 minutes (the Switch timeline alone consumes 25);
 - Work-email-verified;

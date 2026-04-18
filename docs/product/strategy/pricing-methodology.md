@@ -56,7 +56,7 @@ Three rules carried into pricing conversations once methodology unpacks:
    engineer's review hours, not against per-seat productivity tools.
 2. **Per-firm Business tier, not per-seat.** Per-seat caps the price ceiling and
    creates seat-counting friction during firm rollout.
-3. **No public price list in H1.** Founder-priced beta only. Public list waits for
+3. **No public price list in H2.** Founder-priced beta only. Public list waits for
    WTP outputs (Step 1) and segment validation (Step 2).
 
 ### Step 5 — Decision Gate
@@ -101,7 +101,7 @@ and Slack. It is not inherently dishonest **provided the discipline below is fol
 ### Recommended Page Composition (Ron's view, 2026-04-18)
 
 **Free + Pro (paid) + Business (waitlist).** Drop Enterprise from the public page in
-H1. Reasons:
+H2. Reasons:
 
 1. The Enterprise tier contradicts `non-goals.md` GTM #2 (no enterprise sales motion)
    and the Tier 1 anti-target. Inbound from a Tier 1 firm asking about Enterprise is

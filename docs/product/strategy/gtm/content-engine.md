@@ -2,7 +2,7 @@
 
 **Status**: Draft v2. **Owner**: Founder (executes); Ron (custodian).
 **Anchored to**: `gtm/2026-launch-plan.md` (Channel Plan), `non-goals.md` (no paid
-acquisition H1, no scaled AI content), Bet 4 (Switzerland-neutral).
+acquisition H2, no scaled AI content), Bet 4 (Switzerland-neutral).
 
 > This document specifies the *how* of the founder's LinkedIn channel — the cadence,
 > the content rubric, and the targeted-outreach mechanic. The launch plan committed to
@@ -16,11 +16,11 @@ acquisition H1, no scaled AI content), Bet 4 (Switzerland-neutral).
    preparation (drafting, batching, research) is permitted on personal time. Posting
    may begin before June 1 — LinkedIn is personal, not employer IP. Product
    announcements and "launch" posts wait until the product is live (post-June 1).
-1. **No paid spend in H1** (`non-goals.md` GTM #3).
+1. **No paid spend in H2** (`non-goals.md` GTM #3).
 2. **No scaled AI-generated content** — content quality is a Switzerland-neutral
    trust signal; degraded EEAT (Experience, Expertise, Authority, Trust) signals
    forfeit positioning. See `non-goals.md`.
-3. **Founder-only voice in H1** — Mark and Ron do not post under their names; the
+3. **Founder-only voice in H2** — Mark and Ron do not post under their names; the
    channel is the founder's. Ghostwriting assistance from Mark is allowed; final
    approval is the founder's.
 4. **Geographic discipline** — content addresses NZ + AU geotech only; no global
@@ -46,7 +46,7 @@ proven to drive B2B buyer trust. Every founder post must map to one of these.
 
 | Big 5 category | What to post | Geotech-specific examples |
 |---|---|---|
-| **1. Pricing & Costs** | Honest framing of cost questions buyers won't ask vendors directly | "What does a senior-engineer review round actually cost a 10-person firm?" "When does an in-house QA tool pay back?" *(NB: do not publish Redline pricing in H1; pricing is parked.)* |
+| **1. Pricing & Costs** | Honest framing of cost questions buyers won't ask vendors directly | "What does a senior-engineer review round actually cost a 10-person firm?" "When does an in-house QA tool pay back?" *(NB: do not publish Redline pricing in H2; pricing is parked.)* |
 | **2. Problems** | What goes wrong, the failure modes, the things vendors hide | "Five ways AI writing tools quietly damage a GBR." "Why ChatGPT can't help with NZGS-grounded interpretive content." |
 | **3. Versus & Comparisons** | Honest comparisons with alternatives | "Senior peer review vs. tooling: where each one wins." "Redline (when named) vs. ChatGPT vs. Microsoft Copilot — which job each one is actually for." |
 | **4. Reviews** | Customer voices, case fragments, anonymised stories | "What an intermediate engineer told me about her last review round." (Use anonymised KR2 conversation insights — with permission.) |
@@ -154,7 +154,7 @@ People rarely turn down an opportunity to be quoted as an expert. The interview
 becomes the relationship. The content becomes the asset.
 
 This is the founder's only viable path to Phase-2 buyer (Principal/Partner)
-relationships in H1, given the explicit non-goal of enterprise sales motion.
+relationships in H2, given the explicit non-goal of enterprise sales motion.
 
 ## Product-Led SEO — Deferred Decision
 
@@ -168,7 +168,7 @@ each generated skeleton could become a public, indexed page (with customer
 permission), and template-driven landing pages keyed to specific NZS standards
 could capture "NZS 3910 GBR template" search demand.
 
-**This is not committed in H1.** Reasons:
+**This is not committed in H2.** Reasons:
 
 - Product-Led SEO requires patience; pages take months to rank. KR1 is a 60-day
   metric. The two timelines don't align.
