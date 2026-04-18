@@ -21,6 +21,9 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 
 ## Quick Reference — Notebooks by Topic
 
+The canonical register is `.agents/skills/notebooklm-mcp/register.json`. Read that file
+for the full list with URLs, descriptions, and access controls. Summary by topic area:
+
 | Topic area | Notebooks |
 |---|---|
 | Engineering theory & standards | Engineering Standards, Ground Engineering Magazine |
@@ -28,7 +31,7 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 | AI & software architecture | AI System Engineering, Software Architecture & DDD |
 | Process & product | BPM, Product Roadmapping, Writing Specs, Information Architecture & KM |
 | Communication & documentation | Engineers' Guide to Technical Communication |
-| Founder strategy _(Advisory Board only)_ | Redline Founder Memos |
+| Founder strategy _(Advisory Board only)_ | Redline Founder Memos, Monetizing & Scaling Innovation |
 
 **Advisory Board only** notebooks: skip entirely unless the user's session context explicitly
 identifies them as an advisory board member. Do not mention skipped notebooks.

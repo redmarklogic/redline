@@ -73,6 +73,7 @@ flowchart TD
         Notebook[notebooklm-mcp - query NotebookLM]
         Research[redline-research - structured research]
         DevEnv[dev-environment, version-control, security]
+        Research -.uses.-> Notebook
     end
 
     L1 ==> L2
