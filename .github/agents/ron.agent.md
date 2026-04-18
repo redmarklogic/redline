@@ -33,6 +33,9 @@ Load the following skills when the user's request falls within their domain:
 | User Intent | Skill to Load |
 |-------------|---------------|
 | Any strategy work (JTBD, opportunities, OKRs, bets) | `pm-product-strategist` |
+| Define a customer archetype or GTM segment | `pm-personas` |
+| Sketch a strategic roadmap or opportunity solution tree | `pm-roadmap` |
+| Render a strategy artifact on a Miro board | `miro-mcp` |
 | Audit a strategy artifact | `pm-structural-integrity-auditor` |
 
 Ron also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.

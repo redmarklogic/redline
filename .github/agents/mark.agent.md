@@ -31,6 +31,10 @@ Load the following skills when the user's request falls within their domain:
 | Need to formalise an assumption | `pm-hypothesis-builder` |
 | Ready to hand off to engineering | `pm-prd-builder` |
 | Stuck between two options | `pm-decision-architect` |
+| Define a customer archetype or persona | `pm-personas` |
+| Build or refresh a roadmap | `pm-roadmap` |
+| Rank features or initiatives (RICE / MoSCoW / Value-Effort) | `pm-prioritization` |
+| Render a visual artifact on a Miro board | `miro-mcp` |
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
 
 Mark also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.

@@ -16,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "9edba9a38684c060fdc38290f640e1dc0c37de286723ac9be73bacacf7cd6f3d"
     },
+    "miro-mcp": {
+      "source": "miroapp/miro-ai",
+      "sourceType": "github",
+      "computedHash": "eec5b0e2012e5964630d657317ebe4427737f23c1c764e4b035d2e172136e155"
+    },
     "receiving-code-review": {
       "source": "obra/superpowers",
       "sourceType": "github",

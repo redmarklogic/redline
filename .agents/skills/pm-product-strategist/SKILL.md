@@ -69,17 +69,16 @@ Lean-Product-Canvas (initiative structure — handled by separate agent)
 
 **When to use:** Strategy files are empty, job is unclear, or team disagrees on the customer problem.
 
-**Step 1 — Check research availability**
-Ask: Is there customer research in `docs/product/resources/`?
-- If yes: invoke `Research-Synthesizer` to produce structured signals
-- If no: ask for raw input (interview notes, quotes, observations)
+**Step 1 — Gather research signals**
+Ask: Is there customer research in `docs/product/resources/` or notebook coverage in the Founder Memos?
+- If yes: query `redline-research` for relevant excerpts and quotes.
+- If no: ask the user for raw input (interview notes, quotes, observations).
 
-**Step 2 — Build persona**
-Invoke `Persona-Builder` on research output. The job executor must be grounded in a real persona before the job statement can be written.
+**Step 2 — Ground in a persona**
+Invoke the `pm-personas` skill to ensure the job executor is grounded in a real archetype before the job statement is written.
 
-**Step 3 — Run JTBD-Mapper**
-Invoke `JTBD-Mapper` with research signals and persona as input.
-Output: completed `docs/product/strategy/jtbd.md`
+**Step 3 — Write the JTBD statement**
+With research signals and persona in hand, write the job statement to `docs/product/strategy/jtbd.md` in the form: *"When [situation], [persona] wants to [motivation], so they can [outcome]."*
 
 **Step 4 — Validate against Vision**
 Read `docs/product/strategy/vision.md`. Does it reflect the job that was just mapped?
@@ -96,19 +95,14 @@ Read `docs/product/strategy/vision.md`. Does it reflect the job that was just ma
 **Step 1 — Confirm desired outcome**
 Read `docs/product/strategy/kpis.md`. Identify the metric most directly connected to the job being solved. This becomes the root of the Opportunity Solution Tree.
 
-If KPIs are empty or vague: invoke `OKR-Partner` to define the desired outcome first.
+If KPIs are empty or vague: define the desired outcome inline (one sentence, with a measurable threshold and time horizon) before continuing.
 
-**Step 2 — Run Opportunity-Tree**
-Invoke `Opportunity-Tree` with:
-- Desired outcome (from Step 1)
-- JTBD-Mapper output (from Mode 1)
-- Any existing initiatives from `docs/product/initiatives/` (to check current work against the opportunity map)
-
-Output: completed `docs/product/strategy/opportunity-tree.md`
+**Step 2 — Build the Opportunity Solution Tree**
+With the desired outcome (Step 1), the JTBD output (Mode 1), and any existing initiatives from `docs/product/initiatives/`, sketch the tree: outcome at the root, opportunities as branches, candidate solutions as leaves. Render the tree visually using `pm-roadmap` (Miro is the canonical surface for OST). Save the Markdown synthesis to `docs/product/strategy/opportunity-tree.md`.
 
 **Step 3 — Rank and select**
-If 4+ opportunities surface: invoke `Priority-Stack` to rank with explicit criteria.
-If ranking is contested or unclear: flag for `Decision-Architect`.
+If 4+ opportunities surface: invoke `pm-prioritization` to rank with explicit criteria.
+If ranking is contested or unclear: hand off to `pm-decision-architect`.
 
 **Step 4 — Audit active initiatives**
 Cross-reference `docs/product/initiatives/` against the opportunity map.
@@ -123,7 +117,7 @@ Cross-reference `docs/product/initiatives/` against the opportunity map.
 **When to use:** JTBD and OST are complete. Time to set goals and file the strategy.
 
 **Step 1 — Define OKRs per top opportunity**
-Invoke `OKR-Partner` for each opportunity selected for pursuit.
+For each opportunity selected for pursuit, write one OKR to `docs/product/strategy/kpis.md`.
 Each OKR must:
 - Link to a specific opportunity from the OST
 - Have a measurable key result with a threshold and time boundary
@@ -175,9 +169,9 @@ Ask: "Would you like me to write these updates directly to `docs/product/strateg
 - Do not run Mode 2 (OST) without a completed JTBD. An opportunity map without a job anchor is just a feature list.
 - Do not set OKRs before the opportunity map is ranked. OKRs set on gut instinct without opportunity backing will not survive the next strategy review.
 - Every Strategic Bet must link to an opportunity. A bet with no opportunity is a hope, not a strategy.
-- If the PM cannot choose between opportunities: surface the decision criteria and hand off to `Decision-Architect`. Do not decide for them.
+- If the PM cannot choose between opportunities: surface the decision criteria and hand off to `pm-decision-architect`. Do not decide for them.
 - Flag any active initiative that does not map to the opportunity tree. It may still be valid — but it should be a conscious exception, not an oversight.
-- Strategy is hypothetical until tested. Every bet should have a corresponding hypothesis in `docs/product/hypotheses/` and a next experiment in `docs/product/proof/`.
+- Strategy is hypothetical until tested. Every bet should have a corresponding hypothesis (via `pm-hypothesis-builder`) in `docs/product/hypotheses/` and a next experiment in `docs/product/proof/`.
 
 ---
 
@@ -196,11 +190,13 @@ Examples:
 ## The Intended Chain (Full Strategy-to-Execution Flow)
 
 ```
-Research-Synthesizer + Persona-Builder
-  → JTBD-Mapper           (docs/product/strategy/jtbd.md)
-    → Opportunity-Tree    (docs/product/strategy/opportunity-tree.md)
-      → OKR-Partner       (docs/product/strategy/kpis.md + strategic-bets.md)
-        → Lean-Product-Canvas agent  (docs/product/initiatives/ + docs/product/hypotheses/)
-          → Experiment-Designer      (docs/product/proof/)
-            → Performance-Tracker    (validate / invalidate)
+redline-research + pm-personas
+  → JTBD statement                  (docs/product/strategy/jtbd.md)
+    → Opportunity Solution Tree     (docs/product/strategy/opportunity-tree.md, rendered via pm-roadmap)
+      → pm-prioritization           (rank opportunities)
+        → OKRs + Strategic Bets     (docs/product/strategy/kpis.md + strategic-bets.md)
+          → pm-problem-framer       (docs/product/problems/)
+            → pm-hypothesis-builder (docs/product/hypotheses/)
+              → pm-prd-builder      (docs/product/prds/)
+                → spec-kit          (specs/, engineering execution)
 ```
