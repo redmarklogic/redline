@@ -117,6 +117,63 @@ What model was selected and why was it preferred?
 
 (Pronouns "it" and "model" are ambiguous without context; plain-language prefix is missing.)
 
+## Add Notebook to Register
+
+When the user provides a NotebookLM URL and asks to add it to the register or knowledge base,
+follow this five-step workflow in order. Do **not** skip steps or ask for metadata — discover
+it from the notebook itself.
+
+The canonical register is [register.json](register.json) in this skill directory. Every
+notebook used by any skill (including `redline-research`) is listed there.
+
+### Step R1 — Check the register
+
+Read `register.json` and check if any entry's `url` field matches the provided URL.
+Also call `mcp_notebooklm_list_notebooks` to check the MCP library. If the notebook is
+already registered, report that it exists and stop.
+
+### Step R2 — Query the notebook for purpose
+
+Call `mcp_notebooklm_ask_question` with `notebook_url` set to the provided URL (no
+`notebook_id` yet — the notebook has not been added to the library). Use the following
+question template:
+
+```
+Explain for the uninitiated. Define any specialist term or acronym the
+first time it appears. Keep citations. Avoid ambiguity.
+
+What is the purpose of this notebook? What topics does it cover, what
+kind of knowledge or documents does it contain, and when would someone
+consult it?
+```
+
+From the answer extract: an `id` (kebab-case slug), a `name`, a one-paragraph `description`,
+a `topic_area` (match an existing area from `register.json` or propose a new one), a flat
+`topics` list (5–10), `content_types`, and 3–5 `use_cases`. Set `access` to `"open"` unless
+the user specifies otherwise (e.g. `"advisory-board-only"`).
+
+### Step R3 — Append to `register.json`
+
+Append a new JSON object to the array in `register.json` with all fields from Step R2 plus
+`"added": "YYYY-MM-DD"`. Ensure the JSON remains valid.
+
+### Step R4 — Add to MCP library and update metadata
+
+Call `mcp_notebooklm_add_notebook` with all fields populated from Step R2. Then call
+`mcp_notebooklm_update_notebook` to set `content_types` to the specific content types
+discovered (not the default `["documentation", "examples"]`).
+
+### Step R5 — Confirm
+
+Report to the user:
+- Notebook name and ID assigned.
+- A one-sentence purpose summary.
+- Confirmation that the entry was added to `register.json`.
+
+Do **not** ask the user to provide any metadata — derive everything from the notebook query.
+
+---
+
 ## Usage Examples
 
 Add a notebook to the library:

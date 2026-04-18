@@ -1,0 +1,405 @@
+[
+  {
+    "id": "engineering-standards",
+    "name": "Engineering Standards",
+    "url": "https://notebooklm.google.com/notebook/0f6cd98a-9dfa-46f8-9a73-4671d2164949",
+    "description": "NZ infrastructure design standards (IDS), earthworks and compaction requirements (NZS 4431), geotechnical QA procedures, and subdivision consent documentation for practitioners working in the Canterbury / NZ regulatory context.",
+    "topic_area": "Engineering theory & standards",
+    "topics": [
+      "NZ infrastructure design standards",
+      "earthworks and compaction",
+      "NZS 4431",
+      "geotechnical QA",
+      "subdivision consent",
+      "Canterbury regulatory context"
+    ],
+    "content_types": ["design standards", "QA procedures", "regulatory documentation"],
+    "use_cases": [
+      "Checking NZ engineering design standards for geotechnical work",
+      "Verifying earthworks and compaction requirements",
+      "Understanding subdivision consent documentation requirements"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "ground-engineering-magazine",
+    "name": "Ground Engineering Magazine",
+    "url": "https://notebooklm.google.com/notebook/d29c2cef-9f34-442f-ae6d-715251dea9aa",
+    "description": "Issues of Ground Engineering magazine (2014-2026) covering geotechnical industry news, technical papers, and key standards development (Eurocode 7, BS 5930, SPERWall, CIRIA) across piling, foundations, tunnelling, earthworks, and slope stability.",
+    "topic_area": "Engineering theory & standards",
+    "topics": [
+      "geotechnical industry news",
+      "technical papers",
+      "Eurocode 7",
+      "BS 5930",
+      "SPERWall",
+      "CIRIA",
+      "piling",
+      "foundations",
+      "tunnelling",
+      "earthworks",
+      "slope stability"
+    ],
+    "content_types": ["magazine issues", "technical papers", "industry news"],
+    "use_cases": [
+      "Researching geotechnical engineering standards development",
+      "Finding technical papers on piling, foundations, or slope stability",
+      "Understanding industry trends in geotechnical engineering"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "geotechnical-baseline-reports",
+    "name": "Geotechnical Baseline Reports (GBR)",
+    "url": "https://notebooklm.google.com/notebook/8eab0bf9-090d-4b1e-975f-00dbd96342af",
+    "description": "Industry guidance on preparing and contractually applying GBRs to allocate subsurface construction risk. Covers Differing Site Conditions claims, ASCE guidelines, CIRIA C807, the NZTS guide, and the FIDIC Emerald Book.",
+    "topic_area": "Geotechnical domain",
+    "topics": [
+      "geotechnical baseline reports",
+      "subsurface risk allocation",
+      "differing site conditions",
+      "ASCE guidelines",
+      "CIRIA C807",
+      "NZTS guide",
+      "FIDIC Emerald Book"
+    ],
+    "content_types": ["industry guidance", "contract frameworks", "risk allocation guidelines"],
+    "use_cases": [
+      "Preparing geotechnical baseline reports",
+      "Understanding subsurface risk allocation in contracts",
+      "Researching differing site conditions claims"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "geotechnical-report-workflows",
+    "name": "Geotechnical Engineering Report Workflows and Standard Procedures",
+    "url": "https://notebooklm.google.com/notebook/ee83806c-ff73-436d-ad0b-ca319818e553",
+    "description": "Professional practice guides, templates, QA checklists, and training materials for geotechnical report structuring, factual/interpretive delineation, and client-centric writing -- compiled from a leading NZ geotechnical consultancy's internal knowledge base.",
+    "topic_area": "Geotechnical domain",
+    "topics": [
+      "geotechnical report structuring",
+      "factual vs interpretive reporting",
+      "QA checklists",
+      "client-centric writing",
+      "professional practice"
+    ],
+    "content_types": ["practice guides", "templates", "QA checklists", "training materials"],
+    "use_cases": [
+      "Structuring geotechnical engineering reports",
+      "Applying factual/interpretive delineation in reports",
+      "Using QA checklists for report review"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "risk-assessment-engineering",
+    "name": "Risk Assessment in Engineering",
+    "url": "https://notebooklm.google.com/notebook/0b726429-82bc-43f7-9225-ba06f71046c3",
+    "description": "Risk management, professional liability, and probabilistic risk assessment in geotechnical engineering. Sources span ASCE, CIRIA, and NZGS guidelines, field manuals, and legal notes covering contracts, non-disclosure agreements, and professional indemnity insurance.",
+    "topic_area": "Geotechnical domain",
+    "topics": [
+      "risk management",
+      "professional liability",
+      "probabilistic risk assessment",
+      "ASCE guidelines",
+      "CIRIA guidelines",
+      "NZGS guidelines",
+      "contracts and insurance"
+    ],
+    "content_types": ["guidelines", "field manuals", "legal notes"],
+    "use_cases": [
+      "Assessing geotechnical engineering risk",
+      "Understanding professional liability in engineering",
+      "Reviewing contract and insurance requirements"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "ai-system-engineering",
+    "name": "AI System Engineering",
+    "url": "https://notebooklm.google.com/notebook/a9dda38b-1a68-4287-826d-378965f57be6",
+    "description": "Generative AI application design and deployment: foundation models, prompt engineering, retrieval-augmented generation (RAG), multiagent orchestration, and FastAPI/Docker serving. Covers MCP, OAuth2, the NIST AI Risk Management Framework, the EU AI Act, and GDPR.",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "generative AI",
+      "prompt engineering",
+      "RAG",
+      "multiagent orchestration",
+      "FastAPI",
+      "Docker",
+      "MCP",
+      "NIST AI RMF",
+      "EU AI Act",
+      "GDPR"
+    ],
+    "content_types": ["architecture guides", "deployment patterns", "regulatory frameworks"],
+    "use_cases": [
+      "Designing generative AI applications",
+      "Implementing RAG or multiagent systems",
+      "Understanding AI governance and compliance requirements"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "software-architecture-ddd",
+    "name": "Software Architecture & Domain-Driven Design",
+    "url": "https://notebooklm.google.com/notebook/c04e18d3-e1e6-47f0-879a-d0e4a65adcb0",
+    "description": "Ten canonical books (Evans, Vernon, Khononov, Ford, Ousterhout, GoF, and others) covering DDD strategic/tactical patterns (Bounded Contexts, Ubiquitous Language, Aggregates, Repositories, Domain Events), architecture styles (Hexagonal, CQRS, Microservices, Event-Driven), SOLID principles, GoF design patterns, functional domain modeling, EventStorming, Context Mapping, Event Sourcing, saga patterns, and Data Mesh.",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "domain-driven design",
+      "bounded contexts",
+      "aggregates",
+      "hexagonal architecture",
+      "CQRS",
+      "event sourcing",
+      "SOLID principles",
+      "GoF design patterns",
+      "EventStorming",
+      "Data Mesh"
+    ],
+    "content_types": ["canonical books", "design pattern references"],
+    "use_cases": [
+      "Applying DDD patterns to Redline architecture",
+      "Choosing architecture styles for new modules",
+      "Reviewing design patterns for domain modeling"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "business-process-management",
+    "name": "Business Process Management",
+    "url": "https://notebooklm.google.com/notebook/625aacce-d0b2-42bd-b83c-7f9e3e15f4c7",
+    "description": "BPM methodologies and continuous process improvement tools including Lean, Six Sigma, BPMN, 7FE, PDCA, and DMAIC frameworks. Drawn from expert-authored management books and the BPM Common Body of Knowledge (BPM CBOK).",
+    "topic_area": "Process & product",
+    "topics": [
+      "BPM",
+      "Lean",
+      "Six Sigma",
+      "BPMN",
+      "PDCA",
+      "DMAIC",
+      "BPM CBOK",
+      "continuous improvement"
+    ],
+    "content_types": ["management books", "methodology frameworks"],
+    "use_cases": [
+      "Designing or improving business processes",
+      "Applying Lean or Six Sigma to engineering workflows",
+      "Modelling processes with BPMN"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "product-roadmapping",
+    "name": "Product Roadmapping",
+    "url": "https://notebooklm.google.com/notebook/dfb04e76-20c3-44c3-872f-eef2f6c04bb7",
+    "description": "Strategic product roadmapping for product leaders: defining vision, prioritising customer opportunities, and achieving stakeholder buy-in. Covers Kano model, MoSCoW prioritisation, ROI scorecards, user journey maps, and opportunity-solution trees.",
+    "topic_area": "Process & product",
+    "topics": [
+      "product roadmapping",
+      "Kano model",
+      "MoSCoW prioritisation",
+      "ROI scorecards",
+      "user journey maps",
+      "opportunity-solution trees",
+      "stakeholder buy-in"
+    ],
+    "content_types": ["strategy books", "prioritisation frameworks"],
+    "use_cases": [
+      "Building or refreshing the product roadmap",
+      "Prioritising features using Kano or MoSCoW",
+      "Creating opportunity-solution trees"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "writing-specs",
+    "name": "Writing Painless Product and Functional Specifications",
+    "url": "https://notebooklm.google.com/notebook/fb7cbc5c-1ff2-44cc-a61f-bfcdee4519fb",
+    "description": "Software product management frameworks and specification writing: PRDs, functional specifications, OKRs, the Shape Up framework, product discovery vs delivery, and alternatives to traditional roadmaps.",
+    "topic_area": "Process & product",
+    "topics": [
+      "PRDs",
+      "functional specifications",
+      "OKRs",
+      "Shape Up",
+      "product discovery",
+      "product delivery"
+    ],
+    "content_types": ["management frameworks", "specification templates"],
+    "use_cases": [
+      "Writing product requirement documents",
+      "Structuring functional specifications",
+      "Choosing between product discovery and delivery approaches"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "technical-communication",
+    "name": "Engineers' Guide to Technical Communication",
+    "url": "https://notebooklm.google.com/notebook/c611ced9-393d-45ef-bc66-f2be77fbbf0c",
+    "description": "Technical writing and editing best practices for engineering and scientific audiences: document design, audience analysis, ethics, citation standards (Chicago Manual of Style), and structure for reports, proposals, laboratory studies, specifications, and business correspondence.",
+    "topic_area": "Communication & documentation",
+    "topics": [
+      "technical writing",
+      "document design",
+      "audience analysis",
+      "citation standards",
+      "Chicago Manual of Style",
+      "report structure",
+      "proposals"
+    ],
+    "content_types": ["writing guides", "style references"],
+    "use_cases": [
+      "Structuring engineering reports and proposals",
+      "Applying citation and documentation standards",
+      "Improving technical writing quality"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "information-architecture-km",
+    "name": "Information Architecture and Knowledge Management",
+    "url": "https://notebooklm.google.com/notebook/94521cd4-5a7e-49d4-9559-b002254f3e52",
+    "description": "Explores the strategic design and management of information systems to make organizational knowledge assets findable, understandable, and actionable. Covers foundational concepts of Information Architecture, Knowledge Architectures, and Knowledge Management.",
+    "topic_area": "Process & product",
+    "topics": [
+      "information architecture",
+      "knowledge management",
+      "knowledge architectures",
+      "findability",
+      "organisational knowledge"
+    ],
+    "content_types": ["foundational concepts", "strategic frameworks"],
+    "use_cases": [
+      "Designing information architectures for knowledge systems",
+      "Improving findability and knowledge organisation",
+      "Structuring knowledge management strategies"
+    ],
+    "access": "open",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "founder-memos",
+    "name": "Redline Founder Memos",
+    "url": "https://notebooklm.google.com/notebook/9ef1f417-4a48-416e-8881-49473ca82392",
+    "description": "Transcribed voice memos recorded by the Redline founder (April 2026) covering product vision, feature design, go-to-market strategy, pricing tiers, competitive analysis (vs. ChatGPT/Claude/Gemini), UX decisions (the 'Burton' email-based interface), and personal reflections on building a niche AI tool for small geotechnical consultancies. Primary source for founder intent and strategic rationale.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "product vision",
+      "feature design",
+      "go-to-market strategy",
+      "pricing tiers",
+      "competitive analysis",
+      "UX decisions",
+      "founder intent"
+    ],
+    "content_types": ["voice memo transcripts", "strategic notes"],
+    "use_cases": [
+      "Understanding founder intent and strategic rationale",
+      "Grounding strategy work in original product vision",
+      "Informing GTM and pricing decisions"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "monetizing-scaling-innovation",
+    "name": "Monetizing & Scaling Innovation",
+    "url": "https://notebooklm.google.com/notebook/a3ba4e00-3a84-4734-9c8e-6df674dd21d4",
+    "description": "Strategic guide on building profitable, scalable products. Contains Monetizing Innovation and Scaling Innovation by Madhavan Ramanujam et al. Covers willingness-to-pay discovery, pricing models (subscription, usage-based, outcome-based), packaging and bundling (Good-Better-Best tiers), behavioural pricing tactics (anchoring, compromise effect), the four monetisation failure patterns (Feature Shock, Minivation, Hidden Gem, Undead), and scaling strategies covering churn prevention, wallet-share growth, and price negotiation discipline.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "willingness-to-pay research",
+      "pricing models and strategy",
+      "packaging and bundling",
+      "feature tiering Good-Better-Best",
+      "behavioural pricing",
+      "monetisation failure patterns",
+      "scaling and profitable growth",
+      "churn prevention",
+      "sales negotiation and price integrity"
+    ],
+    "content_types": ["business strategy books", "pricing frameworks", "case studies", "behavioural economics theory", "actionable checklists"],
+    "use_cases": [
+      "Deciding how to price a new product, feature tier, or service",
+      "Evaluating packaging and Good-Better-Best tier strategies",
+      "Preparing for a company-wide price increase or sales negotiation",
+      "Designing a product go-to-market strategy grounded in customer willingness-to-pay",
+      "Researching known monetisation failure patterns before a product launch"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "entrepreneurship-startup-strategy",
+    "name": "Entrepreneurship & Startup Strategy",
+    "url": "https://notebooklm.google.com/notebook/d6f96232-b80a-49fd-aa91-70aeb0d57be5",
+    "description": "Comprehensive guide for entrepreneurial management, strategic growth, and corporate innovation. Covers disruptive innovation, Lean Startup methodology (MVP, Build-Measure-Learn), customer development and Jobs-to-Be-Done theory, product-market fit, Crossing the Chasm (early adopters vs mainstream), B2B sales tactics, product roadmapping, and the Business Model Canvas. Drawn from authoritative business books, case studies, and operational frameworks.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "disruptive innovation",
+      "Lean Startup methodology",
+      "customer development",
+      "Jobs-to-Be-Done",
+      "product-market fit",
+      "Crossing the Chasm",
+      "B2B sales strategy",
+      "product roadmapping",
+      "Business Model Canvas",
+      "corporate innovation"
+    ],
+    "content_types": ["business books", "theoretical frameworks", "case studies", "practical checklists", "diagnostic tools"],
+    "use_cases": [
+      "Launching a new venture and identifying a scalable business model",
+      "Bringing a disruptive technology to market without falling into traditional management traps",
+      "Restructuring a mature organisation to foster an entrepreneurial culture",
+      "Designing a B2B sales strategy targeting the right corporate decision-makers",
+      "Creating a product roadmap that aligns teams around customer value"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "digital-marketing-social-selling",
+    "name": "Digital Marketing & Social Selling",
+    "url": "https://notebooklm.google.com/notebook/4a8f0eab-5f2a-41b9-ab67-8b694fdab3fb",
+    "description": "Comprehensive educational guide for modern digital marketing, online sales, and personal branding. Covers content marketing (They Ask, You Answer / The Big 5), SEO and Product-Led SEO, LinkedIn social selling, Ideal Customer Profile (ICP) targeting, and using Generative AI tools (ChatGPT, Gemini) for content and SEO research. Drawn from eight specialised books and professional guides on marketing, sales, and technology.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "content marketing",
+      "They Ask You Answer",
+      "SEO",
+      "Product-Led SEO",
+      "social selling",
+      "LinkedIn",
+      "Ideal Customer Profile",
+      "personal branding",
+      "lead generation",
+      "generative AI for marketing"
+    ],
+    "content_types": ["business books", "step-by-step methodologies", "case studies", "technical guidelines", "strategic frameworks"],
+    "use_cases": [
+      "Increasing website traffic and conversion rates through content marketing",
+      "Building a personal brand and professional network on LinkedIn",
+      "Executing SEO strategy using Product-Led or traditional keyword approaches",
+      "Aligning sales and marketing teams around shared goals",
+      "Using AI tools to assist with content and SEO research"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
+  }
+]
