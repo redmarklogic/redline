@@ -80,6 +80,31 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
 
+### Advisory Board (Product & Strategy)
+
+Two named personas. Invoke by name. Neither writes code — output restricted to `docs/product/`,
+`docs/research/`, and `specs/`. All strategy work must be grounded in the Founder Memos notebook
+before any artifact is produced.
+
+- **Ron** (`ron.agent.md`): Strategy & GTM Advisor. Vision, strategic bets, OKRs, positioning,
+  GTM motion. Has privileged access to the Founder Memos NotebookLM notebook. Every session
+  starts with a notebook query. Invoke: "Ron, [request]"
+  Skills: `pm-product-strategist`, `pm-structural-integrity-auditor`
+
+- **Mark** (`mark.agent.md`): Principal Product Manager. Problem framing, hypotheses, PRDs,
+  decision architecture. Every PRD must reference a Ron-defined strategic bet. Invoke:
+  "Mark, [request]"
+  Skills: `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`,
+  `pm-decision-architect`, `pm-structural-integrity-auditor`
+
+**Handoff chain (non-negotiable):**
+Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
+
+**`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
+
+**Output directory:** `docs/product/` (strategy/, bets.md, okrs/, positioning.md, gtm/,
+hypotheses/, initiatives/, prds/, problems/, decisions/)
+
 ### Redline Project Research
 
 - **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
