@@ -343,5 +343,63 @@
     ],
     "access": "advisory-board-only",
     "added": "2026-04-18"
+  },
+  {
+    "id": "entrepreneurship-startup-strategy",
+    "name": "Entrepreneurship & Startup Strategy",
+    "url": "https://notebooklm.google.com/notebook/d6f96232-b80a-49fd-aa91-70aeb0d57be5",
+    "description": "Comprehensive guide for entrepreneurial management, strategic growth, and corporate innovation. Covers disruptive innovation, Lean Startup methodology (MVP, Build-Measure-Learn), customer development and Jobs-to-Be-Done theory, product-market fit, Crossing the Chasm (early adopters vs mainstream), B2B sales tactics, product roadmapping, and the Business Model Canvas. Drawn from authoritative business books, case studies, and operational frameworks.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "disruptive innovation",
+      "Lean Startup methodology",
+      "customer development",
+      "Jobs-to-Be-Done",
+      "product-market fit",
+      "Crossing the Chasm",
+      "B2B sales strategy",
+      "product roadmapping",
+      "Business Model Canvas",
+      "corporate innovation"
+    ],
+    "content_types": ["business books", "theoretical frameworks", "case studies", "practical checklists", "diagnostic tools"],
+    "use_cases": [
+      "Launching a new venture and identifying a scalable business model",
+      "Bringing a disruptive technology to market without falling into traditional management traps",
+      "Restructuring a mature organisation to foster an entrepreneurial culture",
+      "Designing a B2B sales strategy targeting the right corporate decision-makers",
+      "Creating a product roadmap that aligns teams around customer value"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
+  },
+  {
+    "id": "digital-marketing-social-selling",
+    "name": "Digital Marketing & Social Selling",
+    "url": "https://notebooklm.google.com/notebook/4a8f0eab-5f2a-41b9-ab67-8b694fdab3fb",
+    "description": "Comprehensive educational guide for modern digital marketing, online sales, and personal branding. Covers content marketing (They Ask, You Answer / The Big 5), SEO and Product-Led SEO, LinkedIn social selling, Ideal Customer Profile (ICP) targeting, and using Generative AI tools (ChatGPT, Gemini) for content and SEO research. Drawn from eight specialised books and professional guides on marketing, sales, and technology.",
+    "topic_area": "Founder strategy",
+    "topics": [
+      "content marketing",
+      "They Ask You Answer",
+      "SEO",
+      "Product-Led SEO",
+      "social selling",
+      "LinkedIn",
+      "Ideal Customer Profile",
+      "personal branding",
+      "lead generation",
+      "generative AI for marketing"
+    ],
+    "content_types": ["business books", "step-by-step methodologies", "case studies", "technical guidelines", "strategic frameworks"],
+    "use_cases": [
+      "Increasing website traffic and conversion rates through content marketing",
+      "Building a personal brand and professional network on LinkedIn",
+      "Executing SEO strategy using Product-Led or traditional keyword approaches",
+      "Aligning sales and marketing teams around shared goals",
+      "Using AI tools to assist with content and SEO research"
+    ],
+    "access": "advisory-board-only",
+    "added": "2026-04-18"
   }
 ]

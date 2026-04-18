@@ -1,0 +1,53 @@
+# Decisions Parked — Master Register
+
+**Status**: Living register. **Owner**: Ron.
+**Rule**: A parked decision is not a forgotten decision. Each entry has a trigger
+event that unfreezes it.
+
+| ID | Topic | Parked because | Unfreeze trigger | Owner when unfrozen |
+|---|---|---|---|---|
+| P-001 | Product naming ("Redline" working name) | Founder rejected naming options this pass; not blocking. | First serious external pitch (paid customer or LOI). | Ron + founder |
+| P-002 | Pro tier price | WTP interviews not yet run. Per `pricing-methodology.md` Step 5. | KR2 hits ≥ 10 completed Van Westendorp interviews. | Mark drafts; founder signs. |
+| P-003 | Business tier price floor | Same as P-002. | Same as P-002. | Mark drafts; founder signs. |
+| P-004 | Annual vs. monthly billing default | Pricing methodology gate. | Same as P-002. | Mark + founder |
+| P-005 | Free-tier quota numbers (3 vs. 5 docs; 100 pages) | Founder hypothesised 3–5; not yet validated against unit-economic ceiling (KR5). | Sprint 2 cost telemetry shows quota → cost curve. | Founder |
+| P-006 | Discounting policy | Pricing methodology gate. | Same as P-002. | Mark + founder |
+| P-007 | Founder runway | Founder explicitly parked this pass. | Founder raises it. | Founder |
+| P-008 | Adversarial Scan engine readiness | Confidence too low (no labelled adversarial corpus). Scored 12/25 in feature backlog. | Standards Knowledge Store mature + 50 labelled adversarial examples available. | Founder |
+| P-009 | Zero-training perimeter exception policy | Currently a hard non-goal. Founder parked the exception conversation. | Customer with $100k+ ARR explicitly requests on-prem with custom training; or H2 strategy refresh. | Founder |
+| P-010 | "5 paying customers in 90 days" — single-number target | Ron has proposed a split (KR1 leading + KR3 lagging + KR4 retention). Founder review pending. | Founder accepts the split, or overrides. | Founder |
+| P-011 | Pricing methodology — WTP-first vs. cost-plus vs. competitor-anchored | Methodology adopted (Ramanujam WTP-first); concrete pricing parked under P-002 to P-006. | Same as P-002. | Mark |
+| P-012 | Geographic expansion beyond NZ + AU | Bet 5 explicitly excludes a third geography in H1. | Non-NZ/AU LOI ≥ $50k ARR before Sprint 6 (Bet 5 kill criterion). | Founder |
+| P-013 | Mobile client | Non-goal #3 (engineering). | H2 refresh, or specific Partner asks. | Founder |
+| P-014 | Enterprise sales motion | Non-goal #2 (GTM). | H2 refresh, or inbound enterprise lead converts. | Founder |
+| P-015 | House Rules authoring console scope | Scored 15/25; Business tier; deferred to Sprint 5+. | Pro tier hits ≥ 10 paying customers (signal that Business tier is next). | Mark |
+| P-016 | Paid acquisition channel test | Non-goal #3 (GTM). | Bet 1 trips its kill criterion (<50 signups in 90 days). | Founder |
+| P-017 | KR2 interview velocity (15 in 90 days vs. Blank's 10–15/week) | Founder bandwidth caps the count; depth-per-interview is the mitigation, but the velocity gap may invalidate Customer Development feedback loops. Contested. | First KR2 review checkpoint at 30 days: if < 5 interviews completed, raise to founder for either velocity push or KR rewrite. | Founder |
+| P-018 | Christensen disruption-incumbent litmus (would Autodesk / Bentley / Microsoft / OpenAI see Redline as a sustaining innovation?) | Bet 6 classifies Redline as new-market disruption against nonconsumption, but the litmus test ("is this disruptive to ALL significant incumbents?") is unverified. If any major incumbent treats this as sustaining, Christensen's theory predicts we lose a head-on fight. | Any incumbent ships or announces a feature targeting senior-review quality for geotech reports; or H2 strategy refresh. | Founder + Ron |
+| P-019 | Product-Led SEO commitment (Schwartz pattern: Skeleton Generator results pages + standards landing pages as SEO surface) | Patience required conflicts with KR1's 60-day window; customer-document privacy bleeds into a zero-publication default; engineering load competes with Sprint 2–3 Pre-Review build. | Skeleton Generator has shipped, KR1 has resolved, consent UX exists; or H2 strategy refresh. | Founder + Mark |
+| P-020 | Reddit as a marketing channel | Wrong audience for the Day-1 ICP — r/civilengineering and r/geotech are dominated by students, US-centric career questions, and memes; not practising senior NZ/AU engineers. Founder raised in 2026-04-18 review; rejected for H1. | Validated demand from a non-target persona (e.g., university students entering geotech) becomes a strategic priority; or H2 refresh expands ICP scope. | Founder + Ron |
+| P-021 | Google Ads in H1 vs. H2 | Founder re-opened paid acquisition question 2026-04-18. Holding to original H1 commitment (non-goal #3): Bet 1 must produce a falsifiable organic CAC before paid is added as a second variable. Paid becomes the recovery path if KR1 trips its kill criterion (P-016). | KR1 fails (< 50 signups in 60 days), OR H2 strategy refresh. | Founder |
+| P-022 | Enterprise tier on the public pricing page | Founder proposed a four-tier page (Free + Pro + Business waitlist + Enterprise contact). Ron's recommendation: drop Enterprise from the public page in H1 — it contradicts non-goal GTM #2 (no enterprise sales motion) and the Tier 1 anti-target, and risks adverse network signal if a Tier 1 firm requests certifications we do not hold. See `pricing-methodology.md` Fake-Door Tier Discipline. | Founder commits to actually serving enterprise inbound (with the time and certification investment that implies); or H2 refresh. | Founder |
+| P-023 | Pre-launch period (Apr 18 – May 31, 2026) | Founder is employed until 2026-05-31. All product implementation, code, and infrastructure work is blocked until 2026-06-01. Strategy, planning, NotebookLM research, and LinkedIn content preparation on personal time/hardware are permitted. All KR and sprint clocks start June 1. | Founder's last day at current employer is confirmed; clean-break evidenced. | Founder |
+
+## How to Add a Parked Decision
+
+1. Append to the table above with the next P-ID.
+2. State *why* it is parked (not "TBD" — a real reason).
+3. State the trigger event that will unfreeze it. "Later" is not a trigger.
+4. Name the owner who acts when it unfreezes.
+
+## How to Unfreeze a Parked Decision
+
+1. Confirm the trigger event has actually occurred (with evidence — not a feeling).
+2. Move the entry into the relevant strategy artifact and remove from this register.
+3. Reference the unfreeze in the next strategy refresh.
+
+## Provenance
+
+Items P-001 through P-006 are direct founder decisions this pass. P-007 through P-014 are
+captured from the founder's brief and the strategy artifact set written this pass.
+P-015 and P-016 are flagged by Ron based on the feature backlog and GTM non-goals.
+P-017 through P-019 are raised in the 2026-04-18 notebook-mining pass against the
+entrepreneurship-startup-strategy and digital-marketing-social-selling notebooks
+(see `discovery-guide.md` and `gtm/content-engine.md` for the grounding context).
