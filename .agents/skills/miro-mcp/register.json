@@ -1,0 +1,45 @@
+[
+  {
+    "id": "product-management",
+    "name": "Redline — Product Management",
+    "url": "https://miro.com/app/board/uXjVGgXTnIY=/",
+    "description": "Canonical visual workspace for Redline product management. Owns all relational and spatial product artifacts: roadmaps, opportunity solution trees, user story maps, dependency graphs, sprint tracking, and prioritisation matrices. Markdown docs are canonical for narrative artifacts (PRDs, decisions); this board is canonical for spatial ones.",
+    "owner": "Mark",
+    "purpose": "Product management",
+    "frames": [
+      "Feature D: Pre-Review Engine — story map, D1-D6 slices, dependency graph, sprint table",
+      "Sprint Tracking — live sprint status table",
+      "Roadmap — opportunity solution tree, H2 2026 horizon view",
+      "MoSCoW Register — current feature prioritisation matrix"
+    ],
+    "source_of_truth_docs": [
+      "docs/product/strategy/feature-backlog.md",
+      "docs/product/strategy/strategic-bets.md",
+      "docs/product/strategy/decisions/parked-decisions.md",
+      "docs/product/strategy/okrs/"
+    ],
+    "added": "2026-04-19",
+    "status": "active"
+  },
+  {
+    "id": "marketing",
+    "name": "Redline — Marketing",
+    "url": "https://miro.com/app/board/uXjVGgXhmAU=/",
+    "description": "Canonical visual workspace for Redline marketing artifacts. Owns all relational and spatial marketing artifacts: Content Segmentation Grid, campaign maps, Dream 100 target list, editorial calendar visual, and persona maps. Markdown docs are canonical for written artifacts (content briefs, signal reports); this board is canonical for spatial ones.",
+    "owner": "John",
+    "purpose": "Marketing",
+    "frames": [
+      "Content Segmentation Grid — content x persona x buying-cycle stage matrix",
+      "Editorial Calendar — 90-day visual calendar with Graeme sign-off flags",
+      "Dream 100 — target list with commenting intelligence",
+      "Personas — Day-1 ICP and LinkedIn audience maps"
+    ],
+    "source_of_truth_docs": [
+      "docs/product/marketing/README.md",
+      "docs/product/marketing/archive-intelligence.md",
+      "docs/product/strategy/positioning.md"
+    ],
+    "added": "2026-04-19",
+    "status": "active"
+  }
+]

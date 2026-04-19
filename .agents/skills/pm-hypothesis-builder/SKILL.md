@@ -3,72 +3,59 @@ name: pm-hypothesis-builder
 description: Use when an assumption needs formalizing into a testable hypothesis, a hypothesis draft is non-falsifiable or vague, or before designing any experiment.
 ---
 
-# Skill: Hypothesis Builder
+# Hypothesis Builder
 
-## Purpose
-Convert assumptions into falsifiable hypotheses ready to file in `docs/product/hypotheses/`.
-Enforce metric, threshold, and time boundary — the three non-negotiables of testable thinking.
+## Overview
+
+Convert assumptions into falsifiable hypotheses ready to file in `docs/product/hypotheses/`. Every hypothesis must have a metric, threshold, and time boundary — the three non-negotiables.
 
 ## When to Use
-- After running Assumption Extractor
-- When an initiative has assumptions that need formal testing
+
+- After extracting assumptions from an initiative
 - When a hypothesis draft is vague or non-falsifiable
 - Before designing any experiment
 
-## Behavior Rules
-- Reject any hypothesis that cannot be proven wrong — flag it explicitly
+## Quick Reference
+
+| Element | Good | Bad |
+|---|---|---|
+| Metric | "30-day retention rate" | "engagement" |
+| Success threshold | ">15% within 90 days" | "improves" |
+| Failure threshold | "<5% after 90 days" | Not defined |
+| Time bound | "within 90 days" | "eventually" |
+
+## Behaviour Rules
+
+- Reject any hypothesis that cannot be proven wrong
 - Require a specific metric — "engagement improves" is not a metric
 - Require both success and failure thresholds — not just a target
 - Require a time boundary — open-ended hypotheses are untestable
-- Flag language like "users will like", "it will be better", "should improve" — these are not measurable
-- Output must be directly pasteable into the `docs/product/hypotheses/` template
+- Flag language like "users will like", "it will be better", "should improve"
 
-## Input Expectations
-Provide one of:
-- A raw assumption (from Assumption Extractor or freeform)
-- A draft hypothesis that needs sharpening
-- An initiative description to extract and formalize its core hypothesis
+## Input
+
+Provide a raw assumption, a draft hypothesis to sharpen, or an initiative description to extract and formalize its core hypothesis.
 
 ## Output Structure
 
-### Hypothesis Statement
-> We believe that [specific user segment] experiences [specific problem].
-> If we [specific intervention], then [measurable outcome] will change by [amount] within [time period].
+**Hypothesis Statement:** "We believe that [segment] experiences [problem]. If we [intervention], then [outcome] will change by [amount] within [period]."
 
-### Hypothesis File (paste-ready)
+**Hypothesis File** (paste-ready for `docs/product/hypotheses/`):
 
 ```
-# HYP — [Short hypothesis statement]
+# HYP — [Short statement]
 
 ## Related Initiative
 - [[Initiative: ...]]
 
-## Risk Level
-High | Medium | Low
-
-## Why this might fail
-- [Reason 1]
-- [Reason 2]
-
-## Test Plan
-- Method: [...]
-- Who/where: [...]
-- Duration: [...]
-
-## Metric + Threshold
-- Metric: [Specific, measurable]
-- Success threshold: [Numeric or behavioral — what "validated" looks like]
-- Failure threshold: [Numeric or behavioral — what "invalidated" looks like]
-
-## Status
-Untested
-
-## Last Updated
-[YYYY-MM-DD]
+## Risk Level / Why This Might Fail / Test Plan / Metric + Threshold / Status / Last Updated
 ```
 
-### Validation Flags
-- Falsifiable: [Yes / No — explain if No]
-- Metric defined: [Yes / No]
-- Thresholds defined: [Yes / No]
-- Time-bound: [Yes / No]
+**Validation Flags:** Falsifiable, Metric defined, Thresholds defined, Time-bound — each Yes/No.
+
+## Common Mistakes
+
+- **Vague metrics** — "user satisfaction" is a concept, not a metric. Name the instrument.
+- **Success-only thresholds** — without a failure threshold, you cannot invalidate.
+- **No time boundary** — "eventually" is not testable. Pick a date.
+- **Hypothesis as wish** — "users will love it" is a hope, not a hypothesis.

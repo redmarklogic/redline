@@ -9,10 +9,30 @@ description: Use when working with Miro boards — creating diagrams, documents,
 
 Miro MCP (Model Context Protocol) enables Claude to interact directly with Miro boards. Create diagrams, documents, and tables; read board content; and extract structured documentation from visual designs.
 
+## Board Register
+
+The canonical board register lives at `.agents/skills/miro-mcp/register.json`. Read that file before working on any board to get the correct URL, owner, purpose, and frame structure. Every Redline Miro board must be registered there.
+
+**IMPORTANT**: The Miro API does not support programmatic board creation. New boards must be created manually at miro.com, then their URL recorded in `register.json`. Update `status` from `"pending-url"` to `"active"` once the URL is confirmed.
+
+### Current boards (summary)
+
+| ID | Name | Owner | Purpose | Status |
+|---|---|---|---|---|
+| `product-management` | Redline — Product Management | Mark | Roadmaps, story maps, sprint tracking, MoSCoW | active |
+| `marketing` | Redline — Marketing | John | Content Segmentation Grid, editorial calendar, Dream 100, personas | active |
+
+### Conventions
+
+- **Miro is canonical** for relational and spatial artifacts (roadmaps, story maps, matrices). Markdown is canonical for narrative artifacts (PRDs, decisions, briefs). Do not mirror unless explicitly requested.
+- Each board is divided into **frames** — one frame per major artifact type. Frame names follow the pattern `[Feature/Area] — [artifact type]`.
+- Status selects on tracking tables: `To Do` / `In Progress` / `Shipped` / `Parked`.
+- Every table row must have a named Owner field.
+
 ## When NOT to Use
 - Miro MCP is not configured in the session — verify tools are available first.
 - The user needs a static diagram export — use a local diagramming tool instead.
-- The board URL is not accessible to the agent.
+- The board URL is not accessible to the agent or shows `status: "pending-url"` in the register.
 
 ## Quick Reference
 

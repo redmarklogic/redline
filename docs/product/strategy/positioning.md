@@ -83,6 +83,11 @@ personal engineering practice.
 - "Watched the senior-review process from the inside as the team's data scientist."
 - Commentary on *publicly available* cases (NZ court judgements, Ground Engineering
   magazine case studies, published guidance updates).
+- Pattern observations grounded in publicly available industry discourse — framed as
+  "a pattern I keep seeing in how the industry discusses this problem", not as a citation
+  of a personal corpus. The source of the pattern (the Ground Engineering archive; see
+  `docs/product/marketing/archive-intelligence.md`) is never disclosed. Insights surface
+  in content; the archive remains invisible.
 
 **Forbidden founder framings (reputational and legally adjacent):**
 
@@ -100,10 +105,21 @@ Misrepresenting professional credentials in a market this small is irrecoverable
 This section is binding on every external surface — web, LinkedIn, sales decks,
 podcast appearances, conference panels.
 
+**Founder persona framing (internal):** The founder's LinkedIn presence is grounded in
+the credibility boundaries above, not in a performed "actor" character. The mental model
+that fits the boundaries is "authentic positioned voice" — the founder is genuinely a
+data scientist who read deeply, watched the process, and is building against the
+literature. That is not a performance; it is an honest positioning. Ron's recommendation
+(2026-04-19): drop the "actor" framing internally. In a market of practitioners who talk
+to each other, a performed persona is terminal if it ever reads as inauthentic. Founder
+decision pending; see `docs/product/strategy/decisions/parked-decisions.md` P-028.
+
 ## Provenance
 
 Switzerland-neutral framing and Infrastructure-not-SaaS lexicon are strategy synthesis;
 not memo-grounded. Domain pain framing draws on prior research files catalogued in
 `docs/research/20260418-founder-memos-strategy-grounding.md`. Credibility Boundaries
 section added 2026-04-18 per founder correction (he is a data scientist, not an
-engineer).
+engineer). Archive citation rule and founder persona framing note added 2026-04-19
+following Ron + John advisory session on the Ground Engineering archive as a stealth
+intelligence asset.

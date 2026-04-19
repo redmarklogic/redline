@@ -81,6 +81,11 @@ Optionally add notebooks to the managed library first using `mcp_notebooklm_add_
 
 notebooks can be referenced by name in future sessions.
 
+**Before writing any query**, read the prompting guide:
+[`prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md) — covers prompt
+anatomy, NotebookLM-specific rules (self-contained queries, decomposition, hallucination
+scoping), before/after templates, common mistakes, and a pre-send checklist.
+
 ### Step 4 — Plain-language tone
 
 - **MUST** prepend the following prefix to every `ask_question` call unless the
