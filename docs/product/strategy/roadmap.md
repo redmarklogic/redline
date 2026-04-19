@@ -28,6 +28,7 @@ the Free Skeleton Wedge without revival. See [strategic-bets.md](strategic-bets.
 | A — GBR Skeleton Generator | [Bet 1](strategic-bets.md) | Ship | — | — | Quota exhaustion → outbound |
 | M — Document Parser | [Bet 1](strategic-bets.md) | Ship | — | — | Infra dependency of A |
 | N — Standards Knowledge Store (MVP) | [Bet 3](strategic-bets.md) | Ship | — | — | NZ-only subset |
+| P — Platform and Web Surface | [Bet 1](strategic-bets.md) | Discovery (Wk1) → Ship MVP (Wk2–4) | Iterate | — | SSO-gated signup flow live (Jun 30). See [platform-requirements.md](../../specs/003-platform-website/platform-requirements.md) |
 | **[M2] 60-day warning check** | [Bet 1](strategic-bets.md) | — | Ship | — | KR1 ≥ 30 signups by Day 60 (Jul 31) |
 | G — Justification Email Generator | [Bet 2](strategic-bets.md) | — | Discovery | Ship | Bottoms-up conversion |
 | **[M3] 90-day kill criterion** | [Bet 1](strategic-bets.md) | — | — | Gate | 50 signups + 5% outbound → continue (Sep 1) |
