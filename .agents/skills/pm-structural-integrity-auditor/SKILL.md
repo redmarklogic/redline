@@ -3,80 +3,50 @@ name: pm-structural-integrity-auditor
 description: Use when auditing any product artifact — strategy, initiative, hypothesis, or experiment — for structural gaps before it causes misaligned work or wasted experiments.
 ---
 
-# Agent: Structural Integrity Auditor
+# Structural Integrity Auditor
 
-## Purpose
-Run a rigorous structural audit on any product artifact.
-Surface gaps before they become misaligned work, wasted experiments, or failed decisions.
+## Overview
+
+Run a rigorous structural audit on any product artifact. Surface gaps before they become misaligned work, wasted experiments, or failed decisions. Audit only — do not rewrite or fix.
 
 ## When to Use
-- Before marking an initiative Active
-- Before running an experiment
+
+- Before marking an initiative Active or running an experiment
 - Before presenting strategy to leadership
 - During weekly reviews to catch drift
-- Whenever something feels off but you can't articulate why
+- Whenever something feels off but you cannot articulate why
 
-## Behavior Rules
+## Quick Reference: Audit Checklist
+
+**Strategy:** Vision (1 sentence), North Star Metric (named + defined), supporting metrics (specific + measurable), strategic bets (max 3, each with time horizon).
+
+**Initiative:** Linked to bet, measurable outcome with time horizon, hypotheses linked, stakeholders named, decision criteria defined.
+
+**Hypothesis:** Falsifiable, specific metric, success + failure thresholds, test plan, current status.
+
+**Experiment:** Linked to hypothesis, metric + threshold defined, results recorded, interpretation exists, decision recorded (Continue / Iterate / Kill).
+
+## Behaviour Rules
+
 - Audit only — do not rewrite or fix
 - Be precise: cite the specific field or section that fails
-- Do not soften findings — if it's broken, say so
-- If no gaps are found, state that explicitly — do not invent issues
-- Staleness check: flag any artifact with last updated >7 days if date is provided
-- Always output the Structural Gaps section, even if empty
-
-## Input Expectations
-Provide one of:
-- A Strategy document (Vision, KPIs, Strategic Bets)
-- An Initiative file
-- A Hypothesis file
-- An Experiment file
-
-Include last updated date if available.
-
-## Audit Checklist
-
-### Strategy
-- [ ] Vision is stated in one sentence
-- [ ] North Star Metric is named and defined
-- [ ] Supporting metrics are specific and measurable
-- [ ] Strategic bets are max 3
-- [ ] Each bet has a time horizon
-
-### Initiative
-- [ ] Linked to a specific Strategic Bet
-- [ ] Outcome is measurable with a defined metric
-- [ ] Outcome has a time horizon
-- [ ] Hypotheses are linked
-- [ ] Stakeholders are named
-- [ ] Decision criteria defined if decision is required
-
-### Hypothesis
-- [ ] Falsifiable (can be proven wrong)
-- [ ] Metric is specific
-- [ ] Success threshold is defined
-- [ ] Failure threshold is defined
-- [ ] Test plan exists
-- [ ] Status is current
-
-### Experiment
-- [ ] Linked to a hypothesis
-- [ ] Metric and threshold defined
-- [ ] Results recorded
-- [ ] Interpretation exists
-- [ ] Decision recorded (Continue / Iterate / Kill)
+- Do not soften findings — if it is broken, say so
+- If no gaps found, state that explicitly — do not invent issues
+- Flag any artifact with last updated >7 days (if date provided)
 
 ## Output Structure
 
-### Artifact Audited
-[Name and type]
+**Artifact Audited:** Name and type.
 
-### Audit Results
-[Checklist items with pass/fail per section]
+**Audit Results:** Checklist items with pass/fail per section.
 
-### Structural Gaps
-- [Gap 1: field name — specific issue]
-- [Gap 2: ...]
-(State "No structural gaps detected" if clean)
+**Structural Gaps:** Specific gaps, or "No structural gaps detected."
 
-### Staleness Flag
-[Flag if last updated >7 days, or "N/A — no date provided"]
+**Staleness Flag:** Flag if >7 days, or "N/A — no date provided."
+
+## Common Mistakes
+
+- **Inventing issues** — over-auditing erodes trust; if it passes, say so.
+- **Auditing content quality** — this checks structure, not prose.
+- **Softening findings** — "might be worth considering" is not an audit finding.
+- **Skipping staleness** — a structurally sound artifact that is 30 days stale is still broken.
