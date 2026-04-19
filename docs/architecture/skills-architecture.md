@@ -197,4 +197,4 @@ system is recursive).
 - `AGENTS.md` — the canonical index of every skill and persona.
 - `.agents/skills/writing-skills/SKILL.md` — how skills are authored and tested.
 - `.agents/skills/skills-create/SKILL.md` — checklist for adding a new skill.
-- `.github/agents/mark.agent.md` and `.github/agents/ron.agent.md` — the two personas.
+- `.github/agents/rl.mark.agent.md` and `.github/agents/rl.ron.agent.md` — the two personas.

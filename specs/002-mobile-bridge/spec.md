@@ -11,8 +11,8 @@ Mobile app, making this custom Telegram bridge unnecessary. See
 | Source | Authority | Status |
 | --- | --- | --- |
 | Conversation context (architectural analysis report, 2026-04-18) | Primary -- problem framing | Captured below |
-| `.github/agents/ron.agent.md` (existing) | Binding -- persona definition | No conflicts |
-| `.github/agents/mark.agent.md` (existing) | Binding -- persona definition | No conflicts |
+| `.github/agents/rl.ron.agent.md` (existing) | Binding -- persona definition | No conflicts |
+| `.github/agents/rl.mark.agent.md` (existing) | Binding -- persona definition | No conflicts |
 | `.agents/skills/notebooklm-mcp/SKILL.md` | Supporting -- auth model constraint | No conflicts |
 | `.agents/skills/security/SKILL.md` | Binding -- secrets handling | No conflicts |
 | `AGENTS.md` (Python/uv/env-var conventions) | Binding -- coding standards | No conflicts |
