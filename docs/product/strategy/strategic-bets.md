@@ -82,8 +82,16 @@ curated registry is a defensible asset.
 - Maintenance load is hours per quarter, not weeks per month.
 - Standards licensing does not block resale of derived guidance.
 
-**Kill criterion**: Licensing review concludes derived guidance from NZS standards
-cannot be resold under any commercial model. Bet dies; refactor to citation-only.
+**Architecture decision (locked 2026-04-19)**: The Standards Knowledge Store is
+**internal-only and citation-only**. It stores clause references and applicability
+mappings — never full proprietary text. It is never exposed as a public-facing query
+interface. This is confirmed professionally defensible by Graeme (high confidence).
+See `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+and `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`.
+
+**Kill criterion**: Licensing review (P-026) concludes that even citation-only internal
+use of NZS/AS standards content requires a licence Redline cannot obtain or afford.
+Bet dies; refactor to public-LLM-only grounding with no curated corpus.
 
 **OKR ladder**: Underwrites all KRs; not directly metered.
 

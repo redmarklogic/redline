@@ -31,3 +31,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 
 | Topic | Sub-domain | Last verified | Confidence | Link |
 |---|---|---|---|---|
+| NZ/AU Standards — IP Classification and Licensing for Software Use | standards-and-codes | 2026-04-19 | single-source | [nz-au-standards-ip-classification.md](standards-and-codes/nz-au-standards-ip-classification.md) |
