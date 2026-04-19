@@ -28,6 +28,8 @@ month of unrecoverable cohort data.
 | `quota_consumed` | Each successful generation against the 3–5 cap | Quota mechanic instrumentation |
 | `quota_exhausted` | User hits the cap | Outbound trigger event (24-hour SLA per launch plan) |
 | `return_visit` | Authenticated user returns ≥ 24 hours later | Engagement signal; feeds KR3/KR4 leading indicator |
+| `outbound_sent` | Founder sends outbound email to a quota-exhausted user | Denominator for outbound response rate (Bet 1 kill criterion leg 2) |
+| `outbound_responded` | Quota-exhausted user replies to outbound email | Numerator for outbound response rate; KR2 sub-metric |
 | `pricing_page_view` | Pricing page loads (when shipped) | Demand signal for Pro and waitlist tiers |
 | `business_waitlist_submitted` | Fake-door Business waitlist form completes | Leading indicator for Business-tier build |
 
