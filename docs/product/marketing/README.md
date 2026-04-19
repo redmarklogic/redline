@@ -12,6 +12,7 @@ Ron writes strategy at `docs/product/strategy/`. Mark writes PRDs at
 |------|----------|-------|
 | `the-big-5/` | Content briefs and drafts under the They Ask You Answer / Big 5 framework | `marketing-content-big-5` |
 | `seo/keyword-strategy.md` | Traditional keyword + intent map | `marketing-product-led-seo` |
+| `seo/keyword-discovery-tools-survey.md` | Survey of API/CLI-accessible keyword + question discovery tools for sourcing Product-Led SEO opportunities | `marketing-product-led-seo` |
 | `seo/product-led-seo-briefs/` | Marketing briefs for free programmatic tools, handed to Mark for PRD conversion | `marketing-product-led-seo` |
 | `social-selling/linkedin-playbook.md` | The team's LinkedIn social-selling playbook | `marketing-social-selling-linkedin` |
 | `social-selling/profiles/` | Per-person PIPA-formatted profile playbooks | `marketing-social-selling-linkedin` |
