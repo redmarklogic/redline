@@ -2,7 +2,9 @@
 
 **Branch**: `feature/mobile-bridge`
 **Created**: 2026-04-18
-**Status**: Draft
+**Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub
+Mobile app, making this custom Telegram bridge unnecessary. See
+`docs/product/strategy/decisions/parked-decisions.md` P-025.
 
 ## Source Document Reconciliation
 
