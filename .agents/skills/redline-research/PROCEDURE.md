@@ -2,6 +2,11 @@
 
 Full reference for the `redline-research` skill. Load this file when actively running a research session.
 
+**REQUIRED:** Before writing any query, review the prompting principles in
+[`notebooklm-mcp/prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md).
+The procedure below encodes those principles; the guide is the authoritative reference
+if a situation is not covered here.
+
 ## Knowledge Bases
 
 The canonical notebook register lives at `.agents/skills/notebooklm-mcp/register.json`.
@@ -52,9 +57,7 @@ is marked Advisory Board only and the access condition is not met.
 
 ### Step 4 — Query the most relevant engineering notebook first
 
-Open a session on the most relevant engineering notebook (typically **Engineering Standards**
-or **Ground Engineering Magazine**) and ask your first question using the following mandatory
-preamble template:
+Open a session on the most relevant notebook for the task at hand, and ask your first question using the following mandatory preamble template:
 
 ```
 Actor: <role and context from Step 2, e.g. "an intermediate civil engineer building
@@ -64,13 +67,15 @@ Explain for the uninitiated. Define any specialist term or acronym the first tim
 appears. Keep all citations. Avoid ambiguity.
 
 <Your precise, self-contained research question here.>
+
+Return cited Markdown prose. Answer only using information found in the notebook sources.
+If the notebook does not contain a direct answer, say "Not covered in sources."
 ```
 
-Rules for engineering notebook queries:
+Before sending any query, run through the Quick Checklist in
+[`notebooklm-mcp/prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md).
+One additional rule specific to research sessions:
 
-- Use explicit noun phrases, never pronouns ("the Rankine active pressure coefficient Kₐ",
-  not "it").
-- One concept per query — break compound questions into sequential calls.
 - Retain the full NotebookLM response verbatim, including citations. Do not paraphrase.
 
 ### Step 5 — Cross-reference with complementary notebooks
@@ -196,4 +201,5 @@ Rules for the output document:
 - Do not skip the Glossary — domain experts who read the document later will need it.
 - Do not write findings as lists of bullet points stripped of context — each finding must
   be a coherent prose paragraph with embedded citations.
-- Do not ask a compound question in a single `ask_question` call — split it.
+- Do not ask compound questions or use biased phrasing — see the prompting guide's
+  Common Mistakes table and Quick Checklist.

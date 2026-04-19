@@ -46,7 +46,7 @@ outputs — enough to create a calendar event.
 | Field | Detail |
 |---|---|
 | **Purpose** | Process the latest Ground Engineering issue; surface post angles and product signals using the archive intelligence layer |
-| **Attendees** | Founder, John (or media team representative) |
+| **Attendees** | Founder (leads queries), Graeme (NZ/AU filter), John (Big 5 mapping and post angles), Mark (product signal extraction); Ron joins only if a strategic bet is touched |
 | **Calendar** | Monthly, within 5 business days of each new Ground Engineering issue dropping |
 | **Duration** | 60–90 min |
 | **Inputs** | New Ground Engineering issue; NotebookLM `ground-engineering-magazine` notebook; Dream 100 target list |
