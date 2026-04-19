@@ -89,6 +89,13 @@ Operational discovery — feeds Sprint 1 PRD acceptance criteria:
 ### Part 5 — Pricing module (Van Westendorp, 2 minutes)
 
 Only at the very end, after the JTBD is mapped. See `pricing-methodology.md` Step 1.
+
+**Note**: Part 5 may be dropped if the conversation runs long, the interviewee lacks
+budget authority (e.g. a junior with no purchasing role), or the rapport would be
+damaged by shifting to pricing questions. The pricing-methodology gate requires
+Van Westendorp completion in >= 10 of 15 KR2 conversations — not all 15. Skipping
+Part 5 in a given interview is acceptable; skipping it habitually is not.
+
 Four anchor questions:
 
 - At what monthly price would this be so cheap you'd doubt the quality?

@@ -11,7 +11,7 @@ and use cases.
 **Access rules:**
 - Entries with `"access": "open"` may be queried by any agent.
 - Entries with `"access": "advisory-board-only"` must be skipped unless the session context
-  explicitly identifies the user as an advisory board member (Ron or Mark).
+  explicitly identifies the user as an advisory board member (Ron, Mark, or Graeme).
   Do not mention skipped notebooks.
 
 ## Project Context Files

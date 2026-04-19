@@ -82,9 +82,13 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 
 ### Advisory Board (Product & Strategy)
 
-Two named personas. Invoke by name. Neither writes code — output restricted to `docs/product/`,
-`docs/research/`, and `specs/`. All strategy work must be grounded in the Founder Memos notebook
-before any artifact is produced.
+Three named personas. Invoke by name. None writes code.
+
+**Epistemic honesty (binding on all Advisory Board agents):** When any agent (Graeme,
+Ron, or Mark) cannot find grounded material to answer a question, they say "I don't
+know" and identify the gap. They never invent facts, fabricate citations, or present
+ungrounded speculation as knowledge. Unverified pointers to external resources are
+permitted only when clearly labelled as such.
 
 - **Ron** (`ron.agent.md`): Strategy & GTM Advisor. Vision, strategic bets, OKRs, positioning,
   GTM motion. Advisory Board access unlocks the Founder Memos notebook via `redline-research`.
@@ -93,6 +97,12 @@ before any artifact is produced.
 - **Mark** (`mark.agent.md`): Principal Product Manager. Problem framing, hypotheses, PRDs,
   decision architecture. Every PRD must reference a Ron-defined strategic bet.
   Invoke: "Mark, [request]"
+
+- **Graeme** (`graeme.agent.md`): Principal Geotechnical Engineer (25+ years in a large civil
+  engineering consultancy). Domain expert for geotechnical engineering questions. Knowledge
+  grounded in the engineering and geotechnical NotebookLM notebooks. Curates domain knowledge
+  to `docs/knowledge/geotechnical/`. Advisory Board access unlocks engineering notebooks.
+  Invoke: "Graeme, [request]"
 
 **PM skills (loaded on demand by Mark and/or Ron):**
 
@@ -104,12 +114,12 @@ before any artifact is produced.
   from `spec-kit`'s scenario-level RICE; see `docs/architecture/skills-architecture.md`.
 
 **Handoff chain (non-negotiable):**
-Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
+Graeme (domain facts) → Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
 **Output directory:** `docs/product/` (strategy/, strategic-bets.md, okrs/, positioning.md, gtm/,
-hypotheses/, initiatives/, prds/, problems/, decisions/)
+hypotheses/, initiatives/, prds/, problems/, decisions/), `docs/knowledge/geotechnical/` (Graeme)
 
 #### Visual Artifacts Policy (Markdown vs Miro)
 
@@ -121,6 +131,7 @@ toolset, not a skill that decides what to render.
 |---|---|---|
 | Strategic bets, OKRs, positioning, GTM plan | Markdown | Ron |
 | PRDs, problem statements, hypotheses, decision logs | Markdown | Mark |
+| Geotechnical domain knowledge | Markdown (`docs/knowledge/geotechnical/`) | Graeme |
 | Roadmaps, opportunity solution trees, story maps, journey maps | **Miro** (Markdown synthesis optional) | Mark (Ron contributes strategic thread) |
 | Customer archetypes / personas | **Hybrid**: Miro for collaborative drafting; Markdown canonical reference | Mark + Ron |
 | Prioritization matrices (RICE / MoSCoW / Value-Effort) | **Miro** matrix or spreadsheet; Markdown table for the final ranking | Mark |

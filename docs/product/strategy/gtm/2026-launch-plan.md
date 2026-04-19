@@ -71,7 +71,7 @@ forfeits the falsification value of the bet.
   practitioners. Logged under `decisions/parked-decisions.md` P-020. May be revisited
   for adjacent personas (e.g. junior engineers in study programmes) at H2 strategy
   refresh, but not for the Day-1 ICP.
-- **Google Ads — deferred to H2.** Founder raised re-opening this in 2026-04-18 review.
+- **Google Ads — not committed in H2.** Founder raised re-opening this in 2026-04-18 review.
   Holding to the original commitment for H2 (non-goal #3): Bet 1 must produce a
   falsifiable organic CAC before we add paid as a second variable. If Bet 1 trips its
   kill criterion (KR1 < 50 signups in 60 days), paid acquisition becomes the recovery
@@ -80,7 +80,7 @@ forfeits the falsification value of the bet.
   global; the founder LinkedIn channel reaches AU/UK/CA practitioners at zero marginal
   cost. Adding paid English-speaking-market channels in H2 is premature.
 
-**Product-Led SEO (Schwartz) — deferred to H2**: The Skeleton Generator is
+**Product-Led SEO (Schwartz) — not committed in H2**: The Skeleton Generator is
 structurally compatible with the Product-Led SEO pattern (a *product*, not blog posts,
 as the SEO surface). Not committed in H2 — patience requirement conflicts with KR1's
 60-day window, and customer-document privacy bleeds into a zero-publication default.
@@ -111,8 +111,7 @@ Self-serve for free tier. White-glove for Pro:
 | Risk | Mitigation |
 |---|---|
 | Quota cost exceeds $1/user | KR5 ceiling enforced; rate-limit before KR5 trips |
-| Email-verified signup ≠ buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
-| Firm IT blocks Word task pane | Sprint 1 ships browser upload as fallback, not Word add-in |
+| Email-verified signup does not equal buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
 | Founder bandwidth caps qualified conversations at 15 | If KR1 over-delivers, batch outbound and prioritise the 15 highest-fit signups |
 | Pricing discovery delays paid conversion | Accept; KR3 allows LOIs as substitute for paid revenue |
 

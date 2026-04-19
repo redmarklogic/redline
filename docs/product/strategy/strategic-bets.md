@@ -5,7 +5,7 @@
 **Constraint**: Founder's first official day is 2026-06-01. All kill-criterion
 timelines count from that date.
 
-Five bets. Each bet is a falsifiable claim with a kill criterion. If a bet's kill criterion
+Six bets. Each bet is a falsifiable claim with a kill criterion. If a bet's kill criterion
 trips, the bet is dead — we do not revive it without a new grounding pass.
 
 ---
@@ -26,10 +26,14 @@ quota-exhausted user is $0.10–$1.
 - Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.
 - At least 1 in 5 responders will book a paid Pre-Review trial.
 
-**Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email signups OR
-fewer than 5% of quota-exhausted users respond to outbound. Either kills the wedge.
+**Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email
+signups OR fewer than 5% of quota-exhausted users respond to outbound. Either kills the
+wedge. The signup count is the authoritative trigger; the activation rate in KR1 is a
+product-quality metric that informs iteration, not a bet-kill signal.
 
-**OKR ladder**: `okrs/2026-h2.md` → KR1 (signups), KR3 (signup-to-paid conversion).
+**OKR ladder**: `okrs/2026-h2.md` → KR1 (signups — warning signal at 60 days; kill
+criterion at 90 days), KR2 sub-metric (outbound response rate), KR3 (signup-to-paid
+conversion).
 
 ---
 
@@ -44,9 +48,12 @@ or House Rules engine.
 Phase-2 buyer (Partner) we are not yet credible to.
 
 **Assumption stack**:
-- A rule library covering 20–30 common reviewer markup patterns is sufficient to deliver
+- A rule library covering 20-30 common reviewer markup patterns is sufficient to deliver
   perceived value (we do not need 200).
-- Word task pane integration is acceptable to the engineer's workflow.
+- ~~Word task pane integration is acceptable to the engineer's workflow.~~ **Parked
+  (2026-04-19).** Web interface only in H2. Word task pane desirability will be
+  re-evaluated during KR2 discovery interviews. See `decisions/parked-decisions.md`
+  P-024.
 - Firm IT will permit the integration without a 6-month security review for self-serve
   Pro-tier seats.
 
