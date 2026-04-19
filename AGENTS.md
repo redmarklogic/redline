@@ -82,17 +82,36 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 
 ### Advisory Board (Product & Strategy)
 
-Two named personas. Invoke by name. Neither writes code — output restricted to `docs/product/`,
-`docs/research/`, and `specs/`. All strategy work must be grounded in the Founder Memos notebook
-before any artifact is produced.
+Four named personas. Invoke by name. None writes code.
 
-- **Ron** (`ron.agent.md`): Strategy & GTM Advisor. Vision, strategic bets, OKRs, positioning,
+**Epistemic honesty (binding on all Advisory Board agents):** When any agent (Graeme,
+Ron, Mark, or John) cannot find grounded material to answer a question, they say "I don't
+know" and identify the gap. They never invent facts, fabricate citations, or present
+ungrounded speculation as knowledge. Unverified pointers to external resources are
+permitted only when clearly labelled as such.
+
+- **Ron** (`rl.ron.agent.md`): Strategy & GTM Advisor. Vision, strategic bets, OKRs, positioning,
   GTM motion. Advisory Board access unlocks the Founder Memos notebook via `redline-research`.
   Invoke: "Ron, [request]"
 
-- **Mark** (`mark.agent.md`): Principal Product Manager. Problem framing, hypotheses, PRDs,
+- **Mark** (`rl.mark.agent.md`): Principal Product Manager. Problem framing, hypotheses, PRDs,
   decision architecture. Every PRD must reference a Ron-defined strategic bet.
   Invoke: "Mark, [request]"
+
+- **Graeme** (`rl.graeme.agent.md`): Principal Geotechnical Engineer (25+ years in a large civil
+  engineering consultancy). Domain expert for geotechnical engineering questions. Knowledge
+  grounded in the engineering and geotechnical NotebookLM notebooks. Curates domain knowledge
+  to `docs/knowledge/geotechnical/`. Advisory Board access unlocks engineering notebooks.
+  Invoke: "Graeme, [request]"
+
+- **John** (`rl.john.agent.md`): Head of Marketing — Demand, Content & Brand. Owns content
+  marketing (They Ask You Answer / Big 5), SEO and Product-Led SEO, LinkedIn social selling,
+  brand voice, editorial calendar, and the monthly market-signal report fed back to Ron and
+  Mark. Sits downstream of Ron (consumes positioning/ICP/GTM motion) and parallel to Mark
+  (co-owns Product-Led SEO via marketing-brief-to-PRD handoff). Advisory Board access
+  unlocks `Digital Marketing & Social Selling`, `Entrepreneurship & Startup Strategy`, and
+  `Monetizing & Scaling Innovation` notebooks. Writes only to `docs/product/marketing/`.
+  Invoke: "John, [request]"
 
 **PM skills (loaded on demand by Mark and/or Ron):**
 
@@ -103,13 +122,38 @@ before any artifact is produced.
 - `pm-prioritization` — portfolio-level RICE / MoSCoW / Value-Effort (Mark-owned). Distinct
   from `spec-kit`'s scenario-level RICE; see `docs/architecture/skills-architecture.md`.
 
+**Marketing skills (loaded on demand by John):**
+
+- `marketing-content-big-5` — They Ask You Answer / Big 5 content framework
+- `marketing-product-led-seo` — Product-Led SEO co-design with Mark (marketing brief → PRD)
+- `marketing-social-selling-linkedin` — PIPA profiles, 10:1 LCS rule, Sales Navigator targeting
+- `marketing-ai-content-review` — AI-assisted drafting with mandatory Graeme/Mark/Ron sign-off
+- John also uses `pm-personas` (shared), `pm-prioritization` (campaign ranking),
+  `pm-structural-integrity-auditor` (`/challenge`), `qmd-narrative-design` (long-form), and
+  `miro-mcp` (Content Segmentation Grid, campaign maps).
+
 **Handoff chain (non-negotiable):**
-Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
+```
+Graeme (domain facts) → Ron (vision → bets → OKRs → positioning → GTM motion)
+                          ↓
+               Mark (problem → hypothesis → PRD)        John (content, SEO, social, campaigns)
+                          ↓                                ↓
+               spec-kit (engineering)                   published assets / channels
+                                       ↘             ↙
+                                Monthly Signal Report → back to Ron + Mark
+```
+
+Key John-specific dynamics:
+- Ron → John: positioning, ICP, GTM motion. John never invents these.
+- Mark → John: validated personas, launch-ready PRDs, Product-Led SEO PRDs.
+- John → Mark: Product-Led SEO marketing briefs (John never writes the PRD).
+- John → Graeme: every technical claim before publishing (mandatory, blocking).
+- John → Ron + Mark: monthly signal report (John's most strategic contribution).
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
 **Output directory:** `docs/product/` (strategy/, strategic-bets.md, okrs/, positioning.md, gtm/,
-hypotheses/, initiatives/, prds/, problems/, decisions/)
+hypotheses/, initiatives/, prds/, problems/, decisions/, marketing/), `docs/knowledge/geotechnical/` (Graeme)
 
 #### Visual Artifacts Policy (Markdown vs Miro)
 
@@ -121,9 +165,12 @@ toolset, not a skill that decides what to render.
 |---|---|---|
 | Strategic bets, OKRs, positioning, GTM plan | Markdown | Ron |
 | PRDs, problem statements, hypotheses, decision logs | Markdown | Mark |
+| Geotechnical domain knowledge | Markdown (`docs/knowledge/geotechnical/`) | Graeme |
 | Roadmaps, opportunity solution trees, story maps, journey maps | **Miro** (Markdown synthesis optional) | Mark (Ron contributes strategic thread) |
 | Customer archetypes / personas | **Hybrid**: Miro for collaborative drafting; Markdown canonical reference | Mark + Ron |
 | Prioritization matrices (RICE / MoSCoW / Value-Effort) | **Miro** matrix or spreadsheet; Markdown table for the final ranking | Mark |
+| Marketing campaigns, content briefs, signal reports, editorial calendar, style guide | Markdown (`docs/product/marketing/`) | John |
+| Content Segmentation Grid (content × persona × buying-cycle stage) | **Miro** matrix; Markdown index in `docs/product/marketing/` | John |
 
 Do not auto-mirror every Markdown artifact to Miro — mirror on demand. Drift starts when both
 surfaces try to be canonical for the same content.
@@ -131,6 +178,13 @@ surfaces try to be canonical for the same content.
 > **Note on `speckit.*` agents:** These files are vendor-generated by the `specify` CLI and
 > **must not be edited manually**. Running `specify upgrade` will overwrite manual changes.
 > All Redline-specific extensions belong in `.specify/extensions.yml`, not in these files.
+
+### Marketing (loaded on demand by John)
+
+- **`marketing-content-big-5`**: Use when planning content marketing topics, deciding what blog posts, videos, or pages to publish next, or when prospects keep asking the same sales questions — applies the They Ask You Answer / Big 5 framework.
+- **`marketing-product-led-seo`**: Use when planning SEO strategy beyond blog content, considering free programmatic tools or calculators to capture organic search traffic, or when handing an SEO idea off to product and engineering.
+- **`marketing-social-selling-linkedin`**: Use when building LinkedIn presence for the founder or sales team, optimising LinkedIn profiles, planning prospecting outreach, or designing comment-and-engagement campaigns on LinkedIn.
+- **`marketing-ai-content-review`**: Use when drafting marketing content with generative AI for a technical domain, or before publishing any AI-assisted content that makes domain claims requiring expert verification.
 
 ### Redline Project Research
 

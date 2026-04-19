@@ -71,7 +71,7 @@ forfeits the falsification value of the bet.
   practitioners. Logged under `decisions/parked-decisions.md` P-020. May be revisited
   for adjacent personas (e.g. junior engineers in study programmes) at H2 strategy
   refresh, but not for the Day-1 ICP.
-- **Google Ads — deferred to H2.** Founder raised re-opening this in 2026-04-18 review.
+- **Google Ads — not committed in H2.** Founder raised re-opening this in 2026-04-18 review.
   Holding to the original commitment for H2 (non-goal #3): Bet 1 must produce a
   falsifiable organic CAC before we add paid as a second variable. If Bet 1 trips its
   kill criterion (KR1 < 50 signups in 60 days), paid acquisition becomes the recovery
@@ -80,7 +80,7 @@ forfeits the falsification value of the bet.
   global; the founder LinkedIn channel reaches AU/UK/CA practitioners at zero marginal
   cost. Adding paid English-speaking-market channels in H2 is premature.
 
-**Product-Led SEO (Schwartz) — deferred to H2**: The Skeleton Generator is
+**Product-Led SEO (Schwartz) — not committed in H2**: The Skeleton Generator is
 structurally compatible with the Product-Led SEO pattern (a *product*, not blog posts,
 as the SEO surface). Not committed in H2 — patience requirement conflicts with KR1's
 60-day window, and customer-document privacy bleeds into a zero-publication default.
@@ -97,6 +97,47 @@ Pricing is parked. See `pricing-methodology.md`. For H2 launch, Pro tier is posi
 as "founder-priced beta" with explicit price-discovery framing during founder
 conversations. No public price list in H2.
 
+**Landing page business model statement (locked 2026-04-19).** The landing page must
+explain the business model on day one — withholding it causes professional engineers
+with procurement instincts to assume their data is the product. Approved framing:
+
+> "The Skeleton Generator is free. We are building a paid professional tier — pricing
+> will be set after we have understood how the market values it."
+
+This addresses the data-harvesting concern, explains the freemium model, and does not
+conflate the surface-display choice with the parked pricing decisions (P-002, P-003).
+No specific price points until P-002 and P-003 unfreeze.
+
+## Trust and Privacy
+
+**Principal-facing trust document (required before first quota-exhaustion event).**
+Intermediate engineers cannot approve Redline for firm-wide use — that requires a
+Principal or Partner. The intermediate engineer needs a forwardable one-page document
+to escalate upward. Without it, adoption stalls at the firm boundary.
+
+The trust document answers five questions, in this priority order:
+1. **Data residency** — which country processes and stores uploaded documents? (NZ
+   Privacy Act 2020 IPP 12 and Australian Privacy Act 1988 APP 8 both have cross-border
+   transfer requirements that Principals at regulated firms will ask about.)
+2. **Zero-training guarantee** — documents are never used to train models. Lead with this.
+3. **Deletion timeline** — specific hours, not "in accordance with our policy."
+4. **Sub-processor transparency** — name every service that touches customer data.
+   Do not say "cloud infrastructure providers."
+5. **Infrastructure certifications** — what the named sub-processors hold.
+
+**SOC 2 framing (binding).** Redline does not hold SOC 2 certification. The trust
+document must not claim it. The approved framing for sub-processor certifications:
+
+> "Redline processes your documents on [AWS / Vercel / Supabase / OpenAI API]. Each
+> of these providers holds an independent SOC 2 Type II certification, with reports
+> available on request from those providers. Redline is not yet independently SOC 2
+> certified. We are planning independent certification as the business scales."
+
+Before this framing is published, an exhaustive sub-processor audit must be completed
+(every service touching customer data, including logging, error tracking, analytics,
+email, and CI/CD). See `decisions/parked-decisions.md` P-027. No trust document
+publishes before that audit is complete.
+
 ## Customer Onboarding
 
 Self-serve for free tier. White-glove for Pro:
@@ -111,8 +152,7 @@ Self-serve for free tier. White-glove for Pro:
 | Risk | Mitigation |
 |---|---|
 | Quota cost exceeds $1/user | KR5 ceiling enforced; rate-limit before KR5 trips |
-| Email-verified signup ≠ buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
-| Firm IT blocks Word task pane | Sprint 1 ships browser upload as fallback, not Word add-in |
+| Email-verified signup does not equal buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
 | Founder bandwidth caps qualified conversations at 15 | If KR1 over-delivers, batch outbound and prioritise the 15 highest-fit signups |
 | Pricing discovery delays paid conversion | Accept; KR3 allows LOIs as substitute for paid revenue |
 

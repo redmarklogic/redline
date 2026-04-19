@@ -24,7 +24,7 @@
 |---|---|---|---|---|---|---|---|---|---|
 | G | Justification Email Generator (bottoms-up viral, asks Partner to fund team licence) | Pre-Review / Pro | 3 | 5 | 5 | 4 | 5 | **22** | Sprint 2 |
 | A | GBR / GIR Skeleton Generator (free, SSO-gated download, capped 3–5 docs × 100 pages) | Free wedge | 3 | 5 | 3 | 5 | 5 | **21** | **Sprint 1** |
-| D | Inline Annotation Engine (Word task pane + browser upload; flags ambiguity, missing definitions, undefined acronyms, unit inconsistencies) | Pre-Review / Pro | 5 | 3 | 3 | 4 | 5 | **20** | Sprint 2–3 |
+| D | Inline Annotation Engine (browser upload only; flags ambiguity, missing definitions, undefined acronyms, unit inconsistencies). Word task pane parked — see P-024. | Pre-Review / Pro | 5 | 3 | 3 | 4 | 5 | **20** | Sprint 2-3 |
 | M | Document Parser / Chunking Pipeline | Infra (cross-cutting) | 3 | 3 | 5 | 4 | 5 | **20** | **Sprint 1** (infra dep of A) |
 | L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | Sprint 5+ |
 | F | Citation / Reference Validator (verifies cited standards exist + are current) | Pre-Review / Pro | 3 | 4 | 2 | 4 | 3 | **16** | Sprint 3 |

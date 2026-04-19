@@ -25,6 +25,20 @@ acquisition H2, no scaled AI content), Bet 4 (Switzerland-neutral).
    approval is the founder's.
 4. **Geographic discipline** — content addresses NZ + AU geotech only; no global
    posturing (Bet 5).
+5. **Big 5 is the hard filter (locked 2026-04-19).** Every post must map to one of
+   the five Big 5 categories. If it does not map, it does not go out. No exceptions.
+6. **No usage metrics or social proof posts.** "500 requests last week" and equivalent
+   vanity-metric posts are prohibited. In a market of ~2,000 practitioners who know
+   each other, these numbers invite stress-testing ("from how many firms?") and signal
+   inauthenticity. Posts about scale are permitted only when the numbers are genuinely
+   impressive and the Bet 1 kill criterion has been confirmed.
+7. **No scarcity framing.** Manufactured urgency ("limited access", "spots filling fast")
+   directly contradicts Switzerland-neutral positioning (Bet 4) and reads as manipulation
+   to procurement-trained engineers. Prohibited permanently.
+8. **Feature releases: announce jobs, not features.** Post the job the capability enables,
+   not the capability itself. "Engineers can now catch missed NZGS shear-strength
+   assumptions before review" — not "we shipped Standards Citation v1.2". Feature-level
+   announcements telegraph moat architecture to potential competitors.
 
 ## Cadence
 

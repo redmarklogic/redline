@@ -1,6 +1,10 @@
 # Tasks: Mobile Bridge for Persona Access
 
 **Input**: [plan.md](plan.md)
+**Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub
+Mobile app, making this custom Telegram bridge unnecessary. See
+`docs/product/strategy/decisions/parked-decisions.md` P-025.
+
 **Prerequisites**: Developer has answered the four Open Questions in `plan.md`. Telegram
 bot created via BotFather (token captured). Azure subscription accessible via Azure MCP
 or `az login`.

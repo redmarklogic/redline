@@ -2,15 +2,17 @@
 
 **Branch**: `feature/mobile-bridge`
 **Created**: 2026-04-18
-**Status**: Draft
+**Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub
+Mobile app, making this custom Telegram bridge unnecessary. See
+`docs/product/strategy/decisions/parked-decisions.md` P-025.
 
 ## Source Document Reconciliation
 
 | Source | Authority | Status |
 | --- | --- | --- |
 | Conversation context (architectural analysis report, 2026-04-18) | Primary -- problem framing | Captured below |
-| `.github/agents/ron.agent.md` (existing) | Binding -- persona definition | No conflicts |
-| `.github/agents/mark.agent.md` (existing) | Binding -- persona definition | No conflicts |
+| `.github/agents/rl.ron.agent.md` (existing) | Binding -- persona definition | No conflicts |
+| `.github/agents/rl.mark.agent.md` (existing) | Binding -- persona definition | No conflicts |
 | `.agents/skills/notebooklm-mcp/SKILL.md` | Supporting -- auth model constraint | No conflicts |
 | `.agents/skills/security/SKILL.md` | Binding -- secrets handling | No conflicts |
 | `AGENTS.md` (Python/uv/env-var conventions) | Binding -- coding standards | No conflicts |

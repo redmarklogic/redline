@@ -1,7 +1,9 @@
 # Implementation Plan: Mobile Bridge for Persona Access
 
 **Date**: 2026-04-18 | **Spec**: [spec.md](spec.md)
-**Status**: Draft
+**Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub
+Mobile app, making this custom Telegram bridge unnecessary. See
+`docs/product/strategy/decisions/parked-decisions.md` P-025.
 
 ## Summary
 
@@ -55,7 +57,7 @@ Phase numbering is plan-native.
 | D5 | CI/CD auth | GitHub Actions OIDC federated credential | Eliminates stored Azure credentials in GitHub Secrets. |
 | D6 | Mobile UI | Telegram Bot API | Native Markdown, inline keyboards, no app-store deployment. |
 | D7 | Streaming | Defer -- send complete responses per turn | Telegram lacks native streaming; progressive `editMessage` calls hit rate limits. v2 if needed. |
-| D8 | Persona source of truth | `.github/agents/ron.agent.md`, `.github/agents/mark.agent.md` baked into the container image at build time | Single source of truth; same files used by desktop Copilot. |
+| D8 | Persona source of truth | `.github/agents/rl.ron.agent.md`, `.github/agents/rl.mark.agent.md` baked into the container image at build time | Single source of truth; same files used by desktop Copilot. |
 | D9 | NotebookLM filtering | Strip NotebookLM/`redline-research` tools from Ron's tool list at persona load time when running in mobile mode | Headless OAuth not possible; failing closed prevents broken-tool errors. |
 | D10 | HITL classifier | Allowlist of safe tool names (read-only); everything else triggers approval | Fail-closed default; explicit safe-list reviewed by a human. |
 | D11 | Provisioning | Azure MCP tool calls preferred; fall back to `az` CLI; Bicep template stored in repo for reproducibility and `what-if` validation | Hands-off requirement; reproducibility for disaster recovery. |
