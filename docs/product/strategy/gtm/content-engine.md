@@ -170,6 +170,24 @@ becomes the relationship. The content becomes the asset.
 This is the founder's only viable path to Phase-2 buyer (Principal/Partner)
 relationships in H2, given the explicit non-goal of enterprise sales motion.
 
+## Ground Engineering Archive — Intelligence Layer
+
+The founder holds 15 years of Ground Engineering magazine (2014–2026) in the
+`ground-engineering-magazine` NotebookLM notebook. This archive powers two standing
+query tracks:
+
+- **Track A — Marketing Intelligence (monthly):** Queried during each monthly editorial
+  session to surface cyclical patterns, early-signal topics, and commenting intelligence
+  for the Dream 100 outreach. The archive is never cited publicly; insights are framed as
+  pattern observation. See `docs/product/marketing/archive-intelligence.md`.
+- **Track B — Product Intelligence (quarterly):** Mark + Graeme query for recurring
+  quality problems, standards-evolution patterns, and competitive intelligence to feed
+  Pre-Review rule library development and Standards Knowledge Store roadmap.
+
+The archive is an invisible input — it shapes what the founder knows and asks, not
+what he claims to have read. See the full invisibility protocol at
+`docs/product/marketing/archive-intelligence.md`.
+
 ## Product-Led SEO — Deferred Decision
 
 Eli Schwartz's Product-Led SEO methodology (from the digital-marketing notebook)

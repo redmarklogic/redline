@@ -10,6 +10,7 @@ Ron writes strategy at `docs/product/strategy/`. Mark writes PRDs at
 
 | Path | Contents | Skill |
 |------|----------|-------|
+| `archive-intelligence.md` | Ground Engineering archive strategy: invisibility protocol, monthly marketing query track (Track A), quarterly product query track (Track B), NZ/AU coverage caveat | n/a (intelligence layer) |
 | `the-big-5/` | Content briefs and drafts under the They Ask You Answer / Big 5 framework | `marketing-content-big-5` |
 | `seo/keyword-strategy.md` | Traditional keyword + intent map | `marketing-product-led-seo` |
 | `seo/keyword-discovery-tools-survey.md` | Survey of API/CLI-accessible keyword + question discovery tools for sourcing Product-Led SEO opportunities | `marketing-product-led-seo` |
@@ -27,10 +28,18 @@ Ron writes strategy at `docs/product/strategy/`. Mark writes PRDs at
 ## Hard Rules
 
 1. Every campaign references a strategic bet from `docs/product/strategy/strategic-bets.md`
-   AND a validated persona from `docs/product/personas/`.
+   AND a validated persona from `docs/product/personas/` (see P-029 — personas not yet
+   validated; no campaign briefs until they are).
 2. Every AI-assisted draft passes through `marketing-ai-content-review` before
    publishing.
 3. Every domain (geotechnical) claim is verified by Graeme before publishing.
 4. Every Product-Led SEO idea is handed to Mark as a marketing brief — John does not
    write the PRD.
 5. The monthly signal report is filed on the first business day of every month.
+6. The Ground Engineering archive is never cited as a personal corpus. Insights from it
+   surface as pattern observations. See `archive-intelligence.md` → Invisibility Protocol.
+
+## Standard Operating Cadences
+
+The recurring rituals for marketing (editorial session, content batching, signal report)
+are documented at `docs/product/operations/cadences.md`.
