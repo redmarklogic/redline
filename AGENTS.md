@@ -114,7 +114,7 @@ permitted only when clearly labelled as such.
   from `spec-kit`'s scenario-level RICE; see `docs/architecture/skills-architecture.md`.
 
 **Handoff chain (non-negotiable):**
-Graeme (domain facts) -> Ron (vision -> bets -> OKRs) -> Mark (problem -> hypothesis -> PRD) -> spec-kit (engineering)
+Graeme (domain facts) → Ron (vision → bets → OKRs) → Mark (problem → hypothesis → PRD) → spec-kit (engineering)
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 

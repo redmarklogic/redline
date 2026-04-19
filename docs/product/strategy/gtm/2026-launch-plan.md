@@ -111,7 +111,7 @@ Self-serve for free tier. White-glove for Pro:
 | Risk | Mitigation |
 |---|---|
 | Quota cost exceeds $1/user | KR5 ceiling enforced; rate-limit before KR5 trips |
-| Email-verified signup = buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
+| Email-verified signup does not equal buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
 | Founder bandwidth caps qualified conversations at 15 | If KR1 over-delivers, batch outbound and prioritise the 15 highest-fit signups |
 | Pricing discovery delays paid conversion | Accept; KR3 allows LOIs as substitute for paid revenue |
 
