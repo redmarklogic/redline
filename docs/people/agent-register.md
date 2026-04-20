@@ -17,6 +17,7 @@
 | **John** | Head of Marketing | Content marketing, SEO, social selling, brand voice, demand | `docs/product/marketing/`, `docs/research/`, `specs/` (when asked) | Digital Marketing & Social Selling *(advisory-board)*, Entrepreneurship & Startup Strategy *(advisory-board)*, Monetizing & Scaling Innovation *(advisory-board)* | `marketing-content-big-5`, `marketing-product-led-seo`, `marketing-social-selling-linkedin`, `marketing-ai-content-review`, `pm-personas`, `pm-prioritization`, `pm-structural-integrity-auditor`, `miro-mcp`, `qmd-narrative-design` | Autonomous |
 | **Graeme** | Principal Geotechnical Engineer | Geotechnical domain expertise, standards, report workflows | `docs/knowledge/geotechnical/`, `docs/research/` | Engineering Standards, Ground Engineering Magazine, Geotechnical Baseline Reports (GBR), Geotechnical Report Workflows, Risk Assessment in Engineering | (domain notebooks loaded on demand per query) | Autonomous |
 | **Harriet** | Head of People & Agent Development | Agent hiring, audits, PIPs, skill gap management, org design, agent register | `docs/people/` (direct); `docs/people/drafts/` for agent and skill proposals | Organisational Design & Team Topologies, Product Design & UX *(scoped on demand)* | `hiring-agent-management`, `writing-skills`, `skills-create`, `notebooklm-mcp` | **Draft-first** |
+| **Matt** | UI/UX Designer | Interaction design, wireframes, component specs, user flows for the Redline web platform | `docs/product/design/` (write); `specs/`, `docs/product/`, `docs/knowledge/geotechnical/`, `docs/research/` (read) | Product Design & UX, Information Architecture and Knowledge Management; Digital Marketing & Social Selling *(via John)*, Monetizing & Scaling Innovation *(via John)* | `ux-professional-software` *(pending)*, `ux-conversion-design` *(pending)*, `miro-mcp`, `pm-personas`, `pm-structural-integrity-auditor`, `notebooklm-mcp` | **Draft-first** |
 
 ---
 
@@ -55,8 +56,8 @@ Graeme (domain facts)
 Ron (vision → bets → OKRs → positioning → GTM)
     ↓
 Mark (problem → hypothesis → PRD) ←→ John (content, SEO, social, campaigns)
-    ↓                                         ↓
-speckit.* (engineering)            published assets / channels
+    ↓                                         ↓Matt (design specs, wireframes)      published assets / channels
+    ↓                                         ↓speckit.* (engineering)            published assets / channels
     ↘                             ↙
         Monthly Signal Report → Ron + Mark
 

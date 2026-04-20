@@ -138,6 +138,15 @@
 |---|---|---|
 | `hiring-agent-management` | Operating playbook for the People & Agent Development role (hire, audit, PIP, org management) | Harriet |
 
+### UX & Design
+
+| Skill | Purpose | Used by |
+|---|---|---|
+| `ux-professional-software` | Information-dense UI design for professional/technical software, document-centric interaction patterns, annotation overlays, form design for technical inputs | Matt |
+| `ux-conversion-design` | Conversion UX for warm-handoff B2B SaaS (quota-exhaustion nudges, SSO gate, onboarding friction, pricing page layout) | Matt |
+
+> Both UX skills are pending creation. They require notebook grounding before drafting.
+
 ### Ceremonies
 
 | Skill | Purpose | Used by |
@@ -152,4 +161,5 @@
 
 | Gap | Identified by | Proposed remediation | Status |
 |---|---|---|---|
-| UX for technical professional software | Harriet (2026-04-20, during Alex hire) | Install `frontend-design` from `anthropics/skills`; commission `rl-ux-for-engineers` from `Product Design & UX` notebook | Pending notebooks load + user approval |
+| `ux-professional-software` (information-dense UI, document-centric interaction, form design) | Harriet (2026-04-20, Matt hire) | Query `Product Design & UX` and `Information Architecture and Knowledge Management` notebooks; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
+| `ux-conversion-design` (conversion UX for warm-handoff B2B SaaS) | Harriet (2026-04-20, Matt hire) | Route through John for `Monetizing & Scaling Innovation` and `Digital Marketing & Social Selling` notebooks; combine with `Product Design & UX`; draft skill using `writing-skills` TDD cycle | Pending notebook grounding + John consultation |

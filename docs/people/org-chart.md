@@ -35,6 +35,12 @@ Founder (you)
 │     Writes to: docs/people/ (direct); docs/people/drafts/ (proposals)
 │     Consults: Ron, Mark, John, Graeme (on all hires and PIPs)
 │
+├── Matt — UI/UX Designer  [DRAFT-FIRST]
+│     Outputs: design specs, wireframes (Miro), user flows, component inventories
+│     Writes to: docs/product/design/
+│     Consults: Mark (PRDs), John (positioning, micro-copy), Graeme (domain terms)
+│     Downstream of: Mark (PRDs) → Matt (design) → speckit (engineering)
+│
 └── Engineering Workflow (speckit.* agents — vendor-managed)
       speckit.specify → speckit.plan → speckit.tasks → speckit.implement
       speckit.analyze, speckit.clarify, speckit.checklist, speckit.constitution
@@ -82,6 +88,10 @@ Who consults whom, and for what.
 | Harriet | John | Input on marketing/content agent roles |
 | Harriet | Graeme | Input on domain-specific agent roles |
 | Harriet | Agent under review | Root cause during a PIP session |
+| Matt | Mark | PRD before starting any design work |
+| Matt | John | Positioning alignment, micro-copy review on conversion surfaces |
+| Matt | Graeme | Domain terminology verification on geotechnical designs |
+| Matt | Ron | Strategic fit confirmation (on demand) |
 
 ---
 
@@ -94,6 +104,7 @@ Who consults whom, and for what.
 | John | Autonomous | — (founding member) |
 | Graeme | Autonomous | — (founding member) |
 | Harriet | **Draft-first** | Pending — awaiting trust milestone |
+| Matt | **Draft-first** | Pending — awaiting trust milestone |
 
 ---
 
@@ -103,4 +114,4 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 
 | Role | Identified by | Priority | Status |
 |---|---|---|---|
-| UI/UX Designer (`rl.alex`) | Harriet (2026-04-20) | High — Bet 1 kill criterion depends on Platform (P) shipping by Jun 30 | Draft JD pending notebook grounding |
+| *(none — all identified gaps currently have a draft or approved agent)* | | | |
