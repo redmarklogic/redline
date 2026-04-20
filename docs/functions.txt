@@ -1,0 +1,1 @@
+- `hello()` (`rl`) — Return a simple package greeting.
