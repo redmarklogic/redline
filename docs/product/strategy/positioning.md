@@ -55,6 +55,34 @@ We refuse to be sold as: an AI engineer, a productivity tool, a writing assistan
 compliance certifier, a chatbot, or an enterprise platform. Every one of those framings
 costs us a Strategic Bet.
 
+## Competitive Positioning *(added 2026-04-20, Archie CI session)*
+
+**Against upstream AI drafting tools (Archie and similar):**
+
+> "Your AI wrote it. Who checked it?"
+
+Archie and similar tools generate report drafts. Redline checks them. These are
+complementary, not competing jobs. As AI-drafted reports proliferate, the review job
+grows — every AI-generated GBR still needs a quality layer before a senior signs it.
+Redline is positioned downstream of any drafting tool, not against it.
+
+**Against bespoke AI agencies (SupaHuman and similar):**
+
+SupaHuman delivers bespoke RAG implementations at $50k+ with a sales-call-plus-contract
+acquisition model. Redline delivers a productised quality layer with zero-friction PLG
+onboarding (upload report, see skeleton). SupaHuman reaches firms willing to buy a
+custom project; Redline reaches every engineer willing to try a free tool.
+
+**Insurance GTM angle:**
+
+NZ insurance market is bifurcating on AI coverage — some insurers offering affirmative
+AI policies, others inserting absolute exclusion clauses. GTM message for firms
+navigating this uncertainty: "Redline gives you the audit trail your insurer will ask
+for." Audit trail is baked into the product from Day 1 (see `feature-backlog.md`,
+Feature L core subset elevated to Sprint 1).
+
+Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+
 ## Disruption Frame (Christensen — see `strategic-bets.md` Bet 6)
 
 Redline is a **new-market disruption against nonconsumption**. We are not picking a
@@ -122,4 +150,6 @@ not memo-grounded. Domain pain framing draws on prior research files catalogued 
 section added 2026-04-18 per founder correction (he is a data scientist, not an
 engineer). Archive citation rule and founder persona framing note added 2026-04-19
 following Ron + John advisory session on the Ground Engineering archive as a stealth
-intelligence asset.
+intelligence asset. Competitive Positioning section and Insurance GTM angle added
+2026-04-20 from Archie competitive intelligence session;
+see `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
