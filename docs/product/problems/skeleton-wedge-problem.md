@@ -45,9 +45,9 @@ SupaHuman. This validates the market pain but the delivery model is inaccessible
 Tier 2: bespoke builds at $50k+ with a generalist agency are not a scalable solution for
 5-50 person firms.
 
-Beca's collaboration with Frankly.AI appears discontinued, confirming that engineering
-consultancies lack the DNA to commercialise AI tools internally. The tool-building
-opportunity belongs to a dedicated vendor, not the consultancies themselves.
+Beca built Frankly.AI in-house, launched it commercially via Microsoft Teams globally, and has
+since discontinued it, confirming that engineering consultancies lack the DNA to sustain AI
+product commercialisation. The tool-building opportunity belongs to a dedicated vendor.
 
 ## Measurable Outcome
 

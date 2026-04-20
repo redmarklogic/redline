@@ -185,7 +185,7 @@ Low / Medium / High — [one-line reason]
 ## Hard Constraints
 
 - Every claim must be tagged with its source type: `[Vendor]`, `[Independent]`, or
-  `[First-person account]`.
+  `[First-person]`.
 - Do not write narrative paragraphs outside the designated synthesis section.
 - Do not repeat information across queries.
 - If a table cell has no data, write `Not found` — never leave it blank.

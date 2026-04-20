@@ -9,7 +9,7 @@ Operating playbook for the People & Agent Development function. Load at the star
 
 This skill encodes principles from three sources, queried via the `Organisational Design & Team Topologies` notebook:
 
-- **Team Topologies** (Skeleton & Pais) — team boundaries, Conway's Law, cognitive load, fracture planes, Team APIs, three interaction modes.
+- **Team Topologies** (Skelton & Pais) — team boundaries, Conway's Law, cognitive load, fracture planes, Team APIs, three interaction modes.
 - **Work Without Jobs / Reinventing Jobs** (Jesuthasan & Boudreau) — the four-step work-deconstruction framework, the skills hub / common taxonomy, splitting rewards from development.
 - **An Elegant Puzzle** (Larson) — career ladders, gap-less ownership map, compassionate pragmatism for performance management.
 

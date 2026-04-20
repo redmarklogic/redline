@@ -4,7 +4,7 @@ Source material backing the binding rules in `SKILL.md`. All citations sourced v
 
 ## Books
 
-- **Team Topologies: Organizing Business and Technology Teams for Fast Flow** — Matthew Skeleton & Manuel Pais. IT Revolution Press, 2019.
+- **Team Topologies: Organizing Business and Technology Teams for Fast Flow** — Matthew Skelton & Manuel Pais. IT Revolution Press, 2019.
 - **Work Without Jobs: How to Reboot Your Organization's Work Operating System** — Ravin Jesuthasan & John Boudreau. MIT Press, 2022.
 - **Reinventing Jobs: A 4-Step Approach for Applying Automation to Work** — Ravin Jesuthasan & John Boudreau. Harvard Business Review Press, 2018.
 - **An Elegant Puzzle: Systems of Engineering Management** — Will Larson. Stripe Press, 2019.

@@ -37,10 +37,10 @@ Every interaction between the AI system and the user's document is recorded:
 
 | Event type | What is captured |
 |---|---|
-| **AI generation** | Timestamp, user ID, model version, input parameters (report type, jurisdiction, project parameters), output document hash, generation duration. |
-| **Human edit** | Timestamp, user ID, section modified, nature of change (addition, deletion, modification). Content diffs are stored but not the full document text at each step. |
-| **Review comment** | Timestamp, reviewer ID, comment text, target section, comment type (suggestion, flag, question). |
-| **Comment resolution** | Timestamp, resolver ID, resolution action (accepted, rejected, modified), modification summary if modified. |
+| **AI generation** | Timestamp, user ID, model version, input parameters (report type, jurisdiction, project parameters), output document hash, generation duration. | **Sprint 1** |
+| **Human edit** | Timestamp, user ID, section modified, nature of change (addition, deletion, modification). Content diffs are stored but not the full document text at each step. | Sprint 5+ |
+| **Review comment** | Timestamp, reviewer ID, comment text, target section, comment type (suggestion, flag, question). | Sprint 2–3 (ships with Pre-Review) |
+| **Comment resolution** | Timestamp, resolver ID, resolution action (accepted, rejected, modified), modification summary if modified. | Sprint 2–3 (ships with Pre-Review) |
 
 All timestamps are UTC. All user IDs are authenticated via SSO.
 

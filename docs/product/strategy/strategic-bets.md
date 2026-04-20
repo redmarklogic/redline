@@ -194,12 +194,13 @@ then pivot positioning to a defensible adjacent (Adversarial Scan / litigation
 surface, where incumbents have no posture).
 
 **Named watch item: Beca / Frankly.AI** *(added 2026-04-20, Archie CI session)*:
-Beca partnered with Frankly.AI on AI-assisted engineering reports. Assessed as
-non-threatening for three reasons: (1) cannibalisation problem — selling the tool helps
-competitors; (2) asymmetric motivation — Beca's infrastructure cost structure cannot
-serve residential/commercial geotech; (3) Frankly.AI appears discontinued. Engineering
-consultancies lack the DNA to commercialise AI tools — their business model is billable
-hours, not software licensing. If Beca or another Tier 1 firm reverses this pattern and
+Beca built Frankly.AI as an in-house AI project and launched it as a commercial service via
+Microsoft Teams globally. It has since been discontinued. Assessed as non-threatening for
+three reasons: (1) cannibalisation problem — selling the tool helps competitors; (2)
+asymmetric motivation — Beca's infrastructure cost structure cannot serve
+residential/commercial geotech; (3) Frankly.AI is now discontinued, confirming that
+engineering consultancies lack the DNA to sustain AI product commercialisation alongside a
+billable-hours business model. If Beca or another Tier 1 firm reverses this pattern and
 ships a commercially available geotech QA tool, this kill criterion trips.
 
 **Market segmentation clarification** *(added 2026-04-20, Archie CI session)*:

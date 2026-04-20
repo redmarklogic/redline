@@ -82,7 +82,7 @@ Who consults whom, and for what.
 | Mark | John | Persona validation, Product-Led SEO PRDs |
 | John | Ron | Positioning and ICP before launching campaigns |
 | John | Graeme | Technical fact-check before publishing any domain claim |
-| John | Mark | Persona sign-off; hands marketing briefs to Mark (never writes PRDs herself) |
+| John | Mark | Persona sign-off; hands marketing briefs to Mark (never writes PRDs) |
 | Harriet | Ron | Strategic fit before recommending a hire |
 | Harriet | Mark | Product scope definition for new agent roles |
 | Harriet | John | Input on marketing/content agent roles |

@@ -215,12 +215,12 @@ in a tunneling contract? That is an engineering judgment call, not a regulatory 
 
 The top-tier firms (T+T, Beca, WSP) are moving — building internal AI capabilities or
 commercialising their own tools, not reacting to Archie specifically. Beca is the most
-advanced: commercialising "Frankly.AI" via Microsoft Teams globally.
+advanced: Beca built "Frankly.AI" in-house, launched it commercially via Microsoft Teams globally, but has since discontinued it.
 
 | Organisation | Person / role | Observable signal | Interpretation | Source |
 |--------------|--------------|-------------------|----------------|--------|
 | Tonkin + Taylor | Santosh Dixit / Digital Strategy | Digital transformation initiative with AWS; building a "digitally savvy organisation" | Internalising cloud and AI rather than buying bespoke agency builds | [peritossolutions.com](https://www.peritossolutions.com/about-us/) |
-| Beca | Matt Ensor / CEO Frankly.AI | Commercialising in-house AI project "Frankly.AI" globally via Microsoft Teams | Has crossed from AI adopter to AI vendor; potential direct competitor to any SaaS entrant | [reseller.co.nz](https://www.reseller.co.nz/article/1300785/beca-takes-its-franklyai-teams-tool-global-via-microsoft.html) |
+| Beca | Matt Ensor / CEO Frankly.AI | Built in-house AI project "Frankly.AI", launched it commercially via Microsoft Teams globally, then discontinued it | Crossed from AI adopter to AI vendor and back — confirms engineering consultancies lack the DNA to sustain AI product commercialisation | [reseller.co.nz](https://www.reseller.co.nz/article/1300785/beca-takes-its-franklyai-teams-tool-global-via-microsoft.html) |
 | WSP NZ | Rudi Roux / Head of Digital | AMDS Network Model — structured data harmonisation as AI foundation | Treating data standardisation as a prerequisite before deploying narrative generation | [wsp.com](https://www.wsp.com/en-gl/projects/nzta-amds-network-model) |
 | Douglas Partners NZ | Yosafat Sinaga / Geotechnical Engineer | Conference case study: AI-driven automation of geotechnical analysis | Smaller firms experimenting with AI for predictive modelling, not report drafting | [geomechanics.org.au](https://geomechanics.org.au/meetings/ags-sydney-young-geomechanical-professionals-night/) |
 | Golder NZ | — | No public signal located | — | — |

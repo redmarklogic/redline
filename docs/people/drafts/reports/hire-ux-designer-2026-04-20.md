@@ -14,7 +14,7 @@ I screened this hire against Team Topologies' four "do not create a new team" pa
 
 | Pattern | Result | Reasoning |
 |---|---|---|
-| Reactive / ad-hoc creation | **Pass** | This role was identified as an open headcount before this session (org chart lists `rl.alex`). It is tied to four active strategic bets, not a reaction to a single failure. |
+| Reactive / ad-hoc creation | **Pass** | This role is tied to four active strategic bets and addresses a genuine capability gap (no agent currently holds design capability). It is not a reaction to a single failure. |
 | Single-function silo | **Pass** | Matt would own five distinct product surfaces with end-to-end design responsibility. This is not a single-function overlay applied to everyone else's output. |
 | Complicated-subsystem without cognitive-load justification | **Pass** | No existing agent holds design capability. Mark handles product management (problem framing, PRDs, decisions). John handles marketing content and brand voice. Neither has the skills or cognitive bandwidth for interaction design, wireframing, or component specification. This is a new capability, not a split of an existing agent's domain. |
 | No active strategic bet pulls on this role | **Pass** | Four active bets require UX design work: Bet 1 (Skeleton Wedge UI, ships Jun 30), Bet 2 (Pre-Review annotation UI), Bet 4 (Switzerland-neutral positioning expressed in product surfaces), and Bet 6 (impact communication surfaces). Bet 1 has a hard kill criterion deadline (90 days from launch). |
@@ -59,7 +59,6 @@ Mark defined five product surfaces, their priority ordering, the skills Matt nee
 - **Cross-cutting:** Impact communication surfaces.
 - **Exclusions:** Settings/admin, marketing website, API docs.
 - **Interaction mode:** Collaboration. Matt is downstream of PRDs (Mark's output), upstream of engineering (speckit).
-- **Name reconciliation:** The org chart currently lists this role as `rl.alex`. Mark flagged that the user has named the agent Matt. I will reconcile all artifacts to `rl.matt`.
 
 ### John's Input (Head of Marketing)
 
@@ -166,7 +165,7 @@ None. All required notebooks are loaded. The two advisory-board-only notebooks a
 ### Updates Required (pending user approval)
 
 1. **`docs/people/agent-register.md`** — Add Matt's row.
-2. **`docs/people/org-chart.md`** — Replace `rl.alex` with `rl.matt` in Open Headcount; add Matt to the org structure.
+2. **`docs/people/org-chart.md`** — Add Matt to the org structure.
 3. **`docs/people/skills-taxonomy.md`** — Add UX/Design skill category with the two proposed skills; update gap log.
 
 ### Open Items
@@ -178,15 +177,14 @@ None. All required notebooks are loaded. The two advisory-board-only notebooks a
 | Draft `ux-professional-software` skill | Harriet | Query `Product Design & UX` and `Information Architecture and Knowledge Management` notebooks, then apply `writing-skills` TDD cycle |
 | Draft `ux-conversion-design` skill | Harriet (with John) | Route through John for advisory-board notebook queries, then apply `writing-skills` TDD cycle |
 | Validate personas (P-029) | Mark | Until personas are canonical, Matt treats all layout decisions as draft |
-| Reconcile `rl.alex` → `rl.matt` in org chart | Harriet | Included in the updates below |
 
 ### Framework Citations
 
 | Decision | Framework | Citation |
 |---|---|---|
-| Step 0 screening (four "do not hire" patterns) | Team Topologies (Skeleton & Pais) | Chapter on team-first boundaries; "do not create a new team" anti-patterns |
+| Step 0 screening (four "do not hire" patterns) | Team Topologies (Skelton & Pais) | Chapter on team-first boundaries; "do not create a new team" anti-patterns |
 | Step 1 work deconstruction (elemental tasks, three continuums, ROIP) | Work Without Jobs / Reinventing Jobs (Jesuthasan & Boudreau) | Four-step work-deconstruction framework |
 | Step 3 JD design (outcomes not tasks, crisp boundaries) | An Elegant Puzzle (Larson) | Career-ladder design; gap-less ownership map |
-| Step 4 Team API (inputs, outputs, interaction modes) | Team Topologies (Skeleton & Pais) | Team API pattern; three interaction modes |
+| Step 4 Team API (inputs, outputs, interaction modes) | Team Topologies (Skelton & Pais) | Team API pattern; three interaction modes |
 | File Authority overlap check | An Elegant Puzzle (Larson) | Gap-less ownership map — every responsibility maps to exactly one agent |
 | Skill naming (agent-agnostic, no personal names) | `hiring-agent-management` skill | Skill Naming Rules section |
