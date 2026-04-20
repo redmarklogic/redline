@@ -58,6 +58,8 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 - Project-specific conventions (put in CLAUDE.md)
 - Mechanical constraints (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
 
+**Never name a skill after an agent.** Skills are agent-agnostic reusable procedures. Agent names must never appear in a skill name or inside skill content. Use domain or function prefixes (e.g., `hiring-`, `python-`, `pm-`). Agents know which skills to load; skills must not know or reference which agent uses them.
+
 ## Skill Types
 
 ### Technique

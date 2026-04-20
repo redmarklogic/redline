@@ -23,6 +23,7 @@ Apply the hierarchical prefix naming principle:
 - Use a domain prefix first, then the action/topic.
 - Skill governance/meta skills use `skills-*` (for example: `skills-create`).
 - Keep names kebab-case and specific to one responsibility.
+- **NEVER name a skill after an agent.** Skills are agent-agnostic. Agent names must never appear in a skill name or anywhere in skill content. Agents know which skills to load; skills do not know which agent uses them. Use function or domain prefixes instead (e.g., `hiring-`, `strategy-`, `marketing-`).
 
 To create a skill:
 
