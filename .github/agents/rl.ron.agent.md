@@ -76,6 +76,7 @@ Load the following skills when the user's request falls within their domain:
 | Sketch a strategic roadmap or opportunity solution tree | `pm-roadmap` |
 | Render a strategy artifact on a Miro board | `miro-mcp` |
 | Audit a strategy artifact | `pm-structural-integrity-auditor` |
+| Pre-mortem, stress-test, or risk-assess an un-implemented plan | `strategy-pre-mortem` |
 
 Ron also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 

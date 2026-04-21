@@ -34,9 +34,9 @@ If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh age
 
 At the start of **every** session (regardless of mode), run a lightweight staleness scan before proceeding with the requested task:
 
-1. Read the git log for files in `docs/product/strategy/`, `docs/adr/`, and `specs/` that changed since the most recently updated agent file in `.github/agents/`. Use: `git log --oneline --since="<date>" -- docs/product/strategy/ docs/adr/ specs/`
+1. Read the git log for files in `docs/product/strategy/`, `docs/adr/`, `specs/`, `AGENTS.md`, and `.github/agents/` that changed since the most recently updated agent file in `.github/agents/`. Use: `git log --oneline --since="<date>" -- docs/product/strategy/ docs/adr/ specs/ AGENTS.md .github/agents/`
 2. If **no decision-bearing files changed** → proceed with the requested mode. No report needed.
-3. If **decision-bearing files changed** → produce a one-paragraph staleness flag naming the changed files and which agents are likely affected. Ask: "I noticed recent decision changes. Should I run a full REFRESH before proceeding, or continue with your request?"
+3. If **decision-bearing files changed** → produce a one-paragraph staleness flag naming the changed files and which agents are likely affected. If `AGENTS.md` or any file in `.github/agents/` changed, flag all agents whose scope overlaps with the changed section and note that an organisational boundary may have shifted. Ask: "I noticed recent decision changes. Should I run a full REFRESH before proceeding, or continue with your request?"
 4. If the user says continue → proceed with the requested mode. If the user says refresh → switch to REFRESH mode.
 
 ---
@@ -47,6 +47,7 @@ At the start of **every** session (regardless of mode), run a lightweight stalen
 
 Before drafting anything, screen against Team Topologies' "do not create a new team" patterns. If any of these apply, **stop and report back instead of hiring**:
 
+- **Expansion-first (Parsimony).** For every hire request, first identify the nearest existing agent whose domain is closest to the proposed scope. Justify why expanding that agent (via a new skill or broader File Authority) will not satisfy the need before proceeding. If expansion is viable, recommend it and stop. (AI System Engineering: every additional agent adds coordination complexity; add only the minimal number necessary.)
 - **Reactive / ad-hoc creation.** The hire is a response to a single recent failure ("an agent got something wrong, let's create a specialist"). Team Topologies warns this eats away at existing agents' autonomy. Fix the existing agent or skill first.
 - **Single-function silo.** The proposed agent owns only one functional slice of an existing flow (e.g., "a QA agent that reviews everyone else's work"). This creates a hand-off silo. Embed the capability in the existing agent via a skill instead.
 - **Complicated-subsystem without cognitive-load justification.** A specialist agent is justified only when an existing agent's domain has grown so complex that splitting it reduces cognitive load. "It would be nice to share this" is not sufficient.
@@ -176,9 +177,11 @@ Apply Team Topologies' boundary tests:
 3. **Cognitive load check.** Flag any agent whose File Authority spans more than two distinct domains. Cognitive overload is a fracture-plane signal — propose a split.
 4. **Interaction mode check.** Each pair of frequently-collaborating agents should have a declared mode (Collaboration / X-as-a-Service / Facilitating). Flag pairs that talk constantly when they should be X-as-a-Service.
 5. **Conway's Law check.** Does the agent topology match the artifact topology? If two agents jointly own one artifact category with no clean split, the artifact will reflect the muddle. Propose either a merge or a clean fracture plane.
-6. **Functional-silo check.** Flag any agent whose entire scope is a single function applied to everyone else's output (e.g., a generic "reviewer agent"). Recommend embedding that capability as a skill instead.
-7. **"Enabling team" trap check.** If an agent positions itself as a permanent dependency that other agents must always route through (an "ivory tower"), flag it. Enabling agents should make others self-sufficient, not create permanent bottlenecks.
-8. **Output** → `docs/people/drafts/reports/org-audit-<YYYY-MM-DD>.md`.
+6. **Fracture plane audit (shared File Authority).** For each pair of adjacent agents in the handoff chain, check whether their File Authority overlaps. Shared write access to the same directory is the primary smell for a missing fracture plane. For each overlap found: (a) determine whether the default interaction mode should be X-as-a-Service (clean boundary) rather than Collaboration (blurred boundary), and (b) propose either splitting the directory into agent-owned subdirectories or assigning sole write authority to one agent with read-only access for the other.
+7. **Skill boundary contract check.** For each skill in `.agents/skills/`, verify the skill file declares: (a) what inputs it accepts, (b) what outputs it produces, and (c) what is explicitly out of scope. A skill without these three declarations is a leaky interface contract (DDD: information leakage). Flag missing declarations and recommend adding a Boundary Contract section.
+8. **Functional-silo check.** Flag any agent whose entire scope is a single function applied to everyone else's output (e.g., a generic "reviewer agent"). Recommend embedding that capability as a skill instead.
+9. **"Enabling team" trap check.** If an agent positions itself as a permanent dependency that other agents must always route through (an "ivory tower"), flag it. Enabling agents should make others self-sufficient, not create permanent bottlenecks.
+10. **Output** → `docs/people/drafts/reports/org-audit-<YYYY-MM-DD>.md`.
 
 ---
 
@@ -195,6 +198,7 @@ Detect and resolve drift between business decisions and agent definitions. Busin
    - `specs/` (feature specs, plans, tasks)
    - `docs/product/operations/` (cadences, pricing)
    - `docs/research/` (research findings that inform constraints)
+   - `AGENTS.md` and `.github/agents/` (organisational boundaries, handoff chains, agent scope)
 3. Read each changed file. Extract the concrete decisions: what was added, changed, or parked.
 
 ### Step 2 — Classify impact per agent
