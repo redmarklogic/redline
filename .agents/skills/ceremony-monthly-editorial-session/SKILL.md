@@ -5,6 +5,20 @@ description: Use when running the monthly editorial session triggered by a new G
 
 # Monthly Editorial Session
 
+## Boundary Contract
+
+### Inputs
+- Latest Ground Engineering magazine issue
+
+### Outputs
+- Content signals at `docs/product/marketing/`
+- Product signals routed to Ron and Mark
+
+### Out of Scope
+- Content writing (`marketing-content-big-5`)
+- Strategy decisions (`pm-product-strategist`)
+- Code implementation
+
 ## Overview
 
 A structured ceremony that processes each new Ground Engineering magazine issue through

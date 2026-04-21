@@ -8,6 +8,19 @@ description: Standards for exception handling, error translation, and logging in
 This skill defines how to handle errors in a way that preserves tracebacks, keeps business
 logic readable, and makes failures actionable.
 
+## Boundary Contract
+
+### Applies To
+- Exception handling, error translation, and logging across `src/` and `tests/`
+
+### Produces
+- Clean error chains with preserved tracebacks and layer-appropriate translations
+
+### Does Not Cover
+- General style (`python-style`)
+- Function signatures (`python-function-design`)
+- Lint suppressions (`python-linting`)
+
 ## Context & Guidelines
 
 ### Scope

@@ -5,6 +5,19 @@ description: Use when working with Miro boards — creating diagrams, documents,
 
 # Miro MCP
 
+## Boundary Contract
+
+### Inputs
+- Miro board ID, content to create or read (diagrams, documents, tables)
+
+### Outputs
+- Miro board artifacts (diagrams, documents, tables) or extracted structured content
+
+### Out of Scope
+- Deciding what to visualise (PM skills own content decisions)
+- Code implementation
+- Research queries (`redline-research`)
+
 ## Overview
 
 Miro MCP (Model Context Protocol) enables Claude to interact directly with Miro boards. Create diagrams, documents, and tables; read board content; and extract structured documentation from visual designs.

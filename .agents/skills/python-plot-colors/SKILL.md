@@ -11,6 +11,19 @@ repo — whether with matplotlib, seaborn, plotly, altair, or another library.
 Good color use is a learned discipline. The overarching rule is: **color must
 encode information. Never use it as decoration.**
 
+## Boundary Contract
+
+### Applies To
+- Color selection in plots produced with matplotlib, seaborn, plotly, altair, or similar
+
+### Produces
+- Accessible, information-encoding color schemes with cross-figure consistency
+
+### Does Not Cover
+- Chart type selection and layout (`eda-visual-design`)
+- Data quality screening (`eda-interpreting-data`)
+- General style (`python-style`)
+
 ## Context & Guidelines
 
 ### Scope

@@ -15,6 +15,20 @@ For related topics:
 - Exceptions/logging: use the `python-error-handling` skill.
 - Module-level function ordering and step-down rule: use the `python-module-structure` skill.
 
+## Boundary Contract
+
+### Applies To
+- Function definitions across `src/` and `tests/`
+
+### Produces
+- Focused functions with clear signatures, minimal side effects, and testable decomposition
+
+### Does Not Cover
+- Type annotations (`python-typing`)
+- Docstrings (`python-documentation`)
+- Error handling (`python-error-handling`)
+- Module-level ordering (`python-module-structure`)
+
 ## Context & Guidelines
 
 ### Scope

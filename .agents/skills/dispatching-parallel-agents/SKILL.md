@@ -13,6 +13,19 @@ When you have multiple unrelated failures (different test files, different subsy
 
 **Core principle:** Dispatch one agent per independent problem domain. Let them work concurrently.
 
+## Boundary Contract
+
+### Inputs
+- Two or more independent tasks with no shared state or sequential dependencies
+
+### Outputs
+- Completed task results from concurrently dispatched subagents
+
+### Out of Scope
+- Sequential task execution (`subagent-driven-development`)
+- Task planning and breakdown (`spec-kit`)
+- Code review (`requesting-code-review`)
+
 ## When to Use
 
 ```dot

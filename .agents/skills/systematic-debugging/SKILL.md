@@ -5,6 +5,19 @@ description: Use when encountering any bug, test failure, or unexpected behavior
 
 # Systematic Debugging
 
+## Boundary Contract
+
+### Inputs
+- Bug report, test failure, or unexpected behaviour
+
+### Outputs
+- Root cause analysis and verified fix
+
+### Out of Scope
+- Test writing (`test-driven-development`)
+- Code review (`requesting-code-review`)
+- Feature implementation (`spec-kit`)
+
 ## Overview
 
 Random fixes waste time and create new bugs. Quick patches mask underlying issues.

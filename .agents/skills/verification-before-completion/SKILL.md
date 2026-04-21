@@ -5,6 +5,19 @@ description: Use when about to claim work is complete, fixed, or passing, before
 
 # Verification Before Completion
 
+## Boundary Contract
+
+### Inputs
+- Completed work claimed to be fixed or passing
+
+### Outputs
+- Verified evidence (test output, command results) confirming the claim
+
+### Out of Scope
+- Implementation work
+- Debugging (`systematic-debugging`)
+- Code review (`requesting-code-review`)
+
 ## Overview
 
 Claiming work is complete without verification is dishonesty, not efficiency.

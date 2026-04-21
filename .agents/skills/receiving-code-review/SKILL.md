@@ -5,6 +5,19 @@ description: Use when receiving code review feedback, before implementing sugges
 
 # Code Review Reception
 
+## Boundary Contract
+
+### Inputs
+- Code review feedback (comments, suggestions, requested changes)
+
+### Outputs
+- Addressed review comments with verified fixes
+
+### Out of Scope
+- Requesting review (`requesting-code-review`)
+- Code implementation or feature work
+- Debugging (`systematic-debugging`)
+
 ## Overview
 
 Code review requires technical evaluation, not emotional performance.

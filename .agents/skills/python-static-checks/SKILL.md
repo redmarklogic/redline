@@ -5,6 +5,19 @@ description: Perform static code checks
 
 # Static Checks
 
+## Boundary Contract
+
+### Applies To
+- All Python files before finalising any code change
+
+### Produces
+- Verified clean output from `uv run pre-commit run -a`
+
+### Does Not Cover
+- Individual lint rules (`python-linting`)
+- Type hint standards (`python-typing`)
+- Test execution (`python-testing-unit`)
+
 ## Procedure
 
 To perform static checks on the codebase, run:

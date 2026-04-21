@@ -9,6 +9,21 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 
 **REQUIRED SUB-SKILL:** Use `notebooklm-mcp` to confirm authentication before querying any notebook.
 
+## Boundary Contract
+
+### Inputs
+- Research question from user
+- Notebook register at `.agents/skills/notebooklm-mcp/register.json`
+- Project docs under `docs/architecture/` (read before querying notebooks)
+
+### Outputs
+- Cited research document at `docs/research/YYYYMMDD-<topic>.md`
+
+### Out of Scope
+- Online or web search (use only when user explicitly requests it)
+- Code implementation or architecture decisions
+- Specification writing (`spec-kit`) or design exploration (`brainstorming`)
+
 ## When to Use
 
 - User asks to "research", "investigate", "look up", or "find out" something in the Redline knowledge base.

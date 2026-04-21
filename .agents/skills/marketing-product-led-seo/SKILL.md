@@ -7,6 +7,19 @@ description: Use when planning SEO strategy beyond blog content, considering fre
 
 Source: `Digital Marketing & Social Selling` notebook (Product-Led SEO by Eli Schwartz).
 
+## Boundary Contract
+
+### Inputs
+- SEO opportunity or keyword cluster, product feature set
+
+### Outputs
+- Product-Led SEO marketing brief for handoff to Mark (`pm-prd-builder`)
+
+### Out of Scope
+- PRD writing (`pm-prd-builder`)
+- Blog content planning (`marketing-content-big-5`)
+- Code implementation (`spec-kit`)
+
 ## Core Principle
 
 Traditional SEO writes blog posts targeting keywords. **Product-Led SEO builds the

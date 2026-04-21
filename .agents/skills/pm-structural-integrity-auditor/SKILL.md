@@ -9,6 +9,19 @@ description: Use when auditing any product artifact — strategy, initiative, hy
 
 Run a rigorous structural audit on any product artifact. Surface gaps before they become misaligned work, wasted experiments, or failed decisions. Audit only — do not rewrite or fix.
 
+## Boundary Contract
+
+### Inputs
+- Product artifact to audit (strategy, initiative, hypothesis, experiment, or PRD)
+
+### Outputs
+- Structural integrity report with gaps, contradictions, and recommendations
+
+### Out of Scope
+- Writing or fixing the audited artifacts
+- Problem framing (`pm-problem-framer`)
+- Code implementation or architecture review
+
 ## When to Use
 
 - Before marking an initiative Active or running an experiment

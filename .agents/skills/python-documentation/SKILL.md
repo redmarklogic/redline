@@ -7,6 +7,19 @@ description: Standards and guidelines for writing Python documentation, ensuring
 
 This skill defines the standards for documenting Python code, following the Google Python Style Guide with specific adaptations for type-annotated code.
 
+## Boundary Contract
+
+### Applies To
+- Docstrings in all Python modules, classes, and functions under `src/` and `tests/`
+
+### Produces
+- Google Style docstrings that complement type annotations without redundancy
+
+### Does Not Cover
+- Type hint standards (`python-typing`)
+- Lint rule enforcement (`python-linting`)
+- README and architecture docs (`doc-updater`)
+
 ## Core Rules
 
 1. **Mandatory Documentation**: Public functions, classes, and methods must have docstrings.

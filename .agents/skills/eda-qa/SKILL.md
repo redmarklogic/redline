@@ -12,6 +12,19 @@ and update the target codebook with concrete, actionable findings.
 Strictly use **UK English** spelling and grammar throughout (e.g. *analyse*, *colour*,
 *organisation*).
 
+## Boundary Contract
+
+### Applies To
+- Raw datasets with an existing codebook for data quality investigation
+
+### Produces
+- Updated codebook Findings section with validated data quality problems
+
+### Does Not Cover
+- Codebook creation (`eda-codebook`)
+- Visual design (`eda-visual-design`)
+- Pre-flight data screening (`eda-interpreting-data`)
+
 ## Context & Guidelines
 
 - **Scope**: Apply whenever the user asks to "QA", "validate", "check", or "audit" a

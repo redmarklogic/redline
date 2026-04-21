@@ -7,6 +7,19 @@ description: Secure coding rules for secrets, configuration, and logging in this
 
 This skill defines security rules for day-to-day development in this repo.
 
+## Boundary Contract
+
+### Applies To
+- Secrets handling, configuration, and logging across all code
+
+### Produces
+- Code free from hardcoded secrets, safe logging, and secure configuration patterns
+
+### Does Not Cover
+- General style (`python-style`)
+- Error handling (`python-error-handling`)
+- Authentication and authorization architecture
+
 ## Context & Guidelines
 
 ### Secrets

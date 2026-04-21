@@ -13,6 +13,19 @@ For related topics:
 - General Python style: use the `python-style` skill.
 - Lint rules (including `os.path` ban): use the `python-linting` skill.
 
+## Boundary Contract
+
+### Applies To
+- File and directory path resolution across all Python code
+
+### Produces
+- Consistent path handling using `pathlib`, `importlib.resources`, and `repo_` helper
+
+### Does Not Cover
+- Data versioning paths (`python-pins-data-version-control`)
+- General style (`python-style`)
+- Lint rules for `os.path` ban (`python-linting`)
+
 ## Context & Guidelines
 
 ### Scope

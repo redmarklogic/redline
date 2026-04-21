@@ -5,6 +5,19 @@ description: Use when asked to stress-test, pre-mortem, or risk-assess an un-imp
 
 # Pre-Mortem Analysis
 
+## Boundary Contract
+
+### Inputs
+- Un-implemented plan, launch, initiative, or strategic bet to stress-test
+
+### Outputs
+- Pre-mortem analysis with failure modes, mitigations, and risk assessment
+
+### Out of Scope
+- Strategy creation (`pm-product-strategist`)
+- Problem framing (`pm-problem-framer`)
+- Code implementation
+
 ## Overview
 
 Assume the plan has already failed. Work backward to find why. A pre-mortem removes optimism bias by making failure concrete before execution begins.

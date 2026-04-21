@@ -15,6 +15,21 @@ For related topics:
 - Function design: use the `python-function-design` skill.
 - Docstrings: use the `python-documentation` skill.
 
+## Boundary Contract
+
+### Applies To
+- All Python modules under `src/` and test files under `tests/`
+
+### Produces
+- Code conforming to repo formatting, naming, constant-organisation, and import conventions
+
+### Does Not Cover
+- Lint rule enforcement and suppressions (`python-linting`)
+- Type annotations (`python-typing`)
+- Error handling patterns (`python-error-handling`)
+- Function decomposition and signatures (`python-function-design`)
+- Docstring format and content (`python-documentation`)
+
 ## Context & Guidelines
 
 ### Scope

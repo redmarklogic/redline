@@ -7,6 +7,19 @@ description: Version control conventions (commits, hygiene, pre-commit, and pre-
 
 This skill defines version control conventions for this repo.
 
+## Boundary Contract
+
+### Applies To
+- Git commits, branch hygiene, pre-commit, and pre-push checks
+
+### Produces
+- Clean commit history following repo conventions
+
+### Does Not Cover
+- Batched push workflow (`git-push-batched`)
+- Branch finishing (`finishing-a-development-branch`)
+- Code review (`requesting-code-review`)
+
 ## Context & Guidelines
 
 ### Commits

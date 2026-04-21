@@ -7,6 +7,23 @@ description: Operating playbook for the People & Agent Development role — hiri
 
 Operating playbook for the People & Agent Development function. Load at the start of every session in this role.
 
+## Boundary Contract
+
+### Inputs
+- Hire, audit, refresh, or org-audit request from user
+- Agent files in `.github/agents/` and `docs/people/agent-register.md`
+- Decision-bearing files in `docs/product/strategy/`, `docs/adr/`, `specs/`
+
+### Outputs
+- Draft agent files at `docs/people/drafts/agents/<agent>.agent.md`
+- Reports at `docs/people/drafts/reports/<type>-<YYYY-MM-DD>.md`
+- Updates to `docs/people/agent-register.md`, `org-chart.md`, `skills-taxonomy.md`
+
+### Out of Scope
+- Writing skill content (`writing-skills`)
+- Code implementation or architecture decisions
+- Domain expertise (route to Graeme, Ron, Mark, or John)
+
 This skill encodes principles from three sources, queried via the `Organisational Design & Team Topologies` notebook:
 
 - **Team Topologies** (Skeleton & Pais) — team boundaries, Conway's Law, cognitive load, fracture planes, Team APIs, three interaction modes.

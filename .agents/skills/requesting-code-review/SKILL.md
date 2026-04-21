@@ -9,6 +9,19 @@ Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 
 **Core principle:** Review early, review often.
 
+## Boundary Contract
+
+### Inputs
+- Completed implementation ready for review
+
+### Outputs
+- Pre-review checklist report with issues by severity
+
+### Out of Scope
+- Addressing review feedback (`receiving-code-review`)
+- Code implementation
+- Branch finishing (`finishing-a-development-branch`)
+
 ## When to Request Review
 
 **Mandatory:**

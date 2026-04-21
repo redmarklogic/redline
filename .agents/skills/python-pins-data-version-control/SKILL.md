@@ -12,6 +12,19 @@ For related topics:
 - Path resolution conventions: use the `python-paths` skill.
 - General Python style: use the `python-style` skill.
 
+## Boundary Contract
+
+### Applies To
+- Dataset versioning using the `pins` library and board layout conventions
+
+### Produces
+- Versioned, shareable datasets with consistent naming and read/write patterns
+
+### Does Not Cover
+- Path resolution (`python-paths`)
+- General style (`python-style`)
+- Data ingestion pipelines (`python-data-ingestion`)
+
 ## Context & Guidelines
 
 ### Scope

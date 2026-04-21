@@ -13,6 +13,19 @@ Guide completion of development work by presenting clear options and handling ch
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
+## Boundary Contract
+
+### Inputs
+- Completed implementation on a development branch with passing tests
+
+### Outputs
+- Merge, PR, or cleanup decision executed; branch tidied
+
+### Out of Scope
+- Code implementation (`spec-kit`)
+- Code review process (`requesting-code-review`)
+- Test writing (`test-driven-development`)
+
 ## The Process
 
 ### Step 1: Verify Tests

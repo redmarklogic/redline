@@ -17,6 +17,19 @@ each domain entry point exposed as a **Facade**.
 Related skills: `python-domain-modeling`, `test-driven-development`, `python-testing-unit`,
 `python-function-design`, `python-typing`.
 
+## Boundary Contract
+
+### Applies To
+- Data reader modules under `functions/readers/` and Pandera schema definitions
+
+### Produces
+- Validated DataFrames via the import/process/read pattern with Pandera contracts
+
+### Does Not Cover
+- Domain value objects and constants (`python-domain-modeling`)
+- General function design (`python-function-design`)
+- Data versioning (`python-pins-data-version-control`)
+
 ## Rules
 
 - **pandera >= 0.30.0** — use `pa.DataFrameModel`, not the legacy `pa.SchemaModel`.

@@ -12,6 +12,24 @@ preset, and delegates to spec-kit's command templates for specification-driven d
 Replaces the former `spec-planning`, `writing-plans`, and `executing-plans` skills with a
 single end-to-end workflow.
 
+## Boundary Contract
+
+### Inputs
+- Feature description (conversation context or external `.md` file)
+- `.specify/` project configuration (`architecture.yml`, `extensions.yml`)
+- Concept docs or research docs from `docs/`
+
+### Outputs
+- `specs/NNN-feature/spec.md` -- feature specification with RICE-scored scenarios
+- `specs/NNN-feature/plan.md` -- implementation plan with MoSCoW and domain impact
+- `specs/NNN-feature/tasks.md` -- dependency-ordered vertical-slice tasks
+- `.specify/` project infrastructure (on first use)
+
+### Out of Scope
+- Design exploration and requirements elicitation (`brainstorming`)
+- Research queries against NotebookLM knowledge bases (`redline-research`)
+- Code implementation patterns (`python-*` skills)
+
 ## When to Use
 
 - Planning a new feature, pipeline, or multi-phase project

@@ -5,6 +5,19 @@ description: Story-driven narrative design for Quarto reports and presentations.
 
 # QMD Narrative Design
 
+## Boundary Contract
+
+### Applies To
+- Quarto `.qmd` documents for external audiences (presentations, reports, memos)
+
+### Produces
+- Narrative structure following Hook-Problem-Insight-Proof-Action arc
+
+### Does Not Cover
+- Table rendering (`qmd-tables`)
+- Plot construction (`eda-visual-design`)
+- Data quality screening (`eda-interpreting-data`)
+
 ## Procedure
 
 Apply this skill whenever generating or reviewing a Quarto `.qmd` document for an external audience — a client presentation (`revealjs`), a technical report (`html`/`pdf`/`typst`), or a client memo. Start by asking clarifying questions, then structure content using the Hook-Problem-Insight-Proof-Action arc with audience-aware density.

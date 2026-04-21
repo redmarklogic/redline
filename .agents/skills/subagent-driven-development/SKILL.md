@@ -11,6 +11,19 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 **Core principle:** Fresh subagent per task + two-stage review (spec then quality) = high quality, fast iteration
 
+## Boundary Contract
+
+### Inputs
+- Implementation plan with independent tasks from `tasks.md`
+
+### Outputs
+- Completed implementation with two-stage review (spec compliance + code quality)
+
+### Out of Scope
+- Plan creation (`spec-kit`)
+- Parallel dispatch of independent research tasks (`dispatching-parallel-agents`)
+- Branch finishing (`finishing-a-development-branch`)
+
 ## When to Use
 
 ```dot

@@ -10,6 +10,19 @@ Never encode execution order in script filenames using numeric prefixes
 order in the scripts directory README using a numbered Markdown list with
 relative hyperlinks.
 
+## Boundary Contract
+
+### Applies To
+- Script file naming and execution order documentation under `src/scripts/`
+
+### Produces
+- Descriptive script names with execution order documented in README
+
+### Does Not Cover
+- Script internal structure (`python-script`)
+- Function design (`python-function-design`)
+- General style (`python-style`)
+
 ## Rationale
 
 Numeric-prefix filenames suffer from two chronic problems in version-controlled projects:

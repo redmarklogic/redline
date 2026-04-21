@@ -9,6 +9,21 @@ description: Use when defining a customer archetype, GTM segment, or persona —
 
 A persona is a concrete, evidence-backed stand-in for a real user segment. Mark uses personas at the PRD level. Ron uses archetypes at the GTM/strategy level. Both must trace back to evidence — never invented for narrative convenience.
 
+## Boundary Contract
+
+### Inputs
+- Market segment or user archetype to define, with evidence sources
+- Strategy context from Ron (positioning, ICP, GTM motion)
+
+### Outputs
+- Persona document at `docs/product/relationships/users/<persona>.md`
+- Archetype document at `docs/product/relationships/archetypes/<segment>.md`
+
+### Out of Scope
+- Product strategy and positioning (`pm-product-strategist`)
+- PRD writing (`pm-prd-builder`)
+- Marketing content creation (`marketing-*` skills)
+
 ## When NOT to Use
 
 - PRD already cites a persona validated in research within 6 months — reuse, do not duplicate.

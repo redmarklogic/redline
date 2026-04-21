@@ -7,6 +7,20 @@ description: Standards for Ruff/lint compliance and safe lint suppressions in th
 
 This skill defines how to keep Python code compliant with the repo's linting rules.
 
+## Boundary Contract
+
+### Applies To
+- All Python files under `src/` and `tests/`
+
+### Produces
+- Ruff-compliant code with justified, narrowly-scoped suppressions
+
+### Does Not Cover
+- General style conventions and formatting (`python-style`)
+- Type hint standards (`python-typing`)
+- Docstring content and format (`python-documentation`)
+- Import ordering across packages (`python-module-structure`)
+
 ## Context & Guidelines
 
 ### Scope

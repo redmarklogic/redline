@@ -14,6 +14,19 @@ For related topics:
 - General Python style: use the `python-style` skill.
 - Function ordering within any module (step-down rule, public-before-private): use the `python-module-structure` skill.
 
+## Boundary Contract
+
+### Applies To
+- Python scripts under `src/scripts/` using Spyder-style cell structure
+
+### Produces
+- Thin orchestration scripts with reusable logic kept in the package
+
+### Does Not Cover
+- Script naming and ordering (`python-script-numbering`)
+- Function design (`python-function-design`)
+- Module ordering (`python-module-structure`)
+
 ## Context & Guidelines
 
 ### Scope

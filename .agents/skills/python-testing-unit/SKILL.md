@@ -7,6 +7,19 @@ description: Standards for writing unit tests in this repo.
 
 This skill defines conventions for unit testing in this repo.
 
+## Boundary Contract
+
+### Applies To
+- Unit tests under `tests/` using pytest
+
+### Produces
+- Tests following Arrange/Act/Assert, equivalence classes, and parametrize conventions
+
+### Does Not Cover
+- API endpoint testing (`python-testing-api`)
+- TDD workflow (`test-driven-development`)
+- General style (`python-style`)
+
 ## Context & Guidelines
 
 ### Scope

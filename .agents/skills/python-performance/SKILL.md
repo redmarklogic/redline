@@ -10,6 +10,19 @@ This skill covers how to identify, measure, and fix performance bottlenecks in P
 Apply it when a script, hook, or function is noticeably slow and the cause is not obvious.
 Do not guess — always measure first.
 
+## Boundary Contract
+
+### Applies To
+- Python code with suspected performance bottlenecks in scripts, hooks, or functions
+
+### Produces
+- Profiled and optimised code with measured improvements
+
+### Does Not Cover
+- General style (`python-style`)
+- Function design (`python-function-design`)
+- Algorithmic design decisions (`spec-kit`)
+
 ## Context & Guidelines
 
 ### Scope

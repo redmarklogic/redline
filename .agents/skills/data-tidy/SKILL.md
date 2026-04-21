@@ -11,6 +11,19 @@ value-object/model contracts — regardless of programming language.
 > "Tidy datasets are all alike, but every messy dataset is messy in its own way."
 > — Hadley Wickham, *R for Data Science*
 
+## Boundary Contract
+
+### Applies To
+- DataFrame schema design and value-object modeling decisions
+
+### Produces
+- Tidy data structures (one variable per column, one observation per row, one table per observational unit)
+
+### Does Not Cover
+- Data ingestion implementation (`python-data-ingestion`)
+- Domain modeling specifics (`python-domain-modeling`)
+- Dataset versioning (`python-pins-data-version-control`)
+
 ## Core Tidy Data Rules
 
 Three interrelated rules define a tidy dataset:

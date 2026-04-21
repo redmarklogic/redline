@@ -9,6 +9,20 @@ description: Use when an initiative has at least one validated or in-testing hyp
 
 Convert a structured initiative and its linked hypotheses into a stakeholder-ready PRD. The PRD is an ending point of validated initiative work, not a starting point.
 
+## Boundary Contract
+
+### Inputs
+- Validated initiative with at least one tested hypothesis from `docs/product/hypotheses/`
+- Strategic bet reference from `docs/product/strategy/strategic-bets.md`
+
+### Outputs
+- PRD document at `docs/product/prds/`
+
+### Out of Scope
+- Problem framing (`pm-problem-framer`)
+- Hypothesis building (`pm-hypothesis-builder`)
+- Engineering specification and task breakdown (`spec-kit`)
+
 ## When to Use
 
 - Initiative has at least one Validated or Testing hypothesis

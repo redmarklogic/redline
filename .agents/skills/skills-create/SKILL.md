@@ -10,6 +10,19 @@ This skill is only for creating a brand-new skill folder and `SKILL.md` file.
 For modifying/refactoring existing skills, edit the `SKILL.md` file directly.
 For diagnostic compliance checks, run `uv run pre-commit run --all-files` before committing.
 
+## Boundary Contract
+
+### Inputs
+- Skill idea or requirement for a new skill
+
+### Outputs
+- New skill directory at `.agents/skills/<name>/` with `SKILL.md`
+
+### Out of Scope
+- Skill content authoring and TDD cycle (`writing-skills`)
+- Agent hiring or auditing (`hiring-agent-management`)
+- Code implementation
+
 ## Workflow
 
 Follow these steps when asked to create a new skill.

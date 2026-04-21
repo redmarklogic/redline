@@ -8,6 +8,19 @@ description: Standards for clear, consistent Python type hints in this repo.
 This skill defines how to write type hints that improve readability and correctness without
 adding noise.
 
+## Boundary Contract
+
+### Applies To
+- Type annotations across all Python modules under `src/` and `tests/`
+
+### Produces
+- Clear, consistent type hints that improve readability without noise
+
+### Does Not Cover
+- Docstring standards (`python-documentation`)
+- Lint enforcement (`python-linting`)
+- Domain model types (`python-domain-modeling`)
+
 ## Context & Guidelines
 
 ### Scope

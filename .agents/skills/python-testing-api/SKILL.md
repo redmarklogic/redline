@@ -13,6 +13,19 @@ For general testing philosophy (Arrange/Act/Assert, equivalence classes, paramet
 guidelines, mocking boundaries), use the `python-testing-unit` skill — this skill does **not** duplicate those
 rules.
 
+## Boundary Contract
+
+### Applies To
+- FastAPI endpoint tests (component tests and contract tests) under `tests/`
+
+### Produces
+- Isolated API tests with schema enforcement via Pydantic and OpenAPI
+
+### Does Not Cover
+- General unit testing conventions (`python-testing-unit`)
+- TDD workflow (`test-driven-development`)
+- Function design (`python-function-design`)
+
 ## Scope
 
 Apply these rules when writing or updating tests for FastAPI router modules and
