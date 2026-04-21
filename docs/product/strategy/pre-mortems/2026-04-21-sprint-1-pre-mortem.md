@@ -117,3 +117,43 @@ The kill criterion has tripped. Redline has 19 verified-email signups — well b
 ---
 
 **Next step for Mark:** Frame a problem statement for the document-parser scope cut (Risk 1, Action A) — specifically, define what the manual-input form must capture to produce a useful skeleton, and confirm with Graeme that dropdown-based parameter selection is sufficient for NZ GBR/GIR jurisdiction mapping. This is the most impactful scope-reduction decision in the sprint and it needs product sign-off before build begins.
+
+---
+
+## Addendum (2026-04-22, Founder-Approved Decision)
+
+**Risk 1 Action A is superseded.** The founder rejected the manual-input form approach
+and approved Ron's revised recommendation: keep the document parser (Feature M) in
+Sprint 1, scoped to **metadata extraction only (Step 2)**.
+
+**What changed:**
+
+- The original Action A recommended cutting the document parser entirely and replacing
+  it with a manual-input form. The founder determined that the parser scoped to metadata
+  extraction (project number, client name, site address, date, report type, conditional
+  section flags) is feasible within Sprint 1. The R&D-grade risk identified in the
+  pre-mortem applies to **full deliverable parsing and traceability matrix construction
+  (Step 3)**, not to metadata extraction. Step 3 is deferred to Sprint 2.
+- The UX is one-click: upload LOE, see skeleton populate with a live progress indicator.
+  No manual-input form. No fallback form. If extraction fails on a particular LOE
+  format, the skeleton generates with blank metadata fields — the user edits in Word.
+
+**Ron's revised recommendation:** Ron confirmed that scoping the parser to metadata
+extraction only preserves the pre-mortem's intent (reduce R&D risk in Sprint 1) while
+delivering a superior UX. The manual-input problem statement
+(`docs/product/problems/skeleton-manual-input-problem.md`) is superseded.
+
+**John's marketing alignment:**
+
+- One-click is the only version that supports PLG acquisition — every form field is an
+  abandonment point.
+- The progress indicator ("Extracting metadata... Building sections... Applying
+  standards...") is marketing copy embedded in the product — it teaches users what
+  Redline does while it does it.
+- Extraction quality IS the marketing: 95% accuracy = "magic", 70% = negative viral.
+  Ship at 90%+ or delay.
+- The audit trail positioning becomes tangible from Day 1: showing what was extracted
+  vs. what was inferred.
+
+**Remaining pre-mortem risks are unaffected.** Risks 2-5 and their mitigations stand as
+written. Only Risk 1 Action A is superseded by this decision.

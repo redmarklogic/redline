@@ -39,6 +39,14 @@ onboarding (upload report, see skeleton) reaches engineers that bespoke agency m
 (SupaHuman's sales-call-plus-contract) will never talk to. Provenance:
 `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
+**One-click UX decision** *(added 2026-04-22, founder-approved)*: Sprint 1 UX confirmed
+as one-click LOE upload with LLM metadata extraction and live progress indicator. No
+manual-input form. This reinforces the PLG acquisition advantage — every form field is
+an abandonment point; one-click upload is the only version that delivers the zero-friction
+onboarding this bet depends on. The progress indicator ("Extracting metadata... Building
+sections... Applying standards...") doubles as in-product marketing copy, teaching users
+what Redline does while it works. See PRD decision log (2026-04-22).
+
 **OKR ladder**: `okrs/2026-h2.md` → KR1 (signups — warning signal at 60 days; kill
 criterion at 90 days), KR2 sub-metric (outbound response rate), KR3 (signup-to-paid
 conversion).
