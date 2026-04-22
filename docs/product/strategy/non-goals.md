@@ -35,7 +35,12 @@ strategy drift.
 ## GTM Non-Goals (H2 2026)
 
 1. **No third geography.** NZ and AU only. See `strategic-bets.md` Bet 5.
-2. **No enterprise sales motion.** Single PLG funnel from free wedge → Pro → Business.
+2. **No Tier 1 enterprise sales motion.** *(updated 2026-04-20, Archie CI session)*
+   Tier 1 firms (T+T, WSP, Beca — 1000+ employees, government projects) build their
+   own AI and require enterprise SOC2. They are not Redline's market. Single PLG funnel
+   from free wedge → Pro → Business, targeting Tier 2 firms (5-50 employees,
+   residential/commercial geotech). See `strategic-bets.md` Bet 6 market segmentation.
+   Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
    No SDR team, no outbound enterprise prospecting, no annual contract negotiations.
 3. **No paid acquisition spend before the wedge proves out.** Bet 1 must trip its kill
    criterion before we test paid channels. Spending on Google Ads while the free wedge

@@ -58,6 +58,8 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 - Project-specific conventions (put in CLAUDE.md)
 - Mechanical constraints (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
 
+**Never name a skill after an agent.** Skills are agent-agnostic reusable procedures. Agent names must never appear in a skill name or inside skill content. Use domain or function prefixes (e.g., `hiring-`, `python-`, `pm-`). Agents know which skills to load; skills must not know or reference which agent uses them.
+
 ## Skill Types
 
 ### Technique
@@ -112,6 +114,13 @@ description: Use when [specific triggering conditions and symptoms]
 
 ## Overview
 What is this? Core principle in 1-2 sentences.
+
+## Boundary Contract
+Required. Use one of two template variants:
+- **Service/workflow skills**: `### Inputs` / `### Outputs` / `### Out of Scope`
+- **Coding-standards skills**: `### Applies To` / `### Produces` / `### Does Not Cover`
+Place after Overview, before When to Use. Keep 5-10 lines (excluding headings).
+Service/workflow contracts must name concrete artifacts (file names, paths).
 
 ## When to Use
 [Small inline flowchart IF decision non-obvious]
@@ -607,6 +616,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] YAML frontmatter with required `name` and `description` fields (max 1024 chars; see [spec](https://agentskills.io/specification))
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
+- [ ] Boundary Contract section with correct template variant (service/workflow or coding-standards)
 - [ ] Keywords throughout for search (errors, symptoms, tools)
 - [ ] Clear overview with core principle
 - [ ] Address specific baseline failures identified in RED

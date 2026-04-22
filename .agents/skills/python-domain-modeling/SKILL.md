@@ -10,6 +10,19 @@ Python. For **strategic DDD** decisions (subdomain classification, bounded conte
 identification, EventStorming, context maps), use the `spec-kit` skill's plan phase
 and `docs/architecture/domain-model.md`.
 
+## Boundary Contract
+
+### Applies To
+- Domain objects (Pydantic models, Pandera schemas, value objects) under `src/`
+
+### Produces
+- Tactical DDD artifacts following DataFrame-first API and value-object conventions
+
+### Does Not Cover
+- Strategic DDD decisions and bounded context identification (`spec-kit` plan phase)
+- General class design patterns (`python-class-design`)
+- Data ingestion pipelines (`python-data-ingestion`)
+
 ## Architectural stance
 
 The domain layer contains core business logic and is structured as:

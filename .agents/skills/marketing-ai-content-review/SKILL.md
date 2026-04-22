@@ -7,6 +7,20 @@ description: Use when drafting marketing content with generative AI for a techni
 
 Source: `Digital Marketing & Social Selling` notebook.
 
+## Boundary Contract
+
+### Inputs
+- AI-generated marketing content draft with technical domain claims
+
+### Outputs
+- Reviewed content with EEAT compliance and hallucination flags
+- SME sign-off requirements routed to Graeme for domain verification
+
+### Out of Scope
+- Content topic selection (`marketing-content-big-5`)
+- SEO strategy (`marketing-product-led-seo`)
+- Domain expertise itself (route to Graeme)
+
 ## Core Principle
 
 Generative AI scales content production but **fabricates facts** ("hallucinates").

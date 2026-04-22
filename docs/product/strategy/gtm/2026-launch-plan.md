@@ -155,6 +155,7 @@ Self-serve for free tier. White-glove for Pro:
 | Email-verified signup does not equal buying intent | KR2 (qualified conversations) and KR3 (paid) catch this |
 | Founder bandwidth caps qualified conversations at 15 | If KR1 over-delivers, batch outbound and prioritise the 15 highest-fit signups |
 | Pricing discovery delays paid conversion | Accept; KR3 allows LOIs as substitute for paid revenue |
+| Enterprise AI blocking prevents user acquisition at MSP-managed firms | Category positioning ("quality tool", not "AI tool"); risk-score hygiene; email-based fallback channel; IT Justification Brief. See `enterprise-ai-blocking-risk-assessment.md`. *(added 2026-04-22)* |
 
 ## Phase-2 GTM (Out of Scope, but Documented)
 

@@ -1,0 +1,223 @@
+# PRD: Free Skeleton Generator (Feature A)
+
+**Status**: Draft v1. **Owner**: Mark. **Date**: 2026-04-20.
+**Target reader**: Engineering.
+**Strategic bet**: [Bet 1 — The Free Skeleton Wedge Beats Paid Acquisition](../strategy/strategic-bets.md)
+**Problem statement**: [skeleton-wedge-problem.md](../problems/skeleton-wedge-problem.md)
+
+## Strategic Context
+
+Bet 1 claims that a free, SSO-gated GBR/GIR Skeleton Generator acquires intermediate
+engineers at lower cost than paid acquisition and converts to paid Pre-Review at a higher
+rate than cold outreach. The skeleton is the natural first step in the GBR workflow per
+[report-drafting-initiation-workflow.md](../../research/20260412-report-drafting-initiation-workflow.md).
+Quota exhaustion creates a defensible moment for founder-led outbound.
+
+Competitive context: SupaHuman's Archie validates market demand for AI-assisted
+geotechnical report drafting, but their delivery model (bespoke $50k+ builds, generalist
+RAG with no domain IP) is inaccessible to Tier 2 firms. Redline's PLG advantage is
+zero-friction onboarding versus SupaHuman's enterprise sales process.
+
+## Target Segment
+
+Tier 2 NZ/AU geotechnical consultancies (5-50 person firms). Explicitly not Tier 1
+(T+T, WSP, Beca) — those firms build internally. The user is the intermediate engineer
+(3-7 years post-graduation) who drafts GBRs and GIRs.
+
+## Scope
+
+### In Scope (Sprint 1 — ship by 2026-06-30)
+
+- **GBR skeleton generation**: given a report type (GBR or GIR), jurisdiction (NZ or AU),
+  and basic project parameters (site location, client, scope), produce a structured
+  document skeleton with section headings, placeholder content, and standard clause
+  references.
+- **GIR skeleton generation**: same as GBR, adapted for interpretive report structure.
+- **SSO-gated signup**: verified work email required. No anonymous access.
+- **Quota cap**: 3-5 documents per verified user, 100 pages per document. Quota is
+  non-renewable in free tier.
+- **Document output**: downloadable Word document (.docx) with the skeleton structure.
+- **Standards grounding**: skeleton references drawn from the Standards Knowledge Store
+  (MVP subset — 3-5 NZ documents per [feature-backlog.md](../strategy/feature-backlog.md)
+  Feature N).
+- **Audit trail**: every AI generation event is logged with timestamp, model, input
+  parameters, and output hash. Ships with v1, not as Phase-2. See
+  [audit-trail-day1-requirement.md](audit-trail-day1-requirement.md).
+- **Document Parser (Feature M — metadata extraction only)**: LLM-based extraction
+  of project parameters from an uploaded Letter of Engagement (LOE): project number,
+  client name, site address, date, report type, and conditional section flags. Scoped
+  to metadata extraction (Step 2) only — full deliverable parsing and traceability
+  matrix deferred to Sprint 2. See Decision Log (2026-04-22).
+- **One-click LOE upload UX with live progress indicator**: the user uploads an LOE
+  and sees a progress indicator ("Extracting metadata... Building sections... Applying
+  standards...") while the system extracts parameters and generates the skeleton. No
+  manual-input form. If extraction cannot populate a metadata field, the skeleton
+  generates with that field blank — the user edits in Word.
+- **Platform and web surface (Feature P)**: SSO-gated web application. See
+  [platform-requirements.md](../../specs/003-platform-website/platform-requirements.md).
+
+### Out of Scope
+
+- Pre-Review annotations or inline comments (Bet 2 / Sprint 2-3).
+- Adversarial Scan (Phase-2).
+- House Rules configuration (Sprint 5+).
+- AU standards in the Knowledge Store MVP (NZ-only first; AU follows).
+- Word task pane integration (parked — P-024).
+- Mobile client (engineering non-goal).
+- Firm-specific knowledge ingestion (Business tier).
+- Paid tier or revenue collection — the skeleton is free.
+- Traceability matrix / deliverable-to-section mapping (Step 3 — deferred to Sprint 2).
+  Requires full deliverable parsing beyond metadata extraction.
+- Manual parameter input form (decision 2026-04-22: replaced by one-click LOE upload
+  with LLM metadata extraction). See Decision Log.
+
+## PLG Funnel Mechanics
+
+The skeleton is a product-led growth (PLG) wedge. The funnel:
+
+1. **Acquisition**: intermediate engineer discovers Redline (founder-led content,
+   LinkedIn, word-of-mouth within NZ/AU geotech community).
+2. **Activation**: engineer signs up with verified work email, generates first skeleton.
+   Time-to-value target: under 60 seconds from signup to first skeleton download.
+3. **Quota exhaustion**: after 3-5 documents, the free quota is consumed.
+4. **Outbound trigger**: quota exhaustion fires a founder-led outbound email offering
+   a paid Pre-Review trial on the skeletons the user already generated.
+5. **Conversion**: at least 1 in 5 outbound responders books a paid Pre-Review trial
+   (Bet 1 assumption stack).
+
+GTM angle for outbound: "Your AI wrote it. Who checked it? Redline gives you the audit
+trail your insurer will ask for."
+
+## Success Definition
+
+Per Bet 1's kill criterion:
+
+| Metric | Target | Kill threshold |
+|---|---|---|
+| Verified-email signups (90 days) | 50+ | < 50 kills the wedge |
+| Outbound response rate (quota-exhausted users) | 5%+ | < 5% kills the wedge |
+| 60-day warning signal | 30+ signups by Day 60 | Below 30 triggers course correction |
+
+Product-quality metric (informing iteration, not bet-kill): activation rate
+(signup-to-first-skeleton-download).
+
+## Acceptance Criteria (MVP)
+
+1. Given a verified user uploads an LOE (Letter of Engagement), the system extracts
+   project parameters via LLM and generates a structured skeleton document within
+   30 seconds.
+2. The skeleton contains section headings consistent with
+   [GIR skeleton acceptance criteria](../../research/20260411-gir-skeleton-acceptance-criteria.md)
+   and [section placeholders](../../research/20260411-gir-skeleton-section-placeholders.md).
+3. The skeleton includes placeholder text that references applicable NZ standards from
+   the Standards Knowledge Store.
+4. The output is a downloadable .docx file with proper heading hierarchy.
+5. Each generation event is logged in the audit trail with timestamp, user ID, model
+   version, input parameters, and output document hash.
+6. Quota enforcement: after 3-5 documents (configurable), further generation is blocked
+   and the user sees a quota-exhaustion message with a CTA for Pre-Review trial.
+7. SSO gating: no skeleton generation without a verified work email.
+8. If LLM extraction cannot populate a metadata field, the skeleton generates with that
+   field blank. No fallback form is presented.
+9. The system does not author engineering opinions, recommendations, or interpretive
+   content (per [non-goals.md](../strategy/non-goals.md)).
+
+## Constraints
+
+- Switzerland-neutral: the skeleton is structural scaffolding, not engineering content.
+- Zero-training perimeter: no customer data is retained for model fine-tuning.
+- NZ jurisdiction only in Sprint 1. AU standards follow.
+- Audit trail is a Day-1 requirement, not Phase-2 (see
+  [audit-trail-day1-requirement.md](audit-trail-day1-requirement.md)).
+
+## Engineering Dependencies
+
+- **Feature M — Document Parser**: required to extract project parameters from uploaded
+  scope documents. Scoped inside this PRD, not filed separately.
+- **Feature N — Standards Knowledge Store (MVP)**: NZ-only subset (3-5 documents).
+  Scoped inside this PRD. Architecture per
+  [ADR-005](../../adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md):
+  citation-only, internal, never exposed as a public query interface.
+
+## Open Questions
+
+1. What is the exact quota cap — 3 or 5 documents? Needs founder input on the
+   friction/value tradeoff.
+2. Should the quota-exhaustion outbound email be automated or manually triggered by
+   the founder in the first 90 days?
+3. ~~What project parameters are required vs. optional for skeleton generation?~~
+   **Resolved 2026-04-22.** Graeme confirmed the metadata extraction fields (project
+   number, client name, site address, date, report type, conditional section flags).
+   LOE upload with LLM extraction replaces manual input. See
+   `docs/research/20260421-dropdown-parameter-sufficiency-gbr-gir.md` and Decision Log.
+4. How does the skeleton handle multi-discipline reports (e.g., combined geotech +
+   environmental)? Per non-goals, we refuse environmental — but what happens when a
+   user tries?
+
+## Risks
+
+| Risk | Mitigation |
+|---|---|
+| Skeleton quality too low — engineers don't trust it | Grounded in prior research (acceptance criteria + section placeholders). Iterate based on Day 1-30 feedback. |
+| Quota cap too generous — no conversion pressure | Start at 3 documents. Increase only if activation rate is low. |
+| SSO gating loses casual users | Acceptable tradeoff — unverified signups have no outbound path. |
+| Insurance liability for AI-generated skeleton content | Audit trail ships Day-1. Switzerland-neutral framing: skeleton is structural, not advisory. |
+| LLM extraction quality below usable threshold | John's marketing assessment: 95% accuracy = "magic", 70% = negative viral. Ship at 90%+ or delay. Over-promising in demos creates expectation debt — show real, imperfect extractions in content. Frame as "one click to start, customise if you want" to preserve future flexibility. Offer a pre-loaded demo LOE for prospects without a clean LOE at drafting stage ("No LOE? Try our example"). |
+
+## Next Step
+
+Sprint 2 PRD for D (Inline Annotation Engine) + G (Justification Email Generator) is
+drafted in parallel, per the [feature-backlog.md](../strategy/feature-backlog.md) handoff.
+
+---
+
+## Decision Log
+
+### 2026-04-22: LOE Upload Replaces Manual Input Form (Founder-Approved)
+
+**Decision**: Sprint 1 keeps the document parser (Feature M), scoped to **metadata
+extraction only (Step 2)**. The UX is one-click: upload LOE, LLM extracts project
+number, client name, site address, date, report type, and conditional section flags,
+then the skeleton generates with a live progress indicator. The traceability matrix
+(Step 3 — full deliverable parsing, section mapping, unmapped-item flagging) is
+deferred to Sprint 2. No manual-input form. No fallback form.
+
+**Alternatives rejected**:
+- *Manual-input form (Ron's pre-mortem Risk 1 Action A)*: Rejected by founder.
+  The form approach is superseded. Two input paths (form + parser) doubles testing
+  and signals unreliability. If extraction fails on a particular LOE format, the
+  skeleton generates with blank metadata fields — the user edits in Word.
+
+**Rationale (founder)**:
+- The document parser scoped to metadata extraction (Step 2) is feasible within
+  Sprint 1. Full deliverable parsing (Step 3) is the R&D-grade task — that is what
+  gets deferred, not the parser itself.
+- One-click upload is the only UX that delivers the "magic moment" needed for PLG
+  acquisition.
+
+**Ron's revised recommendation**: Accepted and approved by the founder. Ron confirmed
+that scoping the parser to metadata extraction only is a clean mitigation that
+preserves the pre-mortem's intent (reduce R&D risk) without sacrificing the UX.
+
+**John's marketing assessment**:
+- One-click is the only version that supports PLG acquisition — every form field is
+  an abandonment point.
+- The progress indicator is marketing copy embedded in the product. It teaches users
+  what Redline does while it does it ("Extracting metadata... Building sections...
+  Applying standards...").
+- Extraction quality IS the marketing: 95% accuracy = "magic", 70% = negative viral.
+  Ship at 90%+ or delay.
+- Risk: over-promising in demos creates expectation debt. Mitigation: show real,
+  imperfect extractions in content.
+- Risk: "one-click" promise constrains future flexibility. Frame as "one click to
+  start, customise if you want."
+- Risk: not every project has a clean LOE at drafting stage. Mitigation: offer a
+  pre-loaded demo LOE ("No LOE? Try our example").
+- The audit trail positioning becomes tangible from Day 1: showing what was extracted
+  vs. what was inferred.
+
+**Artifacts affected**:
+- `docs/product/problems/skeleton-manual-input-problem.md` — superseded.
+- `docs/product/strategy/pre-mortems/2026-04-21-sprint-1-pre-mortem.md` — Risk 1
+  Action A superseded (addendum added).
+- `docs/product/strategy/strategic-bets.md` — Bet 1 competitive validation reinforced.

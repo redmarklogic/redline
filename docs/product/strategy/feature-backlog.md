@@ -26,7 +26,7 @@
 | A | GBR / GIR Skeleton Generator (free, SSO-gated download, capped 3–5 docs × 100 pages) | Free wedge | 3 | 5 | 3 | 5 | 5 | **21** | **Sprint 1** |
 | D | Inline Annotation Engine (browser upload only; flags ambiguity, missing definitions, undefined acronyms, unit inconsistencies). Word task pane parked — see P-024. | Pre-Review / Pro | 5 | 3 | 3 | 4 | 5 | **20** | Sprint 2-3 |
 | M | Document Parser / Chunking Pipeline | Infra (cross-cutting) | 3 | 3 | 5 | 4 | 5 | **20** | **Sprint 1** (infra dep of A) |
-| L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | Sprint 5+ |
+| L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | **Sprint 1** (core subset); full scope Sprint 5+ *(elevated 2026-04-20, Archie CI session — insurance bifurcation)* |
 | F | Citation / Reference Validator (verifies cited standards exist + are current) | Pre-Review / Pro | 3 | 4 | 2 | 4 | 3 | **16** | Sprint 3 |
 | E | Senior Reviewer Anticipator (predicts senior markups, ranks by severity) | Pre-Review / Pro | 5 | 2 | 3 | 2 | 4 | **16** | Sprint 4+ (needs labelled corpus) |
 | J | Multi-Document Cross-Check (GBR vs. RFP vs. proposal) | Adversarial / Business | 4 | 2 | 4 | 3 | 3 | **16** | Sprint 5+ |
@@ -45,6 +45,12 @@
 - **M. Document Parser / Chunking Pipeline** (required infra)
 - **N. Standards Knowledge Store — minimum viable subset** (3–5 NZ documents only;
   enough to populate skeleton placeholders for residential GBR scope)
+- **L. Audit Log — core subset only** *(added 2026-04-20, Archie CI session)*.
+  NZ insurance market is bifurcating on AI coverage (affirmative vs. absolute exclusion).
+  Audit trail is now a Day-1 requirement, not a Phase-2 feature. Core subset: log every
+  AI action with timestamp, input hash, and model version. Full scope (reviewer sign-off,
+  export, retention policies) remains Sprint 5+. Provenance:
+  `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
 ### Sprint 2–3 — Convert wedge to paid
 
@@ -59,7 +65,8 @@
 ### Sprint 5+ — Business tier and Phase-2 prep
 
 - **K. House Rules Authoring Console**
-- **L. Audit Log + Reviewer Sign-off**
+- **L. Audit Log + Reviewer Sign-off — full scope** (core subset ships Sprint 1;
+  full scope includes reviewer sign-off, export, retention policies)
 - **J. Multi-Document Cross-Check**
 
 ### Phase-2 / Parked

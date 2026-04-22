@@ -7,6 +7,19 @@ description: Conventions for building CrewAI agents, tasks, flows, and output mo
 
 This skill defines how to structure, implement, and test CrewAI agents and flows in this repo.
 
+## Boundary Contract
+
+### Applies To
+- CrewAI agent, task, flow, and output model code under `src/`
+
+### Produces
+- Consistently structured CrewAI components following repo directory and naming conventions
+
+### Does Not Cover
+- General class design (`python-class-design`)
+- Domain modeling (`python-domain-modeling`)
+- Unit testing conventions (`python-testing-unit`)
+
 ## Context & Guidelines
 
 **Scope**: Apply whenever adding or modifying CrewAI agents, tasks, flows, or their supporting infrastructure under `src/<package>/crewai/`.

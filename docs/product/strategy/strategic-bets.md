@@ -25,11 +25,31 @@ quota-exhausted user is $0.10–$1.
 - Intermediate engineers will give a verified work email for a useful skeleton.
 - Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.
 - At least 1 in 5 responders will book a paid Pre-Review trial.
+- Target engineers can access `redline.[domain]` from their work machines. *(added
+  2026-04-22, enterprise AI blocking risk assessment)* Network-level AI blocking at
+  MSP-managed firms or firms using Microsoft Defender for Cloud Apps could prevent
+  user acquisition. See `enterprise-ai-blocking-risk-assessment.md`.
 
 **Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email
 signups OR fewer than 5% of quota-exhausted users respond to outbound. Either kills the
 wedge. The signup count is the authoritative trigger; the activation rate in KR1 is a
 product-quality metric that informs iteration, not a bet-kill signal.
+
+**Competitive validation** *(added 2026-04-20, Archie CI session)*: Archie (NZ-based
+AI geotechnical report tool) validates that AI-driven geotechnical report tooling has
+real market demand. Archie writes drafts; Redline checks them — different jobs, same
+market signal. PLG vs enterprise sales is a durable acquisition advantage: zero-friction
+onboarding (upload report, see skeleton) reaches engineers that bespoke agency models
+(SupaHuman's sales-call-plus-contract) will never talk to. Provenance:
+`docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+
+**One-click UX decision** *(added 2026-04-22, founder-approved)*: Sprint 1 UX confirmed
+as one-click LOE upload with LLM metadata extraction and live progress indicator. No
+manual-input form. This reinforces the PLG acquisition advantage — every form field is
+an abandonment point; one-click upload is the only version that delivers the zero-friction
+onboarding this bet depends on. The progress indicator ("Extracting metadata... Building
+sections... Applying standards...") doubles as in-product marketing copy, teaching users
+what Redline does while it works. See PRD decision log (2026-04-22).
 
 **OKR ladder**: `okrs/2026-h2.md` → KR1 (signups — warning signal at 60 days; kill
 criterion at 90 days), KR2 sub-metric (outbound response rate), KR3 (signup-to-paid
@@ -55,11 +75,21 @@ Phase-2 buyer (Partner) we are not yet credible to.
   re-evaluated during KR2 discovery interviews. See `decisions/parked-decisions.md`
   P-024.
 - Firm IT will permit the integration without a 6-month security review for self-serve
-  Pro-tier seats.
+  Pro-tier seats. *(Risk upgraded 2026-04-22)*: Microsoft Defender for Cloud Apps
+  provides exactly the kind of automated security review that could block Pre-Review
+  before anyone requests a trial. An IT Justification Brief (see
+  `enterprise-ai-blocking-risk-assessment.md` section 2.3) mitigates this directly.
 
 **Kill criterion**: After Sprint 4, ≥ 50% of free-tier Skeleton converters refuse to
 trial Pre-Review when prompted. Indicates the value prop does not extend from skeleton
 to review.
+
+**Insurance bifurcation** *(added 2026-04-20, Archie CI session)*: Some NZ insurers are
+offering affirmative AI policies; others are inserting absolute exclusion clauses. This
+bifurcation upgrades audit trail from a Phase-2 feature to a Day-1 product requirement.
+GTM angle: "Redline gives you the audit trail your insurer will ask for." Feature L
+(Audit Log) core subset elevated to Sprint 1 accordingly — see `feature-backlog.md`.
+Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
 **OKR ladder**: KR3 (paid conversion), KR4 (retention).
 
@@ -117,6 +147,14 @@ Procurement gatekeepers approve infrastructure faster than they approve "AI tool
 **Kill criterion**: After 30 founder-led conversations, < 30% of intermediate engineers
 say they would tell their senior they use it. Indicates the positioning does not survive
 contact with the actual buying committee.
+
+**Enterprise IT survival** *(added 2026-04-22, enterprise AI blocking risk assessment)*:
+The Switzerland-neutral positioning must survive not just the buying committee but also
+the IT committee. Microsoft Defender for Cloud Apps categorises tools by perceived
+function; if Redline lands in the "Generative AI" category, IT teams will default-block
+it regardless of the positioning's success with engineers. The lexicon ("quality layer",
+"infrastructure, not SaaS") is now blocking-survival language, not just sales language.
+See `enterprise-ai-blocking-risk-assessment.md` section 2.1.
 
 **OKR ladder**: KR2 (qualified-conversation rate).
 
@@ -178,6 +216,26 @@ fight against a well-resourced incumbent — Christensen's theory predicts we lo
 then pivot positioning to a defensible adjacent (Adversarial Scan / litigation
 surface, where incumbents have no posture).
 
+**Named watch item: Beca / Frankly.AI** *(added 2026-04-20, Archie CI session)*:
+Beca built Frankly.AI as an in-house AI project and launched it as a commercial service via
+Microsoft Teams globally. It has since been discontinued. Assessed as non-threatening for
+three reasons: (1) cannibalisation problem — selling the tool helps competitors; (2)
+asymmetric motivation — Beca's infrastructure cost structure cannot serve
+residential/commercial geotech; (3) Frankly.AI is now discontinued, confirming that
+engineering consultancies lack the DNA to sustain AI product commercialisation alongside a
+billable-hours business model. If Beca or another Tier 1 firm reverses this pattern and
+ships a commercially available geotech QA tool, this kill criterion trips.
+
+**Market segmentation clarification** *(added 2026-04-20, Archie CI session)*:
+Tier 1 firms (T+T, WSP, Beca — 1000+ employees, government projects, high overhead)
+will build their own AI and require enterprise SOC2. They are not Redline's market.
+Tier 2 firms (Soil & Rock, EGL — 5-50 employees, residential/commercial geotech) must
+buy. This is Redline's market. Current Tier 2 alternatives: manual review, SupaHuman
+bespoke ($50k+), or ChatGPT (no jurisdiction, no audit trail). SupaHuman is a generalist
+agency (same RAG does travel and geotech) with one named engineering client after 2+
+years and potential exclusivity with Soil & Rock. Provenance:
+`docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+
 **Litmus uncertainty**: Whether each incumbent would *actually* see this as sustaining
 is itself a contested question. Logged under `decisions/parked-decisions.md` P-018.
 
@@ -191,4 +249,7 @@ Bet 1, 2, 4, 5 are strategy synthesis grounded in
 `docs/research/20260418-founder-memos-strategy-grounding.md`. Bet 3 is grounded in the
 standards-registry research files cited inline. Bet 5 reinforcement (Moore beachhead
 doctrine) and Bet 6 (Christensen new-market disruption framing) grounded in queries
-against the entrepreneurship-startup-strategy notebook on 2026-04-18.
+against the entrepreneurship-startup-strategy notebook on 2026-04-18. Bet 1 competitive
+validation, Bet 2 insurance bifurcation, and Bet 6 named watch items and market
+segmentation added 2026-04-20 from Archie competitive intelligence session;
+see `docs/research/20260420-archie-competitive-intelligence-prompt.md`.

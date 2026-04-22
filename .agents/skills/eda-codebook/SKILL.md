@@ -9,6 +9,19 @@ Produce and maintain professional **Quantitative Codebooks** — structured Mark
 that combine a Data Dictionary with a Point-in-Time Data Profile — for any CSV or Excel
 dataset in this project.
 
+## Boundary Contract
+
+### Applies To
+- CSV and Excel datasets requiring documentation or profiling
+
+### Produces
+- Markdown codebook (data dictionary + statistical profile) with layperson glossary
+
+### Does Not Cover
+- Data quality investigation (`eda-qa`)
+- Plot construction (`eda-visual-design`)
+- Data ingestion pipelines (`python-data-ingestion`)
+
 ## Context & Guidelines
 
 - **Scope**: Apply whenever the user asks to "create", "generate", or "update" a codebook,

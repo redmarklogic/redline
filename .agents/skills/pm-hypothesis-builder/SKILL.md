@@ -9,6 +9,20 @@ description: Use when an assumption needs formalizing into a testable hypothesis
 
 Convert assumptions into falsifiable hypotheses ready to file in `docs/product/hypotheses/`. Every hypothesis must have a metric, threshold, and time boundary — the three non-negotiables.
 
+## Boundary Contract
+
+### Inputs
+- Assumption or belief to be tested from an initiative or problem statement
+- Problem framing output from `pm-problem-framer`
+
+### Outputs
+- Falsifiable hypothesis document at `docs/product/hypotheses/`
+
+### Out of Scope
+- Problem framing (`pm-problem-framer`)
+- Experiment execution and result tracking
+- PRD writing (`pm-prd-builder`)
+
 ## When to Use
 
 - After extracting assumptions from an initiative

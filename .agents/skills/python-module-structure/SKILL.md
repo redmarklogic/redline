@@ -14,6 +14,19 @@ For related topics:
 - Script cell structure and Spyder conventions: use the `python-script` skill.
 - Cognitive complexity reduction through helper extraction: use the `python-function-design` skill.
 
+## Boundary Contract
+
+### Applies To
+- Function and definition ordering within any Python module under `src/` and `tests/`
+
+### Produces
+- Modules following the step-down rule with public-before-private ordering
+
+### Does Not Cover
+- Function design and signatures (`python-function-design`)
+- Script cell structure (`python-script`)
+- General style (`python-style`)
+
 ## Context & Guidelines
 
 ### Scope

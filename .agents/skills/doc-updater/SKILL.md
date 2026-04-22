@@ -22,6 +22,19 @@ The priority is accuracy over prose: docs that mention files, endpoints, or comm
   - Project overview/setup: `README.md`.
   - Deep dives: `docs/` (for this repo, ADRs live under `docs/adr/`).
 
+## Boundary Contract
+
+### Inputs
+- Python packages under `src/`, FastAPI/MCP routes, scripts
+
+### Outputs
+- Updated `docs/CODEMAPS/*`, `README.md`, and guides with verified paths
+
+### Out of Scope
+- Architecture decisions (`spec-kit`)
+- Code implementation
+- Docstrings (`python-documentation`)
+
 ## Procedure
 
 1. **Identify what changed**

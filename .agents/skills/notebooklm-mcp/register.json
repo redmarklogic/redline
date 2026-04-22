@@ -401,5 +401,61 @@
     ],
     "access": "advisory-board-only",
     "added": "2026-04-18"
+  },
+  {
+    "id": "product-design-ux",
+    "name": "Product Design & UX",
+    "url": "https://notebooklm.google.com/notebook/4e66203c-f7ce-42d2-881e-0e5be6250a9f",
+    "description": "Four canonical texts on human-centred design and usability: The Design of Everyday Things (Norman), Don't Make Me Think Revisited (Krug), Designing with Data, and Forms that Work. Covers affordances, signifiers, the psychology of human error, A/B testing, usability testing, web navigation, and form design.",
+    "topic_area": "Process & product",
+    "topics": [
+      "human-centered design",
+      "usability testing",
+      "A/B testing",
+      "form design",
+      "web navigation",
+      "psychology of everyday action",
+      "affordances and signifiers",
+      "data-driven design"
+    ],
+    "content_types": ["design books", "usability guidelines", "experimental frameworks"],
+    "use_cases": [
+      "Designing intuitive web interfaces or digital products using HCD principles",
+      "Setting up usability tests or A/B experiments to resolve design debates",
+      "Optimising form design for user comprehension and completion rates",
+      "Diagnosing why users make errors or abandon a system",
+      "Grounding product UX decisions in psychology and empirical evidence"
+    ],
+    "access": "open",
+    "added": "2026-04-20"
+  },
+  {
+    "id": "org-design-team-topologies",
+    "name": "Organisational Design & Team Topologies",
+    "url": "https://notebooklm.google.com/notebook/ac653405-78fd-4f9d-a00c-fed81be5bdd7",
+    "description": "A curated collection of books on modern organisational leadership, team design, and workforce development. Covers Team Topologies (stream-aligned, platform, enabling teams), Conway's Law, cognitive load management, AI/RPA task deconstruction, deliberate practice, skills-based organisations, and Domain-Driven Design (DDD) for software teams. Case studies from Google, GE, and large healthcare providers.",
+    "topic_area": "Process & product",
+    "topics": [
+      "team topologies",
+      "Conway's Law",
+      "cognitive load",
+      "deliberate practice",
+      "skills-based organization",
+      "AI and automation in the workplace",
+      "organizational design",
+      "Domain-Driven Design",
+      "talent development",
+      "performance management"
+    ],
+    "content_types": ["management books", "organizational frameworks", "case studies", "academic research"],
+    "use_cases": [
+      "Restructuring software engineering teams around stream-aligned or platform topology",
+      "Deciding which tasks to automate with AI or RPA versus retain for human workers",
+      "Designing deliberate practice programs to develop world-class technical talent",
+      "Transitioning from role-based to skills-based hiring and performance management",
+      "Applying Conway's Law and DDD to align team structure with software architecture"
+    ],
+    "access": "open",
+    "added": "2026-04-20"
   }
 ]

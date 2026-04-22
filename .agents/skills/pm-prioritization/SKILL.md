@@ -9,6 +9,20 @@ description: Use when ranking features, initiatives, opportunities, or strategic
 
 Rank **what to build next** across initiatives, bets, or opportunities at the portfolio level. Distinct from `spec-kit` RICE, which ranks scenarios inside a single spec. The two operate at different altitudes.
 
+## Boundary Contract
+
+### Inputs
+- List of features, initiatives, or opportunities to rank
+- Chosen framework (RICE, MoSCoW, Value-Effort, or Kano)
+
+### Outputs
+- Ranked priority table with scores and rationale
+
+### Out of Scope
+- Scenario-level RICE within a single spec (`spec-kit`)
+- Product strategy definition (`pm-product-strategist`)
+- PRD writing (`pm-prd-builder`)
+
 ## When NOT to Use
 
 - Ranking acceptance scenarios inside a spec — use `spec-kit`.

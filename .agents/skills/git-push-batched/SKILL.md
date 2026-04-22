@@ -17,6 +17,19 @@ something like "show me the batches first", "let me review", or "don't commit ye
 
 For general commit hygiene, pre-commit, and push checklist, see the `version-control` skill.
 
+## Boundary Contract
+
+### Inputs
+- Dirty working tree with uncommitted changes
+
+### Outputs
+- Thematically grouped commits pushed to remote
+
+### Out of Scope
+- Branch management (`version-control`)
+- PR creation (`finishing-a-development-branch`)
+- Code review (`requesting-code-review`)
+
 ## Context & Guidelines
 
 - **Scope**: Any time the user wants to push uncommitted changes to a remote branch.

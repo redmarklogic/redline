@@ -5,6 +5,19 @@ description: Pre-flight data quality screening and post-plot insight writing for
 
 # EDA — Interpreting Data
 
+## Boundary Contract
+
+### Applies To
+- Pre-flight data quality screening before any distribution, scatter, or time-series plot
+
+### Produces
+- Cleaned data with outlier, axis-compression, and sentinel-zero corrections; post-plot narrative insights
+
+### Does Not Cover
+- Chart type selection and visual design (`eda-visual-design`)
+- Codebook generation (`eda-codebook`)
+- Data quality assurance against codebooks (`eda-qa`)
+
 ## Procedure
 
 Apply Rules 1–7 sequentially _before_ building any plot. After the plot is rendered, apply Rules 8–10 to write the narrative interpretation.

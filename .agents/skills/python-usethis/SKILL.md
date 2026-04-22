@@ -10,6 +10,19 @@ project. A single command adds the dependency, the `pyproject.toml` configuratio
 and the pre-commit hook for a given tool — replacing the error-prone manual steps of
 doing each in isolation.
 
+## Boundary Contract
+
+### Applies To
+- Dev tool integration via the `usethis` CLI in this repo
+
+### Produces
+- Correctly wired tool configurations in `pyproject.toml` and pre-commit hooks
+
+### Does Not Cover
+- Dev environment bootstrap (`dev-environment`)
+- Lint rules (`python-linting`)
+- Dependency hygiene (`python-deptry`)
+
 ## Context & Guidelines
 
 ### Scope

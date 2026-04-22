@@ -5,6 +5,19 @@ description: Design principles for statistical and EDA visualisations. Language-
 
 # EDA Visual Design
 
+## Boundary Contract
+
+### Applies To
+- Statistical and EDA plot creation or review, any plotting library
+
+### Produces
+- Accessible, cognitively efficient visualisations following Tufte, Cleveland, and Norman
+
+### Does Not Cover
+- Pre-flight data quality screening (`eda-interpreting-data`)
+- Color selection specifics (`python-plot-colors`)
+- Codebook generation (`eda-codebook`)
+
 ## Procedure
 
 Apply these rules whenever creating or reviewing a statistical or EDA plot. Rules are language- and library-agnostic.

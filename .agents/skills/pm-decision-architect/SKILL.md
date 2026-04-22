@@ -9,6 +9,20 @@ description: Use when a decision is being avoided, delayed, or made on instinct 
 
 Structure complex product decisions so they are made explicitly, not by default. Every decision must surface options, criteria, tradeoffs, and thresholds before it can be made.
 
+## Boundary Contract
+
+### Inputs
+- Decision to be made with competing options or unclear criteria
+- Relevant strategy docs from `docs/product/strategy/`
+
+### Outputs
+- Decision log at `docs/product/decisions/` with options, criteria, tradeoffs, and thresholds
+
+### Out of Scope
+- Problem framing (`pm-problem-framer`)
+- Hypothesis design (`pm-hypothesis-builder`)
+- Code implementation or architecture decisions (`spec-kit`)
+
 ## When to Use
 
 - Decision is being avoided or delayed

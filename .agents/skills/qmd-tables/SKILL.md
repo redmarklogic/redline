@@ -5,6 +5,19 @@ description: Conventions for rendering tabular output in Quarto (.qmd) documents
 
 # QMD Tables
 
+## Boundary Contract
+
+### Applies To
+- Tables in Quarto `.qmd` documents using `great_tables.GT`
+
+### Produces
+- Cross-format (HTML/PDF) tables with proper formatting and accessibility
+
+### Does Not Cover
+- Narrative design and structure (`qmd-narrative-design`)
+- Plot construction (`eda-visual-design`)
+- Data quality screening (`eda-interpreting-data`)
+
 ## BLOCKING RULE — Read Before Any Table Output
 
 > **NEVER use `print(df.to_markdown(...))`, `print(df.to_string())`, or bare variable display for any runtime-computed DataFrame in a `.qmd` file.** This rule applies unconditionally: during initial authoring, during edits, and during review. Violation of this rule has occurred in production code when this skill was loaded but this constraint was not front of mind. Use `great_tables.GT` exclusively. There are no exceptions for "quick diagnostics", "merge summaries", or "metric tables".

@@ -7,6 +7,19 @@ description: How to bootstrap and maintain the development environment for this 
 
 This skill describes how to set up and maintain a working dev environment for this repo.
 
+## Boundary Contract
+
+### Inputs
+- Repository checkout with `pyproject.toml` and `uv.lock`
+
+### Outputs
+- Working development environment with `uv sync`, pre-commit hooks, and task runners
+
+### Out of Scope
+- Package management commands (`python-style`)
+- Tool configuration details (`python-usethis`)
+- Dependency hygiene checks (`python-deptry`)
+
 ## Context & Guidelines
 
 ### Scope

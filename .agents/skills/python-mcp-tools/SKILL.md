@@ -7,6 +7,19 @@ description: Guidance for using MCP tools and servers in this repo.
 
 This skill describes how to work with MCP-related tooling in this repo.
 
+## Boundary Contract
+
+### Applies To
+- MCP server and tool implementations under `src/`
+
+### Produces
+- Code following repo conventions for MCP tool registration and usage
+
+### Does Not Cover
+- General style (`python-style`)
+- Class design (`python-class-design`)
+- NotebookLM MCP setup (`notebooklm-mcp`)
+
 ## Context & Guidelines
 
 ### Scope

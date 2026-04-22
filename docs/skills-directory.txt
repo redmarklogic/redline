@@ -1,0 +1,1 @@
+- `redline-research`: Use when asked to "research", "investigate", "look up", or "find out" something in the Redline knowledge base — before any online search.

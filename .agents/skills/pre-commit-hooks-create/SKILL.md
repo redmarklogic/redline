@@ -8,6 +8,19 @@ description: How to implement, register, and test project-specific pre-commit ho
 This skill covers how to create project-specific pre-commit hooks that live inside the
 repository under `tasks/hooks/`.
 
+## Boundary Contract
+
+### Inputs
+- Hook requirement (what to check or enforce)
+
+### Outputs
+- Hook script at `tasks/hooks/`, registration in `.pre-commit-config.yaml`
+
+### Out of Scope
+- Dev environment setup (`dev-environment`)
+- Tool configuration (`python-usethis`)
+- Lint rules (`python-linting`)
+
 ## Context & Guidelines
 
 ### Scope

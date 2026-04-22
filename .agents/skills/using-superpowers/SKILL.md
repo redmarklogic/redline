@@ -15,6 +15,19 @@ IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
 This is not negotiable. This is not optional. You cannot rationalize your way out of this.
 </EXTREMELY-IMPORTANT>
 
+## Boundary Contract
+
+### Inputs
+- User request requiring skill lookup
+
+### Outputs
+- Correct skill(s) identified, loaded, and applied to the task
+
+### Out of Scope
+- Skill creation (`writing-skills`)
+- Skill auditing (`hiring-agent-management`)
+- Code implementation
+
 ## Instruction Priority
 
 Superpowers skills override default system prompt behavior, but **user instructions always take precedence**:

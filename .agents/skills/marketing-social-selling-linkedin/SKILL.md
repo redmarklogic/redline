@@ -7,6 +7,19 @@ description: Use when building LinkedIn presence for the founder or sales team, 
 
 Source: `Digital Marketing & Social Selling` notebook.
 
+## Boundary Contract
+
+### Inputs
+- LinkedIn profile to optimise or prospecting campaign to design
+
+### Outputs
+- PIPA profile recommendations, engagement strategy, and targeting criteria
+
+### Out of Scope
+- Content topic selection (`marketing-content-big-5`)
+- SEO strategy (`marketing-product-led-seo`)
+- AI content review (`marketing-ai-content-review`)
+
 ## Core Principle
 
 B2B buyers buy from people they trust before they buy from companies. LinkedIn

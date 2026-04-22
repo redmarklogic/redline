@@ -18,6 +18,21 @@ For related topics, defer to these canonical skills:
 - Domain/value objects: use the `python-domain-modeling` skill.
 - Linting and suppressions: use the `python-linting` skill.
 
+## Boundary Contract
+
+### Applies To
+- Control-flow, iteration, resource management, and composition patterns in Python code
+
+### Produces
+- Idiomatic Python code following established patterns for readability and robustness
+
+### Does Not Cover
+- Style and formatting (`python-style`)
+- Typing rules (`python-typing`)
+- Error handling and logging (`python-error-handling`)
+- Class design (`python-class-design`)
+- Domain modeling (`python-domain-modeling`)
+
 ## Context & Guidelines
 
 ### Scope

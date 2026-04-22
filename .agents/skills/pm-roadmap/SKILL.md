@@ -9,6 +9,22 @@ description: Use when building, refreshing, or auditing a product roadmap, oppor
 
 Miro is the canonical surface for roadmaps, opportunity solution trees, story maps, and journey maps — artifacts whose value is in relationships and flow, not sequential prose. Markdown is the synthesis layer: a one-page summary capturing the decisions reached visually.
 
+## Boundary Contract
+
+### Inputs
+- Active strategic bet from `docs/product/strategy/strategic-bets.md`
+- Primary persona from `docs/product/relationships/users/`
+- Measurable outcome from `docs/product/strategy/kpis.md`
+
+### Outputs
+- Visual roadmap or opportunity solution tree on Miro
+- Markdown synthesis at `docs/product/strategy/roadmap.md` or `opportunity-tree.md`
+
+### Out of Scope
+- Strategy definition (`pm-product-strategist`)
+- PRD writing (`pm-prd-builder`)
+- Prioritization scoring (`pm-prioritization`)
+
 ## When NOT to Use
 
 - User wants a release plan with dates and engineering owners — use `spec-kit`.

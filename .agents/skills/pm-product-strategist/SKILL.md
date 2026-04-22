@@ -9,6 +9,20 @@ description: Use when starting a new product, refreshing strategy after market s
 
 Guide PMs through building a complete product strategy top-down: JTBD (the job), OST (the opportunity landscape), then OKR + Strategic Bets (the goals). Each layer must be grounded before moving to the next.
 
+## Boundary Contract
+
+### Inputs
+- Market context and existing strategy docs in `docs/product/strategy/`
+- Customer evidence and research from `docs/research/`
+
+### Outputs
+- `docs/product/strategy/jtbd.md`, `strategic-bets.md`, `kpis.md`, `opportunity-tree.md`
+
+### Out of Scope
+- Tactical product work (`pm-problem-framer`, `pm-prd-builder`)
+- GTM execution and marketing (`marketing-*` skills)
+- Code implementation
+
 ## When to Use
 
 - Starting a new product or entering a new market

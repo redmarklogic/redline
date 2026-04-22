@@ -12,6 +12,19 @@ This skill covers how to connect GitHub Copilot (Agent mode) to Google NotebookL
 
 Copilot can query notebooks and return citation-backed answers directly inside VS Code.
 
+## Boundary Contract
+
+### Inputs
+- Research question and notebook register at `.agents/skills/notebooklm-mcp/register.json`
+
+### Outputs
+- Citation-backed answers from NotebookLM notebooks
+
+### Out of Scope
+- Research document synthesis (`redline-research`)
+- Online web search
+- Code implementation
+
 ## Context & Guidelines
 
 - **Scope**: Apply this skill when you need to reference NotebookLM notebooks from within VS Code

@@ -13,6 +13,19 @@ For related topics:
 - Adding/removing packages: use the `python-style` skill.
 - Dev environment setup: use the `dev-environment` skill.
 
+## Boundary Contract
+
+### Applies To
+- Dependency declarations in `pyproject.toml` and imports across all Python files
+
+### Produces
+- Clean dependency hygiene with no missing, unused, or misplaced dependencies
+
+### Does Not Cover
+- Package management commands (`python-style`)
+- Dev environment bootstrap (`dev-environment`)
+- Lint rules (`python-linting`)
+
 ## Context & Guidelines
 
 ### Scope

@@ -9,6 +9,20 @@ description: Use when a problem statement is vague, contested, or missing a user
 
 Force clarity on product problems before solution work begins. Every problem must name a user segment, a measurable outcome, and a strategic link — or it is not ready.
 
+## Boundary Contract
+
+### Inputs
+- Vague or contested problem statement from stakeholders
+- Strategic context from `docs/product/strategy/`
+
+### Outputs
+- Structured problem statement at `docs/product/problems/` with user segment, measurable outcome, and strategic link
+
+### Out of Scope
+- Hypothesis design (`pm-hypothesis-builder`)
+- PRD writing (`pm-prd-builder`)
+- Solution design and brainstorming (`brainstorming`)
+
 ## When to Use
 
 - Before writing an initiative or scoping a feature

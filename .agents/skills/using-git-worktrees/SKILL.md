@@ -5,6 +5,19 @@ description: Use when starting feature work that needs isolation from current wo
 
 # Using Git Worktrees
 
+## Boundary Contract
+
+### Inputs
+- Feature work requiring isolation from the current workspace
+
+### Outputs
+- Isolated git worktree on a new branch with verified test baseline
+
+### Out of Scope
+- Branch finishing (`finishing-a-development-branch`)
+- Commit conventions (`version-control`)
+- Code implementation
+
 ## Overview
 
 Git worktrees create isolated workspaces sharing the same repository, allowing work on multiple branches simultaneously without switching.

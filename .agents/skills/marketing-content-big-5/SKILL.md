@@ -8,6 +8,19 @@ description: Use when planning content marketing topics, deciding what blog post
 Source: `Digital Marketing & Social Selling` notebook (They Ask, You Answer by Marcus
 Sheridan).
 
+## Boundary Contract
+
+### Inputs
+- Sales questions, prospect FAQs, or content planning request
+
+### Outputs
+- Content topics mapped to the Big 5 categories at `docs/product/marketing/`
+
+### Out of Scope
+- SEO tool strategy (`marketing-product-led-seo`)
+- LinkedIn outreach (`marketing-social-selling-linkedin`)
+- AI content review (`marketing-ai-content-review`)
+
 ## Core Principle
 
 B2B buyers do most of their research online before talking to sales. Whoever answers

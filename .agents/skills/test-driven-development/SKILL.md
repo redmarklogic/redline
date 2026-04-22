@@ -5,6 +5,19 @@ description: Use when implementing any feature or bugfix, before writing impleme
 
 # Test-Driven Development (TDD)
 
+## Boundary Contract
+
+### Applies To
+- Any feature or bugfix implementation -- tests must be written before code
+
+### Produces
+- RED-GREEN-REFACTOR cycle: failing test, minimal passing implementation, refactored code
+
+### Does Not Cover
+- Unit testing conventions (`python-testing-unit`)
+- API testing conventions (`python-testing-api`)
+- Debugging (`systematic-debugging`)
+
 ## Overview
 
 Write the test first. Watch it fail. Write minimal code to pass.
