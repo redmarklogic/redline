@@ -666,7 +666,7 @@ sequenceDiagram
     Note over Client, Synergy: Phase 6 -- Oversight Review & Sign-Off
 
     Author->>PD: Submit reviewed draft
-    PD->>PD: Oversight review (brief fulfilment, legal caveats, risk)
+    PD->>PD: Oversight review (brief fulfillment, legal caveats, risk)
     PD->>PD: Section B Review Checklist
     Author->>PM: Submit for PM review
     PM->>PM: Check brief alignment, budget, schedule

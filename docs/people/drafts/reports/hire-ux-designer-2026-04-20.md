@@ -182,9 +182,9 @@ None. All required notebooks are loaded. The two advisory-board-only notebooks a
 
 | Decision | Framework | Citation |
 |---|---|---|
-| Step 0 screening (four "do not hire" patterns) | Team Topologies (Skelton & Pais) | Chapter on team-first boundaries; "do not create a new team" anti-patterns |
+| Step 0 screening (four "do not hire" patterns) | Team Topologies (Skeleton & Pais) | Chapter on team-first boundaries; "do not create a new team" anti-patterns |
 | Step 1 work deconstruction (elemental tasks, three continuums, ROIP) | Work Without Jobs / Reinventing Jobs (Jesuthasan & Boudreau) | Four-step work-deconstruction framework |
 | Step 3 JD design (outcomes not tasks, crisp boundaries) | An Elegant Puzzle (Larson) | Career-ladder design; gap-less ownership map |
-| Step 4 Team API (inputs, outputs, interaction modes) | Team Topologies (Skelton & Pais) | Team API pattern; three interaction modes |
+| Step 4 Team API (inputs, outputs, interaction modes) | Team Topologies (Skeleton & Pais) | Team API pattern; three interaction modes |
 | File Authority overlap check | An Elegant Puzzle (Larson) | Gap-less ownership map — every responsibility maps to exactly one agent |
 | Skill naming (agent-agnostic, no personal names) | `hiring-agent-management` skill | Skill Naming Rules section |

@@ -25,6 +25,10 @@ quota-exhausted user is $0.10–$1.
 - Intermediate engineers will give a verified work email for a useful skeleton.
 - Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.
 - At least 1 in 5 responders will book a paid Pre-Review trial.
+- Target engineers can access `redline.[domain]` from their work machines. *(added
+  2026-04-22, enterprise AI blocking risk assessment)* Network-level AI blocking at
+  MSP-managed firms or firms using Microsoft Defender for Cloud Apps could prevent
+  user acquisition. See `enterprise-ai-blocking-risk-assessment.md`.
 
 **Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email
 signups OR fewer than 5% of quota-exhausted users respond to outbound. Either kills the
@@ -71,7 +75,10 @@ Phase-2 buyer (Partner) we are not yet credible to.
   re-evaluated during KR2 discovery interviews. See `decisions/parked-decisions.md`
   P-024.
 - Firm IT will permit the integration without a 6-month security review for self-serve
-  Pro-tier seats.
+  Pro-tier seats. *(Risk upgraded 2026-04-22)*: Microsoft Defender for Cloud Apps
+  provides exactly the kind of automated security review that could block Pre-Review
+  before anyone requests a trial. An IT Justification Brief (see
+  `enterprise-ai-blocking-risk-assessment.md` section 2.3) mitigates this directly.
 
 **Kill criterion**: After Sprint 4, ≥ 50% of free-tier Skeleton converters refuse to
 trial Pre-Review when prompted. Indicates the value prop does not extend from skeleton
@@ -140,6 +147,14 @@ Procurement gatekeepers approve infrastructure faster than they approve "AI tool
 **Kill criterion**: After 30 founder-led conversations, < 30% of intermediate engineers
 say they would tell their senior they use it. Indicates the positioning does not survive
 contact with the actual buying committee.
+
+**Enterprise IT survival** *(added 2026-04-22, enterprise AI blocking risk assessment)*:
+The Switzerland-neutral positioning must survive not just the buying committee but also
+the IT committee. Microsoft Defender for Cloud Apps categorises tools by perceived
+function; if Redline lands in the "Generative AI" category, IT teams will default-block
+it regardless of the positioning's success with engineers. The lexicon ("quality layer",
+"infrastructure, not SaaS") is now blocking-survival language, not just sales language.
+See `enterprise-ai-blocking-risk-assessment.md` section 2.1.
 
 **OKR ladder**: KR2 (qualified-conversation rate).
 
