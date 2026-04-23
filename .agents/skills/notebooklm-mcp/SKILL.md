@@ -94,10 +94,17 @@ Optionally add notebooks to the managed library first using `mcp_notebooklm_add_
 
 notebooks can be referenced by name in future sessions.
 
-**Before writing any query**, read the prompting guide:
-[`prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md) — covers prompt
-anatomy, NotebookLM-specific rules (self-contained queries, decomposition, hallucination
-scoping), before/after templates, common mistakes, and a pre-send checklist.
+**Before writing any query**, read
+[`prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md) — covers
+prompt anatomy, Rules 1–5 (audience prefix, self-contained queries, decomposition,
+hallucination scoping, long-prompt sandwich), prose templates, common mistakes, and
+the pre-send checklist.
+
+**Before writing a structured extraction query** (CSV, JSON, or any tabular output),
+also read
+[`structured-extraction.md`](.agents/skills/notebooklm-mcp/structured-extraction.md)
+— covers Rule 6 (Schema Contract), the three extraction templates (flat CSV, flat
+JSON, nested JSON two-step), and structured-specific common mistakes.
 
 ### Step 4 — Plain-language tone
 
