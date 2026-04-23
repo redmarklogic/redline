@@ -123,6 +123,59 @@ the end immediately before asking for the answer:
 Answer based only on the sources:
 ```
 
+### Rule 6 — Schema Contract for Structured Output
+
+When you ask NotebookLM to extract data into a table, CSV, or JSON object, the
+retrieval step finds relevant passages but the generation step has no schema to
+constrain its output. Without an explicit contract, the model improvises column
+names, invents enum synonyms ("Critical" instead of "High"), wraps output in
+markdown code fences, and injects conversational filler — all of which break
+downstream parsing.
+
+NotebookLM has no API-level parameter to enforce a JSON schema (unlike OpenAI's
+structured outputs). Emulate how Pydantic AI instructs LLMs: define a strict
+**Schema Contract** directly in the prompt that dictates fields, data types,
+constraints, and the exact output format.
+
+The contract has five parts:
+
+1. **Explicit Types** — label each field with `[String]`, `[Integer]`,
+   `[Float]`, `[Boolean]`, `[Enum]`, etc. This forces the model to think
+   programmatically about the value it writes.
+2. **Enum Constraints** — list the exact allowed values
+   (e.g. `"High", "Medium", "Low"`). Prevents synonyms that break parsing.
+3. **Missing-Value Sentinel** — define what to output when the sources lack a
+   value (e.g. `"N/A"` for strings, `null` for numbers). Without this the model
+   guesses or omits the field entirely. For booleans, prefer a three-value enum
+   (`"TRUE"`, `"FALSE"`, `"UNKNOWN"`) so "not stated" is distinguishable from
+   a confirmed negative.
+4. **Explicit Delimiter & Row Separator** — state the column delimiter
+   (`comma`) and that each record must be on its own line. Without this the
+   model may use spaces or collapse all rows onto one line.
+5. **One-Shot Example Row** — after the schema, include a single example row
+   that anchors the exact format (delimiter, quoting, line breaks). This
+   eliminates residual ambiguity that the schema text alone cannot.
+
+Always pair the schema with a formatting instruction: *"Provide raw CSV/JSON
+only. No markdown code fences, no commentary, no explanations."*
+
+**Boundary anchoring (JSON):** Add `"Start your response with [ and end
+with ]. Nothing else."` Without this, the model often wraps valid JSON in
+conversational prose.
+
+**Citation markers in values:** NotebookLM may inject citation markers
+(e.g. `\n1\n`) directly inside string values, breaking JSON/CSV parsing.
+Add `"Do not embed citation numbers or markers inside field values."` to the
+output format block. If citations still leak through, post-process with a
+regex strip (`\n\d+\n`).
+
+**Complex / nested schemas:** On a cold-start (first message in a session),
+complex nested schemas often fail — the model defaults to narrative mode.
+For nested extractions, warm up the session with a simpler flat query first,
+then request the nested version as a follow-up in the same session.
+
+See the Before / After templates below for CSV and JSON examples.
+
 ---
 
 ## Before / After Templates
@@ -159,6 +212,147 @@ relevant NZ standard references.
 Answer only using information found in the notebook sources. If not covered, say so.
 ```
 
+### Tabular extraction (CSV)
+
+```
+# Bad — no schema, ambiguous formatting
+Extract the design requirements from Section 4 and put them in a table.
+Include the clause, a summary, the risk level, and whether we need to act.
+
+# Typical messy result without a schema:
+#   Clause 4.1 – Requires adequate bearing capacity → HIGH risk, action needed
+#   "4.2: Settlement must be < 25 mm" (medium)
+#   ...
+# Problems: inconsistent delimiters, invented risk labels, mixed formats.
+```
+
+```
+# Good — Schema Contract
+Explain for the uninitiated. Define any specialist term the first time it appears.
+Keep citations. Avoid ambiguity.
+
+Extract all design requirements from Section 4 of the guidelines.
+
+OUTPUT FORMAT:
+Provide raw CSV only. No markdown code fences, no commentary, no explanations.
+Use comma (,) as the column delimiter. Place each row on its own line.
+
+SCHEMA (each row = one requirement):
+- "Clause":      [String]  Exact clause reference, e.g. "4.1.2".
+- "Requirement": [String]  One-sentence summary. Maximum 15 words.
+- "Risk_Level":  [Enum]    Exactly one of: "High", "Medium", "Low".
+- "Actionable":  [Enum]    Exactly one of: "TRUE", "FALSE", "UNKNOWN".
+
+MISSING VALUES: Use "N/A" for strings. Use "UNKNOWN" for Actionable when
+the source does not state whether the requirement needs action.
+
+EXAMPLE (first two rows, for format reference):
+Clause,Requirement,Risk_Level,Actionable
+4.1.2,Foundation must resist lateral loads,High,TRUE
+
+Answer only using information found in the notebook sources. If not covered,
+say so.
+```
+
+### Structured extraction (JSON)
+
+```
+# Bad — shape left to the model
+List all the soil layers found in Borehole BH-01 with their depths and
+classification. Return as JSON.
+
+# Typical messy result without a schema:
+#   {"layers": ["Fill (0-1.5m)", "Alluvial Sandy SILT, 1.5 to 4.0m, ..."]}
+# Problems: depths embedded in free text, no consistent keys, flat strings
+# instead of typed fields.
+```
+
+```
+# Good — Schema Contract
+Explain for the uninitiated. Define any specialist term the first time it appears.
+Keep citations. Avoid ambiguity.
+
+Extract all soil layers logged in Borehole BH-01.
+
+OUTPUT FORMAT:
+Provide raw JSON only. No markdown code fences, no commentary, no explanations.
+Do not embed citation numbers or markers inside field values.
+Return a JSON array of objects, one per layer.
+Start your response with [ and end with ]. Nothing else.
+
+SCHEMA (each object):
+- "top_m":       [Float]   Top depth in metres.
+- "base_m":      [Float]   Base depth in metres.
+- "description": [String]  Soil description as logged. Maximum 20 words.
+- "uscs_class":  [String]  USCS classification symbol, e.g. "SM", "CL".
+- "origin":      [Enum]    Exactly one of: "Fill", "Natural", "Unknown".
+
+MISSING VALUES: Use null for numbers, "N/A" for strings, "Unknown" for origin.
+
+EXAMPLE (single object, for format reference):
+[{"top_m": 0.0, "base_m": 1.5, "description": "Compacted hardfill", "uscs_class": "GP", "origin": "Fill"}]
+
+Answer only using information found in the notebook sources. If not covered,
+say so.
+```
+
+### Nested extraction (JSON with arrays)
+
+For complex, nested structures (e.g. a parent object containing an array of
+child objects), warm up the session with a flat extraction first, then request
+the nested version in a follow-up message using the same `session_id`.
+
+```
+# Step 1 — Warm-up (flat extraction, first message)
+Explain for the uninitiated. Define any specialist term the first time it appears.
+Keep citations. Avoid ambiguity.
+
+List all contract frameworks mentioned in the sources that describe subsurface
+construction risk allocation. For each framework, state who bears the default
+risk and the primary allocation mechanism.
+
+OUTPUT FORMAT:
+Raw JSON array only. No markdown code fences, no explanations.
+Do not embed citation numbers or markers inside field values.
+Start your response with [ and end with ]. Nothing else.
+
+SCHEMA (each object = one framework):
+- "framework":          [String] Name of the framework. Maximum 6 words.
+- "allocated_to_default":[Enum]   Exactly one of: "Owner", "Contractor", "Shared", "Unspecified".
+- "mechanism":          [String] How risk allocation works. Maximum 15 words.
+
+EXAMPLE:
+[{"framework":"FIDIC Emerald Book","allocated_to_default":"Shared","mechanism":"GBR baseline exceedance triggers owner liability"}]
+
+Answer only using information found in the notebook sources. If not covered, say so.
+```
+
+```
+# Step 2 — Nested follow-up (same session_id)
+Now expand each framework with its specific risk categories.
+
+OUTPUT FORMAT:
+Raw JSON array only. No markdown code fences, no explanations.
+Do not embed citation numbers or markers inside field values.
+Start your response with [ and end with ]. Nothing else.
+
+SCHEMA (top-level = one framework):
+- "framework":        [String] Name. Maximum 6 words.
+- "risk_allocations": [Array]  Array of risk allocation objects.
+
+SCHEMA (each object inside "risk_allocations"):
+- "risk_category": [String] Type of risk. Maximum 8 words.
+- "allocated_to":  [Enum]   Exactly one of: "Owner", "Contractor", "Shared", "Unspecified".
+- "mechanism":     [String] How allocation works. Maximum 15 words.
+
+MISSING VALUES: Use "N/A" for strings, "Unspecified" for allocated_to.
+
+EXAMPLE:
+[{"framework":"FIDIC Emerald Book","risk_allocations":[{"risk_category":"Unforeseen ground conditions","allocated_to":"Shared","mechanism":"GBR baseline exceedance triggers owner liability"}]}]
+
+Answer only using information found in the notebook sources. If not covered, say so.
+```
+
 ---
 
 ## Common Mistakes and Fixes
@@ -172,6 +366,10 @@ Answer only using information found in the notebook sources. If not covered, say
 | Negative constraints ("don't hallucinate") | Less reliable than positive framing | Use `"Answer only from sources. If absent, say so."` |
 | No audience prefix | Jargon goes unexplained; citations may be omitted | Always prepend the standard audience prefix |
 | Leading/biased phrasing | Model validates your premise instead of analyzing | Use neutral language: "What are the advantages and challenges?" |
+| No schema contract for structured output | Model improvises column names, enum synonyms, and formatting | Define fields with types, enum values, missing-value sentinels, and a raw-output instruction (Rule 6) |
+| Complex nested schema on cold start | Model defaults to narrative prose, ignores JSON schema entirely | Warm up the session with a flat extraction first, then request nested version in follow-up |
+| No boundary anchoring for JSON | Model wraps valid JSON in conversational prose | Add `"Start your response with [ and end with ]. Nothing else."` |
+| Citation markers in structured values | NotebookLM injects `\n1\n` markers into field values, breaking parsing | Add `"Do not embed citation numbers inside field values"`; post-process with regex if needed |
 
 ---
 
@@ -187,6 +385,7 @@ Before sending any query to NotebookLM, verify:
 - [ ] Scope constraint present (`Answer only from sources...` + escape hatch)
 - [ ] If the query is long (>150 words): refocus statement at the end
 - [ ] Multi-part question decomposed into sequential queries
+- [ ] If requesting structured data: schema contract with types, enums, and missing-value sentinels (Rule 6)
 
 ---
 
