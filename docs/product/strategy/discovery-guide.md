@@ -86,6 +86,17 @@ Operational discovery — feeds Sprint 1 PRD acceptance criteria:
 - "If you used a quality tool, would you tell your senior reviewer? Your Principal?
   Why or why not?" (This is the Bet-4 / Switzerland-neutral test.)
 
+**Structural completeness probe** *(added 2026-04-23)*: This question validates
+whether intermediate engineers recognise the content-vs-packaging gap in their own
+report reviews. If they do, structural completeness rules get high priority in
+Pre-Review's initial rule library. If they don't, the rule category may be a
+senior-reviewer concern only (still valid, but changes priority).
+
+- "Think about the last time a senior reviewer sent a draft back — was the issue that
+  your technical content was wrong, or that it wasn't presented clearly enough? For
+  example, did they ask for a decision matrix, a severity classification, or a worked
+  example that you hadn't included, even though you knew the answer?"
+
 ### Part 5 — Pricing module (Van Westendorp, 2 minutes)
 
 Only at the very end, after the JTBD is mapped. See `pricing-methodology.md` Step 1.

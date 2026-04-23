@@ -486,5 +486,34 @@
     ],
     "access": "open",
     "added": "2026-04-22"
+  },
+  {
+    "id": "govcon-systems-engineering",
+    "name": "Government Contracting, Proposal Management & Systems Engineering",
+    "url": "https://notebooklm.google.com/notebook/754a6041-34be-4a37-9d87-12cc4e43c731",
+    "description": "Comprehensive guide to winning government contracts (GovCon). Covers requirements engineering (RE), Model-Based Systems Engineering (MBSE) using UML and SysML, proposal strategy and management, RFP compliance and compliance matrices, and AI-assisted proposal automation including Retrieval-Augmented Generation (RAG) for hallucination-free draft generation. Contains academic textbooks, practical playbooks, compliance matrix templates, decision matrices, and checklists.",
+    "topic_area": "Process & product",
+    "topics": [
+      "requirements engineering",
+      "Model-Based Systems Engineering",
+      "UML and SysML",
+      "government contracting (GovCon)",
+      "proposal management",
+      "RFP compliance and shredding",
+      "compliance matrices",
+      "AI in proposal automation",
+      "Retrieval-Augmented Generation (RAG)",
+      "stakeholder and system requirements"
+    ],
+    "content_types": ["academic textbooks", "business playbooks", "compliance templates", "checklists", "practical guidelines"],
+    "use_cases": [
+      "Preparing a winning bid for a government contract",
+      "Building requirements engineering frameworks for complex system design",
+      "Adopting AI to automate proposal compliance and draft generation",
+      "Diagnosing and fixing broken proposal processes",
+      "Translating vague customer requirements into precise, testable system specifications"
+    ],
+    "access": "open",
+    "added": "2026-04-23"
   }
 ]

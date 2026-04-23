@@ -80,6 +80,22 @@ Phase-2 buyer (Partner) we are not yet credible to.
   before anyone requests a trial. An IT Justification Brief (see
   `enterprise-ai-blocking-risk-assessment.md` section 2.3) mitigates this directly.
 
+**Rule taxonomy refinement — structural presentation completeness** *(added
+2026-04-23)*: Government procurement debrief feedback from the NZ engineering sector
+confirms a recurring failure mode: engineers have the right technical content but lose
+marks because they don't articulate it with sufficient structural specificity. Panels
+penalise missing worked examples, missing decision matrices, missing severity
+taxonomies, and missing governance diagrams — even when the underlying reasoning exists
+in the narrative. This pattern maps directly to GBR/GIR senior review: intermediates
+draft risk assessments without severity classifications, compare options without
+decision matrices, and describe QA processes without distinguishing automated from
+manual controls. The initial 20-30 rule library should therefore include not only
+*technical correctness* checks (wrong standard cited, missing reference) but also
+*structural completeness* checks — rules that flag when a section makes a claim or
+describes a process without the structural artefact a senior reviewer would expect to
+accompany it. Validate via KR2 discovery interviews (see `discovery-guide.md`,
+structural completeness probe).
+
 **Kill criterion**: After Sprint 4, ≥ 50% of free-tier Skeleton converters refuse to
 trial Pre-Review when prompted. Indicates the value prop does not extend from skeleton
 to review.
@@ -118,6 +134,20 @@ mappings — never full proprietary text. It is never exposed as a public-facing
 interface. This is confirmed professionally defensible by Graeme (high confidence).
 See `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
 and `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`.
+
+**House Rules shape — conditional structural expectations** *(added 2026-04-23)*:
+Debrief analysis of lost NZ government engineering procurements reveals that firm-level
+quality expectations are not flat checklists but **conditional structural requirements**:
+"every risk section must include a severity classification", "every options analysis
+must include a decision matrix", "every QA description must distinguish automated from
+manual controls." These expectations live in senior engineers' heads and are enforced
+inconsistently through ad-hoc review markup. The House Rules engine data model must
+support conditional rules of the form *"when section type = X and claim type = Y,
+require artefact Z"* — not just global toggles. This gives House Rules a concrete
+first use case: encoding the structural presentation standards that differentiate a
+draft that survives senior review from one that gets sent back. Firms that encode
+these rules create switching costs through accumulated configuration (per
+`knowledge-tier-architecture-brief.md`).
 
 **Kill criterion**: Licensing review (P-026) concludes that even citation-only internal
 use of NZS/AS standards content requires a licence Redline cannot obtain or afford.
