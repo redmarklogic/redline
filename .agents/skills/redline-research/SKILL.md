@@ -44,7 +44,7 @@ for the full list with URLs, descriptions, and access controls. Summary by topic
 | Engineering theory & standards | Engineering Standards, Ground Engineering Magazine |
 | Geotechnical domain | GBR, Geotechnical Report Workflows, Risk Assessment in Engineering |
 | AI & software architecture | AI System Engineering, Software Architecture & DDD |
-| Process & product | BPM, Product Roadmapping, Writing Specs, Information Architecture & KM, Product Design & UX, Organisational Design & Team Topologies |
+| Process & product | BPM, Product Roadmapping, Writing Specs, Information Architecture & KM, Product Design & UX, Organisational Design & Team Topologies, Professional Services Firm Management |
 | Communication & documentation | Engineers' Guide to Technical Communication |
 | Founder strategy _(Advisory Board only)_ | Redline Founder Memos, Monetizing & Scaling Innovation, Entrepreneurship & Startup Strategy, Digital Marketing & Social Selling |
 

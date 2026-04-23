@@ -457,5 +457,34 @@
     ],
     "access": "open",
     "added": "2026-04-20"
+  },
+  {
+    "id": "professional-services-firm-management",
+    "name": "Professional Services Firm Management",
+    "url": "https://notebooklm.google.com/notebook/5995e7b2-171a-4998-a87f-0fe3d7274b3c",
+    "description": "Comprehensive guide to the business, management, and future of professional service firms (PSFs) — engineering, law, and consulting practices. Covers individual career development (resume writing, networking, PE licensure), firm creation and entrepreneurship, day-to-day operations (project management, client relations, IDC), financial and human capital management, A/E/C firm strategy, and technological disruption (the Innovator's Dilemma, AI impact on professions). Contains practical templates, checklists, and worksheets alongside theoretical frameworks from published books and management literature.",
+    "topic_area": "Process & product",
+    "topics": [
+      "professional services firm management",
+      "career development in engineering",
+      "firm creation and entrepreneurship",
+      "project management",
+      "client relations",
+      "financial management",
+      "A/E/C industry strategy",
+      "technological disruption",
+      "AI impact on professions",
+      "organizational operations"
+    ],
+    "content_types": ["business books", "management frameworks", "practical templates", "checklists", "theoretical frameworks"],
+    "use_cases": [
+      "Managing or growing a professional services or engineering firm",
+      "Planning a career in engineering or consulting",
+      "Assessing risks from technological disruption to professional service business models",
+      "Improving firm operations — project management, client relations, and profitability",
+      "Researching A/E/C firm strategy, niche positioning, and market differentiation"
+    ],
+    "access": "open",
+    "added": "2026-04-22"
   }
 ]

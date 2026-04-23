@@ -118,6 +118,7 @@ permitted only when clearly labelled as such.
 - `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
   `pm-product-strategist`, `pm-structural-integrity-auditor`
 - `strategy-pre-mortem` — pre-mortem stress-testing of un-implemented plans (Ron-owned)
+- `strategy-psf-domain` — PSF/A/E/C domain grounding for competitor analysis, market segmentation, PI insurance, and engineering workflows (Ron-owned)
 - `pm-personas` — customer archetypes (Mark + Ron co-owned)
 - `pm-roadmap` — visual roadmaps and opportunity solution trees (Mark-owned, Ron-contributed)
 - `pm-prioritization` — portfolio-level RICE / MoSCoW / Value-Effort (Mark-owned). Distinct
