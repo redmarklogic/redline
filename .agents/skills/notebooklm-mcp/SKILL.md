@@ -96,8 +96,8 @@ Use `notebook_list` to find notebook IDs, then `notebook_query` to query.
 
 ## Troubleshooting
 
-See [`troubleshooting.md`](troubleshooting.md) for the running log of issues
-and fixes encountered during setup and usage.
+See [`troubleshooting.md`](troubleshooting.md) for known failure modes
+and fixes (symptom-based lookup).
 
 ## Add Notebook to Register
 
