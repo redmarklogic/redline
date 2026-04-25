@@ -25,6 +25,12 @@ import pypdf
 
 
 def merge_chapters(chapter_folder: pathlib.Path, output_path: pathlib.Path) -> None:
+    if output_path.exists():
+        print(
+            f"ERROR: output path already exists — aborting to prevent overwrite: {output_path}"
+        )
+        sys.exit(1)
+
     chapters = sorted(chapter_folder.glob("*.pdf"))
     if not chapters:
         print(f"ERROR: no PDFs found in {chapter_folder}")

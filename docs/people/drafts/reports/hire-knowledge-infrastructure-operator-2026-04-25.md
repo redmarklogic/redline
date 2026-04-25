@@ -1,4 +1,4 @@
-> DRAFT -- pending user approval. Do not promote to production.
+> Approved by Founder on 2026-04-25. Production agent at `.github/agents/rl.linda.agent.md`.
 
 # Hire Report: Knowledge Infrastructure Operator (Linda)
 

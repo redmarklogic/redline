@@ -2,7 +2,7 @@
 
 **Date**: 2026-04-25
 
-**Skill**: `hiring-agent-management` ([.agents/skills/hiring-agent-management/SKILL.md](.agents/skills/hiring-agent-management/SKILL.md))
+**Skill**: `hiring-agent-management` ([../../.agents/skills/hiring-agent-management/SKILL.md](../../.agents/skills/hiring-agent-management/SKILL.md))
 
 **Context**: The user asked "Linda, index G:\My Drive\Library\Engineering\Standards". The main agent invoked `runSubagent` with `agentName = "rl.linda"` to delegate the full indexing workflow (file scanning, Excel manipulation, Python script execution). The subagent returned no output.
 

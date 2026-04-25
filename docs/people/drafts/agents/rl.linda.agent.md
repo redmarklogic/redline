@@ -1,4 +1,4 @@
-> Approved by Founder on 2026-04-25.
+> Approved by Founder on 2026-04-25. This file is the historical draft record; the canonical production agent is at `.github/agents/rl.linda.agent.md`.
 
 # Linda -- Knowledge Infrastructure Operator
 

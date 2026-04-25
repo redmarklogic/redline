@@ -32,5 +32,4 @@ These create, modify, or delete resources without explicit user intent:
 | `chat_configure` | Changes chat settings |
 | `save_auth_tokens` | Fallback auth (use `nlm login` CLI instead) |
 | `tag` | Notebook tagging (manage tags via CLI instead) |
-| `source_get_content` | Raw source dump (already listed under context-pollution) |
 | `notebook_query_start` / `notebook_query_status` | Async query variants (use `notebook_query` instead) |

@@ -23,7 +23,11 @@
    from extract_text import extract_text, make_ocr_reader, ocr_extract_text
    text = extract_text(path)
    if not text:
-       text = ocr_extract_text(path, make_ocr_reader())
+       reader = make_ocr_reader()
+       if reader:
+           text = ocr_extract_text(path, reader)
+       else:
+           text = ""  # easyocr not installed — will be marked NEEDS_REVIEW
    print(text[:500] or "(no text)")
    ```
    Files > 100 MB: skip extraction and mark `NEEDS_REVIEW: large file`.

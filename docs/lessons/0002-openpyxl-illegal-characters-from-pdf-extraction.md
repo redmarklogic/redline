@@ -2,7 +2,7 @@
 
 **Date**: 2026-04-25
 
-**Skill**: `library-management` ([.agents/skills/library-management/SKILL.md](.agents/skills/library-management/SKILL.md))
+**Skill**: `library-management` ([../../.agents/skills/library-management/SKILL.md](../../.agents/skills/library-management/SKILL.md))
 
 **Context**: Batch-indexing 1473 PDF standards into `library-index.xlsx`. PDF text extraction via `pypdf` returns raw bytes that can include control characters (`\x00–\x1f`, `\x7f–\x9f`). When appending rows to a worksheet, openpyxl raises `IllegalCharacterError: <value> cannot be used in worksheets.` halting the entire batch without saving the completed rows.
 

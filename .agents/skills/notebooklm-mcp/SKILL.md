@@ -110,7 +110,7 @@ notebook used by any skill (including `redline-research`) is listed there.
 
 ### Step R1 — Check the register
 
-Read `register.json` and check if any entry's `url` field matches the provided URL.
+Read `.agents/skills/redline-research/register.json` and check if any entry's `url` field matches the provided URL.
 Also call `notebook_list` to verify the notebook exists in the user's NotebookLM account. If
 the notebook is already registered, report that it exists and stop.
 
@@ -134,9 +134,9 @@ a `topic_area` (match an existing area from `register.json` or propose a new one
 `topics` list (5-10), `content_types`, and 3-5 `use_cases`. Set `access` to `"open"` unless
 the user specifies otherwise (e.g. `"advisory-board-only"`).
 
-### Step R3 — Append to `register.json`
+### Step R3 — Append to `.agents/skills/redline-research/register.json`
 
-Append a new JSON object to the array in `register.json` with all fields from Step R2 plus
+Append a new JSON object to the array in `.agents/skills/redline-research/register.json` with all fields from Step R2 plus
 `"added": "YYYY-MM-DD"`. Ensure the JSON remains valid.
 
 ### Step R4 — Confirm

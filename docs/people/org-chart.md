@@ -38,7 +38,7 @@ Founder (you)
 │   │
 │   └── Linda — Knowledge Infrastructure Operator  [DRAFT-FIRST]
 │         Outputs: indexed/tagged library entries, populated notebooks, up-to-date register.json, standards update alerts
-│         Writes to: register.json (direct); G:\My Drive\Library (read + catalogue)
+│         Writes to: .agents/skills/redline-research/register.json (direct); G:\My Drive\Library (read + catalogue)
 │         Routes to: Graeme (standards triage), Ron/Mark/John (domain questions)
 │
 ├── Matt — UI/UX Designer  [DRAFT-FIRST]

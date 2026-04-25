@@ -238,20 +238,22 @@ for i in range(0, len(files), BATCH_SIZE):
             TODAY,
             # Engineering extra columns
             _sanitize(standard_code),
-            status if status != "NEEDS_REVIEW" else None,
+            _sanitize(status),
             _sanitize(jurisdiction),
             _sanitize(issuing_body),
             None,  # superseded_by — Phase 4
         ]
 
-        new_rows.append(row)
+        new_rows.append(
+            row
+        )  # 25 cols: first 20 go to Master, all 25 to domain worksheet
         print(
             f"    code={standard_code!r}  year={year}  issuer={issuing_body!r}  status={status!r}"
         )
         already_done.add(h.upper())
 
     for row in new_rows:
-        ws_master.append(row)
+        ws_master.append(row[:20])
         ws_domain.append(row)
     wb.save(INDEX_PATH)
     print(f"  -> Saved batch {batch_num} ({len(new_rows)} new rows).")

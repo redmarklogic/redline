@@ -108,10 +108,13 @@ After Phases 1–3, collect all NEEDS_REVIEW rows and present them:
 import openpyxl
 wb = openpyxl.load_workbook(r"G:\My Drive\Library\library-index.xlsx")
 ws = wb["Master"]
+headers = [cell.value for cell in ws[1]]
+filename_idx = headers.index("canonical_filename")
+notes_idx = headers.index("notes")
 needs_review = [
-    (row[8].value, row[12].value)
+    (row[filename_idx].value, row[notes_idx].value)
     for row in ws.iter_rows(min_row=2)
-    if row[12].value and "NEEDS_REVIEW" in str(row[12].value)
+    if row[notes_idx].value and "NEEDS_REVIEW" in str(row[notes_idx].value)
 ]
 print(f"{len(needs_review)} rows need review:")
 for filename, note in needs_review:

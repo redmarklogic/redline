@@ -20,7 +20,7 @@ shutil.rmtree(pathlib.Path(r"G:\My Drive\Library\...\chapter-subfolder"))
 Merge the chapters into a single PDF, then delete the originals:
 
 ```powershell
-c:\Users\harel\Documents\products\redline\.venv\Scripts\python.exe .agents\tools\library\merge_chapters.py `
+.\.venv\Scripts\python.exe .agents\tools\library\merge_chapters.py `
     "G:\My Drive\Library\...\chapter-subfolder" `
     "G:\My Drive\Library\...\Merged-Title_Author_Year.pdf"
 ```

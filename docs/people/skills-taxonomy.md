@@ -84,6 +84,14 @@
 | `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda |
 | `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron |
 
+### Research & Knowledge
+
+| Skill | Purpose | Used by |
+|---|---|---|
+| `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John |
+| `rag-prompting` | Query design for NotebookLM — prompt anatomy, retrieval rules, structured extraction | Graeme, Ron, Mark, John, Linda |
+| `library-management` | Index, rename, and add books to the digital library | Linda |
+
 ### Development Workflow
 
 | Skill | Purpose | Used by |

@@ -1,4 +1,4 @@
-﻿---
+---
 name: library-management
 description: Use when indexing, renaming, or adding books to the digital library at G:\My Drive\Library — covers scanning folders, extracting metadata from PDFs, updating the Excel index, and renaming files to the canonical convention.
 ---

@@ -37,7 +37,10 @@ def extract_text(path: str | pathlib.Path, max_pages: int = 5) -> str:
             if text and text.strip():
                 return text[:2000]
     except Exception as e:
-        return f"ERROR: {e}"
+        import logging
+
+        logging.getLogger(__name__).warning("extract_text failed for %s: %s", path, e)
+        return ""
     return ""
 
 
@@ -45,6 +48,7 @@ def make_ocr_reader():
     """Initialize EasyOCR reader (English). Returns None if easyocr is not installed."""
     try:
         import easyocr
+
         reader = easyocr.Reader(["en"], verbose=False)
         print("EasyOCR ready.")
         return reader
@@ -55,6 +59,8 @@ def make_ocr_reader():
 
 def ocr_extract_text(path: str | pathlib.Path, ocr_reader, max_pages: int = 3) -> str:
     """OCR-extract text from a scanned PDF. Stops on first page that yields text."""
+    if ocr_reader is None:
+        return ""
     try:
         import numpy as np
         import pypdfium2 as pdfium
@@ -67,5 +73,10 @@ def ocr_extract_text(path: str | pathlib.Path, ocr_reader, max_pages: int = 3) -
             if text.strip():
                 return text[:2000]
     except Exception as e:
-        return f"ERROR: {e}"
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "ocr_extract_text failed for %s: %s", path, e
+        )
+        return ""
     return ""

@@ -2,7 +2,7 @@
 
 **Date**: 2026-04-25
 
-**Skill**: `library-management` ([.agents/skills/library-management/SKILL.md](.agents/skills/library-management/SKILL.md))
+**Skill**: `library-management` ([../../.agents/skills/library-management/SKILL.md](../../.agents/skills/library-management/SKILL.md))
 
 **Context**: Indexing `G:\My Drive\Library\Engineering\Standards` into `library-index.xlsx`. The first action was to scan the folder (Phase 0), not to verify the index file. When Phase 1 ran `openpyxl.load_workbook()`, it failed immediately with `zipfile.BadZipFile: File is not a zip file` — the index was corrupted (valid ZIP header but truncated End of Central Directory record). All prior indexing work was lost and the file had to be recreated from scratch.
 

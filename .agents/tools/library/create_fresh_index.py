@@ -1,9 +1,9 @@
 """Create a fresh library-index.xlsx with all required worksheets and headers.
 
 Run from the repo root:
-    .venv\Scripts\python.exe .agents\tools\library\create_fresh_index.py
+    .venv\\Scripts\\python.exe .agents\\tools\\library\\create_fresh_index.py
 
-Creates G:\My Drive\Library\library-index.xlsx with:
+Creates G:\\My Drive\\Library\\library-index.xlsx with:
   - Master worksheet (standard 20 columns)
   - Engineering worksheet (20 standard + 5 engineering-specific columns)
   - Standards worksheet (20 standard + 5 engineering-specific columns)
