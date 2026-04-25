@@ -182,6 +182,21 @@ surfaces try to be canonical for the same content.
 > **must not be edited manually**. Running `specify upgrade` will overwrite manual changes.
 > All Redline-specific extensions belong in `.specify/extensions.yml`, not in these files.
 
+### Internal Operations (platform functions)
+
+Two platform agents that serve all other agents. Neither makes domain decisions.
+
+- **Linda** (`rl.linda.agent.md`): Knowledge Infrastructure Operator. Curates and indexes
+  the digital library at `G:\My Drive\Library`, maintains NotebookLM notebooks and
+  `register.json`, monitors standards body feeds and routes updates to Graeme. Domain-agnostic
+  --- organises content but never interprets it. X-as-a-Service interaction mode.
+  Invoke: "Linda, [request]"
+
+- **Harriet** (`rl.harriet.agent.md`): Head of People & Agent Development. Agent hiring,
+  audits, PIPs, skill gap management, org design. Maintains agent register, org chart, and
+  skills taxonomy. Draft-first maturity.
+  Invoke: "Harriet, [request]"
+
 ### Marketing (loaded on demand by John)
 
 - **`marketing-content-big-5`**: Use when planning content marketing topics, deciding what blog posts, videos, or pages to publish next, or when prospects keep asking the same sales questions — applies the They Ask You Answer / Big 5 framework.

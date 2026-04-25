@@ -1,7 +1,7 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-04-20  
+**Last updated:** 2026-04-25  
 **Source of truth for:** all skills in `.agents/skills/`, their domain category, and which agents use them.
 
 > Update this file whenever a skill is created, retired, or reassigned.
@@ -81,7 +81,7 @@
 | `git-push-batched` | Push changes in thematically cohesive commits | Engineering |
 | `pre-commit-hooks-create` | Writing bespoke pre-commit hooks | Engineering |
 | `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
-| `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark |
+| `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda |
 | `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron |
 
 ### Development Workflow
@@ -132,6 +132,14 @@
 | `doc-updater` | Keep codemaps and docs in sync with the codebase | Engineering |
 | `redline-research` | Query multiple NotebookLM knowledge bases | All |
 
+### Knowledge Infrastructure
+
+| Skill | Purpose | Used by |
+|---|---|---|
+| `knowledge-infrastructure` | Digital library curation, notebook maintenance, register.json upkeep, standards monitoring procedures | Linda |
+
+> `knowledge-infrastructure` skill is pending creation. Requires grounding from the "Information Architecture and Knowledge Management" notebook.
+
 ### People & Org
 
 | Skill | Purpose | Used by |
@@ -163,3 +171,4 @@
 |---|---|---|---|
 | `ux-professional-software` (information-dense UI, document-centric interaction, form design) | Harriet (2026-04-20, Matt hire) | Query `Product Design & UX` and `Information Architecture and Knowledge Management` notebooks; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
 | `ux-conversion-design` (conversion UX for warm-handoff B2B SaaS) | Harriet (2026-04-20, Matt hire) | Route through John for `Monetizing & Scaling Innovation` and `Digital Marketing & Social Selling` notebooks; combine with `Product Design & UX`; draft skill using `writing-skills` TDD cycle | Pending notebook grounding + John consultation |
+| `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |

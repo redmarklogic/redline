@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-04-20  
+**Last updated:** 2026-04-25  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.
@@ -30,10 +30,16 @@ Founder (you)
 │         Outputs: domain knowledge documents, fact-checks
 │         Writes to: docs/knowledge/geotechnical/
 │
-├── Harriet — Head of People & Agent Development  [DRAFT-FIRST]
-│     Outputs: hire reports, PIPs, org chart, agent register, skills taxonomy, draft JDs
-│     Writes to: docs/people/ (direct); docs/people/drafts/ (proposals)
-│     Consults: Ron, Mark, John, Graeme (on all hires and PIPs)
+├── Internal Operations (platform functions — serve all agents)
+│   ├── Harriet — Head of People & Agent Development  [DRAFT-FIRST]
+│   │     Outputs: hire reports, PIPs, org chart, agent register, skills taxonomy, draft JDs
+│   │     Writes to: docs/people/ (direct); docs/people/drafts/ (proposals)
+│   │     Consults: Ron, Mark, John, Graeme (on all hires and PIPs)
+│   │
+│   └── Linda — Knowledge Infrastructure Operator  [DRAFT-FIRST]
+│         Outputs: indexed/tagged library entries, populated notebooks, up-to-date register.json, standards update alerts
+│         Writes to: register.json (direct); G:\My Drive\Library (read + catalogue)
+│         Routes to: Graeme (standards triage), Ron/Mark/John (domain questions)
 │
 ├── Matt — UI/UX Designer  [DRAFT-FIRST]
 │     Outputs: design specs, wireframes (Miro), user flows, component inventories
@@ -92,6 +98,9 @@ Who consults whom, and for what.
 | Matt | John | Positioning alignment, micro-copy review on conversion surfaces |
 | Matt | Graeme | Domain terminology verification on geotechnical designs |
 | Matt | Ron | Strategic fit confirmation (on demand) |
+| Linda | Graeme | Standards triage and domain decisions for geotechnical content |
+| Linda | Ron/Mark/John | Domain routing for strategy/product/marketing books |
+| Linda | Notebook owner | Approval before reorganising, merging, or deduping notebooks |
 
 ---
 
@@ -105,6 +114,7 @@ Who consults whom, and for what.
 | Graeme | Autonomous | — (founding member) |
 | Harriet | **Draft-first** | Pending — awaiting trust milestone |
 | Matt | **Draft-first** | Pending — awaiting trust milestone |
+| Linda | **Draft-first** | Hired 2026-04-25 |
 
 ---
 
@@ -115,3 +125,5 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 | Role | Identified by | Priority | Status |
 |---|---|---|---|
 | *(none — all identified gaps currently have a draft or approved agent)* | | | |
+
+> Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.
