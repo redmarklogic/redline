@@ -31,7 +31,7 @@ The canonical digital library lives at `G:\My Drive\Library`. All books are inde
 ## Index Schema
 
 File: `G:\My Drive\Library\library-index.xlsx`
-Worksheets: `Master` (all entries) + one per top-level domain folder (e.g. `Engineering`, `Management`)
+Worksheets: `Master` (all entries) + one per top-level domain folder (e.g. `Engineering`, `Management`). Engineering worksheets include extra columns — see **Engineering Worksheets** section below.
 
 **One row per physical file.** Two rows may share a `sha256` — that signals a duplicate.
 
@@ -42,7 +42,7 @@ Worksheets: `Master` (all entries) + one per top-level domain folder (e.g. `Engi
 | `author` | All authors, semicolon-separated. Format: `Surname, Firstname` |
 | `publisher` | Publisher or national distributor |
 | `year` | Year of publication (integer) |
-| `edition` | Edition number only (e.g. `3rd`). Official reference codes for standards go in `engineering-index.xlsx` |
+| `edition` | Edition number only (e.g. `3rd`). Official reference codes for standards go in `standard_code` on the Engineering worksheet. |
 | `format` | `PDF` or `EPUB` |
 | `path` | Path relative to `G:\My Drive\Library\` (no drive letter) |
 | `canonical_filename` | Filename only, in canonical convention |
@@ -100,23 +100,21 @@ Semantic character — how to use it, independent of origin:
 
 ---
 
-## Engineering Index (Separate Workbook)
+## Engineering Worksheets (within `library-index.xlsx`)
 
-File: `G:\My Drive\Library\engineering-index.xlsx`
+Engineering documents live in one or more worksheets inside `library-index.xlsx` — there is no separate engineering index file. The `Master` sheet holds all rows; the `Engineering` worksheet (and any subdomain worksheets, e.g. `Geotechnical Engineering`) hold the same rows plus additional engineering-specific columns.
 
-Holds engineering-specific fields joined to the main index by `sha256` + `path`. Applies to `domain = Engineering` only. Append a row here in addition to the main index when indexing engineering documents.
+Applies to `domain = Engineering` only. When indexing an engineering document, populate the extra columns below in addition to the standard Master columns.
 
 | Column | Description | Example |
 |---|---|---|
-| `sha256` | Join key | |
-| `path` | Join key | |
 | `standard_code` | Official reference designation engineers cite | `BS EN 1997-1:2004`, `NZS 4402:1986` |
 | `status` | `current` · `superseded` · `withdrawn` · `draft` | |
 | `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International` | |
 | `issuing_body` | Standards body that authored the document (distinct from national distributor) | `CEN`, `CIRIA`, `BSI` |
 | `superseded_by` | Reference code of the replacing document; populate when `status = superseded` | `BS EN 1997-1:2013` |
 
-**Rules:** Never leave `status` blank for any engineering standard. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown.
+**Rules:** Never leave `status` blank for any engineering standard. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. Non-standard engineering books (textbooks, guidance notes) leave `standard_code`, `status`, `jurisdiction`, `issuing_body`, and `superseded_by` blank.
 
 ---
 
