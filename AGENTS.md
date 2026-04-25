@@ -76,7 +76,8 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`git-push-batched`**: Push changes to git in thematically organised commits — groups dirty files into cohesive batches, proposes them for user confirmation, then stages and commits each batch before pushing. By default, auto-commits without waiting for confirmation.
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
-- **`notebooklm-mcp`**: NotebookLM MCP setup and usage (querying notebooks from Copilot Agent)
+- **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
+- **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
 
@@ -190,7 +191,7 @@ surfaces try to be canonical for the same content.
 
 ### Redline Project Research
 
-- **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
+- **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Notebook register at `.agents/skills/redline-research/register.json`. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
 
 ### Skills Management
 

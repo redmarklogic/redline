@@ -121,7 +121,7 @@ For each skill the new agent needs, verify it exists in `.agents/skills/`. If mi
 
 ### Step 6 — Notebook check
 
-Verify required notebooks are in `.agents/skills/notebooklm-mcp/register.json`. If missing, identify sourcing options and report before drafting any skill.
+Verify required notebooks are in `.agents/skills/redline-research/register.json`. If missing, identify sourcing options and report before drafting any skill.
 
 ### Step 7 — Output
 
@@ -308,7 +308,7 @@ Apply the patches. Update `docs/people/agent-register.md` with the new "Last upd
 
 ## Prompt Rewriting Rules
 
-When rewriting any agent JD, apply `notebooklm-mcp/prompting-guide.md` principles:
+When rewriting any agent JD, apply `rag-prompting` principles:
 
 - One concrete task per instruction.
 - Every hard constraint must be testable: "You MUST NOT edit files outside X" — not "try to stay in your domain."

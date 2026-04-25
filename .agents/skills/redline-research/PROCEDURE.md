@@ -2,14 +2,13 @@
 
 Full reference for the `redline-research` skill. Load this file when actively running a research session.
 
-**REQUIRED:** Before writing any query, review the prompting principles in
-[`notebooklm-mcp/prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md).
-The procedure below encodes those principles; the guide is the authoritative reference
-if a situation is not covered here.
+**REQUIRED:** Before writing any query, load the `rag-prompting` skill.
+The procedure below encodes those principles; the `rag-prompting` skill is the
+authoritative reference if a situation is not covered here.
 
 ## Knowledge Bases
 
-The canonical notebook register lives at `.agents/skills/notebooklm-mcp/register.json`.
+The canonical notebook register lives at `.agents/skills/redline-research/register.json`.
 Read that file to get the full list of notebooks, their URLs, topic areas, access controls,
 and use cases.
 
@@ -72,8 +71,7 @@ Return cited Markdown prose. Answer only using information found in the notebook
 If the notebook does not contain a direct answer, say "Not covered in sources."
 ```
 
-Before sending any query, run through the Quick Checklist in
-[`notebooklm-mcp/prompting-guide.md`](.agents/skills/notebooklm-mcp/prompting-guide.md).
+Before sending any query, run through the Quick Checklist in the `rag-prompting` skill.
 One additional rule specific to research sessions:
 
 - Retain the full NotebookLM response verbatim, including citations. Do not paraphrase.
