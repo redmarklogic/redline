@@ -57,13 +57,14 @@ format.docstring-code-format = true
 lint.select = [ "A", "C4", "E4", "E7", "E9", "F", "FLY", "FURB", "I", "INP", "PLE", "PLR", "PT", "RUF", "SIM", "UP" ]
 lint.ignore = [ "PLR2004", "SIM108" ]
 lint.per-file-ignores."!tests/**/*.py" = [ "PT" ]
+lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
 lint.per-file-ignores."hooks/**" = [ "INP" ]
 lint.per-file-ignores."src/scripts/**" = [ "INP" ]
 lint.per-file-ignores."tests/**" = [ "INP" ]
 
 [tool.codespell]
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
-ignore-words-list = [ "ags", "bund", "bunds", "gir", "linz", "sme", "te" ]
+ignore-words-list = [ "aci", "ags", "bund", "bunds", "gir", "linz", "sme", "te" ]
 
 [tool.deptry]
 ignore_notebooks = false
