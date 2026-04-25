@@ -145,7 +145,7 @@ See [procedures/index-folder.md](procedures/index-folder.md) for step-by-step de
 
 | Phase | Purpose | Tool |
 |---|---|---|
-| 0 — Pre-scan | Exact filenames via `Get-ChildItem`; chapter subfolder cleanup | PowerShell |
+| 0 — Pre-scan | Exact filenames via `Get-ChildItem`; **index integrity check**; chapter subfolder cleanup | PowerShell + Python |
 | 1 — Batch index | Extract text/OCR; build rows; save every 8 files | `.agents/tools/library/batch_index.py` |
 | 2 — Rename | Apply canonical filenames; update index | Inline snippet in `index-folder.md` |
 | 3 — Dedup | Flag duplicate hashes in `notes` | `.agents/tools/library/dedup_index.py` |
@@ -173,8 +173,10 @@ All tools live in `.agents/tools/library/`. Run from the repo root:
 |---|---|
 | `extract_text.py` | Importable helpers: `sha256`, `extract_text`, `make_ocr_reader`, `ocr_extract_text` |
 | `batch_index.py` | Phase 1 — batch loop; set `FOLDER` and `DOMAIN_WS` constants before running |
+| `batch_index_standards.py` | Phase 1 — automated Standards variant; derives metadata from folder name (issuer) and filename (code, year); no interactive metadata entry |
 | `dedup_index.py` | Phase 3 — flags duplicate hashes in `notes`; no configuration needed |
 | `merge_chapters.py` | Phase 0 helper — merges chapter PDFs into one file; takes CLI args |
+| `create_fresh_index.py` | Emergency tool — creates a new `library-index.xlsx` with correct worksheets and headers; overwrites existing file |
 
 ---
 
@@ -200,3 +202,6 @@ All tools live in `.agents/tools/library/`. Run from the repo root:
 | Using `C:\Temp` as temp directory | Use `$env:TEMP` — `C:\Temp` may not exist. |
 | Instantiating `easyocr.Reader` per file | `make_ocr_reader()` is called once in `batch_index.py` — do not move it inside the loop. |
 | Leaving `status` blank for engineering standards | Default to `current` only when confirmed. Never blank. |
+| Not verifying the index before Phase 1 | Run Phase 0d — open `library-index.xlsx` in Python and confirm expected worksheets exist before scanning any files. |
+| Writing PDF-extracted text directly to openpyxl cells | PDF extraction returns control characters (`\x00–\x1f`, `\x7f–\x9f`) that openpyxl rejects with `IllegalCharacterError`. Sanitize every string field — see `batch_index_standards.py` for the `_sanitize()` pattern. |
+| Invoking a persona agent (Linda, Graeme, etc.) for execution | Persona agents are advisory — they do not run shell commands or scripts. Apply the persona's skills directly and execute the work in the main agent. |

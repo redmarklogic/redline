@@ -22,6 +22,17 @@ This reveals exact filenames (often longer than remembered) and shows large file
 
 **0c. Already-indexed hashes** are loaded automatically by `batch_index.py` — no manual action needed.
 
+**0d. Verify the index file is readable before proceeding.** A corrupted index means all Phase 1 work is lost on first write:
+
+```python
+import openpyxl
+wb = openpyxl.load_workbook(r"G:\My Drive\Library\library-index.xlsx", read_only=True)
+print("Worksheets:", wb.sheetnames)  # must include "Master" and the target domain worksheet
+wb.close()
+```
+
+If this raises `BadZipFile` or `InvalidFileException`, stop. Use `create_fresh_index.py` to recreate the file (this is destructive — confirm with the user first if the file might contain unrecovered data).
+
 ---
 
 ## Phase 1 — Batch Index
