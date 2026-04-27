@@ -25,6 +25,15 @@ import pypdf
 
 
 def merge_chapters(chapter_folder: pathlib.Path, output_path: pathlib.Path) -> None:
+    """Merge all chapter PDFs in a folder into a single output PDF.
+
+    Verifies the merged PDF is readable before deleting source files
+    and the chapter folder.
+
+    Args:
+        chapter_folder: Directory containing chapter PDF files.
+        output_path: Destination path for the merged PDF.
+    """
     if output_path.exists():
         print(
             f"ERROR: output path already exists — aborting to prevent overwrite: {output_path}"

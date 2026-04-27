@@ -1,18 +1,19 @@
-"""Automated batch indexer for G:\\My Drive\\Library\\Engineering\\Standards.
+r"""Automated manifest-first indexer for Engineering standards PDFs.
 
-Unlike the generic batch_index.py (which requires interactive metadata entry),
-this script auto-populates metadata by leveraging the known folder structure:
-  - Each subdirectory is named after the issuing body (ASTM, NZS, ISO, etc.)
-  - Filenames already encode the standard code
-  - PDF text is extracted to recover title and year
+Unlike the generic batch_index.py, this script derives metadata from the known
+standards folder structure:
+  - Each subdirectory is named after the issuing body (ASTM, NZS, ISO, etc.).
+  - Filenames usually encode the standard code and sometimes the year.
+  - PDF text extraction and OCR are optional enrichment, not default indexing.
 
 Run from the repo root:
-    .venv\\Scripts\\python.exe .agents\\tools\\library\\batch_index_standards.py
+    .venv\Scripts\python.exe .agents\tools\library\batch_index_standards.py
 
 Phases covered by this script: Phase 1 (batch index) only.
 Run dedup_index.py separately after this completes (Phase 3).
 """
 
+import os
 import pathlib
 import re
 import sys
@@ -20,17 +21,16 @@ from datetime import date
 
 import openpyxl
 
-# --- CONFIG ---
 FOLDER = pathlib.Path(r"G:\My Drive\Library\Engineering\Standards")
 DOMAIN_WS = "Standards"
 TEXT_SIZE_LIMIT_MB = 50
 BATCH_SIZE = 8
-# --------------
+USE_TEXT_EXTRACTION = os.environ.get("LIBRARY_INDEX_EXTRACT_TEXT") == "1"
+USE_OCR = os.environ.get("LIBRARY_INDEX_USE_OCR") == "1"
 
-INDEX_PATH = r"G:\My Drive\Library\library-index.xlsx"
+INDEX_PATH = pathlib.Path(r"G:\My Drive\Library\library-index.xlsx")
 TODAY = date.today().isoformat()
 
-# Issuing body → (canonical issuing_body_name, jurisdiction)
 ISSUER_MAP: dict[str, tuple[str, str]] = {
     "_archive": ("", ""),
     "AACE": ("AACE International", "International"),
@@ -67,7 +67,6 @@ ISSUER_MAP: dict[str, tuple[str, str]] = {
     "VDI": ("VDI", "DE"),
 }
 
-# GRI standards are geotechnical (Geosynthetics Research Institute)
 SUBDOMAIN_MAP: dict[str, str] = {
     "GRI": "Geotechnical Engineering",
 }
@@ -79,13 +78,195 @@ from extract_text import (  # noqa: E402
     ocr_extract_text,
     sha256,
 )
+from workbook_utils import (  # noqa: E402
+    LIBRARY_ROOT,
+    WorkbookLock,
+    append_index_row,
+    get_indexed_paths,
+    save_workbook_atomically,
+)
 
-# openpyxl's full set of illegal characters (matches openpyxl.cell.cell)
 _ILLEGAL_CHARS = re.compile(
     r"[\x00-\x08\x0b\x0c\x0e-\x1f"
     r"\x7f-\x84\x86-\x9f"
     r"\ud800-\udfff\ufffe\uffff]"
 )
+
+
+def index_standards() -> None:
+    """Index one row per physical standards PDF using path-based resume."""
+    with WorkbookLock(INDEX_PATH):
+        workbook = openpyxl.load_workbook(INDEX_PATH)
+        already_done = get_indexed_paths(workbook)
+        ocr_reader = make_ocr_reader() if USE_OCR else None
+        files = _get_source_files()
+        print(f"Found {len(files)} PDFs. Already indexed: {len(already_done)} paths.")
+        _index_batches(workbook, files, already_done, ocr_reader)
+
+    print("\nPhase 1 complete.")
+    print(
+        "Next: run dedup_index.py (Phase 3), then review NEEDS_REVIEW rows (Phase 4)."
+    )
+
+
+def _get_source_files() -> list[pathlib.Path]:
+    return sorted(
+        [
+            file_path
+            for file_path in FOLDER.rglob("*.pdf")
+            if file_path.name != "desktop.ini"
+        ],
+        key=lambda file_path: file_path.stat().st_size,
+    )
+
+
+def _index_batches(
+    workbook: openpyxl.Workbook,
+    files: list[pathlib.Path],
+    already_done: set[str],
+    ocr_reader: object | None,
+) -> None:
+    for batch_num, batch_start in enumerate(range(0, len(files), BATCH_SIZE), start=1):
+        batch = files[batch_start : batch_start + BATCH_SIZE]
+        print(
+            f"\n=== Batch {batch_num} "
+            f"({batch_start + 1}-{min(batch_start + BATCH_SIZE, len(files))} of {len(files)}) ==="
+        )
+        new_rows = _compose_batch_rows(batch, already_done, ocr_reader)
+        for row in new_rows:
+            append_index_row(workbook, DOMAIN_WS, row)
+        save_workbook_atomically(workbook, INDEX_PATH)
+        print(f"  -> Saved batch {batch_num} ({len(new_rows)} new rows).")
+
+
+def _compose_batch_rows(
+    batch: list[pathlib.Path],
+    already_done: set[str],
+    ocr_reader: object | None,
+) -> list[list[object]]:
+    new_rows: list[list[object]] = []
+    for file_path in batch:
+        relative_path = str(file_path.relative_to(LIBRARY_ROOT))
+        if relative_path in already_done:
+            print(f"  SKIP (already indexed): {file_path.name}")
+            continue
+        row = _compose_standard_row(file_path, relative_path, ocr_reader)
+        new_rows.append(row)
+        already_done.add(relative_path)
+    return new_rows
+
+
+def _compose_standard_row(
+    file_path: pathlib.Path,
+    relative_path: str,
+    ocr_reader: object | None,
+) -> list[object]:
+    file_hash = sha256(file_path)
+    size_mb = round(file_path.stat().st_size / 1_000_000, 2)
+    print(f"  {file_path.name}  ({size_mb} MB)")
+
+    parent_folder_name = file_path.parent.name
+    issuing_body, jurisdiction = ISSUER_MAP.get(parent_folder_name, ("", ""))
+    subdomain = SUBDOMAIN_MAP.get(parent_folder_name, "")
+    status = _default_status(parent_folder_name)
+    standard_code = _parse_standard_code(file_path.stem)
+    year = _parse_year_from_stem(file_path.stem)
+    text, notes_parts = _extract_metadata_text(file_path, size_mb, ocr_reader)
+    title = _extract_title_from_text(text) or file_path.stem
+    year = _year_from_text(text, year)
+    _append_review_notes(
+        notes_parts=notes_parts,
+        subdomain=subdomain,
+        status=status,
+        issuing_body=issuing_body,
+    )
+    notes = "; ".join(notes_parts) if notes_parts else None
+    print(
+        f"    code={standard_code!r}  year={year}  issuer={issuing_body!r}  status={status!r}"
+    )
+
+    return [
+        file_hash,
+        _sanitize(title),
+        _sanitize(issuing_body),
+        _sanitize(issuing_body),
+        year,
+        None,
+        "PDF",
+        _sanitize(relative_path),
+        _sanitize(file_path.name),
+        "Engineering",
+        _sanitize(subdomain),
+        "Standard",
+        "Standard",
+        "",
+        "",
+        "",
+        "practitioner",
+        "",
+        _sanitize(notes),
+        TODAY,
+        _sanitize(standard_code),
+        _sanitize(status),
+        _sanitize(jurisdiction),
+        _sanitize(issuing_body),
+        None,
+    ]
+
+
+def _extract_metadata_text(
+    file_path: pathlib.Path,
+    size_mb: float,
+    ocr_reader: object | None,
+) -> tuple[str, list[str]]:
+    notes_parts: list[str] = []
+    if not USE_TEXT_EXTRACTION:
+        notes_parts.append(
+            "NEEDS_REVIEW: text extraction skipped — verify title/year manually"
+        )
+        return "", notes_parts
+    if size_mb > TEXT_SIZE_LIMIT_MB:
+        notes_parts.append(
+            f"NEEDS_REVIEW: large file ({size_mb} MB) — verify metadata manually"
+        )
+        return "", notes_parts
+
+    text = extract_text(file_path)
+    if not text and ocr_reader:
+        print("    -> No digital text; trying OCR...")
+        text = ocr_extract_text(file_path, ocr_reader)
+    if not text:
+        review_reason = "digital text extraction returned nothing"
+        if USE_OCR:
+            review_reason = "digital and OCR extraction both returned nothing"
+        notes_parts.append(f"NEEDS_REVIEW: no extractable text — {review_reason}")
+    return text, notes_parts
+
+
+def _append_review_notes(
+    *,
+    notes_parts: list[str],
+    subdomain: str,
+    status: str,
+    issuing_body: str,
+) -> None:
+    if not subdomain:
+        notes_parts.append("NEEDS_REVIEW: subdomain not assigned — classify manually")
+    if status == "needs_review":
+        notes_parts.append(
+            "NEEDS_REVIEW: status not confirmed — current/superseded/withdrawn/draft"
+        )
+    if not issuing_body:
+        notes_parts.append("NEEDS_REVIEW: issuing body unknown")
+
+
+def _year_from_text(text: str, year: int | None) -> int | None:
+    if year is not None or not text:
+        return year
+    year_match = re.search(r"\b(19[5-9]\d|20[0-2]\d)\b", text[:2000])
+    if year_match:
+        return int(year_match.group(1))
+    return None
 
 
 def _sanitize(value: str | None) -> str | None:
@@ -94,169 +275,30 @@ def _sanitize(value: str | None) -> str | None:
     return _ILLEGAL_CHARS.sub("", value).strip() or None
 
 
-ocr_reader = make_ocr_reader()
-
-wb = openpyxl.load_workbook(INDEX_PATH)
-ws_master = wb["Master"]
-ws_domain = wb[DOMAIN_WS]
-
-already_done = {
-    str(row[0].value).upper() for row in ws_master.iter_rows(min_row=2) if row[0].value
-}
-
-files = sorted(
-    [f for f in FOLDER.rglob("*.pdf") if f.name != "desktop.ini"],
-    key=lambda f: f.stat().st_size,
-)
-print(f"Found {len(files)} PDFs. Already indexed: {len(already_done)} hashes.")
-
-
 def _parse_year_from_stem(stem: str) -> int | None:
-    """Extract a 4-digit year from a filename stem."""
     matches = re.findall(r"\b(19[5-9]\d|20[0-2]\d)\b", stem)
     return int(matches[-1]) if matches else None
 
 
-def _parse_standard_code(stem: str, folder_name: str) -> str:
-    """Best-effort standard code from the filename stem.
-
-    The filename stem is usually already a good standard code.
-    Strip trailing '-YYYY' patterns that are redundant with the year column.
-    """
-    # Strip trailing year: "AS 1012.14-2018" -> "AS 1012.14"
+def _parse_standard_code(stem: str) -> str:
     code = re.sub(r"[-\s]*(19[5-9]\d|20[0-2]\d)$", "", stem).strip()
     return code or stem
 
 
-def _extract_title_from_text(text: str) -> str | None:
-    """Heuristically extract the document title from the first ~500 chars."""
-    if not text:
+def _extract_title_from_text(extracted_text: str) -> str | None:
+    if not extracted_text:
         return None
-    # Take the first non-empty line that is longer than 10 chars
-    clean = _ILLEGAL_CHARS.sub("", text)
+    clean = _ILLEGAL_CHARS.sub("", extracted_text)
     for line in clean[:1000].splitlines():
-        line = line.strip()
-        if len(line) > 10:
-            return line[:200]
+        stripped_line = line.strip()
+        if len(stripped_line) > 10:
+            return stripped_line[:200]
     return None
 
 
 def _default_status(folder_name: str) -> str:
-    return "superseded" if folder_name == "_archive" else "NEEDS_REVIEW"
+    return "superseded" if folder_name == "_archive" else "needs_review"
 
 
-batch_num = 0
-for i in range(0, len(files), BATCH_SIZE):
-    batch = files[i : i + BATCH_SIZE]
-    batch_num += 1
-    print(
-        f"\n=== Batch {batch_num} ({i + 1}-{min(i + BATCH_SIZE, len(files))} of {len(files)}) ==="
-    )
-
-    new_rows: list[list] = []
-    for f in batch:
-        h = sha256(str(f))
-        size_mb = round(f.stat().st_size / 1_000_000, 2)
-
-        if h in already_done:
-            print(f"  SKIP (already indexed): {f.name}")
-            continue
-
-        print(f"  {f.name}  ({size_mb} MB)")
-
-        folder_name = f.parent.name
-        issuing_body, jurisdiction = ISSUER_MAP.get(folder_name, ("", ""))
-        subdomain = SUBDOMAIN_MAP.get(folder_name, "")
-        status = _default_status(folder_name)
-        standard_code = _parse_standard_code(f.stem, folder_name)
-        year = _parse_year_from_stem(f.stem)
-
-        # Text extraction
-        notes_parts: list[str] = []
-        if size_mb > TEXT_SIZE_LIMIT_MB:
-            text = ""
-            notes_parts.append(
-                f"NEEDS_REVIEW: large file ({size_mb} MB) — verify metadata manually"
-            )
-        else:
-            text = extract_text(f)
-            if not text and ocr_reader:
-                print("    -> No digital text; trying OCR...")
-                text = ocr_extract_text(f, ocr_reader)
-            if not text:
-                notes_parts.append(
-                    "NEEDS_REVIEW: no extractable text — digital and OCR both returned nothing"
-                )
-
-        # Title: try PDF text, fall back to stem
-        title = _extract_title_from_text(text) or f.stem
-
-        # Year: try PDF text if not found in filename
-        if year is None and text:
-            year_match = re.search(r"\b(19[5-9]\d|20[0-2]\d)\b", text[:2000])
-            if year_match:
-                year = int(year_match.group(1))
-
-        if not subdomain:
-            notes_parts.append(
-                "NEEDS_REVIEW: subdomain not assigned — classify manually"
-            )
-
-        if status == "NEEDS_REVIEW":
-            notes_parts.append(
-                "NEEDS_REVIEW: status not confirmed — current/superseded/withdrawn/draft"
-            )
-
-        if not issuing_body:
-            notes_parts.append("NEEDS_REVIEW: issuing body unknown")
-
-        notes = "; ".join(notes_parts) if notes_parts else None
-
-        relative_path = str(f.relative_to(r"G:\My Drive\Library"))
-        canonical_filename = f.name  # Phase 2 will rename if needed
-
-        row = [
-            h,
-            _sanitize(title),
-            _sanitize(issuing_body),  # author = issuing body for standards
-            _sanitize(issuing_body),  # publisher = issuing body for standards
-            year,
-            None,  # edition — standards use standard_code
-            "PDF",
-            _sanitize(relative_path),
-            _sanitize(canonical_filename),
-            "Engineering",
-            _sanitize(subdomain),
-            "Standard",
-            "Standard",
-            "",  # topics — NEEDS_REVIEW
-            "",  # frameworks
-            "",  # market_context
-            "practitioner",
-            "",  # skill_refs — auto-generated only
-            _sanitize(notes),
-            TODAY,
-            # Engineering extra columns
-            _sanitize(standard_code),
-            _sanitize(status),
-            _sanitize(jurisdiction),
-            _sanitize(issuing_body),
-            None,  # superseded_by — Phase 4
-        ]
-
-        new_rows.append(
-            row
-        )  # 25 cols: first 20 go to Master, all 25 to domain worksheet
-        print(
-            f"    code={standard_code!r}  year={year}  issuer={issuing_body!r}  status={status!r}"
-        )
-        already_done.add(h.upper())
-
-    for row in new_rows:
-        ws_master.append(row[:20])
-        ws_domain.append(row)
-    wb.save(INDEX_PATH)
-    print(f"  -> Saved batch {batch_num} ({len(new_rows)} new rows).")
-
-print("\nPhase 1 complete.")
-print("Next: run dedup_index.py (Phase 3), then review NEEDS_REVIEW rows (Phase 4).")
+if __name__ == "__main__":
+    index_standards()

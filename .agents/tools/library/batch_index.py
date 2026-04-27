@@ -1,18 +1,18 @@
-"""Batch indexer — Phase 1 of the folder indexing workflow.
+r"""Batch indexer — Phase 1 of the folder indexing workflow.
 
 Usage
 -----
-1. Set the three constants in the CONFIG block below.
+1. Set the constants in the CONFIG block below.
 2. Run from the repo root:
-       .venv\\Scripts\\python.exe .agents\\tools\\library\\batch_index.py
+       .venv\Scripts\python.exe .agents\tools\library\batch_index.py
 
 The script:
   - Sorts files by size ascending (small digital PDFs first; large scanned PDFs last).
-  - Skips hashes already present in the Master worksheet (safe to re-run after interruption).
+  - Skips paths already present in the Master worksheet (safe to re-run after interruption).
   - Tries pypdf digital extraction, then falls back to EasyOCR for scanned pages.
   - Skips text extraction entirely for files > TEXT_SIZE_LIMIT_MB (marks NEEDS_REVIEW).
   - Pauses at the <<< FILL IN METADATA >>> marker — build the row tuple there.
-  - Saves after every batch of 8 files.
+  - Saves through a temporary workbook after every batch of 8 files.
 """
 
 import pathlib
@@ -21,17 +21,14 @@ from datetime import date
 
 import openpyxl
 
-# --- CONFIG: set these before running ---
 FOLDER = pathlib.Path(r"G:\My Drive\Library\<subfolder>")
-DOMAIN_WS = "<domain worksheet>"  # e.g. "Engineering" or "Management"
+DOMAIN_WS = "<domain worksheet>"
 TEXT_SIZE_LIMIT_MB = 100
-# ----------------------------------------
 
 BATCH_SIZE = 8
-INDEX_PATH = r"G:\My Drive\Library\library-index.xlsx"
+INDEX_PATH = pathlib.Path(r"G:\My Drive\Library\library-index.xlsx")
 TODAY = date.today().isoformat()
 
-# Import helpers from the same tools/library/ directory
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from extract_text import (  # noqa: E402
     extract_text,
@@ -39,50 +36,75 @@ from extract_text import (  # noqa: E402
     ocr_extract_text,
     sha256,
 )
-
-ocr_reader = make_ocr_reader()
-
-wb = openpyxl.load_workbook(INDEX_PATH)
-ws_master = wb["Master"]
-ws_domain = wb[DOMAIN_WS]
-already_done = {
-    str(row[0].value).upper()
-    for row in ws_master.iter_rows(min_row=2)
-    if row[0].value
-}
-
-files = sorted(
-    [f for f in FOLDER.rglob("*.pdf") if f.name != "desktop.ini"],
-    key=lambda f: f.stat().st_size,
+from workbook_utils import (  # noqa: E402
+    LIBRARY_ROOT,
+    WorkbookLock,
+    append_index_row,
+    get_indexed_paths,
+    save_workbook_atomically,
 )
-print(f"Found {len(files)} PDFs. Already indexed: {len(already_done)} hashes.")
 
-batch_num = 0
-for i in range(0, len(files), BATCH_SIZE):
-    batch = files[i : i + BATCH_SIZE]
-    batch_num += 1
-    print(f"\n=== Batch {batch_num} ({i + 1}–{min(i + BATCH_SIZE, len(files))} of {len(files)}) ===")
 
-    new_rows = []
-    for f in batch:
-        h = sha256(str(f))
-        size_mb = round(f.stat().st_size / 1_000_000, 2)
-        print(f"  {f.name}  ({size_mb} MB)  {h[:12]}...")
+def index_folder() -> None:
+    """Index one row per physical file in the configured folder."""
+    with WorkbookLock(INDEX_PATH):
+        workbook = openpyxl.load_workbook(INDEX_PATH)
+        already_done = get_indexed_paths(workbook)
+        ocr_reader = make_ocr_reader()
+        files = _get_source_files()
+        print(f"Found {len(files)} PDFs. Already indexed: {len(already_done)} paths.")
+        _index_batches(workbook, files, already_done, ocr_reader)
 
-        if h in already_done:
-            print("    -> SKIP (already indexed)")
+    print("\nPhase 1 complete. Proceed to Phase 2 (rename) then Phase 3 (dedup).")
+
+
+def _get_source_files() -> list[pathlib.Path]:
+    return sorted(
+        [
+            file_path
+            for file_path in FOLDER.rglob("*.pdf")
+            if file_path.name != "desktop.ini"
+        ],
+        key=lambda file_path: file_path.stat().st_size,
+    )
+
+
+def _index_batches(
+    workbook: openpyxl.Workbook,
+    files: list[pathlib.Path],
+    already_done: set[str],
+    ocr_reader: object | None,
+) -> None:
+    for batch_num, batch_start in enumerate(range(0, len(files), BATCH_SIZE), start=1):
+        batch = files[batch_start : batch_start + BATCH_SIZE]
+        print(
+            f"\n=== Batch {batch_num} "
+            f"({batch_start + 1}-{min(batch_start + BATCH_SIZE, len(files))} of {len(files)}) ==="
+        )
+        new_rows = _compose_batch_rows(batch, already_done, ocr_reader)
+        for row in new_rows:
+            append_index_row(workbook, DOMAIN_WS, row)
+        already_done.update(str(row[7]) for row in new_rows if row[7])
+        save_workbook_atomically(workbook, INDEX_PATH)
+        print(f"  -> Saved batch {batch_num} ({len(new_rows)} new rows).")
+
+
+def _compose_batch_rows(
+    batch: list[pathlib.Path],
+    already_done: set[str],
+    ocr_reader: object | None,
+) -> list[list[object]]:
+    new_rows: list[list[object]] = []
+    for file_path in batch:
+        relative_path = str(file_path.relative_to(LIBRARY_ROOT))
+        if relative_path in already_done:
+            print(f"  SKIP (already indexed): {file_path.name}")
             continue
 
-        if size_mb > TEXT_SIZE_LIMIT_MB:
-            text = ""
-            notes = f"NEEDS_REVIEW: large file ({size_mb} MB), likely scanned — verify metadata manually"
-        else:
-            text = extract_text(f)
-            if not text and ocr_reader:
-                print("    -> No digital text; trying OCR...")
-                text = ocr_extract_text(f, ocr_reader)
-            notes = "NEEDS_REVIEW: no extractable text — digital and OCR both returned nothing" if not text else None
-
+        file_hash = sha256(file_path)
+        size_mb = round(file_path.stat().st_size / 1_000_000, 2)
+        print(f"  {file_path.name}  ({size_mb} MB)  {file_hash[:12]}...")
+        text, _notes = _extract_review_text(file_path, size_mb, ocr_reader)
         print(f"    TEXT SNIPPET: {text[:300] if text else '(none)'}")
 
         # <<< FILL IN METADATA from text snippet above, then build the row >>>
@@ -101,20 +123,37 @@ for i in range(0, len(files), BATCH_SIZE):
         # market_context = ""
         # audience = "practitioner"
         #
-        # relative_path = str(f.relative_to(r"G:\My Drive\Library"))
-        #
         # new_rows.append([
-        #     h, title, author, publisher, year, edition, "PDF",
+        #     file_hash, title, author, publisher, year, edition, "PDF",
         #     relative_path, canonical_filename,
         #     domain, subdomain, category, document_type,
         #     topics, frameworks, market_context, audience,
         #     "", notes, TODAY,
         # ])
+    return new_rows
 
-    for row in new_rows:
-        ws_master.append(row)
-        ws_domain.append(row)
-    wb.save(INDEX_PATH)
-    print(f"  -> Saved batch {batch_num}.")
 
-print("\nPhase 1 complete. Proceed to Phase 2 (rename) then Phase 3 (dedup).")
+def _extract_review_text(
+    file_path: pathlib.Path,
+    size_mb: float,
+    ocr_reader: object | None,
+) -> tuple[str, str | None]:
+    if size_mb > TEXT_SIZE_LIMIT_MB:
+        return (
+            "",
+            f"NEEDS_REVIEW: large file ({size_mb} MB), likely scanned — verify metadata manually",
+        )
+    text = extract_text(file_path)
+    if not text and ocr_reader:
+        print("    -> No digital text; trying OCR...")
+        text = ocr_extract_text(file_path, ocr_reader)
+    if not text:
+        return (
+            "",
+            "NEEDS_REVIEW: no extractable text — digital and OCR both returned nothing",
+        )
+    return text, None
+
+
+if __name__ == "__main__":
+    index_folder()
