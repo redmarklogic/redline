@@ -11,7 +11,7 @@ import sys
 import openpyxl
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from workbook_utils import (  # noqa: E402
+from workbook_utils import (
     INDEX_PATH,
     WorkbookLock,
     get_header_indexes,

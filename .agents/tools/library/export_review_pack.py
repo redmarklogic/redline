@@ -7,7 +7,7 @@ import sys
 import openpyxl
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from workbook_utils import INDEX_PATH, LIBRARY_ROOT, get_header_indexes  # noqa: E402
+from workbook_utils import INDEX_PATH, LIBRARY_ROOT, get_header_indexes
 
 REVIEW_QUEUE_DIR = LIBRARY_ROOT / "review-queues"
 EXPORT_HEADERS = ["path", "canonical_filename", "title", "year", "notes"]

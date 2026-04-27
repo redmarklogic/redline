@@ -414,7 +414,7 @@ def read_pdf_text(request: MetadataExtractionRequest) -> str:
             reader = PdfReader(pdf_file)
             pages = reader.pages[: request.max_text_pages]
             text = "\n".join(page.extract_text() or "" for page in pages)
-    except (OSError, PdfReadError, KeyError, TypeError):
+    except OSError, PdfReadError, KeyError, TypeError:
         return ""
     return text[:5000]
 
@@ -445,7 +445,7 @@ def _get_json(url: str) -> JsonObject | None:
     try:
         with urllib.request.urlopen(request, timeout=10) as response:
             payload = json.loads(response.read().decode("utf-8"))
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError):
+    except urllib.error.URLError, TimeoutError, json.JSONDecodeError:
         return None
     return cast(JsonObject, payload) if isinstance(payload, Mapping) else None
 
