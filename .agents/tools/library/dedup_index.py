@@ -15,7 +15,7 @@ from collections import defaultdict
 import openpyxl
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from workbook_utils import (
+from workbook_utils import (  # noqa: E402
     INDEX_PATH,
     WorkbookLock,
     get_header_indexes,

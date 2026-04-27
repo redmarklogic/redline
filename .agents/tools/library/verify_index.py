@@ -6,7 +6,7 @@ import sys
 import openpyxl
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from workbook_utils import INDEX_PATH, LIBRARY_ROOT, get_header_indexes
+from workbook_utils import INDEX_PATH, LIBRARY_ROOT, get_header_indexes  # noqa: E402
 
 
 def summarize_workbook(
