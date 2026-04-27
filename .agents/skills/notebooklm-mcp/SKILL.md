@@ -19,7 +19,7 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 ### Out of Scope
 - Query writing and prompt design (`rag-prompting`)
 - Research workflow orchestration (`redline-research`)
-- Notebook registry (`redline-research/register.json`)
+- Notebook registry (`.agents/skills/redline-research/register.json`)
 
 ## Allowed Tools
 
@@ -144,7 +144,7 @@ Append a new JSON object to the array in `.agents/skills/redline-research/regist
 Report to the user:
 - Notebook name and ID assigned.
 - A one-sentence purpose summary.
-- Confirmation that the entry was added to `register.json`.
+- Confirmation that the entry was added to `.agents/skills/redline-research/register.json`.
 
 Do **not** ask the user to provide any metadata — derive everything from the notebook query.
 
