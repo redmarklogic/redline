@@ -515,5 +515,33 @@
     ],
     "access": "open",
     "added": "2026-04-23"
+  },
+  {
+    "id": "legal-ai-startup",
+    "name": "Legal AI Startup",
+    "url": "https://notebooklm.google.com/notebook/0d7a9a9d-0f9d-4cba-9191-f6e29a7e158a",
+    "description": "Y Combinator interview with Max Junestrand, CEO of Leya (leya.law, $675M valuation, YC W24; original source transcribed name as 'Legora' — corrected 2026-04-27), plus Leya website content. Covers legal AI product strategy, playbook-driven contract review, Word-native integration, senior-sponsor GTM in professional services, audit trails, and the collapse of point solutions under generative AI.",
+    "topic_area": "Process & product",
+    "topics": [
+      "legal AI",
+      "contract review automation",
+      "playbook-driven review",
+      "Word-native integration",
+      "professional services GTM",
+      "point solution collapse",
+      "audit trail as trust infrastructure",
+      "AI workspace vs chatbot",
+      "senior-sponsor adoption"
+    ],
+    "content_types": ["YC interview transcript", "product website"],
+    "use_cases": [
+      "Analysing adjacent-market signals for document-heavy AI products",
+      "Understanding playbook-driven review as a product pattern",
+      "Comparing legal AI adoption dynamics to engineering AI adoption",
+      "Extracting GTM lessons for selling AI into professional services firms",
+      "Studying the workspace-over-chatbot product framing"
+    ],
+    "access": "open",
+    "added": "2026-04-26"
   }
 ]

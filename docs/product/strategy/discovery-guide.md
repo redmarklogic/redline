@@ -86,6 +86,20 @@ Operational discovery — feeds Sprint 1 PRD acceptance criteria:
 - "If you used a quality tool, would you tell your senior reviewer? Your Principal?
   Why or why not?" (This is the Bet-4 / Switzerland-neutral test.)
 
+**Word-native workflow friction probe** *(added 2026-04-26, legal AI adjacent-market
+signal)*: This question tests whether web-based review creates enough friction that
+Word-native integration should move up the roadmap. Adjacent evidence from legal AI
+(Leya — leya.law) shows that Word add-in adoption was critical because lawyers live in Word.
+Engineers also draft GIRs/GBRs in Word. If engineers say they would not leave Word to
+review flags in a browser, Word task pane integration (currently parked, P-024) needs
+re-evaluation.
+
+- "If a quality tool flagged issues in your report, would you prefer to see those flags
+  inside Word — like tracked changes or comments — or would you be happy to upload
+  your document to a website and review the flags there? Why?"
+
+Provenance: `docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
 **Structural completeness probe** *(added 2026-04-23)*: This question validates
 whether intermediate engineers recognise the content-vs-packaging gap in their own
 report reviews. If they do, structural completeness rules get high priority in

@@ -34,3 +34,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | NZ/AU Standards — IP Classification and Licensing for Software Use | standards-and-codes | 2026-04-19 | single-source | [nz-au-standards-ip-classification.md](standards-and-codes/nz-au-standards-ip-classification.md) |
 | AI-Drafted GBR Liability Exposure in DSC Disputes | contracts-and-risk | 2026-04-20 | cross-referenced | [ai-gbr-liability-assessment.md](ai-gbr-liability-assessment.md) |
 | Dropdown Parameter Sufficiency for NZ GBR/GIR Skeleton Generation | report-writing | 2026-04-21 | cross-referenced | [../research/20260421-dropdown-parameter-sufficiency-gbr-gir.md](../research/20260421-dropdown-parameter-sufficiency-gbr-gir.md) |
+| Playbook-Driven Review: Geotechnical Adaptation | report-writing | 2026-04-26 | cross-referenced | [../research/20260426-playbook-driven-review-geotechnical-adaptation.md](../research/20260426-playbook-driven-review-geotechnical-adaptation.md) |

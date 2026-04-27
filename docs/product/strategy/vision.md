@@ -57,6 +57,25 @@ Bentley) are unlikely to attack early because the segment is invisible to their 
 Litmus risk and the contested-decision flag are tracked under
 `decisions/parked-decisions.md` P-018.
 
+## Adjacent-Market Signal: Legal AI (2026-04-26)
+
+An advisory board review of Leya (leya.law, legal AI workspace, $675M valuation, YC W24;
+note: original source transcribed name as "Legora" — corrected 2026-04-27)
+surfaced a transferable pattern: in document-heavy, high-liability professions, point
+solutions (templating, editing, research, redlining) collapse when generative AI can
+cover all text-processing workflows with one underlying technology. The durable
+category is not a collection of narrow tools but a **domain-specific quality layer
+embedded in existing document workflows**, governed by expert playbooks and audit
+trails.
+
+This reinforces Redline's current positioning ("infrastructure-grade quality layer")
+and warns against point-solution framing (skeleton tool, checklist tool, report
+linter). The long-term category aspiration is a geotechnical document quality
+workspace --- but the H2 scope remains a narrow wedge (Skeleton Generator +
+Pre-Review). No roadmap changes.
+
+Full analysis: `docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
 ## What Redline Will Never Be
 
 See `non-goals.md`.

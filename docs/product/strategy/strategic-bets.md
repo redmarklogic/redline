@@ -107,6 +107,45 @@ GTM angle: "Redline gives you the audit trail your insurer will ask for." Featur
 (Audit Log) core subset elevated to Sprint 1 accordingly — see `feature-backlog.md`.
 Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
+**Adjacent-market watch item — legal AI playbooks** *(added 2026-04-26)*: Leya's
+playbook-driven review (firm legal teams encode rules with approved language and
+fallback positions; AI marks up deviations; lawyer approves) validates the House Rules
+concept. Legal playbooks create switching costs through accumulated configuration ---
+the same dynamic Redline expects from firm-specific House Rules. Validate playbook
+adoption appetite via KR2 discovery: "Would your firm encode its review standards in a
+tool, or is that knowledge too tacit?" Provenance:
+`docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
+**Adjacent-market watch item — Word-native integration** *(added 2026-04-26)*: Leya's
+Word add-in (right-hand pane, reads document, creates edits, applies playbooks) is
+central to adoption because lawyers live in Word. Engineers also live in Word/PDF.
+**Adjacent-market watch item — starter rules framing** *(added 2026-04-27, Leya internet
+research)*: Leya ships standard playbooks out of the box that firms can immediately use
+or customise. Redline's 20–30 rule library IS a starter playbook by another name. The
+framing matters: (1) it signals rules are customisable, not fixed vendor decisions;
+(2) it creates a natural upgrade path to House Rules ("you've been using our starter
+rules — now encode your own"); (3) it anchors KR2 discovery ("here are our starter
+rules — which would you change?"). Action: position the Pre-Review rule library as
+"starter rules" in product copy and onboarding from Sprint 1. Naming change only; no
+scope change. Provenance:
+`docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
+**Architecture watch item — model-agnostic LLM routing** *(added 2026-04-27, Leya
+internet research)*: Leya routes queries to OpenAI and Anthropic, selecting the best
+model per task type (not single-vendor). When formalising LLM infrastructure in
+Sprint 1–2, model-agnostic routing should be the default posture — different models
+for rule-matching, linguistic analysis, and summarisation. Avoids vendor lock-in and
+enables per-query-type cost optimisation. No H2 scope change; implementation decision
+only. Provenance:
+`docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
+**Adjacent-market convergence note** *(added 2026-04-27)*: Legal and geotechnical
+engineering have independently converged on the same document-review interaction
+pattern: select rule set → run against document → review flagged deviations. This is
+not an analogy — it is a confirmed interaction model. "Playbook" is the correct
+abstraction for what the Pre-Review rule library does. Strengthens conviction that
+the Pre-Review → House Rules upgrade path is architecturally correct.
+
 **OKR ladder**: KR3 (paid conversion), KR4 (retention).
 
 ---
@@ -153,6 +192,15 @@ these rules create switching costs through accumulated configuration (per
 use of NZS/AS standards content requires a licence Redline cannot obtain or afford.
 Bet dies; refactor to public-LLM-only grounding with no curated corpus.
 
+**Adjacent-market watch item — point solutions collapse** *(added 2026-04-26)*: In
+legal tech, fragmented point solutions (templating, translation, redlining, research)
+became obsolete when generative AI could cover all text-processing workflows. The
+Standards Knowledge Store is what prevents Redline from being a point solution ---
+without it, any generic LLM wrapper could replicate Pre-Review output. The curated,
+jurisdictional, versioned corpus is what makes the quality layer domain-specific and
+defensible. Provenance:
+`docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+
 **OKR ladder**: Underwrites all KRs; not directly metered.
 
 ---
@@ -185,6 +233,15 @@ function; if Redline lands in the "Generative AI" category, IT teams will defaul
 it regardless of the positioning's success with engineers. The lexicon ("quality layer",
 "infrastructure, not SaaS") is now blocking-survival language, not just sales language.
 See `enterprise-ai-blocking-risk-assessment.md` section 2.1.
+
+**Adjacent-market watch item — senior-sponsor GTM** *(added 2026-04-26)*: Leya's
+GTM confirms that bottom-up adoption is blocked in high-liability professional firms
+(procurement, security, privacy gates). Their playbook: sell to a senior partner or
+innovation lead, make one team visibly successful ("rock stars"), let others follow.
+This reinforces Switzerland-neutral positioning --- the tool must be something a
+principal would endorse, not something a junior hides. First login impression is
+critical. Provenance:
+`docs/research/20260426-legal-ai-adjacent-market-signal.md`.
 
 **OKR ladder**: KR2 (qualified-conversation rate).
 
