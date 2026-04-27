@@ -7,13 +7,11 @@ description: Use when asked to "research", "investigate", "look up", or "find ou
 Queries multiple NotebookLM knowledge bases with iterative cross-referencing and writes a
 cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 
-**REQUIRED SUB-SKILL:** Use `notebooklm-mcp` to confirm authentication before querying any notebook.
-
 ## Boundary Contract
 
 ### Inputs
 - Research question from user
-- Notebook register at `.agents/skills/notebooklm-mcp/register.json`
+- Notebook register at `.agents/skills/redline-research/register.json`
 - Project docs under `docs/architecture/` (read before querying notebooks)
 
 ### Outputs
@@ -23,6 +21,10 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 - Online or web search (use only when user explicitly requests it)
 - Code implementation or architecture decisions
 - Specification writing (`spec-kit`) or design exploration (`brainstorming`)
+
+### Prerequisites
+- **`notebooklm-mcp`**: MCP server must be installed and authenticated.
+- **`rag-prompting`**: Load before writing any notebook query.
 
 ## When to Use
 
@@ -36,7 +38,7 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 
 ## Quick Reference — Notebooks by Topic
 
-The canonical register is `.agents/skills/notebooklm-mcp/register.json`. Read that file
+The canonical register is `.agents/skills/redline-research/register.json`. Read that file
 for the full list with URLs, descriptions, and access controls. Summary by topic area:
 
 | Topic area | Notebooks |
@@ -60,5 +62,5 @@ identifies them as an advisory board member. Do not mention skipped notebooks.
 
 For notebook URLs, project context files, the full query procedure (Steps 1–8), output
 template, naming rules, and anti-patterns, see [PROCEDURE.md](PROCEDURE.md).
-
+**REQUIRED SUB-SKILLS:** `rag-prompting` (query writing), `notebooklm-mcp` (MCP setup/auth).
 

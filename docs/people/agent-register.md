@@ -1,7 +1,7 @@
 # Agent Register
 
 **Owner:** Harriet  
-**Last updated:** 2026-04-20  
+**Last updated:** 2026-04-25  
 **Source of truth for:** agent domains, file authority, notebook access, skills, and maturity level.
 
 > Update this file whenever an agent is hired, promoted, audited, or has their scope changed.
@@ -18,6 +18,7 @@
 | **Graeme** | Principal Geotechnical Engineer | Geotechnical domain expertise, standards, report workflows | `docs/knowledge/geotechnical/`, `docs/research/` | Engineering Standards, Ground Engineering Magazine, Geotechnical Baseline Reports (GBR), Geotechnical Report Workflows, Risk Assessment in Engineering | `notebooklm-mcp`, `redline-research`, `pm-structural-integrity-auditor` | Autonomous |
 | **Harriet** | Head of People & Agent Development | Agent hiring, audits, PIPs, skill gap management, org design, agent register | `docs/people/` (direct); `docs/people/drafts/` for agent and skill proposals | Organisational Design & Team Topologies, Product Design & UX *(scoped on demand)* | `hiring-agent-management`, `writing-skills`, `skills-create`, `notebooklm-mcp` | **Draft-first** |
 | **Matt** | UI/UX Designer | Interaction design, wireframes, component specs, user flows for the Redline web platform | `docs/product/design/` (write); `specs/`, `docs/product/`, `docs/knowledge/geotechnical/`, `docs/research/` (read) | Product Design & UX, Information Architecture and Knowledge Management; Digital Marketing & Social Selling *(via John)*, Monetizing & Scaling Innovation *(via John)* | `ux-professional-software` *(pending)*, `ux-conversion-design` *(pending)*, `miro-mcp`, `pm-personas`, `pm-structural-integrity-auditor`, `notebooklm-mcp` | **Draft-first** |
+| **Linda** | Knowledge Infrastructure Operator | Digital library curation, NotebookLM notebook maintenance, notebook register, standards monitoring | `.agents/skills/redline-research/register.json` (direct write); `G:\My Drive\Library` (read + catalogue) | Information Architecture and Knowledge Management; all open-access notebooks (operational maintenance) | `notebooklm-mcp`, `redline-research`, `knowledge-infrastructure` *(pending)* | **Draft-first** |
 
 ---
 
@@ -61,8 +62,13 @@ Mark (problem → hypothesis → PRD) ←→ John (content, SEO, social, campaig
     ↘                             ↙
         Monthly Signal Report → Ron + Mark
 
-Harriet (orthogonal support function)
-    → Consults Ron, Mark, John, Graeme on all hires
-    → Owns agent register, org chart, skills taxonomy
-    → Drafts new agent JDs and skill files for user approval
+Internal Operations (platform functions — serve all agents)
+    Harriet (people infrastructure)
+        → Consults Ron, Mark, John, Graeme on all hires
+        → Owns agent register, org chart, skills taxonomy
+        → Drafts new agent JDs and skill files for user approval
+    Linda (knowledge infrastructure)
+        → Curates digital library at G:\My Drive\Library
+        → Maintains NotebookLM notebooks and register.json
+        → Routes standards updates to Graeme for triage
 ```

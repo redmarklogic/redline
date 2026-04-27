@@ -44,8 +44,9 @@ Determine the mode from the invocation before acting.
 | **AUDIT/PIP** | "[Role], [agent] got sloppy" / "create a PIP for [agent]" | Session forensics report + enumerated options |
 | **ORG AUDIT** | "[Role], audit our agents" | Overlap and gap report |
 | **REFRESH** | "[Role], refresh our agents" / "[Role], are our agents up to date?" | Staleness report + draft JD patches |
+| **REFACTOR** | "[Role], refactor skill `<name>`" | Lean SKILL.md + `procedures/` files + `.agents/tools/` scripts |
 
-If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh agents against recent decisions, or audit the whole org?"
+If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh agents against recent decisions, audit the whole org, or refactor a skill?"
 
 ### Session-Start Staleness Check
 
@@ -121,7 +122,7 @@ For each skill the new agent needs, verify it exists in `.agents/skills/`. If mi
 
 ### Step 6 — Notebook check
 
-Verify required notebooks are in `.agents/skills/notebooklm-mcp/register.json`. If missing, identify sourcing options and report before drafting any skill.
+Verify required notebooks are in `.agents/skills/redline-research/register.json`. If missing, identify sourcing options and report before drafting any skill.
 
 ### Step 7 — Output
 
@@ -308,7 +309,7 @@ Apply the patches. Update `docs/people/agent-register.md` with the new "Last upd
 
 ## Prompt Rewriting Rules
 
-When rewriting any agent JD, apply `notebooklm-mcp/prompting-guide.md` principles:
+When rewriting any agent JD, apply `rag-prompting` principles:
 
 - One concrete task per instruction.
 - Every hard constraint must be testable: "You MUST NOT edit files outside X" — not "try to stay in your domain."
@@ -317,6 +318,68 @@ When rewriting any agent JD, apply `notebooklm-mcp/prompting-guide.md` principle
 - Replace vague directives ("be helpful", "be accurate") with measurable ones ("query the notebook before answering", "cite the source").
 - Ground every domain constraint in Redline's actual context (geotechnical/civil engineering B2B SaaS for engineers, not generic knowledge workers).
 - Frame responsibilities as outcomes and decisions, not as a fixed task list (Jesuthasan & Boudreau anti-pattern: rigid JD that traps work in a title).
+
+---
+
+## REFACTOR Workflow
+
+**Trigger:** User says "Harriet, refactor skill `<skill-name>`" — or asks to restructure, modularise, or split a skill.
+
+### What "refactor" means
+
+A skill refactor extracts embedded content into its canonical home:
+
+| Content type | Move to |
+|---|---|
+| Step-by-step procedures (workflow phases, numbered how-to steps) | `procedures/<name>.md` next to the SKILL.md |
+| Reusable Python scripts, shell scripts, utilities | `.agents/tools/<domain>/` |
+| Heavy reference (100+ line tables, full API docs) | Supporting `.md` file next to SKILL.md |
+
+The resulting SKILL.md is a **lean reference** — schema, vocabulary, naming rules, a phase-map table pointing to the procedures, and a tools reference table. It does not contain inline code that belongs in a tool, and does not contain step-by-step prose that belongs in a procedure.
+
+### Steps
+
+**Step 1 — Audit the skill**
+
+Read the full SKILL.md. Classify every section:
+- Phase/workflow content with numbered steps → candidate for `procedures/`
+- Python/shell code blocks > ~30 lines, or code that runs standalone → candidate for `.agents/tools/<domain>/`
+- Schema tables, vocabulary, naming rules, common mistakes → stays in SKILL.md
+
+**Step 2 — Create tools**
+
+For each code block moving to a tool:
+1. Create `.agents/tools/<domain>/<script-name>.py` (or `.sh`).
+2. Add a module docstring explaining purpose, usage, and CLI args.
+3. Where the skill had a monolithic block, split into importable helper functions and a runnable entry point.
+4. **Never hardcode user-specific paths** (e.g., `C:\Users\harel\...`). Use relative paths from the repo root, `pathlib.Path(__file__).resolve().parents[N]`, `$env:TEMP` in PowerShell, or `tempfile.gettempdir()` in Python. See the no-hardcoded-paths rule in `writing-skills`.
+
+**Step 3 — Create procedures**
+
+For each workflow section moving out of SKILL.md:
+1. Create `procedures/<name>.md` next to the SKILL.md.
+2. Write the procedure as direct imperative steps. Reference tools by relative path from the repo root (e.g., `.agents/tools/library/metadata_extractor.py`), not by absolute path.
+3. The procedure file may contain short code snippets (< 30 lines) that are context-specific (i.e., not worth a standalone tool). Keep them inline.
+
+**Step 4 — Rewrite SKILL.md**
+
+Replace extracted sections with:
+- A **phase/workflow table** (one row per phase) with a link to the procedure file.
+- A **tools reference table** (one row per script) with purpose and invocation hint.
+- Retain all schema, vocabulary, naming rules, and common mistakes inline.
+
+Verify: no inline code duplicates what a tool already does. No prose step duplicates what a procedure already says.
+
+**Step 5 — No-redundancy check**
+
+Cross-read SKILL.md, all procedure files, and all tools. Flag any content that appears in two places. Remove from the less authoritative location.
+
+### Output
+
+- Refactored SKILL.md (lean)
+- `procedures/` directory with one `.md` per workflow
+- `.agents/tools/<domain>/` files (if code was extracted)
+- No draft-first required for skill refactors — write directly to `.agents/skills/<name>/`
 
 ---
 

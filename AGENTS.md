@@ -76,7 +76,8 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`git-push-batched`**: Push changes to git in thematically organised commits — groups dirty files into cohesive batches, proposes them for user confirmation, then stages and commits each batch before pushing. By default, auto-commits without waiting for confirmation.
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
-- **`notebooklm-mcp`**: NotebookLM MCP setup and usage (querying notebooks from Copilot Agent)
+- **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
+- **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
 
@@ -181,6 +182,21 @@ surfaces try to be canonical for the same content.
 > **must not be edited manually**. Running `specify upgrade` will overwrite manual changes.
 > All Redline-specific extensions belong in `.specify/extensions.yml`, not in these files.
 
+### Internal Operations (platform functions)
+
+Two platform agents that serve all other agents. Neither makes domain decisions.
+
+- **Linda** (`rl.linda.agent.md`): Knowledge Infrastructure Operator. Curates and indexes
+  the digital library at `G:\My Drive\Library`, maintains NotebookLM notebooks and
+  `register.json`, monitors standards body feeds and routes updates to Graeme. Domain-agnostic
+  --- organises content but never interprets it. X-as-a-Service interaction mode.
+  Invoke: "Linda, [request]"
+
+- **Harriet** (`rl.harriet.agent.md`): Head of People & Agent Development. Agent hiring,
+  audits, PIPs, skill gap management, org design. Maintains agent register, org chart, and
+  skills taxonomy. Draft-first maturity.
+  Invoke: "Harriet, [request]"
+
 ### Marketing (loaded on demand by John)
 
 - **`marketing-content-big-5`**: Use when planning content marketing topics, deciding what blog posts, videos, or pages to publish next, or when prospects keep asking the same sales questions — applies the They Ask You Answer / Big 5 framework.
@@ -190,7 +206,7 @@ surfaces try to be canonical for the same content.
 
 ### Redline Project Research
 
-- **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
+- **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Notebook register at `.agents/skills/redline-research/register.json`. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
 
 ### Skills Management
 

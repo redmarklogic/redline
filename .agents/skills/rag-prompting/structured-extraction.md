@@ -1,7 +1,7 @@
-# NotebookLM Structured Extraction Guide
+# Structured Extraction Guide
 
 Reference for extracting data from NotebookLM into CSV, JSON, or any structured
-format. Apply **after** [`prompting-guide.md`](prompting-guide.md) — Rules 1–5
+format. Apply **after** the rules in [SKILL.md](SKILL.md) — Rules 1-5
 still apply to every structured query.
 
 ---
@@ -40,7 +40,7 @@ model defaults to narrative mode. For any nested extraction (parent with child
 arrays), always warm up first:
 
 1. **Step 1** — flat query in a new session (extracts top-level objects).
-2. **Step 2** — nested follow-up in the **same `session_id`**.
+2. **Step 2** — nested follow-up in the **same session**.
 
 ---
 
@@ -48,9 +48,9 @@ arrays), always warm up first:
 
 | Need | Format | Template |
 |------|--------|----------|
-| Rows of data → spreadsheet / Excel | CSV | Flat CSV |
-| Objects with simple fields → JSON | JSON | Flat JSON |
-| Objects with child arrays → JSON | JSON | Nested (two-step) |
+| Rows of data -> spreadsheet / Excel | CSV | Flat CSV |
+| Objects with simple fields -> JSON | JSON | Flat JSON |
+| Objects with child arrays -> JSON | JSON | Nested (two-step) |
 
 ---
 
@@ -125,7 +125,7 @@ Answer only using information found in the notebook sources. If not covered, say
 ## Template: Nested JSON (two-step)
 
 ```
-# Step 1 — Flat warm-up (first message, creates session)
+# Step 1 -- Flat warm-up (first message, creates session)
 Explain for the uninitiated. Define any specialist term the first time it appears.
 Keep citations. Avoid ambiguity.
 
@@ -150,7 +150,7 @@ Answer only using information found in the notebook sources. If not covered, say
 ```
 
 ```
-# Step 2 — Nested follow-up (same session_id)
+# Step 2 -- Nested follow-up (same session)
 Now expand each framework with its specific risk categories.
 
 OUTPUT FORMAT:
