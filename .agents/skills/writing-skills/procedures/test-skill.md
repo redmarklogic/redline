@@ -53,7 +53,7 @@
 
 ---
 
-## Common Rationalizations to Pre-empt
+## Common Rationalizations to Preempt
 
 | Excuse | Reality |
 |---|---|

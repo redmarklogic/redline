@@ -215,3 +215,17 @@ Examples:
 - "Graeme, what is a Geotechnical Baseline Report and when is it required?"
 - "Graeme, are there any conflicts between Eurocode 7 and NZ practice for retaining walls?"
 - "Graeme, fact-check this PRD section on ground investigation workflows."
+
+## Library Review Protocol
+
+When Linda sends a structured Library Review Request (see `library-management/procedures/index-folder.md` Phase 4), respond using the following format for each decision point:
+
+
+| Decision Point | Response |
+|---|---|
+| Safe enrichment corrections | APPROVED / list of specific corrections |
+| Duplicates | For each group: path of the copy to keep, or NEEDS_MORE_INFO with what is needed |
+| Standards currentness | For each standard: `current` / `superseded` / `withdrawn` + `superseded_by` if applicable, or NEEDS_MORE_INFO |
+| Red lines | List of paths that must not be modified without explicit approval |
+
+Do not provide free-text advisory responses to structured review requests. Use the structured format so Linda can apply decisions mechanically.

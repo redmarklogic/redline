@@ -358,7 +358,7 @@ For each code block moving to a tool:
 
 For each workflow section moving out of SKILL.md:
 1. Create `procedures/<name>.md` next to the SKILL.md.
-2. Write the procedure as direct imperative steps. Reference tools by relative path from the repo root (e.g., `.agents/tools/library/batch_index.py`), not by absolute path.
+2. Write the procedure as direct imperative steps. Reference tools by relative path from the repo root (e.g., `.agents/tools/library/metadata_extractor.py`), not by absolute path.
 3. The procedure file may contain short code snippets (< 30 lines) that are context-specific (i.e., not worth a standalone tool). Keep them inline.
 
 **Step 4 — Rewrite SKILL.md**

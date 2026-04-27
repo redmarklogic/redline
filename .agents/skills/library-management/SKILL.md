@@ -18,6 +18,7 @@ The canonical digital library lives at `G:\My Drive\Library`. All books are inde
 ### Outputs
 - Updated `library-index.xlsx` (both `Master` and domain worksheet)
 - Files renamed on disk to the canonical convention
+- Verification summary proving workbook integrity, row counts, duplicate sync, and review queues
 - A summary of what changed
 
 ### Out of Scope
@@ -31,7 +32,15 @@ The canonical digital library lives at `G:\My Drive\Library`. All books are inde
 ## Index Schema
 
 File: `G:\My Drive\Library\library-index.xlsx`
-Worksheets: `Master` (all entries) + one per top-level domain folder (e.g. `Engineering`, `Management`). Engineering worksheets include extra columns — see **Engineering Worksheets** section below.
+Worksheets: `Master` (all entries) + four domain worksheets: `Ebooks`, `Standards`, `Magazines`, `Misc`. Only `Standards` includes extra engineering columns — see **Engineering Worksheets** section below.
+
+| Worksheet | Content | Headers |
+|---|---|---|
+| `Master` | Every physical file in the library | Standard (20 columns) |
+| `Ebooks` | PDF and EPUB ebooks | Standard (20 columns) |
+| `Standards` | Engineering standards | Enhanced (20 standard + 5 engineering) |
+| `Magazines` | Magazine PDFs and EPUBs | Standard (20 columns) |
+| `Misc` | Everything that does not fit Ebooks, Standards, or Magazines | Standard (20 columns) |
 
 **One row per physical file.** Two rows may share a `sha256` — that signals a duplicate.
 
@@ -58,7 +67,9 @@ Worksheets: `Master` (all entries) + one per top-level domain folder (e.g. `Engi
 | `notes` | Administrative flags only: `DUPLICATE of <path>`, `SUPERSEDED`, `NEEDS_REVIEW`, licensing |
 | `last_updated` | ISO date (`YYYY-MM-DD`) |
 
-**Duplicate flagging:** Add `DUPLICATE of <path>` in `notes` on the second row. Never delete files — flag only.
+**Resume/idempotency key:** use relative `path`, never `sha256`. Every physical file gets a row.
+
+**Duplicate flagging:** Add `DUPLICATE of <path>` in `notes` on the second row. Never delete files — flag only. `sha256` is only for duplicate grouping after indexing.
 
 ---
 
@@ -100,21 +111,21 @@ Semantic character — how to use it, independent of origin:
 
 ---
 
-## Engineering Worksheets (within `library-index.xlsx`)
+## Standards Worksheet (within `library-index.xlsx`)
 
-Engineering documents live in one or more worksheets inside `library-index.xlsx` — there is no separate engineering index file. The `Master` sheet holds all rows; the `Engineering` worksheet (and any subdomain worksheets, e.g. `Geotechnical Engineering`) hold the same rows plus additional engineering-specific columns.
+The `Standards` worksheet is the only domain worksheet with enhanced headers. It holds engineering standards with additional engineering-specific columns beyond the standard 20. The `Master` sheet holds all rows with standard headers only.
 
-Applies to `domain = Engineering` only. When indexing an engineering document, populate the extra columns below in addition to the standard Master columns.
+When indexing an engineering standard, populate the extra columns below in addition to the standard Master columns.
 
 | Column | Description | Example |
 |---|---|---|
 | `standard_code` | Official reference designation engineers cite | `BS EN 1997-1:2004`, `NZS 4402:1986` |
-| `status` | `current` · `superseded` · `withdrawn` · `draft` | |
+| `status` | `current` · `superseded` · `withdrawn` · `draft` · `needs_review` | |
 | `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International` | |
 | `issuing_body` | Standards body that authored the document (distinct from national distributor) | `CEN`, `CIRIA`, `BSI` |
 | `superseded_by` | Reference code of the replacing document; populate when `status = superseded` | `BS EN 1997-1:2013` |
 
-**Rules:** Never leave `status` blank for any engineering standard. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. Non-standard engineering books (textbooks, guidance notes) leave `standard_code`, `status`, `jurisdiction`, `issuing_body`, and `superseded_by` blank.
+**Rules:** Never leave `status` blank for any engineering standard. Use `needs_review` when currentness is unknown; do not default to `current` unless confirmed. When `status = needs_review`, add a `NEEDS_REVIEW` note and route currentness resolution to Graeme. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. Non-standard engineering books (textbooks, guidance notes) leave `standard_code`, `status`, `jurisdiction`, `issuing_body`, and `superseded_by` blank.
 
 ---
 
@@ -138,18 +149,25 @@ Geotechnical-Baseline-Reports-Guide-to-Good-Practice_Davis_2023.pdf
 
 ---
 
-## Folder Indexing Workflow
+## Incremental Add Workflow
 
-Four sequential phases — Phases 1-3 run without user interaction. Phase 4 requires user approval.
+The initial full-library index is complete. The default workflow is now incremental: add one new file, extract metadata, update the workbook, deduplicate, verify.
+
+For a single new PDF, see [procedures/add-single-book.md](procedures/add-single-book.md). For a folder of new PDFs, repeat the single-book procedure for each file; do not recreate the initial index.
+
+Sequential phases — Phases 0-3 run without user interaction. Phase 4 requires user approval when rows remain `NEEDS_REVIEW`.
 See [procedures/index-folder.md](procedures/index-folder.md) for step-by-step detail.
 
 | Phase | Purpose | Tool |
 |---|---|---|
-| 0 — Pre-scan | Exact filenames via `Get-ChildItem`; **index integrity check**; chapter subfolder cleanup | PowerShell + Python |
-| 1 — Batch index | Extract text/OCR; build rows; save every 8 files | `.agents/tools/library/batch_index.py` |
-| 2 — Rename | Apply canonical filenames; update index | Inline snippet in `index-folder.md` |
-| 3 — Dedup | Flag duplicate hashes in `notes` | `.agents/tools/library/dedup_index.py` |
-| 4 — Web search | Resolve NEEDS_REVIEW rows | Browser (approval required) |
+| 0 — Preflight | Exact filenames, workbook readability, expected worksheets, no active writer | PowerShell + `.agents/tools/library/verify_index.py` |
+| 1 — Extract metadata | Build a Pydantic `BookMetadata` record from path, PDF/OCR text, and catalogue APIs | `.agents/tools/library/metadata_extractor.py` |
+| 2 — Workbook update | Append one row to `Master` and the matching domain worksheet; use `path` as the idempotency key | `.agents/tools/library/workbook_utils.py` |
+| 3 — Rename | Apply canonical filenames when appropriate; update `path` and `canonical_filename` together | Inline snippet in `index-folder.md` |
+| 4 — Dedup | Flag duplicate hashes in `notes`; sync duplicate notes to domain worksheets by `path` | `.agents/tools/library/dedup_index.py` |
+| 5 — Review/enrichment | Resolve `NEEDS_REVIEW` rows and standards currentness | Browser/Graeme approval required |
+
+**Workbook lock:** writer tools use `workbook_utils.WorkbookLock`, which creates `library-index.xlsx.lock` beside the workbook. A second writer must fail fast. Remove the lock only after confirming no Python indexer process is still running.
 
 For chapter subfolders, see [procedures/chapter-subfolders.md](procedures/chapter-subfolders.md).
 
@@ -163,7 +181,7 @@ See [procedures/add-single-book.md](procedures/add-single-book.md).
 
 ## Tools Reference
 
-All tools live in `.agents/tools/library/`. Run from the repo root:
+All tools live in `.agents/tools/library/`. Script-style tools run from the repo root:
 
 ```powershell
 .\.venv\Scripts\python.exe .agents\tools\library\<script>.py
@@ -171,12 +189,14 @@ All tools live in `.agents/tools/library/`. Run from the repo root:
 
 | Script | Purpose |
 |---|---|
-| `extract_text.py` | Importable helpers: `sha256`, `extract_text`, `make_ocr_reader`, `ocr_extract_text` |
-| `batch_index.py` | Phase 1 — batch loop; set `FOLDER` and `DOMAIN_WS` constants before running |
-| `batch_index_standards.py` | Phase 1 — automated Standards variant; derives metadata from folder name (issuer) and filename (code, year); no interactive metadata entry |
-| `dedup_index.py` | Phase 3 — flags duplicate hashes in `notes`; no configuration needed |
+| `workbook_utils.py` | Importable helpers: shared headers, worksheet name constants (`DOMAIN_WORKSHEETS`, `ENHANCED_WORKSHEETS`), `WorkbookLock` (`library-index.xlsx.lock`), atomic save, path-based resume, domain-note sync |
+| `metadata_extractor.py` | Incremental add helper: `MetadataExtractionRequest`, `BookMetadataExtractor`, API lookup, digital PDF text, OCR fallback, SHA-256, and final `BookMetadata` output |
+| `dedup_index.py` | Phase 3 — flags duplicate hashes in `notes` and syncs domain worksheets by `path`; no configuration needed |
+| `verify_index.py` | Preflight/post-run verification summary: worksheets, row counts, source PDF count, `NEEDS_REVIEW`, duplicates, missing years |
+| `export_needs_review.py` | Exports `NEEDS_REVIEW` rows to a single flat CSV review queue |
+| `export_review_pack.py` | Exports the full review-queue pack (5 CSVs): all, standards, non-standards, missing-year, duplicates |
+| `enrich_safe_metadata.py` | Safe mechanical enrichment: fill years from filenames, normalize status vocabulary, sync years to domain worksheets |
 | `merge_chapters.py` | Phase 0 helper — merges chapter PDFs into one file; takes CLI args |
-| `create_fresh_index.py` | Emergency tool — creates a new `library-index.xlsx` with correct worksheets and headers; overwrites existing file |
 
 ---
 
@@ -192,16 +212,21 @@ All tools live in `.agents/tools/library/`. Run from the repo root:
 | Deleting duplicate files without user instruction | Flag in `notes`. The user decides. |
 | Deleting chapters before confirming merge succeeded | `merge_chapters.py` verifies output before deleting — use the tool. |
 | Acting on EPUB-to-PDF conversion without confirmation | Flag it. Never convert without user approval. |
-| Using inline Python in PowerShell (`-c "..."`) | Use the tools in `.agents/tools/library/` — run them as files. |
+| Writing throwaway Python for metadata extraction | Use the documented `metadata_extractor.py` and `workbook_utils.py` imports in [procedures/add-single-book.md](procedures/add-single-book.md). |
 | Assuming filenames from session notes | Always run `Get-ChildItem` — actual names are often longer than remembered. |
-| Not saving after each batch | Save after every batch. Unsaved index is lost on session exit. |
-| Hardcoding already-indexed hashes | `batch_index.py` loads them dynamically — do not hardcode. |
+| Not saving after each workbook mutation | Save atomically before moving to the next file. Unsaved index changes are lost on session exit. |
+| Running retired initial-index scripts for a single file | Use `metadata_extractor.py`, then append one workbook row under `WorkbookLock`. |
+| Using `sha256` as the resume key | Use relative `path` to skip already-indexed rows; use `sha256` only in the dedup pass. |
+| Running multiple workbook writers | Stop. All writer tools must acquire the workbook lock; if a lock exists, confirm no writer is active before removing it. |
 | Running dedup checks during Phase 1 | Dedup is Phase 3 only — inline checking slows the batch loop. |
 | Blocking on web search mid-run | Mark NEEDS_REVIEW, continue, batch all web searches in Phase 4. |
-| Processing large files (> 100 MB) first | Sort by size ascending — `batch_index.py` does this automatically. |
 | Using `C:\Temp` as temp directory | Use `$env:TEMP` — `C:\Temp` may not exist. |
-| Instantiating `easyocr.Reader` per file | `make_ocr_reader()` is called once in `batch_index.py` — do not move it inside the loop. |
-| Leaving `status` blank for engineering standards | Default to `current` only when confirmed. Never blank. |
-| Not verifying the index before Phase 1 | Run Phase 0d — open `library-index.xlsx` in Python and confirm expected worksheets exist before scanning any files. |
-| Writing PDF-extracted text directly to openpyxl cells | PDF extraction returns control characters (`\x00–\x1f`, `\x7f–\x9f`) that openpyxl rejects with `IllegalCharacterError`. Sanitize every string field — see `batch_index_standards.py` for the `_sanitize()` pattern. |
+| Instantiating OCR repeatedly | Reuse one `BookMetadataExtractor`; it caches the OCR reader lazily. |
+| Leaving `status` blank for engineering standards | Use `needs_review` until currentness is confirmed. Never default to `current`. |
+| Not verifying the index before extraction | Run preflight — open `library-index.xlsx` in Python and confirm expected worksheets exist before scanning any files. |
+| Skipping post-run verification | Run `verify_index.py`; report source PDF count, `Master`/domain row counts, duplicate note counts, missing-year counts, and `NEEDS_REVIEW` counts. |
+| Writing raw PDF-extracted text directly to openpyxl cells | PDF extraction can return control characters (`\x00–\x1f`, `\x7f–\x9f`) that openpyxl rejects with `IllegalCharacterError`. Keep raw text in `BookMetadata.text_sample`; sanitize any string before workbook writes if openpyxl rejects it. |
 | Invoking a persona agent (Linda, Graeme, etc.) for execution | Persona agents are advisory — they do not run shell commands or scripts. Apply the persona's skills directly and execute the work in the main agent. |
+| Writing throwaway `tmp_*.py` scripts for repeatable operations | Promote to a permanent tool in `.agents/tools/library/` after first use. If no tool exists, create one before proceeding. |
+| Using `source_pdf_count` in verify output | Renamed to `source_file_count` — counts both PDF and EPUB. |
+| Hardcoding `verify_index.py` source folder to Standards only | Default is now `LIBRARY_ROOT`; pass `source_folder=` to narrow scope. |
