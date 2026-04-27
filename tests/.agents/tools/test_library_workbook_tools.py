@@ -22,27 +22,27 @@ def load_tool_module(module_name: str) -> ModuleType:
     return module
 
 
-@pytest.fixture()
+@pytest.fixture
 def workbook_utils() -> ModuleType:
     return load_tool_module("workbook_utils")
 
 
-@pytest.fixture()
+@pytest.fixture
 def enrich_safe_metadata() -> ModuleType:
     return load_tool_module("enrich_safe_metadata")
 
 
-@pytest.fixture()
+@pytest.fixture
 def verify_index() -> ModuleType:
     return load_tool_module("verify_index")
 
 
-@pytest.fixture()
+@pytest.fixture
 def export_needs_review() -> ModuleType:
     return load_tool_module("export_needs_review")
 
 
-@pytest.fixture()
+@pytest.fixture
 def export_review_pack() -> ModuleType:
     return load_tool_module("export_review_pack")
 
@@ -87,7 +87,9 @@ def test_append_index_row_writes_master_and_domain_rows(
     master.title = "Master"
     master.append(workbook_utils.STANDARD_HEADERS)
     domain = workbook.create_sheet("Standards")
-    domain.append(workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS)
+    domain.append(
+        workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS
+    )
     row = [f"value-{index}" for index in range(25)]
 
     # Act
@@ -133,13 +135,20 @@ def test_get_indexed_paths_reads_master_path_column(
         ]
     )
 
-    assert workbook_utils.get_indexed_paths(workbook) == {"Engineering/Standards/file.pdf"}
+    assert workbook_utils.get_indexed_paths(workbook) == {
+        "Engineering/Standards/file.pdf"
+    }
 
 
 def test_domain_worksheet_constants_match_expected_structure(
     workbook_utils: ModuleType,
 ) -> None:
-    assert workbook_utils.DOMAIN_WORKSHEETS == ["Ebooks", "Standards", "Magazines", "Misc"]
+    assert workbook_utils.DOMAIN_WORKSHEETS == [
+        "Ebooks",
+        "Standards",
+        "Magazines",
+        "Misc",
+    ]
     assert workbook_utils.ENHANCED_WORKSHEETS == ["Standards"]
 
 
@@ -174,7 +183,9 @@ def test_sync_notes_to_domain_worksheets_uses_path_as_join_key(
     master.title = "Master"
     master.append(workbook_utils.STANDARD_HEADERS)
     domain = workbook.create_sheet("Standards")
-    domain.append(workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS)
+    domain.append(
+        workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS
+    )
     domain.append(
         [
             "hash",
@@ -236,7 +247,9 @@ def test_summarize_workbook_reports_review_and_duplicate_counts(
     master.title = "Master"
     master.append(workbook_utils.STANDARD_HEADERS)
     standards = workbook.create_sheet("Standards")
-    standards.append(workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS)
+    standards.append(
+        workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS
+    )
 
     row_one = [
         "hash-1",
@@ -585,7 +598,9 @@ def test_sync_years_to_domain_worksheets_copies_filled_years(
         ]
     )
     domain = workbook.create_sheet("Standards")
-    domain.append(workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS)
+    domain.append(
+        workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS
+    )
     domain.append(
         [
             "hash-1",
