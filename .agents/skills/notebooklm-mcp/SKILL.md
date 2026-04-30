@@ -28,10 +28,12 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 | `notebook_query` | Query a notebook (primary use case) |
 | `notebook_list` | List all notebooks (find notebook IDs) |
 | `notebook_get` | Get notebook details and sources |
+| `notebook_describe` | Get AI-generated notebook summary and suggested topics |
+| `source_describe` | Get AI-generated per-source summary and keywords |
 | `refresh_auth` | Refresh auth tokens when expired |
 | `server_info` | Check version and diagnostics |
 
-All other tools (30 of 35) are **forbidden**. See
+All other tools (28 of 35) are **forbidden**. See
 [`forbidden-tools.md`](forbidden-tools.md) for the full list and rationale.
 
 ## Procedure
