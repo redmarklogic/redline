@@ -4,9 +4,9 @@
 
 ## One-Sentence Positioning
 
-> For NZ and AU geotechnical engineers, Redline is the neutral quality layer that catches
-> what a senior reviewer would catch — without writing the report, taking a position, or
-> arbitrating disputes.
+> For NZ and AU geotechnical engineers, Redline is the neutral quality layer that handles
+> the routine compliance checks so your senior reviewers can focus on engineering
+> judgment — without writing the report, taking a position, or arbitrating disputes.
 
 ## Positioning Frame
 
@@ -33,9 +33,36 @@ These words **never** appear:
 
 - "AI engineer", "AI reviewer", "autonomous", "agentic" — all imply replacement,
   trigger Partner resistance, and forfeit neutrality.
+- "AI-powered", "AI" as a value-proposition qualifier — permitted only in
+  explanatory and discovery content, never in positioning (see AI Language Policy
+  below).
 - "Productivity tool", "writing assistant" — wrong category, wrong price ceiling.
 - "Compliance" as a noun for what we deliver. We assist compliance work; we do not
   attest to compliance.
+
+## AI Language Policy *(added 2026-04-30, founder + Ron + John consensus)*
+
+**Decision:** AI is the engine, never the brand. The word "AI" follows a three-layer
+rule across all external surfaces.
+
+| Layer | Where it applies | Rule |
+|---|---|---|
+| **Positioning** (tagline, homepage hero, pitch deck cover, elevator pitch, value proposition) | No "AI". No "machines". Lead with the job: "handles the routine checks so your senior reviewers can focus on the judgment that matters." |
+| **Explanatory** (how-it-works page, product tour, onboarding, sales Q&A) | Use "AI" factually and sparingly when explaining how the product works. Never as a selling point — as a technical fact. Example: "Yes, AI is the engine. It's trained specifically on geotechnical standards — not general-purpose." |
+| **Discovery** (blog posts, SEO content, FAQ, meta descriptions, LinkedIn content) | Use "AI" where it serves discoverability. John owns this via content strategy. The specialised-AI thesis ("People using specialised AI will replace people using generic AI") lives here. |
+
+**Rationale:**
+
+- Pragmatist buyers (Moore, *Crossing the Chasm*) want "industry standard," not
+  "state-of-the-art." Technology labels work on enthusiasts, not on engineering CEOs.
+- A blanket ban on "AI" across all content creates a credibility gap (engineers know
+  it's AI) and SEO invisibility (buyers search "AI for geotechnical reports").
+- "Machines" as a replacement word triggers the wrong mental image for geotechnical
+  engineers (excavators, CPT rigs, pile drivers — not software). Dropped.
+
+**Enforcement:** Every piece of external copy must be reviewed against this table.
+John owns discovery-layer usage. Ron owns positioning-layer compliance. Mark owns
+explanatory-layer accuracy.
 
 ## Day-1 Buyer Story (Intermediate Engineer)
 
@@ -90,9 +117,62 @@ fight with Autodesk, Bentley, ChatGPT, or Microsoft Copilot — we are addressin
 none of them currently sell into (the senior-review quality layer for geotechnical
 reports). Positioning consequence: in any external surface where we are tempted to
 compare ourselves head-on with a large incumbent, we instead reframe to the *job*
-("what a senior reviewer would catch") rather than the *product category* ("AI
-assistant"). Head-on comparisons invite the incumbent's attention; job-framing keeps
-us invisible until the beachhead is dominated.
+("the routine compliance checks that consume senior review time") rather than the
+*product category* ("AI assistant"). Head-on comparisons invite the incumbent's
+attention; job-framing keeps us invisible until the beachhead is dominated.
+
+## CEO Priority Hierarchy *(added 2026-04-30, Ron + Graeme consensus)*
+
+The top-three priorities of a geotechnical engineering firm CEO, in agreed order.
+This ordering drives how we pitch to different buyer roles.
+
+| # | Priority | What the CEO thinks about | Source |
+|---|---|---|---|
+| 1 | **Financial Performance** (utilisation, cash flow, revenue per employee) | "Are we getting paid for the engineering we are doing?" Utilisation must be ~85-90% for technical staff; missing payroll is the most stressful aspect of firm leadership. | PSF Management literature; Graeme (25yr practitioner) |
+| 2 | **Talent** (recruitment, retention, knowledge transfer, leverage) | Skills shortage ranked #1 industry concern in the GSF survey every year (74.6% in 2024). University geoscience enrolments down 45% since 2014. Seniors doing work graduates could handle (systemic underdelegation). | Ground Engineering GSF surveys 2018-2025; PSF Management |
+| 3 | **Liability** (PI insurance, claims, QA/QC) | PI premiums up to 1,000% increases; coverage cut from per-claim to aggregate caps. Even a minor dispute costs $10k+ unbillable time. Insurers evaluate QA procedures when setting premiums. | Ground Engineering 2019-2024; Risk Assessment literature |
+
+**Context-dependence by firm size:**
+
+| Firm tier | Binding constraint | Notes |
+|---|---|---|
+| Tier 3 (5-50 staff) | Financial Performance firmly #1 | Thin margins; one slow month threatens payroll |
+| Tier 2 (50-500 staff) | Financial Performance #1, Talent closing fast | More financial resilience, but acute talent competition |
+| Tier 1 (500+ staff) | Talent can overtake Financial Performance | Financial resilience is higher; existential risk is knowledge drain from retiring principals |
+| Any firm during PI crisis | Liability jumps temporarily to #1 | When premiums spike or coverage shifts, ability to trade is threatened |
+
+**Pitch rule:** When positioning to CEOs, lead with financial performance (write-off
+reduction, capacity, utilisation). When positioning to practice leads and senior
+engineers, lead with talent and leverage. Always frame the quality layer as solving
+downstream consequences (claims, client loss, capacity), not "better reports."
+
+**Key vocabulary correction:** "Efficiency" is a lever, not a CEO-level priority.
+Never use "efficiency" as a selling point. Use specific consequences instead:
+capacity, write-off reduction, leverage, recovered senior hours.
+
+## Positioning Language Sensitivity *(added 2026-04-30, Graeme + John)*
+
+**Problem:** The original supporting tagline "catches what a senior reviewer would
+catch" implies current reviewers are missing things. The Technical Director (TD) —
+often the veto holder on tool purchases — will feel their competence is questioned
+and kill the deal.
+
+**Principle:** The tool is subordinate. It does the tedious part. The human does the
+important part. No engineer resents a tool that removes drudgery. Every engineer
+resents a tool that implies they need supervision.
+
+**Approved phrasings (TD sniff test passed):**
+
+| Context | Phrasing |
+|---|---|
+| Canonical supporting tagline | "Handles the routine checks so your senior reviewers can focus on the judgment that matters." |
+| Conversational (sales calls, LinkedIn) | "Takes the checklist off your senior reviewer's desk — so they can do the work only they can do." |
+| High-impact (landing pages, demos) | "Your pre-review grunt work, handled — before your senior reviewer even opens the file." |
+
+**Banned phrasing:** "Catches what a senior reviewer would catch" — retired.
+Implies reviewers are failing. Confrontational to the TD gatekeeper.
+
+Provenance: Graeme memo on reviewer sensitivity (2026-04-30); John copy review.
 
 ## Credibility Boundaries (Founder Voice)
 

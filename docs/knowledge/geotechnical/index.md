@@ -35,3 +35,5 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | AI-Drafted GBR Liability Exposure in DSC Disputes | contracts-and-risk | 2026-04-20 | cross-referenced | [ai-gbr-liability-assessment.md](ai-gbr-liability-assessment.md) |
 | Dropdown Parameter Sufficiency for NZ GBR/GIR Skeleton Generation | report-writing | 2026-04-21 | cross-referenced | [../research/20260421-dropdown-parameter-sufficiency-gbr-gir.md](../research/20260421-dropdown-parameter-sufficiency-gbr-gir.md) |
 | Playbook-Driven Review: Geotechnical Adaptation | report-writing | 2026-04-26 | cross-referenced | [../research/20260426-playbook-driven-review-geotechnical-adaptation.md](../research/20260426-playbook-driven-review-geotechnical-adaptation.md) |
+| CEO Priorities in Geotechnical Engineering Firms | contracts-and-risk | 2026-04-30 | cross-referenced | [ceo-priorities-engineering-firms.md](ceo-priorities-engineering-firms.md) |
+| Positioning Language — Reviewer Sensitivity | report-writing | 2026-04-30 | practitioner-grounded | [report-writing/memo-positioning-language-reviewer-sensitivity.md](report-writing/memo-positioning-language-reviewer-sensitivity.md) |
