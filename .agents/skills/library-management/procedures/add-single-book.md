@@ -1,6 +1,14 @@
 # Procedure: Add a Single New Book
 
-1. **Copy** the file to the correct folder under `G:\My Drive\Library\`.
+1. **Determine the LCC classification** before touching the file:
+   - Look up the book in the [Library of Congress catalogue](https://catalog.loc.gov) or WorldCat to get the LCC number.
+   - Identify the LCC root (single letter, e.g. `H`) and subclass (two letters, e.g. `HD`).
+   - Derive the target folder: `G:\My Drive\Library\<LCC Root> - <Root Name>\<LCC Subclass> - <Subclass Name>\`
+   - If the folder does not yet exist, create it.
+   - Update `domain` and `subdomain` index columns to the LCC root folder name and subclass folder name respectively.
+   - Consult the domain vocabulary table in SKILL.md for the most common classes if catalogue lookup is unavailable.
+
+2. **Copy** the file to the LCC folder determined in step 1.
 
 2. **Extract metadata with the canonical incremental extractor:**
 

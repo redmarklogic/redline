@@ -73,17 +73,30 @@ Worksheets: `Master` (all entries) + four domain worksheets: `Ebooks`, `Standard
 
 ---
 
-### Domain vocabulary
+### Domain vocabulary — Library of Congress Classification (LCC)
 
-| `domain` | `subdomain` examples |
-|---|---|
-| `Engineering` | `Geotechnical Engineering`, `Structural Engineering`, `Civil Engineering` |
-| `Management` | `Organisational Design`, `People Operations`, `Leadership` |
-| `Product` | `Product Management`, `Product Strategy`, `UX & Design` |
-| `Marketing` | `Content Marketing`, `SEO`, `Social Selling`, `Brand Strategy`, `Demand Generation` |
-| `Business Strategy` | `GTM Strategy`, `Competitive Positioning`, `Pricing`, `Platform Strategy` |
-| `Artificial Intelligence` | `AI Systems`, `Machine Learning`, `AI Strategy` |
-| `Learning & Development` | `Skills Development`, `Coaching`, `Learning Design` |
+The physical folder structure uses **LCC**. `domain` = the LCC root folder name; `subdomain` = the LCC subclass folder name. Folder format: `<LCC Root>\<LCC Subclass>\filename`.
+
+Example: a geotechnical engineering textbook goes in `T - Technology\TA - Engineering (General). Civil engineering\`.
+
+**Determining the correct LCC class:**
+1. Look up the book's LCC number via the [Library of Congress catalogue](https://catalog.loc.gov) or WorldCat.
+2. Use the first two characters of the LCC number to identify the subclass (e.g. `HD` → `HD - Industries. Land use. Labor`).
+3. The root folder is the single-letter prefix (e.g. `H` → `H - Social Sciences`).
+4. If no LCC number is available, use the most specific subclass from the reference table below.
+
+**Commonly used LCC classes in this library:**
+
+| `domain` (LCC root folder) | `subdomain` (LCC subclass folder) | Typical content |
+|---|---|---|
+| `H - Social Sciences` | `HD - Industries. Land use. Labor` | Business strategy, innovation, creativity (HD53), management, entrepreneurship — "Land use" is one narrow section; HD covers industries and business broadly |
+| `H - Social Sciences` | `HF - Commerce` | Marketing, sales, branding |
+| `H - Social Sciences` | `HM - Sociology` | Organisational behaviour, leadership |
+| `Q - Science` | `QA - Mathematics` | Statistics, data science, machine learning |
+| `T - Technology` | `TA - Engineering (General). Civil engineering` | Civil/geotechnical engineering, professional practice |
+| `T - Technology` | `TC - Hydraulic engineering` | Hydraulics, dams, flood management |
+| `T - Technology` | `TH - Building construction` | Structural, building |
+| `B - Philosophy. Psychology. Religion` | `BF - Psychology` | Cognitive science, decision-making, behavioural economics |
 
 ---
 
