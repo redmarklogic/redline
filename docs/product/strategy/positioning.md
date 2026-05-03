@@ -151,11 +151,12 @@ This ordering drives how we pitch to different buyer roles.
 
 **Context-dependence by firm size:**
 
-| Firm tier | Binding constraint | Notes |
+| Firm segment | Binding constraint | Notes |
 | --- | --- | --- |
-| Tier 3 (5-50 staff) | Financial Performance firmly #1; Liability #2 | Thin margins; one slow month threatens payroll. Zero buffer against a PI claim — absorbed from the owner's personal finances. No legal team; some skip PI insurance entirely due to cost. |
-| Tier 2 (50-500 staff) | Financial Performance #1, Talent closing fast | More financial resilience, but acute talent competition. PI exposure grows with project diversity. |
-| Tier 1 (500+ staff) | Talent can overtake Financial Performance | Financial resilience is higher; existential risk is knowledge drain from retiring principals. Dedicated legal and QA teams manage liability internally. |
+| Micro (1-4 staff) | Financial Performance #1 | Solo practitioner or tiny partnership. Principal IS the reviewer — no delegation possible. Too few reports to justify a subscription. Not our target. |
+| Small (5-50 staff) | Financial Performance firmly #1; Liability #2 | Thin margins; one slow month threatens payroll. Zero buffer against a PI claim — absorbed from the owner's personal finances. No legal team; some skip PI insurance entirely due to cost. |
+| Medium (50-500 staff) | Financial Performance #1, Talent closing fast | More financial resilience, but acute talent competition. PI exposure grows with project diversity. |
+| Large (500+ staff) | Talent can overtake Financial Performance | Financial resilience is higher; existential risk is knowledge drain from retiring principals. Dedicated legal and QA teams manage liability internally. |
 | Any firm during PI crisis | Liability jumps temporarily to #1 | When premiums spike or coverage shifts, ability to trade is threatened |
 
 **Pitch rule:** When positioning to CEOs, lead with financial performance (write-off

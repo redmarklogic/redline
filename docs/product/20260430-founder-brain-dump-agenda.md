@@ -75,18 +75,26 @@ Understanding the split clarifies what is in and out of scope.
 - Define the size buckets (headcount? revenue? project type?).
 - Are we targeting SMEs, large firms, or both?
 
-> **RESOLVED (2026-05-03).** Three tiers defined by headcount: Tier 3 (5–50 staff,
-> small/niche firms), Tier 2 (50–500 staff, mid-size firms), Tier 1 (500+ staff,
-> large infrastructure firms). Beachhead is Tier 3 — they cannot build, cannot
-> afford bespoke, and have the highest pain-to-resource ratio. Tier 2 follows via
-> bowling-pin expansion after Tier 3 dominance. Tier 1 is explicitly out of scope
-> (they build their own tools). CEO priority hierarchy is context-dependent by tier:
-> Tier 3 = Financial Performance > Liability > Talent; Tier 2 = Financial
-> Performance > Talent > Liability; Tier 1 = Talent > Financial Performance >
-> Liability. Full analysis in `docs/research/20260503-firm-size-segmentation.md`.
-> Next step: Mark to frame tier-specific problem statements linked to the beachhead
-> bet (Bet 1). KR2 discovery conversations should filter by firm tier and probe
-> willingness-to-pay at the Tier 3 price point.
+> **RESOLVED (2026-05-03).** Canonical naming adopted: **Micro** (1-4 staff),
+> **Small** (5-50 staff), **Medium** (50-500 staff), **Large** (500+ staff).
+> Beachhead is Small -- they cannot build, cannot afford bespoke, and have the
+> highest pain-to-resource ratio. Medium follows via bowling-pin expansion after
+> Small-segment dominance. Large is explicitly out of scope (they build their own
+> tools). Micro is not excluded from the free tier but not designed for.
+>
+> CEO priority hierarchy is context-dependent by segment: Small = Financial
+> Performance > Liability > Talent; Medium = Financial Performance > Talent >
+> Liability; Large = Talent > Financial Performance > Liability.
+>
+> Three named personas created for the Small segment (Sam -- Day-1 User, Anna --
+> Day-1 Buyer, Dave -- Gatekeeper), grounded by Graeme's domain expertise and
+> NotebookLM knowledge bases. See `docs/product/strategy/personas.md`.
+>
+> All strategy docs updated to canonical naming: `positioning.md`,
+> `strategic-bets.md`, `non-goals.md`, `skeleton-wedge-problem.md`,
+> `skeleton-manual-input-problem.md`, `enterprise-ai-blocking-risk-assessment.md`.
+> KR2 discovery guide updated to filter for Small firms (5-50). See
+> `docs/product/strategy/discovery-guide.md`.
 
 ### 1.5 CEO Outreach Journey [John, Founder]
 
@@ -122,6 +130,36 @@ standards. This reveals two distinct use cases for the standards engine:
 - What project-type taxonomy do we need (new build, expansion, demolition,
   maintenance)?
 
+> **RESOLVED (2026-05-03).** One standards engine, two separate product surfaces.
+> The Standards Knowledge Store (Bet 3) is a shared capability; the product surfaces
+> (skeleton templates, rule sets, review workflows, deliverable types) are mode-specific
+> and must not be conflated.
+>
+> **Sequencing:** "Before the fact" (new design) ships in H2. "After the fact"
+> (existing infrastructure assessment) deferred to Phase 2. Rationale: (1) new design
+> is more structured and codifiable; (2) always uses current standard version (no
+> historical lookup ambiguity); (3) it is the recurring bread-and-butter for Small
+> (Tier 3) firms; (4) aligned with every active bet (Skeleton, Pre-Review, Standards
+> Store); (5) CEO Priority #1 (Financial Performance) is served by reducing review
+> rounds on billable new-design reports.
+>
+> **Taxonomy:** One project type in H2: "New Build." Stored as a metadata field for
+> future routing. No project-type selector in the UI until a second real option exists.
+> Full taxonomy for future phases: New Build | Assessment of Existing | Modification
+> of Existing (hybrid -- hardest, last) | Remediation/Repair | Demolition |
+> Maintenance.
+>
+> **Phase 2 trigger:** Add "after the fact" when (a) Small-segment adoption validates
+> the engine on new design, AND (b) KR2 discovery conversations reveal demand for
+> assessment-mode checking among beachhead customers.
+>
+> **Knowledge gaps to resolve before Phase 2:** (1) liability differentiation between
+> design sign-off and condition assessment; (2) NZ-specific assessment standards
+> (NZSEE "Red Book", EPB methodology) -- to be ingested into Standards Knowledge
+> Store; (3) PI insurance implications for each mode.
+>
+> Decision log: `docs/product/strategy/decisions/decision-002-before-vs-after-the-fact.md`.
+
 ### 2.2 Practice of Engineering vs. Business of Engineering [Ron, Graeme]
 
 Two layers of value:
@@ -137,6 +175,22 @@ Two layers of value:
   lane?
 - Does this framing resonate with CEOs?
 - Where does it leave calculation-checking as a future feature?
+
+> **RESOLVED (2026-05-03).** Quality layer positioned squarely in the
+> "business of engineering" lane: standards compliance, liability protection,
+> and insurance audit trail. A physically correct design that ignores the
+> applicable code exposes the firm to negligence claims — this is the problem
+> Redline solves. Calculation-checking is a separate, future product (Phase 2
+> at earliest) with a different liability profile, different competitive
+> exposure, and a different trust threshold. Positioning statement: *"We check
+> the document, not the design."* Ron: every feature request now passes one
+> filter — *does this protect the firm, or does this do the engineering?* If
+> the latter, it is out of scope. Graeme confirmed the practice/business split
+> maps exactly to the PD Oversight Review vs. the Calculations Check — two
+> separate mandates performed by different people. Updated in
+> `docs/product/strategy/non-goals.md` (Product Non-Goal #8),
+> `docs/product/strategy/decisions/parked-decisions.md` (P-032), and
+> `docs/product/problems/business-of-engineering-quality-layer-problem.md`.
 
 ---
 

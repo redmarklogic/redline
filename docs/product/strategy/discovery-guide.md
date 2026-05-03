@@ -185,8 +185,10 @@ Per `okrs/2026-h2.md`, KR2 requires:
 
 - ≥ 30 minutes (the Switch timeline alone consumes 25);
 - Work-email-verified;
-- Employed at an NZ or AU geotechnical consultancy;
-- Drafted at least one GBR/GIR in the last 12 months.
+- Employed at an NZ or AU geotechnical consultancy;- **Firm is in the Small segment (5-50 technical staff).** Micro (1-4) and Medium/Large
+  firms are out of scope for beachhead discovery. If a referral leads to someone at a
+  Micro or Large firm, take the conversation for intelligence but do not count it toward
+  KR2. See `personas.md` for segment definitions;- Drafted at least one GBR/GIR in the last 12 months.
 
 Add: the conversation must produce a documented Switch timeline and a Four-Forces
 map. A 30-minute call that did not surface either is not yet "qualified" — it is

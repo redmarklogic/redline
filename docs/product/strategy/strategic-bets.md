@@ -194,6 +194,14 @@ interface. This is confirmed professionally defensible by Graeme (high confidenc
 See `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
 and `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`.
 
+**Mode-neutral data model requirement** *(added 2026-05-03)*: The Standards Knowledge
+Store data model must not embed new-design-only assumptions. In H2, the store serves
+"before the fact" (new design) only, but the schema must accommodate "after the fact"
+(assessment of existing infrastructure) in Phase 2 — including historical standard
+versions, reduced compliance thresholds (%NBS), and legislative definitions. Project
+type is stored as a metadata field from Sprint 1 for future routing. See
+`docs/product/strategy/decisions/decision-002-before-vs-after-the-fact.md`.
+
 **House Rules shape — conditional structural expectations** *(added 2026-04-23)*:
 Debrief analysis of lost NZ government engineering procurements reveals that firm-level
 quality expectations are not flat checklists but **conditional structural requirements**:
@@ -332,14 +340,14 @@ three reasons: (1) cannibalisation problem — selling the tool helps competitor
 asymmetric motivation — Beca's infrastructure cost structure cannot serve
 residential/commercial geotech; (3) Frankly.AI is now discontinued, confirming that
 engineering consultancies lack the DNA to sustain AI product commercialisation alongside a
-billable-hours business model. If Beca or another Tier 1 firm reverses this pattern and
+billable-hours business model. If Beca or another Large firm reverses this pattern and
 ships a commercially available geotech QA tool, this kill criterion trips.
 
-**Market segmentation clarification** *(added 2026-04-20, Archie CI session)*:
-Tier 1 firms (T+T, WSP, Beca — 1000+ employees, government projects, high overhead)
+**Market segmentation clarification** *(updated 2026-05-03, canonical naming)*:
+Large firms (T+T, WSP, Beca — 500+ employees, government projects, high overhead)
 will build their own AI and require enterprise SOC2. They are not Redline's market.
-Tier 2 firms (Soil & Rock, EGL — 5-50 employees, residential/commercial geotech) must
-buy. This is Redline's market. Current Tier 2 alternatives: manual review, SupaHuman
+Small firms (Soil & Rock, EGL — 5-50 employees, residential/commercial geotech) must
+buy. This is Redline's market. Current Small-firm alternatives: manual review, SupaHuman
 bespoke ($50k+), or ChatGPT (no jurisdiction, no audit trail). SupaHuman is a generalist
 agency (same RAG does travel and geotech) with one named engineering client after 2+
 years and potential exclusivity with Soil & Rock. Provenance:
