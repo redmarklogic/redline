@@ -77,7 +77,7 @@ Worksheets: `Master` (all entries) + four domain worksheets: `Ebooks`, `Standard
 
 The physical folder structure uses **LCC**. `domain` = the LCC root folder name; `subdomain` = the LCC subclass folder name. Folder format: `<LCC Root>\<LCC Subclass>\filename`.
 
-Example: a geotechnical engineering textbook goes in `T - Technology\TA - Engineering (General). Civil engineering\`.
+Example: a geotechnical engineering textbook goes in `T - Technology\TA700-712 - Foundation and Geotechnical Engineering\`.
 
 **Determining the correct LCC class:**
 1. Look up the book's LCC number via the [Library of Congress catalogue](https://catalog.loc.gov) or WorldCat.

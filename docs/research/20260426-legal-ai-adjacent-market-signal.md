@@ -2,9 +2,8 @@
 
 **Date**: 2026-04-26
 **Source**: NotebookLM notebook `0d7a9a9d-0f9d-4cba-9191-f6e29a7e158a` ("Legal AI
-Startup") containing a YC interview with Max Junestrand (CEO, Leya — note: source
-transcribed company name as "Legora"; correct name confirmed via internet research
-2026-04-27 as Leya, leya.law) and the Leya website.
+Startup") containing a YC interview with Max Junestrand (CEO, Leya, later
+rebranded as Legora) and the Leya website.
 **Queried by**: Ron, Graeme, John (advisory board session).
 **Status**: Recorded signal. No roadmap changes.
 
@@ -106,7 +105,7 @@ Phase-2+ consideration, not H2.
 ## What Transfers to Geotechnical Engineering
 
 | Pattern | Transfers? | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Point solutions collapse under LLMs | Yes | Same text-processing dynamic applies to engineering report tools |
 | Word-native workflow integration | Yes | Engineers draft GIRs/GBRs in Word and PDF |
 | Playbook-driven review (firm rules) | Yes | Maps to House Rules engine; firms have internal review standards |
@@ -172,16 +171,17 @@ product, not an individual productivity tool.
 Added via internet research (leya.law, YC company page, TechCrunch, customer case
 studies) to supplement the original NotebookLM queries.
 
-### Name Correction
+### Naming Update
 
-**The company name is Leya (leya.law), not "Legora".** The YC interview transcript in
-the original notebook contained a transcription error. All references in Redline
-documents corrected 2026-04-27.
+This memo originally treated "Legora" as a transcript error because the source material
+used Leya branding. Follow-up public-source checking on 2026-05-03 confirms that Leya
+rebranded as Legora in February 2025. Treat references to Leya in this memo as the
+pre-rebrand company, not as a separate comparator from Legora.
 
 ### Playbook Mechanics (additional detail)
 
 | Detail | Finding |
-|---|---|
+| --- | --- |
 | Who creates playbooks | KM lawyers, senior partners, or dedicated innovation teams |
 | UX for invocation | Open document in Word → launch Leya add-in (right task pane) → select playbook from dropdown → click button |
 | Output format | Standard Word tracked changes (redlines) inline + comment bubbles in margins explaining playbook reasoning |
@@ -192,7 +192,7 @@ documents corrected 2026-04-27.
 ### Architecture (additional detail)
 
 | Detail | Finding |
-|---|---|
+| --- | --- |
 | LLM strategy | Model-agnostic; routes to OpenAI and Anthropic, selecting best model per task type |
 | Certifications | SOC 2 Type II and ISO 27001 |
 | Data policy | Zero-data-retention with LLM providers; no training on customer data |
@@ -201,7 +201,7 @@ documents corrected 2026-04-27.
 ### GTM (additional detail)
 
 | Detail | Finding |
-|---|---|
+| --- | --- |
 | Sales motion | Top-down enterprise; targets law firm partners, KM directors, IT heads |
 | Landing pattern | Pilot in one high-volume practice group (M&A, real estate) → firm-wide rollout |
 | Scale | 100+ law firms globally |

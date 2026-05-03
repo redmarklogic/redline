@@ -45,8 +45,8 @@ def upsert(notebook: dict, sources: list[dict]) -> str:
         notebook["title"],
         notebook["url"],
         notebook["source_count"],
-        notebook["summary"],
-        notebook["suggested_topics"],
+        notebook.get("summary", ""),
+        notebook.get("suggested_topics", ""),
         today,
         "active",
     ]
@@ -63,7 +63,9 @@ def upsert(notebook: dict, sources: list[dict]) -> str:
 
     # --- sources: delete existing rows for this notebook_id ---
     rows_to_delete = []
-    for row in ws_src.iter_rows(min_row=2, max_row=ws_src.max_row, min_col=1, max_col=1):
+    for row in ws_src.iter_rows(
+        min_row=2, max_row=ws_src.max_row, min_col=1, max_col=1
+    ):
         if row[0].value == nid:
             rows_to_delete.append(row[0].row)
 
@@ -72,14 +74,16 @@ def upsert(notebook: dict, sources: list[dict]) -> str:
 
     # --- sources: insert current sources ---
     for src in sources:
-        ws_src.append([
-            nid,
-            notebook["title"],
-            src["source_id"],
-            src["source_title"],
-            src["source_summary"],
-            src["source_keywords"],
-        ])
+        ws_src.append(
+            [
+                nid,
+                notebook["title"],
+                src["source_id"],
+                src["source_title"],
+                src.get("source_summary", ""),
+                src.get("source_keywords", ""),
+            ]
+        )
         _apply_row_style(ws_src, ws_src.max_row)
 
     wb.save(INDEX_PATH)

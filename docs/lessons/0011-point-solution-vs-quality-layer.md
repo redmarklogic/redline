@@ -25,4 +25,12 @@ solutions where the durable value is a domain-specific quality layer with audit 
 The defensible asset is the curated knowledge corpus and the firm-specific
 configuration layered on top --- not the AI text-processing capability itself.
 
+**Refinement (2026-05-03)**: Microsoft Word Legal Agent and actual Legora strengthen the
+same principle from a platform-risk angle. Once a platform owner makes document-native
+review, redlining, citations, and tracked changes native to the workflow surface, the
+moat moves even more decisively to domain corpus, firm rules, audit trail, and adoption
+context. Redline should treat generic Word review as table stakes and defend the
+geotechnical quality layer.
+
 **Source**: `docs/research/20260426-legal-ai-adjacent-market-signal.md`
+**Additional source**: `docs/research/20260503-microsoft-word-legal-agent-robin-ai-legora-signal.md`

@@ -56,21 +56,23 @@ Only `Standards` has extra engineering columns.
 
 ## Vocabulary
 
-### `domain`
+### `domain` and `subdomain`
 
-| `domain` | `subdomain` examples |
-|---|---|
-| `Engineering` | `Geotechnical Engineering`, `Structural Engineering`, `Civil Engineering` |
-| `Management` | `Organisational Design`, `People Operations`, `Leadership` |
-| `Product` | `Product Management`, `Product Strategy`, `UX & Design` |
-| `Marketing` | `Content Marketing`, `SEO`, `Social Selling`, `Brand Strategy`, `Demand Generation` |
-| `Business Strategy` | `GTM Strategy`, `Competitive Positioning`, `Pricing`, `Platform Strategy` |
-| `Artificial Intelligence` | `AI Systems`, `Machine Learning`, `AI Strategy` |
-| `Learning & Development` | `Skills Development`, `Coaching`, `Learning Design` |
+`domain` = LCC root folder name. `subdomain` = LCC subclass folder name. The physical folder structure on disk is `<domain>\<subdomain>\<filename>`.
+
+Refer to `.agents/skills/library-management/reference/classification.md` for the authoritative LCC class table.
+
+| `domain` example | `subdomain` example | Typical content |
+|---|---|---|
+| `H - Social Sciences` | `HD - Management, Business and Leadership` | Strategy, management, entrepreneurship |
+| `H - Social Sciences` | `HF - Commerce, Marketing and Sales` | Marketing, branding, sales |
+| `Q - Science` | `QA75-76 - Computer Science and Software Engineering` | AI, software, data science |
+| `T - Technology` | `TA700-712 - Foundation and Geotechnical Engineering` | Geotechnical engineering |
+| `T - Technology` | `TA - Engineering Management and Professional Practice` | Professional practice |
 
 ### `category` (origin type)
 
-`Book` · `Handbook` · `Framework Guide` · `Academic Paper` · `Conference Paper` · `Magazine Issue` · `Chapter` · `Standard` · `Guidance Note` · `Technical Report` · `Code of Practice`
+`Book` · `Handbook` · `Framework Guide` · `Academic Paper` · `Conference Paper` · `Magazine` · `Chapter` · `Standard` · `Guidance Note` · `Technical Report` · `Code of Practice`
 
 ### `document_type` (semantic character)
 

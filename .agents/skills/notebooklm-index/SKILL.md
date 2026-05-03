@@ -151,8 +151,8 @@ Match existing workbook styling:
 
 ## Prohibited Actions
 
-- Do **not** create Python scripts, tool files, or helper modules
-- Do **not** create temporary files — use inline Python piped to `python -`
+- Do **not** create new Python scripts, tool files, or helper modules — use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py`
+- Do **not** create temporary files
 - Do **not** modify `register.json` or any file other than the index spreadsheet
 - Do **not** load the `library-management` skill — this skill is self-contained
 
@@ -166,5 +166,5 @@ Match existing workbook styling:
 | Calling `note` tool | Forbidden — do not write to the notebook |
 | Matching by notebook title | Always match by `notebook_id` |
 | Skipping `source_describe` | Must call for every source |
-| Creating Python scripts or temp files | Use inline Python only |
+| Creating new Python scripts or temp files | Use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py` |
 | Updating `register.json` | Out of scope — only update the Excel index |
