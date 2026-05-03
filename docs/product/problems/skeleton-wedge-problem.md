@@ -6,11 +6,11 @@
 ## Target User
 
 Intermediate civil/geotechnical engineer (3-7 years post-graduation), working inside a
-Tier 2 NZ or AU consultancy (5-50 person firm) on residential or light-commercial GBR/GIR
+Small NZ or AU consultancy (5-50 person firm) on residential or light-commercial GBR/GIR
 work. These firms lack the budget, engineering bench, or innovation mandate to build
 bespoke AI tooling. They must buy or go without.
 
-Tier 1 firms (Tonkin + Taylor, WSP, Beca) build their own AI internally. Tier 2 firms
+Large firms (Tonkin + Taylor, WSP, Beca) build their own AI internally. Small firms
 are the addressable market.
 
 ## Core Pain
@@ -33,7 +33,7 @@ survives review in fewer rounds.
 | Alternative | Friction |
 |---|---|
 | **Manual drafting from memory or firm templates** | Templates are stale and incomplete. Tribal knowledge is bottlenecked in senior staff. Intermediate engineers miss sections they don't know to include. |
-| **SupaHuman / Archie (bespoke AI build)** | $50k+ engagement, 6-month delivery, enterprise sales process. Inaccessible to Tier 2. SupaHuman is a generalist RAG agency (same architecture does travel RFPs and geotech reports) with one engineering client. Thin technical moat, no domain IP. |
+| **SupaHuman / Archie (bespoke AI build)** | $50k+ engagement, 6-month delivery, enterprise sales process. Inaccessible to Small firms. SupaHuman is a generalist RAG agency (same architecture does travel RFPs and geotech reports) with one engineering client. Thin technical moat, no domain IP. |
 | **ChatGPT or generic AI assistant** | No jurisdictional grounding (NZS, AS, NZGS). No firm context. No audit trail. Partner will not allow it. Output is plausible but unreliable for professional-grade reports. |
 | **Do nothing** | Engineer submits an incomplete draft, absorbs 3x markup from senior reviewer, rebuilds the document over evenings, loses morale. Senior reviewer wastes time on structural issues instead of engineering substance. |
 
@@ -42,7 +42,7 @@ survives review in fewer rounds.
 The Archie competitive intelligence session (2026-04-20) confirms that demand exists.
 Soil & Rock Consultants (NZ) commissioned a bespoke AI report-drafting co-pilot from
 SupaHuman. This validates the market pain but the delivery model is inaccessible to
-Tier 2: bespoke builds at $50k+ with a generalist agency are not a scalable solution for
+Small firms: bespoke builds at $50k+ with a generalist agency are not a scalable solution for
 5-50 person firms.
 
 Beca built Frankly.AI in-house, launched it commercially via Microsoft Teams globally, and has

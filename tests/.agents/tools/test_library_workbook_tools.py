@@ -50,8 +50,10 @@ def export_review_pack() -> ModuleType:
 def test_workbook_lock_fails_when_another_writer_is_active(
     tmp_path: Path, workbook_utils: ModuleType
 ) -> None:
+    # Arrange
     index_path = tmp_path / "library-index.xlsx"
 
+    # Act / Assert
     with (
         workbook_utils.WorkbookLock(index_path),
         pytest.raises(RuntimeError, match="Another library index writer is active"),
@@ -65,6 +67,7 @@ def test_workbook_lock_fails_when_another_writer_is_active(
 def test_save_workbook_atomically_replaces_target(
     tmp_path: Path, workbook_utils: ModuleType
 ) -> None:
+    # Arrange
     target_path = tmp_path / "library-index.xlsx"
     target_path.write_text("old", encoding="utf-8")
 
@@ -72,8 +75,10 @@ def test_save_workbook_atomically_replaces_target(
         def save(self, path: Path) -> None:
             path.write_text("new", encoding="utf-8")
 
+    # Act
     workbook_utils.save_workbook_atomically(FakeWorkbook(), target_path)
 
+    # Assert
     assert target_path.read_text(encoding="utf-8") == "new"
     assert list(tmp_path.glob("*.tmp.xlsx")) == []
 
@@ -90,7 +95,7 @@ def test_append_index_row_writes_master_and_domain_rows(
     domain.append(
         workbook_utils.STANDARD_HEADERS + workbook_utils.ENGINEERING_EXTRA_HEADERS
     )
-    row = [f"value-{index}" for index in range(25)]
+    row = [f"value-{index}" for index in range(27)]
 
     # Act
     workbook_utils.append_index_row(workbook, "Standards", row)
@@ -98,7 +103,7 @@ def test_append_index_row_writes_master_and_domain_rows(
     # Assert
     assert master.max_row == 2
     assert domain.max_row == 2
-    assert [cell.value for cell in master[2]] == row[:20]
+    assert [cell.value for cell in master[2]] == row[:22]
     assert [cell.value for cell in domain[2]] == row
 
 
@@ -135,9 +140,11 @@ def test_get_indexed_paths_reads_master_path_column(
         ]
     )
 
-    assert workbook_utils.get_indexed_paths(workbook) == {
-        "Engineering/Standards/file.pdf"
-    }
+    # Act
+    paths = workbook_utils.get_indexed_paths(workbook)
+
+    # Assert
+    assert paths == {"Engineering/Standards/file.pdf"}
 
 
 def test_domain_worksheet_constants_match_expected_structure(
@@ -162,7 +169,7 @@ def test_append_index_row_writes_master_and_basic_domain_rows(
     master.append(workbook_utils.STANDARD_HEADERS)
     domain = workbook.create_sheet("Ebooks")
     domain.append(workbook_utils.STANDARD_HEADERS)
-    row = [f"value-{index}" for index in range(20)]
+    row = [f"value-{index}" for index in range(22)]
 
     # Act
     workbook_utils.append_index_row(workbook, "Ebooks", row)
@@ -199,6 +206,8 @@ def test_sync_notes_to_domain_worksheets_uses_path_as_join_key(
             "file.pdf",
             "Engineering",
             "Geotechnical Engineering",
+            None,
+            None,
             "Standard",
             "Standard",
             "",
@@ -227,7 +236,7 @@ def test_sync_notes_to_domain_worksheets_uses_path_as_join_key(
     # Assert
     assert synced == 1
     assert (
-        domain.cell(row=2, column=19).value
+        domain.cell(row=2, column=21).value
         == "DUPLICATE of Engineering/Standards/original.pdf"
     )
 
@@ -263,6 +272,8 @@ def test_summarize_workbook_reports_review_and_duplicate_counts(
         "first.pdf",
         "Engineering",
         "Geotechnical Engineering",
+        None,
+        None,
         "Standard",
         "Standard",
         "",
@@ -285,6 +296,8 @@ def test_summarize_workbook_reports_review_and_duplicate_counts(
         "second.pdf",
         "Engineering",
         "Geotechnical Engineering",
+        None,
+        None,
         "Standard",
         "Standard",
         "",
@@ -338,6 +351,8 @@ def test_export_needs_review_writes_review_queue_csv(
             "first.pdf",
             "Engineering",
             "Geotechnical Engineering",
+            None,
+            None,
             "Standard",
             "Standard",
             "",
@@ -362,6 +377,8 @@ def test_export_needs_review_writes_review_queue_csv(
             "second.pdf",
             "Engineering",
             "Geotechnical Engineering",
+            None,
+            None,
             "Standard",
             "Standard",
             "",
@@ -493,6 +510,8 @@ def test_normalize_status_values_lowercases_and_underscores(
             "BS-EN-1997-1-2004.pdf",
             "Engineering",
             "Geotechnical Engineering",
+            None,
+            None,
             "Standard",
             "Standard",
             "",
@@ -515,7 +534,7 @@ def test_normalize_status_values_lowercases_and_underscores(
 
     # Assert
     assert normalized == 1
-    assert master.cell(row=2, column=22).value == "needs_review"
+    assert master.cell(row=2, column=24).value == "needs_review"
 
 
 def test_normalize_status_values_skips_already_normalized(
@@ -540,6 +559,8 @@ def test_normalize_status_values_skips_already_normalized(
             "BS-EN-1997-1-2004.pdf",
             "Engineering",
             "Geotechnical Engineering",
+            None,
+            None,
             "Standard",
             "Standard",
             "",
@@ -562,7 +583,7 @@ def test_normalize_status_values_skips_already_normalized(
 
     # Assert
     assert normalized == 0
-    assert master.cell(row=2, column=22).value == "current"
+    assert master.cell(row=2, column=24).value == "current"
 
 
 def test_sync_years_to_domain_worksheets_copies_filled_years(
@@ -661,6 +682,8 @@ def _make_review_pack_workbook() -> openpyxl.Workbook:
         "BS-EN-1997-1-2004.pdf",
         "Engineering",
         "Geotechnical Engineering",
+        None,
+        None,
         "Standard",
         "Standard",
         "",
@@ -683,6 +706,8 @@ def _make_review_pack_workbook() -> openpyxl.Workbook:
         "Foundation-Design_Author_2020.pdf",
         "Engineering",
         "Geotechnical Engineering",
+        None,
+        None,
         "Book",
         "Textbook",
         "",
@@ -705,6 +730,8 @@ def _make_review_pack_workbook() -> openpyxl.Workbook:
         "BS-EN-1997-1-2004-copy.pdf",
         "Engineering",
         "Geotechnical Engineering",
+        None,
+        None,
         "Standard",
         "Standard",
         "",

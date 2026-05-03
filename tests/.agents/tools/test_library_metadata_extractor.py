@@ -46,42 +46,49 @@ def synthetic_text_pdf_fixture(tmp_path: Path, pdf_assets_dir: Path) -> Path:
 def test_metadata_extraction_request_rejects_non_pdf_paths(
     tmp_path: Path, metadata_extractor: ModuleType
 ) -> None:
+    # Arrange
     text_path = tmp_path / "book.txt"
     text_path.write_text("not a PDF", encoding="utf-8")
 
+    # Act / Assert
     with pytest.raises(ValidationError, match="PDF"):
         metadata_extractor.MetadataExtractionRequest(pdf_path=text_path)
 
 
+@pytest.mark.parametrize(
+    ("path", "expected"),
+    [
+        ("Engineering/Standards/BS-5930.pdf", "Standard"),
+        ("Engineering/Magazines/ge-2026.pdf", "Magazine"),
+        ("Engineering/Ebooks/soil-mechanics.pdf", "Book"),
+        ("Unsorted/file.pdf", "Misc"),
+    ],
+)
 def test_classify_document_uses_library_path_segments(
-    metadata_extractor: ModuleType,
+    metadata_extractor: ModuleType, path: str, expected: str
 ) -> None:
+    # Arrange
     extractor = metadata_extractor.BookMetadataExtractor()
 
-    assert (
-        extractor.classify_document(Path("Engineering/Standards/BS-5930.pdf"))
-        == "Standard"
-    )
-    assert (
-        extractor.classify_document(Path("Engineering/Magazines/ge-2026.pdf"))
-        == "Magazine"
-    )
-    assert (
-        extractor.classify_document(Path("Engineering/Ebooks/soil-mechanics.pdf"))
-        == "Book"
-    )
-    assert extractor.classify_document(Path("Unsorted/file.pdf")) == "Misc"
+    # Act
+    result = extractor.classify_document(Path(path))
+
+    # Assert
+    assert result == expected
 
 
 def test_fetch_by_title_returns_google_books_metadata(
     metadata_extractor: ModuleType,
 ) -> None:
+    # Arrange
     extractor = metadata_extractor.BookMetadataExtractor(
         http_get_json=_fake_google_books_response
     )
 
+    # Act
     result = extractor.fetch_by_title("Geotechnical Engineering Handbook")
 
+    # Assert
     assert result is not None
     assert result.title == "Geotechnical Engineering Handbook"
     assert result.subtitle == "Second Edition"
@@ -96,12 +103,15 @@ def test_fetch_by_title_returns_google_books_metadata(
 def test_fetch_by_title_falls_back_to_open_library(
     metadata_extractor: ModuleType,
 ) -> None:
+    # Arrange
     extractor = metadata_extractor.BookMetadataExtractor(
         http_get_json=_fake_open_library_response
     )
 
+    # Act
     result = extractor.fetch_by_title("Foundation Design Field Manual")
 
+    # Assert
     assert result is not None
     assert result.title == "Foundation Design Field Manual"
     assert result.authors == ["Alice Morgan", "Ben Stone"]
@@ -117,14 +127,17 @@ def test_extract_metadata_reads_text_pdf_and_combines_api_metadata(
     synthetic_text_pdf: Path,
     tmp_path: Path,
 ) -> None:
+    # Arrange
     request = metadata_extractor.MetadataExtractionRequest(pdf_path=synthetic_text_pdf)
     extractor = metadata_extractor.BookMetadataExtractor(
         http_get_json=_fake_google_books_response,
         library_root=tmp_path,
     )
 
+    # Act
     result = extractor.extract_metadata(request)
 
+    # Assert
     assert result.pdf_path == synthetic_text_pdf
     assert result.relative_path == "Engineering/Ebooks/geotechnical-handbook.pdf"
     assert result.file_name == "geotechnical-handbook.pdf"
@@ -143,6 +156,7 @@ def test_extract_metadata_uses_ocr_when_digital_text_is_empty(
     metadata_extractor: ModuleType,
     pdf_assets_dir: Path,
 ) -> None:
+    # Arrange
     scan_path = pdf_assets_dir / "synthetic_blank_scan.pdf"
     scan_text = (
         pdf_assets_dir / "synthetic_scanned_foundations_extract.txt"
@@ -158,8 +172,10 @@ def test_extract_metadata_uses_ocr_when_digital_text_is_empty(
         library_root=pdf_assets_dir,
     )
 
+    # Act
     result = extractor.extract_metadata(request)
 
+    # Assert
     assert result.category == "Book"
     assert result.title == "Foundation Design Field Manual"
     assert result.authors == ["Alice Morgan", "Ben Stone"]

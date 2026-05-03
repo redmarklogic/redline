@@ -16,7 +16,7 @@ Product-Led Growth (PLG) go-to-market (GTM): if engineers cannot access
 cannot acquire users organically.
 
 **Severity: Tier 2 -- serious but manageable.** Not existential, because our primary
-target market (Tier 2 SME firms, 5-50 people) mostly lacks the Microsoft 365 E5
+target market (Small firms, 5-50 people) mostly lacks the Microsoft 365 E5
 licensing and dedicated IT teams required to deploy Defender for Cloud Apps blocking.
 But this risk upgrades from "manageable friction" to "Tier 1 strategic threat" if the
 blocking pattern cascades from large consultancies into MSP-managed IT environments
@@ -52,9 +52,9 @@ state the target is "mid size and small size" consultancies that "don't have a d
 legal team." The founder did not contemplate corporate IT blocking as a barrier, because
 the SME firms he targets mostly do not have enterprise IT security infrastructure.
 
-That assumption is correct for most Tier 2 firms today. But three things could change it:
+That assumption is correct for most Small firms today. But three things could change it:
 
-1. **Cascade from large to mid-market via MSPs.** Many Tier 2 firms outsource IT to
+1. **Cascade from large to mid-market via MSPs.** Many Small firms outsource IT to
    Managed Service Providers (MSPs). MSPs manage Microsoft 365 tenants at scale and may
    apply Defender for Cloud Apps policies as a default template across all their clients.
    When one MSP blocks "Generative AI" tools, every client inherits the block — including
@@ -76,11 +76,11 @@ That assumption is correct for most Tier 2 firms today. But three things could c
 
 | Factor | Assessment |
 |---|---|
-| **Primary target (Tier 2 SME, 5-50 people)** | Low exposure today. Most lack M365 E5 + Defender for Cloud Apps. Risk upgrades if MSPs cascade policies. |
+| **Primary target (Small firms, 5-50 people)** | Low exposure today. Most lack M365 E5 + Defender for Cloud Apps. Risk upgrades if MSPs cascade policies. |
 | **Secondary audience (large consultancy engineers)** | High exposure. The PDF is direct evidence of blocking at a large consultancy. Engineers at these firms will not reach Redline. |
 | **Word-of-mouth channel** | Moderate impact. If early advocates at large firms are blocked, the word-of-mouth flywheel that accelerates beachhead adoption loses one channel — but not the primary channel (LinkedIn + NZ/AU forums). |
 | **Narrative contagion** | The most dangerous vector. "Microsoft says block AI tools" becomes an industry talking point that poisons Redline's category before engineers even try it. |
-| **Timeline** | 6-18 months for cascade to reach Tier 2 MSP-managed firms. Immediate for large consultancies. |
+| **Timeline** | 6-18 months for cascade to reach Small MSP-managed firms. Immediate for large consultancies. |
 
 **Overall: Tier 2 risk (serious, needs strategic response, not existential today).**
 Escalates to Tier 1 if: (a) a major NZ/AU MSP applies blanket Generative AI blocking
@@ -333,7 +333,7 @@ on it, it gets blocked before the advocacy base exists. The "10 angry users" thr
 (borrowing from BeyondWords and Scite) must be reached before IT's next quarterly
 Shadow IT review.
 
-For Tier 2 SME firms without Defender, this race condition does not exist — and those
+For Small firms without Defender, this race condition does not exist — and those
 firms are our primary target. For large consultancies and MSP-managed mid-market firms,
 the race condition is real.
 

@@ -15,7 +15,7 @@ shutil.rmtree(pathlib.Path(r"G:\My Drive\Library\...\chapter-subfolder"))
 
 ---
 
-## Case B — No full book, only chapters
+## Case B — No full book, only chapters in a subfolder
 
 Merge the chapters into a single PDF, then delete the originals:
 
@@ -26,6 +26,31 @@ Merge the chapters into a single PDF, then delete the originals:
 ```
 
 `merge_chapters.py` verifies the output is readable before removing the chapter files. If the merged PDF has 0 pages, the chapters are left intact.
+
+---
+
+## Case C — Chapters scattered in parent folder (no subfolder)
+
+When chapter PDFs are downloaded directly into a parent folder alongside other books:
+
+1. Create a temporary subfolder and move the chapter files into it:
+
+```powershell
+$base = "G:\My Drive\Library\...\<lcc-subfolder>"
+$chapDir = "$base\<Title>-Chapters"
+New-Item -ItemType Directory -Path $chapDir -Force | Out-Null
+Get-ChildItem $base -Filter "<title-prefix>*.pdf" | Move-Item -Destination $chapDir
+```
+
+2. Run `merge_chapters.py` as in Case B:
+
+```powershell
+.\.venv\Scripts\python.exe .agents\tools\library\merge_chapters.py `
+    "$chapDir" `
+    "$base\<Canonical-Title_Author_Year>.pdf"
+```
+
+The chapter subfolder is automatically deleted after a successful merge.
 
 ---
 

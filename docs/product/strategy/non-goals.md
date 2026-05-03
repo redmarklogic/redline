@@ -31,14 +31,22 @@ strategy drift.
    positioning cannot survive that reputation hit. AI-assisted *drafting* of founder
    content remains allowed; LLM-as-Judge quality gate is required before publishing.
    See `gtm/content-engine.md`.
+8. **Calculation checking.** Redline does not validate engineering calculations or
+   design parameters. Pre-Review flags missing sections and standards non-compliance
+   (business of engineering); peer engineers review calculations under a separate
+   mandate (practice of engineering). These are distinct review steps performed by
+   different people under different liability exposure. Pursuing calculation-checking
+   in Phase 1 would require a different liability model, different competitive
+   positioning, and a different trust threshold with Technical Directors. Parked as
+   Phase-2 hypothesis under P-032. *(Added 2026-05-03.)*
 
 ## GTM Non-Goals (H2 2026)
 
 1. **No third geography.** NZ and AU only. See `strategic-bets.md` Bet 5.
-2. **No Tier 1 enterprise sales motion.** *(updated 2026-04-20, Archie CI session)*
-   Tier 1 firms (T+T, WSP, Beca — 1000+ employees, government projects) build their
+2. **No Large-firm enterprise sales motion.** *(updated 2026-05-03, canonical naming)*
+   Large firms (T+T, WSP, Beca — 500+ employees, government projects) build their
    own AI and require enterprise SOC2. They are not Redline's market. Single PLG funnel
-   from free wedge → Pro → Business, targeting Tier 2 firms (5-50 employees,
+   from free wedge → Pro → Business, targeting Small firms (5-50 employees,
    residential/commercial geotech). See `strategic-bets.md` Bet 6 market segmentation.
    Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
    No SDR team, no outbound enterprise prospecting, no annual contract negotiations.

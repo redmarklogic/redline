@@ -48,6 +48,22 @@ Determine the mode from the invocation before acting.
 
 If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh agents against recent decisions, audit the whole org, or refactor a skill?"
 
+### Custom Agent Frontmatter Governance
+
+When drafting, updating, auditing, or refreshing `.github/agents/*.agent.md`, follow the official VS Code Custom Agents documentation: https://code.visualstudio.com/docs/copilot/customization/custom-agents.
+
+Every Redline-owned custom agent must declare these YAML frontmatter fields explicitly:
+
+| Field | Rule |
+|---|---|
+| `name` | Use the identifier that handoffs and subagent lists reference. |
+| `description` | Keep the invocation and role summary concise. |
+| `tools` | List the least-privilege tools or tool sets available to the agent. Include `agent` when `agents` is non-empty. Use official MCP server wildcard syntax such as `notebooklm/*`; do not use ad hoc names such as `mcp_notebooklm_*`. |
+| `agents` | List the exact subagents this agent may invoke. Use `[]` to block subagent use. |
+| `handoffs` | Treat as suggested workflow transitions only. Handoffs do not restrict subagent access and every handoff target must also appear in `agents`. |
+
+Vendor-generated agents, including `speckit.*`, must not be manually edited. If they violate this governance, report the drift and fix it through the vendor generation path rather than patching the generated file.
+
 ### Session-Start Staleness Check
 
 At the start of **every** session (regardless of mode), run a lightweight staleness scan before proceeding with the requested task:

@@ -77,6 +77,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
 - **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
+- **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
 - **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)

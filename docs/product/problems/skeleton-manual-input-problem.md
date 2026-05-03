@@ -25,7 +25,7 @@ The risk: if the manual form captures too little, the skeleton degenerates to "j
 
 ## Target User
 
-Intermediate civil/geotechnical engineer (3-7 years post-graduation), working inside a Tier 2 NZ consultancy (5-50 person firm) on residential or light-commercial GBR/GIR work. Same as [skeleton-wedge-problem.md](skeleton-wedge-problem.md).
+Intermediate civil/geotechnical engineer (3-7 years post-graduation), working inside a Small NZ consultancy (5-50 person firm) on residential or light-commercial GBR/GIR work. Same as [skeleton-wedge-problem.md](skeleton-wedge-problem.md).
 
 This user knows what report type they need. They know what conditional sections apply. They know their project number and client name. What they do not know (or cannot confidently recall) is the complete list of mandatory sections, the correct heading conventions, which standards apply to each section, and what domain-specific questions the skeleton should prompt them to answer.
 
@@ -67,7 +67,7 @@ Bet 1's kill criterion depends on quota exhaustion triggering outbound. Quota ex
 
 | Check | Status | Detail |
 |---|---|---|
-| Target user | Identified | Intermediate engineer, Tier 2 NZ firm, GBR/GIR work |
+| Target user | Identified | Intermediate engineer, Small NZ firm, GBR/GIR work |
 | Core pain | Identified | Skeleton generator needs project parameters; without them, output is generic and worthless |
 | Desired outcome | Measurable | Form < 2 min, skeleton specific enough to drive 3-5 generations per user |
 | Strategic link | Linked | Bet 1 — quota exhaustion depends on skeleton usefulness |

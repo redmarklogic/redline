@@ -22,6 +22,8 @@ STANDARD_HEADERS = [
     "canonical_filename",
     "domain",
     "subdomain",
+    "lcc_class",
+    "lcc_subclass",
     "category",
     "document_type",
     "topics",
