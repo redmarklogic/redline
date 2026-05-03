@@ -8,7 +8,7 @@
 ## Vision Statement
 
 A neutral, infrastructure-grade quality layer for geotechnical engineering documents —
-that catches what a senior engineer would catch, without replacing their judgement.
+that handles routine checks so senior reviewers can focus on the judgement that matters.
 
 ## What This Means
 
@@ -57,24 +57,32 @@ Bentley) are unlikely to attack early because the segment is invisible to their 
 Litmus risk and the contested-decision flag are tracked under
 `decisions/parked-decisions.md` P-018.
 
-## Adjacent-Market Signal: Legal AI (2026-04-26)
+## Adjacent-Market Signal: Legal AI and Word-Native Review (2026-05-03)
 
-An advisory board review of Leya (leya.law, legal AI workspace, $675M valuation, YC W24;
-note: original source transcribed name as "Legora" — corrected 2026-04-27)
-surfaced a transferable pattern: in document-heavy, high-liability professions, point
-solutions (templating, editing, research, redlining) collapse when generative AI can
-cover all text-processing workflows with one underlying technology. The durable
-category is not a collection of narrow tools but a **domain-specific quality layer
-embedded in existing document workflows**, governed by expert playbooks and audit
-trails.
+Robin AI, Legora, and Microsoft Word Legal Agent strengthen Redline's current vision
+rather than changing it. The transferable pattern is not "become an agentic document
+operating system." The transferable pattern is narrower: expert playbooks applied inside
+existing document workflows, with human approval, source-linked comments, deterministic
+document handling, and auditability.
 
-This reinforces Redline's current positioning ("infrastructure-grade quality layer")
-and warns against point-solution framing (skeleton tool, checklist tool, report
-linter). The long-term category aspiration is a geotechnical document quality
-workspace --- but the H2 scope remains a narrow wedge (Skeleton Generator +
-Pre-Review). No roadmap changes.
+The 2026-04-26 Leya memo should now be read as a pre-rebrand Legora signal. Public-source
+checking confirms Leya rebranded as Legora in February 2025. Microsoft Word Legal Agent
+validates document-native, playbook-driven review, but also shows that generic Word
+redlining is platform territory.
 
-Full analysis: `docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+Redline's differentiation therefore remains the geotechnical quality layer:
+jurisdictional standards, firm-specific House Rules, source-linked Pre-Review comments,
+deterministic DOCX handling, and professional-liability boundaries. Workflow expansion is
+allowed only where Redline preserves human engineering judgement. Document-native review,
+citations, comments, tracked changes, audit trail, standards references, and House Rules
+are in scope; autonomous recommendations, baseline setting, compliance attestation, and
+reviewer arbitration are permanent non-goals.
+
+The H2 scope remains Skeleton Generator + Pre-Review. No OKR or roadmap reset.
+
+Full analyses: `docs/research/20260426-legal-ai-adjacent-market-signal.md`,
+`docs/research/20260503-microsoft-word-legal-agent-robin-ai-legora-signal.md`, and
+`docs/knowledge/geotechnical/contracts-and-risk/ai-workflow-expansion-boundaries.md`.
 
 ## What Redline Will Never Be
 

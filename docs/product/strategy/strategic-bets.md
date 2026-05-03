@@ -22,6 +22,7 @@ exhaustion creates a defensible moment for an outbound conversation. Marginal co
 quota-exhausted user is $0.10–$1.
 
 **Assumption stack**:
+
 - Intermediate engineers will give a verified work email for a useful skeleton.
 - Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.
 - At least 1 in 5 responders will book a paid Pre-Review trial.
@@ -68,6 +69,7 @@ or House Rules engine.
 Phase-2 buyer (Partner) we are not yet credible to.
 
 **Assumption stack**:
+
 - A rule library covering 20-30 common reviewer markup patterns is sufficient to deliver
   perceived value (we do not need 200).
 - ~~Word task pane integration is acceptable to the engineer's workflow.~~ **Parked
@@ -146,6 +148,23 @@ not an analogy — it is a confirmed interaction model. "Playbook" is the correc
 abstraction for what the Pre-Review rule library does. Strengthens conviction that
 the Pre-Review → House Rules upgrade path is architecturally correct.
 
+**Adjacent-market watch item — Robin/Legora/Microsoft comparable** *(added
+2026-05-03)*: Robin AI, Legora, and Microsoft Word Legal Agent strengthen the
+Pre-Review → House Rules hypothesis. They validate playbook-driven review,
+source-linked markup, preserved document fidelity, and human approval as the
+interaction model for high-liability document work. They do not change the product
+problem. For H2, Redline should test whether high-fidelity DOCX output, comments,
+tracked changes, and source-linked review notes are sufficient before unfreezing the
+Word task pane. No scope change.
+
+**Professional-boundary guardrail** *(added 2026-05-03, Graeme)*: Legal-AI-style
+workflow expansion is allowed only where Redline remains a quality and traceability layer.
+Safe expansion includes document-native review, comments, tracked changes,
+source-linked flags, audit trail, standards references, and House Rules. Unsafe expansion
+includes autonomous engineering recommendations, GBR baseline setting, compliance
+attestation, or arbitration between author and reviewer. Provenance:
+`docs/knowledge/geotechnical/contracts-and-risk/ai-workflow-expansion-boundaries.md`.
+
 **OKR ladder**: KR3 (paid conversion), KR4 (retention).
 
 ---
@@ -162,6 +181,7 @@ knowledge is fragmented, jurisdiction-bound, and underspecified in public LLMs. 
 curated registry is a defensible asset.
 
 **Assumption stack**:
+
 - A small standards corpus (10–15 documents) is enough to materially improve skeleton
   and Pre-Review output for NZ GBR work.
 - Maintenance load is hours per quarter, not weeks per month.
@@ -217,6 +237,7 @@ they do not feel threatened by tools that surface issues for human resolution.
 Procurement gatekeepers approve infrastructure faster than they approve "AI tools".
 
 **Assumption stack**:
+
 - Junior/intermediate engineers will champion a tool framed as a self-check rather than
   hide it from seniors.
 - Firm Principals will allow the tool when the framing is "checks our house standards"
@@ -289,6 +310,7 @@ is large enough to register, the Standards Knowledge Store and House Rules moat
 (Bet 3) is years deep.
 
 **Assumption stack**:
+
 - The job is genuinely "nonconsumption" today (validated through KR2 — confirm engineers
   are paying for senior review hours, not for tooling).
 - No incumbent (Autodesk, Bentley, Microsoft, OpenAI) treats geotech-specific QA as a
@@ -325,6 +347,15 @@ years and potential exclusivity with Soil & Rock. Provenance:
 
 **Litmus uncertainty**: Whether each incumbent would *actually* see this as sustaining
 is itself a contested question. Logged under `decisions/parked-decisions.md` P-018.
+
+**Incumbent signal — Microsoft Word Legal Agent** *(added 2026-05-03)*: Microsoft
+shipping a legal workflow agent inside Word is a platform-incumbent signal, but it does
+not trip this bet's kill criterion. The kill criterion is geotech-specific senior-review
+quality for GBR/GIR documents, not generic legal redlining or Word-native document
+assistance. Treat Microsoft as proof that generic Word review will commoditise, and keep
+Redline focused on geotechnical standards, House Rules, audit trail, and NZ/AU beachhead
+workflows. Provenance:
+`docs/research/20260503-microsoft-word-legal-agent-robin-ai-legora-signal.md`.
 
 **OKR ladder**: Underwrites Bet 4 (positioning) and Bet 5 (beachhead).
 

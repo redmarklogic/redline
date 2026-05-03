@@ -12,7 +12,7 @@ and `jtbd.md`.
 ## Two Methodologies, One Guide
 
 | Source | What it gives us |
-|---|---|
+| --- | --- |
 | Christensen / Moesta "Switch" interview | The *story* — uncover the real Job by tracing the customer's switch timeline. |
 | Steve Blank — Customer Development | The *posture* — founder-only, no pitching, validate the problem before the solution. |
 
@@ -86,19 +86,63 @@ Operational discovery — feeds Sprint 1 PRD acceptance criteria:
 - "If you used a quality tool, would you tell your senior reviewer? Your Principal?
   Why or why not?" (This is the Bet-4 / Switzerland-neutral test.)
 
-**Word-native workflow friction probe** *(added 2026-04-26, legal AI adjacent-market
-signal)*: This question tests whether web-based review creates enough friction that
-Word-native integration should move up the roadmap. Adjacent evidence from legal AI
-(Leya — leya.law) shows that Word add-in adoption was critical because lawyers live in Word.
-Engineers also draft GIRs/GBRs in Word. If engineers say they would not leave Word to
-review flags in a browser, Word task pane integration (currently parked, P-024) needs
-re-evaluation.
+**Document-native review probe** *(updated 2026-05-03, Robin/Legora/Microsoft
+comparable)*: This tests whether Redline needs a Word task pane, high-fidelity DOCX
+round-trip, or a browser review loop with Word-compatible output. Adjacent evidence from
+legal AI shows that document-native, playbook-driven review matters in high-liability
+professional workflows. Graeme's boundary note adds the domain constraint: Redline may
+surface flags, citations, comments, tracked changes, and audit evidence, but must not
+author engineering judgement or arbitrate reviewer decisions.
 
-- "If a quality tool flagged issues in your report, would you prefer to see those flags
-  inside Word — like tracked changes or comments — or would you be happy to upload
-  your document to a website and review the flags there? Why?"
+- "The last time you handled senior-review comments, where did the real work happen:
+   Word comments, tracked changes, PDF markup, a review meeting, email, or a separate
+   checklist?"
+- "If Redline returned a DOCX with comments, tracked changes, source links, and preserved
+   formatting, would that fit your workflow, or would the review need to happen inside
+   Word itself?"
+- "What would make browser upload unacceptable: confidentiality, formatting risk, version
+   control, upload friction, IT policy, or something else?"
+- "Which parts of the document must survive perfectly: numbering, tables, figure
+   references, comments, tracked changes, headers/footers, appendices, or template styles?"
+- "Would you trust a source-linked comment more than a plain suggestion? What source
+   would need to be linked: clause reference, firm rule, prior report pattern, or reviewer
+   rationale?"
 
-Provenance: `docs/research/20260426-legal-ai-adjacent-market-signal.md`.
+**Generic LLM usage probe** *(added 2026-05-03, John)*: This tests whether Redline is
+wrapping an existing drafting behaviour rather than competing with it.
+
+- "What do you already use ChatGPT, Claude, Copilot, or internal prompt libraries for in
+   report work?"
+- "Before an AI-assisted draft reaches a senior reviewer, what do you still check
+   manually?"
+- "What would make you trust or reject a source-linked quality flag: the cited source,
+   the wording, the Word comment format, the reviewer workflow, or something else?"
+
+**House Rules / starter playbook probe** *(added 2026-05-03, Mark + Graeme)*:
+
+- "Does your firm have review rules that everyone is expected to follow but that are not
+   reliably written down?"
+- "Who owns those rules today: Technical Director, Project Director, senior reviewer,
+   project controller, QA manager, or nobody?"
+- "If Redline shipped 20-30 starter rules, which would your firm keep, change, or delete?"
+- "How much senior time would your firm spend configuring House Rules before it became
+   too much effort?"
+- "Would founder-assisted setup feel useful, or would it feel like outsourced engineering
+   review?"
+
+**Workflow expansion boundary probe** *(added 2026-05-03, Graeme)*:
+
+- "Where would multi-document consistency matter first: RFP to LOE, LOE to GIR, GIR to
+   appendices, GBR to specification, or report bundle to limitations clauses?"
+- "Is that a H2 need, or only useful after Pre-Review already works on a single document?"
+- "Which review rules are safe to encode as checks, and which should always stay with a
+   senior engineer's judgement?"
+- "Would a senior reviewer trust Redline more if every flag said 'review required' rather
+   than 'fix this'?"
+
+Provenance: `docs/research/20260426-legal-ai-adjacent-market-signal.md`,
+`docs/research/20260503-microsoft-word-legal-agent-robin-ai-legora-signal.md`, and
+`docs/knowledge/geotechnical/contracts-and-risk/ai-workflow-expansion-boundaries.md`.
 
 **Structural completeness probe** *(added 2026-04-23)*: This question validates
 whether intermediate engineers recognise the content-vs-packaging gap in their own

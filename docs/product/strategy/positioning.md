@@ -13,7 +13,7 @@
 We position Redline against three categories of incumbent, deliberately:
 
 | Category | Incumbent example | How Redline differs |
-|---|---|---|
+| --- | --- | --- |
 | Generic AI assistants | ChatGPT, Microsoft 365 Copilot | Jurisdictional grounding (NZS / AS / NZGS), zero-training perimeter, partner-safe to admit using. |
 | Document QA / linting tools | Generic grammar / clause-flagger SaaS | Domain-specific to geotechnical reports; Switzerland-neutral; firm-configurable house rules. |
 | Senior peer review | The senior engineer | Compresses the review loop; never replaces the human reviewer's judgement. |
@@ -45,11 +45,17 @@ These words **never** appear:
 **Decision:** AI is the engine, never the brand. The word "AI" follows a three-layer
 rule across all external surfaces.
 
-| Layer | Where it applies | Rule |
-|---|---|---|
-| **Positioning** (tagline, homepage hero, pitch deck cover, elevator pitch, value proposition) | No "AI". No "machines". Lead with the job: "handles the routine checks so your senior reviewers can focus on the judgment that matters." |
-| **Explanatory** (how-it-works page, product tour, onboarding, sales Q&A) | Use "AI" factually and sparingly when explaining how the product works. Never as a selling point — as a technical fact. Example: "Yes, AI is the engine. It's trained specifically on geotechnical standards — not general-purpose." |
-| **Discovery** (blog posts, SEO content, FAQ, meta descriptions, LinkedIn content) | Use "AI" where it serves discoverability. John owns this via content strategy. The specialised-AI thesis ("People using specialised AI will replace people using generic AI") lives here. |
+- **Positioning** (tagline, homepage hero, pitch deck cover, elevator pitch, value
+  proposition): no "AI". No "machines". Lead with the job: "handles the routine checks
+  so your senior reviewers can focus on the judgment that matters."
+- **Explanatory** (how-it-works page, product tour, onboarding, sales Q&A): use "AI"
+  factually and sparingly when explaining how the product works. Never as a selling
+  point — as a technical fact. Example: "Yes, AI is the engine. It's trained specifically
+  on geotechnical standards — not general-purpose."
+- **Discovery** (blog posts, SEO content, FAQ, meta descriptions, LinkedIn content): use
+  "AI" where it serves discoverability. John owns this via content strategy. The
+  specialised-AI thesis ("People using specialised AI will replace people using generic
+  AI") lives here.
 
 **Rationale:**
 
@@ -93,6 +99,17 @@ complementary, not competing jobs. As AI-drafted reports proliferate, the review
 grows — every AI-generated GBR still needs a quality layer before a senior signs it.
 Redline is positioned downstream of any drafting tool, not against it.
 
+**Generic LLM and drafting-tool objection:**
+
+Generic AI is useful for early thinking, drafting assistance, and summarisation. Redline
+is not trying to be a better chatbot. It is the quality layer after the draft: it checks
+whether the document follows the standards, firm rules, and review expectations the firm
+is prepared to stand behind.
+
+Approved softer phrasing for this objection:
+
+> "The draft can come from anywhere. The check still has to happen."
+
 **Against bespoke AI agencies (SupaHuman and similar):**
 
 SupaHuman delivers bespoke RAG implementations at $50k+ with a sales-call-plus-contract
@@ -127,7 +144,7 @@ The top-three priorities of a geotechnical engineering firm CEO, in agreed order
 This ordering drives how we pitch to different buyer roles.
 
 | # | Priority | What the CEO thinks about | Source |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | **Financial Performance** (utilisation, cash flow, revenue per employee) | "Are we getting paid for the engineering we are doing?" Utilisation must be ~85-90% for technical staff; missing payroll is the most stressful aspect of firm leadership. | PSF Management literature; Graeme (25yr practitioner) |
 | 2 | **Talent** (recruitment, retention, knowledge transfer, leverage) | Skills shortage ranked #1 industry concern in the GSF survey every year (74.6% in 2024). University geoscience enrolments down 45% since 2014. Seniors doing work graduates could handle (systemic underdelegation). | Ground Engineering GSF surveys 2018-2025; PSF Management |
 | 3 | **Liability** (PI insurance, claims, QA/QC) | PI premiums up to 1,000% increases; coverage cut from per-claim to aggregate caps. Even a minor dispute costs $10k+ unbillable time. Insurers evaluate QA procedures when setting premiums. | Ground Engineering 2019-2024; Risk Assessment literature |
@@ -135,10 +152,10 @@ This ordering drives how we pitch to different buyer roles.
 **Context-dependence by firm size:**
 
 | Firm tier | Binding constraint | Notes |
-|---|---|---|
-| Tier 3 (5-50 staff) | Financial Performance firmly #1 | Thin margins; one slow month threatens payroll |
-| Tier 2 (50-500 staff) | Financial Performance #1, Talent closing fast | More financial resilience, but acute talent competition |
-| Tier 1 (500+ staff) | Talent can overtake Financial Performance | Financial resilience is higher; existential risk is knowledge drain from retiring principals |
+| --- | --- | --- |
+| Tier 3 (5-50 staff) | Financial Performance firmly #1; Liability #2 | Thin margins; one slow month threatens payroll. Zero buffer against a PI claim — absorbed from the owner's personal finances. No legal team; some skip PI insurance entirely due to cost. |
+| Tier 2 (50-500 staff) | Financial Performance #1, Talent closing fast | More financial resilience, but acute talent competition. PI exposure grows with project diversity. |
+| Tier 1 (500+ staff) | Talent can overtake Financial Performance | Financial resilience is higher; existential risk is knowledge drain from retiring principals. Dedicated legal and QA teams manage liability internally. |
 | Any firm during PI crisis | Liability jumps temporarily to #1 | When premiums spike or coverage shifts, ability to trade is threatened |
 
 **Pitch rule:** When positioning to CEOs, lead with financial performance (write-off
@@ -164,7 +181,7 @@ resents a tool that implies they need supervision.
 **Approved phrasings (TD sniff test passed):**
 
 | Context | Phrasing |
-|---|---|
+| --- | --- |
 | Canonical supporting tagline | "Handles the routine checks so your senior reviewers can focus on the judgment that matters." |
 | Conversational (sales calls, LinkedIn) | "Takes the checklist off your senior reviewer's desk — so they can do the work only they can do." |
 | High-impact (landing pages, demos) | "Your pre-review grunt work, handled — before your senior reviewer even opens the file." |
