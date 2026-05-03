@@ -75,6 +75,19 @@ Understanding the split clarifies what is in and out of scope.
 - Define the size buckets (headcount? revenue? project type?).
 - Are we targeting SMEs, large firms, or both?
 
+> **RESOLVED (2026-05-03).** Three tiers defined by headcount: Tier 3 (5–50 staff,
+> small/niche firms), Tier 2 (50–500 staff, mid-size firms), Tier 1 (500+ staff,
+> large infrastructure firms). Beachhead is Tier 3 — they cannot build, cannot
+> afford bespoke, and have the highest pain-to-resource ratio. Tier 2 follows via
+> bowling-pin expansion after Tier 3 dominance. Tier 1 is explicitly out of scope
+> (they build their own tools). CEO priority hierarchy is context-dependent by tier:
+> Tier 3 = Financial Performance > Liability > Talent; Tier 2 = Financial
+> Performance > Talent > Liability; Tier 1 = Talent > Financial Performance >
+> Liability. Full analysis in `docs/research/20260503-firm-size-segmentation.md`.
+> Next step: Mark to frame tier-specific problem statements linked to the beachhead
+> bet (Bet 1). KR2 discovery conversations should filter by firm tier and probe
+> willingness-to-pay at the Tier 3 price point.
+
 ### 1.5 CEO Outreach Journey [John, Founder]
 
 Build a structured LinkedIn outreach sequence: contact decision-makers, run
