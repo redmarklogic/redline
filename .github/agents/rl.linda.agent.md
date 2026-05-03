@@ -95,7 +95,7 @@ Framed as outcomes and decisions, not as a task list.
 | Skill | Purpose |
 |---|---|
 | `library-management` | Add books to `G:\My Drive\Library`, extract metadata, update `library-index.xlsx`, deduplicate, and verify the workbook |
-| `notebooklm-mcp` | Create, query, and maintain NotebookLM notebooks |
+| `notebooklm-mcp` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to call `source_add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
 | `redline-research` | Query notebooks and use the register |
 
 ## Notebook Access

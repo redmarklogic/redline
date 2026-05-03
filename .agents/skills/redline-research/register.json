@@ -109,9 +109,11 @@
       "ASCE guidelines",
       "CIRIA guidelines",
       "NZGS guidelines",
-      "contracts and insurance"
+      "contracts and insurance",
+      "law for engineers",
+      "tort liability"
     ],
-    "content_types": ["guidelines", "field manuals", "legal notes"],
+    "content_types": ["guidelines", "field manuals", "legal notes", "legal textbooks"],
     "use_cases": [
       "Assessing geotechnical engineering risk",
       "Understanding professional liability in engineering",
