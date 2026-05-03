@@ -249,8 +249,8 @@ semi-automatic (user triggers reflection), then move to fully automatic
 
 ### 3.5 Systematic Creativity Skill [Founder]
 
-A book , "Inside the Box: A Proven System of Creativity for Breakthrough Results", lays out
-Systematic Inventive Thinking (SIT,  innovation principles (subtraction, addition, multiplication, etc.) applied
+A book, "Inside the Box: A Proven System of Creativity for Breakthrough Results", lays out
+Systematic Inventive Thinking (SIT) — innovation principles (subtraction, addition, multiplication, etc.) applied
 to existing products. Examples: multi-blade razors (addition), scent-only
 detergent (subtraction), blank-key keyboards (subtraction).
 

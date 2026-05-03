@@ -93,7 +93,8 @@ Example: a geotechnical engineering textbook goes in `T - Technology\TA700-712 -
 | `H - Social Sciences` | `HF - Commerce` | Marketing, sales, branding |
 | `H - Social Sciences` | `HM - Sociology` | Organisational behaviour, leadership |
 | `Q - Science` | `QA - Mathematics` | Statistics, data science, machine learning |
-| `T - Technology` | `TA - Engineering (General). Civil engineering` | Civil/geotechnical engineering, professional practice |
+| `T - Technology` | `TA - Engineering (General). Civil engineering` | Civil engineering (general), professional practice |
+| `T - Technology` | `TA700-712 - Foundation and Geotechnical Engineering` | Geotechnical engineering, foundation engineering |
 | `T - Technology` | `TC - Hydraulic engineering` | Hydraulics, dams, flood management |
 | `T - Technology` | `TH - Building construction` | Structural, building |
 | `B - Philosophy. Psychology. Religion` | `BF - Psychology` | Cognitive science, decision-making, behavioural economics |

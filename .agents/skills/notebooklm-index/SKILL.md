@@ -53,7 +53,7 @@ Index NotebookLM notebooks into a structured Excel register using MCP tools.
 | `source_count` | `notebook_get` | integer |
 | `summary` | `notebook_describe` | plain text |
 | `suggested_topics` | `notebook_describe` | pipe-separated (`topic1 \| topic2`), empty string if none |
-| `indexed_date` | set at index time | `YYYY-MM-DD` |
+| `last_updated` | set at index time | `YYYY-MM-DD` |
 | `status` | set at index time | `active` or `deleted` |
 
 ### Worksheet: `sources`
@@ -81,7 +81,7 @@ Every "add" is an upsert. There is no distinction between add and update.
 2. Search for the `notebook_id` in column A
 3. **If found:** overwrite that row in `notebooks` and delete all rows for that `notebook_id` in `sources`, then re-insert current sources
 4. **If not found:** append a new row to `notebooks` and append source rows to `sources`
-5. Set `indexed_date` to today (`YYYY-MM-DD`)
+5. Set `last_updated` to today (`YYYY-MM-DD`)
 6. Set `status` to `active`
 
 ### Deleted notebooks
@@ -89,7 +89,7 @@ Every "add" is an upsert. There is no distinction between add and update.
 If `notebook_get` fails (notebook no longer exists):
 1. Find the row in `notebooks` by `notebook_id`
 2. Set `status` to `deleted`
-3. Set `indexed_date` to today
+3. Set `last_updated` to today
 4. Do **not** delete rows from `sources` (preserve historical data)
 
 ## Full Sync (no URL given)
@@ -106,7 +106,7 @@ When the user says "update the index" without providing a notebook URL, run a fu
 |---|---|---|
 | **New** | In NotebookLM, not in index | Full index (steps 4a–4c) |
 | **Existing** | In both NotebookLM and index | Diff check (step 5) |
-| **Stale** | In index, not in NotebookLM | Mark `status = deleted`, update `indexed_date` |
+| **Stale** | In index, not in NotebookLM | Mark `status = deleted`, update `last_updated` |
 
 4. **New notebooks** — full index, one at a time:
    - a. `notebook_get` — retrieve metadata and source list
@@ -124,13 +124,13 @@ When the user says "update the index" without providing a notebook URL, run a fu
      - Sources in index but **not** in notebook → delete those rows from `sources`
      - Sources in both → keep existing rows unchanged (do not re-fetch)
      - Update `source_count` in the `notebooks` row (from `notebook_get`, already called)
-     - Update `indexed_date` to today
+     - Update `last_updated` to today
      - Do **not** re-call `notebook_describe` — keep existing summary
      - Write changes to Excel
      - Report: `"[notebook_title] — Updated: added X sources, removed Y sources"`
 
 6. **Stale notebooks** — mark deleted:
-   - Set `status = deleted` and `indexed_date` to today in `notebooks`
+   - Set `status = deleted` and `last_updated` to today in `notebooks`
    - Do **not** delete source rows (preserve historical data)
    - Report: `"[notebook_title] — Marked deleted"`
 
