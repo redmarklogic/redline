@@ -1,7 +1,11 @@
 # Parameter Completeness Checking and Standard of Care
 
+**Status**: validated
+**Owner**: Graeme (Principal Geotechnical Engineer)
+**Last updated**: 2026-05-04
+**Provenance**: Original notebook research 2026-05-04; confirmed in parameter
+completeness advisory session, 2026-05-04
 **Sub-domain**: report-writing
-**Last verified**: 2026-05-04
 **Confidence**: cross-referenced
 **Sources**: Geotechnical Report Workflows, Risk Assessment in Engineering, Engineering Standards, Ground Engineering Magazine
 
