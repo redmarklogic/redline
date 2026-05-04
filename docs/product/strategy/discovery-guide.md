@@ -86,13 +86,14 @@ Operational discovery — feeds Sprint 1 PRD acceptance criteria:
 - "If you used a quality tool, would you tell your senior reviewer? Your Principal?
   Why or why not?" (This is the Bet-4 / Switzerland-neutral test.)
 
-**Document-native review probe** *(updated 2026-05-03, Robin/Legora/Microsoft
-comparable)*: This tests whether Redline needs a Word task pane, high-fidelity DOCX
-round-trip, or a browser review loop with Word-compatible output. Adjacent evidence from
-legal AI shows that document-native, playbook-driven review matters in high-liability
-professional workflows. Graeme's boundary note adds the domain constraint: Redline may
-surface flags, citations, comments, tracked changes, and audit evidence, but must not
-author engineering judgement or arbitrate reviewer decisions.
+**Document-native review probe** *(updated 2026-05-04, Robin AI dropped per founder
+direction; Legora/Microsoft comparable retained)*: This tests whether Redline needs a
+Word task pane, high-fidelity DOCX round-trip, or a browser review loop with
+Word-compatible output. Adjacent evidence from legal AI shows that document-native,
+playbook-driven review matters in high-liability professional workflows. Graeme's
+boundary note adds the domain constraint: Redline may surface flags, citations,
+comments, tracked changes, and audit evidence, but must not author engineering
+judgement or arbitrate reviewer decisions.
 
 - "The last time you handled senior-review comments, where did the real work happen:
    Word comments, tracked changes, PDF markup, a review meeting, email, or a separate
@@ -155,7 +156,7 @@ senior-reviewer concern only (still valid, but changes priority).
   example, did they ask for a decision matrix, a severity classification, or a worked
   example that you hadn't included, even though you knew the answer?"
 
-### Part 5 — Pricing module (Van Westendorp, 2 minutes)
+### Part 5 — Pricing module (Van Westendorp + purchase path, 5 minutes)
 
 Only at the very end, after the JTBD is mapped. See `pricing-methodology.md` Step 1.
 
@@ -165,12 +166,35 @@ damaged by shifting to pricing questions. The pricing-methodology gate requires
 Van Westendorp completion in >= 10 of 15 KR2 conversations — not all 15. Skipping
 Part 5 in a given interview is acceptable; skipping it habitually is not.
 
-Four anchor questions:
+**5a. Van Westendorp — four anchor questions:**
 
 - At what monthly price would this be so cheap you'd doubt the quality?
 - At what price would you consider it a bargain?
 - At what price would you start to think it's expensive but worth considering?
 - At what price would it be too expensive to consider?
+
+**5b. Purchase path and pricing model — six discovery questions** *(added 2026-05-04,
+founder direction)*:
+
+These questions test the "dual purchase path" principle (`principles.md` #4) and the
+two pricing hypotheses in `pricing-methodology.md` Step 4. They reveal whether the
+buyer's natural motion is personal or firm-level, and what pricing model fits their
+mental model.
+
+1. "If you decided to use this tool, would you buy it yourself or would your firm need
+   to approve and pay for it?"
+2. "Could you put a $50–100/month tool on your own credit card, or does anything above
+   a certain amount need a purchase order from your firm?"
+3. "If your firm bought a team licence, would you also want a personal subscription for
+   side consulting or independent work?"
+4. "Would you want to try it individually first before proposing it to the firm, or
+   would the firm need to evaluate it for everyone before anyone gets access?"
+5. "Think about what your firm spends on senior review time per report — roughly how
+   many hours does a senior reviewer spend on a typical GBR before signing it off?
+   How much of that time would a pre-review tool need to save before it paid for
+   itself?"
+6. "Would your firm prefer to pay per document reviewed, per person per month, or a
+   flat monthly fee for the whole team?"
 
 ### Part 6 — Wrap (manage the network) (1 minute)
 
