@@ -36,7 +36,8 @@ class TestMergeChapters:
         import sys
 
         sys.path.insert(
-            0, str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library")
+            0,
+            str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library"),
         )
         from merge_chapters import merge_chapters
 
@@ -53,7 +54,8 @@ class TestMergeChapters:
         import sys
 
         sys.path.insert(
-            0, str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library")
+            0,
+            str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library"),
         )
         from merge_chapters import merge_chapters
 
@@ -62,14 +64,13 @@ class TestMergeChapters:
 
         assert not chapter_folder.exists()
 
-    def test_sorts_chapters_alphabetically(
-        self, tmp_path: pathlib.Path
-    ) -> None:
+    def test_sorts_chapters_alphabetically(self, tmp_path: pathlib.Path) -> None:
         """Chapters should be merged in sorted filename order."""
         import sys
 
         sys.path.insert(
-            0, str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library")
+            0,
+            str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library"),
         )
         from merge_chapters import merge_chapters
 
@@ -94,7 +95,8 @@ class TestMergeChapters:
         import sys
 
         sys.path.insert(
-            0, str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library")
+            0,
+            str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library"),
         )
         from merge_chapters import merge_chapters
 
@@ -109,7 +111,8 @@ class TestMergeChapters:
         import sys
 
         sys.path.insert(
-            0, str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library")
+            0,
+            str(pathlib.Path(__file__).parent.parent / ".agents" / "tools" / "library"),
         )
         from merge_chapters import merge_chapters
 

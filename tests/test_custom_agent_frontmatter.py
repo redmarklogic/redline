@@ -19,7 +19,9 @@ def test_first_party_agents_declare_tools_and_subagents() -> None:
         assert tools, f"{agent_path} tools must be an explicit non-empty list"
         assert agents, f"{agent_path} agents must be an explicit non-empty list"
         assert "agent" in tools, f"{agent_path} must include agent tool"
-        assert not any(tool == "*" for tool in tools), f"{agent_path} must not allow all tools"
+        assert not any(tool == "*" for tool in tools), (
+            f"{agent_path} must not allow all tools"
+        )
         assert not any(tool.startswith("mcp_notebooklm_") for tool in tools), (
             f"{agent_path} must use official MCP server wildcard syntax"
         )
@@ -43,7 +45,9 @@ def test_handoffs_are_limited_to_declared_subagents() -> None:
 def test_harriet_skill_requires_official_custom_agent_frontmatter() -> None:
     skill_text = HARRIET_SKILL.read_text(encoding="utf-8")
 
-    assert "code.visualstudio.com/docs/copilot/customization/custom-agents" in skill_text
+    assert (
+        "code.visualstudio.com/docs/copilot/customization/custom-agents" in skill_text
+    )
     assert "tools" in skill_text
     assert "agents" in skill_text
     assert "handoffs" in skill_text
