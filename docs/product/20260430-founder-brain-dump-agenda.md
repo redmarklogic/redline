@@ -86,8 +86,8 @@ Understanding the split clarifies what is in and out of scope.
 > Performance > Liability > Talent; Medium = Financial Performance > Talent >
 > Liability; Large = Talent > Financial Performance > Liability.
 >
-> Three named personas created for the Small segment (Sam -- Day-1 User, Anna --
-> Day-1 Buyer, Dave -- Gatekeeper), grounded by Graeme's domain expertise and
+> Three named personas created for the Small segment (Perrie -- Day-1 User, Anna --
+> Day-1 Buyer, Prisca -- Gatekeeper), grounded by Graeme's domain expertise and
 > NotebookLM knowledge bases. See `docs/product/strategy/personas.md`.
 >
 > All strategy docs updated to canonical naming: `positioning.md`,

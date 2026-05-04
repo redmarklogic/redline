@@ -1,7 +1,7 @@
 # Geotechnical Knowledge Index
 
 **Owner**: Graeme (Principal Geotechnical Engineer)
-**Last updated**: 2026-05-03
+**Last updated**: 2026-05-04
 
 This index tracks all curated geotechnical domain knowledge documented by Graeme.
 Each entry links to a knowledge document in the appropriate sub-domain directory.
@@ -41,3 +41,6 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | NZ/AU Geotechnical Firm Segmentation & Persona Grounding | contracts-and-risk | 2026-05-03 | cross-referenced | [../research/20260503-persona-grounding-firm-segmentation.md](../research/20260503-persona-grounding-firm-segmentation.md) |
 | Before-the-Fact vs After-the-Fact Standards Checking | standards-and-codes | 2026-05-03 | cross-referenced | [standards-and-codes/before-vs-after-the-fact-standards-checking.md](standards-and-codes/before-vs-after-the-fact-standards-checking.md) |
 | Practice of Engineering vs. Business of Engineering | contracts-and-risk | 2026-05-03 | cross-referenced | [contracts-and-risk/practice-vs-business-of-engineering.md](contracts-and-risk/practice-vs-business-of-engineering.md) |
+| Parameter Completeness Checking and Standard of Care | report-writing | 2026-05-04 | cross-referenced | [report-writing/parameter-completeness-checking-standard-of-care.md](report-writing/parameter-completeness-checking-standard-of-care.md) |
+| Design Type Taxonomy and Parameter Completeness Requirements | report-writing | 2026-05-04 | cross-referenced | [report-writing/design-type-taxonomy-and-parameter-completeness.md](report-writing/design-type-taxonomy-and-parameter-completeness.md) |
+| Engineering Reports vs Legal Documents — Domain Distinctiveness | report-writing | 2026-05-04 | cross-referenced | [report-writing/engineering-reports-vs-legal-documents-domain-distinctiveness.md](report-writing/engineering-reports-vs-legal-documents-domain-distinctiveness.md) |

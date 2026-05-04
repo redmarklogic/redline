@@ -18,14 +18,14 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 
 ---
 
-## 1. Sam — Day-1 User (Intermediate Engineer)
+## 1. Perrie — Day-1 User (Intermediate Engineer)
 
 ### Identity
 
-- **Name**: Sam (synthetic)
+- **Name**: Perrie (synthetic)
 - **Role**: Intermediate Geotechnical Engineer, 4 years post-graduation, working toward
   Chartered Professional Engineer (CPEng) status
-- **Firm context**: 15-person NZ consultancy. Sam reports to a Senior Engineer and has
+- **Firm context**: 15-person NZ consultancy. Perrie reports to a Senior Engineer and has
   work reviewed by one of two seniors before the Director signs off
 - **Digital maturity**: Comfortable with Word, Teams, and basic cloud tools. Has used
   ChatGPT privately but would never admit it at work because the Director has not
@@ -61,7 +61,7 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 | Submitting a draft I know is incomplete because the reviewer is bottlenecked and I have no other option | JTBD trigger event |
 | Cannot use ChatGPT because it has no jurisdictional grounding and the partner would not approve it | JTBD current alternatives |
 
-### Gains (what success looks like, in Sam's words)
+### Gains (what success looks like, in Perrie's words)
 
 - "My reviewer came back with five comments instead of twenty. That's never happened."
 - "I used the skeleton and it already had the right section structure for an NZ residential
@@ -70,32 +70,32 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 
 ### Adoption Journey
 
-1. **Discovery**: Sam finds the free Skeleton Generator through a colleague or a Google
+1. **Discovery**: Perrie finds the free Skeleton Generator through a colleague or a Google
    search for "GBR template NZ." Uploads a Letter of Engagement. Gets a structured
    skeleton in one click. (Bet 1 acquisition)
-2. **Activation**: Sam uses the skeleton 2-3 times. Quota exhausts. Founder reaches out
+2. **Activation**: Perrie uses the skeleton 2-3 times. Quota exhausts. Founder reaches out
    with a Pre-Review trial offer. (Bet 1 → Bet 2 conversion)
-3. **Retention**: Sam submits a Pre-Reviewed draft. Reviewer returns fewer comments.
-   Sam tells a colleague. (Bet 2 validation)
+3. **Retention**: Perrie submits a Pre-Reviewed draft. Reviewer returns fewer comments.
+   Perrie tells a colleague. (Bet 2 validation)
 
 ### Adoption Risks
 
-- **Variable digital maturity** — Sam might not trust a web tool with a draft report
+- **Variable digital maturity** — Perrie might not trust a web tool with a draft report
   containing client data. Data sensitivity is real for engineers handling site
   investigation results.
-- **No internal champion to validate output** — Sam cannot independently judge whether
-  the tool's suggestions are correct. If the tool gives bad advice once, Sam loses trust
+- **No internal champion to validate output** — Perrie cannot independently judge whether
+  the tool's suggestions are correct. If the tool gives bad advice once, Perrie loses trust
   permanently.
 
-### Anti-Persona (who Sam is NOT)
+### Anti-Persona (who Perrie is NOT)
 
-- Sam is not a graduate (0-2 years). Graduates do not draft full GBRs independently; they
+- Perrie is not a graduate (0-2 years). Graduates do not draft full GBRs independently; they
   assist seniors. A graduate has no "review bottleneck" pain because they are not the
   bottleneck — they are the cause of it.
-- Sam is not a tech enthusiast adopting AI tools for fun. Sam is a pragmatist who wants
+- Perrie is not a tech enthusiast adopting AI tools for fun. Perrie is a pragmatist who wants
   fewer review comments, not a better AI experience.
-- Sam is not at a Large firm (500+). Large firms have internal QA teams, templates, and
-  dedicated technical writers. Sam's pain exists because the firm is too small for those.
+- Perrie is not at a Large firm (500+). Large firms have internal QA teams, templates, and
+  dedicated technical writers. Perrie's pain exists because the firm is too small for those.
 
 ---
 
@@ -184,16 +184,16 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 
 ---
 
-## 3. Dave — Gatekeeper (Senior Reviewer)
+## 3. Prisca — Gatekeeper (Senior Reviewer)
 
 ### Identity
 
-- **Name**: Dave (synthetic)
-- **Role**: Senior Geotechnical Engineer, 10 years post-graduation, CPEng. Dave is the
+- **Name**: Prisca (synthetic)
+- **Role**: Senior Geotechnical Engineer, 10 years post-graduation, CPEng. Prisca is the
   primary reviewer for 6 intermediates. He is technically excellent, respected by the
   team, and protective of the firm's technical reputation
-- **Firm context**: Same 20-person firm as Anna. Dave reports to Anna but has
-  significant autonomy on technical matters. Anna trusts Dave's judgment — if Dave says
+- **Firm context**: Same 20-person firm as Anna. Prisca reports to Anna but has
+  significant autonomy on technical matters. Anna trusts Prisca's judgment — if Prisca says
   a report is not ready, it does not go to the client
 
 ### Evidence Anchors
@@ -208,12 +208,12 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 
 ### Jobs to Be Done
 
-1. **Maintain the firm's technical standard** — every report with Dave's review carries
+1. **Maintain the firm's technical standard** — every report with Prisca's review carries
    his professional reputation. He will not lower the bar.
-2. **Stop correcting the same basic mistakes** — Dave is tired of marking up copy-paste
+2. **Stop correcting the same basic mistakes** — Prisca is tired of marking up copy-paste
    errors and missing caveats. He wants to spend review time on engineering judgment, not
    proofreading.
-3. **Develop the intermediates** — Dave genuinely wants his team to improve. He just does
+3. **Develop the intermediates** — Prisca genuinely wants his team to improve. He just does
    not have time to teach when he is buried in reviews.
 
 ### Pains (observed, not assumed)
@@ -221,41 +221,41 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 | Pain | Source |
 |---|---|
 | Reviews 15-25 reports/month at 1-3 hours each while also managing his own project work | Graeme grounding |
-| The same corrections repeat — copy-paste errors, wrong standards, missing caveats — and Dave feels like nobody learns | Graeme grounding: most common quality failures |
-| Dave carries the cognitive load of remembering which standards have been updated, which caveats apply to which soil conditions, and which client has specific reporting requirements | Graeme grounding: "standards keep updating and nobody remembers all of it" |
-| Dave's review time is not valued as a line item — it is absorbed into project overhead, making it invisible to management until a senior leaves | Structural inference from Graeme's bottleneck description |
+| The same corrections repeat — copy-paste errors, wrong standards, missing caveats — and Prisca feels like nobody learns | Graeme grounding: most common quality failures |
+| Prisca carries the cognitive load of remembering which standards have been updated, which caveats apply to which soil conditions, and which client has specific reporting requirements | Graeme grounding: "standards keep updating and nobody remembers all of it" |
+| Prisca's review time is not valued as a line item — it is absorbed into project overhead, making it invisible to management until a senior leaves | Structural inference from Graeme's bottleneck description |
 
 ### Resistance Profile
 
-Dave is the persona most likely to resist Redline. His resistance is not irrational — it
+Prisca is the persona most likely to resist Redline. His resistance is not irrational — it
 is identity-based. Understanding it is critical to adoption.
 
 | Resistance factor | Root cause | What would shift it |
 |---|---|---|
-| **Ego**: "I am the quality standard here" | Dave's professional identity is built on being the person who catches mistakes. A tool that catches mistakes threatens that identity. | Position the tool as catching the *routine* stuff (copy-paste, standards references) so Dave can focus on the *hard* stuff (engineering judgment, risk assessment). Never say "catches what Dave would catch." Say "handles the checklist so Dave can focus on the judgment." |
-| **Trust**: "What if it's wrong?" | Dave knows that a bad suggestion accepted by an intermediate is worse than no suggestion at all. He has seen juniors trust ChatGPT output uncritically. | Show Dave the tool's reasoning. Let him see *why* it flagged something. Transparency converts skeptics faster than accuracy metrics. |
-| **Control**: "I haven't approved this" | Dave was not consulted when Anna bought the tool. He feels bypassed. | Involve Dave in the trial. Ask him to configure the house rules. Make him the expert on the tool, not the subject of it. |
+| **Ego**: "I am the quality standard here" | Prisca's professional identity is built on being the person who catches mistakes. A tool that catches mistakes threatens that identity. | Position the tool as catching the *routine* stuff (copy-paste, standards references) so Prisca can focus on the *hard* stuff (engineering judgment, risk assessment). Never say "catches what Prisca would catch." Say "handles the checklist so Prisca can focus on the judgment." |
+| **Trust**: "What if it's wrong?" | Prisca knows that a bad suggestion accepted by an intermediate is worse than no suggestion at all. He has seen juniors trust ChatGPT output uncritically. | Show Prisca the tool's reasoning. Let him see *why* it flagged something. Transparency converts skeptics faster than accuracy metrics. |
+| **Control**: "I haven't approved this" | Prisca was not consulted when Anna bought the tool. He feels bypassed. | Involve Prisca in the trial. Ask him to configure the house rules. Make him the expert on the tool, not the subject of it. |
 
 ### Conversion Path (Gatekeeper to Champion)
 
-Dave does not convert because he is told to. He converts through one of two experiences:
+Prisca does not convert because he is told to. He converts through one of two experiences:
 
-1. **The tool catches something Dave missed.** This is rare but transformative. Dave
-   respects competence. If the tool flags a superseded standard that Dave did not notice,
-   Dave's resistance drops sharply.
-2. **The tool eliminates the drudge work.** Dave realises he has not marked up a single
+1. **The tool catches something Prisca missed.** This is rare but transformative. Prisca
+   respects competence. If the tool flags a superseded standard that Prisca did not notice,
+   Prisca's resistance drops sharply.
+2. **The tool eliminates the drudge work.** Prisca realises he has not marked up a single
    copy-paste error in two weeks because the intermediates are catching them before
-   submission. Dave's reviews are now 45 minutes instead of 2 hours, and the review
+   submission. Prisca's reviews are now 45 minutes instead of 2 hours, and the review
    quality is higher because he is not fatigued by the time he gets to the hard sections.
 
-### Anti-Persona (who Dave is NOT)
+### Anti-Persona (who Prisca is NOT)
 
-- Dave is not a Luddite. He uses engineering software daily (gINT, LPILE, PLAXIS). His
+- Prisca is not a Luddite. He uses engineering software daily (gINT, LPILE, PLAXIS). His
   resistance is not about technology — it is about a tool entering *his* domain of
   expertise.
-- Dave is not the buyer. He does not care about the subscription cost or the PI insurance
+- Prisca is not the buyer. He does not care about the subscription cost or the PI insurance
   story. He cares about whether the tool makes his intermediates' reports better or worse.
-- Dave is not the user. He does not run Pre-Review on his own reports. He sees the
+- Prisca is not the user. He does not run Pre-Review on his own reports. He sees the
   *output* of Pre-Review in the drafts his intermediates submit.
 
 ---
@@ -287,7 +287,7 @@ These personas are hypotheses. They will be validated or revised through:
 
 1. **KR2 discovery conversations** (15 planned) using the Switch interview structure.
    Each conversation should produce a Four-Forces map. See `discovery-guide.md`.
-2. **Name replacement**: Replace synthetic names (Sam, Anna, Dave) with real names from
+2. **Name replacement**: Replace synthetic names (Perrie, Anna, Prisca) with real names from
    interviews when evidence exists.
 3. **Staleness rule**: These personas expire 12 months from creation (2027-05-03) and
    must be revisited before reuse.
