@@ -13,6 +13,7 @@ Ron writes strategy at `docs/product/strategy/`. Mark writes PRDs at
 | `messaging/specialized-ai-thesis.md` | Messaging foundation for the "People using specialised AI will replace people using generic AI" thesis — three layers of AI adoption, Redline proof point, messaging variants, content calendar seeds, competitive framing, objection handling | `marketing-content-big-5`, `marketing-ai-content-review` |
 | `archive-intelligence.md` | Ground Engineering archive strategy: invisibility protocol, monthly marketing query track (Track A), quarterly product query track (Track B), NZ/AU coverage caveat | n/a (intelligence layer) |
 | `the-big-5/` | Content briefs and drafts under the They Ask You Answer / Big 5 framework | `marketing-content-big-5` |
+| `content/` | Published and draft content pieces (blog posts, LinkedIn series, landing pages, sales enablement) | `marketing-content-big-5`, `marketing-ai-content-review` |
 | `seo/keyword-strategy.md` | Traditional keyword + intent map | `marketing-product-led-seo` |
 | `seo/keyword-discovery-tools-survey.md` | Survey of API/CLI-accessible keyword + question discovery tools for sourcing Product-Led SEO opportunities | `marketing-product-led-seo` |
 | `seo/product-led-seo-briefs/` | Marketing briefs for free programmatic tools, handed to Mark for PRD conversion | `marketing-product-led-seo` |

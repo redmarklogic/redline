@@ -558,3 +558,317 @@ Start directly with { character. End with } character. Nothing before or after.
 **Source**: Conversation 2026-05-05, NotebookLM notebook
 `dfd5b22d-4b26-4919-a5b0-3d21385ec745`. Scale validation batches 1-3.
 Batch 1: rows 1477-1486. Batch 2: rows 1487-1496. Batch 3: rows 1507-1515 (9 rows, includes duplicates/splits).
+
+---
+
+## Batch 4 (2026-05-05) — Seismic Standards & Standalone Amendments (10 sources + 4 recovered)
+
+### Extraction results
+
+| Standard Code | Status | Discipline | File Hygiene |
+|---|---|---|---|
+| AS/NZS 1170.3:2003 | published | loading | OK |
+| AS/NZS 1170.3 Supp 1:2003 | published | loading | FILE MISMATCH: `ASNZS 1170.3.pdf` contains Supplement |
+| NZS 1170.5:2004 | published | seismic | FILE MISMATCH: `ASNZS 1170.5.pdf` contains Supp 1 (Commentary) |
+| NZS 1170.5 Supp 1:2004 | published | seismic | FILE MISMATCH: filename suggests base standard |
+| AS/NZS 1200:2000 | published | general | OK |
+| AS/NZS 1200:2015 | published | general | OK |
+| AS/NZS 1254:2010 | published | plumbing | Appears twice (two upload copies) |
+| AS/NZS 1260:2017 | published | plumbing | OK |
+| AS/NZS 1269.1:2005 | published | occupational health and safety | OK |
+| DR AS/NZS 1170.0 AMD 3 CP | draft | loading | Recovered skipped source |
+| AS/NZS 1170.0/Amdt 3 | amendment | loading | Recovered skipped source |
+| AS/NZS 1170.0/Amdt 5 | amendment | loading | Recovered skipped source |
+| AS/NZS 1170.2:2021 | published | loading | Recovered skipped source ([A1] consolidated) |
+
+### New standard types in Batch 4
+
+**NZS-only standards**: `NZS 1170.5:2004` is a New Zealand-only standard (not joint AS/NZS).
+- `issuing_body = "Standards New Zealand"` (not "Standards Australia; Standards New Zealand")
+- `jurisdiction = "NZ"` (not "AU; NZ")
+- Standard code prefix `NZS` (not `AS/NZS`)
+
+**Seismic discipline**: NZS 1170.5 introduces `discipline = "seismic"` — earthquake actions standard
+unique to NZ due to seismic hazard. First occurrence of this discipline in the notebook.
+
+**Standalone amendments recovered**: Amdt 3 and Amdt 5 to AS/NZS 1170.0:2002 were correctly
+identified as standalone amendment documents (not consolidated reissues):
+- `document_status = "amendment"`, `amends = "AS/NZS 1170.0:2002"`
+- Both are short change-sheet documents modifying specific clauses
+- Filed under distinct standard codes `AS/NZS 1170.0/Amdt 3` and `AS/NZS 1170.0/Amdt 5`
+
+### 4 Skipped sources recovered
+
+`batch_planner.py` had filtered out 4 sources by filename patterns (containing `[Extract`,
+`[Amdt`, `[A1]`). These were extracted manually and added as:
+- DR AS/NZS 1170.0 AMD 3 CP: Draft Amendment 3 to AS/NZS 1170.0:2002 (2010, draft)
+- AS/NZS 1170.0/Amdt 3: Standalone Amendment No. 3 (2011)
+- AS/NZS 1170.0/Amdt 5: Standalone Amendment No. 5 (2011)
+- AS/NZS 1170.2:2021 [A1]: Consolidated reissue with Amendment 1 (published, not amendment)
+
+### Column mapping defect (rows 1477-1515)
+
+Previous write scripts (write_batch1_to_excel.py, write_batch2_to_excel.py, write_batch3_to_excel.py)
+wrote data in extraction JSON field order instead of named column mapping. This resulted in scrambled
+columns: standard_code in sha256 column (col 1), year_published in author column (col 3), committee
+in year column (col 5). Rows 1477-1515 are flagged for remediation. Rows 1516+ use correct mapping.
+
+### Data quality signals
+
+**10/10 valid JSON** — Output format fix held. No code fence regressions (Pilot 3 prompt).
+
+**Batch 4 library index rows**: 1516-1529 (14 rows: 4 skipped + 10 batch4).
+
+---
+
+## Batches 5-13 (2026-05-05) — Steady Production (90 sources)
+
+Batches 5-13 covered sources 43-132: ASNZS 1269.1.pdf through ASNZS 327-2010.pdf.
+
+### High-level observations
+
+**10/10 valid JSON per batch** — The refined prompt held with no code fence regressions across
+90 consecutive extractions. The Pilot 3 output format fix is robust at scale.
+
+**Mixed discipline coverage**: Batches 5-13 spanned electrical (lighting, AS/NZS 1158 series),
+structural (steel connections, scaffolding, AS/NZS 1554, 1576), fire, plumbing, and materials
+standards. Discipline assignment was consistent.
+
+**[Source N] pattern confirmed**: Files with `[Source 2 Xpp]` suffix consistently represent
+the original edition of the standard (without incorporated amendments), while the primary filename
+holds the consolidated reissue. This pattern established in Batch 3 continued throughout.
+
+**No new prompt issues** — All 90 extractions used the same refined prompt without requiring
+calibration. Standard amendment/consolidated reissue/handbook detection held.
+
+### Library index rows
+
+Batches 5-13: rows 1530-1619 (90 rows).
+
+---
+
+## Batch 14 (2026-05-05) — Plumbing Series & SNZ Technical Specification (10 sources)
+
+### Extraction results
+
+| Standard Code | Status | Discipline | File Hygiene |
+|---|---|---|---|
+| SNZ TS 3404:2018 | published | structural | OK (NZ-only Technical Specification) |
+| AS/NZS 3500.0:2021 | published | plumbing | OK |
+| AS/NZS 3500.1/Amdt 2 | amendment | plumbing | FILE MISMATCH: `ASNZS 3500.1-2003.pdf` contains Amdt 2 |
+| AS/NZS 3500.1:2018 | published | plumbing | OK (incorporates Amdt 1) |
+| AS/NZS 3500.1:2025 | published | plumbing | OK |
+| AS/NZS 3500.1:2003 | published | plumbing | OK (filename `3500.1.1` = consolidated reissue) |
+| AS/NZS 3500.2:2003 | published | plumbing | OK (incorporates Amdts 1 & 2) |
+| AS/NZS 3500.2:2015 | published | plumbing | [Source 2] = base without amendments |
+| AS/NZS 3500.2:2015 | published | plumbing | Primary = consolidated with Amdts 1 & 2 |
+| AS/NZS 3500.2:2018 | published | plumbing | OK |
+
+### New standard types in Batch 14
+
+**SNZ TS designation**: `SNZ TS 3404:2018` is a New Zealand Technical Specification (not a standard).
+- Issued by Standards New Zealand alone (not joint AS/NZS)
+- Code prefix `SNZ TS` (distinguishable from `AS/NZS`, `NZS`, `DR`)
+- Covers durability requirements for steel — discipline = structural
+- Supersedes specific sections of NZS 3404.1:2009 (partial supersession)
+
+**`.1.1` filename suffix = consolidated reissue**: `ASNZS 3500.1.1-2003.pdf` contains the consolidated
+reissue of AS/NZS 3500.1:2003 incorporating Amendment No. 1. The second `.1` in the filename encodes the
+amendment number, not a sub-part. Compare: `ASNZS 3500.1-2003.pdf` (which is actually Amendment No. 2).
+
+**FILE MISMATCH: `ASNZS 3500.1-2003.pdf`**: Filename suggests the 2003 base standard but content is
+Amendment No. 2 (2010) to that standard. This is the third file mismatch pattern encountered:
+1. Named as base standard, contains Supplement (Batch 2 pattern)
+2. Named as base standard, contains Commentary (Batch 4 pattern)
+3. Named as 2003 edition, contains 2010 Amendment No. 2 (Batch 14)
+
+### Data quality signals
+
+**10/10 valid JSON** — No regressions.
+
+**Batch 14 library index rows**: 1620-1629.
+
+**Progress**: 143 sources extracted (batches 1-14 + 4 skipped). ~114 sources remaining.
+
+---
+
+**Source**: Conversation 2026-05-05, NotebookLM notebook `dfd5b22d-4b26-4919-a5b0-3d21385ec745`.
+Standards index at `G:\My Drive\Library\library-index.xlsx`. Library index state after batch 14:
+Standards worksheet = 1629 rows, Master worksheet = 2373 rows.
+
+---
+
+## Batch 15 (2026-05-05) — First Unreadable Source & Environmental Discipline (10 sources)
+
+### Extraction results
+
+| Standard Code | Status | Discipline | File Hygiene |
+|---|---|---|---|
+| AS/NZS 3500.2:2025 | published | plumbing | OK |
+| AS/NZS 3500.3/Amdt 3 | amendment | plumbing | FILE MISMATCH: `ASNZS 3500.3-2005.pdf` contains Amdt 3 (2012) |
+| AS/NZS 3500.3:2018 | published | plumbing | OK |
+| N/A | — | — | UNREADABLE: `ASNZS 3500.3-2025.pdf` — all fields returned N/A |
+| AS/NZS 3500.5:2012 | published | plumbing | OK |
+| AS/NZS 3518:2013 | published | plumbing | OK |
+| AS/NZS 3580.1.1:2016 | published | environmental | OK (air monitoring series) |
+| AS/NZS 3580.10.1:2016 | published | environmental | OK |
+| AS/NZS 3580.10.1:2003 | published | environmental | OK |
+| AS/NZS 3580.10.2:2013 | published | environmental | OK |
+
+### New finding: Unreadable source
+
+`ASNZS 3500.3-2025.pdf` is the first source returning all N/A values. NotebookLM has no accessible
+text from the document — likely a scanned PDF without OCR or a corrupted upload.
+
+**Principle**: When all returned fields are N/A, the source is unreadable. Flag it explicitly:
+`"flag": "UNREADABLE SOURCE: NotebookLM returned no content. File may be scanned/corrupted. Requires re-upload."` and write the row to the index with that flag so the gap is visible in the library.
+
+**Action**: Re-upload `ASNZS 3500.3-2025.pdf` (or replace with a text-layer PDF) and re-extract.
+
+### Environmental discipline introduced
+
+AS/NZS 3580 series (air quality monitoring methods) is the first large-block `environmental`
+discipline cluster. Model classified all correctly without correction. The `TD - Environmental
+technology. Sanitary engineering` subdomain mapping is appropriate.
+
+### FILE MISMATCH: Batch 15 variant
+
+`ASNZS 3500.3-2005.pdf` → content is Amendment No. 3 (2012), not the 2005 base standard. Fourth
+distinct filename-content mismatch pattern (filename names a base year, content is a later amendment).
+
+### Library index rows
+
+Batch 15: rows 1630-1639.
+
+---
+
+## Batch 16 (2026-05-05) — Structural Steel Series & Out-of-Vocabulary Discipline (10 sources)
+
+### Extraction results
+
+| Standard Code | Status | Discipline (raw) | Discipline (corrected) | File Hygiene |
+|---|---|---|---|---|
+| AS/NZS 3580.12.1:2015 | published | environmental | — | OK |
+| AS/NZS 3580.18:2017 | published | environmental | — | OK |
+| AS/NZS 3582.1:2016 | published | materials | — | OK |
+| AS/NZS 3582.3:2016 | published | materials | — | OK |
+| AS/NZS 3582.3:2002 | published | materials | — | OK |
+| AS/NZS 3661.1:1993 | published | general | — | OK |
+| AS/NZS 3678:2016 | published | civil | structural | Structural steel — wrong discipline |
+| AS/NZS 3679.1:2016 | published | civil | structural | Hot-rolled bars/sections — wrong discipline |
+| AS/NZS 3679.2:2016 | published | civil | structural | Welded beams/columns — wrong discipline |
+| AS/NZS 3725 Supp 1:2007 | published | civil | geotechnical | Buried concrete pipes supp — wrong discipline |
+
+### Out-of-vocabulary discipline: `civil`
+
+The model began returning `discipline = "civil"` for structural steel standards and buried pipe
+standards in Batch 16. `civil` is NOT in the controlled vocabulary:
+`geotechnical | structural | materials | materials testing | loading | seismic | environmental | plumbing | electrical | fire | occupational health and safety | quality | general`
+
+**Manual corrections applied**:
+- `civil` for structural steel (AS/NZS 3678, 3679.1, 3679.2) → `structural`
+- `civil` for buried concrete pipe supplement (AS/NZS 3725 Supp 1) → `geotechnical`
+
+**Root cause**: The extraction prompt's discipline field states the controlled vocabulary but does
+not say "if none match, use `general`." The model interpolates from engineering context and produces
+technically plausible but out-of-vocabulary values.
+
+**Fix needed**: Add fallback instruction to extraction prompt:
+`"If the document's discipline does not clearly match any listed value (e.g. 'civil', 'mechanical',
+'information technology'), use 'general'."`
+
+### Library index rows
+
+Batch 16: rows 1640-1649.
+
+---
+
+## Batch 17 (2026-05-05) — Vocabulary Violations Continue & Code Fence Regression (10 sources)
+
+### Extraction results
+
+| Standard Code | Status | Discipline (raw) | Discipline (corrected) | Notes |
+|---|---|---|---|---|
+| AS/NZS 3725:2007 | published | civil | geotechnical | Design for buried concrete pipes |
+| AS/NZS 3823.1.5:2015 | published | electrical | — | Air conditioner energy efficiency |
+| AS/NZS 3833:1998 | published | occupational health and safety | — | Dangerous goods storage |
+| AS/NZS 3833:2007 | published | occupational health and safety | — | Dangerous goods storage (revised) |
+| AS/NZS 3845.1:2015 | published | civil | general | Road safety barriers Part 1 |
+| AS/NZS 3845.2:2017 | published | civil | general | Road safety devices Part 2 |
+| AS/NZS 3845:1999 | published | civil | general | Road barriers (superseded) |
+| AS/NZS ISO/IEC 38500:2010 | published | information technology | general | IT governance for organisations |
+| AS/NZS 3992:1998 | published | mechanical | general | Pressure equipment welding |
+| AS/NZS 3992:2015 | published | mechanical | general | Pressure equipment welding (revised) |
+
+### Out-of-vocabulary disciplines this batch
+
+Three distinct out-of-vocabulary values appeared:
+- `civil` (road barriers, buried pipes) → `general` (barriers) or `geotechnical` (buried pipes)
+- `information technology` → `general`
+- `mechanical` → `general`
+
+All four corrected before writing to index. Pattern is now predictable: when a standard doesn't fit
+neatly into the structural/geotechnical/plumbing/electrical domains, the model names the engineering
+sub-discipline rather than falling back to `general`.
+
+### Code fence regression (1/10)
+
+`ASNZS 3992-2015.pdf` response returned wrapped in ` ```json ``` `. This is the first regression since
+the Pilot 3 prompt fix — but isolated to 1/10 records, not systemic. Stripped manually before saving.
+Suggest adding the fallback instruction and re-testing if regression frequency increases.
+
+### Library index rows
+
+Batch 17: rows 1650-1659.
+
+**Progress**: 173 sources extracted (batches 1-17 + 4 recovered). 84 sources remaining.
+
+---
+
+## Batch 18 partial (2026-05-05) — Water Infrastructure Standards (5 sources, session end)
+
+### Extraction results
+
+| Standard Code | Status | Discipline (raw) | Discipline (corrected) | Notes |
+|---|---|---|---|---|
+| AS/NZS 4020:2018 | published | plumbing | — | Products in contact with drinking water |
+| AS/NZS 4058:2007 | published | plumbing | geotechnical | Precast concrete pipes (buried infra) |
+| AS/NZS 4081:2001 | published | occupational health and safety | — | Polyfunctional isocyanate storage |
+| AS/NZS 4087:2011 | published | plumbing | — | Metallic flanges for waterworks ([Source 2]) |
+| AS/NZS 4087:2011 | published | plumbing | — | Metallic flanges for waterworks (primary) |
+
+### Discipline correction
+
+Model classified AS/NZS 4058 (precast concrete pipes: pressure and non-pressure) as `plumbing`.
+Corrected to `geotechnical` for consistency with AS/NZS 3725:2007 (design for installation of buried
+concrete pipes), which was already classified `geotechnical`. Both standards deal with buried
+infrastructure, which is a geotechnical engineering domain.
+
+**Principle**: Classify concrete pipe standards by their primary use context (buried installation =
+geotechnical), not by the end application (water/drainage = plumbing).
+
+### Split-file duplicate (ASNZS 4087-2011)
+
+Both `ASNZS 4087-2011 [Source 2 46pp].pdf` and `ASNZS 4087-2011.pdf` returned identical metadata
+(AS/NZS 4087:2011, Amendment No. 1 incorporated). Both flagged as `POSSIBLE DUPLICATE` in notes
+column. This is consistent with the `[Source N]` split-file pattern observed from Batch 3 onwards.
+
+### Library index rows
+
+Batch 18 partial: rows 1660-1664. Standards = 1664, Master = 2408.
+
+**Session ended here. Sources 178-256 (79 sources) remaining.**
+
+---
+
+## Pending actions (open at session end 2026-05-05)
+
+1. **Add vocabulary fallback to extraction prompt**: "If discipline does not match any listed value,
+   use `general`." This will eliminate manual corrections for `civil`, `mechanical`, `information
+   technology`, and any future out-of-vocabulary values.
+2. **Re-upload ASNZS 3500.3-2025.pdf**: Unreadable source — needs text-layer PDF or re-upload.
+3. **Continue extraction**: Sources 178-256 (79 remaining). Next batch starts at source 178
+   (`ASNZS 4114-2020.pdf`). Update `list_sources.py` range to `sources[178:188]`.
+4. **Remediate column mapping defect**: Rows 1477-1515 have wrong column order from Batches 1-3
+   write scripts. Separate remediation pass required.
+5. **Conversation ID to reuse**: `f4ae37ee-13a5-4a0a-b854-3be4f1e99bb2`

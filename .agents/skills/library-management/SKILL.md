@@ -136,7 +136,7 @@ When indexing an engineering standard, populate the extra columns below in addit
 | Column | Description | Example |
 |---|---|---|
 | `standard_code` | The designation printed on the document. For published standards: `AS/NZS 2865:2009`. For drafts: `DR 05564`. Never use the target standard code for a draft — index what the document *is*, not what it aspires to become | `DR 05564`, `AS/NZS 2865:2009`, `BS EN 1997-1:2004` |
-| `discipline` | Engineering discipline. Controlled vocabulary: `geotechnical` · `structural` · `materials testing` · `loading` · `seismic` · `environmental` · `plumbing` · `electrical` · `occupational health and safety` · `quality` · `general` | `occupational health and safety` |
+| `discipline` | Engineering discipline. Controlled vocabulary: `geotechnical` · `structural` · `materials` · `materials testing` · `loading` · `seismic` · `environmental` · `plumbing` · `electrical` · `fire` · `occupational health and safety` · `quality` · `general`. See [reference/discipline-taxonomy.md](reference/discipline-taxonomy.md) for definitions | `occupational health and safety` |
 | `issuing_body` | Standards body that authored the document (distinct from national distributor like SAI Global). For joint standards: semicolon-separated | `Standards Australia; Standards New Zealand`, `CEN`, `BSI` |
 | `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International`. Semicolon-separated when joint | `AU; NZ` |
 
