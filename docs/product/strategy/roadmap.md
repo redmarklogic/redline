@@ -34,8 +34,42 @@ the Free Skeleton Wedge without revival. See [strategic-bets.md](strategic-bets.
 | **[M3] 90-day kill criterion** | [Bet 1](strategic-bets.md) | — | — | Gate | 50 signups + 5% outbound → continue (Sep 1) |
 | D — Inline Annotation Engine | [Bet 2](strategic-bets.md) | Parked | Discovery | Discovery | **P-030 decomposition required first** |
 | **[M4] Pre-Review sprint kick-off** | [Bet 2](strategic-bets.md) | — | — | Ship | D decomposition session complete |
+| D (taxonomy-free rules) — taboo words, undefined acronyms, ambiguity flags, unit inconsistencies, citation validator, section/structural completeness, passive voice/readability | [Bet 2](strategic-bets.md) | — | Discovery | Ship | 15–20 rules; no taxonomy dependency |
+| Taxonomy Discovery (Graeme) — Pareto 5 design types | [Bet 3](strategic-bets.md) | Ship | Ship | Ship | Started 2026-05. No code dependency — domain research. Output: `design-type-taxonomy-and-parameter-completeness.md` |
+| D.pc — Parameter Completeness Rules | [Bet 2](strategic-bets.md), [Bet 3](strategic-bets.md) | — | — | Discovery | Blocked until D engine scaffold + taxonomy validated |
 
 **Status key**: Ship = committed delivery · Discovery = design/research only · Parked = blocked (see below) · Gate = must-pass milestone · — = out of scope that month
+
+---
+
+## Development Streams — Parallelisation Plan (2026-05-04)
+
+Four streams run in parallel. The key insight: taxonomy discovery (Stream 3) has no code
+dependency and starts immediately, while the rule engine scaffold (Stream 2) proceeds
+independently after P-030 unfreezes.
+
+**Stream 1: Skeleton + Infra (Sprint 1 — current)**
+Feature A (Skeleton Generator), Feature M (Document Parser), Feature N (Standards Store MVP),
+Feature L (Audit Log). This is the vertical slice that must ship by M1 (2026-06-30).
+
+**Stream 2: Rule Engine + Taxonomy-Free Rules (Sprint 2–3, after P-030 unfreezes)**
+Feature D engine scaffold plus 15–20 taxonomy-free rules that require no design-type taxonomy:
+taboo words, undefined acronyms, ambiguity flags, unit inconsistencies, citation validator,
+section completeness, structural completeness, passive voice / readability.
+
+**Stream 3: Taxonomy Discovery (starts 2026-05, parallel with all streams)**
+Graeme validates parameter checklists for Pareto 5 design types: shallow foundations,
+timber pole retaining walls, slope stability, liquefaction assessment, piled foundations.
+No code dependency — this is pure domain research. Output target:
+`docs/knowledge/geotechnical/report-writing/design-type-taxonomy-and-parameter-completeness.md`.
+
+**Stream 4: Parameter Completeness Rules (Sprint 3–4, after Stream 2 engine + Stream 3 checklists)**
+Encode validated parameter checklists as pluggable rules. Integration point: same rule
+interface as taxonomy-free rules (takes parsed document, returns annotations). Presence
+check only — no numeric validation.
+
+**Key dependency**: Feature D decomposition remains parked under P-030 until Feature A ships.
+Stream 3 is the only stream with no blocker — it starts now.
 
 ---
 
@@ -63,6 +97,13 @@ The P-030 session is a prerequisite gate; until it passes, D has no sprint commi
 
 See [parked-decisions.md](decisions/parked-decisions.md) for the full P-030 record.
 
+**Benton — Taxonomy Query Channel (P-035)**
+
+The "Benton" concept — a conversational channel where users query design-type taxonomy
+knowledge — is a GTM / sales-tooling item, not a product feature. It is parked under P-035.
+If validated, it would serve as a sales enablement tool (demonstrate domain depth in live
+calls) rather than a customer-facing product surface. No sprint commitment.
+
 **Items not on this roadmap**: B, C (rejected/deferred); H, I (Phase 2, not in H2 2026 scope).
 
 ---
@@ -72,12 +113,12 @@ See [parked-decisions.md](decisions/parked-decisions.md) for the full P-030 reco
 | Bet | Coverage in this roadmap |
 |---|---|
 | Bet 1 — Free Skeleton Wedge | A, M, M1, M2, M3 (primary bet; kill criterion is the 90-day horizon) |
-| Bet 2 — Pre-Review is Day-1 paid | G (discovery + ship), D (parked → discovery), M4 (sprint gate) |
-| Bet 3 — Standards Knowledge Store is the moat | N (MVP ship in Month 1) |
+| Bet 2 — Pre-Review is Day-1 paid | G (discovery + ship), D (parked → discovery; taxonomy-free rules Sprint 2–3), D.pc (parameter completeness Sprint 3–4), M4 (sprint gate) |
+| Bet 3 — Standards Knowledge Store is the moat | N (MVP ship in Month 1), Taxonomy Discovery (Stream 3, all months), D.pc (Stream 4, Month 3 discovery) |
 
 Bets 4–6 are not surfaced in this horizon — they fall beyond the 90-day kill window.
 
 ---
 
 > *Miro is canonical for this artifact. This file is the synthesis.*
-> Last updated: 2026-04-19. Owner: Mark.
+> Last updated: 2026-05-04. Owner: Mark.

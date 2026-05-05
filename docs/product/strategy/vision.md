@@ -59,11 +59,14 @@ Litmus risk and the contested-decision flag are tracked under
 
 ## Adjacent-Market Signal: Legal AI and Word-Native Review (2026-05-03)
 
-Robin AI, Legora, and Microsoft Word Legal Agent strengthen Redline's current vision
+Legora and Microsoft Word Legal Agent strengthen Redline's current vision
 rather than changing it. The transferable pattern is not "become an agentic document
 operating system." The transferable pattern is narrower: expert playbooks applied inside
 existing document workflows, with human approval, source-linked comments, deterministic
 document handling, and auditability.
+
+*(Updated 2026-05-04: Robin AI dropped per founder direction. The Leya/Legora signal
+and Microsoft Word Legal Agent analysis remain valid.)*
 
 The 2026-04-26 Leya memo should now be read as a pre-rebrand Legora signal. Public-source
 checking confirms Leya rebranded as Legora in February 2025. Microsoft Word Legal Agent

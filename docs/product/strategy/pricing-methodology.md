@@ -50,13 +50,27 @@ Aligned to the architecture decision (one product, two modes, three tiers):
 
 ### Step 4 — Anchoring Strategy
 
-Three rules carried into pricing conversations once methodology unpacks:
+One committed principle and two hypotheses to test during pricing conversations:
 
-1. **Infrastructure pricing, not SaaS pricing.** Anchor against the cost of a senior
-   engineer's review hours, not against per-seat productivity tools.
-2. **Per-firm Business tier, not per-seat.** Per-seat caps the price ceiling and
-   creates seat-counting friction during firm rollout.
-3. **No public price list in H2.** Founder-priced beta only. Public list waits for
+**Committed architectural principle:**
+
+1. **Dual purchase path.** Two buying motions exist: (a) individual engineer buys a
+   personal Pro seat with a credit card; (b) firm Principal approves a Business-tier
+   subscription for the team. Architecture, pricing, and onboarding must accommodate
+   both from Day 1. See `principles.md` #4.
+
+**Hypotheses under test (NOT principles yet — validate via KR2):**
+
+2. **Infrastructure pricing, not SaaS pricing (hypothesis).** Anchor against the cost
+   of a senior engineer's review hours, not against per-seat productivity tools.
+   Aspirational framing — test whether the buyer perceives the distinction.
+3. **Per-firm Business tier, not per-seat (hypothesis).** Per-seat caps the price
+   ceiling and creates seat-counting friction during firm rollout. Plausible but
+   unvalidated — per-seat may be the right model for Small firms.
+
+**Locked rule:**
+
+4. **No public price list in H2.** Founder-priced beta only. Public list waits for
    WTP outputs (Step 1) and segment validation (Step 2).
 
 ### Step 5 — Decision Gate

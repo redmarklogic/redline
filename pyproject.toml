@@ -72,7 +72,7 @@ lint.per-file-ignores."tests/**" = [ "INP" ]
 
 [tool.codespell]
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
-ignore-words-list = [ "aci", "ags", "bund", "bunds", "gir", "linz", "nd", "skelton", "sme", "te" ]
+ignore-words-list = [ "aci", "ags", "bund", "bunds", "gage", "gir", "linz", "nd", "skelton", "sme", "te" ]
 
 [tool.deptry]
 ignore_notebooks = false

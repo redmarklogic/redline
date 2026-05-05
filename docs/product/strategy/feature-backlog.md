@@ -28,6 +28,7 @@
 | M | Document Parser / Chunking Pipeline | Infra (cross-cutting) | 3 | 3 | 5 | 4 | 5 | **20** | **Sprint 1** (infra dep of A) |
 | L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | **Sprint 1** (core subset); full scope Sprint 5+ *(elevated 2026-04-20, Archie CI session — insurance bifurcation)* |
 | F | Citation / Reference Validator (verifies cited standards exist + are current) | Pre-Review / Pro | 3 | 4 | 2 | 4 | 3 | **16** | Sprint 3 |
+| D.pc | Parameter Completeness Checking (rule type within D — presence check for design-type-specific parameters; requires design-type taxonomy. Pareto 5: shallow foundations, timber pole retaining walls, slope stability, liquefaction assessment, piled foundations. Both under-inclusion and over-inclusion are failure modes.) | Pre-Review / Pro | 4 | 2 | 3 | 3 | 4 | **16** | Sprint 3-4 |
 | E | Senior Reviewer Anticipator (predicts senior markups, ranks by severity) | Pre-Review / Pro | 5 | 2 | 3 | 2 | 4 | **16** | Sprint 4+ (needs labelled corpus) |
 | J | Multi-Document Cross-Check (GBR vs. RFP vs. proposal) | Adversarial / Business | 4 | 2 | 4 | 3 | 3 | **16** | Sprint 5+ |
 | B | Indemnification Clause Flagger (free single-doc scan, no sign-in) | Free | 4 | 3 | 2 | 3 | 4 | **16** | **Defer** (alternative wedge — see Sprint 1 reasoning below) |
@@ -55,8 +56,25 @@
 ### Sprint 2–3 — Convert wedge to paid
 
 - **G. Justification Email Generator** (bottoms-up conversion mechanic for Pro → Business)
-- **D. Inline Annotation Engine** (the paid product surface — Pre-Review)
+- **D. Inline Annotation Engine** (the paid product surface — Pre-Review). Decomposes into
+  taxonomy-free rules first (15–20 rules: taboo words, undefined acronyms, ambiguity flags,
+  unit inconsistencies, citation validator, section/structural completeness, passive voice /
+  readability). Parameter completeness rules follow in Sprint 3–4 (see D.pc below).
 - **F. Citation / Reference Validator** (sub-feature of D; ships inside D's first release)
+
+### Sprint 3–4 — Parameter Completeness Rules (D.pc)
+
+- **D.pc. Parameter Completeness Checking** — pluggable rules that check presence of
+  design-type-specific parameters (e.g., bearing capacity for shallow foundations,
+  FoS against sliding for timber pole retaining walls). Presence check only — no
+  numeric validation. Blocked by two dependencies:
+  1. **Stream 2**: Feature D rule engine scaffold must be built (Sprint 2-3, after P-030 unfreezes).
+  2. **Stream 3**: Graeme's taxonomy discovery must validate parameter checklists for
+     Pareto 5 design types (`docs/knowledge/geotechnical/report-writing/design-type-taxonomy-and-parameter-completeness.md`).
+- Taxonomy discovery (Stream 3) proceeds in parallel with all other streams — no code dependency.
+- Integration point: same rule interface as taxonomy-free rules (takes parsed document,
+  returns annotations).
+- **References**: [Bet 2](strategic-bets.md) (Pre-Review), [Bet 3](strategic-bets.md) (Standards Knowledge Store as moat).
 
 ### Sprint 4+ — Pre-Review depth
 
