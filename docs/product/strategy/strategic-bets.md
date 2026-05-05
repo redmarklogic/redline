@@ -148,9 +148,9 @@ not an analogy — it is a confirmed interaction model. "Playbook" is the correc
 abstraction for what the Pre-Review rule library does. Strengthens conviction that
 the Pre-Review → House Rules upgrade path is architecturally correct.
 
-**Adjacent-market watch item — Robin AI/Legora/Microsoft comparable** *(added
-2026-05-03)*:
-Robin AI, Legora, and Microsoft Word Legal Agent strengthen the Pre-Review → House Rules
+**Adjacent-market watch item — Legora/Microsoft comparable** *(added 2026-05-03;
+updated 2026-05-04: Robin AI dropped per founder direction)*:
+Legora and Microsoft Word Legal Agent strengthen the Pre-Review → House Rules
 hypothesis. They validate playbook-driven review, source-linked markup, preserved
 document fidelity, and human approval as the interaction model for high-liability
 document work. They do not change the product problem. For H2, Redline should test

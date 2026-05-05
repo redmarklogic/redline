@@ -190,7 +190,7 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 
 - **Name**: Prisca (synthetic)
 - **Role**: Senior Geotechnical Engineer, 10 years post-graduation, CPEng. Prisca is the
-  primary reviewer for 6 intermediates. He is technically excellent, respected by the
+  primary reviewer for 6 intermediates. She is technically excellent, respected by the
   team, and protective of the firm's technical reputation
 - **Firm context**: Same 20-person firm as Anna. Prisca reports to Anna but has
   significant autonomy on technical matters. Anna trusts Prisca's judgment — if Prisca says
@@ -209,54 +209,54 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 ### Jobs to Be Done
 
 1. **Maintain the firm's technical standard** — every report with Prisca's review carries
-   his professional reputation. He will not lower the bar.
+   her professional reputation. She will not lower the bar.
 2. **Stop correcting the same basic mistakes** — Prisca is tired of marking up copy-paste
-   errors and missing caveats. He wants to spend review time on engineering judgment, not
+   errors and missing caveats. She wants to spend review time on engineering judgment, not
    proofreading.
-3. **Develop the intermediates** — Prisca genuinely wants his team to improve. He just does
-   not have time to teach when he is buried in reviews.
+3. **Develop the intermediates** — Prisca genuinely wants her team to improve. She just does
+   not have time to teach when she is buried in reviews.
 
 ### Pains (observed, not assumed)
 
 | Pain | Source |
 |---|---|
-| Reviews 15-25 reports/month at 1-3 hours each while also managing his own project work | Graeme grounding |
+| Reviews 15-25 reports/month at 1-3 hours each while also managing her own project work | Graeme grounding |
 | The same corrections repeat — copy-paste errors, wrong standards, missing caveats — and Prisca feels like nobody learns | Graeme grounding: most common quality failures |
 | Prisca carries the cognitive load of remembering which standards have been updated, which caveats apply to which soil conditions, and which client has specific reporting requirements | Graeme grounding: "standards keep updating and nobody remembers all of it" |
 | Prisca's review time is not valued as a line item — it is absorbed into project overhead, making it invisible to management until a senior leaves | Structural inference from Graeme's bottleneck description |
 
 ### Resistance Profile
 
-Prisca is the persona most likely to resist Redline. His resistance is not irrational — it
+Prisca is the persona most likely to resist Redline. Her resistance is not irrational — it
 is identity-based. Understanding it is critical to adoption.
 
 | Resistance factor | Root cause | What would shift it |
 |---|---|---|
 | **Ego**: "I am the quality standard here" | Prisca's professional identity is built on being the person who catches mistakes. A tool that catches mistakes threatens that identity. | Position the tool as catching the *routine* stuff (copy-paste, standards references) so Prisca can focus on the *hard* stuff (engineering judgment, risk assessment). Never say "catches what Prisca would catch." Say "handles the checklist so Prisca can focus on the judgment." |
-| **Trust**: "What if it's wrong?" | Prisca knows that a bad suggestion accepted by an intermediate is worse than no suggestion at all. He has seen juniors trust ChatGPT output uncritically. | Show Prisca the tool's reasoning. Let him see *why* it flagged something. Transparency converts skeptics faster than accuracy metrics. |
-| **Control**: "I haven't approved this" | Prisca was not consulted when Anna bought the tool. He feels bypassed. | Involve Prisca in the trial. Ask him to configure the house rules. Make him the expert on the tool, not the subject of it. |
+| **Trust**: "What if it's wrong?" | Prisca knows that a bad suggestion accepted by an intermediate is worse than no suggestion at all. She has seen juniors trust ChatGPT output uncritically. | Show Prisca the tool's reasoning. Let her see *why* it flagged something. Transparency converts skeptics faster than accuracy metrics. |
+| **Control**: "I haven't approved this" | Prisca was not consulted when Anna bought the tool. She feels bypassed. | Involve Prisca in the trial. Ask her to configure the house rules. Make her the expert on the tool, not the subject of it. |
 
 ### Conversion Path (Gatekeeper to Champion)
 
-Prisca does not convert because he is told to. He converts through one of two experiences:
+Prisca does not convert because she is told to. She converts through one of two experiences:
 
 1. **The tool catches something Prisca missed.** This is rare but transformative. Prisca
    respects competence. If the tool flags a superseded standard that Prisca did not notice,
    Prisca's resistance drops sharply.
-2. **The tool eliminates the drudge work.** Prisca realises he has not marked up a single
+2. **The tool eliminates the drudge work.** Prisca realises she has not marked up a single
    copy-paste error in two weeks because the intermediates are catching them before
    submission. Prisca's reviews are now 45 minutes instead of 2 hours, and the review
-   quality is higher because he is not fatigued by the time he gets to the hard sections.
+   quality is higher because she is not fatigued by the time she gets to the hard sections.
 
 ### Anti-Persona (who Prisca is NOT)
 
-- Prisca is not a Luddite. He uses engineering software daily (gINT, LPILE, PLAXIS). His
-  resistance is not about technology — it is about a tool entering *his* domain of
+- Prisca is not a Luddite. She uses engineering software daily (gINT, LPILE, PLAXIS). Her
+  resistance is not about technology — it is about a tool entering *her* domain of
   expertise.
-- Prisca is not the buyer. He does not care about the subscription cost or the PI insurance
-  story. He cares about whether the tool makes his intermediates' reports better or worse.
-- Prisca is not the user. He does not run Pre-Review on his own reports. He sees the
-  *output* of Pre-Review in the drafts his intermediates submit.
+- Prisca is not the buyer. She does not care about the subscription cost or the PI insurance
+  story. She cares about whether the tool makes her intermediates' reports better or worse.
+- Prisca is not the user. She does not run Pre-Review on her own reports. She sees the
+  *output* of Pre-Review in the drafts her intermediates submit.
 
 ---
 

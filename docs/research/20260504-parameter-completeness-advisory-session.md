@@ -49,9 +49,9 @@ The free tier shows what parameters are missing. Contextual analysis (where in t
 
 The Skeleton Generator embeds parameter prompts as part of its section placeholders (free = teaching the engineer what to include). Pre-Review checks compliance against the taxonomy (paid = verifying completeness after the report is drafted). This separation reinforces the "teach for free, check for pay" principle.
 
-### 10. Robin AI / Lagura analogy dropped
+### 10. Robin AI / Legora analogy dropped
 
-The analogy to Robin AI (legal contract review) and Lagura was useful as an internal mental model during early ideation. It is not appropriate for external communication and has been dropped from all documentation.
+The analogy to Robin AI (legal contract review) and Legora was useful as an internal mental model during early ideation. It is not appropriate for external communication and has been dropped from external-facing documentation.
 
 ### 11. Persona rename: Dave to Prisca
 

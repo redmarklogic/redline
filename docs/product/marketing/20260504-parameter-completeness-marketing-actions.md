@@ -16,7 +16,7 @@
 
 ## Key Constraint
 
-Robin AI / Lagura analogy is internal-only. Never reference in any external content.
+Robin AI / Legora analogy is internal-only. Never reference in any external content.
 
 ## Action 1: Big 5 Content Briefs (5 articles)
 
@@ -33,13 +33,14 @@ Articles identified in session:
    Bucket: Pricing. Target: Anna.
 
 2. **"Why ChatGPT Cannot Review Your Retaining Wall Design Report"**
-   Bucket: Problems. Target: Perrie, Sam.
+   Bucket: Problems. Target: Perrie, Prisca.
 
 3. **"The 5 Parameters Intermediate Engineers Forget Most Often in NZ Residential GIR Reports"**
-   Bucket: Problems. Target: Perrie, Sam.
+   Bucket: Problems. Target: Perrie, Prisca.
 
 4. **"Redline vs ChatGPT for Geotechnical Report Review: What Gets Missed"**
    Bucket: Versus. Target: Anna, Prisca.
+   **Status: Deferred** — parked per P-031 (do not publish until all three P-031 unfreeze conditions are met: working product live, real reproducible side-by-side test, founder review).
 
 5. **"What a Complete Timber Pole Wall Report Looks Like: The Parameter Checklist"**
    Bucket: Best in Class. Target: all.
