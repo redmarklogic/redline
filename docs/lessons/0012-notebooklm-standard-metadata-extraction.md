@@ -468,24 +468,28 @@ de-duplicated source files.
 **Massive version/edition sprawl** — 4 file representations of 1 standard with 3 amendment states 
 suggests need for **comprehensive de-duplication and consolidation strategy** before continuing.
 
-### Critical Issue: Output Format Regression
+### Critical Issue: Output Format Regression — FIXED (2026-05-05)
 
-The extraction prompt includes explicit instruction: "OUTPUT FORMAT: Raw JSON object only. 
-No markdown code fences, no explanations. Start your response with { and end with }. Nothing else."
+The extraction prompt includes explicit instruction for raw JSON output. However, Batch 3 showed 2/5 responses 
+wrapped in markdown code fences (````json`), breaking JSON validity.
 
-**Batch 3 result**: 2/5 responses had ````json` wrapping, breaking JSON validity. This suggests 
-either:
-1. Model context drift (earlier parts of prompt becoming less influential over time in session)
-2. Ambiguity in prompt on when to add code fences (for clarity vs literal JSON)
-3. Session length affecting instruction adherence
+**Root cause**: Instruction was present but insufficient — model partially reverted to earlier behavior despite other 
+prompt refinements (Handbook fix) maintaining discipline.
 
-**Recommended fix**: Add explicit negative instruction to extraction prompt:
-```
-DO NOT wrap the JSON in markdown code fences.
-DO NOT start the response with ```json
-DO NOT end the response with ```
-Start directly with { character. End with } character. Nothing before or after.
-```
+**Fix applied**:
+1. Added **CRITICAL RULES FOR OUTPUT** section to prompt
+2. Made all rules NEGATIVE (what NOT to do): "DO NOT wrap", "DO NOT include backticks", "DO NOT include the word 'json'"
+3. Added **INVALID EXAMPLES** section showing what the model should NOT output
+4. Added **VALID EXAMPLE** section showing what correct output looks like
+5. Moved output format rules BEFORE the SCHEMA (earlier in prompt = higher priority)
+
+**Expected outcome for Batch 4**: 100% valid JSON (without code fences) if negative instruction enforcement works.
+
+**Tracking**: Lesson updated with applied fix; skill documentation synced with prompt.
+
+---
+
+### Critical Issue: Output Format Regression (Pre-fix)
 
 ### Next steps before continuing
 

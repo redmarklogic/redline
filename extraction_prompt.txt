@@ -15,7 +15,30 @@ CURRENTNESS: Do NOT attempt to determine whether a standard is "current" or "sup
 
 HANDBOOK DESIGNATION: Distinguish published Handbooks (HB prefix) from drafts. If standard_code is "HB <number>:<year>" or the document starts with "HB" (e.g., "HB 89:2011"), this is a published Handbook — NOT a draft. Handbooks have "DRAFT ONLY" or "NOT NORMATIVE" in their footer as a formatting convention (they are guidance, not requirements), but this does NOT mean they are pre-publication drafts. Only mark document_status as "draft" if: (1) standard_code starts with "DR" (e.g., "DR 05564"), OR (2) the document explicitly says "Draft for Public Comment" with a comment deadline. If standard_code is "HB" or "AS/NZS" (no "DR" prefix), set document_status to "published" regardless of footer text.
 
-OUTPUT FORMAT: Raw JSON object only. No markdown code fences, no explanations. Start your response with { and end with }. Nothing else.
+OUTPUT FORMAT: Raw JSON object only. No markdown, no explanations, no extra text.
+
+CRITICAL RULES FOR OUTPUT:
+- Start your response with the { character (first character of your response must be {)
+- End your response with the } character (last character of your response must be })
+- DO NOT wrap the JSON in markdown code fences (```json ... ```)
+- DO NOT include backticks, markdown formatting, or any text before or after the JSON object
+- DO NOT include the word "json" anywhere in your response
+- DO NOT add explanations, notes, or comments
+- The ONLY text in your response should be the raw JSON object from { to }
+
+INVALID EXAMPLES (DO NOT DO THIS):
+  ```json
+  { ... }
+  ```
+
+  Here is the metadata:
+  { ... }
+
+  json
+  { ... }
+
+VALID EXAMPLE (DO THIS):
+  { ... }
 
 SCHEMA:
 {

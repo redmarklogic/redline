@@ -68,10 +68,18 @@ comment deadline. If `standard_code` is "HB" or "AS/NZS" (no "DR"
 prefix), set `document_status` to "published" regardless of footer
 text.
 
-OUTPUT FORMAT:
-Raw JSON object only. No markdown code fences, no explanations.
-Do not embed citation numbers or markers inside field values.
-Start your response with { and end with }. Nothing else.
+OUTPUT FORMAT: Raw JSON object only. No markdown, no explanations, no extra text.
+
+CRITICAL RULES FOR OUTPUT:
+- Start your response with the { character (first character must be {)
+- End your response with the } character (last character must be })
+- DO NOT wrap the JSON in markdown code fences (```json ... ```)
+- DO NOT include backticks, markdown formatting, or any text before or after the JSON object
+- DO NOT include the word "json" anywhere in your response
+- DO NOT add explanations, notes, or comments
+- The ONLY text in your response should be the raw JSON object from { to }
+
+VALID EXAMPLE: { "standard_code": "...", ... }
 
 SCHEMA:
 - "standard_code":    [String]  The full designation printed on the
