@@ -325,6 +325,79 @@ standards in remaining 180+ sources. Estimated ~5-10 Handbooks in full notebook.
 
 ---
 
+## Batch 2 (2026-05-05) — File Hygiene Discovery (10 sources)
+
+### Extraction results
+
+| Standard Code | Discipline | Status | File Hygiene |
+|---|---|---|---|
+| AS/NZS 1158.3.1:2005 | electrical | published | ✓ OK |
+| AS/NZS 1158.3.1:2020 | electrical | published | ✓ OK |
+| AS/NZS 1158.3.1:2005 | electrical | published | ⚠ Possible duplicate |
+| AS/NZS 1163:2016 | structural | published | ✓ OK |
+| AS/NZS 1170.0:2002 | structural | published | ✓ OK |
+| AS/NZS 1170.0 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
+| AS/NZS 1170.0 Supp 1:2002 | structural | published | ❌ Supplement duplicate |
+| AS/NZS 1170.1:2002 | structural | published | ✓ OK |
+| AS/NZS 1170.1 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
+| AS/NZS 1170.2 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
+
+### What worked in Batch 2
+
+**Large amendment sets handled correctly**: AS/NZS 1170.0:2002 with "Amendment Nos 1, 2, 3, 4 and 5" 
+extracted and concatenated properly. No truncation or parsing errors.
+
+**Supplement detection accurate**: When extraction encountered Supplements (non-normative commentary), 
+it correctly identified them as "Supp 1:2002" (not the base standard), populated scope accordingly, 
+and used `discipline = structural` appropriately for all structural guidance documents.
+
+### What didn't work in Batch 2 (FILE HYGIENE ISSUE — CRITICAL)
+
+**Filename-content mismatch discovered**: 4 of 10 sources have uploaded filenames that don't match 
+document content:
+
+- File `ASNZS 1170.0-2002.pdf` contains `AS/NZS 1170.0 Supp 1:2002` (Supplement, not base standard)
+- File `ASNZS 1170.0.pdf` contains `AS/NZS 1170.0 Supp 1:2002` (same Supplement again — duplicate upload)
+- File `ASNZS 1170.1.pdf` contains `AS/NZS 1170.1 Supp 1:2002` (Supplement, not base standard)
+- File `ASNZS 1170.2-2002.pdf` contains `AS/NZS 1170.2 Supp 1:2002` (Supplement, not base standard)
+
+**Root cause**: Library files were uploaded with simplified/incorrect names. The extraction process is 
+working correctly — it reads document content, not filename. But batch extraction misses these issues 
+because the filter (`skip if "Supp" in filename`) didn't catch them (filenames don't have "Supp").
+
+**Principle verified**: Never trust filenames for classification. Always extract from actual document 
+content. The verbatim_evidence fields correctly identified each as a Supplement, preserving audit trail.
+
+### Data quality signals
+
+**10/10 JSON valid** — All queries parsed successfully.
+
+**6/10 primary standards, 4/10 supplements** — Supplements are valid documents, included with flags 
+in `notes` column for manual review.
+
+**0 regressions** — Handbook fix from Batch 1 still active; no false positives on published vs draft.
+
+**2 operational problems**:
+1. **Duplicate Supplements**: Files `ASNZS 1170.0.pdf` and `ASNZS 1170.0-2002.pdf` both contain the 
+   same Supplement (item 6 and 7 identical in Batch 2 results). Suggests one file is a duplicate.
+2. **Possible Edition Drift**: Item 3 (`AS/NZS 1158.3.1:2005` with "Amendment No. 1 (November 2008)") 
+   appears to be a different edition/version than item 1 (same base, different amendment set). May 
+   represent a consolidated reissue variant or data hygiene issue in the upload.
+
+### Next-batch impact
+
+**File hygiene cleanup needed** before scaling to 200+ sources. The 4 mismatched files should be 
+renamed before running remaining 24 batches. Recommend:
+1. Query notebook for all Supplement documents
+2. Rename files to include "Supp" designation
+3. Identify and remove duplicate uploads
+4. Re-extract affected rows after cleanup
+
+**For this extraction cycle**: Batch 2 results are correct as extracted (they reflect actual document 
+content). Include supplements in Standards worksheet but flag for post-extraction cleanup.
+
+---
+
 **Source**: Conversation 2026-05-05, NotebookLM notebook
-`dfd5b22d-4b26-4919-a5b0-3d21385ec745`. Scale validation batch 1 on 10 sources
-(rows 1477-1486 in Standards worksheet).
+`dfd5b22d-4b26-4919-a5b0-3d21385ec745`. Scale validation batches 1-2.
+Batch 1: rows 1477-1486. Batch 2: rows 1487-1496 (includes 4 supplements with file hygiene flags).
