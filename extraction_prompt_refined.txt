@@ -37,6 +37,7 @@ Your response MUST be raw JSON with NO wrapping.
 - DO NOT write any text after the closing } bracket
 
 ===== EXAMPLES OF WRONG FORMAT (DO NOT DO THESE) =====
+
 WRONG: ```json
 {...}
 ```
@@ -44,8 +45,10 @@ WRONG: ```
 {...}
 ```
 WRONG: Here is the JSON: {...}
+WRONG: {...} (Note: incomplete, missing closing brace - wrong for different reason)
 
 ===== EXAMPLES OF RIGHT FORMAT (DO THIS) =====
+
 RIGHT: {"standard_code": "AS/NZS 1170.2:2021", "title": "Wind", ...}
 RIGHT: {
   "standard_code": "AS/NZS 1170.2:2021",

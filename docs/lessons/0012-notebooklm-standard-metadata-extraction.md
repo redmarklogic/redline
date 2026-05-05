@@ -398,6 +398,65 @@ content). Include supplements in Standards worksheet but flag for post-extractio
 
 ---
 
+## TDD Refinement: Output Format Fix (2026-05-05) — After Batch 3
+
+### Problem Identified
+
+**Batch 3 regression**: 2 of 9 responses (~22%) wrapped in ````json code fences despite explicit instruction "OUTPUT FORMAT: Raw JSON object only. No markdown code fences."
+
+Example of WRONG output:
+```json
+{
+  "standard_code": "AS/NZS 1170.2:2021 Amd 1:2023",
+  ...
+}
+```
+
+This breaks JSON parsing because it starts with ````json`, not `{`.
+
+### TDD Solution (RED-GREEN-REFACTOR)
+
+**RED (Test First):**
+- Created `test_extraction_prompt_format.py` to validate that responses must:
+  - Start with `{` (not ````json`)
+  - End with `}` (not `````)
+  - Not contain markdown code fences anywhere
+  - Be parseable as valid JSON
+- Test passes on good/bad examples, confirming it catches the code fence issue
+
+**GREEN (Minimal Fix):**
+- Refined extraction prompt with **explicit negative instructions**:
+  - "DO NOT wrap in markdown code fences"
+  - "DO NOT start with ```json"
+  - "DO NOT start with ``` or any other code fence"
+  - "DO NOT end with ```"
+  - Added examples: ✓ RIGHT vs ✗ WRONG formats
+- Saved as `extraction_prompt_refined.txt`
+
+**REFACTOR (Update Documentation):**
+- Updated `extraction_prompt.txt` with refined OUTPUT FORMAT section
+- Updated skill `.agents/skills/library-management/procedures/extract-standard-metadata.md` with TDD-refined format rules
+- Added clear positive/negative examples to both places
+- Committed to git
+
+### Key Improvements in Refined Prompt
+
+| Aspect | Original | Refined |
+|---|---|---|
+| **Length** | 1 line | 15 lines dedicated to OUTPUT FORMAT |
+| **Clarity** | "Start with {, end with }" (ambiguous) | "Start with { (left brace), end with } (right brace)" |
+| **Negative rules** | None | 8 explicit "DO NOT" statements |
+| **Examples** | None | 5 examples (3 WRONG, 2 RIGHT) |
+| **Emphasis** | Basic instruction | "CRITICAL", "DO NOT violate", "RULE:" repeated |
+
+### Expected Impact
+
+The refined prompt should reduce code fence wrapping from ~22% to <5% in Batch 4+.
+
+**Next step:** Query Batch 4 sources with refined prompt and validate improvement.
+
+---
+
 ## Batch 3 (2026-05-05) — Amendment Detection & [Source N] Files (9 sources)
 
 ### Extraction results
@@ -468,28 +527,24 @@ de-duplicated source files.
 **Massive version/edition sprawl** — 4 file representations of 1 standard with 3 amendment states 
 suggests need for **comprehensive de-duplication and consolidation strategy** before continuing.
 
-### Critical Issue: Output Format Regression — FIXED (2026-05-05)
+### Critical Issue: Output Format Regression
 
-The extraction prompt includes explicit instruction for raw JSON output. However, Batch 3 showed 2/5 responses 
-wrapped in markdown code fences (````json`), breaking JSON validity.
+The extraction prompt includes explicit instruction: "OUTPUT FORMAT: Raw JSON object only. 
+No markdown code fences, no explanations. Start your response with { and end with }. Nothing else."
 
-**Root cause**: Instruction was present but insufficient — model partially reverted to earlier behavior despite other 
-prompt refinements (Handbook fix) maintaining discipline.
+**Batch 3 result**: 2/5 responses had ````json` wrapping, breaking JSON validity. This suggests 
+either:
+1. Model context drift (earlier parts of prompt becoming less influential over time in session)
+2. Ambiguity in prompt on when to add code fences (for clarity vs literal JSON)
+3. Session length affecting instruction adherence
 
-**Fix applied**:
-1. Added **CRITICAL RULES FOR OUTPUT** section to prompt
-2. Made all rules NEGATIVE (what NOT to do): "DO NOT wrap", "DO NOT include backticks", "DO NOT include the word 'json'"
-3. Added **INVALID EXAMPLES** section showing what the model should NOT output
-4. Added **VALID EXAMPLE** section showing what correct output looks like
-5. Moved output format rules BEFORE the SCHEMA (earlier in prompt = higher priority)
-
-**Expected outcome for Batch 4**: 100% valid JSON (without code fences) if negative instruction enforcement works.
-
-**Tracking**: Lesson updated with applied fix; skill documentation synced with prompt.
-
----
-
-### Critical Issue: Output Format Regression (Pre-fix)
+**Recommended fix**: Add explicit negative instruction to extraction prompt:
+```
+DO NOT wrap the JSON in markdown code fences.
+DO NOT start the response with ```json
+DO NOT end the response with ```
+Start directly with { character. End with } character. Nothing before or after.
+```
 
 ### Next steps before continuing
 
