@@ -398,6 +398,104 @@ content). Include supplements in Standards worksheet but flag for post-extractio
 
 ---
 
+## Batch 3 (2026-05-05) — Amendment Detection & [Source N] Files (9 sources)
+
+### Extraction results
+
+| Standard Code | Status | Amendment? | File Type | Notes |
+|---|---|---|---|---|
+| AS/NZS 1170.2:2021 | published | No | [Source 2] | Base standard (large doc split) |
+| AS/NZS 1170.2:2021 | published | No | Primary | Base standard |
+| AS/NZS 1170.2:2021 | published | No | ? | Possible 2020 edition misfile |
+| AS/NZS 1170.2:2021 Amd 1:2023 | amendment | Yes | [amendment 1] | Standalone amendment 2023 |
+| AS/NZS 1170.2:2021 | published | No | [Source 5] | Base with Amd 1&2 incorporated |
+| AS/NZS 1170.2:2021 Amd 2:2024 | amendment | Yes | [Source 6] | Standalone amendment 2024 |
+| AS/NZS 1170.2:2021 | published | No | [Source 2] again | Duplicate (Same as item 1) |
+| AS/NZS 1170.2:2021 | published | No | Primary | Base standard |
+| AS/NZS 1170.3 Supp 1:2003 | published | No | [supp1-2003] | Commentary supplement |
+
+### What worked in Batch 3
+
+**Amendment detection 100% accurate**: All standalone amendments correctly identified:
+- AS/NZS 1170.2:2021 Amd 1:2023 (May 2023 publication) → `document_status = amendment`
+- AS/NZS 1170.2:2021 Amd 2:2024 (June 2024 publication) → `document_status = amendment`
+- Both correctly populated `amends` field with base standard reference
+- Both left `incorporated_amendments` as "N/A"
+
+**[Source N] file structure understood**: Files labeled [Source 2], [Source 5], [Source 6] are revealed to be 
+large document splits (typical for PDFs >100pp uploaded in chunks):
+- [Source 2 102pp] = part of large document
+- [Source 5 11pp] and [Source 6 132pp] = other parts of same standard
+- Model correctly extracted the document content from each part, not treating splits as separate standards
+
+**Multiple editions/amendments tracked**: Extracted 2 separate amendments (Amd 1:2023, Amd 2:2024) 
+plus the base standard (2021) with various consolidated editions showing different amendment incorporation states.
+
+### What didn't work in Batch 3 (OUTPUT FORMAT REGRESSION)
+
+**JSON code fence wrapping (CRITICAL)**: Two of five query responses came back wrapped in markdown 
+code fences:
+
+```
+```json
+{ ... valid JSON ... }
+```
+```
+
+This is NOT valid JSON (starts with ``json`` instead of `{`). The prompt explicitly says 
+"OUTPUT FORMAT: Raw JSON object only. No markdown code fences." The model partially reverted 
+to older behavior despite the Handbook fix maintaining the rule.
+
+**File labeling vs document content mismatch**: ASNZS 1170.2-2020.pdf extracted as AS/NZS 1170.2:2021, 
+suggesting either a file mislabeling or a year drift in the upload process.
+
+**Massive duplication in uploads**: Batch 3 shows at least 4 representations of AS/NZS 1170.2:2021 
+with slightly different incorporation states:
+- [Source 2]: Amendment No. 1 (May 2023)
+- [Source 5]: Amendment Nos 1 and 2  
+- [Source 6]: Only Amendment No. 1 (May 2023) initially, then Amd 2:2024 found in [Source 6]
+- Primary file: Amendment No. 1 (May 2023)
+
+This suggests the uploaded files may be redundant consolidations or partial extracts, not 
+de-duplicated source files.
+
+### Data quality signals
+
+**9 JSON responses, 2 with format errors** — 78% valid JSON (regression from Batch 1-2's 100%)
+
+**7 published, 2 amendments** — Amendment detection still working despite regression
+
+**Massive version/edition sprawl** — 4 file representations of 1 standard with 3 amendment states 
+suggests need for **comprehensive de-duplication and consolidation strategy** before continuing.
+
+### Critical Issue: Output Format Regression
+
+The extraction prompt includes explicit instruction: "OUTPUT FORMAT: Raw JSON object only. 
+No markdown code fences, no explanations. Start your response with { and end with }. Nothing else."
+
+**Batch 3 result**: 2/5 responses had ````json` wrapping, breaking JSON validity. This suggests 
+either:
+1. Model context drift (earlier parts of prompt becoming less influential over time in session)
+2. Ambiguity in prompt on when to add code fences (for clarity vs literal JSON)
+3. Session length affecting instruction adherence
+
+**Recommended fix**: Add explicit negative instruction to extraction prompt:
+```
+DO NOT wrap the JSON in markdown code fences.
+DO NOT start the response with ```json
+DO NOT end the response with ```
+Start directly with { character. End with } character. Nothing before or after.
+```
+
+### Next steps before continuing
+
+1. **Deduplicate uploaded files**: Query notebook for duplicates across [Source N] splits
+2. **Fix output format regression**: Strengthen prompt instruction against code fences
+3. **Clarify file structure**: Understand whether [Source N] files are intentional splits or upload artifacts
+4. **Continue batches**: Assess whether duplication continues in remaining 200+ sources
+
+---
+
 **Source**: Conversation 2026-05-05, NotebookLM notebook
-`dfd5b22d-4b26-4919-a5b0-3d21385ec745`. Scale validation batches 1-2.
-Batch 1: rows 1477-1486. Batch 2: rows 1487-1496 (includes 4 supplements with file hygiene flags).
+`dfd5b22d-4b26-4919-a5b0-3d21385ec745`. Scale validation batches 1-3.
+Batch 1: rows 1477-1486. Batch 2: rows 1487-1496. Batch 3: rows 1507-1515 (9 rows, includes duplicates/splits).
