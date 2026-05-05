@@ -47,3 +47,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | Regional Parameter Overlays | report-writing | 2026-05-04 | practitioner-grounded | [report-writing/regional-parameter-overlays.md](report-writing/regional-parameter-overlays.md) |
 | Input vs Output Parameters in Geotechnical Design Reports | report-writing | 2026-05-04 | practitioner-grounded | [report-writing/input-vs-output-parameters.md](report-writing/input-vs-output-parameters.md) |
 | Parameter Completeness Scope Statement | report-writing | 2026-05-04 | practitioner-grounded | [report-writing/parameter-completeness-scope-statement.md](report-writing/parameter-completeness-scope-statement.md) |
+| Standards Copyright Field Design for Library Index | standards-and-codes | 2026-05-05 | practitioner-grounded | [standards-and-codes/standards-copyright-field-design.md](standards-and-codes/standards-copyright-field-design.md) |
