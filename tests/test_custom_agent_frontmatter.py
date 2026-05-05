@@ -55,7 +55,8 @@ def test_harriet_skill_requires_official_custom_agent_frontmatter() -> None:
 
 def _frontmatter_for(path: Path) -> list[str]:
     lines = path.read_text(encoding="utf-8").splitlines()
-    assert lines and lines[0] == "---", f"{path} must start with YAML frontmatter"
+    assert lines, f"{path} must start with YAML frontmatter"
+    assert lines[0] == "---", f"{path} must start with YAML frontmatter"
 
     try:
         end_index = lines[1:].index("---") + 1
