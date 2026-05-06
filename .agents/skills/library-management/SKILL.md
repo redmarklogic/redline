@@ -1,6 +1,6 @@
 ---
 name: library-management
-description: Use when indexing, renaming, or adding books to the digital library at G:\My Drive\Library — covers scanning folders, extracting metadata from PDFs, updating the Excel index, and renaming files to the canonical convention.
+description: Use when indexing, renaming, or adding books to the digital library at G:\My Drive\Library — covers scanning folders, extracting metadata from PDFs, using the SNZ scraper for NZ/AU standard metadata (title, status, canonical code), updating the Excel index, and renaming files to the canonical convention.
 ---
 
 # Library Management
@@ -178,6 +178,60 @@ When indexing an engineering standard, populate the extra columns below in addit
 
 ---
 
+## Metadata Enrichment for NZ/AU Standards
+
+For standards issued by Standards Australia, Standards New Zealand, or jointly (AS, NZS, AS/NZS prefix), the SNZ catalogue scraper is the **primary metadata source**. PDF text extraction alone is unreliable for scanned standards and will miss canonical title and currentness.
+
+**Required skill:** `python-testing-unit` (`.agents/skills/python-testing-unit/SKILL.md`) — follow TDD when extending the scraper or normaliser.
+
+### Step-by-step workflow
+
+1. **Normalise the code** from the filename using `normalise_standard_code` (`.agents/tools/library/naming_conventions.py`) to convert filename artefacts to a canonical query:
+   ```python
+   from naming_conventions import normalise_standard_code, strip_amendment_suffix
+   canonical = strip_amendment_suffix(normalise_standard_code(raw_code))
+   # e.g. "ASNZS 5667.4-1998" → "AS/NZS 5667.4:1998"
+   # e.g. "ASNZS 9001-2008 [Amdt 1]" → "AS/NZS 9001:2008" (amendment stripped for query)
+   ```
+
+2. **Query the SNZ catalogue**:
+   ```python
+   from snz_scraper import get_snz_metadata, StandardNotFoundError, AmbiguousStandardError
+   result = get_snz_metadata(canonical)
+   # Populate: title = result.title, status = result.status.lower()
+   ```
+
+3. **If `StandardNotFoundError` or `AmbiguousStandardError`**: read the **first page** of the PDF to find the real standard code printed on the cover. Common causes and fixes:
+
+   | Symptom | Likely cause | Fix |
+   |---|---|---|
+   | Digits run together (`56674`) | Missing decimal point (`5667.4`) | Add the dot |
+   | Year before the dot (`5667.4-1998`) | Already canonical — check normaliser | Recheck input |
+   | No SNZ entry at all | Non-SNZ standard (ISO, IEC, BS) | Fall back to manual |
+   | Multiple editions returned | Year missing from filename | Find year on cover page |
+
+   Correct the code and retry step 2.
+
+4. **If still unresolvable** after reading the cover page: flag `NEEDS_REVIEW: SNZ lookup failed — verify code manually` in `notes` and proceed with whatever is printed on the cover.
+
+5. **Rectify the filename** if the original filename did not match the resolved standard code: rename the file and update `path` and `canonical_filename` together. See [Canonical Filename Convention](#canonical-filename-convention).
+
+### What the scraper populates
+
+| Field | How to populate |
+|---|---|
+| `title` | `result.title` — always prefer over filename-derived title |
+| `status` | `result.status.lower()` — `current` / `superseded` / `withdrawn` / `sponsored` |
+| `standard_code` | Output of `normalise_standard_code` after confirmation |
+| `issuing_body` | Inferred from prefix: `AS/NZS` → `Standards Australia; Standards New Zealand` |
+| `jurisdiction` | Inferred from prefix: `AS/NZS` → `AU; NZ`; `NZS` only → `NZ`; `AS` only → `AU` |
+
+### Scraper coverage
+
+The SNZ scraper covers `standards.govt.nz` only (NZS, AS/NZS, AS prefixes). For ISO, IEC, BS EN, ASTM, or other non-SNZ standards, fall back to PDF text extraction and manual lookup. Future tools for other publishers will follow the same pattern and will be registered in `.agents/tools/library/`.
+
+---
+
 ## Canonical Filename Convention
 
 Format: `Full-Title-Without-Marketing-Subtitle_FirstAuthorSurname_Year.pdf`
@@ -258,6 +312,9 @@ All tools live in `.agents/tools/library/`. Script-style tools run from the repo
 | Updating `path` but not `canonical_filename` | Always update both columns together. |
 | Forgetting `last_updated` after a rename | Set it every time a row is touched. |
 | Skipping a duplicate row | Every file gets a row. Add `DUPLICATE of <path>` — never silently skip. |
+| Using filename as `title` for NZ/AU standards | Call `get_snz_metadata` first; filename is never the canonical title. |
+| Leaving `status = needs_review` after a successful SNZ lookup | Populate `status` from `result.status.lower()` — the scraper resolves this. |
+| Not renaming the file after a code correction | When the resolved code differs from the filename, rename and update `path` + `canonical_filename` together. |
 | Deleting duplicate files without user instruction | Flag in `notes`. The user decides. |
 | Deleting chapters before confirming merge succeeded | `merge_chapters.py` verifies output before deleting — use the tool. |
 | Acting on EPUB-to-PDF conversion without confirmation | Flag it. Never convert without user approval. |
