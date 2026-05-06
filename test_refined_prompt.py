@@ -9,8 +9,8 @@ This script:
 """
 
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
@@ -29,7 +29,9 @@ def test_refined_prompt_against_batch3_source() -> None:
     print("GREEN PHASE: Testing refined extraction prompt")
     print("=" * 70)
     print(f"\n✓ Loaded refined prompt ({len(refined_prompt)} chars)")
-    print(f"✓ Ready to query: AS/NZS 1170.2:2021 Amd 1:2023 (Batch 3 source that had code fence issue)")
+    print(
+        "✓ Ready to query: AS/NZS 1170.2:2021 Amd 1:2023 (Batch 3 source that had code fence issue)"
+    )
 
     # Prepare for query
     notebook_id = "dfd5b22d-4b26-4919-a5b0-3d21385ec745"
@@ -64,12 +66,12 @@ Or run automated: mcp_notebooklm_notebook_query with extracted source_id from ba
 
         if is_valid:
             data = json.loads(response.strip())
-            print(f"\n✓ Valid JSON parsed successfully")
+            print("\n✓ Valid JSON parsed successfully")
             print(f"  Standard Code: {data.get('standard_code')}")
             print(f"  Document Status: {data.get('document_status')}")
             print(f"  Amends: {data.get('amends')}")
         else:
-            print(f"\n❌ Format validation failed")
+            print("\n❌ Format validation failed")
             print(f"Response preview: {response[:200]}")
             sys.exit(1)
     else:
