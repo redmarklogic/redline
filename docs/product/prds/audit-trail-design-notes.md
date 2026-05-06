@@ -122,6 +122,28 @@ sometimes collapse them even when they have the headcount?
 **Test**: Interview 2-3 people from firms with 50+ staff. Do they actually
 use three separate signatories, or is it aspirational?
 
+### Q6. Information radiator surface and content for reviewer state orientation
+
+*(Added 2026-05-06. Origin: strategy session — Graeme's structural orientation
+insight + founder's information radiator idea. Framing: Ron.)*
+*(Resolved 2026-05-06. Graeme practitioner feedback confirmed Candidate B.)*
+
+**RESOLVED — Candidate B (Enhanced Document Control Page).**
+
+Graeme's practitioner feedback confirmed that reviewers open the document first,
+page 2 is the first substantive stop, and the coverage summary extends existing
+provenance rather than introducing a new concept.
+
+Candidate A demoted to supplement (PD dashboard can show coverage summary).
+Candidate C deferred to P-024 unfreeze.
+
+Full resolved design: `docs/product/prds/information-radiator-candidate-b-design.md`.
+Practitioner feedback: `docs/knowledge/geotechnical/report-writing/information-radiator-practitioner-feedback.md`.
+
+**One open sub-question for KR2 interviews**: coverage table ordering (section
+number vs flag severity). Mark recommends section number with visual distinction;
+Graeme recommends flag severity. Testable.
+
 ## Mockup Index
 
 | Mockup | File | Status |

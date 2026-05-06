@@ -39,6 +39,12 @@ strategy drift.
    in Phase 1 would require a different liability model, different competitive
    positioning, and a different trust threshold with Technical Directors. Parked as
    Phase-2 hypothesis under P-032. *(Added 2026-05-03.)*
+9. **Standalone template management product.** Redline is not a template management
+   tool. Template awareness is a quality-layer input (Business tier, Feature K) that
+   personalises skeleton output and Pre-Review checks. Firms upload their templates
+   so Redline can enforce their conventions at the point of writing --- not so Redline
+   can manage their template library. The value is embedded enforcement, not template
+   governance. *(Added 2026-05-06.)*
 
 ## GTM Non-Goals (H2 2026)
 

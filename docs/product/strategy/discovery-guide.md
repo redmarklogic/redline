@@ -141,6 +141,19 @@ wrapping an existing drafting behaviour rather than competing with it.
 - "Would a senior reviewer trust Redline more if every flag said 'review required' rather
    than 'fix this'?"
 
+**Compounding value / switching cost probe** *(added 2026-05-06, Ron)*: Tests whether
+firm-specific configuration creates genuine retention through compounding value (not
+just switching friction). Critical for validating the Knowledge Tier (Business tier,
+Sprint 5+) value proposition.
+
+- "After 6 months of using a tool that knows your firm's template and review standards,
+   what would switching to a different tool cost you --- in time, in reconfiguration, or
+   in review quality?"
+- "If you spent two days configuring your house rules in Redline, and a competitor offered
+   the same capability, how hard would it be to switch?"
+- "Would knowing that the tool gets better the longer you use it make you more or less
+   willing to start?"
+
 Provenance: `docs/research/20260426-legal-ai-adjacent-market-signal.md`,
 `docs/research/20260503-microsoft-word-legal-agent-robin-ai-legora-signal.md`, and
 `docs/knowledge/geotechnical/contracts-and-risk/ai-workflow-expansion-boundaries.md`.

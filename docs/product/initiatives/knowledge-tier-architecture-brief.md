@@ -48,17 +48,17 @@ architecture that drafts geotech reports also drafts travel RFPs. Redline's firm
 knowledge layer means the system gets better the more the firm uses it, creating a
 compounding advantage that a generalist RAG agency cannot replicate.
 
-## Why It Creates Switching Costs
+## Why Value Compounds
 
-Once a firm has uploaded its historical reports, templates, and house style, the cost of
-leaving Redline is the cost of re-teaching a new system everything the firm has already
-invested in configuring. This is not lock-in through contract terms — it is lock-in
-through accumulated value.
+Once a firm has uploaded its historical reports, templates, and house style, the system's
+understanding of their conventions deepens with every report generated through Redline.
+After 12 months of use, the knowledge layer reflects not just the firm's static templates
+but their evolving practice patterns.
 
-The switching cost compounds over time: as the firm generates more reports through
-Redline, the system's understanding of the firm's conventions deepens. After 12 months
-of use, the knowledge layer reflects not just the firm's static templates but their
-evolving practice patterns.
+Firms stay because Redline gets better the longer they use it --- not because their data
+is trapped. The value is compounding: each new report reinforces the system's grasp of
+the firm's conventions, and the cost of re-teaching a new system grows organically over
+time. This is retention through accumulated value, not lock-in through dependency.
 
 ## The "Standardise" Question
 

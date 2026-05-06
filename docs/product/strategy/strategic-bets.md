@@ -106,13 +106,20 @@ to review.
 offering affirmative AI policies; others are inserting absolute exclusion clauses. This
 bifurcation upgrades audit trail from a Phase-2 feature to a Day-1 product requirement.
 GTM angle: "Redline gives you the audit trail your insurer will ask for." Feature L
-(Audit Log) core subset elevated to Sprint 1 accordingly — see `feature-backlog.md`.
+(Audit Log) core subset elevated to Sprint 1 accordingly --- see `feature-backlog.md`.
 Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+
+**Sign-off via OOXML metadata** *(added 2026-05-06)*: Feature L full scope (Sprint 5+)
+will implement reviewer sign-off using OOXML document metadata (`customXmlParts`)
+embedded in the .docx itself --- not a separate database record. This stores the
+sign-off audit trail inside the document, making it portable and insurer-readable.
+Conditional on P-024 (Word task pane) unfreezing, since the sign-off interaction
+requires an in-Word surface.
 
 **Adjacent-market watch item — legal AI playbooks** *(added 2026-04-26)*: Leya's
 playbook-driven review (firm legal teams encode rules with approved language and
 fallback positions; AI marks up deviations; lawyer approves) validates the House Rules
-concept. Legal playbooks create switching costs through accumulated configuration ---
+concept. Legal playbooks create compounding value through accumulated configuration ---
 the same dynamic Redline expects from firm-specific House Rules. Validate playbook
 adoption appetite via KR2 discovery: "Would your firm encode its review standards in a
 tool, or is that knowledge too tacit?" Provenance:
@@ -210,11 +217,12 @@ must include a decision matrix", "every QA description must distinguish automate
 manual controls." These expectations live in senior engineers' heads and are enforced
 inconsistently through ad-hoc review markup. The House Rules engine data model must
 support conditional rules of the form *"when section type = X and claim type = Y,
-require artefact Z"* — not just global toggles. This gives House Rules a concrete
+require artefact Z"* --- not just global toggles. This gives House Rules a concrete
 first use case: encoding the structural presentation standards that differentiate a
 draft that survives senior review from one that gets sent back. Firms that encode
-these rules create switching costs through accumulated configuration (per
-`knowledge-tier-architecture-brief.md`).
+these rules experience compounding value through accumulated configuration (per
+`knowledge-tier-architecture-brief.md`) --- the system gets better the longer they
+use it, and the cost of re-teaching a new system grows over time.
 
 **Kill criterion**: Licensing review (P-026) concludes that even citation-only internal
 use of NZS/AS standards content requires a licence Redline cannot obtain or afford.

@@ -305,3 +305,54 @@ the reader's own data. This is a Product-Led SEO opportunity.
 5. **John**: Once Graeme's practitioner brief is in hand, rewrite the blog
    headlines with Graeme's voice as the source. Route through
    `marketing-ai-content-review`.
+
+---
+
+## Scoping Decisions (2026-05-06 Session)
+
+The following scoping decisions were confirmed by Ron, John, and the founder:
+
+1. **Swiss cheese metaphor**: Scoped to the white paper and sales conversations with
+   PDs/Partners only. Not for landing pages, LinkedIn posts, or product copy.
+   Overapplying a safety-engineering metaphor to a document-quality product risks
+   sounding inflated, which violates the brand voice rule ("technically credible,
+   never hyped").
+
+2. **Cognitive load reduction insight** (Graeme: "templated report halves review time
+   because I don't spend 20-30 minutes orientating"): Scoped to Prisca-targeted
+   content (sales one-pager, blog posts aimed at senior reviewers). Not a headline
+   for Anna or Perrie --- it describes the reviewer's experience, not the buyer's
+   decision.
+
+3. **"Review trail your QMS lost when you went digital"**: Retired. Three problems:
+   "QMS" is jargon, it's backward-looking, and it implies Redline is a QMS. Use the
+   existing phrasing from Bet 2: *"Redline gives you the audit trail your insurer
+   will ask for."* That phrasing is cleaner, more forward-looking, and speaks to a
+   buying trigger (PI renewal) rather than a historical problem.
+
+4. **Three-persona pitch lines** (ready for sales enablement):
+   - **Perrie** (user): "I submitted a draft and it came back with five comments
+     instead of twenty. That has never happened."
+   - **Prisca** (senior reviewer/champion): "I haven't marked up a single copy-paste
+     error in two weeks. I'm actually reviewing the engineering now."
+   - **Anna** (buyer): "My seniors are reviewing faster because the basic stuff is
+     already caught."
+
+5. **Template upload page rewrite** (ready for landing page draft):
+   - **Before**: "Upload your templates so Redline can personalise your skeleton output."
+   - **After**: "Upload your firm's report templates. Redline uses them as the
+     structural standard for every report --- so deviations from your firm's conventions
+     are flagged at the point of writing, not the point of review."
+
+6. **"What to tell your insurer"** sales enablement paragraph (ready to file):
+   > "We have implemented an automated pre-review layer (Redline) that checks every
+   > geotechnical report against current NZ and Australian standards, required section
+   > structure, and our firm's internal reporting conventions before the report reaches
+   > a senior reviewer. The tool generates a timestamped record of checks performed
+   > for every report reviewed."
+
+7. **QA Tax Calculator**: Product-Led SEO opportunity. John to write a marketing brief
+   and route to Mark for PRD conversion. Free calculator: "How much does your firm
+   spend on avoidable report rework?" Inputs: number of intermediates, reports/month,
+   average reviewer hours per report, senior hourly rate. Output: annual cost of
+   avoidable rework.
