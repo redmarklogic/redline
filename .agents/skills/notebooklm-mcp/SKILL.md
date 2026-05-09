@@ -37,6 +37,19 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 All other tools (27 of 35) are **forbidden**. See
 [`forbidden-tools.md`](forbidden-tools.md) for the full list and rationale.
 
+## Post-Source-Change Rule (mandatory)
+
+After **any** operation that adds, removes, or renames a source in a notebook
+(`source_add`, `source_delete`, `source_rename`), Linda **must** update
+`G:\My Drive\Library\index-notebooklm.xlsx` before the task is considered done.
+
+Trigger: load the `notebooklm-index` skill and run the **single-notebook upsert**
+for the affected notebook using its UUID. Do not run a full sync — upsert only the
+notebook that changed.
+
+This rule applies even when the source operation was part of a larger task
+(e.g. library ingestion). The index update is the final step, not optional.
+
 ## Procedure
 
 ### Step 1 — Install

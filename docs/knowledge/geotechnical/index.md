@@ -52,3 +52,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | Audit Trail Sign-Off Workflows | report-writing | 2026-05-05 | cross-referenced | [report-writing/audit-trail-sign-off-workflows.md](report-writing/audit-trail-sign-off-workflows.md) |
 | Template Management in Engineering Consultancies | report-writing | 2026-05-06 | cross-referenced | [report-writing/template-management-domain-perspective.md](report-writing/template-management-domain-perspective.md) |
 | Information Radiator — Practitioner Feedback on Pre-Review Summary Design | report-writing | 2026-05-06 | practitioner-grounded | [report-writing/information-radiator-practitioner-feedback.md](report-writing/information-radiator-practitioner-feedback.md) |
+| UI Terminology Glossary for Geotechnical Products | report-writing | 2026-05-09 | practitioner-grounded | [report-writing/ui-terminology-glossary.md](report-writing/ui-terminology-glossary.md) |
