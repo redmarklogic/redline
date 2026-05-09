@@ -52,10 +52,21 @@
   AI action with timestamp, input hash, and model version. Full scope (reviewer sign-off,
   export, retention policies) remains Sprint 5+. Provenance:
   `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+  *(Updated 2026-05-09, P-037)* Sprint 1 also embeds an **OOXML provenance event**
+  (write-only custom XML part in every generated DOCX): skeleton generation timestamp,
+  template version, standards applied. Nothing reads it yet — reading is Phase 2.
+  Full event ledger schema design (extensibility model, all event types) is a
+  **Sprint 2 task** (see P-037). Signature event type and Graeme domain validation
+  are deferred to when signature work begins.
 
 ### Sprint 2–3 — Convert wedge to paid
 
 - **G. Justification Email Generator** (bottoms-up conversion mechanic for Pro → Business)
+- **OOXML Event Ledger schema design** *(added 2026-05-09, P-037)* — standalone engineering
+  design task: define the append-only custom XML part format, event type registry (provenance,
+  signatures, Pre-Review annotations), extensibility model, and versioning rules. This produces
+  the schema that Features A (provenance), L (signatures/audit), and D (Pre-Review) all consume.
+  Graeme consulted when signature event type design begins, not before.
 - **D. Inline Annotation Engine** (the paid product surface — Pre-Review). Decomposes into
   taxonomy-free rules first (15–20 rules: taboo words, undefined acronyms, ambiguity flags,
   unit inconsistencies, citation validator, section/structural completeness, passive voice /
