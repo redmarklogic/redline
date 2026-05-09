@@ -159,7 +159,10 @@
 | Skill | Purpose | Used by |
 |---|---|---|
 | `ux-professional-software` | Information-dense UI design for professional/technical software, document-centric interaction patterns, annotation overlays, form design for technical inputs | Matt |
-| `ux-conversion-design` | Conversion UX for warm-handoff B2B SaaS (quota-exhaustion nudges, SSO gate, onboarding friction, pricing page layout) | Matt |
+| `ux-conversion-design` | Co-development partner conversion UX (quota-exhaustion nudges, SSO gate, onboarding friction, 10→100→1000 phased conversion surfaces). Phase 1: founder-led recruitment. Phase 2: self-serve Pro purchase + referral loop | Matt |
+| `ux-document-design` | Document-as-product design: structural hierarchy, placeholder formatting, metadata presentation, and standards citation styling in generated DOCX output | Matt |
+| `ux-design-critique` | Structured self-review checklist: Nielsen heuristics scoring, cognitive load check, AI Language Policy compliance, cross-surface consistency, persona walk-through. Adapted from pbakaus/impeccable/critique framework for Markdown/Miro outputs | Matt |
+| Playwright MCP *(built-in)* | Live website review via browser automation: navigate, screenshot, interact, inspect console/network, resize viewports. Governed by Matt's Website Review Protocol (pre-flight check, acceptance criteria loop, stop-on-unavailable). No separate skill file — protocol is embedded in Matt's JD. | Matt |
 
 > Both UX skills are pending creation. They require notebook grounding before drafting.
 
@@ -178,5 +181,8 @@
 | Gap | Identified by | Proposed remediation | Status |
 |---|---|---|---|
 | `ux-professional-software` (information-dense UI, document-centric interaction, form design) | Harriet (2026-04-20, Matt hire) | Query `Product Design & UX` and `Information Architecture and Knowledge Management` notebooks; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
-| `ux-conversion-design` (conversion UX for warm-handoff B2B SaaS) | Harriet (2026-04-20, Matt hire) | Route through John for `Monetizing & Scaling Innovation` and `Digital Marketing & Social Selling` notebooks; combine with `Product Design & UX`; draft skill using `writing-skills` TDD cycle | Pending notebook grounding + John consultation |
+| `ux-conversion-design` (co-development partner conversion UX, 10→100→1000 phasing) | Harriet (2026-04-20, Matt hire; rescoped 2026-05-09) | Route through John for `Monetizing & Scaling Innovation` and `Digital Marketing & Social Selling` notebooks; combine with `Product Design & UX`; draft skill using `writing-skills` TDD cycle | Pending notebook grounding + John consultation |
+| `ux-document-design` (document-as-product design for generated DOCX output) | Harriet (2026-05-09, Matt scope expansion) | Query `Product Design & UX` notebook for document design principles; consider Word/OOXML formatting constraints; draft skill using `writing-skills` TDD cycle | Pending — Sprint 1 priority |
+| `ux-taskpane-design` (Word taskpane add-in interaction patterns) | Harriet (2026-05-09, Matt scope expansion) | Deferred until P-024 unfreezes. Query `Product Design & UX` notebook when ready | Deferred (P-024) |
+| `ux-email-as-interface` (email template design for co-development and impact communication) | Harriet (2026-05-09, Matt scope expansion) | Collaborate with John on email copy patterns; draft skill using `writing-skills` TDD cycle | Deferred — Phase 2 |
 | `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |

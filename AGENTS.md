@@ -115,6 +115,13 @@ permitted only when clearly labelled as such.
   `Monetizing & Scaling Innovation` notebooks. Writes only to `docs/product/marketing/`.
   Invoke: "John, [request]"
 
+- **Matt** (`rl.matt.agent.md`): UI/UX Designer across four product surfaces (web, Word
+  documents, Word taskpane, email agent). Interaction design, wireframes, component specs,
+  and user flow design. Downstream of Mark (consumes PRDs), upstream of speckit (produces
+  design specs). Knowledge grounded in the Product Design & UX notebook. Writes only to
+  `docs/product/design/`.
+  Invoke: "Matt, [request]"
+
 **PM skills (loaded on demand by Mark and/or Ron):**
 
 - `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
@@ -136,13 +143,24 @@ permitted only when clearly labelled as such.
   `pm-structural-integrity-auditor` (`/challenge`), `qmd-narrative-design` (long-form), and
   `miro-mcp` (Content Segmentation Grid, campaign maps).
 
+**UX skills (loaded on demand by Matt):**
+
+- `ux-professional-software` — information-dense UI design, document-centric interaction patterns
+- `ux-conversion-design` — co-development partner conversion UX (quota-exhaustion, SSO gate, onboarding)
+- `ux-document-design` — document-as-product design for generated DOCX output
+- `ux-design-critique` — structured self-review checklist (Nielsen heuristics, cognitive load, AI Language Policy)
+- Matt also uses `pm-personas` (shared read-only), `pm-structural-integrity-auditor` (`/challenge`),
+  `miro-mcp` (wireframes, user flows), and `notebooklm-mcp` (Product Design & UX notebook).
+
 **Handoff chain (non-negotiable):**
 ```
 Graeme (domain facts) → Ron (vision → bets → OKRs → positioning → GTM motion)
                           ↓
                Mark (problem → hypothesis → PRD)        John (content, SEO, social, campaigns)
                           ↓                                ↓
-               spec-kit (engineering)                   published assets / channels
+               Matt (design specs, wireframes)          published assets / channels
+                          ↓                                ↓
+               spec-kit (engineering)                      ↓
                                        ↘             ↙
                                 Monthly Signal Report → back to Ron + Mark
 ```
@@ -154,10 +172,16 @@ Key John-specific dynamics:
 - John → Graeme: every technical claim before publishing (mandatory, blocking).
 - John → Ron + Mark: monthly signal report (John's most strategic contribution).
 
+Key Matt-specific dynamics:
+- Mark → Matt: PRDs. Matt never designs without a PRD.
+- Matt → Graeme: domain terminology verification (mandatory, blocking).
+- Matt → John: conversion-critical designs for positioning and micro-copy review.
+- Matt → speckit.specify: design specs for engineering handoff.
+
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
 **Output directory:** `docs/product/` (strategy/, strategic-bets.md, okrs/, positioning.md, gtm/,
-hypotheses/, initiatives/, prds/, problems/, decisions/, marketing/), `docs/knowledge/geotechnical/` (Graeme)
+hypotheses/, initiatives/, prds/, problems/, decisions/, marketing/, design/), `docs/knowledge/geotechnical/` (Graeme)
 
 #### Visual Artifacts Policy (Markdown vs Miro)
 
@@ -175,6 +199,8 @@ toolset, not a skill that decides what to render.
 | Prioritization matrices (RICE / MoSCoW / Value-Effort) | **Miro** matrix or spreadsheet; Markdown table for the final ranking | Mark |
 | Marketing campaigns, content briefs, signal reports, editorial calendar, style guide | Markdown (`docs/product/marketing/`) | John |
 | Content Segmentation Grid (content × persona × buying-cycle stage) | **Miro** matrix; Markdown index in `docs/product/marketing/` | John |
+| Design specifications, interaction pattern docs | Markdown (`docs/product/design/`) | Matt |
+| Wireframes, user flows, annotated mockups | **Miro** (Markdown design spec canonical) | Matt |
 
 Do not auto-mirror every Markdown artifact to Miro — mirror on demand. Drift starts when both
 surfaces try to be canonical for the same content.
