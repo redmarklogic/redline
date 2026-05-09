@@ -7,7 +7,7 @@ from types import ModuleType
 import openpyxl
 import pytest
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 TOOLS_DIR = REPO_ROOT / ".agents" / "tools" / "library"
 
 

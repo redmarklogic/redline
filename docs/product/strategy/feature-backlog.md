@@ -26,7 +26,7 @@
 | A | GBR / GIR Skeleton Generator (free, SSO-gated download, capped 3–5 docs × 100 pages) | Free wedge | 3 | 5 | 3 | 5 | 5 | **21** | **Sprint 1** |
 | D | Inline Annotation Engine (browser upload only; flags ambiguity, missing definitions, undefined acronyms, unit inconsistencies). Word task pane parked — see P-024. | Pre-Review / Pro | 5 | 3 | 3 | 4 | 5 | **20** | Sprint 2-3 |
 | M | Document Parser / Chunking Pipeline | Infra (cross-cutting) | 3 | 3 | 5 | 4 | 5 | **20** | **Sprint 1** (infra dep of A) |
-| L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | **Sprint 1** (core subset); full scope Sprint 5+ *(elevated 2026-04-20, Archie CI session — insurance bifurcation)* |
+| L | Audit Log + Reviewer Sign-off | Business | 3 | 4 | 5 | 5 | 2 | **19** | **Sprint 1** (core subset); full scope Sprint 5+ *(elevated 2026-04-20, Archie CI session --- insurance bifurcation; sign-off via OOXML metadata confirmed 2026-05-06, conditional on P-024)* |
 | F | Citation / Reference Validator (verifies cited standards exist + are current) | Pre-Review / Pro | 3 | 4 | 2 | 4 | 3 | **16** | Sprint 3 |
 | D.pc | Parameter Completeness Checking (rule type within D — presence check for design-type-specific parameters; requires design-type taxonomy. Pareto 5: shallow foundations, timber pole retaining walls, slope stability, liquefaction assessment, piled foundations. Both under-inclusion and over-inclusion are failure modes.) | Pre-Review / Pro | 4 | 2 | 3 | 3 | 4 | **16** | Sprint 3-4 |
 | E | Senior Reviewer Anticipator (predicts senior markups, ranks by severity) | Pre-Review / Pro | 5 | 2 | 3 | 2 | 4 | **16** | Sprint 4+ (needs labelled corpus) |

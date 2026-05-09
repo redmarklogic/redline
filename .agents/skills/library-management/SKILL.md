@@ -1,6 +1,6 @@
 ---
 name: library-management
-description: Use when indexing, renaming, or adding books to the digital library at G:\My Drive\Library — covers scanning folders, extracting metadata from PDFs, updating the Excel index, and renaming files to the canonical convention.
+description: Use when indexing, renaming, or adding books to the digital library at G:\My Drive\Library — covers scanning folders, extracting metadata from PDFs, using the SNZ scraper for NZ/AU standard metadata (title, status, canonical code), updating the Excel index, and renaming files to the canonical convention.
 ---
 
 # Library Management
@@ -36,11 +36,11 @@ Worksheets: `Master` (all entries) + four domain worksheets: `Ebooks`, `Standard
 
 | Worksheet | Content | Headers |
 |---|---|---|
-| `Master` | Every physical file in the library | Standard (20 columns) |
-| `Ebooks` | PDF and EPUB ebooks | Standard (20 columns) |
-| `Standards` | Engineering standards | Enhanced (20 standard + 5 engineering) |
-| `Magazines` | Magazine PDFs and EPUBs | Standard (20 columns) |
-| `Misc` | Everything that does not fit Ebooks, Standards, or Magazines | Standard (20 columns) |
+| `Master` | Every physical file in the library | Standard (22 columns) |
+| `Ebooks` | PDF and EPUB ebooks | Standard (22 columns) |
+| `Standards` | Engineering standards | Enhanced (22 standard + 5 engineering; additional columns are planned — see below) |
+| `Magazines` | Magazine PDFs and EPUBs | Standard (22 columns) |
+| `Misc` | Everything that does not fit Ebooks, Standards, or Magazines | Standard (22 columns) |
 
 **One row per physical file.** Two rows may share a `sha256` — that signals a duplicate.
 
@@ -105,7 +105,7 @@ Example: a geotechnical engineering textbook goes in `T - Technology\TA700-712 -
 
 Origin type — what kind of physical object this file is:
 
-`Book` · `Handbook` · `Framework Guide` · `Academic Paper` · `Conference Paper` · `Magazine Issue` · `Chapter` · `Standard` · `Guidance Note` · `Technical Report` · `Code of Practice`
+`Book` · `Handbook` · `Framework Guide` · `Academic Paper` · `Conference Paper` · `Magazine Issue` · `Chapter` · `Standard` · `Draft for Public Comment` · `Guidance Note` · `Technical Report` · `Code of Practice`
 
 ---
 
@@ -113,7 +113,7 @@ Origin type — what kind of physical object this file is:
 
 Semantic character — how to use it, independent of origin:
 
-`Textbook` · `Practical Guide` · `Reference Manual` · `Case Studies` · `Theory` · `Standard` · `Code of Practice` · `Guidance Note` · `Technical Report` · `Magazine Issue` · `Chapter` · `Academic Paper` · `Workbook`
+`Textbook` · `Practical Guide` · `Reference Manual` · `Case Studies` · `Theory` · `Standard` · `Draft for Public Comment` · `Code of Practice` · `Guidance Note` · `Technical Report` · `Magazine Issue` · `Chapter` · `Academic Paper` · `Workbook`
 
 **Note:** `category` and `document_type` serve different purposes. A file can be `category = Guidance Note` and `document_type = Practical Guide` simultaneously.
 
@@ -127,19 +127,117 @@ Semantic character — how to use it, independent of origin:
 
 ## Standards Worksheet (within `library-index.xlsx`)
 
-The `Standards` worksheet is the only domain worksheet with enhanced headers. It holds engineering standards with additional engineering-specific columns beyond the standard 20. The `Master` sheet holds all rows with standard headers only.
+The `Standards` worksheet is the only domain worksheet with enhanced headers. It holds engineering standards with additional engineering-specific columns beyond the standard 22. The `Master` sheet holds all rows with standard headers only.
 
-When indexing an engineering standard, populate the extra columns below in addition to the standard Master columns.
+**Implemented engineering columns (5):** `standard_code`, `status`, `jurisdiction`, `issuing_body`, `superseded_by` — these are defined in `workbook_utils.ENGINEERING_EXTRA_HEADERS` and present in every Standards row.
+
+**Planned engineering columns (8):** `discipline`, `year_published`, `year_withdrawn`, `copyright`, `reproduction_permitted`, `citation_permitted`, `licence_verified`, `licence_notes` — not yet in `workbook_utils.py`. Add these to `ENGINEERING_EXTRA_HEADERS` before writing them to the workbook.
+
+When indexing an engineering standard, populate the extra columns below in addition to the standard Master columns. Columns are grouped thematically.
+
+**Identity**
 
 | Column | Description | Example |
 |---|---|---|
-| `standard_code` | Official reference designation engineers cite | `BS EN 1997-1:2004`, `NZS 4402:1986` |
-| `status` | `current` · `superseded` · `withdrawn` · `draft` · `needs_review` | |
-| `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International` | |
-| `issuing_body` | Standards body that authored the document (distinct from national distributor) | `CEN`, `CIRIA`, `BSI` |
-| `superseded_by` | Reference code of the replacing document; populate when `status = superseded` | `BS EN 1997-1:2013` |
+| `standard_code` | The designation printed on the document. For published standards: `AS/NZS 2865:2009`. For drafts: `DR 05564`. Never use the target standard code for a draft — index what the document *is*, not what it aspires to become | `DR 05564`, `AS/NZS 2865:2009`, `BS EN 1997-1:2004` |
+| `issuing_body` | Standards body that authored the document (distinct from national distributor like SAI Global). For joint standards: semicolon-separated | `Standards Australia; Standards New Zealand`, `CEN`, `BSI` |
+| `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International`. Semicolon-separated when joint | `AU; NZ` |
 
-**Rules:** Never leave `status` blank for any engineering standard. Use `needs_review` when currentness is unknown; do not default to `current` unless confirmed. When `status = needs_review`, add a `NEEDS_REVIEW` note and route currentness resolution to Graeme. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. Non-standard engineering books (textbooks, guidance notes) leave `standard_code`, `status`, `jurisdiction`, `issuing_body`, and `superseded_by` blank.
+**Identity — planned columns** *(not yet in workbook_utils.py)*
+
+| Column | Description | Example |
+|---|---|---|
+| `discipline` | Engineering discipline. Controlled vocabulary: `geotechnical` · `structural` · `materials` · `materials testing` · `loading` · `seismic` · `environmental` · `plumbing` · `electrical` · `fire` · `occupational health and safety` · `quality` · `general`. See [reference/discipline-taxonomy.md](reference/discipline-taxonomy.md) for definitions | `occupational health and safety` |
+
+**Temporal (validity window)** *(planned — not yet in workbook_utils.py)*
+
+| Column | Description | Example |
+|---|---|---|
+| `year_published` | Year the standard came into force (integer). Do not parse from `standard_code` — populate explicitly | `2009` |
+| `year_withdrawn` | Year the standard ceased being authoritative (integer, nullable). Blank = still current | `2023` |
+
+**Currency chain**
+
+| Column | Description | Example |
+|---|---|---|
+| `status` | `current` · `superseded` · `withdrawn` · `draft` · `needs_review` | `superseded` |
+| `superseded_by` | Reference code of the replacing document; populate when `status = superseded` | `AS/NZS 2865:2023` |
+
+**Copyright and licensing** *(planned — not yet in workbook_utils.py)*
+
+| Column | Description | Example |
+|---|---|---|
+| `copyright` | Copyright classification. Controlled vocabulary — see [reference/copyright-lookup.md](reference/copyright-lookup.md) for definitions and decision rules | `proprietary` |
+| `reproduction_permitted` | What can be done with the text. `none` · `clause-reference` · `partial-quote` · `full-with-licence` | `clause-reference` |
+| `citation_permitted` | Whether the standard may be referenced by number and title. Boolean, default `TRUE` — referencing is always legally safe | `TRUE` |
+| `licence_verified` | Has someone actually checked the licence terms? Boolean, default `FALSE`. Prevents assumptions becoming commitments | `FALSE` |
+| `licence_notes` | Free text (nullable). Licence number, expiry, subscription tier, specific restrictions | `Single-user licence, purchased SAI Global 2024` |
+
+**Rules:** Never leave `status` blank for any engineering standard. Use `needs_review` when currentness is unknown; do not default to `current` unless confirmed. When `status = needs_review`, add a `NEEDS_REVIEW` note and route currentness resolution to Graeme. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. When `year_withdrawn` is populated, `status` must be `superseded` or `withdrawn`. Non-standard engineering books (textbooks, guidance notes) leave all engineering-specific columns blank.
+
+**Draft-handling rules (binding):**
+
+1. **`standard_code`** = the designation printed on the document (e.g. `DR 05564`), never the target standard it proposes to become.
+2. **`title`** = the title on *this* document, not a related published edition's title. Drafts and published editions often have different titles.
+3. **`year`** and **`year_published`** = the year *this* document was issued (e.g. the commenting-period year), not the year the target standard was eventually published.
+4. **`document_type`** = `Draft for Public Comment` (not `Standard`). `category` remains `Standard` (it is in the standards domain).
+5. **`author`** = the technical committee (e.g. `Committee SF-037 — Work in Confined Spaces`), not the issuing body. The issuing body is already captured in `issuing_body`. For published standards, `author` is also the technical committee when identifiable; fall back to the issuing body only when the committee is unknown.
+6. **`publisher`** = the national standards body (e.g. `Standards Australia; Standards New Zealand`), never a distributor/retailer (e.g. SAI Global).
+7. **`notes`** must link the draft to its target standard and any related editions in the library (e.g. "Draft proposing revision of AS/NZS 2865:2001. See also source #120.").
+
+---
+
+## Metadata Enrichment for NZ/AU Standards
+
+For standards issued by Standards Australia, Standards New Zealand, or jointly (AS, NZS, AS/NZS prefix), the SNZ catalogue scraper is the **primary metadata source**. PDF text extraction alone is unreliable for scanned standards and will miss canonical title and currentness.
+
+**Required skill:** `python-testing-unit` (`.agents/skills/python-testing-unit/SKILL.md`) — follow TDD when extending the scraper or normaliser.
+
+### Step-by-step workflow
+
+1. **Normalise the code** from the filename using `normalise_standard_code` (`.agents/tools/library/naming_conventions.py`) to convert filename artefacts to a canonical query:
+   ```python
+   from naming_conventions import normalise_standard_code, strip_amendment_suffix
+   canonical = strip_amendment_suffix(normalise_standard_code(raw_code))
+   # e.g. "ASNZS 5667.4-1998" → "AS/NZS 5667.4:1998"
+   # e.g. "ASNZS 9001-2008 [Amdt 1]" → "AS/NZS 9001:2008" (amendment stripped for query)
+   ```
+
+2. **Query the SNZ catalogue**:
+   ```python
+   from snz_scraper import get_snz_metadata, StandardNotFoundError, AmbiguousStandardError
+   result = get_snz_metadata(canonical)
+   # Populate: title = result.title, status = result.status.lower()
+   ```
+
+3. **If `StandardNotFoundError` or `AmbiguousStandardError`**: read the **first page** of the PDF to find the real standard code printed on the cover. Common causes and fixes:
+
+   | Symptom | Likely cause | Fix |
+   |---|---|---|
+   | Digits run together (`56674`) | Missing decimal point (`5667.4`) | Add the dot |
+   | Year before the dot (`5667.4-1998`) | Already canonical — check normaliser | Recheck input |
+   | No SNZ entry at all | Non-SNZ standard (ISO, IEC, BS) | Fall back to manual |
+   | Multiple editions returned | Year missing from filename | Find year on cover page |
+
+   Correct the code and retry step 2.
+
+4. **If still unresolvable** after reading the cover page: flag `NEEDS_REVIEW: SNZ lookup failed — verify code manually` in `notes` and proceed with whatever is printed on the cover.
+
+5. **Rectify the filename** if the original filename did not match the resolved standard code: rename the file and update `path` and `canonical_filename` together. See [Canonical Filename Convention](#canonical-filename-convention).
+
+### What the scraper populates
+
+| Field | How to populate |
+|---|---|
+| `title` | `result.title` — always prefer over filename-derived title |
+| `status` | `result.status.lower()` — `current` / `superseded` / `withdrawn` / `sponsored` |
+| `standard_code` | Output of `normalise_standard_code` after confirmation |
+| `issuing_body` | Inferred from prefix: `AS/NZS` → `Standards Australia; Standards New Zealand` |
+| `jurisdiction` | Inferred from prefix: `AS/NZS` → `AU; NZ`; `NZS` only → `NZ`; `AS` only → `AU` |
+
+### Scraper coverage
+
+The SNZ scraper covers `standards.govt.nz` only (NZS, AS/NZS, AS prefixes). For ISO, IEC, BS EN, ASTM, or other non-SNZ standards, fall back to PDF text extraction and manual lookup. Future tools for other publishers will follow the same pattern and will be registered in `.agents/tools/library/`.
 
 ---
 
@@ -223,6 +321,9 @@ All tools live in `.agents/tools/library/`. Script-style tools run from the repo
 | Updating `path` but not `canonical_filename` | Always update both columns together. |
 | Forgetting `last_updated` after a rename | Set it every time a row is touched. |
 | Skipping a duplicate row | Every file gets a row. Add `DUPLICATE of <path>` — never silently skip. |
+| Using filename as `title` for NZ/AU standards | Call `get_snz_metadata` first; filename is never the canonical title. |
+| Leaving `status = needs_review` after a successful SNZ lookup | Populate `status` from `result.status.lower()` — the scraper resolves this. |
+| Not renaming the file after a code correction | When the resolved code differs from the filename, rename and update `path` + `canonical_filename` together. |
 | Deleting duplicate files without user instruction | Flag in `notes`. The user decides. |
 | Deleting chapters before confirming merge succeeded | `merge_chapters.py` verifies output before deleting — use the tool. |
 | Acting on EPUB-to-PDF conversion without confirmation | Flag it. Never convert without user approval. |

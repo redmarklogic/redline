@@ -1,0 +1,76 @@
+Explain for the uninitiated. Define any specialist term the first time it appears. Keep citations. Avoid ambiguity.
+
+You are examining a single uploaded document (an engineering standard or draft standard). Extract metadata from the TITLE PAGE, FOREWORD, and PREFACE of this document only. Do not infer metadata from other documents referenced in the body text.
+
+CRITICAL DISTINCTION: Report what this document IS, not what it references. If this is a draft (DR, DPC), report the draft designation — not the target standard it proposes to become.
+
+AMENDMENT DETECTION: If the filename, title page, or document header contains "Amendment", "Amdt", "Amd", or "A1"/"A2"/etc., check whether this is a STANDALONE amendment or a CONSOLIDATED reissue:
+
+- STANDALONE AMENDMENT: A short change-sheet or errata document that modifies specific clauses of a base standard. The title page will say "Amendment No. 1" without "Incorporating". Set document_status to "amendment" and populate amends.
+- CONSOLIDATED REISSUE: The full base standard republished with amendments folded into the text. The title page will say "Incorporating Amendment No. 1", "Reissued incorporating Amendment", or similar. This is NOT an amendment — it is the base standard. Set document_status to "published", leave amends as "N/A", and record the incorporated amendment in incorporated_amendments.
+
+Do NOT report the base standard's metadata as if this were an amendment. Only set document_status to "amendment" for standalone amendment documents.
+
+CURRENTNESS: Do NOT attempt to determine whether a standard is "current" or "superseded". Report document_status as what the document itself states: "draft" for drafts, "amendment" for amendments, "published" for published standards. Supersession is determined post-extraction, not by the model.
+
+HANDBOOK DESIGNATION: Distinguish published Handbooks (HB prefix) from drafts. If standard_code is "HB <number>:<year>" or the document starts with "HB" (e.g., "HB 89:2011"), this is a published Handbook — NOT a draft. Handbooks have "DRAFT ONLY" or "NOT NORMATIVE" in their footer as a formatting convention (they are guidance, not requirements), but this does NOT mean they are pre-publication drafts. Only mark document_status as "draft" if: (1) standard_code starts with "DR" (e.g., "DR 05564"), OR (2) the document explicitly says "Draft for Public Comment" with a comment deadline. If standard_code is "HB" or "AS/NZS" (no "DR" prefix), set document_status to "published" regardless of footer text.
+
+OUTPUT FORMAT (CRITICAL - READ CAREFULLY):
+
+Your response MUST be raw JSON with NO wrapping.
+
+===== WHAT TO DO =====
+- Response starts with { (left brace)
+- Response ends with } (right brace)
+- Response is valid JSON parseable by json.loads()
+- Nothing before the {. Nothing after the }.
+
+===== WHAT NOT TO DO (DO NOT violate these) =====
+- DO NOT wrap in markdown code fences (```)
+- DO NOT start the response with ```json
+- DO NOT start the response with ```text
+- DO NOT start the response with ``` or any other code fence
+- DO NOT end the response with ```
+- DO NOT write ```json ... ```. This is WRONG.
+- DO NOT include explanations, preamble, or post-script
+- DO NOT write "Here is the JSON:" or "Here are the results:" before the JSON
+- DO NOT write any text after the closing } bracket
+
+===== EXAMPLES OF WRONG FORMAT (DO NOT DO THESE) =====
+WRONG: ```json
+{...}
+```
+WRONG: ```
+{...}
+```
+WRONG: Here is the JSON: {...}
+
+===== EXAMPLES OF RIGHT FORMAT (DO THIS) =====
+RIGHT: {"standard_code": "AS/NZS 1170.2:2021", "title": "Wind", ...}
+RIGHT: {
+  "standard_code": "AS/NZS 1170.2:2021",
+  "title": "Wind actions",
+  ...
+}
+
+RULE: If your response does not start with { and end with } (and nothing else before or after), it is WRONG.
+
+SCHEMA:
+{
+  "standard_code": "...",
+  "title": "...",
+  "year_published": null,
+  "committee": "...",
+  "issuing_body": "...",
+  "jurisdiction": "...",
+  "document_status": "published|draft|amendment",
+  "amends": "...",
+  "incorporated_amendments": "...",
+  "supersedes": "...",
+  "scope_summary": "...",
+  "discipline": "geotechnical|structural|materials|materials testing|loading|seismic|environmental|plumbing|electrical|fire|occupational health and safety|quality|general",
+  "topics": "...",
+  "verbatim_evidence": "..."
+}
+
+MISSING VALUES: Use "N/A" for strings, null for integers.
