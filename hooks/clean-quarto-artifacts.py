@@ -55,7 +55,9 @@ def main() -> int:
             artifact.unlink()
             print(f"Removed file:      {artifact.relative_to(REPO_ROOT)}")
 
-    print(f"\nRemoved {len(artifacts)} Quarto artifact(s). Stage the deletions and re-commit.")
+    print(
+        f"\nRemoved {len(artifacts)} Quarto artifact(s). Stage the deletions and re-commit."
+    )
     return 1
 
 
