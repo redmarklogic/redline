@@ -158,6 +158,13 @@ repos:
         always_run: true
         pass_filenames: false
         priority: 1
+      - id: clean-quarto-artifacts
+        name: clean-quarto-artifacts
+        entry: uv run --frozen --offline hooks/clean-quarto-artifacts.py
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:
