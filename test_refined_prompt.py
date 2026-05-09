@@ -12,9 +12,18 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from rl.functions.extraction import validate_extraction_response_format
+def _validate_extraction_response_format(response: str) -> tuple[bool, str]:
+    stripped = response.strip()
+    if not stripped.startswith("{"):
+        return False, f"Response starts with {stripped[:10]!r}, expected '{{'"
+    if not stripped.endswith("}"):
+        return False, f"Response ends with {stripped[-10:]!r}, expected '}}'"
+    try:
+        json.loads(stripped)
+        return True, "Valid raw JSON"
+    except json.JSONDecodeError as exc:
+        return False, f"Invalid JSON: {exc}"
 
 
 def test_refined_prompt_against_batch3_source() -> None:
@@ -61,7 +70,7 @@ Or run automated: mcp_notebooklm_notebook_query with extracted source_id from ba
         print("=" * 70)
         print("VALIDATING RESPONSE")
         print("=" * 70)
-        is_valid, msg = validate_extraction_response_format(response)
+        is_valid, msg = _validate_extraction_response_format(response)
         print(f"\nResponse format: {msg}")
 
         if is_valid:

@@ -36,11 +36,11 @@ Worksheets: `Master` (all entries) + four domain worksheets: `Ebooks`, `Standard
 
 | Worksheet | Content | Headers |
 |---|---|---|
-| `Master` | Every physical file in the library | Standard (20 columns) |
-| `Ebooks` | PDF and EPUB ebooks | Standard (20 columns) |
-| `Standards` | Engineering standards | Enhanced (20 standard + 13 engineering) |
-| `Magazines` | Magazine PDFs and EPUBs | Standard (20 columns) |
-| `Misc` | Everything that does not fit Ebooks, Standards, or Magazines | Standard (20 columns) |
+| `Master` | Every physical file in the library | Standard (22 columns) |
+| `Ebooks` | PDF and EPUB ebooks | Standard (22 columns) |
+| `Standards` | Engineering standards | Enhanced (22 standard + 5 engineering; additional columns are planned — see below) |
+| `Magazines` | Magazine PDFs and EPUBs | Standard (22 columns) |
+| `Misc` | Everything that does not fit Ebooks, Standards, or Magazines | Standard (22 columns) |
 
 **One row per physical file.** Two rows may share a `sha256` — that signals a duplicate.
 
@@ -127,7 +127,11 @@ Semantic character — how to use it, independent of origin:
 
 ## Standards Worksheet (within `library-index.xlsx`)
 
-The `Standards` worksheet is the only domain worksheet with enhanced headers. It holds engineering standards with additional engineering-specific columns beyond the standard 20. The `Master` sheet holds all rows with standard headers only.
+The `Standards` worksheet is the only domain worksheet with enhanced headers. It holds engineering standards with additional engineering-specific columns beyond the standard 22. The `Master` sheet holds all rows with standard headers only.
+
+**Implemented engineering columns (5):** `standard_code`, `status`, `jurisdiction`, `issuing_body`, `superseded_by` — these are defined in `workbook_utils.ENGINEERING_EXTRA_HEADERS` and present in every Standards row.
+
+**Planned engineering columns (8):** `discipline`, `year_published`, `year_withdrawn`, `copyright`, `reproduction_permitted`, `citation_permitted`, `licence_verified`, `licence_notes` — not yet in `workbook_utils.py`. Add these to `ENGINEERING_EXTRA_HEADERS` before writing them to the workbook.
 
 When indexing an engineering standard, populate the extra columns below in addition to the standard Master columns. Columns are grouped thematically.
 
@@ -136,11 +140,16 @@ When indexing an engineering standard, populate the extra columns below in addit
 | Column | Description | Example |
 |---|---|---|
 | `standard_code` | The designation printed on the document. For published standards: `AS/NZS 2865:2009`. For drafts: `DR 05564`. Never use the target standard code for a draft — index what the document *is*, not what it aspires to become | `DR 05564`, `AS/NZS 2865:2009`, `BS EN 1997-1:2004` |
-| `discipline` | Engineering discipline. Controlled vocabulary: `geotechnical` · `structural` · `materials` · `materials testing` · `loading` · `seismic` · `environmental` · `plumbing` · `electrical` · `fire` · `occupational health and safety` · `quality` · `general`. See [reference/discipline-taxonomy.md](reference/discipline-taxonomy.md) for definitions | `occupational health and safety` |
 | `issuing_body` | Standards body that authored the document (distinct from national distributor like SAI Global). For joint standards: semicolon-separated | `Standards Australia; Standards New Zealand`, `CEN`, `BSI` |
 | `jurisdiction` | `UK` · `EU` · `NZ` · `AU` · `US` · `International`. Semicolon-separated when joint | `AU; NZ` |
 
-**Temporal (validity window)**
+**Identity — planned columns** *(not yet in workbook_utils.py)*
+
+| Column | Description | Example |
+|---|---|---|
+| `discipline` | Engineering discipline. Controlled vocabulary: `geotechnical` · `structural` · `materials` · `materials testing` · `loading` · `seismic` · `environmental` · `plumbing` · `electrical` · `fire` · `occupational health and safety` · `quality` · `general`. See [reference/discipline-taxonomy.md](reference/discipline-taxonomy.md) for definitions | `occupational health and safety` |
+
+**Temporal (validity window)** *(planned — not yet in workbook_utils.py)*
 
 | Column | Description | Example |
 |---|---|---|
@@ -154,7 +163,7 @@ When indexing an engineering standard, populate the extra columns below in addit
 | `status` | `current` · `superseded` · `withdrawn` · `draft` · `needs_review` | `superseded` |
 | `superseded_by` | Reference code of the replacing document; populate when `status = superseded` | `AS/NZS 2865:2023` |
 
-**Copyright and licensing**
+**Copyright and licensing** *(planned — not yet in workbook_utils.py)*
 
 | Column | Description | Example |
 |---|---|---|

@@ -174,7 +174,7 @@ def _parse_search(html: str, query: str) -> str:
 def _fetch(url: str) -> str:
     """Fetch *url* and return its decoded content as a string."""
     req = urllib.request.Request(url, headers=_HEADERS)
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=10) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
