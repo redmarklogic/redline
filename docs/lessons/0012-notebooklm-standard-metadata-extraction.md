@@ -431,10 +431,10 @@ This breaks JSON parsing because it starts with ````json`, not `{`.
   - "DO NOT start with ``` or any other code fence"
   - "DO NOT end with ```"
   - Added examples: ✓ RIGHT vs ✗ WRONG formats
-- Saved as `extraction_prompt_refined.txt`
+- Saved as `extraction_prompt_refined.txt` *(file removed from repo after workflow stabilised; canonical prompt is now embedded in `.agents/skills/library-management/procedures/extract-standard-metadata.md`)*
 
 **REFACTOR (Update Documentation):**
-- Updated `extraction_prompt.txt` with refined OUTPUT FORMAT section
+- Updated `extraction_prompt.txt` with refined OUTPUT FORMAT section *(file removed from repo after workflow stabilised; see above)*
 - Updated skill `.agents/skills/library-management/procedures/extract-standard-metadata.md` with TDD-refined format rules
 - Added clear positive/negative examples to both places
 - Committed to git

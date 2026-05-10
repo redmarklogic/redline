@@ -148,7 +148,7 @@ permitted only when clearly labelled as such.
 - `ux-professional-software` — information-dense UI design, document-centric interaction patterns
 - `ux-conversion-design` — co-development partner conversion UX (quota-exhaustion, SSO gate, onboarding)
 - `ux-document-design` — document-as-product design for generated DOCX output
-- `ux-design-critique` — structured self-review checklist (Nielsen heuristics, cognitive load, AI Language Policy)
+- `ux-design-critique` — structured self-review checklist (Nielsen heuristics, cognitive load, AI Language Policy). *Embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file.*
 - Matt also uses `pm-personas` (shared read-only), `pm-structural-integrity-auditor` (`/challenge`),
   `miro-mcp` (wireframes, user flows), and `notebooklm-mcp` (Product Design & UX notebook).
 

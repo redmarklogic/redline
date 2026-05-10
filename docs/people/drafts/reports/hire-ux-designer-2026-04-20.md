@@ -78,7 +78,7 @@ Graeme was not invoked directly in this session, but the JD encodes a mandatory 
 
 ## Step 3 — Career-Ladder Style JD
 
-The full JD is in `docs/people/drafts/agents/rl.matt.agent.md`.
+The full JD is in `.github/agents/rl.matt.agent.md`.
 
 Design choices applied:
 
@@ -160,7 +160,7 @@ None. All required notebooks are loaded. The two advisory-board-only notebooks a
 ### Deliverables Produced
 
 1. **This hire report** — `docs/people/drafts/reports/hire-ux-designer-2026-04-20.md`
-2. **Draft JD** — `docs/people/drafts/agents/rl.matt.agent.md`
+2. **Production JD** — `.github/agents/rl.matt.agent.md`
 
 ### Updates Required (pending user approval)
 

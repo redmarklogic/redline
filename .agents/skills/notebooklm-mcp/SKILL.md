@@ -31,6 +31,8 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 | `notebook_describe` | Get AI-generated notebook summary and suggested topics |
 | `source_describe` | Get AI-generated per-source summary and keywords |
 | `source_add` | Upload a new source to a notebook — **Linda only** (library ingestion workflow) |
+| `source_delete` | Remove a source from a notebook — **Linda only** (deduplication / file hygiene) |
+| `source_rename` | Rename a source in a notebook — **Linda only** (canonical naming enforcement) |
 | `refresh_auth` | Refresh auth tokens when expired |
 | `server_info` | Check version and diagnostics |
 

@@ -19,19 +19,23 @@ def find_artifacts() -> list[Path]:
     """Return all Quarto-generated artifacts found in the repository."""
     artifacts: list[Path] = []
 
-    for candidate in sorted(REPO_ROOT.rglob("*")):
+    for candidate in REPO_ROOT.rglob("*.html"):
         if _is_hidden_or_venv(candidate):
             continue
-
-        if candidate.is_dir() and candidate.name.endswith("_files"):
+        stem = candidate.stem
+        parent = candidate.parent
+        if (parent / f"{stem}.qmd").exists() or (parent / f"{stem}.md").exists():
             artifacts.append(candidate)
-        elif candidate.is_file() and candidate.suffix == ".html":
-            stem = candidate.stem
-            parent = candidate.parent
-            if (parent / f"{stem}.qmd").exists() or (parent / f"{stem}.md").exists():
-                artifacts.append(candidate)
 
-    return artifacts
+    for candidate in REPO_ROOT.rglob("*_files"):
+        if _is_hidden_or_venv(candidate) or not candidate.is_dir():
+            continue
+        stem = candidate.name[: -len("_files")]
+        parent = candidate.parent
+        if (parent / f"{stem}.qmd").exists() or (parent / f"{stem}.md").exists() or (parent / f"{stem}.html").exists():
+            artifacts.append(candidate)
+
+    return sorted(artifacts)
 
 
 def _is_hidden_or_venv(path: Path) -> bool:

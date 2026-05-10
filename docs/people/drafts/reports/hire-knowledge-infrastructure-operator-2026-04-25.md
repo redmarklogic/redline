@@ -89,7 +89,7 @@ All constraints encoded in the draft JD as hard constraints.
 
 ## Step 3 -- Draft JD
 
-See: `docs/people/drafts/agents/rl.linda.agent.md`
+See: `.github/agents/rl.linda.agent.md`
 
 Design choices (with framework citations):
 
@@ -172,7 +172,7 @@ No missing notebooks. Linda's primary grounding source exists and is accessible.
 | Action | Owner | Dependency |
 |---|---|---|
 | Approve or reject this hire report | **User** | None |
-| If approved: promote `rl.linda.agent.md` from `docs/people/drafts/agents/` to `.github/agents/` | **User** | User approval |
+| ~~Promote `rl.linda.agent.md` to `.github/agents/`~~ **Done** — production JD at `.github/agents/rl.linda.agent.md` | **User** | Completed |
 | If approved: update agent register, org chart, skills taxonomy | **Harriet** | User approval |
 | Create `knowledge-infrastructure` skill (query IA&KM notebook, TDD cycle) | **Harriet** | User approval + notebook grounding session |
 
