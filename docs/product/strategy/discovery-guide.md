@@ -180,6 +180,31 @@ senior-reviewer concern only (still valid, but changes priority).
   example, did they ask for a decision matrix, a severity classification, or a worked
   example that you hadn't included, even though you knew the answer?"
 
+**Scope-qualification probe** *(added 2026-05-10, Mark; informed by CEAS/EngineeringNZ/ACENZ PS4 advisories)*:
+Tests whether engineers feel the scope-limitation gap as a personal risk or as an
+abstract industry concern. Validates SCOPE-CLAUSE-01, -05, -NEW as mandatory skeleton
+clauses. High relevance for Anna (buyer) conversations.
+
+- "When you last wrote a conclusions or limitations section, how did you decide what
+  caveats to state? Do you work from a checklist, a template, or professional judgment?"
+- "Has a senior reviewer or director ever sent a report back because a limitation clause
+  was missing or too weak — not because the engineering was wrong, but because the scope
+  statement didn't protect the firm?"
+- "Have you seen the CEAS, EngineeringNZ, or ACENZ advisories about PS4 scope statements
+  in the last 18 months? If so, has your firm changed anything as a result?"
+
+**AI disclosure probe** *(added 2026-05-10, Mark; informed by CEAS Indemnity Matters Issue 88)*:
+Tests whether PI insurer questions about AI usage are a felt buying trigger for Anna or
+an emerging anxiety. Do not ask this of intermediates (Perrie) unless they raise AI usage
+themselves — it risks triggering the tool-approval reflex.
+
+- "Has your PI insurer, a client, or your indemnity association asked about your use of
+  AI in report preparation? If they asked today, what would you tell them?"
+- "Does your firm have any policy or disclosure approach for AI-assisted report sections?
+  Or is it still informal?"
+- "If a report went out with AI-assisted content and a claim arose, would you be
+  comfortable explaining to your insurer exactly which parts AI contributed to?"
+
 ### Part 5 — Pricing module (Van Westendorp + purchase path, 5 minutes)
 
 Only at the very end, after the JTBD is mapped. See `pricing-methodology.md` Step 1.
