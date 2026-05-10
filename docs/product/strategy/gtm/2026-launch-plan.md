@@ -12,17 +12,25 @@ proceed on personal time. All GTM clocks start June 1.
 Single Product-Led Growth funnel with a Business expansion path. No enterprise
 sales motion. NZ + AU only. No paid acquisition spend in H2.
 
+**10→100→1000 phasing** *(added 2026-05-09)*: Phase 1 caps at 10 co-development
+partners recruited from free-tier users via founder outreach (email/LinkedIn).
+Goal is feedback and removing roughness, not revenue. Monetisation test begins in
+Phase 2. See `strategic-bets.md` for transition gate criteria.
+
 ```
 Free Skeleton Generator (web upload → SSO-gated download, quota-capped)
         |  signup + quota exhaust
         v
-Founder-led outbound (within 24 hours of quota exhaustion)
-        |  qualifies into Pre-Review trial
+Founder-led co-development recruitment (email/LinkedIn, capped at 10 partners)
+        |  feedback partnership → product iteration
         v
-Pro tier (self-serve seat) — Pre-Review mode
-        |  bottoms-up adoption inside firm
+Phase 1 → Phase 2 gate (repeat usage + senior endorsement)
+        |  gate passes
         v
-Business tier (firm subscription) — House Rules + Audit Log
+Pro tier (self-serve seat) → Phase 2 (100 customers)
+        |  bottoms-up adoption + referral/viral loop
+        v
+Business tier (firm subscription) — House Rules + Audit Log → Phase 3 (1000)
 ```
 
 **Acquisition mechanic (clarified 2026-04-18):** the user uploads a document on the
@@ -39,10 +47,12 @@ email submission — users do not send anything to a Redline mailbox.
 | Awareness | Founder LinkedIn, NZ/AU domain forums, no paid spend | Founder | N/A |
 | Acquisition | Free Skeleton Generator at redline.[domain] | Product | KR1: 50 verified-email signups in 60 days |
 | Activation | First skeleton generated within 5 minutes of signup | Product | ≥ 80% of signups generate ≥ 1 skeleton |
-| Quota event | User exhausts 3–5 doc quota | Product → CRM trigger | Founder-led outbound within 24h |
-| Discovery | Founder-led 30-minute call | Founder | KR2: 15 qualified conversations in 90 days |
-| Conversion | Pro trial → paid subscription | Founder + product | KR3: 5 paid OR 2 LOIs in 90 days |
-| Retention | Active in second billing cycle | Product | KR4: ≥ 60% second-cycle retention |
+| Quota event | User exhausts 3–5 doc quota | Product → CRM trigger | Founder identifies high-fit users for co-development recruitment |
+| Co-development | Founder contacts quota-exhausted users via email/LinkedIn (capped at 10) | Founder | KR3: 10 active feedback partners in 90 days |
+| Discovery | Founder-led 30-minute call with feedback partners | Founder | KR2: 15 qualified conversations in 90 days |
+| Phase 1→2 gate | Repeat usage (7/10 return for second project) + senior endorsement (3 firms) | Product + Founder | See `strategic-bets.md` |
+| Conversion (Phase 2) | Pro trial → paid subscription (self-serve) | Product | Deferred — monetisation test begins in Phase 2 |
+| Retention | Active in second billing cycle | Product | KR4: ≥ 60% second-cycle retention (Phase 2) |
 | Expansion | Pro user requests Business tier for firm | Product (Justification Email Generator) | Tracked, not a KR in H2 |
 
 ## Channel Plan
@@ -163,6 +173,9 @@ Self-serve for free tier. White-glove for Pro:
 - House Rules authoring console as Business-tier hook.
 - Indirect channel partnerships with NZ/AU PM-software vendors.
 - Conference presence (NZGS, AGS).
+- **Referral/viral loop hypothesis** *(added 2026-05-09)*: Users share the tool and
+  earn extra skeleton credits when their referral signs up and logs in. Tests organic
+  growth engine for Phase 2 scaling to 100 customers.
 
 ## Provenance
 

@@ -24,17 +24,47 @@ quota-exhausted user is $0.10–$1.
 **Assumption stack**:
 
 - Intermediate engineers will give a verified work email for a useful skeleton.
-- Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.
-- At least 1 in 5 responders will book a paid Pre-Review trial.
+- ~~Quota-exhausted users will respond to a founder-led outbound email at ≥ 10%.~~
+  **Revised 2026-05-09.** Founder-led outbound is a co-development motion capped at
+  10 feedback partners, not a sales-at-scale motion. The founder contacts free-tier
+  users via email or LinkedIn to recruit co-development partners. See 10→100→1000
+  phasing below.
+- ~~At least 1 in 5 responders will book a paid Pre-Review trial.~~ **Revised
+  2026-05-09.** Phase 1 goal is 10 active feedback partners (paid or not).
+  Monetisation test pushed to Phase 2.
 - Target engineers can access `redline.[domain]` from their work machines. *(added
   2026-04-22, enterprise AI blocking risk assessment)* Network-level AI blocking at
   MSP-managed firms or firms using Microsoft Defender for Cloud Apps could prevent
   user acquisition. See `enterprise-ai-blocking-risk-assessment.md`.
 
 **Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email
-signups OR fewer than 5% of quota-exhausted users respond to outbound. Either kills the
-wedge. The signup count is the authoritative trigger; the activation rate in KR1 is a
-product-quality metric that informs iteration, not a bet-kill signal.
+signups. The signup count is the authoritative trigger; the activation rate in KR1 is a
+product-quality metric that informs iteration, not a bet-kill signal. ~~The outbound
+response rate criterion has been removed~~ *(revised 2026-05-09)* — the founder-led
+outbound motion is a co-development partnership recruitment (capped at 10), not a
+scalable sales motion. Outbound response rate is not a meaningful kill signal at
+this scale.
+
+**10→100→1000 phasing** *(added 2026-05-09, founder brainstorm)*:
+
+- **Phase 1 (10 customers)**: Founder personally recruits up to 10 feedback partners
+  from free-tier users via email or LinkedIn. Goal is co-development and removing
+  roughness. Paid or not — partnership for feedback is the priority. Duration: ~90
+  days from launch.
+- **Phase 2 (100 customers)**: Opens up acquisition. Referral/viral loop hypothesis:
+  users can share the tool and earn extra credits when their referral logs in.
+  Monetisation test begins. Self-serve Pro purchase path activates.
+- **Phase 3 (1000 customers)**: Full scale.
+
+**Phase 1 → Phase 2 transition gate** *(added 2026-05-09)*:
+
+- **Hard gate (Repeat Usage)**: By day 90 of Phase 1, at least 7 of 10 feedback
+  partners have returned unprompted to generate a skeleton for a second distinct
+  project within 30 days of their first generation.
+- **Supporting signal (Senior Endorsement)**: By day 90, at least 3 distinct firms
+  among the 10 have a senior/principal engineer who has reviewed a Redline-generated
+  skeleton and confirmed it met their firm's structural and legal standards without
+  requiring structural rework.
 
 **Competitive validation** *(added 2026-04-20, Archie CI session)*: Archie (NZ-based
 AI geotechnical report tool) validates that AI-driven geotechnical report tooling has
@@ -53,8 +83,8 @@ sections... Applying standards...") doubles as in-product marketing copy, teachi
 what Redline does while it works. See PRD decision log (2026-04-22).
 
 **OKR ladder**: `okrs/2026-h2.md` → KR1 (signups — warning signal at 60 days; kill
-criterion at 90 days), KR2 sub-metric (outbound response rate), KR3 (signup-to-paid
-conversion).
+criterion at 90 days), KR2 (founder-led qualified conversations for co-development),
+KR3 (10 active feedback partners).
 
 ---
 
