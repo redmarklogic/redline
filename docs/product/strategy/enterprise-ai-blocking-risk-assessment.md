@@ -65,7 +65,13 @@ That assumption is correct for most Small firms today. But three things could ch
    narrative leaks into professional networks (NZGS chapters, AGS branches, LinkedIn
    threads). Mid-market firms that do not use Defender may still adopt informal "no AI
    tools" policies in response to the narrative — blocking access at the cultural level
-   rather than the network level.
+   rather than the network level. *(2026-05-10 addendum, Ron)*: An additional narrative
+   source is insurance-industry cyber-hardening guidance. CEAS Indemnity Matters Issue 88
+   (April 2026), citing Aon's Middle East Conflict client alert, advises firms to
+   "elevate monitoring, awareness, and vigilance" and "harden critical controls." This
+   guidance --- coming from the engineers' own insurance provider --- could push firms
+   and their MSPs to tighten web access policies, reinforcing the "block AI tools"
+   narrative from a second, insurance-driven vector.
 
 3. **Insurance pressure.** The insurance bifurcation identified in Bet 2 (some insurers
    inserting absolute AI exclusion clauses) could reinforce IT blocking. A firm whose

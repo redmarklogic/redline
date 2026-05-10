@@ -76,6 +76,17 @@ Map the customer's words into the four forces. Ask explicitly if not surfaced:
 A real switch happens only when (Push + Pull) > (Anxiety + Habit). If Anxiety and
 Habit dominate, the JTBD is real but the buying moment is not.
 
+**Disputes Tribunal liability probe** *(added 2026-05-10, Ron/Mark)*: Tests whether the
+doubled Disputes Tribunal ceiling ($30k to $60k, January 2026) is a felt push or merely
+a known headline. Place in Push.
+
+- "Since January, the Disputes Tribunal limit went to $60k. Has your firm had a claim
+   or a near-miss that made that feel real? Has it changed anything about how you review
+   reports or chase unpaid fees?"
+
+Provenance: CEAS Indemnity Matters Issue 88, April 2026. NZ-specific --- does not
+apply to AU discovery conversations without an AU equivalent.
+
 ### Part 4 — Workflow context (5 minutes)
 
 Operational discovery — feeds Sprint 1 PRD acceptance criteria:
