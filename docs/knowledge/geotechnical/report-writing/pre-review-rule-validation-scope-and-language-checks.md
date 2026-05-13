@@ -297,6 +297,44 @@ qualifications ("all recommendations are subject to"). These are not liability p
 
 ---
 
+## Checklist-Derived Rule Expansions (2026-05-13)
+
+Analysis of 10 geotechnical report checklists across 5 jurisdictions (NZ, US FHWA, US TDOT,
+US Mason County, US USACE) identified the following rule gaps not covered by the six families
+above. See `checklist-taxonomy-cross-jurisdiction.md` for the full taxonomy and
+`fhwa-reviewer-checklist-rule-vocabulary.md` for the FHWA candidate seed set.
+
+### Cross-Section Limitations Statement (Drawings)
+
+CERT 10a (Western Bay of Plenty 2009) explicitly requires a "Cross sections (limitations
+statement)" item under the Drawings deliverable section. This embeds scope limitation logic in
+a drawing deliverable, not in the report text. Engineers produce cross-sections with interpolated
+subsurface profiles between boreholes without stating that the interpolation is inferred. The
+SCOPE-LIM-01 check must be extended to run against figures and drawings, not just the report
+body text.
+
+### FHWA "Subjective Terminology" Additions
+
+The FHWA reviewer checklist asks: "Has the use of subjective subsurface terminology been
+avoided?" with examples: "relatively soft rock" and "gravel with occasional boulders." These
+should be added to the TABOO-01 vague/subjective word detection list alongside the existing
+taboo word families.
+
+### Four Checklist Categories as Workflow Moments
+
+The universal taxonomy carries a `workflow_moment` dimension: Pre-Investigation, During Drafting,
+Pre-Review, Pre-Submission. Each rule should declare which workflow moment it belongs to. All
+current SCOPE- and TABOO- rules belong to the Pre-Review moment. See
+`checklist-taxonomy-cross-jurisdiction.md` for the full four-moment model.
+
+### Seismic/Liquefaction Method Rules (NZ Configuration)
+
+The NZGS 2016 Module 2 provides quantitative investigation method rules for liquefaction
+assessment. These are NZ-specific and sit at the boundary of Layers 3 and 4. See
+`nzgs-seismic-liquefaction-checklist-rules.md` for the full rule catalogue.
+
+---
+
 ## Open Questions
 
 1. Do NZ/AU professional indemnity insurers (CEAS/Aon) have specific standard-of-care boilerplate
