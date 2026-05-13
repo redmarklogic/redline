@@ -42,7 +42,7 @@
 
 ### Sprint 1 — Vertical slice (must ship end-to-end)
 
-- **A. GBR Skeleton Generator** (the wedge)
+- **A. GBR Skeleton Generator** (the wedge; includes Graeme-validated mandatory clause list for NZ/AU — SCOPE-CLAUSE-01, -05, -NEW mandatory; SCOPE-CLAUSE-03 conditional on Groundwater section; US clauses 02/04/06 inactive. See `decisions/decision-004-mandatory-clause-boilerplate.md` and `prds/skeleton-generator-prd.md`.)
 - **M. Document Parser / Chunking Pipeline** (required infra)
 - **N. Standards Knowledge Store — minimum viable subset** (3–5 NZ documents only;
   enough to populate skeleton placeholders for residential GBR scope)
@@ -62,16 +62,47 @@
 ### Sprint 2–3 — Convert wedge to paid
 
 - **G. Justification Email Generator** (bottoms-up conversion mechanic for Pro → Business)
-- **OOXML Event Ledger schema design** *(added 2026-05-09, P-037)* — standalone engineering
+- **OOXML Event Ledger schema design** *(added 2026-05-09, P-037; updated 2026-05-10, Decision 005)* — standalone engineering
   design task: define the append-only custom XML part format, event type registry (provenance,
   signatures, Pre-Review annotations), extensibility model, and versioning rules. This produces
   the schema that Features A (provenance), L (signatures/audit), and D (Pre-Review) all consume.
   Graeme consulted when signature event type design begins, not before.
+  The schema must include the `clause_modified` event type: fields `clause_id`, `original_hash`
+  (SHA-256 of mandatory clause text at generation), `current_hash` (SHA-256 at Pre-Review run),
+  `detected_at`, and `actor`. Detection mechanism: on every Pre-Review run, compare current
+  mandatory clause text against the stored original hash in the custom XML part; write a
+  `clause_modified` event if hashes differ. See `decisions/decision-005-clause-modification-tracking.md`.
+- **Rule Toggle Architecture — jurisdiction metadata schema** *(added 2026-05-10, Decision 003)* —
+  engineering design prerequisite for the first Pre-Review rules. Before any rules are authored,
+  define and implement the rule metadata schema: `jurisdiction` (list of applicable markets),
+  `enabled_by_default` (boolean — true if the rule runs by default within its declared jurisdictions), `configurable` (boolean). Every rule authored
+  in Sprint 2-3 ships with all three fields. The rule runner filters by metadata, not a hard-coded
+  list. US-practice rules (SCOPE-CLAUSE-02, -04, -06) ship in the schema with
+  `enabled_by_default: false` for NZ/AU. See `decisions/decision-003-jurisdiction-aware-rule-metadata.md`.
 - **D. Inline Annotation Engine** (the paid product surface — Pre-Review). Decomposes into
-  taxonomy-free rules first (15–20 rules: taboo words, undefined acronyms, ambiguity flags,
-  unit inconsistencies, citation validator, section/structural completeness, passive voice /
-  readability). Parameter completeness rules follow in Sprint 3–4 (see D.pc below).
+  taxonomy-free rules first — see Pre-Review Rule Inventory below. Parameter completeness
+  rules follow in Sprint 3–4 (see D.pc below).
 - **F. Citation / Reference Validator** (sub-feature of D; ships inside D's first release)
+
+#### Pre-Review Rule Inventory (Graeme-validated, 2026-05-10)
+
+All rules carry jurisdiction metadata per Decision 003. Severity changes and implementation
+notes below supersede any earlier informal descriptions.
+
+| Rule ID | Name | Jurisdiction | Severity | Ships Sprint 2-3? | Implementation notes |
+|---|---|---|---|---|---|
+| SCOPE-LIM-01 | Scope limitation detection | NZ/AU/global | HIGH | Yes | Scan FULL DOCUMENT, not Conclusions section only. Applicability section sits at end of report. |
+| SCOPE-CON-01 | Scope-overreach in conclusions | NZ/AU/global | MEDIUM (downgraded from HIGH) | Yes | "Flag for human review" framing only. LLM cannot treat professional inference as overreach. |
+| SCOPE-COST-01 | Cost-qualifier language | NZ/AU/global | MEDIUM | Yes | Expanded trigger list: "limited to", "preliminary investigation", "indicative only", "reconnaissance", "outside the scope", "budget", "cost". |
+| SCOPE-CLAUSE-01 | Inferred conditions caveat | NZ/AU | HIGH — mandatory | Yes | `jurisdiction: [NZ, AU]`, `enabled_by_default: true`. |
+| SCOPE-CLAUSE-02 | Temporal boundaries | US | LOW — inactive NZ/AU | Yes (schema only) | `jurisdiction: [US]`, `enabled_by_default: false` for NZ/AU. |
+| SCOPE-CLAUSE-03 | Groundwater fluctuation | NZ/AU | MEDIUM — conditional | Conditional | Check Groundwater section body, not disclaimer boilerplate. `jurisdiction: [NZ, AU]`. Include only when Groundwater section is present. |
+| SCOPE-CLAUSE-04 | Changed conditions | US | LOW — inactive NZ/AU | Yes (schema only) | `jurisdiction: [US]`, `enabled_by_default: false` for NZ/AU. Replaced by "Further Work" section in NZ practice. |
+| SCOPE-CLAUSE-05 | Third-party reliance | NZ/AU | HIGH — mandatory | Yes | `jurisdiction: [NZ, AU]`, `enabled_by_default: true`. |
+| SCOPE-CLAUSE-06 | Standard-of-care | US | LOW — inactive NZ/AU | Yes (schema only) | `jurisdiction: [US]`, `enabled_by_default: false` for NZ/AU. |
+| SCOPE-CLAUSE-NEW | Temporal validity of recommendations | NZ/AU | MEDIUM | Yes | New rule. 18-month temporal validity caveat. `jurisdiction: [NZ, AU]`, `enabled_by_default: true`. |
+| CITE-EXIST-01 | Citation existence check | NZ/AU | MEDIUM-HIGH | Yes | Must handle both whole-standard and clause-level citation patterns. Standards priority: NZS 4431, NZS 3604, NZS 1170.5, NZS 4402, NZS 4404, AS 2870, NZGS Field Description, MBIE Canterbury Guidelines (Part D — TC1/TC2/TC3). |
+| RISK-LANG-01 | Risk-language detection | NZ/AU/global | Tiered | Yes | Three tiers: HIGH (guarantee, certify, safe for, no risk, "in accordance with the highest quality standards", "we certify that...", "this report is final", "the engineer confirms that..." [physical outcome], "the design will perform as intended"); MEDIUM (all/every in conditions context); CONTEXT-CHECK (suitable/adequate — check for conditioning clause within ~30 words). |
 
 ### Sprint 3–4 — Parameter Completeness Rules (D.pc)
 

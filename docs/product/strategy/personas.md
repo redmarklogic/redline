@@ -142,6 +142,8 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
 | PI premiums are 3-8% of revenue; even minor disputes cost at least $10,000 from profits | Graeme grounding: liability context |
 | Talent shortage means intermediates are less experienced than a decade ago, but report volumes have not dropped | Graeme grounding: "talent shortage causes the liability exposure" |
 | No dedicated QA staff or R&D budget — "we don't have the budget for R&D" | Graeme grounding |
+| Disputes Tribunal ceiling doubled to $60k; minor quality failures now carry material financial exposure without legal representation | CEAS Indemnity Matters Issue 88, April 2026 |
+| Multiple PS4 / scope-qualification advisories in 18 months from CEAS, EngineeringNZ, and ACENZ; directors who sign off reports are receiving industry-wide warnings about inadequate limitation clauses | CEAS Indemnity Matters Issue 88, April 2026 |
 
 ### Gains (what success looks like, in Anna's words)
 
@@ -160,6 +162,17 @@ volume to feel the review bottleneck but no budget for dedicated QA staff or R&D
   The client notices. Anna is embarrassed and angry.
 - PI renewal: the insurer asks what QA systems the firm has. Anna's answer is "our
   seniors check everything." She knows that is not a system.
+- PI renewal: the insurer asks specifically about AI usage in report preparation.
+  Anna does not have a policy, a disclosure statement, or a record of which reports
+  used AI assistance. The question makes her realise the firm is exposed on a dimension
+  she had not considered. *(Added 2026-05-10. Treat as a distinct buying trigger from
+  the general QA systems question above — AI disclosure is a newer and more specific
+  insurer concern.)*
+- Disputes Tribunal ceiling doubles to $60k (January 2026). Report quality failures
+  that previously fell below the threshold for formal action are now firmly within
+  Tribunal reach. The blowback risk --- chasing unpaid fees and facing a quality
+  counterclaim without legal representation --- makes Anna re-evaluate what "good
+  enough" QA looks like. Source: CEAS Indemnity Matters Issue 88, April 2026.
 
 ### Adoption Risks
 

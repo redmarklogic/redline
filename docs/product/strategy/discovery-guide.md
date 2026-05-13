@@ -76,6 +76,17 @@ Map the customer's words into the four forces. Ask explicitly if not surfaced:
 A real switch happens only when (Push + Pull) > (Anxiety + Habit). If Anxiety and
 Habit dominate, the JTBD is real but the buying moment is not.
 
+**Disputes Tribunal liability probe** *(added 2026-05-10, Ron/Mark)*: Tests whether the
+doubled Disputes Tribunal ceiling ($30k to $60k, January 2026) is a felt push or merely
+a known headline. Place in Push.
+
+- "Since January, the Disputes Tribunal limit went to $60k. Has your firm had a claim
+   or a near-miss that made that feel real? Has it changed anything about how you review
+   reports or chase unpaid fees?"
+
+Provenance: CEAS Indemnity Matters Issue 88, April 2026. NZ-specific --- does not
+apply to AU discovery conversations without an AU equivalent.
+
 ### Part 4 — Workflow context (5 minutes)
 
 Operational discovery — feeds Sprint 1 PRD acceptance criteria:
@@ -168,6 +179,31 @@ senior-reviewer concern only (still valid, but changes priority).
   your technical content was wrong, or that it wasn't presented clearly enough? For
   example, did they ask for a decision matrix, a severity classification, or a worked
   example that you hadn't included, even though you knew the answer?"
+
+**Scope-qualification probe** *(added 2026-05-10, Mark; informed by CEAS/EngineeringNZ/ACENZ PS4 advisories)*:
+Tests whether engineers feel the scope-limitation gap as a personal risk or as an
+abstract industry concern. Validates SCOPE-CLAUSE-01, -05, -NEW as mandatory skeleton
+clauses. High relevance for Anna (buyer) conversations.
+
+- "When you last wrote a conclusions or limitations section, how did you decide what
+  caveats to state? Do you work from a checklist, a template, or professional judgment?"
+- "Has a senior reviewer or director ever sent a report back because a limitation clause
+  was missing or too weak — not because the engineering was wrong, but because the scope
+  statement didn't protect the firm?"
+- "Have you seen the CEAS, EngineeringNZ, or ACENZ advisories about PS4 scope statements
+  in the last 18 months? If so, has your firm changed anything as a result?"
+
+**AI disclosure probe** *(added 2026-05-10, Mark; informed by CEAS Indemnity Matters Issue 88)*:
+Tests whether PI insurer questions about AI usage are a felt buying trigger for Anna or
+an emerging anxiety. Do not ask this of intermediates (Perrie) unless they raise AI usage
+themselves — it risks triggering the tool-approval reflex.
+
+- "Has your PI insurer, a client, or your indemnity association asked about your use of
+  AI in report preparation? If they asked today, what would you tell them?"
+- "Does your firm have any policy or disclosure approach for AI-assisted report sections?
+  Or is it still informal?"
+- "If a report went out with AI-assisted content and a claim arose, would you be
+  comfortable explaining to your insurer exactly which parts AI contributed to?"
 
 ### Part 5 — Pricing module (Van Westendorp + purchase path, 5 minutes)
 

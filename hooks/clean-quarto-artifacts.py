@@ -32,7 +32,11 @@ def find_artifacts() -> list[Path]:
             continue
         stem = candidate.name[: -len("_files")]
         parent = candidate.parent
-        if (parent / f"{stem}.qmd").exists() or (parent / f"{stem}.md").exists() or (parent / f"{stem}.html").exists():
+        if (
+            (parent / f"{stem}.qmd").exists()
+            or (parent / f"{stem}.md").exists()
+            or (parent / f"{stem}.html").exists()
+        ):
             artifacts.append(candidate)
 
     return sorted(artifacts)

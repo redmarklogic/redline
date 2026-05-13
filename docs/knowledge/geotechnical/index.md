@@ -1,7 +1,7 @@
 # Geotechnical Knowledge Index
 
 **Owner**: Graeme (Principal Geotechnical Engineer)
-**Last updated**: 2026-05-04
+**Last updated**: 2026-05-10
 
 This index tracks all curated geotechnical domain knowledge documented by Graeme.
 Each entry links to a knowledge document in the appropriate sub-domain directory.
@@ -53,3 +53,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | Template Management in Engineering Consultancies | report-writing | 2026-05-06 | cross-referenced | [report-writing/template-management-domain-perspective.md](report-writing/template-management-domain-perspective.md) |
 | Information Radiator — Practitioner Feedback on Pre-Review Summary Design | report-writing | 2026-05-06 | practitioner-grounded | [report-writing/information-radiator-practitioner-feedback.md](report-writing/information-radiator-practitioner-feedback.md) |
 | UI Terminology Glossary for Geotechnical Products | report-writing | 2026-05-09 | practitioner-grounded | [report-writing/ui-terminology-glossary.md](report-writing/ui-terminology-glossary.md) |
+| Pre-Review Rule Validation — Scope, Clause, Citation and Language Checks | report-writing | 2026-05-10 | cross-referenced | [report-writing/pre-review-rule-validation-scope-and-language-checks.md](report-writing/pre-review-rule-validation-scope-and-language-checks.md) |

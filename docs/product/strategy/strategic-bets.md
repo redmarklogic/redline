@@ -128,6 +128,27 @@ describes a process without the structural artefact a senior reviewer would expe
 accompany it. Validate via KR2 discovery interviews (see `discovery-guide.md`,
 structural completeness probe).
 
+**Scope-limitation rule pattern** *(added 2026-05-10, Graeme/Ron)*: CEAS Indemnity
+Matters Issue 88 (April 2026) issued a PS4 Practice Advisory on altered Producer
+Statements with unclear scope definitions for construction monitoring. Graeme confirms
+this maps directly to a recurring GBR/GIR quality failure: conclusions sections that
+make claims about site conditions without qualifying investigation scope. The risk
+literature identifies this as one of the two primary categories of professional liability
+claims --- "improper use of information and advice is a more frequent cause of claims
+than inaccurate information or wrong advice." Pre-Review rules address this through
+three mechanisms: (1) mandatory clause presence checks (inferred conditions caveat,
+temporal boundaries, groundwater, changed conditions, third-party reliance,
+standard-of-care), (2) scope-conclusion consistency checks (LLM-assisted: flag
+conclusions that extend beyond stated scope), and (3) taboo word detection in
+conclusions (absolute/subjective words that imply completeness the investigation cannot
+support). Candidate rule shape: *"when section type = Conclusions or Limitations and
+report scope includes ground investigation, construction monitoring, or foundation
+design, flag if no explicit scope limitation statement is present."* The 1979 CEAS case
+study reprinted in the same issue --- engineer sued for failing to qualify investigation
+limitations --- validates that this failure mode has persisted for nearly 50 years.
+Provenance: CEAS Indemnity Matters Issue 88; Graeme notebook-grounded assessment
+(Risk Assessment in Engineering, GBR, Report Workflows notebooks).
+
 **Kill criterion**: After Sprint 4, ≥ 50% of free-tier Skeleton converters refuse to
 trial Pre-Review when prompted. Indicates the value prop does not extend from skeleton
 to review.
@@ -138,6 +159,19 @@ bifurcation upgrades audit trail from a Phase-2 feature to a Day-1 product requi
 GTM angle: "Redline gives you the audit trail your insurer will ask for." Feature L
 (Audit Log) core subset elevated to Sprint 1 accordingly --- see `feature-backlog.md`.
 Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+
+**Insurance-industry AI scrutiny signal** *(added 2026-05-10, Ron)*: CEAS Indemnity
+Matters Issue 88 (April 2026) directly asks NZ consulting engineers: "How open are you
+with your clientele about your use of AI? And are your reports factually correct?" This
+question comes from Aon --- the engineers' PI insurance provider. Two cautionary tales
+cited: Deloitte repaying part of a $440k AI-error report; a WA lawyer referred to the
+regulator for AI-generated fake citations. The tone is cautionary, not exclusionary ---
+but the direction of travel is clear. This is a leading indicator for the insurance
+bifurcation thesis: the insurance industry is actively asking engineers about AI usage
+and report accuracy. If more engineering-specific cases emerge, the industry could shift
+from cautionary questions to explicit exclusion clauses or premium increases for firms
+that disclose AI usage without a demonstrable QA layer. Favourable for Redline if the
+audit trail exists. Provenance: CEAS Indemnity Matters Issue 88, April 2026.
 
 **Sign-off via OOXML metadata** *(added 2026-05-06)*: Feature L full scope (Sprint 5+)
 will implement reviewer sign-off using OOXML document metadata (`customXmlParts`)
