@@ -23,6 +23,8 @@ Force clarity on product problems before solution work begins. Every problem mus
 - PRD writing (`pm-prd-builder`)
 - Solution design and brainstorming (`brainstorming`)
 
+See also `mermaid-diagrams` for optional causal chain diagrams when visualising problem structure.
+
 ## When to Use
 
 - Before writing an initiative or scoping a feature

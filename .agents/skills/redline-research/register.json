@@ -545,5 +545,34 @@
     ],
     "access": "open",
     "added": "2026-04-26"
+  },
+  {
+    "id": "geotechnical-checklists",
+    "name": "Geotechnical Engineering Checklists",
+    "url": "https://notebooklm.google.com/notebook/58764ffc-c1f8-4739-884c-6036977f71e1",
+    "description": "A curated collection of geotechnical engineering QC checklists, review guidelines, and submittal checklists from US and NZ sources. Covers geotechnical report review (FHWA), geotechnical design QC workflow (work plan, soils/geology report, foundation reports, final plans), earthquake geotechnical investigation practice (NZGS Module 2), ground investigation specification (NZGS_0200), and building consent lodgement requirements for geotechnical submissions.",
+    "topic_area": "Geotechnical domain",
+    "topics": [
+      "geotechnical report review",
+      "QC checklists",
+      "geotechnical investigations",
+      "ground investigations",
+      "NZGS specifications",
+      "FHWA guidelines",
+      "USACE engineering manual",
+      "earthquake geotechnical engineering",
+      "building consent",
+      "lodgement checklists"
+    ],
+    "content_types": ["QC checklists", "review guidelines", "engineering manuals", "specifications", "submittal checklists"],
+    "use_cases": [
+      "Reviewing a geotechnical report for completeness and quality",
+      "Checking required content for a soils and geology report or foundation report",
+      "Understanding FHWA or USACE requirements for geotechnical documentation",
+      "Verifying a geotechnical report meets NZ building consent lodgement requirements",
+      "Applying NZGS ground investigation specifications to site investigation planning"
+    ],
+    "access": "open",
+    "added": "2026-05-13"
   }
 ]

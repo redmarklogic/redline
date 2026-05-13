@@ -23,6 +23,9 @@ Convert a structured initiative and its linked hypotheses into a stakeholder-rea
 - Hypothesis building (`pm-hypothesis-builder`)
 - Engineering specification and task breakdown (`spec-kit`)
 
+### Related Skills
+- Mermaid diagrams for user flows, system context, and state machines (`mermaid-diagrams`)
+
 ## When to Use
 
 - Initiative has at least one Validated or Testing hypothesis

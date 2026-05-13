@@ -25,6 +25,7 @@ cited research document to `docs/research/YYYYMMDD-<topic>.md`.
 ### Prerequisites
 - **`notebooklm-mcp`**: MCP server must be installed and authenticated.
 - **`rag-prompting`**: Load before writing any notebook query.
+- **`mermaid-diagrams`**: Load when the research document benefits from visual aids (concept maps, causal chains, system flows).
 
 ## When to Use
 
