@@ -1,4 +1,4 @@
-# GeoSonar Quality Gate Design — Domain Perspective
+# Redline Quality Gate Design — Domain Perspective
 
 **Date**: 2026-05-13
 **Author**: Graeme (Principal Geotechnical Engineer)
@@ -10,7 +10,7 @@ Geotechnical Baseline Reports (GBR), practitioner experience (25+ years)
 
 ## Context
 
-This document records Graeme's domain analysis of four GeoSonar product design concepts
+This document records Graeme's domain analysis of four Redline product design concepts
 submitted for review on 2026-05-13. Each concept is assessed for fit with NZ/AU professional
 practice, PLI implications, and domain risks.
 
@@ -142,6 +142,20 @@ a PLI risk from false assurance?
 
 - GBR practice: When baselines deviate from factual GDR data, the notebook recommends
   maintaining a record "to allow transparency should a claim be raised" [GBR: citation 2].
+
+```mermaid
+flowchart TD
+    A([Author submits report]) --> B[Platform runs automated gate checks]
+    B --> C{All checks pass?}
+    C -->|Yes| D[Eligible for TR submission]
+    C -->|No| E[Platform flags failing checks]
+    E --> F{Engineer responds}
+    F -->|Fix the finding| B
+    F -->|Exception required| G[Author writes substantive justification]
+    G --> H[Exception logged and attached]
+    H --> D
+    D --> I[TR reviews: content and exception log]
+```
 
 ### Practitioner assessment
 

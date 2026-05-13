@@ -46,6 +46,15 @@ Assessed by the TR and PD in combination, often with input from the firm's Insur
 **Layer 4 — Technical Defensibility**
 Assessed by the TR and, for complex analyses, specialist Subject Matter Experts (SME). This layer checks: whether conclusions are supported by the data presented, whether ground models are realistic, whether design parameters are appropriate for the soil/rock conditions encountered, whether stability analyses are properly bounded, whether professional judgment extensions beyond the data are stated and justified [GRW: citations 8, 9; RA: citations 1-2]. This is the hardest layer to automate — it requires engineering domain knowledge.
 
+```mermaid
+flowchart TD
+    L1["Layer 1 — Mechanical & Formatting (Author, BIS)"]
+    L2["Layer 2 — Structural Completeness (Author, TR)"]
+    L3["Layer 3 — Linguistic & Liability Risk (TR, PD)"]
+    L4[/"Layer 4 — Technical Defensibility (TR, SME) — NOT automatable"/]
+    L1 --> L2 --> L3 --> L4
+```
+
 ---
 
 ### 2. Defect Categories — The Equivalent of Bugs, Vulnerabilities, Code Smells
@@ -134,6 +143,24 @@ The PM Handbook mandates for every project: a Project Management Plan, a risk ma
 ### 4. Typical Review Cycle — Who Reviews, When, What Gets Signed Off
 
 The standard review cycle in a large NZ geotechnical consultancy follows a three-tier sign-off chain [GRW: audit-trail knowledge doc]:
+
+```mermaid
+sequenceDiagram
+    participant A as Author
+    participant TR as Technical Reviewer
+    participant PD as Project Director
+    participant C as Client
+    A->>A: Self-review (20 Checkpoints)
+    A->>TR: Submit draft
+    TR-->>A: Changes required
+    A->>TR: Revised draft
+    TR->>PD: Technical sign-off (Section A)
+    PD->>C: Release draft (Section B — DRAFT gate)
+    C-->>A: Client comments
+    A->>TR: Revised final
+    TR->>PD: Re-check interpretation
+    PD->>C: Issue final (Section B — FINAL gate)
+```
 
 **Stage 1 — Self-Review (Author)**
 - Author completes the "20 Checkpoints in 90 Seconds" checklist.

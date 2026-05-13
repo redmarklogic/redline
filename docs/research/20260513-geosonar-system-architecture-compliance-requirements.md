@@ -2,7 +2,7 @@
 
 **Date**: 2026-05-13
 **Type**: Deep research synthesis
-**Purpose**: Domain grounding for GeoSonar quality platform mockups
+**Purpose**: Domain grounding for Redline quality platform design
 
 ---
 
@@ -59,7 +59,7 @@
 
 ## Part 1: Formal QA Checklists & Peer Review
 
-### CERT 10a Guide for Geotechnical Report Checklist
+### CERT 10a Guide for Geotechnical Report Checklist[^1]
 
 - **Structure**: Boolean tabular structure. Yes / No / N/A checkbox methodology.
 - **Sections Covered**: Introduction, Topography, Geology, Field and Laboratory Investigation Scope, Subsurface Conditions, Discussion of Subsurface Features, Groundwater and Surface Water Considerations, Settlement Considerations, Allowable Foundation Bearing Pressures, Slope Stability, Effluent Disposal, Stormwater Disposal, Earthworks Considerations, Existing Fills, Conclusions and Recommendations, Data Tables.
@@ -67,7 +67,7 @@
 - **Review Stage**: Development Code review and Construction certification stages.
 - **Responsible Role(s)**: Not covered in sources.
 
-### Mason County Geologically Hazardous Areas Checklist
+### Mason County Geologically Hazardous Areas Checklist[^2]
 
 - **Structure**: Formal certification statement paired with signature block. Absolute validation checklist for ordinance compliance.
 - **Sections Covered**: Final geotechnical report alignment with Mason County Resource Ordinance (Geologically Hazardous Areas).
@@ -75,7 +75,7 @@
 - **Review Stage**: Final report submission and legal certification phase.
 - **Responsible Role(s)**: Geotechnical Design Professional (requires signature and professional stamp).
 
-### Oregon City Geotechnical Engineering Review Checklist
+### Oregon City Geotechnical Engineering Review Checklist[^3]
 
 - **Structure**: Field-based verification with blank linear checkbox arrays for spatial thresholds, volumetric exemptions, and development conditions.
 - **Sections Covered**: Project permit exemptions, report dating, density controls, slope disturbance parameters, zoning code alignment.
@@ -83,7 +83,7 @@
 - **Review Stage**: Not covered in sources.
 - **Responsible Role(s)**: Not covered in sources.
 
-### USACE Geotechnical Design Checklist
+### USACE Geotechnical Design Checklist[^4]
 
 - **Structure**: Comprehensive tabular accountability format with mandatory three-tier rating: Compliance (C), Noncompliance (NC), Nonapplicability (NA).
 - **Sections Covered**: Technical drawings, project specifications, field/laboratory exploration deliverables for structural design.
@@ -91,7 +91,7 @@
 - **Review Stage**: Engineering design review phase.
 - **Responsible Role(s)**: Formally designated Reviewer.
 
-### MBIE/NZGS CPT Fieldwork Checklists
+### MBIE/NZGS CPT Fieldwork Checklists[^5]
 
 - **Structure**: Detailed procedural checklists (Appendix C) within MBIE/NZGS Module 2.
 - **Sections Covered**: Field execution methodologies and data acquisition parameters for CPT operations.
@@ -99,7 +99,7 @@
 - **Review Stage**: Preliminary site investigation and field data acquisition.
 - **Responsible Role(s)**: Ground Investigation Contractors (safe execution, data quality) under Geotechnical Professionals (CPEng or PEngGeol, minimum 10 years experience in earthquake geotechnical hazards).
 
-### MBIE/NZGS SPT Procedures Checklist
+### MBIE/NZGS SPT Procedures Checklist[^5]
 
 - **Structure**: Procedural guidelines (Appendix D) in MBIE/NZGS Module 2.
 - **Sections Covered**: SPT execution standards for liquefaction hazard assessments.
@@ -107,7 +107,7 @@
 - **Review Stage**: Field operations and active site investigation.
 - **Responsible Role(s)**: Ground Investigation Contractors and authorizing Geotechnical Professionals.
 
-### FHWA GEC 14 GRD Quality Assurance Checklist
+### FHWA GEC 14 GRD Quality Assurance Checklist[^6]
 
 - **Structure**: Categorical framework with qualitative "comment forms" (no numerical scores or letter grades). Forms forwarded to authors to track error resolution.
 - **Sections Covered**: General Information Form (Project Name, Section, Contracting Method), major geohazards, massive earthworks, structural foundation elements, ground improvement technologies.
@@ -115,7 +115,7 @@
 - **Review Stage**: Document preparation and peer review prior to finalization.
 - **Responsible Role(s)**: QA Reviewer (must identify P.E. status and DOT/Firm affiliation) + GRD Author.
 
-### TDOT Quality Assurance Milestone Checklists
+### TDOT Quality Assurance Milestone Checklists[^7]
 
 - **Structure**: Standardized checklists integrated within ProjectWise digital architecture.
 - **Sections Covered**: Overarching QC workflow for engineering design and deliverable documents.
@@ -123,7 +123,7 @@
 - **Review Stage**: Milestone stage reviews during project production.
 - **Responsible Role(s)**: Regional Quality Team and Project Manager.
 
-### Auckland Council AC1009 Lodgement Checklist Commercial
+### Auckland Council AC1009 Lodgement Checklist Commercial[^8]
 
 - **Structure**: Hybrid regulatory structure with Yes/No/N/A tabular checklists interfacing with Practice Notes AC2229 and AC2253.
 - **Sections Covered**: Resource consent integration, vehicle maneuvering, site topography, earthworks volumetrics, structural engineering producer statements, natural hazard identification.
@@ -131,7 +131,7 @@
 - **Review Stage**: Building consent and resource consent application lodgement.
 - **Responsible Role(s)**: Council Officers (reviewers) and Producer Statement Authors (Registered Engineers).
 
-### FHWA-ED-88-053 Review Checklists
+### FHWA-ED-88-053 Review Checklists[^9]
 
 - **Structure**: Formalized review checklists with associated technical guidelines for major infrastructure.
 - **Sections Covered**: Major and unusual geotechnical design features, extensive earthworks, complex structural foundations.
@@ -261,7 +261,7 @@ Quantitative system for evaluating, scoring, and prioritizing unstable slope man
 
 ---
 
-## Key Implications for GeoSonar Platform Design
+## Key Implications for Redline Platform Design
 
 ### 1. Rule Engine Architecture
 
@@ -270,9 +270,20 @@ The checklists reveal a consistent pattern: **Boolean pass/fail items** that can
 - Rules categorized by: jurisdiction (NZ/AU/international), report type (GIR/GBR/GDR/GFR), and review stage (draft/final/lodgement)
 - Three-tier rating output: Compliant / Non-Compliant / Not Applicable
 
+```mermaid
+flowchart LR
+    IN["Incoming Report\n(GIR / GBR / GDR / GFR)"]
+    RR[("Rule Registry\nBy jurisdiction, type, stage")]
+    RE["Rule Engine"]
+    OUT["Rating per Rule\nCompliant / Non-Compliant / N/A"]
+    IN --> RE
+    RR --> RE
+    RE --> OUT
+```
+
 ### 2. No Existing Numerical Scoring for Report Quality
 
-The AGS Data Reliability Framework is the closest analogue but operates on **field data**, not **report documents**. GeoSonar would be genuinely novel as an automated report-quality scorer.
+The AGS Data Reliability Framework is the closest analogue but operates on **field data**, not **report documents**. Redline would be genuinely novel as an automated report-quality scorer.
 
 ### 3. Maturity Model as Portfolio Metric
 
@@ -296,3 +307,15 @@ In software, SonarQube triggers in the CI/CD pipeline. In geotechnical reporting
 ### 7. Producer Statement Author Registry
 
 Auckland Council requires authors to be on a registered list. The platform could integrate CPEng/PEngGeol verification as a gate -- confirming the signing engineer has appropriate credentials for the report type.
+
+---
+
+[^1]: Western Bay of Plenty District Council — *Checklist: Guide for Geotechnical Report (Yes / No / N/A)*. <https://www.westernbay.govt.nz/>
+[^2]: Mason County — *Submittal Checklist: Geotechnical Report*. <https://cms2.revize.com/>
+[^3]: City of Oregon City Engineering Development Services — *Geotechnical Checklist for Public Works Construction*. <https://www.orcity.org/>
+[^4]: U.S. Army Corps of Engineers (USACE) — *Geotechnical Design Checklist*. <https://tam.usace.army.mil/>
+[^5]: MBIE / New Zealand Geotechnical Society — *Module 2: Geotechnical Investigations for Earthquake Engineering* (Appendices C and D). <https://www.building.govt.nz/>
+[^6]: Federal Highway Administration — *Assuring Quality in Geotechnical Reporting Documents*, GEC 14 (FHWA-HIF-17-016). <https://highways.dot.gov/>
+[^7]: Tennessee Department of Transportation (TDOT) — *Quality Manual* and *Geotechnical Guidelines*. <https://www.tn.gov/>
+[^8]: Auckland Council — *AC1009 Lodgement Checklist: Commercial*. <https://www.aucklandcouncil.govt.nz/>
+[^9]: Federal Highway Administration / National Transportation Library — *Checklist and Guidelines for Review of Geotechnical Reports and Preliminary Plans and Specifications* (FHWA-ED-88-053). <https://rosap.ntl.bts.gov/>
