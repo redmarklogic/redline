@@ -71,6 +71,7 @@
 | `python-plot-colors` | Color selection, colormap choice, color-blindness safety | Engineering / Data |
 | `qmd-tables` | Rendering tables in Quarto documents | Engineering / Data |
 | `qmd-narrative-design` | Narrative design (Hook-Problem-Insight-Proof-Action arc) | John, Engineering |
+| `mermaid-diagrams` | Mermaid diagram type selection, syntax constraints (v8.8.0 ceiling), quality guidance | Mark, Ron, John, Matt, Engineering |
 
 ### Infrastructure & Security
 

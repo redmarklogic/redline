@@ -68,6 +68,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`python-plot-colors`**: Color selection, colormap choice, color-blindness safety, and cross-figure consistency for all plotting libraries used in this repo.
 - **`qmd-tables`**: Rendering tables in Quarto documents (great_tables GT, HTML/PDF helpers)
 - **`qmd-narrative-design`**: Narrative design for reports and presentations (Hook-Problem-Insight-Proof-Action arc)
+- **`mermaid-diagrams`**: Mermaid diagram type selection, syntax constraints (v8.8.0 ceiling), when-to-diagram rules, and quality guidance for Markdown documents
 
 ### Infrastructure & Security
 
