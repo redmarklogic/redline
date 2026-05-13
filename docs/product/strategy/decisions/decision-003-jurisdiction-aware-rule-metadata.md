@@ -21,7 +21,7 @@ absence creates a silent assumption that must be excavated and undone at expansi
 1. **Rules are jurisdiction-scoped, not dropped.** Every rule in the Pre-Review rule library
    carries explicit metadata:
    - `jurisdiction`: list of applicable markets (`NZ`, `AU`, `US`, or `global`)
-   - `enabled_by_default`: boolean, per jurisdiction
+   - `enabled_by_default`: boolean — true if the rule executes by default when the document's jurisdiction matches one of the rule's declared jurisdictions; the runner applies this after filtering by jurisdiction, so a rule with `jurisdiction: [US]` never runs in NZ/AU regardless of this field
    - `configurable`: boolean — whether a firm can override the rule via House Rules
 
 2. **The rule runner reads metadata.** Which rules execute for a given document is determined

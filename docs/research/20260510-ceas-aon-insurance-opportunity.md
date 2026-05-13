@@ -163,8 +163,7 @@ over coffee.
 
 ### Step 2: Coffee meeting (after June 1)
 
-Email the speaker and ask for 30 minutes over coffee. The Aon office is 15 minutes
-from my house.
+Email the speaker and ask for 30 minutes over coffee.
 
 **The frame**: "I'm building a quality layer for geotechnical reports -- a tool that
 helps engineers catch routine errors before senior review. I'm not an engineer; I was

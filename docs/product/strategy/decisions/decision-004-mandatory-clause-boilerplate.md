@@ -59,7 +59,7 @@ be validated by Graeme before shipping to production; it is not the final form.
 
 ### 3. Placeholder Token Format
 
-Square bracket style, all-caps, space-separated words:
+Square bracket style, all-caps, underscore-separated words:
 
 | Token | Maps to |
 |---|---|

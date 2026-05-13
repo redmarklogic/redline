@@ -75,7 +75,7 @@
 - **Rule Toggle Architecture — jurisdiction metadata schema** *(added 2026-05-10, Decision 003)* —
   engineering design prerequisite for the first Pre-Review rules. Before any rules are authored,
   define and implement the rule metadata schema: `jurisdiction` (list of applicable markets),
-  `enabled_by_default` (boolean, per jurisdiction), `configurable` (boolean). Every rule authored
+  `enabled_by_default` (boolean — true if the rule runs by default within its declared jurisdictions), `configurable` (boolean). Every rule authored
   in Sprint 2-3 ships with all three fields. The rule runner filters by metadata, not a hard-coded
   list. US-practice rules (SCOPE-CLAUSE-02, -04, -06) ship in the schema with
   `enabled_by_default: false` for NZ/AU. See `decisions/decision-003-jurisdiction-aware-rule-metadata.md`.

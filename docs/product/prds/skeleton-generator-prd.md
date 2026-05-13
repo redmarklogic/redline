@@ -73,7 +73,7 @@ Tier 2 NZ/AU geotechnical consultancies (5-50 person firms). Explicitly not Tier
   for NZ/AU per Decision 003 — they are architecturally present but do not appear in the
   NZ/AU skeleton output.
 
-  Placeholder token format — square bracket, all-caps, space-separated words:
+  Placeholder token format — square bracket, all-caps, underscore-separated words:
   - `[CLIENT_NAME]` — pre-populated from LOE extraction where available
   - `[FIRM_NAME]` — from SSO profile or firm configuration
   - `[PROJECT_NUMBER]` — pre-populated from LOE extraction where available

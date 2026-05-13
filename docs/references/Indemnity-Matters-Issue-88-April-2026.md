@@ -222,9 +222,7 @@ Society  of  Construction  Contract  Practitioners  has
 issued   a   practice   note   (also available   to   non-
 members)  as guidance on managing costs and delays
 that are impacting construction works:
-https://d2rjvl4n5h2b61.cloudfront.net/media/docu
-ments/SCCP_GN_-
-_Navigating_Fuel_and_Freight_Disruption.pdf.
+https://d2rjvl4n5h2b61.cloudfront.net/media/documents/SCCP_GN_-_Navigating_Fuel_and_Freight_Disruption.pdf
 Professionals and AI
 The  following  articles,  whilst  a  few  months  old,
 reflect  how  some  of  our  fellow  professionals,  in
@@ -242,10 +240,7 @@ cautionary  tales  for  those  using  AI  in  their  business:
 how open are you with your clientele about your use
 of AI? And are your reports factually correct?
 ## Accountants
-https://www.theguardian.com/australia-
-news/2025/oct/06/deloitte-to-pay-money-back-to-
-albanese-government-after-using-ai-in-440000-
-report
+https://www.theguardian.com/australia-news/2025/oct/06/deloitte-to-pay-money-back-to-albanese-government-after-using-ai-in-440000-report
 Deloitte must provide a partial refund on a   $440,000
 report containing several  errors,  after  admitting  it
 used generative artificial intelligence to help produce
@@ -263,10 +258,7 @@ system  used  to  automate  penalties  in  the  welfare
 system    if   mutual    obligations   weren’t    met    by
 jobseekers, in December 2024.
 ## Lawyers
-https://www.theguardian.com/australia-
-news/2025/aug/20/wa-lawyer-referred-to-
-regulator-after-preparing-documents-with-ai-
-generated-case-citations-that-did-not-exist-ntwnfb
+https://www.theguardian.com/australia-news/2025/aug/20/wa-lawyer-referred-to-regulator-after-preparing-documents-with-ai-generated-case-citations-that-did-not-exist-ntwnfb
 A  lawyer  has  been  referred  to  Western  Australia’s
 legal  regulator  after  using  artificial  intelligence  to
 prepare    court  documents  for  an  immigration  case.
