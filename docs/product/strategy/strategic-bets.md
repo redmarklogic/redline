@@ -238,6 +238,17 @@ attestation, or arbitration between author and reviewer. Provenance:
 
 **OKR ladder**: KR3 (paid conversion), KR4 (retention).
 
+**Pre-Submission freemium angle** *(added 2026-05-13, checklist collection analysis)*:
+Council lodgement checklists (CERT 10a, Lodgement Checklist Commercial, Mason County) are
+public, non-copyrighted documents defining the minimum submission bar. A free Pre-Submission
+checker that validates against council-specific checklists would acquire users at zero CAC
+and create a natural upsell path to Pre-Review: "Your report passes the council gate, but
+here are 12 quality issues a peer reviewer would find." This is a Phase 2 product surface
+that reuses the Pre-Review parsing pipeline at Depth 1 only (presence checks). Council
+checklists are copyright-free rule sources. See
+`docs/product/initiatives/pre-submission-council-compliance-checker.md`. Provenance:
+`docs/research/20260513-checklist-collection-analysis.md`.
+
 ---
 
 ## Bet 3 — Standards Knowledge Store Is the Real Moat
@@ -302,6 +313,16 @@ defensible. Provenance:
 `docs/research/20260426-legal-ai-adjacent-market-signal.md`.
 
 **OKR ladder**: Underwrites all KRs; not directly metered.
+
+**Council checklist catalogue as sourcing strategy** *(added 2026-05-13, checklist
+collection analysis)*: NZ/AU/US council geotechnical checklists are public, non-copyrighted
+documents. They provide a free, low-risk starting corpus for the Standards Knowledge Store:
+encode council checklist rules as Depth 1 (presence) checks, then layer Depth 2 (content
+quality) rules from professional standards on top. This avoids the licensing risk (P-026)
+for the initial rule library while still demonstrating the Knowledge Store architecture.
+Council checklists also validate the shared taxonomy (ADR-006) empirically --- 10 checklists
+from 5 jurisdictions converge on the same 10-node taxonomy. Provenance:
+`docs/research/20260513-checklist-collection-analysis.md`.
 
 ---
 
