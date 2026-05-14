@@ -99,6 +99,65 @@ complementary, not competing jobs. As AI-drafted reports proliferate, the review
 grows — every AI-generated GBR still needs a quality layer before a senior signs it.
 Redline is positioned downstream of any drafting tool, not against it.
 
+## Compliance Floor / Quality Ceiling Frame *(added 2026-05-14)*
+
+Redline is the compliance floor. The senior engineer is the quality ceiling. Between
+those two sits a documented, machine-verified professional practice record that the
+current market does not have.
+
+**What Redline CAN claim — completely, honestly, unconditionally:**
+
+- It catches citation errors.
+- It catches absent mandatory standards.
+- It catches forbidden language.
+- It catches missing clauses.
+
+**What Redline MUST NOT claim:**
+
+- "Redline ensures your reports are correct."
+- "Redline protects your firm from liability."
+- "A Redline-reviewed report meets the standard of care."
+
+These claims convert Redline from a professional tool into a crutch. The firms that
+believe them are the ones who stop applying engineering judgment — which is precisely
+the misuse scenario. Any marketing or product copy that implies attested correctness
+must be rejected at review.
+
+**The genuine use condition:**
+
+Redline's value is realised only if the time freed from compliance mechanics is
+reinvested into technical review — engineering judgment, calculation checking,
+parameter plausibility. If that time is pocketed as throughput, Redline generates
+false confidence. This condition must appear in onboarding, documentation, and sales
+materials.
+
+## Audit Trail as Professional Practice Record *(added 2026-05-14)*
+
+The audit trail must not output "PASSED." It must output a scoped professional
+practice record:
+
+> "These specific items were checked within scope. Engineering judgment was not in
+> scope and remains the responsibility of the certifying engineer."
+
+This distinction is not fine print — it must be the primary output. A log is not a
+professional practice record.
+
+**Stakeholder alignment:**
+
+| Stakeholder | Interest in the audit trail |
+| --- | --- |
+| PI (Professional Indemnity) insurers | Machine-verified QC data for premium pricing |
+| Engineering NZ | Profession-wide compliance data |
+
+Both interests are served by the same audit trail design. The audit trail serves two
+markets simultaneously without requiring two products.
+
+**Product design rule (binding):**
+
+The audit trail is signed, timestamped, exportable as PDF, structured to survive legal
+discovery, and explicitly scoped. All four properties are required. Absence of any one
+converts the record into a log and forfeits the professional practice framing.
+
 **Generic LLM and drafting-tool objection:**
 
 Generic AI is useful for early thinking, drafting assistance, and summarisation. Redline
