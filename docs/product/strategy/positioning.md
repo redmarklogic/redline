@@ -125,7 +125,25 @@ navigating this uncertainty: "Redline gives you the audit trail your insurer wil
 for." Audit trail is baked into the product from Day 1 (see `feature-backlog.md`,
 Feature L core subset elevated to Sprint 1).
 
-Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+**Qualification added 2026-05-14 (post-webinar):** The "audit trail your insurer will
+ask for" line is directionally correct but must not be stated as a current underwriting
+requirement — it is a coming one. The CAS/Aon webinar (14 May 2026) confirmed QA is a
+factor in PI renewals but the renewal question was designed for the *commercial* QA
+layer (scope, contracts, senior sign-off), not the *technical content verification*
+layer where AI failure modes live. No NZ insurer is currently requiring a documented
+technical content audit trail at renewal. The correct framing in explanatory and
+discovery content: "Redline creates the audit trail for the technical content check
+the renewal QA question has never had." Do not represent the audit trail as a present
+insurer demand. The insurer's own renewal question is the structural gap Redline
+addresses — not a requirement Redline satisfies.
+
+The bifurcation thesis (affirmative vs exclusion clauses) remains unconfirmed with any
+NZ underwriter. The actual underwriting decision for the CAS scheme sits with NZI
+(the underwriter), not Aon (the broker). No primary research with NZI has been
+conducted as of May 2026.
+
+Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`,
+`docs/research/20260514-ceas-aon-webinar-findings.md`.
 
 ## Disruption Frame (Christensen — see `strategic-bets.md` Bet 6)
 
