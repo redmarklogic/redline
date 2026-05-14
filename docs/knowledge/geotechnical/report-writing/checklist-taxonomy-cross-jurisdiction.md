@@ -27,61 +27,16 @@ section classification for Redline's shared taxonomy architecture.
 Every checklist source covers at least 7 of these 10 nodes. No source introduces a primary node
 that is absent from all other sources.
 
-```mermaid
-mindmap
-  root((Geotechnical Report Taxonomy))
-    1. Site Context
-      Site history
-      Aerial photos
-      Previous reports
-      Existing infrastructure
-    2. Topography and Geomorphology
-      Terrain description
-      Slope angles
-      Geologic hazards
-      Landslide indicators
-    3. Geology and Stratigraphy
-      Geologic formations
-      Rock outcrops
-      Depth to bedrock
-      Stratigraphic description
-    4. Field Investigation
-      Exploration scope
-      Borehole locations
-      In-situ testing methods
-      Geophysical testing
-    5. Subsurface Conditions
-      Soils and fill
-      Rock quality
-      Groundwater
-      Organic soils
-    6. Laboratory Testing
-      Classification tests
-      Engineering property tests
-      Geoenvironmental tests
-    7. Engineering Analysis
-      Foundation bearing capacity
-      Settlement analysis
-      Slope stability
-      Seismic and liquefaction
-      Lateral earth pressures
-    8. Earthworks
-      Cut and fill design
-      Compaction criteria
-      Existing fills assessment
-      Site preparation
-    9. Drainage and Environment
-      Groundwater drainage
-      Surface water
-      Effluent disposal
-      Stormwater soakage
-    10. Deliverables
-      Tables
-      Figures
-      Appendices
-      Drawings
-      Digital data AGS4
-```
+1. **Site Context** — Site history, Aerial photos, Previous reports, Existing infrastructure
+2. **Topography and Geomorphology** — Terrain description, Slope angles, Geologic hazards, Landslide indicators
+3. **Geology and Stratigraphy** — Geologic formations, Rock outcrops, Depth to bedrock, Stratigraphic description
+4. **Field Investigation** — Exploration scope, Borehole locations, In-situ testing methods, Geophysical testing
+5. **Subsurface Conditions** — Soils and fill, Rock quality, Groundwater, Organic soils
+6. **Laboratory Testing** — Classification tests, Engineering property tests, Geoenvironmental tests
+7. **Engineering Analysis** — Foundation bearing capacity, Settlement analysis, Slope stability, Seismic and liquefaction, Lateral earth pressures
+8. **Earthworks** — Cut and fill design, Compaction criteria, Existing fills assessment, Site preparation
+9. **Drainage and Environment** — Groundwater drainage, Surface water, Effluent disposal, Stormwater soakage
+10. **Deliverables** — Tables, Figures, Appendices, Drawings, Digital data AGS4
 
 ---
 

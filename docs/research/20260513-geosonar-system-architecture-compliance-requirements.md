@@ -1,4 +1,4 @@
-# System Architecture and Compliance Requirements for Automated Geotechnical Investigation Report Quality Assurance
+# System Architecture and Compliance Requirements for Automated Geotechnical Interpretive Report Quality Assurance
 
 **Date**: 2026-05-13
 **Type**: Deep research synthesis
@@ -25,7 +25,7 @@
 | GBR | Geotechnical Baseline Report. Establishes anticipated ground conditions and contractual baselines |
 | GDR | Geotechnical Design Report |
 | GFR | Geotechnical Feedback Report. Post-construction analysis and observational records |
-| GIR | Geotechnical Investigation Report. Primary deliverable presenting subsurface exploration data |
+| GIR | Geotechnical Interpretive Report. Primary deliverable presenting subsurface exploration data |
 | GIS | Geographic Information Systems |
 | GSI | Geological Strength Index |
 | GRD | Geotechnical Reporting Document. Overarching term for any geotechnical deliverable |

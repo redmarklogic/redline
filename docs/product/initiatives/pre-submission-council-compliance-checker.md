@@ -89,4 +89,4 @@ product surface.
 ## Provenance
 
 Initiative derived from advisory board session (2026-05-13) analysing 10 geotechnical checklists.
-See [research/20260513-checklist-collection-analysis.md](../research/20260513-checklist-collection-analysis.md).
+See [research/20260513-checklist-collection-analysis.md](../../research/20260513-checklist-collection-analysis.md).

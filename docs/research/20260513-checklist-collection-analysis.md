@@ -37,48 +37,16 @@ Engine, and Pre-Review Engine, and (c) competitive positioning opportunities?
 All 10 checklists converge on the same 10 taxonomy nodes, regardless of jurisdiction, era, or
 document perspective:
 
-```mermaid
-mindmap
-  root((Report Taxonomy))
-    1. Site Context
-      Location
-      Scope/Purpose
-    2. Topography/Geomorphology
-      Terrain
-      Aerial Photography
-    3. Geology/Stratigraphy
-      Geologic Setting
-      Subsurface Profile
-    4. Field Investigation
-      Boreholes
-      CPT/SPT
-      Field Tests
-    5. Subsurface Conditions
-      Soil/Rock Description
-      Groundwater
-    6. Laboratory Testing
-      Classification
-      Strength
-      Consolidation
-    7. Engineering Analysis
-      Slope Stability
-      Bearing Capacity
-      Settlement
-      Seismic Assessment
-    8. Earthworks
-      Cut/Fill Design
-      Shrink-Swell
-      Compaction
-    9. Drainage/Environment
-      Surface Drainage
-      Subdrainage
-      Environmental
-    10. Deliverables
-      Logs
-      Plans
-      Cross-Sections
-      Photographs
-```
+1. **Site Context** — Location, Scope/Purpose
+2. **Topography/Geomorphology** — Terrain, Aerial Photography
+3. **Geology/Stratigraphy** — Geologic Setting, Subsurface Profile
+4. **Field Investigation** — Boreholes, CPT/SPT, Field Tests
+5. **Subsurface Conditions** — Soil/Rock Description, Groundwater
+6. **Laboratory Testing** — Classification, Strength, Consolidation
+7. **Engineering Analysis** — Slope Stability, Bearing Capacity, Settlement, Seismic Assessment
+8. **Earthworks** — Cut/Fill Design, Shrink-Swell, Compaction
+9. **Drainage/Environment** — Surface Drainage, Subdrainage, Environmental
+10. **Deliverables** — Logs, Plans, Cross-Sections, Photographs
 
 The 20-30% variation is jurisdiction-specific: seismic (NZ), material sites (FHWA),
 sign-off gates (TDOT), and council compliance (NZ councils).
