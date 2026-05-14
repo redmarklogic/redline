@@ -30,11 +30,18 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 | `notebook_get` | Get notebook details and sources |
 | `notebook_describe` | Get AI-generated notebook summary and suggested topics |
 | `source_describe` | Get AI-generated per-source summary and keywords |
-| `source_add` | Upload a new source to a notebook — **Linda only** (library ingestion workflow) |
+| `source_add` | Upload a new source to a notebook — **Linda only** (library ingestion workflow). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
 | `source_delete` | Remove a source from a notebook — **Linda only** (deduplication / file hygiene) |
 | `source_rename` | Rename a source in a notebook — **Linda only** (canonical naming enforcement) |
 | `refresh_auth` | Refresh auth tokens when expired |
 | `server_info` | Check version and diagnostics |
+
+### File Upload Rule
+
+> **Never refuse a file upload based on assumed format limitations.**
+> The `source_add` `file` type accepts at minimum: PDF, TXT, audio, and **video (MP4)**.
+> When asked to upload any file, attempt the upload and let NotebookLM reject it if
+> the format is truly unsupported. Do not pre-emptively block the user.
 
 All other tools (27 of 35) are **forbidden**. See
 [`forbidden-tools.md`](forbidden-tools.md) for the full list and rationale.
