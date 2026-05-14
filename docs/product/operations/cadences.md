@@ -9,7 +9,7 @@ outputs — enough to create a calendar event.
 > **Calendar tip:** Each recurring event below lists a `Calendar` field specifying the
 > recurrence pattern and timing. The founder can schedule these directly; the timings
 > are chosen to be compatible with a solo-founder pre-employment-exit preparation
-> period (Apr 18 – May 31) and a full-time product period from June 1.
+> period (Apr 18 – May 31) and a full-time product period from June 2.
 
 ---
 
