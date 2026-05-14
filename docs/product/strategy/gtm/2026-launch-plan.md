@@ -84,7 +84,7 @@ forfeits the falsification value of the bet.
 - **Google Ads — not committed in H2.** Founder raised re-opening this in 2026-04-18 review.
   Holding to the original commitment for H2 (non-goal #3): Bet 1 must produce a
   falsifiable organic CAC before we add paid as a second variable. If Bet 1 trips its
-  kill criterion (KR1 < 50 signups in 60 days), paid acquisition becomes the recovery
+  kill criterion (KR1 < 50 signups by Sep 1 / day 90), paid acquisition becomes the recovery
   path — see P-016 and the new P-021 entry.
 - **Geographic expansion via paid Reddit/Google in AU/UK/CA — not needed.** LinkedIn is
   global; the founder LinkedIn channel reaches AU/UK/CA practitioners at zero marginal

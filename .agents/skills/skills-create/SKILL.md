@@ -50,6 +50,12 @@ To create a skill:
 
 ### 2. Create Initial Content
 
+> **STOP. Before writing any content, load and follow `writing-skills` (specifically
+> `procedures/create-skill.md`). The Iron Law is non-negotiable: no skill content may
+> be written before baseline failure is documented. If you have already written content
+> without running RED-phase tests, delete the content and start the TDD cycle from
+> scratch.**
+
 **Skills must not reference `docs/lessons/` files.** Lessons are ephemeral observations
 for humans; skills are authoritative, durable instructions for the agent. Embed any
 required guidance directly in the skill body rather than linking to a lesson.

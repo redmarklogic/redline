@@ -27,6 +27,7 @@ Apply this skill whenever generating or reviewing a Quarto `.qmd` document for a
 - Pre-flight data quality: `.agents/skills/eda-interpreting-data/SKILL.md`
 - Plot construction: `.agents/skills/eda-visual-design/SKILL.md`
 - Table rendering: `.agents/skills/qmd-tables/SKILL.md`
+- Mermaid diagrams: `.agents/skills/mermaid-diagrams/SKILL.md`
 
 ---
 

@@ -23,6 +23,9 @@ Structure complex product decisions so they are made explicitly, not by default.
 - Hypothesis design (`pm-hypothesis-builder`)
 - Code implementation or architecture decisions (`spec-kit`)
 
+### Related Skills
+- Mermaid diagrams for decision trees and options-comparison flowcharts (`mermaid-diagrams`)
+
 ## When to Use
 
 - Decision is being avoided or delayed

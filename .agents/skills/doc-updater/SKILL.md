@@ -35,6 +35,9 @@ The priority is accuracy over prose: docs that mention files, endpoints, or comm
 - Code implementation
 - Docstrings (`python-documentation`)
 
+### Related Skills
+- Mermaid diagrams for architecture and module dependency visuals (`mermaid-diagrams`)
+
 ## Procedure
 
 1. **Identify what changed**

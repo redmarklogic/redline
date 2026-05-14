@@ -15,7 +15,7 @@ I screened this hire against Team Topologies' four "do not create a new team" pa
 | Pattern | Result | Reasoning |
 |---|---|---|
 | Reactive / ad-hoc creation | **Pass** | This role is tied to four active strategic bets and addresses a genuine capability gap (no agent currently holds design capability). It is not a reaction to a single failure. |
-| Single-function silo | **Pass** | Matt would own five distinct product surfaces with end-to-end design responsibility. This is not a single-function overlay applied to everyone else's output. |
+| Single-function silo | **Pass** | Matt would own four product delivery surfaces (web app, Word document output, Word taskpane, email agent) with end-to-end design responsibility across each. This is not a single-function overlay applied to everyone else's output. |
 | Complicated-subsystem without cognitive-load justification | **Pass** | No existing agent holds design capability. Mark handles product management (problem framing, PRDs, decisions). John handles marketing content and brand voice. Neither has the skills or cognitive bandwidth for interaction design, wireframing, or component specification. This is a new capability, not a split of an existing agent's domain. |
 | No active strategic bet pulls on this role | **Pass** | Four active bets require UX design work: Bet 1 (Skeleton Wedge UI, ships Jun 30), Bet 2 (Pre-Review annotation UI), Bet 4 (Switzerland-neutral positioning expressed in product surfaces), and Bet 6 (impact communication surfaces). Bet 1 has a hard kill criterion deadline (90 days from launch). |
 
@@ -52,11 +52,11 @@ Most tasks are **Variable + Interactive + Judgment-based**. This profile require
 
 ### Mark's Input (Principal Product Manager)
 
-Mark defined five product surfaces, their priority ordering, the skills Matt needs, and file authority. Key points:
+Mark defined the four product delivery surfaces, their H2 priority capability areas, the skills Matt needs, and file authority. Key points:
 
-- **H2 priority surfaces:** Skeleton Generator UI, onboarding and SSO gate, quota-exhaustion and conversion nudges.
-- **Post-launch surface:** Pre-Review annotation UI (highest-complexity surface).
-- **Cross-cutting:** Impact communication surfaces.
+- **H2 priority capabilities (within web app surface):** Skeleton Generator UI, onboarding and SSO gate, quota-exhaustion and conversion nudges.
+- **Post-launch capability (web app surface):** Pre-Review annotation UI (highest-complexity surface).
+- **Cross-cutting (email agent surface):** Impact communication surfaces.
 - **Exclusions:** Settings/admin, marketing website, API docs.
 - **Interaction mode:** Collaboration. Matt is downstream of PRDs (Mark's output), upstream of engineering (speckit).
 

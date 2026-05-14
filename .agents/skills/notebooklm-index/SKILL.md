@@ -7,6 +7,14 @@ description: Use when adding, updating, or auditing a NotebookLM notebook in the
 
 Index NotebookLM notebooks into a structured Excel register using MCP tools.
 
+## Mandatory Trigger Rule
+
+**This skill MUST be invoked immediately after any task that calls `mcp_notebooklm_notebook_create`.** Never declare a task complete if a new notebook was created without first running this skill to add it to the index. This is a non-negotiable workflow gate.
+
+**Verification (TDD-style post-condition):** After running, open `G:\My Drive\Library\index-notebooklm.xlsx` and confirm the `notebooks` worksheet contains a row with the new `notebook_id`. If the row is absent, the index update did not succeed — debug and re-run before finishing.
+
+---
+
 ## Boundary Contract
 
 ### Inputs
@@ -168,3 +176,4 @@ Match existing workbook styling:
 | Skipping `source_describe` | Must call for every source |
 | Creating new Python scripts or temp files | Use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py` |
 | Updating `register.json` | Out of scope — only update the Excel index |
+| Not running this skill after `notebook_create` | **Oversight** — the mandatory trigger rule (top of this skill) is binding; always update the index before declaring a notebook-creation task complete |
