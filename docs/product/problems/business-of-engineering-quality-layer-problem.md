@@ -1,6 +1,6 @@
 # Problem Statement: The Business-of-Engineering Quality Layer
 
-**Status**: Draft v1. **Owner**: Mark. **Date**: 2026-05-03.
+**Status**: Draft v2. **Owner**: Mark. **Date**: 2026-05-14.
 **Strategic bet**: [Bet 1 — The Free Skeleton Wedge Beats Paid Acquisition](../strategy/strategic-bets.md)
 **Resolution source**: Founder Brain Dump Item 2.2 — Practice vs. Business of Engineering (resolved 2026-05-03, Ron + Graeme aligned).
 
@@ -19,6 +19,28 @@ Ron and Graeme aligned: Redline's quality layer belongs squarely in the business
 
 ---
 
+## The Consultancy Pipeline: Known Gates
+
+This is a living gate map. As Redline identifies where different quality interventions sit within the consultancy workflow, the map expands — but naming each gate also names what sits outside Phase 1 scope.
+
+```mermaid
+flowchart LR
+    A[Engagement Gate] --> B[Site Investigation]
+    B --> C[Report Drafting]
+    C --> D[Report Gate]
+    D --> E[Submission]
+    A -.-> A1["CAS QA renewal question\ncommercial clause discipline"]
+    D -.-> D1["Redline Pre-Review\ntechnical content + warranty language"]
+    classDef gate fill:#e8f5e9,stroke:#388e3c
+    classDef annotation fill:#e3f2fd,stroke:#1565c0
+    class A,D gate
+    class A1,D1 annotation
+```
+
+Gates shown in green are quality intervention points identified to date.
+
+---
+
 ## Target User
 
 Principal or intermediate engineer at a Small NZ or AU geotechnical consultancy (5–50 staff). These firms carry professional indemnity insurance, submit reports to councils and insurers, and operate without an in-house compliance function. They cannot afford dedicated Quality Assurance staff. They rely on individual engineers to self-check and on senior reviewers to catch what slips through.
@@ -34,6 +56,18 @@ When a geotechnical report is submitted with a standards gap — a missing claus
 The engineer submitting the report has no systematic way to check for these gaps before the document leaves the building. Senior reviewers catch some, but they are already bottlenecked on engineering judgment. The applicable standards landscape (NZS, AS, NZGS, MBIE guidance, Canterbury-specific requirements) is too broad and too frequently updated for any individual to hold entirely in memory.
 
 The job-to-be-done: the firm needs to demonstrate, at submission, that the report has been checked against the applicable standards framework — not because an engineer remembered everything, but because a systematic check was run and the gaps were flagged before sign-off.
+
+---
+
+## The QA Layer Distinction
+
+Commercial QA and technical QA address different risks at different points in the project lifecycle. The CAS renewal question probes commercial QA: whether the firm uses industry-standard contract conditions, avoids signing bespoke client-drafted terms, and maintains upfront scope discipline. These risks crystallise at the moment of contract signature — before a bore log is reviewed or a report section drafted.
+
+Technical QA operates at the report gate, after the engineering work is done. It asks whether the document evidence — the report submitted to a council or insurer — complies with the applicable standards framework. A firm can answer every CAS renewal question perfectly and still submit a report that omits a required clause reference under NZS 3604, cites a superseded standard, or fails to address a Canterbury-specific MBIE Part D requirement. The CAS renewal question has no visibility into the document. Redline does.
+
+Warranty language drift is a specific failure mode that sits squarely in the technical QA domain. AI-assisted drafting tends to produce confident, declarative prose. That register can cross into warranty territory: a sentence such as "the ground will not liquefy under the design seismic event" is not a hedged professional opinion — it is an express warranty. A PI policy typically excludes liability for contractual guarantees of outcome. The CAS renewal question cannot detect this because it has no access to the report text. A Redline Pre-Review can flag it before the document leaves the building.
+
+"We check the document, not the design" is the boundary — technical QA at the report gate is what Redline does.
 
 ---
 
@@ -70,6 +104,18 @@ Calculation verification is a practice-of-engineering problem: it requires re-ru
 The "We check the document, not the design" boundary exists precisely to hold this line and to give the CEO a clear, defensible answer to the question: "What does Redline actually check?"
 
 This does not foreclose a future product that addresses calculation-checking. It defers it deliberately.
+
+---
+
+## Non-Goal: Contract Clause Review at the Engagement Gate
+
+Contract clause review would mean scanning bespoke, client-drafted contracts for deviations from ACENZ or CCCS standard terms — specifically: fitness-for-purpose warranties inserted by the client, removal of liability caps, and clauses granting unrestricted third-party reliance. This is a genuine risk for NZ consulting engineers and a known driver of PI claims.
+
+It is not in Phase 1 scope. It operates at the engagement gate — before a project report exists — not at the report gate where Redline intervenes. The user is different: the principal negotiating the engagement contract, not the engineer finalising the report. The knowledge domain is different: contract law and deviation analysis against ACENZ/CCCS standard terms, not geotechnical reporting standards. The buying moment is different: a one-off decision at contract execution, not a recurring obligation at every report submission.
+
+Ron has named this a deliberate non-goal for Phase 1. The engagement gate product direction will be reviewed when Phase 1 has its first paying firm and the report-gate value proposition is validated in market.
+
+Redline's scope is the report gate; the engagement gate is a separate product direction.
 
 ---
 
