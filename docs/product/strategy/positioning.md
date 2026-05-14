@@ -158,6 +158,22 @@ The audit trail is signed, timestamped, exportable as PDF, structured to survive
 discovery, and explicitly scoped. All four properties are required. Absence of any one
 converts the record into a log and forfeits the professional practice framing.
 
+**Attestation scope (non-negotiable):** Any signature on the audit trail attests only
+that Redline's flags were reviewed and resolved — not that the report is compliant,
+not that the engineering is correct, and not that the firm's PI position has improved.
+The scope of attestation must be stated on the face of the document, not buried in
+terms of service. Engineers are trained to be cautious about what they sign. Any
+ambiguity about what is being attested to will produce either refusal to use the
+feature or — worse — a false sense that the attestation covers more than it does.
+
+**What the audit trail does NOT do:** A scoped practice record demonstrates process.
+It does not demonstrate adequate engineering judgment. It will not shield the firm if
+the engineering judgment was deficient and the compliance layer appeared clean.
+Do not allow any product copy, sales language, or onboarding material to imply
+otherwise. This applies specifically to the claim "Redline gives you the audit trail
+your insurer will ask for" — that line is directionally correct but must never be
+stated in a way that implies the audit trail improves the firm's PI position.
+
 **Generic LLM and drafting-tool objection:**
 
 Generic AI is useful for early thinking, drafting assistance, and summarisation. Redline

@@ -182,6 +182,15 @@ one-time efficiency story. The before/after value framing should reflect three
 scenarios: (1) human-written report, (2) AI-written report without Redline, (3)
 AI-written report with Redline. Scenario 2 is the ceiling that makes the Redline
 pitch largest.
+
+**Scope of the compounding story (important constraint):** Redline eliminates the
+harder compliance mechanics in AI-written reports. It does not reduce the difficulty
+of the engineering judgment layer — that remains harder than for human-written reports
+because the reviewer still cannot apply a trust model to AI output. After Redline
+runs, the senior engineer reviewing an AI-written report is back to doing their real
+job — but their real job is harder when the input was AI-generated. Do not present
+the compounding value story in a way that implies Redline fully normalises an
+AI-written report's review burden back to the human-written baseline. It does not.
 Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
 **Insurance-industry AI scrutiny signal** *(added 2026-05-10, Ron)*: CEAS Indemnity

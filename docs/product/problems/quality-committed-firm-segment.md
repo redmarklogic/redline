@@ -10,11 +10,12 @@
 
 The quality-committed firm is identifiable by at least one of the following signals:
 
-- **PI (Professional Indemnity) claim or near-miss history** — the firm has experienced a claim or a near-miss and is actively changing its QA (Quality Assurance) process as a result.
+- **PI (Professional Indemnity) claim or near-miss history** — the firm has changed its QA process in response to a project experience: a near-miss, an unexpected client escalation, or an incident that prompted a review. *Do not ask about claims directly — engineers are trained to be cautious about what they disclose to vendors. Ask instead: "Has your firm changed its QA process in response to a project experience?" This surfaces the same underlying experience without triggering a defensive response.*
 - **Named QA Principal or formal review-stage policy** — the firm has assigned a named individual responsibility for QA, or has a written policy that mandates a review stage before report submission.
-- **Protected senior review time** — senior engineers have time budgeted for review that is not at the mercy of utilisation targets. The firm does not treat review as a billable luxury.
+- **QA is funded from firm overhead, not the project budget** — the practical test for whether review time is genuinely protected. When QA comes out of the project budget, project managers compress it under deadline pressure regardless of policy. The behavioural test: *when a senior engineer pushes back a delivery date because review is incomplete, does the project manager accept that?* A principal who answers yes without hesitation is in the target segment.
+- **Fixed-fee or write-off-reduction billing model** *(hypothesis — validate in co-development conversations)*: firms that bill by the hour have a structural disincentive to reinvest freed review time into deeper review — efficiency means fewer billable hours. The genuine use condition (freed time reinvested in engineering judgment) is commercially sustainable primarily for fixed-fee firms or firms motivated by reducing write-offs and rework cost. Test for billing model alongside the other signals.
 
-These are observable, pre-sale qualification signals. They can be surfaced through outbound conversations with firm Principals, through PI renewal discussions, or through referral networks.
+These are observable, pre-sale qualification signals. They can be surfaced through outbound conversations with firm Principals and through PI renewal discussions.
 
 ---
 
@@ -47,7 +48,7 @@ This is a brand risk, not a theoretical one. Redline's positioning is "we check 
 
 | Buyer type | Buys on | Price ceiling | Redline outcome |
 |---|---|---|---|
-| Quality-committed firm | Value — risk reduction, PI defensibility | Higher (value-based) | Positive — Redline improves firm's risk position |
+| Quality-committed firm | Value — risk reduction, PI defensibility | Higher (value-based) — *hypothesis, to be tested in co-development conversations; do not use as a basis for pricing decisions before validation* | Positive — Redline improves firm's risk position |
 | Throughput firm | Price — time saved per report | Lower (cost-based) | Risky — Redline may enable volume without quality |
 
 These are different sales conversations, different economic buyers, and different price ceilings. Conflating them in the early sales motion will produce a mixed customer base and a diluted brand.
