@@ -80,6 +80,14 @@ flowchart TD
     style G fill:#dbeafe,stroke:#2563eb
 ```
 
+- **Project type + jurisdiction** — the engineer declares what they are writing (e.g., residential earthworks GIR, Canterbury) before the skeleton is generated.
+- **Registered?** — the generator checks whether this project type / jurisdiction combination has a curated entry in the Standards Registry. This is a hard gate, not a soft preference.
+- **Standards Registry (human-curated)** — a qualified engineer has verified which standards are mandatory and advisory for this project type. This is the only source of standards nomination; LLM inference is not permitted here.
+- **Decline + explain + request route** — if the project type is not registered, the generator refuses, names the unrecognised type, and provides a route to submit a registration request. A silent fallback to inference is prohibited (see Option C rejection below).
+- **Skeleton with nominated standards** — the generated skeleton carries the registry-sourced standards list as explicit placeholders, labelled with each standard's role (compliance framework, test methodology, etc.).
+- **Engineer writes against skeleton** — the engineer drafts the report using the skeleton as a structured prompt. Standards are pre-nominated; the engineer applies judgment to the engineering content.
+- **Redline checks citations** — Pre-Review verifies that the standards nominated in the skeleton are correctly cited in the final report. Because both the skeleton and the checker draw from the same registry, the loop anchor is external to the LLM.
+
 Option C was rejected because a silent LLM fallback recreates the same loop for any
 project type not yet in the registry, without alerting the user that the nomination was
 inferred rather than curated.
