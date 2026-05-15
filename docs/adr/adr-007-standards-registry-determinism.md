@@ -76,21 +76,28 @@ project type in this jurisdiction. That commitment cannot be delegated to infere
 
 ```mermaid
 flowchart TD
-    A[Project type\n+ jurisdiction] --> B{Registered?}
+    A1[Describes project\nin natural language] --> CL
+    A2[Uploads existing\ndocument / RFP] --> CL
+    CL[Classify: project type\n+ jurisdiction] --> B{Registered?}
     B -->|Yes| C[Standards Registry\nhuman-curated]
     B -->|No| D[Decline + explain\n+ request route]
     C --> E[Skeleton with\nnominated standards]
     E --> F[Engineer writes\nagainst skeleton]
     F --> G[Redline checks\ncitations]
     G -->|Registry is\nthe shared anchor| C
+    style A1 fill:#f3f4f6,stroke:#6b7280
+    style A2 fill:#f3f4f6,stroke:#6b7280
+    style CL fill:#e0e7ff,stroke:#4f46e5
     style C fill:#dcfce7,stroke:#16a34a
     style D fill:#fef9c3,stroke:#ca8a04
     style G fill:#dbeafe,stroke:#2563eb
 ```
 
-- **Project type + jurisdiction** — the engineer declares what they are writing (e.g., residential earthworks GIR, Canterbury) before the skeleton is generated.
-- **Registered?** — the generator checks whether this project type / jurisdiction combination has a curated entry in the Standards Registry. This is a hard gate, not a soft preference.
-- **Standards Registry (human-curated)** — a qualified engineer has verified which standards are mandatory and advisory for this project type. This is the only source of standards nomination; LLM inference is not permitted here.
+- **Describes project in natural language** — the engineer describes the project scope in free text (e.g., "residential earthworks GIR for a new subdivision in Canterbury"). One of two permitted entry points.
+- **Uploads existing document / RFP** — the engineer uploads an existing brief, RFP, or prior report. The system reads the document to extract project context. One of two permitted entry points.
+- **Classify: project type + jurisdiction** — the system classifies the input into a project type and jurisdiction. LLM inference is permitted at this step — this is factual classification of a real-world project, not a normative judgment about which standards apply. The engineer confirms or corrects the classification before proceeding.
+- **Registered?** — the generator checks whether the classified project type / jurisdiction combination has a curated entry in the Standards Registry. This is a hard gate, not a soft preference.
+- **Standards Registry (human-curated)** — a qualified engineer has verified which standards are mandatory and advisory for this project type. This is the only source of standards nomination; LLM inference is not permitted here, regardless of how input was provided.
 - **Decline + explain + request route** — if the project type is not registered, the generator refuses, names the unrecognised type, and provides a route to submit a registration request. A silent fallback to inference is prohibited (see Option C rejection below).
 - **Skeleton with nominated standards** — the generated skeleton carries the registry-sourced standards list as explicit placeholders, labelled with each standard's role (compliance framework, test methodology, etc.).
 - **Engineer writes against skeleton** — the engineer drafts the report using the skeleton as a structured prompt. Standards are pre-nominated; the engineer applies judgment to the engineering content.
@@ -126,6 +133,13 @@ inferred rather than curated.
   design + retaining wall on the same site) are not an edge case in NZ practice.
 - This is a correctness and trust constraint, not a performance constraint. Speed-of-
   delivery pressure must not be used to justify a temporary inference fallback.
+- **Input source does not create an inference exception**: the prohibition on LLM
+  inference for standards nomination applies regardless of how input was provided.
+  An engineer uploading an RFP or existing document does not change this — if the
+  system reads the document and nominates standards directly from it without a registry
+  lookup, that is LLM inference and is prohibited. The permitted use of LLM inference
+  is limited to classifying project type and jurisdiction from the input; standards
+  nomination must always go through the registry.
 - **Registry curation obligation created**: the correctness guarantee is bounded by
   the accuracy and currency of the registry. Registry entries must be reviewed when
   referenced standards are updated (e.g., a new NZS edition). The responsible owner
