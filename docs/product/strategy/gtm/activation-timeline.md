@@ -25,7 +25,7 @@ The dependency chain is non-negotiable. Each step gates the next. See `launch-pe
 
 | Approx Date | Action | Owner | Notes |
 |---|---|---|---|
-| Jun 1 | Founder start date. Step 0 confirmed live. | Founder | LinkedIn profile live, known-contact connections only. No public activity. |
+| Jun 2 | Founder start date. Step 0 confirmed live. | Founder | LinkedIn profile live, known-contact connections only. No public activity. |
 | Aug 2026 (approx) | Craig Lewis email/DM sent. | Founder | After Step 2 is active (LinkedIn posts visible) and next Indemnity Matters issue published. Craig Lewis is not a known contact — outreach lands better once the founder has a public signal. See `marketing/content/craig-lewis-email.md`. |
 | Jun 1–7 | Private discovery conversations (max 3 known contacts). | Founder | Discovery framing only. No product demo. Findings fed to Mark if positioning changes. |
 | Jun 1–14 | Waitlist nurture sequence drafted and loaded into email tool. | John | All 3 emails ready before website goes live. Email 1 must auto-trigger on signup. See `marketing/content/waitlist-nurture-sequence.md`. |

@@ -88,3 +88,10 @@ Legend:
   list. A straight-line flowchart is decoration.
 - **Omitting the legend** — using colour or `classDef` without a legend. Colour without
   a legend is noise.
+- **`--` inside node labels** — Mermaid 8.8.0 lexes `--` as an edge token anywhere in
+  the source, including inside `[...]` labels. CLI flags (`--flag`), double-hyphens, and
+  similar constructs will cause a syntax error. Rephrase as plain text.
+- **`\n` in non-rectangular shapes** — newlines inside stadium `([...])` and diamond
+  `{...}` nodes are unreliable in 8.8.0. Use shorter single-line labels in these shapes.
+- **Non-ASCII punctuation in labels** — em dash (`—`), en dash (`–`), and curly quotes
+  break the 8.8.0 tokeniser. Use plain hyphens and straight quotes.

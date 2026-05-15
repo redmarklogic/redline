@@ -30,7 +30,7 @@ Q&A."*
 |---|---|---|
 | Christine Crook | Specialist, liability insurance and companion policies | AON — primary presenter |
 | Gaynor Roberts | Claims Manager | AON |
-| Craig Lewis | Chair | CAS (Consulting Advancement Society); also Principal, Lewis Bradford Consulting Engineers |
+| Craig Lewis | Chair | CAS (Consulting Engineers Advancement Society); also Principal, Lewis Bradford Consulting Engineers |
 | Michelle (Grant?) | Host / Webinar facilitator | Likely Michelle Grant, LGE Consulting Ltd |
 
 **Note on Craig Lewis:** Lewis Bradford Consulting Engineers is a known attendee firm

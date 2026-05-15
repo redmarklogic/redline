@@ -41,7 +41,7 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 > **Never refuse a file upload based on assumed format limitations.**
 > The `source_add` `file` type accepts at minimum: PDF, TXT, audio, and **video (MP4)**.
 > When asked to upload any file, attempt the upload and let NotebookLM reject it if
-> the format is truly unsupported. Do not pre-emptively block the user.
+> the format is truly unsupported. Do not preemptively block the user.
 
 All other tools (27 of 35) are **forbidden**. See
 [`forbidden-tools.md`](forbidden-tools.md) for the full list and rationale.

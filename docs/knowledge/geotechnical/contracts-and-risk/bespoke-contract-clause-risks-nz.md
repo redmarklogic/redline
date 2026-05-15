@@ -7,7 +7,7 @@
 
 ## Summary
 
-In NZ geotechnical practice, "bespoke conditions" means client-written contracts that replace or modify standard industry templates (ACENZ Short Form Conditions of Engagement, CCCS). These contracts are the leading commercial-layer cause of PI (Professional Indemnity) insurance exposure in small and mid-size firms. The CAS (Consulting Advancement Society) QA renewal question was introduced specifically to drive firms toward standard conditions and away from signing bespoke contracts without scrutiny.
+In NZ geotechnical practice, "bespoke conditions" means client-written contracts that replace or modify standard industry templates (ACENZ Short Form Conditions of Engagement, CCCS). These contracts are the leading commercial-layer cause of PI (Professional Indemnity) insurance exposure in small and mid-size firms. The CAS (Consulting Engineers Advancement Society) QA renewal question was introduced specifically to drive firms toward standard conditions and away from signing bespoke contracts without scrutiny.
 
 ## Key Facts
 

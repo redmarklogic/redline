@@ -22,9 +22,9 @@ I've been reading Indemnity Matters carefully as I design Redline, most recently
 
 ## Context Note
 
-Craig Lewis is Chair of CAS (Construction Advisors to Surveyors? — confirm correct expansion). He is the person who could connect the founder to the Indemnity Matters editorial team, and who represents the professional community most likely to encounter the standard-version citation problem in post-event reviews.
+Craig Lewis is Chair of CAS (Consulting Engineers Advancement Society). He is the person who could connect the founder to the Indemnity Matters editorial team, and who represents the professional community most likely to encounter the standard-version citation problem in post-event reviews.
 
-The founder is losing Indemnity Matters access when he leaves his current employer on June 1, 2026. The personal subscription ask is genuine and operationally necessary.
+The founder is losing Indemnity Matters access when he leaves his current employer on May 31, 2026. The personal subscription ask is genuine and operationally necessary.
 
 The email is four sentences. It is not a product pitch. The ask is twenty minutes of conversation, not a partnership, endorsement, or referral.
 
