@@ -99,6 +99,81 @@ complementary, not competing jobs. As AI-drafted reports proliferate, the review
 grows — every AI-generated GBR still needs a quality layer before a senior signs it.
 Redline is positioned downstream of any drafting tool, not against it.
 
+## Compliance Floor / Quality Ceiling Frame *(added 2026-05-14)*
+
+Redline is the compliance floor. The senior engineer is the quality ceiling. Between
+those two sits a documented, machine-verified professional practice record that the
+current market does not have.
+
+**What Redline CAN claim — completely, honestly, unconditionally:**
+
+- It catches citation errors.
+- It catches absent mandatory standards.
+- It catches forbidden language.
+- It catches missing clauses.
+
+**What Redline MUST NOT claim:**
+
+- "Redline ensures your reports are correct."
+- "Redline protects your firm from liability."
+- "A Redline-reviewed report meets the standard of care."
+
+These claims convert Redline from a professional tool into a crutch. The firms that
+believe them are the ones who stop applying engineering judgment — which is precisely
+the misuse scenario. Any marketing or product copy that implies attested correctness
+must be rejected at review.
+
+**The genuine use condition:**
+
+Redline's value is realised only if the time freed from compliance mechanics is
+reinvested into technical review — engineering judgment, calculation checking,
+parameter plausibility. If that time is pocketed as throughput, Redline generates
+false confidence. This condition must appear in onboarding, documentation, and sales
+materials.
+
+## Audit Trail as Professional Practice Record *(added 2026-05-14)*
+
+The audit trail must not output "PASSED." It must output a scoped professional
+practice record:
+
+> "These specific items were checked within scope. Engineering judgment was not in
+> scope and remains the responsibility of the certifying engineer."
+
+This distinction is not fine print — it must be the primary output. A log is not a
+professional practice record.
+
+**Stakeholder alignment:**
+
+| Stakeholder | Interest in the audit trail |
+| --- | --- |
+| PI (Professional Indemnity) insurers | Machine-verified QC data for premium pricing |
+| Engineering NZ | Profession-wide compliance data |
+
+Both interests are served by the same audit trail design. The audit trail serves two
+markets simultaneously without requiring two products.
+
+**Product design rule (binding):**
+
+The audit trail is signed, timestamped, exportable as PDF, structured to survive legal
+discovery, and explicitly scoped. All four properties are required. Absence of any one
+converts the record into a log and forfeits the professional practice framing.
+
+**Attestation scope (non-negotiable):** Any signature on the audit trail attests only
+that Redline's flags were reviewed and resolved — not that the report is compliant,
+not that the engineering is correct, and not that the firm's PI position has improved.
+The scope of attestation must be stated on the face of the document, not buried in
+terms of service. Engineers are trained to be cautious about what they sign. Any
+ambiguity about what is being attested to will produce either refusal to use the
+feature or — worse — a false sense that the attestation covers more than it does.
+
+**What the audit trail does NOT do:** A scoped practice record demonstrates process.
+It does not demonstrate adequate engineering judgment. It will not shield the firm if
+the engineering judgment was deficient and the compliance layer appeared clean.
+Do not allow any product copy, sales language, or onboarding material to imply
+otherwise. This applies specifically to the claim "Redline gives you the audit trail
+your insurer will ask for" — that line is directionally correct but must never be
+stated in a way that implies the audit trail improves the firm's PI position.
+
 **Generic LLM and drafting-tool objection:**
 
 Generic AI is useful for early thinking, drafting assistance, and summarisation. Redline
@@ -125,7 +200,25 @@ navigating this uncertainty: "Redline gives you the audit trail your insurer wil
 for." Audit trail is baked into the product from Day 1 (see `feature-backlog.md`,
 Feature L core subset elevated to Sprint 1).
 
-Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+**Qualification added 2026-05-14 (post-webinar):** The "audit trail your insurer will
+ask for" line is directionally correct but must not be stated as a current underwriting
+requirement — it is a coming one. The CAS/Aon webinar (14 May 2026) confirmed QA is a
+factor in PI renewals but the renewal question was designed for the *commercial* QA
+layer (scope, contracts, senior sign-off), not the *technical content verification*
+layer where AI failure modes live. No NZ insurer is currently requiring a documented
+technical content audit trail at renewal. The correct framing in explanatory and
+discovery content: "Redline creates the audit trail for the technical content check
+the renewal QA question has never had." Do not represent the audit trail as a present
+insurer demand. The insurer's own renewal question is the structural gap Redline
+addresses — not a requirement Redline satisfies.
+
+The bifurcation thesis (affirmative vs exclusion clauses) remains unconfirmed with any
+NZ underwriter. The actual underwriting decision for the CAS scheme sits with NZI
+(the underwriter), not Aon (the broker). No primary research with NZI has been
+conducted as of May 2026.
+
+Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`,
+`docs/research/20260514-ceas-aon-webinar-findings.md`.
 
 ## Disruption Frame (Christensen — see `strategic-bets.md` Bet 6)
 

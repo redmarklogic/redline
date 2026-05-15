@@ -8,6 +8,9 @@ description: When asked to push changes to git, inspect all dirty files and orga
 This skill is applied whenever the user says anything like:
 "push changes", "commit and push", "push to git", or "push my work".
 
+**Do not apply this skill proactively.** Completing a task does not trigger a commit.
+Wait for an explicit user instruction before staging or committing anything.
+
 It prevents the anti-pattern of a single giant commit ("WIP", "save", "misc changes")
 by grouping related changes before anything is staged.
 

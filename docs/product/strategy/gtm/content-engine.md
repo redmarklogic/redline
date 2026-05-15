@@ -14,8 +14,8 @@ acquisition H2, no scaled AI content), Bet 4 (Switzerland-neutral).
 
 0. **Pre-launch period (Apr 18 – May 31).** Founder is employed. LinkedIn content
    preparation (drafting, batching, research) is permitted on personal time. Posting
-   may begin before June 1 — LinkedIn is personal, not employer IP. Product
-   announcements and "launch" posts wait until the product is live (post-June 1).
+   may begin before June 2 — LinkedIn is personal, not employer IP. Product
+   announcements and "launch" posts wait until the product is live (post-June 2).
 1. **No paid spend in H2** (`non-goals.md` GTM #3).
 2. **No scaled AI-generated content** — content quality is a Switzerland-neutral
    trust signal; degraded EEAT (Experience, Expertise, Authority, Trust) signals

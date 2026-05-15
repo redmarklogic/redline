@@ -18,6 +18,30 @@ description: Use when receiving code review feedback, before implementing sugges
 - Code implementation or feature work
 - Debugging (`systematic-debugging`)
 
+## Step 0 — CI Gate (hard stop before anything else)
+
+**STOP. Do not read review threads. Do not implement any fix. Do not resolve any thread.**
+
+Run `procedures/pre-flight.md` now. This is a hard numbered gate, not a suggestion.
+
+The pre-flight procedure:
+1. Gates on CI/CD — polls every minute, up to 10 minutes; fixes PR-owned failures before proceeding
+2. Escalates to your human partner if checks are still running at timeout or if failures are pre-existing
+3. Triages all threads by severity (CI/CD → security → architectural conflicts → correctness → nits)
+4. Applies reviewer trust level before acting on each comment
+
+**The gate applies even when:**
+- All threads are documentation edits ("doc-only" changes fail codespell, custom hooks, and link checks)
+- All threads look trivially simple ("simple" threads can mask CI failures caused by the PR)
+- CI failures appear pre-existing (still escalate — do not self-decide to ignore)
+- The user said "quickly", "just nits", or similar (time pressure is not an exception)
+
+## Procedures
+
+| File | Purpose |
+|---|---|
+| `procedures/pre-flight.md` | CI/CD gate, severity triage, reviewer trust assignment |
+
 ## Overview
 
 Code review requires technical evaluation, not emotional performance.
@@ -26,9 +50,12 @@ Code review requires technical evaluation, not emotional performance.
 
 ## The Response Pattern
 
+**Step 0 runs first, always.** See [Step 0 — CI Gate](#step-0--ci-gate-hard-stop-before-anything-else) above.
+
 ```
 WHEN receiving code review feedback:
 
+0. CI GATE: procedures/pre-flight.md — STOP here until CI passes or escalated
 1. READ: Complete feedback without reacting
 2. UNDERSTAND: Restate requirement in own words (or ask)
 3. VERIFY: Check against codebase reality
@@ -49,6 +76,28 @@ WHEN receiving code review feedback:
 - Ask clarifying questions
 - Push back with technical reasoning if wrong
 - Just start working (actions > words)
+
+## Common Mistakes
+
+**Skipping the CI gate because threads look doc-only or simple**
+
+This is the most common rationalization. Documentation PRs fail CI for exactly the reasons
+that make them seem safe: codespell, custom hooks, and link checks all run on Markdown files.
+"No code changed" does not mean "CI will pass."
+
+Rationalizations that are not exceptions:
+- "The threads are just text edits."
+- "These are nits / cosmetic fixes."
+- "The changes are documentation-only."
+- "I'll check CI after fixing the threads."
+- "The CI failure looks pre-existing."
+
+All of the above require Step 0 to be completed before any thread is touched.
+
+**Treating "pre-existing" failures as someone else's problem**
+
+If CI is failing and the failure looks pre-existing, escalate to your human partner.
+Do not self-decide to proceed. The pre-existing classification might be wrong.
 
 ## Handling Unclear Feedback
 
@@ -157,6 +206,33 @@ When feedback IS correct:
 ```
 
 **Why no thanks:** Actions speak. Just fix it. The code itself shows you heard the feedback.
+
+## Handling Irrelevant Comments
+
+When a comment is not actionable (wrong tech stack, out of scope, preference with no technical merit):
+
+```
+NEVER: Silently resolve the thread
+NEVER: "Thanks for the feedback — resolving this."
+NEVER: ANY gratitude expression before resolving
+
+ALWAYS:
+  1. POST a reply stating exactly why this comment does not apply
+  2. THEN resolve the thread
+```
+
+The reply must be specific — reference the concrete reason (architectural decision, wrong stack, out of PR scope). A vague "this isn't relevant" is not enough.
+
+```
+✅ "Python is this project's documented language choice — not in scope for a PR review.
+    Resolving. Architectural discussions belong outside the PR."
+✅ "This file is intentionally read-only in this context; the pattern you're describing
+    applies to a different layer. Resolving — no change needed."
+
+❌ "Thanks for the feedback, but this isn't relevant."
+❌ [resolve with no reply]
+❌ "Resolving — not applicable."  ← too vague, no stated reason
+```
 
 **If you catch yourself about to write "Thanks":** DELETE IT. State the fix instead.
 

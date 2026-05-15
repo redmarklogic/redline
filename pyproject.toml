@@ -72,7 +72,22 @@ lint.per-file-ignores."tests/**" = [ "INP" ]
 
 [tool.codespell]
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
-ignore-words-list = [ "aci", "ags", "als", "bund", "bunds", "gage", "gir", "linz", "lod", "nd", "skelton", "sme", "te" ]
+ignore-words-list = [
+  "aci",
+  "ags",
+  "als",
+  "bund",
+  "bunds",
+  "constructure",
+  "gage",
+  "gir",
+  "linz",
+  "lod",
+  "nd",
+  "skelton",
+  "sme",
+  "te"
+]
 skip = [ "tests/assets/html/*.html" ]
 
 [tool.deptry]

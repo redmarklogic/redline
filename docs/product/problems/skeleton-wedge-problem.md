@@ -13,6 +13,10 @@ bespoke AI tooling. They must buy or go without.
 Large firms (Tonkin + Taylor, WSP, Beca) build their own AI internally. Small firms
 are the addressable market.
 
+**Secondary user (Phase 2)**: the senior engineer who is the current knowledge bottleneck. The skeleton reduces the volume of junior-engineer interruptions the senior handles — the calls at 9pm, the "which standard applies here?" questions, the skeleton reviews that should not need a senior's involvement. In co-development conversations with senior engineers, lead with this framing: *"fewer interruptions, not less relevance."*
+
+For firm principal conversations (not senior engineer conversations), an additional angle applies: the skeleton encodes institutional knowledge that currently lives in one person's head. When that person leaves — whether to retirement or a competitor — the firm does not start from zero. This framing must not be used with the senior engineer themselves; it can read as "we're making you replaceable," which will produce resistance from someone who has spent 25 years building that expertise.
+
 ## Core Pain
 
 When an intermediate engineer sits down to draft a Geotechnical Baseline Report (GBR) or
@@ -27,6 +31,28 @@ senior staff who are bottlenecked on other reviews.
 The job-to-be-done (per [jtbd.md](../strategy/jtbd.md)): the engineer wants a quality
 layer that flags what a senior reviewer would mark up, so they can ship a draft that
 survives review in fewer rounds.
+
+## Extended Framing — Three Functions of the Skeleton
+
+Today's advisory board discussion (Ron + Graeme, 2026-05-14) established that the skeleton
+generator is not simply a "document structure template" tool. It performs three distinct
+functions during the design phase:
+
+1. **Standards nomination** — identifies which standards are mandatory for the project type
+   (jurisdiction, report type, site conditions). This function is deterministic: standards are
+   drawn from the Standards Registry by rule. **LLM inference of applicable standards is
+   prohibited.** The output must be auditable and traceable to the registry.
+
+2. **Design-phase checklist** — items the engineer must address during site investigation and
+   design before writing begins. This externalises the senior reviewer's pre-drafting mental
+   model and gives the intermediate engineer a structured prompt to work from.
+
+3. **Report structure** — section headings, placeholders, mandatory clauses, and jurisdiction-
+   specific scaffolding that varies by report type.
+
+The three functions are separable but delivered together. A user who only receives the
+report structure without the standards nomination and design checklist gets a formatting
+tool, not a quality layer.
 
 ## Current Alternatives and Their Friction
 

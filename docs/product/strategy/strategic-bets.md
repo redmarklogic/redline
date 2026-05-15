@@ -158,6 +158,39 @@ offering affirmative AI policies; others are inserting absolute exclusion clause
 bifurcation upgrades audit trail from a Phase-2 feature to a Day-1 product requirement.
 GTM angle: "Redline gives you the audit trail your insurer will ask for." Feature L
 (Audit Log) core subset elevated to Sprint 1 accordingly --- see `feature-backlog.md`.
+
+**AI report review — compounding cognitive load** *(added 2026-05-14, Graeme + Ron)*:
+Reviewing AI-generated reports carries a higher per-sentence cognitive load than
+reviewing human-written reports — even when the English is perfect. With a known human
+author, the reviewer applies a trust model built over time and uses pattern recognition
+to allocate attention. With AI, that model does not exist. Errors are not correlated
+with style, confidence, or fluency. The reviewer cannot skim. Every sentence is, in
+effect, from an unknown author with no track record.
+
+The class of errors AI introduces is specifically difficult to catch: fabricated
+citations that look authoritative (e.g., NZS 4407:2015 for SPT — a roading standard),
+correct-range-but-wrong values (plausible SPT N-value, wrong borehole), method-correct
+but context-wrong (valid design method applied to wrong soil classification), and fluent
+interpolation beyond the data (ground conditions between investigation points stated as
+fact, not inference).
+
+**Strategic implication**: as AI-generated report volume increases, the "without
+Redline" baseline worsens — not stays constant. The senior engineer's total review
+time for an AI-written report is higher than for a human-written report. Redline's
+delta therefore grows with AI adoption. This is a compounding value story, not a
+one-time efficiency story. The before/after value framing should reflect three
+scenarios: (1) human-written report, (2) AI-written report without Redline, (3)
+AI-written report with Redline. Scenario 2 is the ceiling that makes the Redline
+pitch largest.
+
+**Scope of the compounding story (important constraint):** Redline eliminates the
+harder compliance mechanics in AI-written reports. It does not reduce the difficulty
+of the engineering judgment layer — that remains harder than for human-written reports
+because the reviewer still cannot apply a trust model to AI output. After Redline
+runs, the senior engineer reviewing an AI-written report is back to doing their real
+job — but their real job is harder when the input was AI-generated. Do not present
+the compounding value story in a way that implies Redline fully normalises an
+AI-written report's review burden back to the human-written baseline. It does not.
 Provenance: `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
 
 **Insurance-industry AI scrutiny signal** *(added 2026-05-10, Ron)*: CEAS Indemnity

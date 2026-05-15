@@ -1,11 +1,11 @@
 # GTM — 2026 H2 Launch Plan
 
-**Status**: Draft v2. **Owner**: Ron. **Period**: Jun 1 → Nov 30, 2026.
+**Status**: Draft v2. **Owner**: Ron. **Period**: Jun 2 → Nov 30, 2026.
 
 **Constraint**: Founder is employed until 2026-05-31. No code, servers, or
-product research on employer hardware/networks/paid time before June 1.
+product research on employer hardware/networks/paid time before June 2.
 Strategy planning, NotebookLM research, and LinkedIn content preparation may
-proceed on personal time. All GTM clocks start June 1.
+proceed on personal time. All GTM clocks start June 2.
 
 ## Motion
 

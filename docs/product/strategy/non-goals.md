@@ -86,7 +86,7 @@ strategy drift.
    factor for GBR drafting.
 4. **Clean break from current employer.** No Redline code, servers, research, or product
    work may touch the current employer's hardware, networks, or paid time. Founder's
-   first official day on Redline is 2026-06-01. Strategy and planning work on personal
+   first official day on Redline is 2026-06-02. Strategy and planning work on personal
    time and hardware is permitted before that date; implementation is not. This is
    both a legal requirement (IP/non-compete protection) and a personal integrity
    commitment.

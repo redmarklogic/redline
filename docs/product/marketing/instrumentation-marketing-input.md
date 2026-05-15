@@ -1,6 +1,6 @@
 # Marketing Instrumentation Input — PostHog Event Taxonomy & Dashboards
 
-**Status**: Input for Mark's discovery phase (June 1-14).
+**Status**: Input for Mark's discovery phase (June 2-14).
 **Owner**: John (marketing perspective). Ron owns the measurement spec at
 `docs/product/strategy/instrumentation.md`; this document supplements it with the
 marketing-specific layer.
@@ -144,7 +144,7 @@ less elegant but functional for H2 volume.
 
 | Kill leg | Numerator event | Denominator | Target |
 |---|---|---|---|
-| Leg 1: Signups | `signup_completed` (cumulative count) | Calendar time (90 days from June 1) | ≥ 50 by Sep 1 |
+| Leg 1: Signups | `signup_completed` (cumulative count) | Calendar time (90 days from June 2) | ≥ 50 by Sep 1 |
 | Leg 2: Outbound response rate | `outbound_responded` | `outbound_sent` | ≥ 5% |
 
 ### PostHog Dashboard: "Bet 1 Kill Criterion Tracker"
@@ -154,7 +154,7 @@ Build one dashboard with these panels:
 1. **Cumulative Signups (line chart)**
    - Insight type: Trends
    - Event: `signup_completed`, cumulative count
-   - Time range: June 1 - Sep 1
+   - Time range: June 2 - Sep 1
    - Add a horizontal reference line at 50 (the kill threshold)
    - Add a diagonal "pace line" showing the required 0.56 signups/day to hit 50 by
      Sep 1 (50 signups / 90 days)

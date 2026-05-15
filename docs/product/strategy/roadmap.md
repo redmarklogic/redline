@@ -11,12 +11,56 @@
 
 ## Context
 
-The founder's first official day is **2026-06-01**. This roadmap covers the first 90 days —
+The founder's first official day is **2026-06-02**. This roadmap covers the first 90 days —
 the period in which Bet 1's kill criterion must either pass or trip.
 
 **Kill criterion for Bet 1**: By 2026-09-01, Redline must have ≥ 50 verified-email signups
 and ≥ 5% outbound response rate from quota-exhausted users. Missing either number kills
 the Free Skeleton Wedge without revival. See [strategic-bets.md](strategic-bets.md).
+
+---
+
+## Gantt Chart
+
+```mermaid
+gantt
+    title Redline — 90-Day Roadmap (May–Sep 2026)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b %Y
+
+    section GTM
+    Firmographic MVP           :active, 2026-05-14, 2026-05-21
+    Firmographic Full          :2026-05-21, 2026-06-04
+    LinkedIn Tier 1 Outreach   :2026-06-02, 2026-06-25
+
+    section Milestones
+    Company Launch             :crit, 2026-06-02, 1d
+    M1 Skeleton Live           :crit, 2026-06-30, 1d
+    M2 60-Day Check            :crit, 2026-07-31, 1d
+    M3 Kill Criterion          :crit, 2026-09-01, 1d
+
+    section Stream 1 — Skeleton
+    Feature A GBR Skeleton     :crit, 2026-06-02, 2026-06-30
+    Feature M Document Parser  :crit, 2026-06-02, 2026-06-30
+    Feature N Standards Store  :2026-06-02, 2026-06-30
+    Platform P Discovery       :2026-06-02, 2026-06-09
+    Platform P Build           :2026-06-09, 2026-06-30
+    Platform P Iterate         :2026-07-01, 2026-07-31
+
+    section Stream 2 — Rule Engine
+    Feature D Parked           :done, 2026-06-02, 2026-06-30
+    Feature G Discovery        :2026-07-01, 2026-07-31
+    Feature G Ship             :2026-08-01, 2026-08-31
+    D Taxonomy-Free Discovery  :2026-07-01, 2026-07-31
+    D Taxonomy-Free Ship       :2026-08-01, 2026-08-31
+    D.pc Discovery             :2026-08-01, 2026-08-31
+
+    section Stream 3 — Taxonomy
+    Pareto 5 Design Types      :active, 2026-05-14, 2026-08-31
+
+    section Stream 4 — Param Rules
+    Parameter Completeness     :2026-08-01, 2026-08-31
+```
 
 ---
 
@@ -37,6 +81,8 @@ the Free Skeleton Wedge without revival. See [strategic-bets.md](strategic-bets.
 | D (taxonomy-free rules) — taboo words, undefined acronyms, ambiguity flags, unit inconsistencies, citation validator, section/structural completeness, passive voice/readability | [Bet 2](strategic-bets.md) | — | Discovery | Ship | 15–20 rules; no taxonomy dependency |
 | Taxonomy Discovery (Graeme) — Pareto 5 design types | [Bet 3](strategic-bets.md) | Ship | Ship | Ship | Started 2026-05. No code dependency — domain research. Output: `design-type-taxonomy-and-parameter-completeness.md` |
 | D.pc — Parameter Completeness Rules | [Bet 2](strategic-bets.md), [Bet 3](strategic-bets.md) | — | — | Discovery | Blocked until D engine scaffold + taxonomy validated |
+| **[GTM] Firmographic spreadsheet — NZ civil engineering** | [Bet 1](strategic-bets.md) | MVP by 21 May → Full by 4 Jun | — | — | Tier 1 list (10–15 active LinkedIn posters) delivered to John before CEAS warm window closes (25 Jun). See [initiative scope](../../initiatives/firmographic-nz-engineering-scope.md) |
+| **[GTM] LinkedIn social selling — Tier 1 outreach** | [Bet 1](strategic-bets.md) | Warm window open | Warm window closes 25 Jun | — | John executes against Tier 1 list. Hypothesis: [ceas-warm-window-linkedin-conversion.md](../../hypotheses/ceas-warm-window-linkedin-conversion.md). Evaluate at close of warm window. |
 
 **Status key**: Ship = committed delivery · Discovery = design/research only · Parked = blocked (see below) · Gate = must-pass milestone · — = out of scope that month
 
@@ -115,10 +161,12 @@ calls) rather than a customer-facing product surface. No sprint commitment.
 | Bet 1 — Free Skeleton Wedge | A, M, M1, M2, M3 (primary bet; kill criterion is the 90-day horizon) |
 | Bet 2 — Pre-Review is Day-1 paid | G (discovery + ship), D (parked → discovery; taxonomy-free rules Sprint 2–3), D.pc (parameter completeness Sprint 3–4), M4 (sprint gate) |
 | Bet 3 — Standards Knowledge Store is the moat | N (MVP ship in Month 1), Taxonomy Discovery (Stream 3, all months), D.pc (Stream 4, Month 3 discovery) |
+| Bet 1 (GTM) — CEAS warm window | Firmographic spreadsheet (pre-M1 delivery), Tier 1 LinkedIn outreach (Month 1 → warm window close 25 Jun). See `strategy/gtm/2026-launch-plan.md`. |
 
 Bets 4–6 are not surfaced in this horizon — they fall beyond the 90-day kill window.
 
 ---
 
 > *Miro is canonical for this artifact. This file is the synthesis.*
-> Last updated: 2026-05-04. Owner: Mark.
+> Last updated: 2026-05-14. Owner: Mark.
+> GTM track added: firmographic spreadsheet + CEAS warm window LinkedIn outreach (Phase 1 activity, re-classified from Phase 2+ by Ron, 2026-05-14).

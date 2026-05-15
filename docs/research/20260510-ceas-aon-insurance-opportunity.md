@@ -1,8 +1,9 @@
 # CEAS/Aon Insurance Opportunity -- Market Signal and Engagement Plan
 
 **Date**: 2026-05-10
-**Source**: CEAS Indemnity Matters Issue 88 (April 2026); CEAS/Aon webinar invitation (May 2026)
-**Status**: Active -- webinar registered, coffee meeting to be scheduled post-June 1
+**Updated**: 2026-05-14 (post-webinar debrief)
+**Source**: CEAS Indemnity Matters Issue 88 (April 2026); CEAS/Aon webinar (14 May 2026, recorded and transcribed)
+**Status**: Webinar complete. Coffee meeting with Christine Crook: OFF (see below). Full intelligence: `docs/research/20260514-ceas-aon-webinar-findings.md`.
 
 ---
 
@@ -109,12 +110,19 @@ It creates a documented audit trail -- a record of what was checked, what was fl
 and what the engineer did about it.
 
 The positioning line we have been developing is: **"Redline gives you the audit trail
-your insurer will ask for."** *[Internal strategy -- not validated with any insurer.]*
-The CEAS newsletter -- where the insurer asks engineers about AI and report accuracy --
-is a directional signal that this concern is real. But the newsletter asking a question
-is not the same as an insurer requiring an audit trail. The coffee meeting is needed to
-establish whether the positioning line reflects actual underwriting practice or is
-merely plausible.
+your insurer will ask for."** *[Internal strategy -- partially validated by webinar,
+not yet confirmed by underwriter.]*
+
+The webinar confirmed that QA processes are a factor in renewal underwriting and have
+been for six to eight years. However, the renewal QA question was designed for the
+*commercial* QA layer (scope discipline, contract conditions, senior sign-off) -- not
+for the *technical content verification* layer where AI failure modes actually live.
+The positioning line is directionally correct but must not be stated as a current
+underwriting requirement. The correct frame: Redline creates the audit trail for the
+technical content check the renewal QA question has never had -- and won't need to ask
+for if it's already there. The coffee meeting with Aon is no longer the designed test
+(see below); the conversation with NZI (the actual underwriter) is the test that
+matters.
 
 ### Additional signals from the newsletter
 
@@ -144,35 +152,74 @@ merely plausible.
 
 ## The engagement plan
 
-### Step 1: Webinar
+### Step 1: Webinar — COMPLETE (2026-05-14)
 
-Attend the webinar. Take notes. Note the speaker's name. Ask one genuine question
-during the session to establish name recognition. The question should be about the
-webinar content (insurance), not about AI or startups.
+Attended. The webinar ran as planned — presentation from Christine Crook (Aon,
+specialist in PI and liability for professional service firms), Q&A with Craig Lewis
+(CAS Chair) and Gaynor Roberts (Aon Claims Manager). Approximately 100 attendees from
+NZ civil engineering firms.
 
-**Suggested question**: "For small firms, how do PI renewal conversations typically
-address the firm's internal QA processes -- is that a factor in underwriting, or is it
-mostly about claims history?"
+Key intelligence extracted — full record at
+`docs/research/20260514-ceas-aon-webinar-findings.md`. Summary of findings
+most relevant to the engagement plan:
 
-This is a legitimate attendee question. It also seeds the exact topic I want to explore
-over coffee.
+**Q5 (QA as renewal factor)**: Confirmed by both Christine and Craig.
+QA has been in CAS renewal documentation for 6--8 years, originally to drive discipline
+around scope, conditions, and internal review. Firms are asked to "outline basic QA
+measures." Craig acknowledged firms can "easy copy last year's answer" -- i.e., it
+has become a checkbox, not an audit.
 
-**Rules for the webinar**:
-- Do not mention AI, Redline, or startups
-- The webinar comment is the handshake; the coffee is the conversation
+**Q6 (AI claims in engineering)**: Gaynor Roberts: "Not seeing it on the engineers
+book -- but we're expecting to." Lawyers are the current primary target (fabricated
+case law). Craig's framing: "Treat AI like a bright, very keen young graduate. The buck
+stops with whoever's signing the producer statements."
 
-### Step 2: Coffee meeting (after June 1)
+**Q10 (favorable underwriting for AI QA processes)**: Craig: "Would have to be a
+fairly good argument put forward." Christine: "AI is an emerging risk -- part of the
+evolution of how underwriters approach risk management." Both pointed to NZI (the
+actual underwriter, not Aon) as the decision-maker for any underwriting change.
 
-Email the speaker and ask for 30 minutes over coffee.
+**Key structural intelligence (Graeme-validated)**: The CAS renewal QA question
+operates at the commercial layer (scope, conditions, contracts). The technical content
+verification layer -- whether AI-generated report text was verified for hallucinations,
+category errors, and warranty language drift -- is structurally invisible to the
+renewal question. No existing NZ mechanism bridges this gap. This is the defensible
+product territory.
 
-**The frame**: "I'm building a quality layer for geotechnical reports -- a tool that
-helps engineers catch routine errors before senior review. I'm not an engineer; I was
-the data scientist inside a geotech team for 3.5 years. I want to understand the
-insurance side so the product genuinely serves firms."
+### Step 2: Coffee meeting with Christine Crook -- OFF
 
-This is honest, stays within my credibility boundaries (I do not claim to be an
-engineer), and positions me as someone whose product could reduce claims -- which is
-aligned with Aon's interests.
+Decision date: 2026-05-14.
+
+Reason: Christine's role is at Aon, the broker -- not NZI, the underwriter.
+Favorable underwriting treatment for AI QA (the core hypothesis to test) would be
+decided by NZI, not Aon. Christine's answer to Q10 was a carefully hedged response
+pointing to NZI. A coffee meeting at this stage would not produce the intelligence
+needed to confirm or refute the bifurcation thesis -- Christine does not hold a firm
+underwriting position and explicitly deferred to NZI on the core question.
+
+The conversation that matters is with NZI. That conversation requires case data and
+a validated risk-reduction argument, neither of which exists at the current stage.
+
+### Step 3: Craig Lewis relationship -- active, post-June
+
+Craig Lewis is the CAS Chair and the most strategically relevant contact from the
+webinar. Two purposes:
+
+1. **Indemnity Matters access**: The user loses institutional access to Indemnity
+   Matters upon leaving their current employer (post-June 1). A personal or founder
+   subscription via a relationship with Craig is the access strategy.
+
+2. **Member survey intelligence**: Craig confirmed at the webinar that CAS received
+   member responses to the April newsletter AI question ("How open are you with your
+   clientele about your use of AI?") and is discussing at a board meeting the week of
+   May 19. Findings will appear in a future Indemnity Matters. This is primary market
+   research. Watch for the issue.
+
+**Action**: Email Craig Lewis this week (before the board meeting) as a founder
+introduction. Four sentences maximum. Do not mention the webinar recording. Keep it
+clean: building a quality layer for geotechnical reports, losing institutional access
+to Indemnity Matters after June 1, would like to discuss a personal subscription or
+founding relationship with CAS.
 
 ### Five questions for the coffee meeting (priority order)
 
@@ -268,14 +315,87 @@ newsletter:
 The blog post requires Graeme's sign-off on any domain-technical claims before
 publishing.
 
+## Webinar Debrief — 14 May 2026
+
+**Status**: Complete. Video uploaded to NotebookLM (notebook `12dc5e06-4f77-4577-abca-758017e26675`).
+
+**CRITICAL CONSTRAINT — No public use of webinar material.** The webinar host
+explicitly stated at the opening: *"We do ask that there's no recordings or AI notetakers
+in these webinars to allow for free conversation and discussion in the Q&A."* The video
+exists for private internal intelligence only. No quotes, paraphrases, or references to
+the webinar Q&A may appear in any public content (blog posts, LinkedIn, website).
+The presentation content may only be referenced if independently corroborated from
+public sources (e.g., the newsletter, public insurance documentation).
+
+**Presenters identified:**
+- **Christine Crook** (AON) — specialist in liability insurance and companion policies for
+  professional service firms, 20+ years of involvement with CAS. Primary presenter.
+- **Gaynor Roberts** (AON) — Claims Manager. Answered the AI claims question.
+- **Craig Lewis** (Chair of CAS; Lewis Bradford Consulting Engineers) — Co-host for Q&A.
+- **Michelle** — Host (likely Michelle Grant, LGE Consulting Ltd, based on attendee list).
+
+**Format:** ~100 attendees, audience mics muted. Part 1: presentation by Christine Crook.
+Part 2: live Q&A, questions read by Michelle from the online forum.
+
+**Key Q&A findings relevant to Redline (internal use only):**
+
+1. **QA IS a factor in PI underwriting (Q5 confirmed).** Christine Crook: *"Yes, it is
+   definitely a factor in underwriting... we do try and extract some of those questions
+   from you at renewal time as well."* Craig Lewis added it has been part of renewal
+   documentation for 6-8 years. **This validates the bifurcation hypothesis directionally.**
+   QA documentation is asked about at renewal — not just claims history.
+
+2. **No AI claims in engineering yet, but expected (Q6).** Gaynor Roberts (Claims Manager):
+   *"No, we're not [seeing AI claims], but we're expecting to... we haven't seen any AI
+   claims [even across other schemes]. The most frequent claims would be against lawyers."*
+   **Signal: Redline is ahead of the wave.** The urgency is real but not yet a claims
+   reality in the engineering book.
+
+3. **AI QA favorable treatment — deflected, not denied (Q10).** Craig Lewis: *"I think
+   that would be something that NZI would need to consider... would have to be a fairly
+   good argument put forward."* Christine Crook: *"AI is really an emerging risk... it's
+   part of the evolution around risk management."* This is the public-stage non-answer
+   Ron predicted. The coffee meeting remains the path to a candid answer.
+
+4. **Craig Lewis is the coffee meeting target.** As CAS Chair and practising engineer
+   (Lewis Bradford Consulting Engineers), he is both the Q&A co-host and a practitioner.
+   The post-webinar email is to Christine Crook (AON) per the original plan, but Craig
+   Lewis is a secondary warm contact who can validate the practitioner side of Q4.
+
+5. **Newsletter follow-up signal.** Craig Lewis said: *"There was a follow-up [asking]
+   about the responses coming in after the April newsletter. We have a board meeting
+   next week, so we'll follow up."* The AI disclosure question from Issue 88 is
+   generating member responses. This confirms it is live and unresolved in the community.
+
+**Questions asked in the public webinar that were reserved for coffee:**
+- Q5 (QA at renewal): Asked publicly. Received a confirming answer — bifurcation is real.
+  Do not re-ask verbatim in the coffee meeting. Reframe as: *"How does that documentation
+  actually look? Is 'we use seniors to review everything' still sufficient, or are
+  underwriters looking for something more systematic?"*
+- Q10 (AI QA favorable treatment): Asked publicly. Received the expected deflection.
+  In the coffee meeting, reframe as: *"When a firm has a written QA checklist with a
+  sign-off trail — not just 'seniors review everything' — does that show up anywhere
+  in the renewal conversation, or is it essentially invisible to underwriting?"*
+
+**Coffee meeting — revised approach:**
+- Email hook: *"I was at your webinar last week — thank you for a genuinely informative
+  session. I had a follow-up I didn't want to ask in the group setting."*
+- Questions 1, 2, 3, and 5 from the original plan remain valid (not asked publicly).
+- Questions 4 and 10 reframed as above.
+- Do not contact before June 2 (company launch date).
+
+**See full intelligence extract:** `docs/research/20260514-ceas-aon-webinar-intelligence-extract.md`
+
+---
+
 ## Key dates
 
 | Date | Event |
 |---|---|
-| May 2026 (TBD) | CEAS/Aon webinar -- attend, ask one question, note speaker |
-| June 1 | Start as independent founder |
-| Early June | Email speaker, request coffee meeting |
-| Early June | Publish Big 5 "Problems" blog post (before conference) |
+| 14 May 2026 | CEAS/Aon webinar — COMPLETE. Video in NotebookLM. See debrief above. |
+| June 2 | Company officially launches (first day on Redline) |
+| Early June | Email Christine Crook, request coffee meeting (post-webinar framing) |
+| Early June | Publish Big 5 "Problems" blog post (before conference — newsletter sources only, no webinar material) |
 | 22-23 July | CEAS Members' Conference, Te Pae Christchurch (evaluate attending as individual, not sponsor) |
 
 ## Provenance
@@ -285,3 +405,4 @@ publishing.
 - Persona impact ($60k Tribunal): Mark (product), 2026-05-10
 - Content brief: John (marketing), 2026-05-10
 - Engagement plan: Ron (strategy), 2026-05-10
+- Webinar debrief: Founder + Ron (strategy), 2026-05-14

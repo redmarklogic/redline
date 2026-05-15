@@ -78,3 +78,35 @@ If you are committing to this architectural decision, ensure the following const
 - [ ] **Fallback Mechanism:** Define what happens when `MAX_RETRIES` is hit. Do you return the best draft to the user with a warning flag? Do you fail gracefully and return an error?
 - [ ] **Checker Sovereignty:** The Checker must have a deterministic way of signalling approval. Instruct the Checker to output a specific system token (e.g., `<STATUS: APPROVED>`) when no rectifications are needed, so your application layer knows exactly when to break the loop.
 - [ ] **Temperature Tuning:** Set the Maker to a slightly higher temperature (e.g., 0.4–0.7) to allow for creative problem-solving, but set the Checker to a temperature of `0.0` to ensure strictly deterministic, objective evaluations.
+
+---
+
+## 7. The Domain-Expert Gate (Redline-Specific Extension)
+
+For domain-specific use cases in Redline — where the system's output carries geotechnical domain claims — the AI Maker-Checker loop is insufficient on its own. The LLM Checker can confirm that an output is internally consistent and matches the criterion, but it cannot confirm that the domain claim in the user-facing explanation is factually correct.
+
+A third gate is required, held by a human domain expert (Graeme), that sits outside the automated loop.
+
+### Gate 3 — Domain Accuracy of User-Facing Explanation
+
+**What it checks**: After the Checker has issued a `PASS` and the test suite confirms the detection criterion is met, Graeme reviews the user-facing explanation — the text the system shows to the practitioner explaining *why* the standard citation was flagged. This explanation must be domain-accurate, not merely correct-in-output-label.
+
+**Why the LLM Checker cannot hold this gate**: A detection LLM can output the correct flag ("NZS 4431:1989 is outdated") via reasoning that is domain-confused ("flagged because 1989 is before 2000"). If that confused reasoning surfaces in user-facing language, the explanation shipped to a practitioner carries a false domain claim. The AI Checker does not detect this — it sees a correct output label and issues `PASS`.
+
+**Gate ownership**: Graeme (Principal Geotechnical Engineer). Blocking — the use case does not ship until Gate 3 clears.
+
+**What Gate 3 does not replace**: Mark's pass/fail confirmation against the product criterion is separate. Both gates must clear independently before release.
+
+**Interaction with the loop:**
+
+```
+Maker → Checker loop (automated, iterative)
+                    ↓
+         Mark: pass/fail against criterion
+                    ↓
+         Graeme: domain accuracy of user-facing explanation  ← blocking
+                    ↓
+         Use case approved for release
+```
+
+See `docs/product/prds/acceptance-test-ownership-policy.md` for the full RACI and workflow sequences across Case 1 (outdated version), Case 2 (fabricated standard), and Case 3 (wrong jurisdiction).
