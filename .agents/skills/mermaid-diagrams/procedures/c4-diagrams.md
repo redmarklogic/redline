@@ -98,7 +98,7 @@ flowchart TD
     engineer["<b>Geotechnical Engineer</b> <br/> [Person] <br/> Authors and reviews reports"]:::person
 
     subgraph boundary["Redline [Software System]"]
-        addin["<b>Word Add-in</b> <br/> [Container: TypeScript] <br/> Provides compliance UI <br/> inside Microsoft Word"]:::container
+        taskpane["<b>Word Add-in</b> <br/> [Container: TypeScript] <br/> Provides compliance UI <br/> inside Microsoft Word"]:::container
         api["<b>API</b> <br/> [Container: Python / FastAPI] <br/> Orchestrates compliance <br/> checks and returns findings"]:::container
         db[("
 <b>Standards Registry</b>
@@ -107,8 +107,8 @@ Stores geotechnical
 standards")]:::db
     end
 
-    engineer -->|"Triggers compliance check <br/> [Microsoft Word]"| addin
-    addin -->|"Sends report, receives findings <br/> [HTTPS / JSON]"| api
+    engineer -->|"Triggers compliance check <br/> [Microsoft Word]"| taskpane
+    taskpane -->|"Sends report, receives findings <br/> [HTTPS / JSON]"| api
     api -->|"Reads applicable standards <br/> [SQL / TCP]"| db
 
     classDef person    fill:#08427b,color:#fff,stroke:#052e56
