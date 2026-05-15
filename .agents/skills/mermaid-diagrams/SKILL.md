@@ -100,6 +100,34 @@ Do not add a diagram when:
 - Prefer `flowchart` over `graph` (both work in 8.8.0, but `flowchart` is the modern keyword)
 - Use `stateDiagram-v2` over `stateDiagram` for state diagrams
 
+### Line Breaks in Labels
+
+Use `<br/>` to force a line break inside any node or message label. It is the most
+reliable method across all diagram types in Mermaid 8.8.0.
+
+**Always wrap labels in double quotes when using `<br/>`** — this prevents the parser
+from misinterpreting the `<` and `>` characters and avoids syntax errors:
+
+```
+graph TD
+    A["Line One <br/> Line Two"]
+```
+
+- **Do not use `\n` in flowchart node shapes.** It fails silently in most shape contexts.
+  Exception: in sequence diagrams (8.8.0 only), `\n` inside quoted strings is also
+  valid — but `<br/>` is still preferred for consistency.
+- **If you see the literal text `<br/>` rendered inside a box** instead of a line break,
+  the `htmlLabels` configuration is off. For `<br/>` to work in flowcharts, Mermaid must
+  be initialised with `htmlLabels: true` (the default in most integrations). If you cannot
+  control the initialisation, use short labels without breaks and move overflow text into
+  the accompanying prose.
+
+| Context | `<br/>` | `\n` |
+|---|---|---|
+| Flowchart node shapes | Yes (requires `htmlLabels: true`) | No |
+| Sequence diagram messages and notes | Yes | Yes (inside quoted strings) |
+| Gantt, state, ERD labels | Avoid — use short labels instead | No |
+
 ### Node and Label Rules
 
 - Use descriptive labels, not single letters: `A[Parse Input]` not `A`
