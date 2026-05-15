@@ -74,8 +74,23 @@ inferred rather than curated.
   the Skeleton Generator can serve it. There is no graceful degradation — the generator
   must decline to produce a skeleton for unregistered types rather than fall back to
   inference.
+- When the generator declines, it must explain why and provide a path forward. A blank
+  refusal will produce confusion and user abandonment. The minimum acceptable decline
+  response: name the unregistered type, explain that deterministic standards nomination
+  is not yet available for it, and provide a route to request registration. This UX
+  path must be defined before Phase 1 ships — hybrid project types (e.g., foundation
+  design + retaining wall on the same site) are not an edge case in NZ practice.
 - This is a correctness and trust constraint, not a performance constraint. Speed-of-
   delivery pressure must not be used to justify a temporary inference fallback.
+- **Registry curation obligation created**: the correctness guarantee is bounded by
+  the accuracy and currency of the registry. Registry entries must be reviewed when
+  referenced standards are updated (e.g., a new NZS edition). The responsible owner
+  and review cadence for registry curation must be defined before the Skeleton
+  Generator ships. A wrong entry in the registry produces a wrong-but-confident output
+  — this may be harder to detect than a wrong LLM inference, because it carries the
+  authority of "human-curated."
+  *Owner to be assigned. Cadence: at minimum, review triggered by any Standards
+  Knowledge Store update.*
 
 ---
 

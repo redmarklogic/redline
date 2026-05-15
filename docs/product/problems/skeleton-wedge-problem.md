@@ -13,7 +13,9 @@ bespoke AI tooling. They must buy or go without.
 Large firms (Tonkin + Taylor, WSP, Beca) build their own AI internally. Small firms
 are the addressable market.
 
-**Secondary user (Phase 2)**: the senior engineer who is the current knowledge bottleneck. The skeleton serves as a knowledge externalisation tool — capturing what the senior engineer holds in memory (applicable standards, mandatory clauses, jurisdiction-specific requirements) so that the firm is not dependent on any one person. This framing is particularly acute when a senior engineer is approaching retirement.
+**Secondary user (Phase 2)**: the senior engineer who is the current knowledge bottleneck. The skeleton reduces the volume of junior-engineer interruptions the senior handles — the calls at 9pm, the "which standard applies here?" questions, the skeleton reviews that should not need a senior's involvement. In co-development conversations with senior engineers, lead with this framing: *"fewer interruptions, not less relevance."*
+
+For firm principal conversations (not senior engineer conversations), an additional angle applies: the skeleton encodes institutional knowledge that currently lives in one person's head. When that person leaves — whether to retirement or a competitor — the firm does not start from zero. This framing must not be used with the senior engineer themselves; it can read as "we're making you replaceable," which will produce resistance from someone who has spent 25 years building that expertise.
 
 ## Core Pain
 

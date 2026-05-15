@@ -55,8 +55,15 @@ honest, transparent positioning.
 **Big 5 category**: Best of (reframe — "here's the right job, and it's not what
 you're spending the time on")
 
-**Target reader**: Technical Director or QA lead who has felt the pain of a senior
-engineer being tied up in documentation checking before a report can go out.
+**Target reader**: Technical Director or QA lead who has watched a senior engineer
+choose to spend their time on documentation checking before a report can go out —
+and either didn't notice, or didn't feel they could change it.
+
+*Framing note (Ron, 2026-05-14):* Do not present the senior engineer as a victim of
+bureaucracy. The dynamic is systemic underdelegation — the senior engineer is choosing
+to do this work, partly from billing pressure, partly from professional identity. An
+article that names this honestly will land better with a self-aware principal than one
+that sympathises with the senior engineer's burden.
 
 **Core argument**:
 
@@ -304,3 +311,104 @@ catch if they weren't checking citations?"
 | Build `output/mockups/review-time-before-after.html` | Engineering | Independent |
 | Draft Article 1 ("What is your senior engineer actually for?") | John | After Graeme sign-off on 55/45 |
 | Pass Article 1 draft through `marketing-ai-content-review` | John | After draft complete |
+
+---
+
+## Section D — LinkedIn Drafts (review-time cognitive load gem)
+
+**Source**: Graeme (Principal Geotechnical Engineer, 25+ years), advisory board session,
+14 May 2026. Quotes are verbatim from the session note. No domain claims have been added
+or extrapolated.
+
+**AI Content Review status**: No fabricated domain claims. No 55/45 figure. No Redline
+CTA. All technical observations sourced directly from Graeme's verbatim quote.
+No Graeme sign-off gate applies — this content does not make independent domain claims;
+it attributes the observation directly to its source. Confirm with Graeme before
+publishing that he is comfortable being quoted in this form (even without naming him).
+
+**Word-count target**: Under 200 words per post.
+
+---
+
+### Version A — Graeme's voice (engineer speaking to engineers)
+
+> **Hook**
+>
+> When I review a report I know was AI-assisted, I slow down. Materially.
+
+> **Body**
+>
+> The errors don't announce themselves. They're not in the clumsy sentences or the
+> uncertain tone — those are gone. Every sentence reads as if it could be right.
+>
+> The categories that catch me: fabricated citations that look authoritative. Values
+> in the correct range but wrong for this site. Methods applied correctly — context
+> wrong. Fluent extrapolation beyond the data. None of these are detectable at the
+> sentence level. All of them require cross-referencing outside the document.
+>
+> The cognitive cost of reviewing AI-assisted work is not lower than reviewing human
+> work. It's higher. With a human author I apply a trust model built from experience.
+> With AI output I have none. Every sentence starts from zero.
+
+> **Closing question**
+>
+> Is anyone else finding this? The confidence interval on AI text is invisible —
+> and that changes everything about what careful review actually requires.
+
+*Estimated word count: ~130 words.*
+
+---
+
+### Version B — Founder's voice (founder building in public, observational)
+
+> **Hook**
+>
+> A senior geotechnical engineer — 25 years of practice — told me something I keep
+> returning to.
+
+> **Body**
+>
+> He said that when he reviews a report he knows was AI-assisted, he can't skim.
+> Not because the writing is bad. Because the errors aren't correlated with anything
+> visible: not confidence, not fluency, not style. Every sentence has to be treated
+> as if from an unknown author.
+>
+> He named four categories that worry him most: fabricated citations that look
+> authoritative. Values in the correct range but wrong for the site. Methods applied
+> correctly — context wrong. Fluent extrapolation beyond the data.
+>
+> The observation that stayed with me: these failure modes are indistinguishable from
+> competence at the sentence level. Detection requires cross-referencing outside the
+> document. AI output doesn't reduce review burden. For someone who actually
+> understands the subject, it may increase it.
+
+> **Closing question**
+>
+> If that's right — what does responsible AI-assisted review actually look like
+> in practice?
+
+*Estimated word count: ~145 words.*
+
+---
+
+### Recommendation: publish Version A first
+
+**Reason**: Engineers trust practitioners before they trust founders. Version A puts the
+authoritative observation in the mouth of the person who has earned the right to make
+it. The hook ("I slow down. Materially.") is a practitioner confession — it lands as
+honest, not promotional. The closing question invites peer dialogue.
+
+Version B has value, but it reads as a founder vouching for a practitioner's credibility.
+That is a weaker signal than the practitioner speaking directly. There is also a subtle
+risk: framing this as "someone told me" can read as borrowed authority rather than earned
+insight, and engineers will notice.
+
+Sequencing: publish Version A to establish the insight as practitioner-sourced. If
+engagement is strong, Version B can follow as a founder's reflection on the reaction —
+"An engineer I spoke with shared this last week. Here's what it means for how we built
+Redline." That second post earns its Redline mention because Version A has already done
+the thought-leadership work.
+
+**Pre-publication gate**: Confirm with Graeme that he is comfortable being quoted, even
+if not named. These are strong claims attributed to a real person. His verbal sign-off
+is a minimum before either version goes out.
