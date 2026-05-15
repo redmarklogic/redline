@@ -52,13 +52,21 @@ share the same failure mode.
 
 ```mermaid
 flowchart LR
+    S[Engineer requests\nskeleton] --> A
     A[Claude infers\nstandards] --> B[Claude writes\nskeleton]
     B --> C[Claude confirms\ncitations]
-    C -->|Same failure mode| A
+    C -->|No external anchor\nloop never breaks| A
+    style S fill:#f3f4f6,stroke:#6b7280
     style A fill:#fecaca,stroke:#dc2626
     style B fill:#fecaca,stroke:#dc2626
     style C fill:#fecaca,stroke:#dc2626
 ```
+
+- **Engineer requests skeleton** — a project type and jurisdiction are provided as input, same as Option B. From this point the paths diverge.
+- **Claude infers standards** — the LLM nominates which standards apply based on its training data. No human has verified this nomination; it may be correct, outdated, or hallucinated.
+- **Claude writes skeleton** — the skeleton is drafted against the inferred standards list. Errors in nomination propagate silently into structure and placeholders.
+- **Claude confirms citations** — the same model that nominated the standards is used to verify them. Shared failure modes are invisible to the checker; a confidently wrong inference passes review.
+- **No exit** — there is no external anchor that can break this cycle. Consistent errors recirculate undetected. This is not an edge case; it is the default behaviour.
 
 The Standards Registry is the deterministic anchor that severs this loop. It represents
 a human commitment: a qualified engineer has verified that these standards apply to this
