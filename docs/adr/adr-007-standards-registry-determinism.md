@@ -48,9 +48,37 @@ is not broken — the model nominates, the model writes, the model confirms. Con
 errors become invisible to the checker because both the generation and the verification
 share the same failure mode.
 
+**The adversarial loop (Option A — rejected):**
+
+```mermaid
+flowchart LR
+    A[Claude infers\nstandards] --> B[Claude writes\nskeleton]
+    B --> C[Claude confirms\ncitations]
+    C -->|Same failure mode| A
+    style A fill:#fecaca,stroke:#dc2626
+    style B fill:#fecaca,stroke:#dc2626
+    style C fill:#fecaca,stroke:#dc2626
+```
+
 The Standards Registry is the deterministic anchor that severs this loop. It represents
 a human commitment: a qualified engineer has verified that these standards apply to this
 project type in this jurisdiction. That commitment cannot be delegated to inference.
+
+**The registry-anchored flow (Option B — selected):**
+
+```mermaid
+flowchart TD
+    A[Project type\n+ jurisdiction] --> B{Registered?}
+    B -->|Yes| C[Standards Registry\nhuman-curated]
+    B -->|No| D[Decline + explain\n+ request route]
+    C --> E[Skeleton with\nnominated standards]
+    E --> F[Engineer writes\nagainst skeleton]
+    F --> G[Redline checks\ncitations]
+    G -->|Registry is\nthe shared anchor| C
+    style C fill:#dcfce7,stroke:#16a34a
+    style D fill:#fef9c3,stroke:#ca8a04
+    style G fill:#dbeafe,stroke:#2563eb
+```
 
 Option C was rejected because a silent LLM fallback recreates the same loop for any
 project type not yet in the registry, without alerting the user that the nomination was
