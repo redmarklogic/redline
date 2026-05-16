@@ -20,8 +20,10 @@ name: Agent Topology Sync
 on:
   workflow_dispatch:
 
-# No GITHUB_TOKEN permissions needed — all API calls use the user PAT secret.
-permissions: {}
+# Allow issue creation when falling back to github.token.
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   trigger:
@@ -31,7 +33,8 @@ jobs:
     steps:
       - name: Create topology sync issue and assign to Copilot
         env:
-          GH_TOKEN: ${{ secrets.GH_COPILOT_PAT }}
+          GH_TOKEN: ${{ secrets.GH_COPILOT_PAT || github.token }}
+          GH_COPILOT_PAT: ${{ secrets.GH_COPILOT_PAT }}
           REPO: ${{ github.repository }}
         run: |
           cat > /tmp/trigger.py << 'PYEOF'
@@ -39,6 +42,7 @@ jobs:
 
           today = datetime.date.today().isoformat()
           repo = os.environ["REPO"]
+          has_pat = bool(os.environ.get("GH_COPILOT_PAT", ""))
           summary_file = os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null")
 
           issue_body = (
@@ -85,16 +89,19 @@ jobs:
               f"`chore(people): Agent Topology Sync — {today}`"
           )
 
-          payload = {
+            payload = {
               "title": f"Agent Topology Sync — {today}",
               "body": issue_body,
               "assignees": ["copilot-swe-agent[bot]"],
           }
 
+            if not has_pat:
+              payload.pop("assignees", None)
+
           with open("/tmp/payload.json", "w") as fh:
               json.dump(payload, fh)
 
-          result = subprocess.run(
+            result = subprocess.run(
               [
                   "gh", "api",
                   "--method", "POST",
@@ -105,6 +112,22 @@ jobs:
               ],
               capture_output=True,
           )
+
+              if result.returncode != 0 and has_pat and "copilot-swe-agent[bot]" in result.stderr.decode():
+                payload.pop("assignees", None)
+                with open("/tmp/payload.json", "w") as fh:
+                  json.dump(payload, fh)
+                result = subprocess.run(
+                  [
+                    "gh", "api",
+                    "--method", "POST",
+                    "-H", "Accept: application/vnd.github+json",
+                    "-H", "X-GitHub-Api-Version: 2022-11-28",
+                    f"/repos/{repo}/issues",
+                    "--input", "/tmp/payload.json",
+                  ],
+                  capture_output=True,
+                )
 
           if result.returncode != 0:
               print(result.stderr.decode(), file=sys.stderr)
@@ -117,13 +140,26 @@ jobs:
           print(f"Issue #{number} created and assigned to Copilot Cloud Agent.")
           print(f"Track progress: {url}")
 
+            assignment_status = "copilot-swe-agent[bot] assigned"
+            note = ""
+            if not has_pat:
+              assignment_status = "not assigned"
+              note = (
+                "GH_COPILOT_PAT is not configured. The issue was created with github.token, "
+                "but Copilot bot assignment requires the user PAT secret. "
+                "Configure GH_COPILOT_PAT to enable automatic assignment."
+              )
+
           with open(summary_file, "a") as fh:
               fh.write(f"## Topology Sync Triggered\n\n")
               fh.write(f"| Field | Value |\n")
               fh.write(f"|-------|-------|\n")
               fh.write(f"| Issue | [#{number}: {data['title']}]({url}) |\n")
+              fh.write(f"| Assignment | {assignment_status} |\n")
               fh.write(f"| Date | {today} |\n\n")
               fh.write("Copilot Cloud Agent is working. ")
               fh.write("Review the PR it opens when finished.\n")
+              if note:
+                fh.write(f"\n> {note}\n")
           PYEOF
           python3 /tmp/trigger.py
