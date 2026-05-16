@@ -89,19 +89,27 @@ jobs:
               f"`chore(people): Agent Topology Sync — {today}`"
           )
 
-            payload = {
+          payload = {
               "title": f"Agent Topology Sync — {today}",
               "body": issue_body,
               "assignees": ["copilot-swe-agent[bot]"],
           }
 
-            if not has_pat:
+          assignment_status = "copilot-swe-agent[bot] assigned"
+          note = ""
+          if not has_pat:
               payload.pop("assignees", None)
+              assignment_status = "not assigned"
+              note = (
+                  "GH_COPILOT_PAT is not configured. The issue was created with github.token, "
+                  "but Copilot bot assignment requires the user PAT secret. "
+                  "Configure GH_COPILOT_PAT to enable automatic assignment."
+              )
 
           with open("/tmp/payload.json", "w") as fh:
               json.dump(payload, fh)
 
-            result = subprocess.run(
+          result = subprocess.run(
               [
                   "gh", "api",
                   "--method", "POST",
@@ -113,21 +121,27 @@ jobs:
               capture_output=True,
           )
 
-              if result.returncode != 0 and has_pat and "copilot-swe-agent[bot]" in result.stderr.decode():
-                payload.pop("assignees", None)
-                with open("/tmp/payload.json", "w") as fh:
+          if result.returncode != 0 and has_pat and "copilot-swe-agent[bot]" in result.stderr.decode():
+              payload.pop("assignees", None)
+              with open("/tmp/payload.json", "w") as fh:
                   json.dump(payload, fh)
-                result = subprocess.run(
+              result = subprocess.run(
                   [
-                    "gh", "api",
-                    "--method", "POST",
-                    "-H", "Accept: application/vnd.github+json",
-                    "-H", "X-GitHub-Api-Version: 2022-11-28",
-                    f"/repos/{repo}/issues",
-                    "--input", "/tmp/payload.json",
+                      "gh", "api",
+                      "--method", "POST",
+                      "-H", "Accept: application/vnd.github+json",
+                      "-H", "X-GitHub-Api-Version: 2022-11-28",
+                      f"/repos/{repo}/issues",
+                      "--input", "/tmp/payload.json",
                   ],
                   capture_output=True,
-                )
+              )
+              if result.returncode == 0:
+                  assignment_status = "not assigned"
+                  note = (
+                      "GH_COPILOT_PAT is configured, but assigning copilot-swe-agent[bot] was rejected. "
+                      "The issue was created without assignment."
+                  )
 
           if result.returncode != 0:
               print(result.stderr.decode(), file=sys.stderr)
@@ -137,18 +151,8 @@ jobs:
           url = data["html_url"]
           number = data["number"]
 
-          print(f"Issue #{number} created and assigned to Copilot Cloud Agent.")
+          print(f"Issue #{number} created.")
           print(f"Track progress: {url}")
-
-            assignment_status = "copilot-swe-agent[bot] assigned"
-            note = ""
-            if not has_pat:
-              assignment_status = "not assigned"
-              note = (
-                "GH_COPILOT_PAT is not configured. The issue was created with github.token, "
-                "but Copilot bot assignment requires the user PAT secret. "
-                "Configure GH_COPILOT_PAT to enable automatic assignment."
-              )
 
           with open(summary_file, "a") as fh:
               fh.write(f"## Topology Sync Triggered\n\n")
@@ -160,6 +164,6 @@ jobs:
               fh.write("Copilot Cloud Agent is working. ")
               fh.write("Review the PR it opens when finished.\n")
               if note:
-                fh.write(f"\n> {note}\n")
+                  fh.write(f"\n> {note}\n")
           PYEOF
           python3 /tmp/trigger.py
