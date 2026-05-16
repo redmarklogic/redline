@@ -1,7 +1,7 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-04-25  
+**Last updated:** 2026-05-16  
 **Source of truth for:** all skills in `.agents/skills/`, their domain category, and which agents use them.
 
 > Update this file whenever a skill is created, retired, or reassigned.
@@ -82,14 +82,14 @@
 | `git-push-batched` | Push changes in thematically cohesive commits | Engineering |
 | `pre-commit-hooks-create` | Writing bespoke pre-commit hooks | Engineering |
 | `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
-| `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda |
-| `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron |
+| `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda, Peter |
+| `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron, Peter |
 
 ### Research & Knowledge
 
 | Skill | Purpose | Used by |
 |---|---|---|
-| `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John |
+| `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John, Peter |
 | `rag-prompting` | Query design for NotebookLM — prompt anatomy, retrieval rules, structured extraction | Graeme, Ron, Mark, John, Linda |
 | `library-management` | Index, rename, and add books to the digital library | Linda |
 
@@ -120,7 +120,7 @@
 | `pm-roadmap` | Build and refresh roadmaps and opportunity solution trees | Mark, Ron |
 | `pm-prioritization` | Portfolio-level RICE / MoSCoW / Value-Effort ranking | Mark, John |
 | `pm-product-strategist` | Vision, OKRs, strategic bets | Ron |
-| `pm-structural-integrity-auditor` | Audit any product artifact for structural gaps | Mark, Ron, John |
+| `pm-structural-integrity-auditor` | Audit any product artifact for structural gaps | Mark, Ron, John, Peter |
 
 ### Marketing
 
@@ -167,11 +167,25 @@
 
 > `ux-professional-software`, `ux-conversion-design`, and `ux-document-design` are pending creation (see Skills Coverage Gaps below). `ux-design-critique` is embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file. Playwright MCP is a built-in tool governed by the Website Review Protocol in Matt's JD.
 
+### Engineering Architecture & Evaluation
+
+| Skill | Purpose | Used by |
+|---|---|---|
+| `engineering-architecture` | System design, component boundaries, API design decisions, ADR writing, architectural constraint expression as tests | Peter |
+| `evaluation-architecture` | LLM evaluation lifecycle, rubric design, LLM-as-judge patterns, evaluation pipeline design, HITL review design | Peter |
+| `shaping` | Shape Up shaping process adapted for Redline (Pitch format, breadboarding, rabbit hole identification, appetite setting, Two-Touch model) | Peter, Mark |
+| `ai-acceptable-use-policy` | AI tool governance, DORA AI capabilities model, small-batch enforcement, AI acceptable-use policy maintenance, deliberate practice requirements | Peter, Ron |
+
+> All four skills are live at `.agents/skills/` as stubs. Notebook grounding is pending — see Coverage Gaps below.
+
 ### Ceremonies
 
 | Skill | Purpose | Used by |
 |---|---|---|
 | `ceremony-monthly-editorial-session` | Monthly Ground Engineering magazine editorial session | Graeme, John |
+| `ceremony-agent-topology-sync` | Periodic cross-agent sync: knowledge-grounded reflection, JD patch drafting, orphan/overlap analysis, skill gap triggers — run quarterly or on: new hire, strategy pivot, major milestone, client feedback batch | Harriet (facilitating agent) |
+
+> `ceremony-agent-topology-sync` is live at `.agents/skills/ceremony-agent-topology-sync/`. Registered in `AGENTS.md` under Internal Operations.
 
 ---
 
@@ -187,3 +201,7 @@
 | `ux-taskpane-design` (Word taskpane add-in interaction patterns) | Harriet (2026-05-09, Matt scope expansion) | Deferred until P-024 unfreezes. Query `Product Design & UX` notebook when ready | Deferred (P-024) |
 | `ux-email-as-interface` (email template design for co-development and impact communication) | Harriet (2026-05-09, Matt scope expansion) | Collaborate with John on email copy patterns; draft skill using `writing-skills` TDD cycle | Deferred — Phase 2 |
 | `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
+| `engineering-architecture` (system design, ADRs, component boundaries) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook; ground stub at `.agents/skills/engineering-architecture/` | Stub promoted — notebook grounding pending |
+| `evaluation-architecture` (LLM evaluation lifecycle, rubric design) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` and `AI System Engineering` notebooks; ground stub at `.agents/skills/evaluation-architecture/` | Stub promoted — notebook grounding pending |
+| `shaping` (Shape Up process adapted for Redline) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for Shape Up content; ground stub at `.agents/skills/shaping/` | Stub promoted — notebook grounding pending |
+| `ai-acceptable-use-policy` (DORA AI capabilities, small-batch enforcement) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for DORA content; incorporate external DORA 2024-2026 research; ground stub at `.agents/skills/ai-acceptable-use-policy/` | Stub promoted — notebook grounding + external research pending |

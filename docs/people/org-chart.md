@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-04-25  
+**Last updated:** 2026-05-16  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.
@@ -29,6 +29,15 @@ Founder (you)
 │   └── Graeme — Principal Geotechnical Engineer
 │         Outputs: domain knowledge documents, fact-checks
 │         Writes to: docs/knowledge/geotechnical/
+│
+├── Peter — Principal Engineer  [DRAFT-FIRST]
+│     Archetype: Architect (Larson) + Shaper (Singer) + Advisory Tech Lead (Cagan)
+│     Outputs: ADRs, shaped Pitches, evaluation rubric structures, feasibility assessments,
+│              architectural constraint tests, quality gate configurations, improvement loop analyses
+│     Writes to: docs/adr/, docs/architecture/, docs/evaluation/, specs/shaped/, docs/research/
+│     Trio: Mark + Matt + Peter (Product Trio — weekly)
+│     Evaluation partner: Graeme (quarterly retro)
+│     Proactive briefing: Ron (bet feasibility), John (ADR impacts)
 │
 ├── Internal Operations (platform functions — serve all agents)
 │   ├── Harriet — Head of People & Agent Development  [DRAFT-FIRST]
@@ -67,11 +76,18 @@ Graeme ──► Ron ───────────────────�
          (problem → hypothesis → PRD)   (content, SEO,
                 │                        social, campaigns)
                 ▼
-          speckit.specify
-          speckit.plan
-          speckit.tasks
-          speckit.implement
-         (engineering delivery)
+              Peter
+         (shape → Pitch → feasibility)
+                │
+          ┌─────┴─────┐
+          ▼           ▼
+        Matt     speckit.specify
+   (design specs)  speckit.plan
+                   speckit.tasks
+                   speckit.implement
+         │
+         ▼
+    Peter (Touch 2: architectural review of SpecKit output)
 ```
 
 ---
@@ -95,9 +111,19 @@ Who consults whom, and for what.
 | Harriet | Graeme | Input on domain-specific agent roles |
 | Harriet | Agent under review | Root cause during a PIP session |
 | Matt | Mark | PRD before starting any design work |
+| Matt | Peter | Technical constraints before wireframes (Touch 1) |
 | Matt | John | Positioning alignment, micro-copy review on conversion surfaces |
 | Matt | Graeme | Domain terminology verification on geotechnical designs |
 | Matt | Ron | Strategic fit confirmation (on demand) |
+| Peter | Graeme | Domain truth for evaluation rubric content (blocking gate) |
+| Peter | Ron | Strategic bet context, kill criteria, ICP constraints |
+| Peter | Mark | PRD scope, business appetite for shaping |
+| Peter | Matt | Design constraints delivery (Touch 1), SpecKit review (Touch 2) |
+| Peter | John | Architecture claim verification |
+| Mark | Peter | Feasibility assessment, shaping, Pitch approval |
+| Ron | Peter | Technical feasibility of strategic bets |
+| John | Peter | Architecture claim verification before publishing |
+| Graeme | Peter | Evaluation failure triage, rubric structure review |
 | Linda | Graeme | Standards triage and domain decisions for geotechnical content |
 | Linda | Ron/Mark/John | Domain routing for strategy/product/marketing books |
 | Linda | Notebook owner | Approval before reorganising, merging, or deduping notebooks |

@@ -23,9 +23,9 @@ three questions:
 We currently have around 60 skills. Without organisation, the AI would have to read all of
 them every time you ask a question. So we layer them.
 
-## The five layers
+## The six layers
 
-Redline's skills sit in a five-layer stack. Each layer answers a different kind of question
+Redline's skills sit in a six-layer stack. Each layer answers a different kind of question
 and hands off to the layer below it.
 
 ```mermaid
@@ -56,6 +56,18 @@ flowchart TD
         Mark -.uses.-> Audit
     end
 
+    subgraph L15[Layer 1.5 - Shaping: Is this buildable? What are the boundaries?]
+        Peter[Peter - Principal Engineer]
+        Shaping[shaping]
+        EngArch[engineering-architecture]
+        EvalArch[evaluation-architecture]
+        AIPolicy[ai-acceptable-use-policy]
+        Peter -.uses.-> Shaping
+        Peter -.uses.-> EngArch
+        Peter -.uses.-> EvalArch
+        Peter -.uses.-> AIPolicy
+    end
+
     subgraph L3[Layer 3 - Engineering Spec: What exactly do we build?]
         SpecKit[spec-kit - specs, plans, tasks]
     end
@@ -77,10 +89,12 @@ flowchart TD
     end
 
     L1 ==> L2
-    L2 ==> L3
+    L2 ==> L15
+    L15 ==> L3
     L3 ==> L4
     L4 -.calls.-> L5
     L2 -.calls.-> L5
+    L15 -.calls.-> L5
     L1 -.calls.-> L5
 ```
 
@@ -101,13 +115,28 @@ documents, and GTM plans. He never writes code. He hands off to Mark.
 Mark turns Ron's bets into something a team can actually build. He frames problems,
 identifies personas, prioritises features, and writes the Product Requirements Document
 (PRD) that tells engineering what to build and why. He never writes code either. He hands
-off to spec-kit.
+off to Peter for shaping.
+
+### Layer 1.5 — Shaping
+
+Peter takes Mark's PRD and shapes it into a Pitch: rough scope boundaries, rabbit holes
+removed, technical risks triaged. The Pitch uses breadboard-level abstraction — components
+and connections, no visual design. Mark sets the business appetite; Peter sets the technical
+appetite. The Pitch is the handoff to spec-kit.
+
+This layer sits between Product (L2) and Engineering Spec (L3) because shaping translates
+product intent into buildable scope. It prevents two common failures: specs that are
+technically infeasible (skipping feasibility) and specs that contain hidden rabbit holes
+(skipping risk triage).
+
+Skills at this layer: `shaping`, `engineering-architecture`, `evaluation-architecture`,
+`ai-acceptable-use-policy`.
 
 ### Layer 3 — Engineering spec
 
-spec-kit takes Mark's PRD and breaks it into a formal specification, an implementation
-plan, and a task list. This is where words become acceptance criteria. It is the bridge
-between product and code.
+spec-kit takes Mark's PRD and Peter's shaped Pitch and breaks them into a formal specification,
+an implementation plan, and a task list. This is where words become acceptance criteria.
+It is the bridge between product and code.
 
 ### Layer 4 — Implementation
 
@@ -128,13 +157,15 @@ Suppose you say: *"I want users to be able to export their reports as PDF."*
 |---|---|---|
 | 1 | L1 — Ron | "Does this map to one of our strategic bets? If yes, which one? If no, stop and revisit." |
 | 2 | L2 — Mark | "Who exactly wants PDF export? (loads `pm-personas`) What problem does it solve? (loads `pm-problem-framer`) Is this top of the list? (loads `pm-prioritization`) Write the PRD. (loads `pm-prd-builder`)" |
-| 3 | L3 — spec-kit | "Turn the PRD into a spec with acceptance scenarios, a plan, and a task list." |
-| 4 | L4 — implementation | "Write the code following `python-style`, `python-function-design`, and `python-testing-unit`." |
-| 5 | L5 — tools | At any point, the team can use `miro-mcp` to draft a roadmap, `redline-research` to look up prior decisions, or `version-control` to commit work. |
+| 3 | L1.5 — Peter | "Is this feasible in 6 weeks? Shape it: set boundaries, remove rabbit holes, write the Pitch." |
+| 4 | L3 — spec-kit | "Turn the Pitch into a spec with acceptance scenarios, a plan, and a task list." |
+| 5 | L4 — implementation | "Write the code following `python-style`, `python-function-design`, and `python-testing-unit`." |
+| 6 | L5 — tools | At any point, the team can use `miro-mcp` to draft a roadmap, `redline-research` to look up prior decisions, or `version-control` to commit work. |
 
 Skipping a layer is the most common failure mode. A PRD without a strategic bet (skipping
 L1) produces work nobody wanted. A spec without a PRD (skipping L2) produces a feature the
-team cannot explain. Code without a spec (skipping L3) produces something that works but
+team cannot explain. A spec without shaping (skipping L1.5) produces scope with hidden
+rabbit holes. Code without a spec (skipping L3) produces something that works but
 solves the wrong problem.
 
 ## Two RICE skills, two altitudes — why we did not merge them
@@ -168,8 +199,8 @@ which medium they own; `miro-mcp` is the rendering tool, not the decision-maker.
 
 ## What about the named agents (Mark and Ron)?
 
-Mark and Ron are not skills. They are **personas** — addressable identities you invoke by
-name ("Mark, ..." or "Ron, ..."). Each persona has a routing table that tells it which
+Mark, Ron, Peter, and Matt are not skills. They are **personas** --- addressable identities you invoke by
+name ("Mark, ...", "Ron, ...", or "Peter, ..."). Each persona has a routing table that tells it which
 skills to load when. Think of them as the chefs who know which recipe cards to pick off
 the wall.
 
@@ -197,4 +228,4 @@ system is recursive).
 - `AGENTS.md` — the canonical index of every skill and persona.
 - `.agents/skills/writing-skills/SKILL.md` — how skills are authored and tested.
 - `.agents/skills/skills-create/SKILL.md` — checklist for adding a new skill.
-- `.github/agents/rl.mark.agent.md` and `.github/agents/rl.ron.agent.md` — the two personas.
+- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, and `.github/agents/rl.peter.agent.md` --- the personas.

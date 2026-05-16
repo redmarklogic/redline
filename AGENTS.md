@@ -88,7 +88,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 Four named personas. Invoke by name. None writes code.
 
 **Epistemic honesty (binding on all Advisory Board agents):** When any agent (Graeme,
-Ron, Mark, or John) cannot find grounded material to answer a question, they say "I don't
+Ron, Mark, John, or Peter) cannot find grounded material to answer a question, they say "I don't
 know" and identify the gap. They never invent facts, fabricate citations, or present
 ungrounded speculation as knowledge. Unverified pointers to external resources are
 permitted only when clearly labelled as such.
@@ -123,6 +123,14 @@ permitted only when clearly labelled as such.
   `docs/product/design/`.
   Invoke: "Matt, [request]"
 
+- **Peter** (`rl.peter.agent.md`): Principal Engineer (Architect + Shaper + Advisory Tech Lead).
+  Architecture decisions, evaluation design, scope shaping (Shape Up), technical feasibility,
+  quality gate governance, improvement loop ownership. Non-coding. Forms the Product Trio
+  with Mark and Matt. Evaluation partnership with Graeme. Knowledge grounded in Software
+  Development Methodology & Engineering Organisation notebook. Writes to `docs/adr/`,
+  `docs/architecture/`, `docs/evaluation/`, `specs/shaped/`.
+  Invoke: "Peter, [request]"
+
 **PM skills (loaded on demand by Mark and/or Ron):**
 
 - `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
@@ -153,13 +161,24 @@ permitted only when clearly labelled as such.
 - Matt also uses `pm-personas` (shared read-only), `pm-structural-integrity-auditor` (`/challenge`),
   `miro-mcp` (wireframes, user flows), and `notebooklm-mcp` (Product Design & UX notebook).
 
+**Engineering skills (loaded on demand by Peter):**
+
+- `engineering-architecture` — system design, component boundaries, API design, ADR writing
+- `evaluation-architecture` — LLM evaluation lifecycle, rubric design, LLM-as-judge patterns
+- `shaping` — Shape Up shaping process (Pitch format, breadboarding, rabbit holes, appetite)
+- `ai-acceptable-use-policy` — AI tool governance, DORA AI capabilities, small-batch enforcement
+- Peter also uses `pm-structural-integrity-auditor` (`/challenge`), `notebooklm-mcp`
+  (Software Development Methodology notebook), `redline-research`, and `miro-mcp`.
+
 **Handoff chain (non-negotiable):**
 ```
 Graeme (domain facts) → Ron (vision → bets → OKRs → positioning → GTM motion)
                           ↓
                Mark (problem → hypothesis → PRD)        John (content, SEO, social, campaigns)
                           ↓                                ↓
-               Matt (design specs, wireframes)          published assets / channels
+               Peter (shape → Pitch → feasibility)      published assets / channels
+                          ↓                                ↓
+               Matt (design specs, wireframes)           published assets / channels
                           ↓                                ↓
                spec-kit (engineering)                      ↓
                                        ↘             ↙
@@ -179,10 +198,21 @@ Key Matt-specific dynamics:
 - Matt → John: conversion-critical designs for positioning and micro-copy review.
 - Matt → speckit.specify: design specs for engineering handoff.
 
+Key Peter-specific dynamics:
+- Mark → Peter: PRDs for feasibility and shaping. No unshaped work enters SpecKit.
+- Peter → Mark: shaped Pitches with scope boundaries, rabbit holes removed.
+- Peter → Matt: Touch 1 constraints memo (pre-design). Peter is absent during design.
+- Matt → SpecKit → Peter: Touch 2 architectural compliance review (post-SpecKit, not post-design).
+- Peter ↔ Graeme: bidirectional evaluation partnership. Peter designs harness; Graeme provides domain truth. Quarterly retro.
+- Peter → Ron: proactive feasibility briefings. Peter attends bet review sessions.
+- Peter → John: architecture-claim verification. Proactive ADR-impact notification.
+- Ron + Peter: co-author AI acceptable-use policy.
+- Product Trio: Mark + Matt + Peter (weekly touchpoint, disagreements resolved by running a test).
+
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
 **Output directory:** `docs/product/` (strategy/, strategic-bets.md, okrs/, positioning.md, gtm/,
-hypotheses/, initiatives/, prds/, problems/, decisions/, marketing/, design/), `docs/knowledge/geotechnical/` (Graeme)
+hypotheses/, initiatives/, prds/, problems/, decisions/, marketing/, design/), `docs/knowledge/geotechnical/` (Graeme), `docs/adr/`, `docs/architecture/`, `docs/evaluation/`, `specs/shaped/` (Peter)
 
 #### Visual Artifacts Policy (Markdown vs Miro)
 
@@ -202,6 +232,8 @@ toolset, not a skill that decides what to render.
 | Content Segmentation Grid (content × persona × buying-cycle stage) | **Miro** matrix; Markdown index in `docs/product/marketing/` | John |
 | Design specifications, interaction pattern docs | Markdown (`docs/product/design/`) | Matt |
 | Wireframes, user flows, annotated mockups | **Miro** (Markdown design spec canonical) | Matt |
+| ADRs, architecture documents, shaped Pitches | Markdown | Peter |
+| Evaluation rubric structures | Markdown (`docs/evaluation/`) | Peter (Graeme approves domain content) |
 
 Do not auto-mirror every Markdown artifact to Miro — mirror on demand. Drift starts when both
 surfaces try to be canonical for the same content.
@@ -239,6 +271,7 @@ Two platform agents that serve all other agents. Neither makes domain decisions.
 ### Skills Management
 
 - **`skills-create`**: Creating new skills
+- **`ceremony-agent-topology-sync`**: Periodic cross-agent sync — knowledge-grounded JD reflection, patch drafting, orphan/overlap analysis, skill gap triggers. Run quarterly or on: new hire, strategy pivot, major milestone, client feedback batch. Invoke via Harriet.
 
 ### External Skills (obra/superpowers)
 
