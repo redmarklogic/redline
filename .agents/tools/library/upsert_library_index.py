@@ -63,18 +63,32 @@ existing row rather than appending a duplicate.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import sys
 from datetime import date
 from pathlib import Path
 
 import openpyxl
-from workbook_utils import (
-    STANDARD_HEADERS,
-    WorkbookLock,
-    get_header_indexes,
-    save_workbook_atomically,
-)
+
+try:
+    from workbook_utils import (
+        STANDARD_HEADERS,
+        WorkbookLock,
+        get_header_indexes,
+        save_workbook_atomically,
+    )
+except ModuleNotFoundError:
+    util_path = Path(__file__).resolve().parent / "workbook_utils.py"
+    spec = importlib.util.spec_from_file_location("workbook_utils", util_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load workbook utilities from {util_path}")
+    workbook_utils = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(workbook_utils)
+    STANDARD_HEADERS = workbook_utils.STANDARD_HEADERS
+    WorkbookLock = workbook_utils.WorkbookLock
+    get_header_indexes = workbook_utils.get_header_indexes
+    save_workbook_atomically = workbook_utils.save_workbook_atomically
 
 
 def _sha256(file_path: Path) -> str:
@@ -138,7 +152,9 @@ def upsert(
         _upsert_row(wb, worksheet_name, rel_path, row)
         save_workbook_atomically(wb, index_path)
 
-    master_count = openpyxl.load_workbook(index_path, read_only=True)["Master"].max_row - 1
+    master_count = (
+        openpyxl.load_workbook(index_path, read_only=True)["Master"].max_row - 1
+    )
     return (
         f"{operation}\n"
         f"file: {file_path.name}\n"

@@ -33,6 +33,7 @@ operation : str
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 from datetime import date
@@ -40,6 +41,25 @@ from pathlib import Path
 
 import openpyxl
 from openpyxl.styles import Alignment, Font, PatternFill
+
+try:
+    from workbook_utils import (
+        WorkbookLock,
+        get_header_indexes,
+        save_workbook_atomically,
+    )
+except ModuleNotFoundError:
+    util_path = Path(__file__).resolve().parent / "workbook_utils.py"
+    spec = importlib.util.spec_from_file_location("workbook_utils", util_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load workbook utilities from {util_path}")
+    workbook_utils = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(workbook_utils)
+    WorkbookLock = workbook_utils.WorkbookLock
+    get_header_indexes = workbook_utils.get_header_indexes
+    save_workbook_atomically = workbook_utils.save_workbook_atomically
+
+INDEX_PATH = Path(r"G:\My Drive\Library\index-notebooklm.xlsx")
 
 HEADER_FONT = Font(bold=True, color="FFFFFF")
 HEADER_FILL = PatternFill(start_color="1F4E79", end_color="1F4E79", fill_type="solid")
@@ -51,71 +71,79 @@ def _apply_row_style(ws, row_idx: int) -> None:
         cell.alignment = DATA_ALIGN
 
 
-def upsert(index_path: Path, notebook: dict, sources: list[dict]) -> str:
-    wb = openpyxl.load_workbook(index_path)
-    ws_nb = wb["notebooks"]
-    ws_src = wb["sources"]
+def upsert(
+    notebook: dict,
+    sources: list[dict],
+    index_path: Path | None = None,
+) -> str:
+    resolved_index_path = index_path or INDEX_PATH
+    with WorkbookLock(resolved_index_path):
+        wb = openpyxl.load_workbook(resolved_index_path)
+        ws_nb = wb["notebooks"]
+        ws_src = wb["sources"]
 
-    nid = notebook["notebook_id"]
-    today = date.today().isoformat()
+        nid = notebook["notebook_id"]
+        today = date.today().isoformat()
 
-    # --- notebooks: find existing row ---
-    existing_row = None
-    for row in ws_nb.iter_rows(min_row=2, max_row=ws_nb.max_row, min_col=1, max_col=1):
-        if row[0].value == nid:
-            existing_row = row[0].row
-            break
+        # --- notebooks: find existing row ---
+        existing_row = None
+        for row in ws_nb.iter_rows(
+            min_row=2, max_row=ws_nb.max_row, min_col=1, max_col=1
+        ):
+            if row[0].value == nid:
+                existing_row = row[0].row
+                break
 
-    nb_values = [
-        nid,
-        notebook["title"],
-        notebook["url"],
-        notebook["source_count"],
-        notebook.get("summary", ""),
-        notebook.get("suggested_topics", ""),
-        today,
-        "active",
-    ]
+        nb_values = [
+            nid,
+            notebook["title"],
+            notebook["url"],
+            notebook["source_count"],
+            notebook.get("summary", ""),
+            notebook.get("suggested_topics", ""),
+            today,
+            "active",
+        ]
 
-    if existing_row:
-        for col_idx, val in enumerate(nb_values, start=1):
-            ws_nb.cell(row=existing_row, column=col_idx, value=val)
-        _apply_row_style(ws_nb, existing_row)
-        operation = "upsert (existing row overwritten)"
-    else:
-        ws_nb.append(nb_values)
-        _apply_row_style(ws_nb, ws_nb.max_row)
-        operation = "insert (new row appended)"
+        if existing_row:
+            for col_idx, val in enumerate(nb_values, start=1):
+                ws_nb.cell(row=existing_row, column=col_idx, value=val)
+            _apply_row_style(ws_nb, existing_row)
+            operation = "upsert (existing row overwritten)"
+        else:
+            ws_nb.append(nb_values)
+            _apply_row_style(ws_nb, ws_nb.max_row)
+            operation = "insert (new row appended)"
 
-    # --- sources: delete existing rows for this notebook_id ---
-    rows_to_delete = []
-    for row in ws_src.iter_rows(
-        min_row=2, max_row=ws_src.max_row, min_col=1, max_col=1
-    ):
-        if row[0].value == nid:
-            rows_to_delete.append(row[0].row)
+        # --- sources: delete existing rows for this notebook_id ---
+        rows_to_delete = []
+        for row in ws_src.iter_rows(
+            min_row=2, max_row=ws_src.max_row, min_col=1, max_col=1
+        ):
+            if row[0].value == nid:
+                rows_to_delete.append(row[0].row)
 
-    for row_idx in reversed(rows_to_delete):
-        ws_src.delete_rows(row_idx)
+        for row_idx in reversed(rows_to_delete):
+            ws_src.delete_rows(row_idx)
 
-    # --- sources: insert current sources ---
-    for src in sources:
-        ws_src.append(
-            [
-                nid,
-                notebook["title"],
-                src["source_id"],
-                src["source_title"],
-                src.get("source_summary", ""),
-                src.get("source_keywords", ""),
-            ]
-        )
-        _apply_row_style(ws_src, ws_src.max_row)
+        # --- sources: insert current sources ---
+        for src in sources:
+            ws_src.append(
+                [
+                    nid,
+                    notebook["title"],
+                    src["source_id"],
+                    src["source_title"],
+                    src.get("source_summary", ""),
+                    src.get("source_keywords", ""),
+                ]
+            )
+            _apply_row_style(ws_src, ws_src.max_row)
 
-    wb.save(index_path)
+        save_workbook_atomically(wb, resolved_index_path)
 
     # Verify
-    wb2 = openpyxl.load_workbook(index_path)
+    wb2 = openpyxl.load_workbook(resolved_index_path)
     nb_count = wb2["notebooks"].max_row - 1
     src_count = wb2["sources"].max_row - 1
     wb2.close()
@@ -128,20 +156,31 @@ def upsert(index_path: Path, notebook: dict, sources: list[dict]) -> str:
     )
 
 
-def mark_deleted(index_path: Path, notebook_id: str) -> str:
-    wb = openpyxl.load_workbook(index_path)
-    ws_nb = wb["notebooks"]
-    today = date.today().isoformat()
+def mark_deleted(notebook_id: str, index_path: Path | None = None) -> str:
+    resolved_index_path = index_path or INDEX_PATH
+    with WorkbookLock(resolved_index_path):
+        wb = openpyxl.load_workbook(resolved_index_path)
+        ws_nb = wb["notebooks"]
+        today = date.today().isoformat()
 
-    for row in ws_nb.iter_rows(min_row=2, max_row=ws_nb.max_row):
-        if row[0].value == notebook_id:
-            row[6].value = today      # indexed_date / last_updated (col 7)
-            row[7].value = "deleted"  # status (col 8)
-            break
-    else:
-        return f"notebook_id {notebook_id!r} not found in {index_path}"
+        header_indexes = get_header_indexes(
+            ws_nb,
+            ["notebook_id", "last_updated", "status"],
+        )
 
-    wb.save(index_path)
+        found = False
+        for row in ws_nb.iter_rows(min_row=2, max_row=ws_nb.max_row):
+            notebook_id_col = header_indexes["notebook_id"]
+            if row[notebook_id_col].value == notebook_id:
+                row[header_indexes["last_updated"]].value = today
+                row[header_indexes["status"]].value = "deleted"
+                found = True
+                break
+
+        if not found:
+            return f"notebook_id {notebook_id!r} not found in {resolved_index_path}"
+
+        save_workbook_atomically(wb, resolved_index_path)
     return f"Marked deleted: {notebook_id}"
 
 
@@ -160,9 +199,9 @@ if __name__ == "__main__":
 
     operation = data.get("operation", "upsert")
     if operation == "upsert":
-        result = upsert(index_path, data["notebook"], data["sources"])
+        result = upsert(data["notebook"], data["sources"], index_path=index_path)
     elif operation == "mark_deleted":
-        result = mark_deleted(index_path, data["notebook_id"])
+        result = mark_deleted(data["notebook_id"], index_path=index_path)
     else:
         print(f"ERROR: unknown operation {operation!r}", file=sys.stderr)
         sys.exit(1)

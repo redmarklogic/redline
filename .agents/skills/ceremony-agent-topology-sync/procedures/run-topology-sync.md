@@ -1,5 +1,3 @@
-> DRAFT — pending user approval. Do not promote to production.
-
 # Run Agent Topology Sync — Step-by-Step
 
 **See:** `ceremony-agent-topology-sync/SKILL.md` for boundary contract, triggers, and the

@@ -56,7 +56,7 @@ flowchart TD
         Mark -.uses.-> Audit
     end
 
-    subgraph L15[Layer 1.5 - Shaping: Is this buildable? What are the boundaries?]
+    subgraph L25[Layer 2.5 - Shaping: Is this buildable? What are the boundaries?]
         Peter[Peter - Principal Engineer]
         Shaping[shaping]
         EngArch[engineering-architecture]
@@ -89,12 +89,12 @@ flowchart TD
     end
 
     L1 ==> L2
-    L2 ==> L15
-    L15 ==> L3
+    L2 ==> L25
+    L25 ==> L3
     L3 ==> L4
     L4 -.calls.-> L5
     L2 -.calls.-> L5
-    L15 -.calls.-> L5
+    L25 -.calls.-> L5
     L1 -.calls.-> L5
 ```
 
@@ -117,7 +117,7 @@ identifies personas, prioritises features, and writes the Product Requirements D
 (PRD) that tells engineering what to build and why. He never writes code either. He hands
 off to Peter for shaping.
 
-### Layer 1.5 — Shaping
+### Layer 2.5 — Shaping
 
 Peter takes Mark's PRD and shapes it into a Pitch: rough scope boundaries, rabbit holes
 removed, technical risks triaged. The Pitch uses breadboard-level abstraction — components
@@ -157,14 +157,14 @@ Suppose you say: *"I want users to be able to export their reports as PDF."*
 |---|---|---|
 | 1 | L1 — Ron | "Does this map to one of our strategic bets? If yes, which one? If no, stop and revisit." |
 | 2 | L2 — Mark | "Who exactly wants PDF export? (loads `pm-personas`) What problem does it solve? (loads `pm-problem-framer`) Is this top of the list? (loads `pm-prioritization`) Write the PRD. (loads `pm-prd-builder`)" |
-| 3 | L1.5 — Peter | "Is this feasible in 6 weeks? Shape it: set boundaries, remove rabbit holes, write the Pitch." |
+| 3 | L2.5 — Peter | "Is this feasible in 6 weeks? Shape it: set boundaries, remove rabbit holes, write the Pitch." |
 | 4 | L3 — spec-kit | "Turn the Pitch into a spec with acceptance scenarios, a plan, and a task list." |
 | 5 | L4 — implementation | "Write the code following `python-style`, `python-function-design`, and `python-testing-unit`." |
 | 6 | L5 — tools | At any point, the team can use `miro-mcp` to draft a roadmap, `redline-research` to look up prior decisions, or `version-control` to commit work. |
 
 Skipping a layer is the most common failure mode. A PRD without a strategic bet (skipping
 L1) produces work nobody wanted. A spec without a PRD (skipping L2) produces a feature the
-team cannot explain. A spec without shaping (skipping L1.5) produces scope with hidden
+team cannot explain. A spec without shaping (skipping L2.5) produces scope with hidden
 rabbit holes. Code without a spec (skipping L3) produces something that works but
 solves the wrong problem.
 

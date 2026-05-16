@@ -59,11 +59,11 @@ Ron (vision → bets → OKRs → positioning → GTM)
     ↓
 Mark (problem → hypothesis → PRD) ←→ John (content, SEO, social, campaigns)
     ↓                                         ↓
-Peter (shape → Pitch → feasibility)  published assets / channels
-    ↓                                         ↓
-Matt (design specs, wireframes)       published assets / channels
-    ↓                                         ↓
-speckit.* (engineering)               published assets / channels
+Peter (shape → Pitch → feasibility)         published assets / channels
+    ↓
+Matt (design specs, wireframes)
+    ↓
+speckit.* (engineering)
     ↘                             ↙
         Monthly Signal Report → Ron + Mark
 

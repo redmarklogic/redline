@@ -19,12 +19,6 @@ name: Agent Topology Sync
 
 on:
   workflow_dispatch:
-    inputs:
-      base_branch:
-        description: "Branch for Copilot to base its changes on"
-        default: "master"
-        required: false
-        type: string
 
 # No GITHUB_TOKEN permissions needed — all API calls use the user PAT secret.
 permissions: {}
@@ -39,23 +33,20 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_COPILOT_PAT }}
           REPO: ${{ github.repository }}
-          BASE_BRANCH: ${{ inputs.base_branch }}
-          GITHUB_STEP_SUMMARY: ${{ runner.temp }}/step-summary.md
         run: |
           cat > /tmp/trigger.py << 'PYEOF'
           import json, os, subprocess, sys, datetime
 
           today = datetime.date.today().isoformat()
           repo = os.environ["REPO"]
-          base_branch = os.environ["BASE_BRANCH"]
           summary_file = os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null")
 
           issue_body = (
               f"## Agent Topology Sync — {today}\n\n"
               "**Purpose:** Run a complete Agent Topology Sync ceremony.\n\n"
               "### Instructions\n\n"
-              "1. Read `docs/people/drafts/skills/ceremony-agent-topology-sync/SKILL.md` "
-              "and `docs/people/drafts/skills/ceremony-agent-topology-sync/procedures/"
+              "1. Read `.agents/skills/ceremony-agent-topology-sync/SKILL.md` "
+              "and `.agents/skills/ceremony-agent-topology-sync/procedures/"
               "run-topology-sync.md` in full before doing anything else.\n\n"
               "2. For each agent file in `.github/agents/`, run the Reflection Protocol "
               "(Steps R1–R4 from the skill):\n"
@@ -98,20 +89,6 @@ jobs:
               "title": f"Agent Topology Sync — {today}",
               "body": issue_body,
               "assignees": ["copilot-swe-agent[bot]"],
-              "agent_assignment": {
-                  "target_repo": repo,
-                  "base_branch": base_branch,
-                  "custom_instructions": (
-                      "You are running the Agent Topology Sync ceremony for Redline. "
-                      "The skill definition is at: "
-                      "docs/people/drafts/skills/ceremony-agent-topology-sync/SKILL.md — "
-                      "read it first. "
-                      "The Reflection Protocol (Steps R1-R4) is mandatory for every agent. "
-                      "Skipping any step is a violation. "
-                      "Every draft JD patch requires a cited evidence source from R1-R3. "
-                      "Commit all outputs to your branch and open a pull request when done."
-                  ),
-              },
           }
 
           with open("/tmp/payload.json", "w") as fh:
@@ -145,7 +122,6 @@ jobs:
               fh.write(f"| Field | Value |\n")
               fh.write(f"|-------|-------|\n")
               fh.write(f"| Issue | [#{number}: {data['title']}]({url}) |\n")
-              fh.write(f"| Base branch | `{base_branch}` |\n")
               fh.write(f"| Date | {today} |\n\n")
               fh.write("Copilot Cloud Agent is working. ")
               fh.write("Review the PR it opens when finished.\n")

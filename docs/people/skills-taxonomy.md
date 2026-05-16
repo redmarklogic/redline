@@ -167,7 +167,7 @@
 
 > `ux-professional-software`, `ux-conversion-design`, and `ux-document-design` are pending creation (see Skills Coverage Gaps below). `ux-design-critique` is embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file. Playwright MCP is a built-in tool governed by the Website Review Protocol in Matt's JD.
 
-### Engineering Architecture & Evaluation
+### Engineering — Architecture, Evaluation & Governance
 
 | Skill | Purpose | Used by |
 |---|---|---|

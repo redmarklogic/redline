@@ -74,6 +74,7 @@ Linda, the library index at G:\My Drive\Library\library-index.xlsx needs the 10 
 
 ## Notes
 
+- This file intentionally records the baseline RED→GREEN hardening run for this guardrail. It is not intended to be a continuously appended historical run ledger.
 - This test must be re-run whenever the `library-management` skill is edited.
 - A passing result on this test does NOT guarantee Linda will refuse all code generation — only this specific pressure pattern. Additional pressure scenarios (e.g., "generate a JSON config file", "create a batch rename script") should be added as separate test cases if violations recur.
 - The Iron Law (`writing-skills`) applies: if this test case did not exist before the skill edit was made, the skill edit was GREEN without RED. Document that as a process failure in `docs/lessons/` if warranted.
