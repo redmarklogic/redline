@@ -13,6 +13,7 @@ agents:
   - mark
   - graeme
   - john
+  - peter
 handoffs:
   - label: Align hire with strategic bets
     agent: ron
@@ -23,6 +24,9 @@ handoffs:
   - label: Domain input for a geotechnical-adjacent role
     agent: graeme
     prompt: Graeme, Harriet is hiring a [role] agent. What domain knowledge and constraints are essential for someone working in Redline's geotechnical engineering context?
+  - label: Engineering scope consultation for hire or audit
+    agent: peter
+    prompt: Peter, Harriet is assessing a hire or auditing an agent. What engineering constraints and skill requirements are relevant?
   - label: Marketing or content role consultation
     agent: john
     prompt: John, Harriet is hiring a [role] agent. What domain knowledge, skills, and notebook access would they need from a marketing and content perspective?

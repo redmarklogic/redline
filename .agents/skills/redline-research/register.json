@@ -574,5 +574,39 @@
     ],
     "access": "open",
     "added": "2026-05-13"
+  },
+  {
+    "id": "software-dev-methodology-eng-org",
+    "name": "Software Development Methodology & Engineering Organisation",
+    "url": "https://notebooklm.google.com/notebook/cdb5e862-443d-4bb5-b24d-1393cacb5906",
+    "description": "25-source knowledge base spanning software engineering methodology, product discovery, AI/LLM engineering, and engineering leadership. Engineering methodology: Farley's Modern Software Engineering, Mythical Man-Month, Software Engineering at Google, Accelerate (Forsgren et al.), Continuous Delivery, Extreme Programming, Clean Agile, Sprint. Product management and discovery: INSPIRED and Empowered (Cagan), Continuous Discovery Habits (Torres), Lean Product Playbook, Product-Led Growth, Project to Product. AI and LLM engineering: LLM Engineers Handbook (Iusztin), Age of Invisible Machines (Wilson), Co-Intelligence (Mollick), Designing Multi-Agent Systems (Dibia), AI Engineering Building Applications, Building Applications with AI Agents, Building Generative AI Services with FastAPI, Prompt Engineering for LLMs. Engineering organisation and leadership: Staff Engineer (Larson), Team Topologies, Working Backwards (Amazon — Bryar and Carr).",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "software engineering methodology",
+      "agile and lean development",
+      "continuous delivery and DevOps",
+      "product discovery",
+      "empowered product teams",
+      "product management",
+      "LLM engineering",
+      "AI agent systems",
+      "multiagent orchestration",
+      "engineering leadership",
+      "staff engineer career path",
+      "team topologies",
+      "Working Backwards (Amazon)"
+    ],
+    "content_types": ["software engineering books", "product management books", "AI engineering guides", "organisational frameworks", "leadership frameworks"],
+    "use_cases": [
+      "Researching software engineering best practices and methodology",
+      "Designing or improving product discovery and continuous delivery workflows",
+      "Understanding LLM engineering, prompt engineering, and AI agent system design",
+      "Applying empowered product team frameworks from Cagan and Torres",
+      "Navigating engineering career development to staff-level and beyond",
+      "Grounding Amazon Working Backwards methodology in product development",
+      "Aligning engineering team structure and flow using Team Topologies"
+    ],
+    "access": "open",
+    "added": "2026-05-16"
   }
 ]

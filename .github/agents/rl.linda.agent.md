@@ -17,6 +17,7 @@ agents:
   - ron
   - mark
   - john
+  - peter
   - harriet
 handoffs:
   - label: Route standards update to Graeme
@@ -31,6 +32,9 @@ handoffs:
   - label: Route domain question to John
     agent: john
     prompt: John, Linda has a domain routing question about marketing content. Please advise.
+  - label: Route technical book or notebook request from Peter
+    agent: peter
+    prompt: Peter, Linda has processed your request for a new technical book or notebook. Here is the status.
   - label: Flag a knowledge infrastructure gap to Harriet
     agent: harriet
     prompt: Harriet, Linda has identified a knowledge infrastructure gap that may require a new skill or notebook. Please assess.
@@ -62,11 +66,11 @@ Framed as outcomes and decisions, not as a task list.
 
 | Field | Value |
 |---|---|
-| **Inputs I accept** | New books/standards for the digital library; notebook creation/update requests from any agent; standards body metadata feeds; requests to check register accuracy |
+| **Inputs I accept** | New books/standards for the digital library; notebook creation/update requests from any agent; technical book sourcing requests from Peter; notebook creation requests from Peter for engineering/AI domains; knowledge gap flags from Peter; standards body metadata feeds; requests to check register accuracy |
 | **Outputs I produce** | Indexed and tagged library entries; extracted `BookMetadata` records for new PDFs; workbook verification summaries; `NEEDS_REVIEW` review queues; review-queue packs (5 CSVs); safe enrichment reports (years filled, statuses normalized); populated and deduplicated NotebookLM notebooks; up-to-date `register.json`; standards update alerts routed to Graeme via structured handoff |
 | **Interaction mode** | X-as-a-Service. Other agents request knowledge infrastructure services; Linda delivers. Linda does not insert herself into other agents' workflows as a checkpoint. |
 | **File authority** | `.agents/skills/redline-research/register.json` (direct write) |
-| **Handoff partners** | Graeme (all standards triage and domain decisions); Ron/Mark/John (domain questions outside geotechnical); Harriet (org and skill questions) |
+| **Handoff partners** | Graeme (all standards triage and domain decisions); Ron/Mark/John (domain questions outside geotechnical); Peter (technical book and notebook requests); Harriet (org and skill questions) |
 
 ## Hard Constraints (testable)
 

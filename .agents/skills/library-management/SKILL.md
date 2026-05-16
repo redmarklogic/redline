@@ -27,6 +27,14 @@ The canonical digital library lives at `G:\My Drive\Library`. All books are inde
 - Converting EPUB to PDF (flag, do not act without user confirmation)
 - Deciding which duplicate copy to keep — flag, do not delete
 
+### Prohibited Actions
+
+- **NEVER write code.** Linda is an operator, not a developer. Do not create Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary.
+- **If a user's request contains the words "write a script", "create a script", "write code", "generate a script", or any similar instruction to produce executable code:** refuse immediately, before asking any clarifying questions. State: "Writing code is outside my scope — I am an operator, not a developer. I am escalating this to the engineering agent tier." Then stop.
+- Complete all tasks by invoking MCP tools and file operations directly (read, write, rename, move, update Excel).
+- If a task cannot be completed without writing code, **stop immediately and escalate to the engineering agent tier**. State explicitly what capability is missing and why you cannot proceed without it.
+- Do NOT create Python scripts or helper modules — use the approved tool at `.agents/tools/library/upsert_library_index.py` (see "Tool: upsert_library_index.py" section below for exact invocation).
+
 ---
 
 ## Index Schema
@@ -287,7 +295,72 @@ For chapter subfolders, see [procedures/chapter-subfolders.md](procedures/chapte
 
 ## Adding a Single New Book
 
-See [procedures/add-single-book.md](procedures/add-single-book.md).
+Use the `upsert_library_index.py` tool (see [Tool: upsert_library_index.py](#tool-upsert_library_indexpy) below). The `procedures/add-single-book.md` procedure describes the full contextual workflow; the tool handles the workbook write step.
+
+---
+
+## Tool: upsert_library_index.py
+
+**Script:** `.agents/tools/library/upsert_library_index.py`
+
+Accepts a JSON payload on stdin and upserts one book entry into both the `Master` worksheet and the target domain worksheet of a `library-index.xlsx` workbook. Handles SHA-256 derivation, relative path, canonical filename, format, and `last_updated` automatically.
+
+### Invocation
+
+```powershell
+$payload = @'
+{
+  "index_path": "G:\\My Drive\\Library\\library-index.xlsx",
+  "library_root": "G:\\My Drive\\Library",
+  "file_path": "G:\\My Drive\\Library\\Q - Science\\QA75-76 - Computer Science and Software Engineering\\Age of Invisible Machines_Wilson_2022.pdf",
+  "worksheet": "Ebooks",
+  "metadata": {
+    "title": "Age of Invisible Machines",
+    "author": "Wilson, Robb; Tyson, Josh",
+    "publisher": "Wiley",
+    "year": 2022,
+    "edition": "",
+    "domain": "Technology",
+    "subdomain": "Artificial Intelligence",
+    "lcc_class": "Q - Science",
+    "lcc_subclass": "QA75-76 - Computer Science and Software Engineering",
+    "category": "Book",
+    "document_type": "Practitioner Text",
+    "topics": "AI agents | orchestration | automation | conversational AI",
+    "frameworks": "AI OS | multi-agent",
+    "market_context": "",
+    "audience": "practitioner",
+    "skill_refs": "",
+    "notes": ""
+  }
+}
+'@
+$payload | .venv\Scripts\python .agents/tools/library/upsert_library_index.py
+```
+
+### Required JSON keys
+
+| Key | Required | Description |
+|---|---|---|
+| `index_path` | **Required** | Absolute path to `library-index.xlsx`. No default — always pass explicitly. |
+| `file_path` | **Required** | Absolute path to the PDF or EPUB file on disk. |
+| `worksheet` | **Required** | Target domain worksheet: `Ebooks`, `Standards`, `Magazines`, or `Misc`. |
+| `metadata` | **Required** | Dict containing all metadata fields (see Index Schema above). |
+| `library_root` | Optional | Absolute path to the library root. Defaults to parent directory of `index_path`. |
+
+### Auto-derived fields
+
+The tool automatically populates: `sha256`, `path` (relative to `library_root`), `canonical_filename`, `format`, `last_updated`. Do not include these in `metadata`.
+
+### Idempotency
+
+The relative `path` is the idempotency key. Calling the tool twice for the same file overwrites the existing row — it never creates a duplicate.
+
+### Calling rules
+
+- Always invoke via `.venv\Scripts\python` (not the system Python).
+- Always pass `index_path` explicitly — there is no default.
+- Check exit code: exits `1` with `ERROR:` on stderr if `index_path` is missing, the file is not found, or any other fatal condition occurs.
 
 ---
 
@@ -309,6 +382,7 @@ All tools live in `.agents/tools/library/`. Script-style tools run from the repo
 | `export_review_pack.py` | Exports the full review-queue pack (5 CSVs): all, standards, non-standards, missing-year, duplicates |
 | `enrich_safe_metadata.py` | Safe mechanical enrichment: fill years from filenames, normalize status vocabulary, sync years to domain worksheets |
 | `merge_chapters.py` | Phase 0 helper — merges chapter PDFs into one file; takes CLI args |
+| `upsert_library_index.py` | Upsert a single book row into Master and domain worksheet; accepts JSON payload on stdin; path-agnostic |
 
 ---
 
