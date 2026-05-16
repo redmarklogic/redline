@@ -1,7 +1,34 @@
-"""Upsert a NotebookLM notebook into index-notebooklm.xlsx.
+"""Upsert or mark-deleted a NotebookLM notebook in an index-notebooklm.xlsx file.
 
-Usage (one-shot, called by Linda):
-    python .agents/tools/library/upsert_notebooklm_index.py
+The tool is path-agnostic: it operates on any index file passed via the JSON
+payload's ``index_path`` key, so it can serve multiple projects and libraries.
+
+Usage (called by Linda via run_in_terminal):
+
+    Upsert a notebook::
+
+        echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
+               "operation": "upsert",
+               "notebook": {"notebook_id": "...", "title": "...", "url": "...",
+                            "source_count": 3, "summary": "...", "suggested_topics": ""},
+               "sources": [{"source_id": "...", "source_title": "...",
+                             "source_summary": "...", "source_keywords": ""}]}' |
+        python .agents/tools/library/upsert_notebooklm_index.py
+
+    Mark a notebook as deleted::
+
+        echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
+               "operation": "mark_deleted",
+               "notebook_id": "abc-123"}' |
+        python .agents/tools/library/upsert_notebooklm_index.py
+
+Required JSON keys
+------------------
+index_path : str
+    Absolute path to the target ``index-notebooklm.xlsx`` workbook.
+    **Must be provided by the caller.** The tool has no built-in default path.
+operation : str
+    ``"upsert"`` (default if omitted) or ``"mark_deleted"``.
 """
 
 from __future__ import annotations
@@ -14,7 +41,6 @@ from pathlib import Path
 import openpyxl
 from openpyxl.styles import Alignment, Font, PatternFill
 
-INDEX_PATH = Path(r"G:\My Drive\Library\index-notebooklm.xlsx")
 HEADER_FONT = Font(bold=True, color="FFFFFF")
 HEADER_FILL = PatternFill(start_color="1F4E79", end_color="1F4E79", fill_type="solid")
 DATA_ALIGN = Alignment(wrap_text=True, vertical="top")
@@ -25,8 +51,8 @@ def _apply_row_style(ws, row_idx: int) -> None:
         cell.alignment = DATA_ALIGN
 
 
-def upsert(notebook: dict, sources: list[dict]) -> str:
-    wb = openpyxl.load_workbook(INDEX_PATH)
+def upsert(index_path: Path, notebook: dict, sources: list[dict]) -> str:
+    wb = openpyxl.load_workbook(index_path)
     ws_nb = wb["notebooks"]
     ws_src = wb["sources"]
 
@@ -86,10 +112,10 @@ def upsert(notebook: dict, sources: list[dict]) -> str:
         )
         _apply_row_style(ws_src, ws_src.max_row)
 
-    wb.save(INDEX_PATH)
+    wb.save(index_path)
 
     # Verify
-    wb2 = openpyxl.load_workbook(INDEX_PATH)
+    wb2 = openpyxl.load_workbook(index_path)
     nb_count = wb2["notebooks"].max_row - 1
     src_count = wb2["sources"].max_row - 1
     wb2.close()
@@ -102,7 +128,43 @@ def upsert(notebook: dict, sources: list[dict]) -> str:
     )
 
 
+def mark_deleted(index_path: Path, notebook_id: str) -> str:
+    wb = openpyxl.load_workbook(index_path)
+    ws_nb = wb["notebooks"]
+    today = date.today().isoformat()
+
+    for row in ws_nb.iter_rows(min_row=2, max_row=ws_nb.max_row):
+        if row[0].value == notebook_id:
+            row[6].value = today      # indexed_date / last_updated (col 7)
+            row[7].value = "deleted"  # status (col 8)
+            break
+    else:
+        return f"notebook_id {notebook_id!r} not found in {index_path}"
+
+    wb.save(index_path)
+    return f"Marked deleted: {notebook_id}"
+
+
 if __name__ == "__main__":
     data = json.loads(sys.stdin.read())
-    result = upsert(data["notebook"], data["sources"])
+
+    raw_path = data.get("index_path")
+    if not raw_path:
+        print("ERROR: 'index_path' is required in the JSON payload", file=sys.stderr)
+        sys.exit(1)
+
+    index_path = Path(raw_path)
+    if not index_path.exists():
+        print(f"ERROR: index file not found: {index_path}", file=sys.stderr)
+        sys.exit(1)
+
+    operation = data.get("operation", "upsert")
+    if operation == "upsert":
+        result = upsert(index_path, data["notebook"], data["sources"])
+    elif operation == "mark_deleted":
+        result = mark_deleted(index_path, data["notebook_id"])
+    else:
+        print(f"ERROR: unknown operation {operation!r}", file=sys.stderr)
+        sys.exit(1)
+
     print(result)

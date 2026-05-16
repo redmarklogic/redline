@@ -30,6 +30,49 @@ Index NotebookLM notebooks into a structured Excel register using MCP tools.
 - Physical library indexing (`library-management`)
 - Writing notes into the notebook itself (`note` tool is **forbidden**)
 
+## Tool: upsert_notebooklm_index.py
+
+Linda **must** use this tool to write to the Excel index — she cannot write Python code herself.
+
+**Script path:** `.agents/tools/library/upsert_notebooklm_index.py`  
+**Invocation:** pipe a JSON payload to the script via `run_in_terminal`.
+
+### Upsert a notebook (add or overwrite)
+
+```powershell
+echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
+       "operation": "upsert",
+       "notebook": {"notebook_id": "<UUID>",
+                    "title": "<title>",
+                    "url": "https://notebooklm.google.com/notebook/<UUID>",
+                    "source_count": <N>,
+                    "summary": "<summary>",
+                    "suggested_topics": "<topic1 | topic2>"},
+       "sources": [{"source_id": "<UUID>",
+                    "source_title": "<title>",
+                    "source_summary": "<summary>",
+                    "source_keywords": "<kw1 | kw2>"}]}' |
+.venv\Scripts\python .agents/tools/library/upsert_notebooklm_index.py
+```
+
+### Mark a notebook as deleted
+
+```powershell
+echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
+       "operation": "mark_deleted",
+       "notebook_id": "<UUID>"}' |
+.venv\Scripts\python .agents/tools/library/upsert_notebooklm_index.py
+```
+
+### Rules for this tool
+
+- `index_path` is **required** in every payload — always pass the absolute path explicitly.
+- Use `.venv\Scripts\python`, not a bare `python`, to ensure the correct environment.
+- The script exits with code 1 and an `ERROR:` message on `stderr` if `index_path` is missing or the file does not exist.
+- Always check the printed result for the row counts to confirm success.
+
+---
+
 ## MCP Tools
 
 ### Single notebook (URL given)
@@ -159,7 +202,9 @@ Match existing workbook styling:
 
 ## Prohibited Actions
 
-- Do **not** create new Python scripts, tool files, or helper modules — use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py`
+- **NEVER write code of any kind.** Linda is an operator, not a developer. Do not write Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary that applies even when no approved tool exists for the task.
+- If a task cannot be completed without writing code, **stop immediately and escalate to the engineering agent tier**. State explicitly what capability is missing and why you cannot proceed without it.
+- Do **not** create new Python scripts, tool files, or helper modules — use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py` (see the "Tool" section above for exact invocation)
 - Do **not** create temporary files
 - Do **not** modify `register.json` or any file other than the index spreadsheet
 - Do **not** load the `library-management` skill — this skill is self-contained
@@ -174,6 +219,7 @@ Match existing workbook styling:
 | Calling `note` tool | Forbidden — do not write to the notebook |
 | Matching by notebook title | Always match by `notebook_id` |
 | Skipping `source_describe` | Must call for every source |
-| Creating new Python scripts or temp files | Use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py` |
+| Creating new Python scripts or temp files | Use the approved tool \u2014 see the "Tool" section above |
+| Omitting `index_path` from the JSON payload | `index_path` is required; no default exists |
 | Updating `register.json` | Out of scope — only update the Excel index |
 | Not running this skill after `notebook_create` | **Oversight** — the mandatory trigger rule (top of this skill) is binding; always update the index before declaring a notebook-creation task complete |
