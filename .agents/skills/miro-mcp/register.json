@@ -41,5 +41,19 @@
     ],
     "added": "2026-04-19",
     "status": "active"
+  },
+  {
+    "id": "eventstorming-report-generation",
+    "name": "Redline — EventStorming: Report Generation",
+    "url": "https://miro.com/app/board/uXjVHSId4d8=/",
+    "description": "EventStorming session output for the geotechnical report generation process. Maps the end-to-end workflow from project initiation to close-out, identifies domain events, commands, actors, pain points, policies, read models, external systems, aggregates, and bounded contexts. Includes bounded context map, liability risk boundary, UL snapshot, and action items.",
+    "owner": "Peter",
+    "purpose": "EventStorming / Strategic DDD",
+    "frames": [],
+    "source_of_truth_docs": [
+      "docs/architecture/domain-model.md"
+    ],
+    "added": "2026-05-17",
+    "status": "active"
   }
 ]

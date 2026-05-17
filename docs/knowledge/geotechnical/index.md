@@ -64,3 +64,4 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | Claude-Generated GBR Review — Standards Errors, Structural Gaps, Domain Accuracy | report-writing | 2026-05-14 | cross-referenced | [report-writing/claude-gbr-demo-review.md](report-writing/claude-gbr-demo-review.md) |
 | Skeleton Generator as Design-Phase Knowledge Prompt | report-writing | 2026-05-14 | cross-referenced | [report-writing/skeleton-as-design-phase-knowledge-prompt.md](report-writing/skeleton-as-design-phase-knowledge-prompt.md) |
 | Geotechnical Report Types and Common Mistakes | report-writing | 2026-05-17 | cross-referenced | [report-writing/report-types-and-common-mistakes.md](report-writing/report-types-and-common-mistakes.md) |
+| Geotechnical Report Production Workflow — EventStorming Domain Map | report-writing | 2026-05-17 | cross-referenced | [report-writing/geotechnical-report-production-workflow.md](report-writing/geotechnical-report-production-workflow.md) |
