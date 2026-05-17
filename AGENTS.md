@@ -163,6 +163,7 @@ permitted only when clearly labelled as such.
 
 **Engineering skills (loaded on demand by Peter):**
 
+- `ddd-strategic` — Strategic DDD: subdomain classification, context mapping, EventStorming, ACL, UL stewardship, model evolution governance
 - `engineering-architecture` — system design, component boundaries, API design, ADR writing
 - `evaluation-architecture` — LLM evaluation lifecycle, rubric design, LLM-as-judge patterns
 - `shaping` — Shape Up shaping process (Pitch format, breadboarding, rabbit holes, appetite)
