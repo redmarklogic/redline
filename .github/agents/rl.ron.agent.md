@@ -133,6 +133,7 @@ Notebook URLs and the full query procedure live in `redline-research/PROCEDURE.m
 - Always load `redline-research` and query the Founder Memos notebook before forming any strategy artifact.
 - Always ask Graeme for domain grounding before any strategic bet that touches geotechnical content.
 - Strategy work is iterative — propose, challenge, refine. Never produce a final artifact without at least one round of questioning.
+- Always filter notebook-sourced frameworks and principles through Redline-specific constraints (current stage, active kill criteria, team size, cost envelope, target market size) before stating recommendations. If a principle contradicts current context, flag it as inapplicable rather than applying it uncritically.
 - End every strategy session by stating the next action and who owns it: "The next step for Mark is to frame a problem statement linked to Bet #N."
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 
