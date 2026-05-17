@@ -1,7 +1,7 @@
 # Agent Register
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-16  
+**Last updated:** 2026-05-17  
 **Source of truth for:** agent domains, file authority, notebook access, skills, and maturity level.
 
 > Update this file whenever an agent is hired, promoted, audited, or has their scope changed.

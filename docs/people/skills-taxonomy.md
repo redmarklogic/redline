@@ -1,7 +1,7 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-16  
+**Last updated:** 2026-05-17  
 **Source of truth for:** all skills in `.agents/skills/`, their domain category, and which agents use them.
 
 > Update this file whenever a skill is created, retired, or reassigned.
@@ -92,6 +92,7 @@
 | `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John, Peter |
 | `rag-prompting` | Query design for NotebookLM — prompt anatomy, retrieval rules, structured extraction | Graeme, Ron, Mark, John, Linda |
 | `library-management` | Index, rename, and add books to the digital library | Linda |
+| `notebooklm-index` | Index NotebookLM notebooks into the register spreadsheet | Linda |
 
 ### Development Workflow
 
@@ -121,6 +122,8 @@
 | `pm-prioritization` | Portfolio-level RICE / MoSCoW / Value-Effort ranking | Mark, John |
 | `pm-product-strategist` | Vision, OKRs, strategic bets | Ron |
 | `pm-structural-integrity-auditor` | Audit any product artifact for structural gaps | Mark, Ron, John, Peter |
+| `strategy-pre-mortem` | Pre-mortem stress-testing of un-implemented plans | Ron |
+| `strategy-psf-domain` | PSF/A/E/C domain grounding for competitor analysis, market segmentation, PI insurance | Ron |
 
 ### Marketing
 
