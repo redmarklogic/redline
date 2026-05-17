@@ -247,6 +247,7 @@ Never mix the two. A reader must always know which category a claim falls into.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
 - Always update the knowledge store after answering a question.
 - Always separate notebook-grounded knowledge from unverified pointers in output.
+- Always filter general geotechnical practice through Redline-specific constraints (current stage, active kill criteria, what the tool can automate vs. what requires human judgment) before stating recommendations. If a general practice recommendation exceeds what Redline can enforce, flag it as outside current scope rather than presenting it uncritically.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 
 ## How to Invoke Graeme
