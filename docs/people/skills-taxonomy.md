@@ -174,12 +174,13 @@
 
 | Skill | Purpose | Used by |
 |---|---|---|
+| `ddd-strategic` | Strategic DDD: subdomain classification, context mapping, EventStorming, ACL pattern, UL stewardship, model evolution governance | Peter |
 | `engineering-architecture` | System design, component boundaries, API design decisions, ADR writing, architectural constraint expression as tests | Peter |
 | `evaluation-architecture` | LLM evaluation lifecycle, rubric design, LLM-as-judge patterns, evaluation pipeline design, HITL review design | Peter |
 | `shaping` | Shape Up shaping process adapted for Redline (Pitch format, breadboarding, rabbit hole identification, appetite setting, Two-Touch model) | Peter, Mark |
 | `ai-acceptable-use-policy` | AI tool governance, DORA AI capabilities model, small-batch enforcement, AI acceptable-use policy maintenance, deliberate practice requirements | Peter, Ron |
 
-> All four skills are live at `.agents/skills/` as stubs. Notebook grounding is pending — see Coverage Gaps below.
+> `ddd-strategic` is drafted at `docs/people/drafts/skills/ddd-strategic/` — pending user approval for promotion to `.agents/skills/`. `engineering-architecture` is partially grounded (strategic DDD content moved to `ddd-strategic`; system-level architecture content still pending). `evaluation-architecture`, `shaping`, and `ai-acceptable-use-policy` are stubs — notebook grounding pending.
 
 ### Ceremonies
 
@@ -204,7 +205,8 @@
 | `ux-taskpane-design` (Word taskpane add-in interaction patterns) | Harriet (2026-05-09, Matt scope expansion) | Deferred until P-024 unfreezes. Query `Product Design & UX` notebook when ready | Deferred (P-024) |
 | `ux-email-as-interface` (email template design for co-development and impact communication) | Harriet (2026-05-09, Matt scope expansion) | Collaborate with John on email copy patterns; draft skill using `writing-skills` TDD cycle | Deferred — Phase 2 |
 | `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
-| `engineering-architecture` (system design, ADRs, component boundaries) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook; ground stub at `.agents/skills/engineering-architecture/` | Stub promoted — notebook grounding pending |
+| `ddd-strategic` (strategic DDD: subdomain classification, context mapping, EventStorming, ACL, UL stewardship, model evolution governance) | Harriet (2026-05-17, DDD topology sync session) | Drafted at `docs/people/drafts/skills/ddd-strategic/` with 3 procedures. Grounded via NotebookLM Software Architecture & DDD notebook. | **Drafted** — pending user approval for promotion |
+| `engineering-architecture` (system design, ADRs, component boundaries) | Harriet (2026-05-16, Peter hire) | Strategic DDD content extracted to `ddd-strategic`. System-level architecture content still requires notebook grounding from Software Development Methodology & Engineering Organisation notebook. | Partially grounded — patch drafted |
 | `evaluation-architecture` (LLM evaluation lifecycle, rubric design) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` and `AI System Engineering` notebooks; ground stub at `.agents/skills/evaluation-architecture/` | Stub promoted — notebook grounding pending |
 | `shaping` (Shape Up process adapted for Redline) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for Shape Up content; ground stub at `.agents/skills/shaping/` | Stub promoted — notebook grounding pending |
 | `ai-acceptable-use-policy` (DORA AI capabilities, small-batch enforcement) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for DORA content; incorporate external DORA 2024-2026 research; ground stub at `.agents/skills/ai-acceptable-use-policy/` | Stub promoted — notebook grounding + external research pending |
