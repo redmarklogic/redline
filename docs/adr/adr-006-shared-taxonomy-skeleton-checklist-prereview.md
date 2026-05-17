@@ -1,5 +1,9 @@
 # ADR-006: Shared Taxonomy -- Skeleton Generator, Checklist Engine, Pre-Review Engine
 
+## Summary
+
+A single canonical 10-node report taxonomy is shared across the Skeleton Generator, Checklist Engine, and Pre-Review Engine, with each component attaching its own logic (templates, presence checks, quality rules) to the shared nodes (accepted 2026-05-13). The taxonomy was derived from 10 checklists across 5 jurisdictions showing 70–80% convergence; the canonical maintained version lives in `docs/knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md`, not in this ADR. The hard constraint: no component may define a private section taxonomy — all section-level reasoning must reference the shared 10 nodes.
+
 **Status**: Accepted
 **Date**: 2026-05-13
 **Deciders**: Mark (PM), Graeme (domain), Ron (strategy)

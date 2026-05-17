@@ -1,5 +1,9 @@
 # ADR-004: Styles-Only Template Strategy with Jinja Deferral
 
+## Summary
+
+Company DOCX templates are treated as style sources only: all body content is cleared and the document is rebuilt from scratch using `DocumentFacade` primitives, preserving only style definitions, page layout, headers, and footers (accepted 2026-04-12). Jinja-based template rendering (`python-docx-template`) is deferred until a concrete placeholder-injection need arises beyond Phase 3. The hard constraint: the generator must never append content to an existing template body — it clears first, then builds.
+
 ## Decision
 
 Company DOCX templates are treated as style sources only. The skeleton

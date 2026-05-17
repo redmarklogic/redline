@@ -1,5 +1,9 @@
 # Architecture Decision Record Template
 
+## Summary
+
+One paragraph (3–5 sentences): restate the decision in plain language, its current status, and the single most important constraint it imposes. Written so an agent can route on this alone without reading the rest of the file.
+
 ## Decision
 
 Describe the architectural choice in one or two sentences.

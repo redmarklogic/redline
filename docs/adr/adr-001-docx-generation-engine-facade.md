@@ -1,5 +1,9 @@
 # ADR-001: DOCX Generation Engine Selection and Facade Abstraction
 
+## Summary
+
+python-docx is the accepted initial engine for skeleton DOCX generation, accessed exclusively through a `DocumentFacade` protocol (accepted 2026-04-12). The facade ensures no application code ever imports python-docx directly, keeping the engine swappable or composable with ONLYOFFICE document-builder and Quarto without touching business logic. The hard constraint: any code that reaches a python-docx type outside the facade implementation violates this ADR.
+
 ## Decision
 
 Use python-docx as the initial DOCX generation engine for the skeleton generator,

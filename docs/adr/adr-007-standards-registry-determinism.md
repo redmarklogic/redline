@@ -1,5 +1,9 @@
 # ADR-007: Standards Registry as Deterministic Anchor for Skeleton Generator
 
+## Summary
+
+Standards nomination in the Skeleton Generator must be deterministic, sourced exclusively from the human-curated Standards Registry — LLM inference of applicable standards is prohibited, including as a hybrid fallback for unregistered project types (accepted 2026-05-14). Without the registry as an external anchor, the same model that infers standards, writes the skeleton, and confirms citations will propagate consistent errors invisibly through the adversarial loop. The hard constraint: any code path that delegates standards nomination to an LLM — even as a fallback — violates this ADR.
+
 **Status**: Accepted
 **Date**: 2026-05-14
 **Deciders**: Ron (strategy), Graeme (domain), Mark (PM)

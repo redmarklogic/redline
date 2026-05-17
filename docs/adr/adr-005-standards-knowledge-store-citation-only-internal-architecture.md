@@ -1,5 +1,9 @@
 # ADR-005 — Standards Knowledge Store: Citation-Only, Internal-Only Architecture
 
+## Summary
+
+The Standards Knowledge Store stores clause references and applicability mappings only — never full proprietary NZS/AS text — and is used exclusively as an internal engine powering Redline features (accepted 2026-04-19). Storing full commercial clause text creates a copyright liability that is existential at pre-revenue stage; citation references are the universal professional standard in engineering practice and carry no such risk. The hard constraint: full clause text from any NZS, AS, or NZGS publication must never be stored in the system, and the store is never exposed as a public-facing query interface.
+
 ## Decision
 
 The Standards Knowledge Store stores clause references and applicability mappings only —

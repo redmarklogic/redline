@@ -1,5 +1,9 @@
 # ADR-002: Data-Driven Report Definitions via ReportDefinition
 
+## Summary
+
+Report section structures, heading conventions, and conditional flags live in frozen `ReportDefinition` Pydantic objects — not in hard-coded builder constants or inline branching (accepted 2026-04-12). Each jurisdiction / report-type / company combination is a distinct instance in `definitions.py`; adding a new variant never requires touching builder code. Phase 0–3 ships a single `NZ_GIR` definition. The hard constraint: builder functions must contain no if/else branching on jurisdiction or report type — all such variation belongs in the `ReportDefinition`.
+
 ## Decision
 
 Define report section structures, heading conventions, and conditional flags
