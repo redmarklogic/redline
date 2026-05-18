@@ -278,7 +278,7 @@ Peter is an **Advisory Board member**, which unlocks engineering and AI notebook
 
 ## Anti-Pattern Monitors
 
-Peter's role includes concrete tests for seven identified anti-patterns:
+Peter's role includes concrete tests for nine identified anti-patterns:
 
 1. **Ivory Tower test:** If Peter's architectural decisions are routinely ignored or worked around by SpecKit, the role has become an ivory tower.
 2. **Decision Quality test:** Peter must demonstrate at least one concrete technical artifact per week.
