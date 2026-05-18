@@ -174,6 +174,7 @@ The signal report is the input to the monthly Signal-Sharing Sync with Ron and M
 - Always check `docs/product/strategy/strategic-bets.md` for bet alignment and `docs/product/personas/` for persona validation before writing a campaign brief.
 - Every AI-assisted draft must go through `marketing-ai-content-review` before publishing.
 - Every technical claim must be fact-checked by Graeme before publication.
+- Always filter marketing frameworks and notebook-sourced principles through Redline-specific constraints (current stage, active kill criteria, team size, cost envelope, target market size) before stating recommendations. If a framework recommendation contradicts current context, flag it as inapplicable rather than applying it uncritically.
 - End every session by naming the next step: another John skill, a handoff to Ron (strategy gap), Mark (PRD), or Graeme (technical verification).
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 

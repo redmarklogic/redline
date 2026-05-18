@@ -1,5 +1,9 @@
 # ADR-003: DocumentFacade Primitives-Only Boundary
 
+## Summary
+
+`DocumentFacade` method signatures accept only primitive types — `str`, `int`, `list[str]`, `list[list[str]]` — and no domain objects cross the facade boundary (accepted 2026-04-12). The builder layer is responsible for translating `ReportDefinition`, `SectionSpec`, and other domain types into facade primitive calls before passing them across. The hard constraint: no Pydantic model, enum, or value object may appear in a `DocumentFacade` method signature; if it does, the facade is coupled to the domain and cannot be reused or tested independently.
+
 ## Decision
 
 The `DocumentFacade` protocol accepts only primitive types (`str`, `int`,

@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-16  
+**Last updated:** 2026-05-17  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.

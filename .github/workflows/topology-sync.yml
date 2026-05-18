@@ -1,27 +1,34 @@
-# Agent Topology Sync — GitHub Actions trigger
+# Agent Topology Sync -- GitHub Actions trigger
 #
 # Triggers Copilot Cloud Agent to run the Agent Topology Sync ceremony by
 # creating a GitHub Issue and assigning it to copilot-swe-agent[bot].
 #
-# REQUIRED SECRET: GH_COPILOT_PAT
-#   A user Personal Access Token (NOT the default GITHUB_TOKEN, which is a
-#   machine token — the Copilot assignment API requires a user token).
+# RECOMMENDED SECRETS (ORG-OWNED GITHUB APP):
+#   GH_APP_ID
+#   GH_APP_PRIVATE_KEY
 #
-#   Fine-grained PAT permissions required:
+#   These generate an installation token at runtime, so the workflow continues
+#   to operate even if individual developers leave the organization.
+#
+#   App installation permissions required:
 #     - Read access to metadata
 #     - Read and write access to: actions, contents, issues, pull requests
 #
-#   Classic PAT: repo scope is sufficient.
+# FALLBACK:
+#   If app secrets are unavailable, the workflow falls back to github.token and
+#   still creates the issue, but bot assignment may be unavailable.
 #
-#   Add this secret at: Settings → Secrets and variables → Actions → New secret
+#   Add app secrets at: Settings -> Secrets and variables -> Actions -> New secret
 
 name: Agent Topology Sync
 
 on:
   workflow_dispatch:
 
-# No GITHUB_TOKEN permissions needed — all API calls use the user PAT secret.
-permissions: {}
+# Allow issue creation when falling back to github.token.
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   trigger:
@@ -29,82 +36,144 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Create GitHub App token (preferred)
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        continue-on-error: true
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
       - name: Create topology sync issue and assign to Copilot
         env:
-          GH_TOKEN: ${{ secrets.GH_COPILOT_PAT }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
+          GH_APP_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
         run: |
           cat > /tmp/trigger.py << 'PYEOF'
-          import json, os, subprocess, sys, datetime
+          import datetime
+          import json
+          import os
+          import subprocess
+          import sys
 
           today = datetime.date.today().isoformat()
           repo = os.environ["REPO"]
+          has_app_token = bool(os.environ.get("GH_APP_TOKEN", ""))
           summary_file = os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null")
 
           issue_body = (
-              f"## Agent Topology Sync — {today}\n\n"
-              "**Purpose:** Run a complete Agent Topology Sync ceremony.\n\n"
-              "### Instructions\n\n"
+              f"## Agent Topology Sync -- {today}\\n\\n"
+              "**Purpose:** Run a complete Agent Topology Sync ceremony.\\n\\n"
+              "### Instructions\\n\\n"
               "1. Read `.agents/skills/ceremony-agent-topology-sync/SKILL.md` "
               "and `.agents/skills/ceremony-agent-topology-sync/procedures/"
-              "run-topology-sync.md` in full before doing anything else.\n\n"
+              "run-topology-sync.md` in full before doing anything else.\\n\\n"
               "2. For each agent file in `.github/agents/`, run the Reflection Protocol "
-              "(Steps R1–R4 from the skill):\n"
-              "   - **R1 — Repo docs scan:** Read `docs/product/strategy/strategic-bets.md`, "
+              "(Steps R1-R4 from the skill):\\n"
+              "   - **R1 -- Repo docs scan:** Read `docs/product/strategy/strategic-bets.md`, "
               "all files in `docs/adr/`, all files in `docs/product/prds/`, all specs in `specs/`, "
               "and the agent's own JD file. Identify what has changed since the last topology sync "
-              "report (check `docs/people/drafts/reports/` for the most recent one).\n"
-              "   - **R2 — Knowledge base query:** For each agent, find their assigned NotebookLM "
+              "report (check `docs/people/drafts/reports/` for the most recent one).\\n"
+              "   - **R2 -- Knowledge base query:** For each agent, find their assigned NotebookLM "
               "notebooks (listed in their JD under 'Notebook Access'). For each notebook, query: "
               "'What frameworks, guidelines, or standards in this domain have been updated or "
               "superseded? Are there gaps between the agent's current responsibilities and what "
-              "best practice now recommends?'\n"
-              "   - **R3 — Online currency check:** Search online for updates to any framework, "
+              "best practice now recommends?'\\n"
+              "   - **R3 -- Online currency check:** Search online for updates to any framework, "
               "guideline, or standard referenced in the agent's current skill files. Record each "
-              "finding as: [Source] [Date] [Change] [Impact on current JD or skills].\n"
-              "   - **R4 — Delta Statement:** Write a Delta Statement for each agent: what they own "
+              "finding as: [Source] [Date] [Change] [Impact on current JD or skills].\\n"
+              "   - **R4 -- Delta Statement:** Write a Delta Statement for each agent: what they own "
               "today, what has changed, where their JD or skills may now be incorrect or outdated, "
-              "and what new frameworks or guidelines should be added.\n\n"
+              "and what new frameworks or guidelines should be added.\\n\\n"
               "3. Identify **orphan responsibilities** (no owner) and **overlaps** "
-              "(two or more agents claiming the same area).\n\n"
-              "4. Produce all required outputs listed below.\n\n"
-              "### Required Outputs\n\n"
-              "| Output | Path |\n"
-              "|--------|------|\n"
-              f"| Topology Sync Report | `docs/people/drafts/reports/topology-sync-{today}.md` |\n"
+              "(two or more agents claiming the same area).\\n\\n"
+              "4. Produce all required outputs listed below.\\n\\n"
+              "### Required Outputs\\n\\n"
+              "| Output | Path |\\n"
+              "|--------|------|\\n"
+              f"| Topology Sync Report | `docs/people/drafts/reports/topology-sync-{today}.md` |\\n"
               "| Draft JD patch per agent with confirmed drift | "
-              "`docs/people/drafts/agents/<agent-name>.agent.md` |\n"
-              "| Updated agent register | `docs/people/agent-register.md` |\n"
-              "| Updated org chart | `docs/people/org-chart.md` |\n"
-              "| Updated skills taxonomy | `docs/people/skills-taxonomy.md` |\n\n"
-              "### Evidence Rule\n\n"
-              "Every JD patch MUST include a citation — the exact file path and a quoted "
-              "excerpt from R1, R2, or R3 — that justifies the change. "
-              "**No citation = no patch.**\n\n"
+              "`docs/people/drafts/agents/<agent-name>.agent.md` |\\n"
+              "| Updated agent register | `docs/people/agent-register.md` |\\n"
+              "| Updated org chart | `docs/people/org-chart.md` |\\n"
+              "| Updated skills taxonomy | `docs/people/skills-taxonomy.md` |\\n\\n"
+              "### Evidence Rule\\n\\n"
+              "Every JD patch MUST include a citation -- the exact file path and a quoted "
+              "excerpt from R1, R2, or R3 -- that justifies the change. "
+              "**No citation = no patch.**\\n\\n"
               f"When all outputs are committed, open a pull request titled: "
-              f"`chore(people): Agent Topology Sync — {today}`"
+              f"`chore(people): Agent Topology Sync -- {today}`"
           )
 
           payload = {
-              "title": f"Agent Topology Sync — {today}",
+              "title": f"Agent Topology Sync -- {today}",
               "body": issue_body,
               "assignees": ["copilot-swe-agent[bot]"],
           }
 
-          with open("/tmp/payload.json", "w") as fh:
+          assignment_status = "copilot-swe-agent[bot] assigned"
+          note = ""
+          if not has_app_token:
+              payload.pop("assignees", None)
+              assignment_status = "not assigned"
+              note = (
+                  "GitHub App token was not available. The issue was created with github.token, "
+                  "but bot assignment may be unavailable in fallback mode. "
+                  "Configure GH_APP_ID and GH_APP_PRIVATE_KEY to enable app-based assignment."
+              )
+
+          with open("/tmp/payload.json", "w", encoding="utf-8") as fh:
               json.dump(payload, fh)
 
           result = subprocess.run(
               [
-                  "gh", "api",
-                  "--method", "POST",
-                  "-H", "Accept: application/vnd.github+json",
-                  "-H", "X-GitHub-Api-Version: 2022-11-28",
+                  "gh",
+                  "api",
+                  "--method",
+                  "POST",
+                  "-H",
+                  "Accept: application/vnd.github+json",
+                  "-H",
+                  "X-GitHub-Api-Version: 2022-11-28",
                   f"/repos/{repo}/issues",
-                  "--input", "/tmp/payload.json",
+                  "--input",
+                  "/tmp/payload.json",
               ],
               capture_output=True,
           )
+
+          if (
+              result.returncode != 0
+              and has_app_token
+              and "copilot-swe-agent[bot]" in result.stderr.decode()
+          ):
+              payload.pop("assignees", None)
+              with open("/tmp/payload.json", "w", encoding="utf-8") as fh:
+                  json.dump(payload, fh)
+              result = subprocess.run(
+                  [
+                      "gh",
+                      "api",
+                      "--method",
+                      "POST",
+                      "-H",
+                      "Accept: application/vnd.github+json",
+                      "-H",
+                      "X-GitHub-Api-Version: 2022-11-28",
+                      f"/repos/{repo}/issues",
+                      "--input",
+                      "/tmp/payload.json",
+                  ],
+                  capture_output=True,
+              )
+              if result.returncode == 0:
+                  assignment_status = "not assigned"
+                  note = (
+                      "GitHub App token is configured, but assigning copilot-swe-agent[bot] "
+                      "was rejected. The issue was created without assignment."
+                  )
 
           if result.returncode != 0:
               print(result.stderr.decode(), file=sys.stderr)
@@ -114,16 +183,20 @@ jobs:
           url = data["html_url"]
           number = data["number"]
 
-          print(f"Issue #{number} created and assigned to Copilot Cloud Agent.")
+          print(f"Issue #{number} created.")
           print(f"Track progress: {url}")
 
-          with open(summary_file, "a") as fh:
-              fh.write(f"## Topology Sync Triggered\n\n")
-              fh.write(f"| Field | Value |\n")
-              fh.write(f"|-------|-------|\n")
-              fh.write(f"| Issue | [#{number}: {data['title']}]({url}) |\n")
-              fh.write(f"| Date | {today} |\n\n")
+          with open(summary_file, "a", encoding="utf-8") as fh:
+              fh.write("## Topology Sync Triggered\\n\\n")
+              fh.write("| Field | Value |\\n")
+              fh.write("|-------|-------|\\n")
+              fh.write(f"| Issue | [#{number}: {data['title']}]({url}) |\\n")
+              fh.write(f"| Assignment | {assignment_status} |\\n")
+              fh.write(f"| Date | {today} |\\n\\n")
               fh.write("Copilot Cloud Agent is working. ")
-              fh.write("Review the PR it opens when finished.\n")
+              fh.write("Review the PR it opens when finished.\\n")
+              if note:
+                  fh.write(f"\\n> {note}\\n")
           PYEOF
+
           python3 /tmp/trigger.py
