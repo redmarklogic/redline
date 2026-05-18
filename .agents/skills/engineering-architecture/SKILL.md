@@ -41,17 +41,35 @@ System-level design decisions, ADR writing, and architectural constraint express
 
 "Every architectural constraint must be expressible as a test. If it cannot be tested, it is opinion, not architecture." (XP Explained, adapted)
 
-## Grounding Sources (to be queried via `redline-research`)
+## Quick Reference
+
+| Activity | Output | Stored at |
+|---|---|---|
+| System design decision | ADR | `docs/adr/` |
+| Component boundary definition | Architecture document | `docs/architecture/` |
+| Technology selection | ADR | `docs/adr/` |
+| Shape work for SpecKit | Shaped Pitch | `specs/shaped/` |
+| Touch 2: SpecKit compliance review | Compliance verdict (inline) | — |
+| Architectural constraint | Automated test | Tests directory |
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Expressing architectural constraints as prose rules | Every constraint must be an automated test. If it cannot be tested, it is opinion, not architecture. |
+| Reviewing Matt's design specs (Touch 1.5) | Review only SpecKit output at Touch 2; never touch Matt's design artifacts between Touch 1 and Touch 2. |
+| Selecting technology before defining component boundaries | Define boundaries and APIs first; technology selection follows. |
+| Writing detailed specifications | Write shaped Pitches (breadboard level); SpecKit's `specify` agent writes the spec. |
+| Applying general principles without Redline context | Filter every notebook-sourced principle through current stage, kill criteria, and cost envelope before stating it. |
+| Confusing strategic DDD decisions with system architecture | Subdomain classification and context mapping belong in `ddd-strategic`, not here. |
+
+## Grounding Sources (queried via `redline-research`)
 
 - *Team Topologies* (Skelton & Pais) — team API design, fracture planes
 - *Accelerate* (Forsgren, Humble & Kim) — loosely coupled architecture, deployment independence
 - *Modern Software Engineering* (Farley) — incremental design, YAGNI
 - *Staff Engineer* (Larson) — architect's approach to technical direction
 - *XP Explained* (Beck) — tests over specifications
-
-## Status
-
-**Partially grounded.** Strategic DDD content (Gaps 1-6) has been extracted from the Software Architecture & DDD notebook (`c04e18d3-e1e6-47f0-879a-d0e4a65adcb0`) and placed in the `ddd-strategic` skill. System-level architecture content (Team Topologies fracture planes, Accelerate loosely coupled architecture, component boundary principles) still requires notebook grounding from the Software Development Methodology & Engineering Organisation notebook (`cdb5e862-443d-4bb5-b24d-1393cacb5906`).
 
 ## Strategic DDD
 

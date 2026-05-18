@@ -9,6 +9,21 @@ description: Use when indexing, renaming, or adding books to the digital library
 
 The canonical digital library lives at `G:\My Drive\Library`. All books are indexed in `G:\My Drive\Library\library-index.xlsx` — this file is the single source of truth. Every operation must leave the index consistent before finishing.
 
+---
+
+## New Book Processing — Mandatory Sequence
+
+**Every new PDF or EPUB that arrives in the library — whether dropped in the root of `G:\My Drive\Library` or any temporary landing zone — must follow this four-step sequence in order. No step may be skipped or deferred.**
+
+1. **Move** the file from the root of `G:\My Drive\Library` (or its temporary landing location) into the correct LCC subfolder (e.g., `G:\My Drive\Library\T - Technology\TA700-712 - Foundation and Geotechnical Engineering\`). If the correct subfolder is ambiguous, route the domain classification decision to the relevant domain agent before proceeding — do not move the file until the destination is confirmed.
+2. **Rename** the file to the canonical convention: `Full-Title_FirstAuthorSurname_Year.pdf` (see [Canonical Filename Convention](#canonical-filename-convention)).
+3. **Index** the file in `G:\My Drive\Library\library-index.xlsx` using the incremental add workflow (see [Incremental Add Workflow](#incremental-add-workflow)). Run post-index verification before proceeding.
+4. **Upload** to the appropriate NotebookLM notebook using the `notebooklm-mcp` skill.
+
+> **Hard stop:** Step 4 (NotebookLM upload) is blocked until steps 1, 2, and 3 are complete and verified. Uploading a file before it is correctly placed, renamed, and indexed leaves the library in an inconsistent state — the notebook will reference a path or filename that does not match the index, and the error cannot be corrected retroactively without re-ingesting.
+
+---
+
 ## Boundary Contract
 
 ### Inputs
