@@ -213,7 +213,7 @@ Mark problematic areas with **pink** (or **red**) sticky notes. Bottlenecks, man
 
 ### Step 4: Pivotal Events
 
-Identify events that represent significant business transitions (e.g., "Order Placed" separates browsing from fulfilment). Mark with vertical divider lines. These often become bounded context boundaries.
+Identify events that represent significant business transitions (e.g., "Order Placed" separates browsing from fulfillment). Mark with vertical divider lines. These often become bounded context boundaries.
 
 ### Step 5: Commands and Actors
 
