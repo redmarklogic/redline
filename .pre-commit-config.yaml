@@ -119,30 +119,6 @@ repos:
         always_run: true
         pass_filenames: false
         priority: 0
-      - id: export-skills-directory
-        name: export-skills-directory
-        entry: uv run --frozen --offline hooks/export-skills-directory.py
-        args: ["--skills-dir=.agents/skills", "--output-file=docs/skills-directory.txt", "--prefix=redline-"]
-        language: system
-        always_run: true
-        pass_filenames: false
-        priority: 0
-      - id: export-module-tree
-        name: export-module-tree
-        entry: uv run --frozen --offline hooks/export-module-tree.py
-        args: ["--source-root=src/rl", "--output-file=docs/module-tree.txt"]
-        language: system
-        always_run: true
-        pass_filenames: false
-        priority: 0
-      - id: export-functions
-        name: export-functions
-        entry: uv run --frozen --offline hooks/export-functions.py
-        args: ["--source-root=src/rl", "--output-file=docs/functions.txt"]
-        language: system
-        always_run: true
-        pass_filenames: false
-        priority: 0
       - id: check-overused-underscore
         name: Check overused underscores
         entry: uv run hooks/check_overused_underscore.py

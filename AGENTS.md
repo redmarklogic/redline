@@ -281,8 +281,8 @@ Source: <https://github.com/obra/superpowers>
 - **`brainstorming`**: Socratic design refinement --- activates before writing code; teases out a spec through questions, explores alternatives, and presents design in sections for validation. Terminal state invokes `spec-kit`.
 - **`dispatching-parallel-agents`**: Concurrent subagent workflows --- dispatches multiple agents in parallel to work on independent tasks.
 - **`finishing-a-development-branch`**: Merge/PR decision workflow --- verifies tests, presents options (merge/PR/keep/discard), cleans up worktrees.
-- **`receiving-code-review`**: Responding to feedback --- structured process for addressing code review comments. **This is the canonical skill for all PR comment handling, including irrelevant comments. NEVER use the `address-pr-comments` VS Code extension skill — it is superseded by this skill.**
 - **`requesting-code-review`**: Pre-review checklist --- reviews against plan, reports issues by severity before submitting for review.
+- **`resolving-pr-issues`**: Resolve incoming PR code-review comments --- structured triage → reproduce → fail-first test → fix → two-stage gate → PTAL → CI closure cycle.
 - **`subagent-driven-development`**: Fast iteration with two-stage review --- dispatches fresh subagent per task with spec compliance then code quality review.
 - **`systematic-debugging`**: 4-phase root cause process --- structured debugging with root-cause-tracing, defense-in-depth, and condition-based-waiting techniques.
 - **`using-git-worktrees`**: Parallel development branches --- creates isolated workspaces on new branches, runs project setup, verifies clean test baseline.
