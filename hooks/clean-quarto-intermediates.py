@@ -67,22 +67,53 @@ def _has_tracked_children(path: Path) -> bool:
     return bool(result.stdout.strip())
 
 
+def _should_skip_path(path: Path) -> bool:
+    return bool(_SKIP_PARTS.intersection(path.parts))
+
+
+def _collect_intermediate_paths(
+    pattern: str,
+    *,
+    require_directory: bool = False,
+    require_file: bool = False,
+) -> set[Path]:
+    collected_paths: set[Path] = set()
+    for path in _REPO_ROOT.glob(pattern):
+        if _should_skip_path(path):
+            continue
+        if require_directory and not path.is_dir():
+            continue
+        if require_file and not path.is_file():
+            continue
+        collected_paths.add(path)
+    return collected_paths
+
+
 def _candidate_intermediate_paths() -> list[Path]:
     candidate_paths: set[Path] = set()
 
     for directory_name in _INTERMEDIATE_DIR_NAMES:
-        for path in _REPO_ROOT.glob(f"**/{directory_name}"):
-            if path.is_dir() and not _SKIP_PARTS.intersection(path.parts):
-                candidate_paths.add(path)
+        candidate_paths.update(
+            _collect_intermediate_paths(
+                f"**/{directory_name}",
+                require_directory=True,
+            )
+        )
 
-    for path in _REPO_ROOT.glob("**/*_files"):
-        if path.is_dir() and not _SKIP_PARTS.intersection(path.parts):
-            candidate_paths.add(path)
+    candidate_paths.update(
+        _collect_intermediate_paths(
+            "**/*_files",
+            require_directory=True,
+        )
+    )
 
     for prefix in _INTERMEDIATE_FILE_PREFIXES:
-        for path in _REPO_ROOT.glob(f"**/{prefix}*"):
-            if path.is_file() and not _SKIP_PARTS.intersection(path.parts):
-                candidate_paths.add(path)
+        candidate_paths.update(
+            _collect_intermediate_paths(
+                f"**/{prefix}*",
+                require_file=True,
+            )
+        )
 
     return sorted(candidate_paths)
 
@@ -117,8 +148,8 @@ def main() -> int:
 
     quarto_executable = shutil.which("quarto")
     if quarto_executable is None:
-        print("quarto not found; skipping Quarto intermediate cleanup")
-        return 0
+        print("quarto not found; using fallback cleanup for untracked intermediates")
+        return _fallback_cleanup_untracked_intermediates()
 
     supports_clean_subcommand = _supports_clean_subcommand(quarto_executable)
     if not supports_clean_subcommand:
