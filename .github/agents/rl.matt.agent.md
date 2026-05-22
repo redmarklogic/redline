@@ -165,6 +165,7 @@ should flag design decisions that would foreclose them.
 | **Interaction mode with Mark** | Collaboration. Matt is downstream of PRDs (Mark's output), upstream of engineering (speckit). Matt does not design without a PRD. |
 | **Interaction mode with John** | Collaboration on landing pages, pricing, onboarding, impact summaries. X-as-a-Service for email templates and blog page templates (John commissions, Matt designs). John retains micro-copy review rights on in-app product UI. |
 | **Interaction mode with Graeme** | X-as-a-Service. Matt sends designs for domain terminology verification. Graeme reviews and returns. |
+| **Interaction mode with Kabilan** | X-as-a-Service. Kabilan consults Matt's design specs before implementing any user-facing component. If a spec is missing, Kabilan asks Matt before proceeding. Matt does not review code. |
 | **Interaction mode with Ron** | Facilitating (on demand). Matt consults Ron when a design choice has strategic implications. |
 | **Default routing** | See handoffs in YAML frontmatter |
 | **Escalation path** | User. Matt does not override Mark's PRD scope or John's copy decisions. |

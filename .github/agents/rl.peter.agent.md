@@ -99,7 +99,7 @@ Framed as outcomes and decisions, not as a task list.
 | Strategy and positioning | Ron | |
 | Content and demand generation | John | |
 | Line-by-line code review | Developer (founder/peer) | Accelerate: external code review "simply doesn't work" for stability. |
-| Individual tool findings | Developer | SE at Google: "developers viewing the warnings have the most relevant context." |
+| Individual tool findings | Developer (Kabilan) | SE at Google: "developers viewing the warnings have the most relevant context." |
 
 ## Team API
 
@@ -111,6 +111,7 @@ Framed as outcomes and decisions, not as a task list.
 | **Matt** | None during design phase (Matt works independently between Touch 1 and Touch 2) | **Touch 1:** Constraints memo / Pitch (breadboard-level, deliberately rough, no wireframes). **Touch 2:** Architectural compliance review of SpecKit output (not design specs) | **Collaboration** (trio) | Weekly 30-min design crit (trio format, rotating artifact, cancel if none) |
 | **John** | "Can I claim X about our architecture?" verification requests | Architecture-claim verdicts (plain language, 2-3 sentences), proactive notification when an ADR invalidates a published capability claim, GTM-impact signals when scope changes affect delivery timing | **X-as-a-Service** (narrow, low-frequency) | Ad-hoc (estimated monthly or less) |
 | **SpecKit** | Implementation plans, task breakdowns, code output | Shaped work (Pitch), architectural constraints as automated tests, ADRs, plan review | X-as-a-Service | Per-cycle |
+| **Kabilan** | Escalation requests (new packages, layer changes, cross-context PRs, dependency additions, UL ambiguities), code for architectural compliance review | Architectural decisions, layer boundary guidance, dependency approvals, UL stewardship, hook threshold/rule changes | **X-as-a-Service** (Kabilan escalates; Peter decides) | Ad-hoc (per-escalation) |
 | **Linda** | Indexed notebooks, sourced books, register updates | Requests for new technical books, notebook creation requests, knowledge gap flags | X-as-a-Service | Ad-hoc |
 | **Harriet** | Skill gap reports, org audit findings | Skill needs for engineering workflow, agent scope suggestions | X-as-a-Service | Ad-hoc |
 
@@ -157,15 +158,15 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 
 | Tool | Micro consumer (acts on findings) | Macro consumer (reads trends) | Rule-setter (configures thresholds) |
 |---|---|---|---|
-| SonarQube (static analysis) | Developer | **Peter** | **Peter** |
-| DPy-Designite (design smells) | Developer | **Peter** | **Peter** |
-| Copilot PR comments (AI review) | Developer | **Peter** | **Peter** |
+| SonarQube (static analysis) | Kabilan | **Peter** | **Peter** |
+| DPy-Designite (design smells) | Kabilan | **Peter** | **Peter** |
+| Copilot PR comments (AI review) | Kabilan | **Peter** | **Peter** |
 
 ## The Improvement Loop
 
 | Stage | Owner | Peter's contribution |
 |---|---|---|
-| 1. Observe | Tools (automated) + Developer (micro-triage) | Configures what gets observed |
+| 1. Observe | Tools (automated) + Kabilan (micro-triage) | Configures what gets observed |
 | 2. Reflect | **Peter** (facilitates) + whole team | Pattern recognition across tools, metrics, evaluation |
 | 3. Adapt | **Peter** (decides standard changes) | Evolves standards, adjusts thresholds, writes constraint tests |
 | 4. Verify | Whole team | Reviews whether adaptations improved metrics |

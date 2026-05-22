@@ -53,6 +53,14 @@ This repo uses `pre-commit`.
 - Install hooks with: `uv run pre-commit install`.
 - Run all checks with: `uv run pre-commit run --all-files`.
 
+## Dependency Management
+
+- Dependencies are declared in `pyproject.toml` and locked via `uv.lock`.
+- Adding, removing, or upgrading a dependency changes the project's public contract. Escalate to Peter before modifying `pyproject.toml` dependencies.
+- Use `uv add <package>` to add a dependency and `uv remove <package>` to remove one. Both update `pyproject.toml` and `uv.lock` atomically.
+- After any dependency change, run `uv sync` and then `uv run deptry .` to verify no transitive or missing imports were introduced.
+- Never pin exact versions in `pyproject.toml` unless Peter explicitly requests it; the lockfile handles reproducibility.
+
 ## Procedure
 
 1. From the repo root, run `tasks\dev_sync.ps1`.

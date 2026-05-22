@@ -139,3 +139,4 @@ facade consumes.
 
 - ADR-001: DOCX Generation Engine Selection and Facade Abstraction
 - [Protocol classes (PEP 544)](https://peps.python.org/pep-0544/)
+- **External validation (2026-05-22)**: Microsoft's Legal Agent in Word uses a "purpose-built insertion algorithm" and a "deterministic resolution layer" for document editing rather than relying on an LLM to generate OOXML directly -- confirming the primitives-only boundary principle independently. See [competitor profile](../research/competitors/microsoft-legal-agent.md).

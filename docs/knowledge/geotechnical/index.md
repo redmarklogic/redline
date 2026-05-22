@@ -48,6 +48,7 @@ Confidence levels: notebook-grounded | cross-referenced | single-source
 | Input vs Output Parameters in Geotechnical Design Reports | report-writing | 2026-05-04 | practitioner-grounded | [report-writing/input-vs-output-parameters.md](report-writing/input-vs-output-parameters.md) |
 | Parameter Completeness Scope Statement | report-writing | 2026-05-04 | practitioner-grounded | [report-writing/parameter-completeness-scope-statement.md](report-writing/parameter-completeness-scope-statement.md) |
 | Standards Copyright Field Design for Library Index | standards-and-codes | 2026-05-05 | practitioner-grounded | [standards-and-codes/standards-copyright-field-design.md](standards-and-codes/standards-copyright-field-design.md) |
+| Pre-Review UX — Domain Perspective on Review Workflow Patterns | report-writing | 2026-05-22 | practitioner-grounded | [report-writing/pre-review-ux-domain-feedback.md](report-writing/pre-review-ux-domain-feedback.md) |
 | Audit Trail Business Case — Domain Perspective | report-writing | 2026-05-05 | cross-referenced | [../research/20260505-audit-trail-business-case.md](../research/20260505-audit-trail-business-case.md) |
 | Audit Trail Sign-Off Workflows | report-writing | 2026-05-05 | cross-referenced | [report-writing/audit-trail-sign-off-workflows.md](report-writing/audit-trail-sign-off-workflows.md) |
 | Template Management in Engineering Consultancies | report-writing | 2026-05-06 | cross-referenced | [report-writing/template-management-domain-perspective.md](report-writing/template-management-domain-perspective.md) |

@@ -287,3 +287,50 @@ This memo extends, but does not replace:
 Important naming update: the 2026-04-26 memo is about Leya, which public sources now
 confirm rebranded as Legora in February 2025. Treat the older memo as a pre-rebrand
 Legora/Leya signal, while this memo adds current Legora-specific market evidence.
+
+---
+
+## Addendum -- 2026-05-22: Grounded Legal Agent Architecture Detail
+
+**Source**: NotebookLM notebook `eb1f1482-c70f-4da4-b27b-a44a9eae569e` ("Redline - Legal
+Adviser Word Benchmark"), containing four primary sources: Microsoft Support (Get Started),
+Microsoft Support (Transparency Documentation), Artificial Lawyer, and JLE.
+
+Three findings that were not available in the original May 3 pass:
+
+### A. Architecture detail confirmed
+
+The Legal Agent uses two distinct mechanisms for document editing:
+
+1. A **purpose-built insertion algorithm** that understands Word document structure
+   (formatting, lists, tables, tracked changes) -- not just visible text.
+2. A **deterministic resolution layer** applied over edits, including author-specific
+   changes, instead of relying on an LLM to generate every revision directly.
+
+This is stronger evidence than the original memo's "document-structure-aware editing"
+characterisation. It validates ADR-003 (facade-primitives-only boundary) with higher
+confidence. Reference added to ADR-003.
+
+### B. Playbook-to-skill conversion specifics
+
+The Legal Agent converts a `.docx` playbook into a reusable "skill" -- an AI-readable
+instruction set broken down by categorised topics with extracted rules and example clauses.
+Users can review, adjust, and save the skill for reuse across future contract reviews.
+
+This is the strongest public reference implementation of what Redline's House Rules engine
+should look like. The interaction pattern (upload -> extract -> review -> save -> apply)
+should inform House Rules UX design. Recorded as a design reference for Matt (Phase 2).
+
+### C. Stated limitations as marketing ammunition
+
+Microsoft's own transparency documentation explicitly states the Legal Agent is:
+
+- NOT jurisdiction-aware by default (relies on training data, not live legal databases).
+- Capable of producing "fluent, plausible-sounding content that is legally incorrect."
+- May miss nuances in lengthy or complex documents.
+
+These are precisely the problems Redline's Standards Knowledge Store solves for engineering.
+Positioning line: "A general-purpose AI can review your report, but it does not know
+NZS 4431 from NZS 3910."
+
+Full competitor profile: [`competitors/microsoft-legal-agent.md`](competitors/microsoft-legal-agent.md)

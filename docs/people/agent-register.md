@@ -1,7 +1,7 @@
 # Agent Register
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-18  
+**Last updated:** 2026-05-22  
 **Source of truth for:** agent domains, file authority, notebook access, skills, and maturity level.
 
 > Update this file whenever an agent is hired, promoted, audited, or has their scope changed.
@@ -20,6 +20,7 @@
 | **Harriet** | Head of People & Agent Development | Agent hiring, audits, PIPs, skill gap management, org design, agent register | `docs/people/` (direct); `docs/people/drafts/` for agent and skill proposals | Organisational Design & Team Topologies, Product Design & UX *(scoped on demand)*, Strategy & Mental Models | `hiring-agent-management`, `writing-skills`, `skills-create`, `notebooklm-mcp` | **Draft-first** |
 | **Matt** | UI/UX Designer | Interaction design, wireframes, component specs, user flows across four product surfaces (web, Word documents, Word taskpane, email agent) | `docs/product/design/` (write); `specs/`, `docs/product/`, `docs/knowledge/geotechnical/`, `docs/research/` (read) | Product Design & UX, Information Architecture and Knowledge Management; Digital Marketing & Social Selling *(via John)*, Monetizing & Scaling Innovation *(via John)* | `ux-professional-software` *(pending)*, `ux-conversion-design` *(pending)*, `ux-document-design` *(pending)*, `ux-design-critique`, `miro-mcp`, `pm-personas`, `pm-structural-integrity-auditor`, `notebooklm-mcp`, Playwright MCP *(website review — built-in)* | **Draft-first** |
 | **Linda** | Knowledge Infrastructure Operator | Digital library curation, NotebookLM notebook maintenance, notebook register, standards monitoring | `.agents/skills/redline-research/register.json` (direct write); `G:\My Drive\Library` (read + catalogue) | Information Architecture and Knowledge Management; all open-access notebooks (operational maintenance) | `notebooklm-mcp`, `redline-research`, `knowledge-infrastructure` *(pending)* | **Draft-first** |
+| **Kabilan** | Python Developer (Senior Software Engineer) | Full-stack Python engineering: implementation, testing, debugging, data pipelines, scripts, infrastructure. No architectural, product, domain, or design decisions. All code subject to founder review. No push to origin without explicit founder instruction. | `src/rl/`, `tests/`, `scripts/` (modify only), `hooks/` (bug fixes only), `output/` (write); `docs/adr/`, `docs/architecture/`, `docs/knowledge/geotechnical/`, `docs/product/prds/`, `docs/product/hypotheses/`, `docs/product/problems/`, `docs/product/design/`, `specs/` (read) | None (engineering notebooks via Peter) | All 39 Python/engineering skills (loaded on demand): `python-style`, `python-patterns`, `python-typing`, `python-linting`, `python-testing-unit`, `python-testing-api`, `test-driven-development`, `python-static-checks`, `systematic-debugging`, `verification-before-completion`, + 29 others | Autonomous |
 
 ---
 

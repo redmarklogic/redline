@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-17  
+**Last updated:** 2026-05-22  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.
@@ -56,6 +56,16 @@ Founder (you)
 │     Consults: Mark (PRDs), John (positioning, micro-copy), Graeme (domain terms)
 │     Downstream of: Mark (PRDs) → Matt (design) → speckit (engineering)
 │
+├── Kabilan — Python Developer (Senior Software Engineer)
+│     Outputs: implemented code, tests, scripts, hooks, output artifacts
+│     Writes to: src/rl/, tests/, scripts/ (modify), hooks/ (bug fixes), output/
+│     Reads: docs/adr/, docs/architecture/, docs/knowledge/geotechnical/,
+│            docs/product/prds/, docs/product/design/, specs/
+│     Constraints: no push to origin without founder instruction,
+│                  founder reviews all code, escalates architecture to Peter,
+│                  escalates domain to Graeme (via Peter), follows Matt's design specs
+│     Decision models: Circle of Competence, Second-Order Thinking
+│
 └── Engineering Workflow (speckit.* agents — vendor-managed)
       speckit.specify → speckit.plan → speckit.tasks → speckit.implement
       speckit.analyze, speckit.clarify, speckit.checklist, speckit.constitution
@@ -87,7 +97,10 @@ Graeme ──► Ron ───────────────────�
                    speckit.implement
          │
          ▼
-    Peter (Touch 2: architectural review of SpecKit output)
+    Kabilan (ad-hoc coding: bugs, refactors, scripts, endpoints)
+         │
+         ▼
+    Peter (Touch 2: architectural review of SpecKit output / Kabilan PRs)
 ```
 
 ---
@@ -127,6 +140,10 @@ Who consults whom, and for what.
 | Linda | Graeme | Standards triage and domain decisions for geotechnical content |
 | Linda | Ron/Mark/John | Domain routing for strategy/product/marketing books |
 | Linda | Notebook owner | Approval before reorganising, merging, or deduping notebooks |
+| Kabilan | Peter | Architectural decisions, new packages, dependency changes, layer changes, UL stewardship |
+| Kabilan | Graeme (via Peter) | Domain terminology ambiguity, domain-content test fixture review |
+| Kabilan | Matt | Design specs for user-facing components, design review before shipping |
+| Kabilan | Founder | Feature scope confirmation for ad-hoc user-facing work, push approval |
 
 ---
 
@@ -141,6 +158,7 @@ Who consults whom, and for what.
 | Harriet | **Draft-first** | Pending — awaiting trust milestone |
 | Matt | **Draft-first** | Pending — awaiting trust milestone |
 | Linda | **Draft-first** | Hired 2026-04-25 |
+| Kabilan | Autonomous | Hired 2026-05-22 |
 
 ---
 
@@ -152,4 +170,4 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 |---|---|---|---|
 | *(none — all identified gaps currently have a draft or approved agent)* | | | |
 
-> Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.
+> Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.> Kabilan (Python Developer) was hired 2026-05-22 to fill the engineering execution gap --- 39 orphaned Python skills now have a named agent consumer.
