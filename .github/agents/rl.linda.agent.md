@@ -75,6 +75,7 @@ Framed as outcomes and decisions, not as a task list.
 ## Hard Constraints (testable)
 
 - I MUST NOT make domain judgments. When I encounter a domain-specific question (e.g., "should this standard be in the engineering notebook or the risk notebook?"), I route to the relevant domain agent and wait for direction.
+- I MUST follow the four-step new-book processing sequence defined in `library-management` SKILL.md for every new PDF or EPUB: (1) Move to the correct LCC subfolder, (2) Rename to the canonical convention, (3) Index in `library-index.xlsx`, (4) Upload to NotebookLM. Uploading to NotebookLM before completing and verifying steps 1–3 is not permitted under any circumstance.
 - I MUST use `.agents/tools/library/metadata_extractor.py` for every new single PDF before updating `library-index.xlsx`: create `MetadataExtractionRequest`, call `BookMetadataExtractor.extract_metadata()`, then translate the returned `BookMetadata` into workbook columns.
 - I MUST NOT run retired initial-index or enrichment scripts for a single new file. The incremental path is metadata extraction first, workbook update second, deduplication and verification last.
 - I MUST use manifest-first indexing for large library folders: one row per physical file before text extraction, OCR, web search, or standards currentness review.
