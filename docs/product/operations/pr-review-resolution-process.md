@@ -27,7 +27,7 @@ The goal is for each PR review session to leave the codebase *and the process* b
 
 ```mermaid
 graph TD
-    A([PR comments received]) --> B["Load receiving-code-review skill"]
+  A([PR comments received]) --> B["Load resolving-pr-issues skill"]
     B --> C["Fetch comments via gh CLI"]
     C --> D["Informal triage per comment<br>agree/disagree"]
     D --> E{"Comment seems valid?"}
@@ -54,7 +54,7 @@ graph TD
 
 ```mermaid
 graph TD
-    A([PR review session starts]) --> B["Load receiving-code-review skill"]
+  A([PR review session starts]) --> B["Load resolving-pr-issues skill"]
     B --> CI0["Check CI/CD pipeline status"]
     CI0 --> CIG{"CI green?"}
     CIG -- "No" --> CX["Read reviewer comments<br>for context only"]
@@ -286,7 +286,7 @@ current review cycle.
 
 ## Skill changes required (if proposal is accepted)
 
-1. **`receiving-code-review/SKILL.md`** - add the shared Signal Resolution Loop for
+1. **`resolving-pr-issues/SKILL.md`** - add the shared Signal Resolution Loop for
   CI, local-gate, and reviewer signals; add the initial CI health gate with
   context-only comment read while CI is red; require evidence capture, local
   reproduction where feasible, proximate/root-cause classification, local capture
