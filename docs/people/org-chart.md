@@ -170,4 +170,5 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 |---|---|---|---|
 | *(none — all identified gaps currently have a draft or approved agent)* | | | |
 
-> Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.> Kabilan (Python Developer) was hired 2026-05-22 to fill the engineering execution gap --- 39 orphaned Python skills now have a named agent consumer.
+> Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.
+> Kabilan (Python Developer) was hired 2026-05-22 to fill the engineering execution gap --- 39 orphaned Python skills now have a named agent consumer.

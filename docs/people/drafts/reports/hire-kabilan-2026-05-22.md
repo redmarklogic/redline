@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-22
 **Drafted by:** Harriet (Head of People & Agent Development)
-**Status:** Draft — awaiting founder approval
+**Status:** Approved (2026-05-22)
 
 ---
 

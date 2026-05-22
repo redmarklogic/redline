@@ -46,7 +46,7 @@ need, and four workflow patterns missing from the initial design reference.
 ### 3. Disposition workflow requires six options
 
 6. Required disposition options:
-   - **Agree**: finding valid, report will be amended
+   - **Will Fix**: finding valid, report will be amended
    - **Disagree**: false positive, tool got it wrong
    - **Not Applicable**: correct in general but does not apply to this project
    - **Accepted Risk**: deviation is intentional and documented — distinct from Disagree

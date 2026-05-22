@@ -79,7 +79,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`python-mcp-tools`**: MCP tooling usage in this repo
 - **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
 - **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
-- **`notebooklm-deep-research`**: Run NotebookLM deep research with Prompt Anatomy, title distillation, and selective source import rules under web/Drive constraints
+- **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.
 - **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
@@ -267,7 +267,8 @@ toolset, not a skill that decides what to render.
 | Design specifications, interaction pattern docs | Markdown (`docs/product/design/`) | Matt |
 | Wireframes, user flows, annotated mockups | **Miro** (Markdown design spec canonical) | Matt |
 | ADRs, architecture documents, shaped Pitches | Markdown | Peter |
-| Evaluation rubric structures | Markdown (`docs/evaluation/`) | Peter (Graeme approves domain content) |\n| Production code, tests, scripts | Code (`src/rl/`, `tests/`, `scripts/`) | Kabilan |
+| Evaluation rubric structures | Markdown (`docs/evaluation/`) | Peter (Graeme approves domain content) |
+| Production code, tests, scripts | Code (`src/rl/`, `tests/`, `scripts/`) | Kabilan |
 
 Do not auto-mirror every Markdown artifact to Miro — mirror on demand. Drift starts when both
 surfaces try to be canonical for the same content.
