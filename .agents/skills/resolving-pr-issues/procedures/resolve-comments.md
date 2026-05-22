@@ -15,7 +15,7 @@ gh api repos/<owner>/<repo>/pulls/<number>/reviews
 If the GitHub API returns 404 (private repo / limited token), fall back to local diff:
 
 ```powershell
-git diff origin/master..HEAD --stat
+git diff origin/HEAD..HEAD --stat
 ```
 
 ---
@@ -51,6 +51,7 @@ Answer both questions:
 2. Would a short code or doc comment make that context visible next time?
 
 Then:
+
 - If yes: improve code/docs **and** reply with that context.
 - If no: reply with technical evidence only.
 
