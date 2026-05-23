@@ -1,4 +1,4 @@
-# Concept: Report Skeleton Generator
+﻿# Concept: Report Skeleton Generator
 
 > **Audience**: Product owners, automation engineers, and domain engineers.
 > This document describes an automated pipeline that ingests pre-field
@@ -259,7 +259,7 @@ Appendices  (ordered by first reference in main text)
   protocol in the `marker` sibling package. The facade decouples business
   logic from engine specifics, allowing future engine swaps (e.g.,
   ONLYOFFICE document-builder for post-processing). See
-  [ADR-001](../../adr/adr-001-docx-generation-engine-facade.md).
+  [ADR-002](../../adr/adr-002-docx-generation-engine-facade.md).
 - **CrewAI** orchestrates the multi-step pipeline with specialised agents
   for extraction, section building, and formatting. Note: CrewAI is
   deferred for the initial phases (0-3) which use pure DOCX generation

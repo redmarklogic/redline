@@ -1,4 +1,4 @@
-# Strategic Bets — H2 2026
+﻿# Strategic Bets — H2 2026
 
 **Status**: Draft v2. **Owner**: Ron. **Period**: 2026-06-01 → 2026-11-30.
 
@@ -306,7 +306,7 @@ curated registry is a defensible asset.
 **internal-only and citation-only**. It stores clause references and applicability
 mappings — never full proprietary text. It is never exposed as a public-facing query
 interface. This is confirmed professionally defensible by Graeme (high confidence).
-See `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+See `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`
 and `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`.
 
 **Mode-neutral data model requirement** *(added 2026-05-03)*: The Standards Knowledge
@@ -353,7 +353,7 @@ documents. They provide a free, low-risk starting corpus for the Standards Knowl
 encode council checklist rules as Depth 1 (presence) checks, then layer Depth 2 (content
 quality) rules from professional standards on top. This avoids the licensing risk (P-026)
 for the initial rule library while still demonstrating the Knowledge Store architecture.
-Council checklists also validate the shared taxonomy (ADR-006) empirically --- 10 checklists
+Council checklists also validate the shared taxonomy (ADR-007) empirically --- 10 checklists
 from 5 jurisdictions converge on the same 10-node taxonomy. Provenance:
 `docs/research/20260513-checklist-collection-analysis.md`.
 

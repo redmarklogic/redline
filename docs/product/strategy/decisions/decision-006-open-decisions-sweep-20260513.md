@@ -1,4 +1,4 @@
-# Open Decisions — Document Sweep Findings (2026-05-13)
+﻿# Open Decisions — Document Sweep Findings (2026-05-13)
 
 **Status**: All decided (2026-05-13).
 **Raised by**: Document consistency sweep (2026-05-13).
@@ -146,7 +146,7 @@ the launch plan distinguishing the warning from the kill criterion. No strategy 
 ### Conflict
 
 The Pre-Review rule validation document and the FHWA vocabulary document both use `severity`
-(HIGH / MEDIUM / LOW) and `depth_level` (1 / 2 / 3) as rule properties. ADR-006 defines
+(HIGH / MEDIUM / LOW) and `depth_level` (1 / 2 / 3) as rule properties. ADR-007 defines
 `depth_level` as part of the canonical rule schema. But neither document explicitly states
 whether severity and depth are *orthogonal* (independent) or *correlated* (depth 1 always
 HIGH because presence is critical).
@@ -160,7 +160,7 @@ If they are not explicitly declared orthogonal, future rule authors may conflate
 ### Decision Required
 
 **Mark**: Confirm that `severity` and `depth_level` are orthogonal dimensions, both required
-on every rule. Update the rule schema in ADR-006 to make this explicit.
+on every rule. Update the rule schema in ADR-007 to make this explicit.
 
 **Graeme**: Validate that the proposed 2x3 matrix (3 severities x 3 depths) makes domain sense.
 Are there cells that should never exist (e.g., Depth 3 / LOW severity — a method validation
@@ -182,7 +182,7 @@ configurable: bool       # Can a firm override via House Rules?
 
 ### Files to update after decision
 
-- [adr-006-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-006-shared-taxonomy-skeleton-checklist-prereview.md) — add explicit schema definition with orthogonality note
+- [adr-007-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-007-shared-taxonomy-skeleton-checklist-prereview.md) — add explicit schema definition with orthogonality note
 - [fhwa-reviewer-checklist-rule-vocabulary.md](../../../knowledge/geotechnical/report-writing/fhwa-reviewer-checklist-rule-vocabulary.md) — update tables to include both `severity` and `depth_level` columns explicitly
 - [pre-review-rule-validation-scope-and-language-checks.md](../../../knowledge/geotechnical/report-writing/pre-review-rule-validation-scope-and-language-checks.md) — add schema reference
 
@@ -196,14 +196,14 @@ configurable: bool       # Can a firm override via House Rules?
 
 The 10-node taxonomy table appears identically in:
 1. [checklist-taxonomy-cross-jurisdiction.md](../../../knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md)
-2. [adr-006-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-006-shared-taxonomy-skeleton-checklist-prereview.md)
+2. [adr-007-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-007-shared-taxonomy-skeleton-checklist-prereview.md)
 
 If a node name is updated in one, the other silently diverges.
 
 ### Decision Required
 
 **Mark**: Should the 10-node taxonomy be extracted to a single canonical reference file
-(`docs/knowledge/geotechnical/report-writing/canonical-taxonomy.md`) and both ADR-006
+(`docs/knowledge/geotechnical/report-writing/canonical-taxonomy.md`) and both ADR-007
 and the cross-jurisdiction analysis link to it? Or is the duplication acceptable given that
 ADRs are typically immutable after acceptance?
 
@@ -212,7 +212,7 @@ ADRs are typically immutable after acceptance?
 | Option | Description |
 |---|---|
 | A | Extract to `canonical-taxonomy.md`; both documents link to it | Single source of truth; any change is visible in both contexts |
-| B | ADR-006 is immutable (by ADR convention); only the knowledge doc is the live reference; ADR-006 is explicitly marked "taxonomy defined at 2026-05-13; see knowledge doc for current version" | Respects ADR immutability; adds a clarifying note |
+| B | ADR-007 is immutable (by ADR convention); only the knowledge doc is the live reference; ADR-007 is explicitly marked "taxonomy defined at 2026-05-13; see knowledge doc for current version" | Respects ADR immutability; adds a clarifying note |
 | C | Accept duplication; low-risk given stable taxonomy | No effort now; risk of silent drift over time |
 
 **Recommended**: Option B. ADRs should not be mutated; adding a note that the knowledge doc
@@ -220,7 +220,7 @@ is the live reference respects that convention while directing readers to the ri
 
 ### Files to update after decision
 
-- [adr-006-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-006-shared-taxonomy-skeleton-checklist-prereview.md) — add note under taxonomy table pointing to knowledge doc as live reference
+- [adr-007-shared-taxonomy-skeleton-checklist-prereview.md](../../../adr/adr-007-shared-taxonomy-skeleton-checklist-prereview.md) — add note under taxonomy table pointing to knowledge doc as live reference
 
 ---
 
@@ -231,5 +231,5 @@ is the live reference respects that convention while directing readers to the ri
 | 1 — Product surfaces count | Mark, Ron | Decided | Four delivery channels (web, Word docs, Word taskpane, email). Capability areas are sub-surfaces of channels. Hiring draft corrected. | 2026-05-13 |
 | 2 — Pre-Submission scope | Mark | Decided | Mode within Pre-Review (Option B). Same codebase, Depth 1 rules, free tier. Initiative doc, research doc, day-in-the-life updated. | 2026-05-13 |
 | 3 — KR1 deadline ambiguity | Ron | Decided | Two-threshold model confirmed. Aug 1 = warning (founder review triggered, bet continues). Sep 1 = authoritative kill criterion. Parked-decisions P-016, P-021 and launch plan updated. | 2026-05-13 |
-| 4 — Rule schema orthogonality | Mark, Graeme | Decided | `severity` and `depth_level` are orthogonal. Full schema with code block added to ADR-006. | 2026-05-13 |
-| 5 — Taxonomy duplication | Mark | Decided | ADR-006 is immutable (snapshot). Pointer note added in ADR-006 directing to knowledge doc as live reference. | 2026-05-13 |
+| 4 — Rule schema orthogonality | Mark, Graeme | Decided | `severity` and `depth_level` are orthogonal. Full schema with code block added to ADR-007. | 2026-05-13 |
+| 5 — Taxonomy duplication | Mark | Decided | ADR-007 is immutable (snapshot). Pointer note added in ADR-007 directing to knowledge doc as live reference. | 2026-05-13 |

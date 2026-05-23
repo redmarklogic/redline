@@ -1,4 +1,4 @@
-# Decision 002 — "Before the Fact" First; "After the Fact" Phase 2
+﻿# Decision 002 — "Before the Fact" First; "After the Fact" Phase 2
 
 **Status**: Decided. **Date**: 2026-05-03. **Deciders**: Founder, Mark, Graeme.
 
@@ -116,4 +116,4 @@ Add "after the fact" when BOTH conditions are met:
 - `docs/product/strategy/strategic-bets.md` — Bets 1-6
 - `docs/product/strategy/positioning.md` — CEO Priority Hierarchy
 - `docs/research/20260503-firm-size-segmentation.md` — Firm size tiers
-- `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+- `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`

@@ -1,4 +1,4 @@
-# AI-Assisted Workflow Expansion Boundaries
+﻿# AI-Assisted Workflow Expansion Boundaries
 
 **Sub-domain**: contracts-and-risk
 **Last verified**: 2026-05-03
@@ -25,7 +25,7 @@ Legal-AI-style workflow expansion is plausible in geotechnical engineering only 
 ## Standards Referenced
 
 - No new engineering standard was interpreted in this assessment.
-- Existing Redline architecture remains governed by ADR-005: the Standards Knowledge Store is internal-only and citation-only, storing clause references and applicability mappings rather than full proprietary standards text.
+- Existing Redline architecture remains governed by ADR-006: the Standards Knowledge Store is internal-only and citation-only, storing clause references and applicability mappings rather than full proprietary standards text.
 
 ## Open Questions
 
@@ -39,4 +39,4 @@ Legal-AI-style workflow expansion is plausible in geotechnical engineering only 
 - `docs/research/20260426-legal-ai-adjacent-market-signal.md`
 - `docs/research/20260426-playbook-driven-review-geotechnical-adaptation.md`
 - `docs/knowledge/geotechnical/ai-gbr-liability-assessment.md`
-- `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+- `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`

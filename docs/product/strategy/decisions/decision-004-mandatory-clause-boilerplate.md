@@ -1,4 +1,4 @@
-# Decision 004 — Mandatory Clause Boilerplate in Skeleton Generator
+﻿# Decision 004 — Mandatory Clause Boilerplate in Skeleton Generator
 
 **Status**: Decided. **Date**: 2026-05-10. **Deciders**: Founder, Mark, Graeme.
 
@@ -104,7 +104,7 @@ paraphrase variation.
   visually distinct in Word, and unambiguous when LOE extraction pre-populates fields.
 - **Curated source is the correct architecture.** Clause wording sourced from a curated list
   in the Standards Knowledge Store (Feature N) is consistent with the citation-only,
-  internal-only architecture established in ADR-005. The LLM selects clauses; it does not
+  internal-only architecture established in ADR-006. The LLM selects clauses; it does not
   author them.
 
 ## Consequences
@@ -121,6 +121,6 @@ paraphrase variation.
 
 - `docs/product/prds/skeleton-generator-prd.md` (Feature A PRD — updated per this decision)
 - `docs/product/strategy/decisions/decision-003-jurisdiction-aware-rule-metadata.md`
-- `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+- `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`
 - `docs/product/strategy/feature-backlog.md` (Feature N — Standards Knowledge Store)
 - Graeme domain analysis session, 2026-05-10
