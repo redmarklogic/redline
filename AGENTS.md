@@ -79,6 +79,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`python-mcp-tools`**: MCP tooling usage in this repo
 - **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
 - **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
+- **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.
 - **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
 - **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
@@ -131,6 +132,27 @@ permitted only when clearly labelled as such.
   `docs/architecture/`, `docs/evaluation/`, `specs/shaped/`.
   Invoke: "Peter, [request]"
 
+### Engineering (execution)
+
+- **Kabilan** (`rl.kabilan.agent.md`): Python Developer (Senior Software Engineer).
+  Implementation, testing, debugging, data pipelines, scripts, and infrastructure. Writes
+  code; does not make architectural, product, or domain decisions. Downstream of Peter
+  (consumes shaped Pitches, ADRs, architectural decisions), Matt (consumes design specs),
+  and SpecKit (consumes task plans). All code subject to founder review; never pushes to
+  origin without explicit founder instruction. Decision-making guided by Circle of
+  Competence and Second-Order Thinking. Writes to `src/rl/`, `tests/`, `scripts/`,
+  `hooks/`, `output/`.
+  Invoke: "Kabilan, [request]"
+
+**Engineering skills (loaded on demand by Kabilan):**
+
+See Kabilan's agent file for the full skills table. Key skill categories: Python core
+(`python-style`, `python-patterns`, `python-typing`, `python-linting`), testing
+(`python-testing-unit`, `test-driven-development`), domain modeling
+(`python-domain-modeling`, `data-tidy`), environment (`dev-environment`, `python-deptry`),
+git (`version-control`, `git-push-batched`), and verification
+(`python-static-checks`, `verification-before-completion`).
+
 **PM skills (loaded on demand by Mark and/or Ron):**
 
 - `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
@@ -173,17 +195,19 @@ permitted only when clearly labelled as such.
 
 **Handoff chain (non-negotiable):**
 ```
-Graeme (domain facts) → Ron (vision → bets → OKRs → positioning → GTM motion)
-                          ↓
-               Mark (problem → hypothesis → PRD)        John (content, SEO, social, campaigns)
-                          ↓                                ↓
-               Peter (shape → Pitch → feasibility)      published assets / channels
-                          ↓                                ↓
+Graeme (domain facts) --> Ron (vision --> bets --> OKRs --> positioning --> GTM motion)
+                          |
+               Mark (problem --> hypothesis --> PRD)        John (content, SEO, social, campaigns)
+                          |                                |
+               Peter (shape --> Pitch --> feasibility)      published assets / channels
+                          |                                |
                Matt (design specs, wireframes)           published assets / channels
-                          ↓                                ↓
-               spec-kit (engineering)                      ↓
-                                       ↘             ↙
-                                Monthly Signal Report → back to Ron + Mark
+                          |                                |
+               spec-kit (engineering spec)                 |
+                          |                                |
+               Kabilan (implementation, tests, code)       |
+                                       \             /
+                                Monthly Signal Report --> back to Ron + Mark
 ```
 
 Key John-specific dynamics:
@@ -194,21 +218,30 @@ Key John-specific dynamics:
 - John → Ron + Mark: monthly signal report (John's most strategic contribution).
 
 Key Matt-specific dynamics:
-- Mark → Matt: PRDs. Matt never designs without a PRD.
-- Matt → Graeme: domain terminology verification (mandatory, blocking).
-- Matt → John: conversion-critical designs for positioning and micro-copy review.
-- Matt → speckit.specify: design specs for engineering handoff.
+- Mark --> Matt: PRDs. Matt never designs without a PRD.
+- Matt --> Graeme: domain terminology verification (mandatory, blocking).
+- Matt --> John: conversion-critical designs for positioning and micro-copy review.
+- Matt --> speckit.specify: design specs for engineering handoff.
+- Matt --> Kabilan (indirect): Kabilan reads Matt's design specs before implementing user-facing components. If a spec is missing, Kabilan asks Matt.
 
 Key Peter-specific dynamics:
-- Mark → Peter: PRDs for feasibility and shaping. No unshaped work enters SpecKit.
-- Peter → Mark: shaped Pitches with scope boundaries, rabbit holes removed.
-- Peter → Matt: Touch 1 constraints memo (pre-design). Peter is absent during design.
-- Matt → SpecKit → Peter: Touch 2 architectural compliance review (post-SpecKit, not post-design).
-- Peter ↔ Graeme: bidirectional evaluation partnership. Peter designs harness; Graeme provides domain truth. Quarterly retro.
-- Peter → Ron: proactive feasibility briefings. Peter attends bet review sessions.
-- Peter → John: architecture-claim verification. Proactive ADR-impact notification.
+- Mark --> Peter: PRDs for feasibility and shaping. No unshaped work enters SpecKit.
+- Peter --> Mark: shaped Pitches with scope boundaries, rabbit holes removed.
+- Peter --> Matt: Touch 1 constraints memo (pre-design). Peter is absent during design.
+- Matt --> SpecKit --> Peter: Touch 2 architectural compliance review (post-SpecKit, not post-design).
+- Peter <-> Graeme: bidirectional evaluation partnership. Peter designs harness; Graeme provides domain truth. Quarterly retro.
+- Peter --> Ron: proactive feasibility briefings. Peter attends bet review sessions.
+- Peter --> John: architecture-claim verification. Proactive ADR-impact notification.
 - Ron + Peter: co-author AI acceptable-use policy.
 - Product Trio: Mark + Matt + Peter (weekly touchpoint, disagreements resolved by running a test).
+
+Key Kabilan-specific dynamics:
+- Kabilan --> Peter: escalates architectural decisions (new packages, layer changes, cross-context PRs, dependency additions, UL ambiguities).
+- Peter --> Kabilan: architectural decisions, layer boundary guidance, dependency approvals, hook threshold/rule changes.
+- Kabilan --> Matt: consults design specs before implementing user-facing work. Asks Matt when spec is missing.
+- Kabilan --> Graeme (via Peter): domain terminology questions route through Peter, who routes to Graeme.
+- Kabilan --> Founder: all code is reviewed by the founder. No push to origin without explicit founder instruction.
+- Kabilan never invokes SpecKit agents. SpecKit and Kabilan are parallel workflows; Kabilan consumes SpecKit output.
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 
@@ -235,6 +268,7 @@ toolset, not a skill that decides what to render.
 | Wireframes, user flows, annotated mockups | **Miro** (Markdown design spec canonical) | Matt |
 | ADRs, architecture documents, shaped Pitches | Markdown | Peter |
 | Evaluation rubric structures | Markdown (`docs/evaluation/`) | Peter (Graeme approves domain content) |
+| Production code, tests, scripts | Code (`src/rl/`, `tests/`, `scripts/`) | Kabilan |
 
 Do not auto-mirror every Markdown artifact to Miro — mirror on demand. Drift starts when both
 surfaces try to be canonical for the same content.

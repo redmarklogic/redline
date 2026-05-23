@@ -23,6 +23,20 @@ governance), use the `ddd-strategic` skill.
 - General class design patterns (`python-class-design`)
 - Data ingestion pipelines (`python-data-ingestion`)
 
+## Layer Architecture
+
+This repo follows a layered architecture. Dependencies point inward --- outer layers depend on inner layers, never the reverse.
+
+| Layer | Location | Responsibility |
+|---|---|---|
+| Domain | `src/rl/domain/` | Core business logic: entities, value objects, aggregates, domain events |
+| Functions | `src/rl/functions/` | Stateless business operations and data transformations |
+| Adapters | `src/rl/adapters/` | I/O boundaries: file readers, API clients, database access |
+| Interface | `src/rl/api/` or `src/rl/web/` | FastAPI endpoints, CLI entrypoints, MCP tools |
+| Scripts | `scripts/` | Thin orchestration that wires layers together |
+
+Do not create new top-level packages under `src/rl/` or move code between layers without Peter's approval. Adding a new layer (e.g. a `services/` package) is an architectural decision.
+
 ## Architectural stance
 
 The domain layer contains core business logic and is structured as:

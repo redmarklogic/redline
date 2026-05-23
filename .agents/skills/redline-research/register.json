@@ -608,5 +608,63 @@
     ],
     "access": "open",
     "added": "2026-05-16"
+  },
+  {
+    "id": "llm-token-optimisation-agentic-workflows",
+    "name": "LLM Token Optimisation — Agentic VS Code Copilot Workflows",
+    "url": "https://notebooklm.google.com/notebook/c7ef2307-4082-4723-b81a-0956b124852d",
+    "description": "Evidence-based strategies for reducing LLM input token consumption in agentic multi-agent VS Code GitHub Copilot workflows with large persistent instruction contexts. 26 sources covering modular instruction architectures (on-demand vs always-loaded skills), session length management and compact handoff patterns, model routing by task complexity, prompt caching and context compression techniques, and token cost monitoring with LiteLLM and VS Code tooling.",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "LLM token cost optimisation",
+      "agentic AI workflows",
+      "GitHub Copilot agent mode",
+      "prompt caching",
+      "model routing",
+      "context window management",
+      "session handoff patterns",
+      "AGENTS.md and SKILL.md architecture",
+      "LiteLLM cost tracking",
+      "multi-agent orchestration"
+    ],
+    "content_types": ["blog posts", "technical guides", "academic papers", "official documentation", "community discussions"],
+    "use_cases": [
+      "Designing on-demand vs always-loaded instruction strategies for AGENTS.md and skill files",
+      "Implementing prompt caching (Anthropic cache_control breakpoints, OpenAI automatic caching) in agentic loops",
+      "Setting up model routing to match task complexity with model cost tier",
+      "Monitoring and attributing per-session token spend using LiteLLM or VS Code Debug View",
+      "Managing session length and compact handoff patterns in multi-agent advisory chains"
+    ],
+    "access": "open",
+    "added": "2026-05-22"
+  },
+  {
+    "id": "strategy-competitive-advantage",
+    "name": "Strategy & Competitive Advantage",
+    "url": "https://notebooklm.google.com/notebook/a91c8e68-ed9e-4929-ab25-1b35d952cf28",
+    "description": "Comprehensive guide to strategic thinking, competitive positioning, and sustained advantage. Covers business strategy frameworks (Good Strategy Bad Strategy, Blue Ocean), competitive analysis, resource-based view of the firm, strategic inflection points, and how organizations build defensible competitive moats. Draws on canonical strategy books and case studies for product, firm, and market-level strategic thinking.",
+    "topic_area": "Process & product",
+    "topics": [
+      "strategic thinking",
+      "good strategy bad strategy",
+      "competitive positioning",
+      "competitive advantage",
+      "blue ocean strategy",
+      "resource-based view",
+      "strategic inflection points",
+      "competitive moats",
+      "business strategy frameworks",
+      "market analysis"
+    ],
+    "content_types": ["strategy books", "case studies", "competitive analysis frameworks", "strategic thinking tools"],
+    "use_cases": [
+      "Developing a coherent strategy with clear diagnosis, guiding policy, and coherent actions",
+      "Analysing competitive positioning and identifying sustainable competitive advantages",
+      "Stress-testing strategic assumptions and identifying strategic risks",
+      "Evaluating Blue Ocean vs Red Ocean opportunities",
+      "Understanding how firms build and defend competitive moats"
+    ],
+    "access": "open",
+    "added": "2026-05-23"
   }
 ]

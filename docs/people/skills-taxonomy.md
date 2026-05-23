@@ -1,10 +1,12 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-17  
+**Last updated:** 2026-05-22  
 **Source of truth for:** all skills in `.agents/skills/`, their domain category, and which agents use them.
 
 > Update this file whenever a skill is created, retired, or reassigned.
+>
+> **Note:** "Engineering" in the Used by column refers to **Kabilan** (Python Developer, hired 2026-05-22). Kabilan loads these skills on demand per task type.
 
 ---
 
@@ -91,6 +93,7 @@
 |---|---|---|
 | `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John, Peter |
 | `rag-prompting` | Query design for NotebookLM — prompt anatomy, retrieval rules, structured extraction | Graeme, Ron, Mark, John, Linda |
+| `notebooklm-deep-research` | Run NotebookLM deep research with 5 Whys intake, selective source import, and notebook indexing | Ron, Mark, Peter, Linda |
 | `library-management` | Index, rename, and add books to the digital library | Linda |
 | `notebooklm-index` | Index NotebookLM notebooks into the register spreadsheet | Linda |
 
@@ -105,7 +108,7 @@
 | `using-git-worktrees` | Parallel development in isolated git worktrees | Engineering |
 | `finishing-a-development-branch` | Merge/PR decision workflow | Engineering |
 | `requesting-code-review` | Pre-review checklist | Engineering |
-| `receiving-code-review` | Responding to code review feedback | Engineering |
+| `resolving-pr-issues` | Resolve incoming PR code-review comments (structured triage, fail-first test, fix, CI closure) | Engineering |
 | `verification-before-completion` | Verify errors are truly resolved before claiming done | Engineering |
 | `systematic-debugging` | 4-phase root cause debugging process | Engineering |
 

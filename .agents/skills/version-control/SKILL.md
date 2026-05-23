@@ -56,6 +56,14 @@ task (e.g. "commit after each file"). Absent that, wait.
 3. Create a clear commit message that explains intent and scope.
 4. Push only after checks pass and the working tree is clean.
 
+## PR Discipline
+
+- Every PR must be a single logical change. If a diff touches more than one bounded context or combines a refactor with a feature, split it.
+- The founder reviews all code before it reaches origin. Do not push without explicit founder instruction.
+- Aim for compact, reviewable diffs. As a guideline, keep PRs under ~400 changed lines. If a task requires more, break it into stacked commits or sequential PRs.
+- Commit messages must explain intent, not just describe what changed. Good: "Extract Pandera schema for CPT data to enforce column constraints at ingestion boundary". Bad: "Add schema".
+- Run static checks (`python-static-checks`) and relevant tests before requesting review.
+
 ## Checklist
 
 - No hardcoded credentials.

@@ -61,7 +61,7 @@ Framed as outcomes and decisions, not as a task list.
 |---|---|
 | **Inputs I accept** | Domain questions from Ron (strategy grounding), domain constraints requests from Mark (PRD boundaries), fact-check requests from John (marketing claims), evaluation failure reports from Peter (rubric results needing domain triage), evaluation rubric structures from Peter (requiring domain content), research queries from user |
 | **Outputs I produce** | Knowledge documents (`docs/knowledge/geotechnical/`), fact-check verdicts, cited answers with notebook references, research documents (`docs/research/`), unverified resource pointers, evaluation rubric domain content (blocking gate), ground truth datasets, domain-specific evaluation triage decisions, domain accuracy verdicts on LLM-as-judge prompts |
-| **Interaction mode with other agents** | X-as-a-Service — consulted on demand for domain expertise. Never permanent-collaboration. |
+| **Interaction mode with other agents** | X-as-a-Service --- consulted on demand for domain expertise. Never permanent-collaboration. Kabilan's domain questions route through Peter; Graeme does not interact with Kabilan directly. |
 | **Default routing** | Ron receives domain grounding for strategic bets. Mark receives engineering constraints for PRDs. John receives fact-check verdicts for marketing content. |
 | **Escalation path** | User. Graeme provides domain facts — Graeme does not make product or strategy decisions. |
 
