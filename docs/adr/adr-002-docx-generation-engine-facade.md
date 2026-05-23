@@ -1,4 +1,4 @@
-# ADR-001: DOCX Generation Engine Selection and Facade Abstraction
+﻿# ADR-002: DOCX Generation Engine Selection and Facade Abstraction
 
 ## Summary
 
@@ -243,6 +243,7 @@ implementation.
 
 ## References
 
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for the DOCX generation engine and facade protocol
 - [python-docx documentation](https://python-docx.readthedocs.io/)
 - [ONLYOFFICE Document Builder API](https://api.onlyoffice.com/docs/document-builder/get-started/overview/)
 - [Quarto Word output](https://quarto.org/docs/output-formats/ms-word.html)

@@ -1,4 +1,4 @@
-# ADR-003: DocumentFacade Primitives-Only Boundary
+﻿# ADR-004: DocumentFacade Primitives-Only Boundary
 
 ## Summary
 
@@ -17,7 +17,7 @@ Accepted -- 2026-04-12
 
 ## Context
 
-ADR-001 established the `DocumentFacade` protocol as the abstraction boundary
+ADR-002 established the `DocumentFacade` protocol as the abstraction boundary
 between skeleton builder logic and the DOCX generation engine. The protocol
 defines methods like `add_heading(text, level)`, `add_table(headers, rows)`,
 and `save(path)`.
@@ -30,7 +30,7 @@ primitives (strings to write, integers for heading levels, lists for table
 data). If domain types leak into the facade signature, the facade becomes
 coupled to the domain model and cannot be reused or tested independently.
 
-This decision clarifies the boundary that ADR-001 implied but did not
+This decision clarifies the boundary that ADR-002 implied but did not
 explicitly state.
 
 ## Options Considered
@@ -137,6 +137,7 @@ facade consumes.
 
 ## References
 
-- ADR-001: DOCX Generation Engine Selection and Facade Abstraction
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for DocumentFacade method signatures
+- ADR-002: DOCX Generation Engine Selection and Facade Abstraction
 - [Protocol classes (PEP 544)](https://peps.python.org/pep-0544/)
 - **External validation (2026-05-22)**: Microsoft's Legal Agent in Word uses a "purpose-built insertion algorithm" and a "deterministic resolution layer" for document editing rather than relying on an LLM to generate OOXML directly -- confirming the primitives-only boundary principle independently. See [competitor profile](../research/competitors/microsoft-legal-agent.md).

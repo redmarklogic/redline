@@ -1,4 +1,4 @@
-# ADR-004: Styles-Only Template Strategy with Jinja Deferral
+﻿# ADR-005: Styles-Only Template Strategy with Jinja Deferral
 
 ## Summary
 
@@ -93,7 +93,7 @@ renders the template with context data.
   template with Jinja placeholders to render.
 - Jinja introduces template syntax (`{{ }}`, `{% %}`) that may collide with
   existing content in company templates not designed for Jinja.
-- The `DocumentFacade` protocol (ADR-001) already allows introducing a
+- The `DocumentFacade` protocol (ADR-002) already allows introducing a
   `JinjaDocxFacade` behind the same interface when placeholder injection is
   needed (e.g., Phase 6+ narrative sections).
 - Keeping Phases 0-3 Jinja-free simplifies testing and reduces the dependency
@@ -162,6 +162,7 @@ Use DOCX template files (.dotx) natively.
 
 ## References
 
-- ADR-001: DOCX Generation Engine Selection and Facade Abstraction
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for DOCX output visual formatting
+- ADR-002: DOCX Generation Engine Selection and Facade Abstraction
 - [python-docx template handling](https://python-docx.readthedocs.io/en/latest/user/documents.html)
 - [python-docx-template (Jinja)](https://docxtpl.readthedocs.io/)

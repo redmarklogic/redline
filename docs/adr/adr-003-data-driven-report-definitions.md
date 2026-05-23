@@ -1,4 +1,4 @@
-# ADR-002: Data-Driven Report Definitions via ReportDefinition
+﻿# ADR-003: Data-Driven Report Definitions via ReportDefinition
 
 ## Summary
 
@@ -147,6 +147,7 @@ The architecture supports growth without requiring it now.
 
 ## References
 
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for report section structures and heading conventions
 - [python-docx documentation](https://python-docx.readthedocs.io/)
 - [Pydantic frozen models](https://docs.pydantic.dev/latest/concepts/models/#frozen)
-- ADR-001: DOCX Generation Engine Selection and Facade Abstraction
+- ADR-002: DOCX Generation Engine Selection and Facade Abstraction

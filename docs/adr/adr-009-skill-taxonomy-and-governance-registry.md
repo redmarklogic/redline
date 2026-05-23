@@ -1,4 +1,4 @@
-# ADR-008: SkillX Three-Tier Taxonomy and Governance Registry Schema
+﻿# ADR-009: SkillX Three-Tier Taxonomy and Governance Registry Schema
 
 ## Summary
 
@@ -155,10 +155,11 @@ The modification — tier in the lock file, not in SKILL.md frontmatter — pres
 
 ## References
 
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for skill classification and ownership
 - arXiv 2604.04804 — SkillX three-tier taxonomy (Atomic / Functional / Planning), source for Decision 1
 - Research notebook: NotebookLM ID `1bdfb971-e39d-43cd-ae87-778720d940fb` — Linda's skill-bloat deep research
 - `docs/architecture/skills-architecture.md` — existing architecture constraints on skill structure
 - `hooks/check-skills-documented.py` — pre-commit hook that validates skill documentation coverage (extension target)
 - `AGENTS.md` — agent skill manifests (human-readable canonical source, complementary to registry)
-- ADR-006 — shared taxonomy for skeleton/checklist pre-review (pattern for shared-taxonomy decisions at Redline)
+- ADR-007 — shared taxonomy for skeleton/checklist pre-review (pattern for shared-taxonomy decisions at Redline)
 - `.agents/skills/hiring-agent-management/SKILL.md` — Harriet's agent topology sync procedure (governance consumer of this ADR)

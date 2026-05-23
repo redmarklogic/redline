@@ -1,4 +1,4 @@
-# ADR-006: Shared Taxonomy -- Skeleton Generator, Checklist Engine, Pre-Review Engine
+﻿# ADR-007: Shared Taxonomy -- Skeleton Generator, Checklist Engine, Pre-Review Engine
 
 ## Summary
 
@@ -157,6 +157,7 @@ Both dimensions are required on every rule.
 
 ## References
 
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for the geotechnical report section taxonomy
 - [Checklist taxonomy analysis](../knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md)
 - [FHWA reviewer vocabulary](../knowledge/geotechnical/report-writing/fhwa-reviewer-checklist-rule-vocabulary.md)
 - [Strategic bets](../product/strategy/strategic-bets.md) -- Bets 1, 2, 3

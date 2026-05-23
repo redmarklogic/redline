@@ -1,4 +1,4 @@
-# ADR-005 — Standards Knowledge Store: Citation-Only, Internal-Only Architecture
+﻿# ADR-006 — Standards Knowledge Store: Citation-Only, Internal-Only Architecture
 
 ## Summary
 
@@ -112,6 +112,7 @@ quality layer, not an AI assistant).
 
 ## References
 
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for NZ/AU standards citations and applicability mappings
 - `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`
   — Graeme's domain advisory (2026-04-19)
 - `docs/product/strategy/positioning.md` — Anti-positioning (chatbot forbidden form)
@@ -119,5 +120,5 @@ quality layer, not an AI assistant).
   Bet 4 (Switzerland-neutral), Bet 6 (new-market disruption stealth)
 - `docs/product/strategy/decisions/parked-decisions.md` — P-019 (Product-Led SEO),
   P-026 (formal licensing enquiries)
-- ADR-003 — Facade primitives-only boundary (related: what passes through internal
+- ADR-004 — Facade primitives-only boundary (related: what passes through internal
   boundaries)

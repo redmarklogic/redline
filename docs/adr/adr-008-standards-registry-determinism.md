@@ -1,4 +1,4 @@
-# ADR-007: Standards Registry as Deterministic Anchor for Skeleton Generator
+﻿# ADR-008: Standards Registry as Deterministic Anchor for Skeleton Generator
 
 ## Summary
 
@@ -158,5 +158,6 @@ inferred rather than curated.
 
 ## References
 
-- ADR-005: Standards Knowledge Store — Citation-Only Internal Architecture
-- ADR-006: Shared Taxonomy — Skeleton Generator, Checklist Engine, Pre-Review Engine
+- ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for standards nominations in skeleton generation
+- ADR-006: Standards Knowledge Store — Citation-Only Internal Architecture
+- ADR-007: Shared Taxonomy — Skeleton Generator, Checklist Engine, Pre-Review Engine
