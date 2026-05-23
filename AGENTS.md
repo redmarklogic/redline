@@ -144,55 +144,6 @@ permitted only when clearly labelled as such.
   `hooks/`, `output/`.
   Invoke: "Kabilan, [request]"
 
-**Engineering skills (loaded on demand by Kabilan):**
-
-See Kabilan's agent file for the full skills table. Key skill categories: Python core
-(`python-style`, `python-patterns`, `python-typing`, `python-linting`), testing
-(`python-testing-unit`, `test-driven-development`), domain modeling
-(`python-domain-modeling`, `data-tidy`), environment (`dev-environment`, `python-deptry`),
-git (`version-control`, `git-push-batched`), and verification
-(`python-static-checks`, `verification-before-completion`).
-
-**PM skills (loaded on demand by Mark and/or Ron):**
-
-- `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
-  `pm-product-strategist`, `pm-structural-integrity-auditor`
-- `strategy-pre-mortem` — pre-mortem stress-testing of un-implemented plans (Ron-owned)
-- `strategy-psf-domain` — PSF/A/E/C domain grounding for competitor analysis, market segmentation, PI insurance, and engineering workflows (Ron-owned)
-- `pm-personas` — customer archetypes (Mark + Ron co-owned)
-- `pm-roadmap` — visual roadmaps and opportunity solution trees (Mark-owned, Ron-contributed)
-- `pm-prioritization` — portfolio-level RICE / MoSCoW / Value-Effort (Mark-owned). Distinct
-  from `spec-kit`'s scenario-level RICE; see `docs/architecture/skills-architecture.md`.
-
-**Marketing skills (loaded on demand by John):**
-
-- `marketing-content-big-5` — They Ask You Answer / Big 5 content framework
-- `marketing-product-led-seo` — Product-Led SEO co-design with Mark (marketing brief → PRD)
-- `marketing-social-selling-linkedin` — PIPA profiles, 10:1 LCS rule, Sales Navigator targeting
-- `marketing-ai-content-review` — AI-assisted drafting with mandatory Graeme/Mark/Ron sign-off
-- John also uses `pm-personas` (shared), `pm-prioritization` (campaign ranking),
-  `pm-structural-integrity-auditor` (`/challenge`), `qmd-narrative-design` (long-form), and
-  `miro-mcp` (Content Segmentation Grid, campaign maps).
-
-**UX skills (loaded on demand by Matt):**
-
-- `ux-professional-software` — information-dense UI design, document-centric interaction patterns
-- `ux-conversion-design` — co-development partner conversion UX (quota-exhaustion, SSO gate, onboarding)
-- `ux-document-design` — document-as-product design for generated DOCX output
-- `ux-design-critique` — structured self-review checklist (Nielsen heuristics, cognitive load, AI Language Policy). *Embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file.*
-- Matt also uses `pm-personas` (shared read-only), `pm-structural-integrity-auditor` (`/challenge`),
-  `miro-mcp` (wireframes, user flows), and `notebooklm-mcp` (Product Design & UX notebook).
-
-**Engineering skills (loaded on demand by Peter):**
-
-- `ddd-strategic` — Strategic DDD: subdomain classification, context mapping, EventStorming, ACL, UL stewardship, model evolution governance
-- `engineering-architecture` — system design, component boundaries, API design, ADR writing
-- `evaluation-architecture` — LLM evaluation lifecycle, rubric design, LLM-as-judge patterns
-- `shaping` — Shape Up shaping process (Pitch format, breadboarding, rabbit holes, appetite)
-- `ai-acceptable-use-policy` — AI tool governance, DORA AI capabilities, small-batch enforcement
-- Peter also uses `pm-structural-integrity-auditor` (`/challenge`), `notebooklm-mcp`
-  (Software Development Methodology notebook), `redline-research`, and `miro-mcp`.
-
 **Handoff chain (non-negotiable):**
 ```
 Graeme (domain facts) --> Ron (vision --> bets --> OKRs --> positioning --> GTM motion)
@@ -292,21 +243,9 @@ Two platform agents that serve all other agents. Neither makes domain decisions.
   skills taxonomy. Draft-first maturity.
   Invoke: "Harriet, [request]"
 
-### Marketing (loaded on demand by John)
-
-- **`marketing-content-big-5`**: Use when planning content marketing topics, deciding what blog posts, videos, or pages to publish next, or when prospects keep asking the same sales questions — applies the They Ask You Answer / Big 5 framework.
-- **`marketing-product-led-seo`**: Use when planning SEO strategy beyond blog content, considering free programmatic tools or calculators to capture organic search traffic, or when handing an SEO idea off to product and engineering.
-- **`marketing-social-selling-linkedin`**: Use when building LinkedIn presence for the founder or sales team, optimising LinkedIn profiles, planning prospecting outreach, or designing comment-and-engagement campaigns on LinkedIn.
-- **`marketing-ai-content-review`**: Use when drafting marketing content with generative AI for a technical domain, or before publishing any AI-assisted content that makes domain claims requiring expert verification.
-
 ### Redline Project Research
 
 - **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Notebook register at `.agents/skills/redline-research/register.json`. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
-
-### Skills Management
-
-- **`skills-create`**: Creating new skills
-- **`ceremony-agent-topology-sync`**: Periodic cross-agent sync — knowledge-grounded JD reflection, patch drafting, orphan/overlap analysis, skill gap triggers. Run quarterly or on: new hire, strategy pivot, major milestone, client feedback batch. Invoke via Harriet.
 
 ### External Skills (obra/superpowers)
 

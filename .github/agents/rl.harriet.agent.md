@@ -95,6 +95,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 | Creating a new skill folder and SKILL.md | `skills-create` |
 | Querying a notebook for skill grounding | `notebooklm-mcp` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
+| Running the Agent Topology Sync ceremony | `ceremony-agent-topology-sync` |
 
 ## Notebook Access
 
