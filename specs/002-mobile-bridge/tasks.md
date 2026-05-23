@@ -1,4 +1,4 @@
-# Tasks: Mobile Bridge for Persona Access
+﻿# Tasks: Mobile Bridge for Persona Access
 
 **Input**: [plan.md](plan.md)
 **Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub
@@ -22,11 +22,11 @@ or `az login`.
 
 ## Phase 0: Architecture Decision Records
 
-- [ ] T001 [Phase 0] Create `docs/adr/adr-005-telegram-and-azure-container-apps.md`
+- [ ] T001 [Phase 0] Create `docs/adr/adr-010-telegram-and-azure-container-apps.md`
       recording D2 and D6.
-- [ ] T002 [Phase 0] Create `docs/adr/adr-006-session-state-azure-table-storage.md`
+- [ ] T002 [Phase 0] Create `docs/adr/adr-011-session-state-azure-table-storage.md`
       recording D3.
-- [ ] T003 [Phase 0] Create `docs/adr/adr-007-notebooklm-desktop-only.md`
+- [ ] T003 [Phase 0] Create `docs/adr/adr-012-notebooklm-desktop-only.md`
       recording D9.
 - [ ] T004 [Phase 0] Update `docs/adr/` index in `mkdocs.yml` if applicable.
 

@@ -1,4 +1,4 @@
-# Implementation Plan: GIR Skeleton Generator (Phases 0-3)
+﻿# Implementation Plan: GIR Skeleton Generator (Phases 0-3)
 
 **Date**: 2026-04-12 | **Spec**: [spec.md](spec.md)
 **Status**: Draft
@@ -13,7 +13,7 @@ sections, conditional section logic, empty structured tables, and project metada
 for an engineer to open and start editing.
 
 The skeleton generator lives in a new `marker` sibling package under `src/`, accessed
-through a `DocumentFacade` protocol (per ADR-001). The `marker` package handles all DOCX
+through a `DocumentFacade` protocol (per ADR-002). The `marker` package handles all DOCX
 generation concerns, while the `rl` hub package will later orchestrate it alongside other
 tools.
 
@@ -53,7 +53,7 @@ pieces together.
 | D3 | Section numbering approach | Dynamic numbering at generation time | Sections are assigned numbers sequentially based on which conditionals are enabled, rather than using hard-coded numbers. Eliminates gap risk. |
 | D4 | Conditional section representation | Boolean flags on a frozen Pydantic model | Simple, explicit, testable. Each flag maps to one conditional section group. Interaction rules (e.g., ground_improvement requires foundation_assessment) are validated in the model. |
 | D5 | Heading text source | Heading strings defined in `ReportDefinition` data object, not as module-level constants | Section names, ordering, heading case rules, and table schemas are data that varies by jurisdiction/report type/company. Embedding them in a data structure (not code) enables future multi-jurisdiction and multi-report-type support without changing the builder. |
-| D6 | Template handling | Accept optional Path to `.docx` file; default to blank Document(). **"Styles only" strategy**: clear all template content, keep style definitions. | python-docx cannot open `.dotx` natively (ADR-001). Templates are style sources, not content sources. Clearing content avoids merge conflicts with generated sections. |
+| D6 | Template handling | Accept optional Path to `.docx` file; default to blank Document(). **"Styles only" strategy**: clear all template content, keep style definitions. | python-docx cannot open `.dotx` natively (ADR-002). Templates are style sources, not content sources. Clearing content avoids merge conflicts with generated sections. |
 | D7 | Facade domain isolation | `DocumentFacade` accepts only primitive types (`str`, `int`, `list[str]`). No domain value objects cross the facade boundary. | The facade is a document engine abstraction. The *builder* layer translates domain objects into facade calls. This keeps `marker.domain` and `marker.functions.engines` independent of any upstream domain model. |
 | D8 | Multi-jurisdiction architecture | Section structure driven by a `ReportDefinition` data object, not hard-coded. Phase 0-3 ships a single `NZ_GIR` definition. | The builder is parameterised by report definitions. Adding AU/US/UK jurisdictions or environmental reports means adding new definitions, not changing builder code. |
 | D9 | Multi-company conventions | `ReportDefinition` includes a `heading_case` field (e.g., `"sentence"`, `"title"`). Phase 0-3 ships with `"sentence"` only. | Different companies use different heading conventions. Making this data-driven avoids hard-coding NZ sentence-case as a universal rule. |
@@ -251,7 +251,7 @@ class ProjectMetadata(BaseModel, frozen=True):
 from typing import Protocol
 
 class DocumentFacade(Protocol):
-    """Uniform interface for DOCX generation engines (ADR-001).
+    """Uniform interface for DOCX generation engines (ADR-002).
 
     BOUNDARY RULE: All parameters are primitive types only.
     No Pydantic models, no domain value objects, no enums.
@@ -487,7 +487,7 @@ end states (file exists, correct structure), and include at least one error-stat
 | `marker` package name conflicts with an existing PyPI package | No conflict found; name is internal to the monorepo. If extracting later, rename. |
 | Pydantic version mismatch between marker and rl packages | Both use the same dependency from pyproject.toml; no version divergence possible in monorepo |
 | ReportDefinition model may grow complex as jurisdictions are added | Start with one definition (NZ_GIR). Validate the model shape with 2-3 hypothetical definitions before committing. |
-| Facade protocol too narrow for future template engines (Jinja, Quarto) | Protocol can grow incrementally. Document known future needs in ADR-001. |
+| Facade protocol too narrow for future template engines (Jinja, Quarto) | Protocol can grow incrementally. Document known future needs in ADR-002. |
 
 ## Glossary
 

@@ -1,4 +1,4 @@
-# Platform & Website Requirements
+﻿# Platform & Website Requirements
 
 **Status**: Captured (raw founder input). **Owner**: Mark.
 **Captured**: 2026-04-19. **Source**: Founder specification notes.
@@ -90,7 +90,7 @@ specific web interface, we are building an "engine" first.
 > FastAPI are both under consideration. Django offers a batteries-included stack
 > (ORM, admin, auth, sessions) which may reduce Sprint 1 surface area; FastAPI
 > offers async-native performance and auto-generated OpenAPI docs. This decision
-> will be locked in ADR-007 during discovery Week 1 (June 1--5).
+> will be locked in ADR-010 during discovery Week 1 (June 1--5).
 
 By treating the API as the primary product, we guarantee ultimate extensibility. These
 engineering tools can be seamlessly embedded into no-code automation workflows (like n8n),
@@ -105,7 +105,7 @@ HTTP requests.
   completely independently of any User Interface. The API is the product; any frontend
   application is strictly an external consumer of this API.
 - **Technology Stack and Protocol**: The tools API must be built in Python using either
-  Django (with Django REST Framework) or FastAPI (decision TBD -- see ADR-007). All
+  Django (with Django REST Framework) or FastAPI (decision TBD -- see ADR-010). All
   communication between clients and the tools must occur via RESTful HTTP requests
   (GET, POST, PUT, DELETE).
 - **Core Logic Encapsulation**: All engineering mathematics, standards evaluations, and
