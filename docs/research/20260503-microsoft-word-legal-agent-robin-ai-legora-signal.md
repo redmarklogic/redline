@@ -1,4 +1,4 @@
-# Microsoft Word Legal Agent, Robin AI, and Legora Signal
+﻿# Microsoft Word Legal Agent, Robin AI, and Legora Signal
 
 **Date**: 2026-05-03
 **Queried by**: Ron, Mark, Copilot
@@ -308,8 +308,8 @@ The Legal Agent uses two distinct mechanisms for document editing:
    changes, instead of relying on an LLM to generate every revision directly.
 
 This is stronger evidence than the original memo's "document-structure-aware editing"
-characterisation. It validates ADR-003 (facade-primitives-only boundary) with higher
-confidence. Reference added to ADR-003.
+characterisation. It validates ADR-004 (facade-primitives-only boundary) with higher
+confidence. Reference added to ADR-004.
 
 ### B. Playbook-to-skill conversion specifics
 

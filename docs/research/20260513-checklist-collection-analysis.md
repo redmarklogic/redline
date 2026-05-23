@@ -1,4 +1,4 @@
-# Checklist Collection Analysis -- Cross-Jurisdiction Geotechnical Report Review
+﻿# Checklist Collection Analysis -- Cross-Jurisdiction Geotechnical Report Review
 
 **Date**: 2026-05-13
 **Type**: Empirical analysis
@@ -132,7 +132,7 @@ taxonomy should serve three product components:
 2. **Checklist Engine** ("are these sections present?") -- taxonomy nodes become presence checks
 3. **Pre-Review Engine** ("is content compliant?") -- taxonomy nodes become rule attachment points
 
-This decision is recorded in ADR-006.
+This decision is recorded in ADR-007.
 
 ### Rule Dimension Model
 

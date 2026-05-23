@@ -1,4 +1,4 @@
-# Competitor Profile: Microsoft Legal Agent (Frontier)
+﻿# Competitor Profile: Microsoft Legal Agent (Frontier)
 
 **Last updated**: May 22, 2026
 **Purpose**: Inform Redline product roadmap, architecture validation, and competitive positioning
@@ -54,7 +54,7 @@ specialised mechanisms: `[Vendor]`
 **Key observation**: Microsoft's engineering team, with full access to Word's internal
 document model, still built a separate deterministic layer for document manipulation rather
 than letting the LLM generate edits directly. This is strong external validation of
-Redline's ADR-003 (facade-primitives-only boundary). `[Inferred]`
+Redline's ADR-004 (facade-primitives-only boundary). `[Inferred]`
 
 ### Playbook-to-Skill Conversion (House Rules Parallel)
 
@@ -127,8 +127,8 @@ the human resolves." This is becoming the industry standard for high-liability A
 
 | Architectural element | Microsoft Legal Agent | Redline (planned) | Assessment |
 |---|---|---|---|
-| Document manipulation | Purpose-built insertion algorithm + deterministic resolution layer | DOCX generation engine facade with deterministic primitives (ADR-003) | Converging on the same insight: LLMs cannot be trusted to produce correct OOXML |
-| Rule sets | Playbook-to-skill conversion: .docx -> topics -> rules -> reusable skill | Standards Knowledge Store (ADR-005) + Pre-Review starter rules -> House Rules | Same pattern, different domain |
+| Document manipulation | Purpose-built insertion algorithm + deterministic resolution layer | DOCX generation engine facade with deterministic primitives (ADR-004) | Converging on the same insight: LLMs cannot be trusted to produce correct OOXML |
+| Rule sets | Playbook-to-skill conversion: .docx -> topics -> rules -> reusable skill | Standards Knowledge Store (ADR-006) + Pre-Review starter rules -> House Rules | Same pattern, different domain |
 | Compliance reporting | Colour-coded compliance report (Green/Red) with per-clause resolution | Pre-Review inline annotations with source-linked citations | Comparable output |
 | Human oversight | "All outputs are advisory only. Human oversight required." | Switzerland-neutral: "surfaces gaps; the human resolves" | Identical professional-boundary posture |
 | Jurisdictional awareness | NOT jurisdiction-aware; relies on training data | Jurisdictional from day 1 (NZS, AS, NZGS, ACENZ) via curated Standards Knowledge Store | Redline's structural advantage |
@@ -174,7 +174,7 @@ the human resolves." This is becoming the industry standard for high-liability A
 ### Patterns to adopt
 
 1. **Deterministic document manipulation as a non-negotiable.** Microsoft confirms the
-   insight. Already locked in ADR-003. No change needed.
+   insight. Already locked in ADR-004. No change needed.
 
 2. **Playbook-to-skill conversion UX.** The upload -> extract -> review -> save -> apply
    workflow is the best public reference for House Rules. Design input for Matt (Phase 2).
@@ -214,7 +214,7 @@ the human resolves." This is becoming the industry standard for high-liability A
 - **Matt**: When designing Pre-Review output format, review the Legal Agent's colour-coded
   compliance report and clickable citation UX as a design reference.
 - **Peter**: Record the Legal Agent's "insertion algorithm + deterministic resolution layer"
-  as external architectural validation in ADR-003's references section.
+  as external architectural validation in ADR-004's references section.
 - **Founder**: Add a dated addendum to the May 3 research memo with the three new findings:
   (a) architecture detail, (b) playbook-to-skill conversion specifics,
   (c) stated limitations as marketing ammunition.
