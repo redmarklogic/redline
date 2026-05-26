@@ -68,8 +68,8 @@ Before pushing, check the size of your diff against the base branch:
 # Check diff size against the default branch (from repo root)
 git diff --stat origin/master
 
-# Count only changed lines (additions + deletions)
-git diff origin/master | grep -E "^\+" | wc -l
+# Count total changed lines (additions + deletions combined)
+(git diff origin/master | Where-Object { $_ -match '^[+\-]' -and $_ -notmatch '^(\+\+\+|---)' } | Measure-Object).Count
 ```
 
 If the output exceeds 400 lines, apply the stacking strategy below before pushing.

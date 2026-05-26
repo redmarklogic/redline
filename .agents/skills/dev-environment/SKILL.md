@@ -62,7 +62,7 @@ development-time only and never published in package metadata. Four groups exist
 
 | Group | Contents | Installed by default? |
 |---|---|---|
-| `dev` | ruff, deptry, pre-commit, pydantic, openpyxl, pypdf, import-linter | Yes |
+| `dev` | codespell, deptry, import-linter, openpyxl, pre-commit, pre-commit-update, prek, pydantic, pypdf, pyproject-fmt, ruff | Yes |
 | `test` | pytest, pytest-cov, coverage | Yes |
 | `doc` | mkdocs | Yes |
 | `ocr` | easyocr, numpy, pypdfium2 | **No — opt-in only** |

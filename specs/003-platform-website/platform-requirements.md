@@ -1,4 +1,4 @@
-﻿# Platform & Website Requirements
+ Platform & Website Requirements
 
 **Status**: Captured (raw founder input). **Owner**: Mark.
 **Captured**: 2026-04-19. **Source**: Founder specification notes.

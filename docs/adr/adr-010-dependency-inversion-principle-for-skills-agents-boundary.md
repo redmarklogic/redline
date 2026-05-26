@@ -1,4 +1,4 @@
-# ADR-009: Dependency Inversion Principle as the Governing Rule of the Skills/Agents Boundary
+# ADR-010: Dependency Inversion Principle as the Governing Rule of the Skills/Agents Boundary
 
 ## Summary
 

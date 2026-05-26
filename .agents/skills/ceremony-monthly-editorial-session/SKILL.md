@@ -12,7 +12,7 @@ description: Use when running the monthly editorial session triggered by a new G
 - Latest Ground Engineering magazine issue
 - Access to `ground-engineering-magazine` NotebookLM notebook
 - Current Dream 100 target list
-- Current editorial calendar (`docs/product/marketing/editorial-calendar.md`)
+- Current editorial calendar (`docs/product/marketing/editorial-calendar.md`) — created by this ceremony if absent
 
 ### Outputs
 
