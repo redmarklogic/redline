@@ -17,6 +17,14 @@
       "owner_agent": ["kabilan"],
       "status": "active"
     },
+    "cce-mcp": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "atomic",
+      "owner_agent": ["kabilan", "peter"],
+      "status": "active"
+    },
     "ceremony-agent-topology-sync": {
       "source": "local",
       "sourceType": "local",

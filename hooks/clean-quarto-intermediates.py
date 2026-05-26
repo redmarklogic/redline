@@ -3,6 +3,7 @@
 Uses the Quarto CLI cleanup command when available, and falls back to
 safe removal of untracked Quarto intermediate paths for older Quarto versions.
 """
+# no-adr: version control hygiene for Quarto intermediates; no governing ADR
 
 import re
 import shutil

@@ -1,4 +1,5 @@
 """Git hook to detect overused underscore-prefixed helpers."""
+# no-adr: code quality heuristic; no governing ADR
 
 import ast
 import sys

@@ -8,6 +8,7 @@ was completed. A skill passes the gate if its directory contains either:
 Only skills whose SKILL.md is being added in the current commit are checked.
 Existing skills that pre-date this hook are not retroactively penalised.
 """
+# no-adr: enforces test-driven-development skill RED-phase discipline; no governing ADR
 
 import subprocess
 import sys

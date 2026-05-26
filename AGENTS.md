@@ -77,6 +77,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`git-push-batched`**: Push changes to git in thematically organised commits — groups dirty files into cohesive batches, proposes them for user confirmation, then stages and commits each batch before pushing. By default, auto-commits without waiting for confirmation.
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
+- **`cce-mcp`**: Code Context Engine MCP server — indexes the codebase for semantic search (`context_search`), cross-session decision persistence (`record_decision` / `session_recall`), and 94% input-token savings vs full-file reads. Install once with `cce init --agent copilot`.
 - **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
 - **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
 - **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.

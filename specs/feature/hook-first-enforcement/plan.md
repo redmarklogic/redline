@@ -22,26 +22,7 @@ first). Each phase adds one hook (or extends one existing hook) and wires it int
 pass as CLI args in `.pre-commit-config.yaml`
 **Key dependencies**: stdlib only (re, ast, sys, pathlib) — no new third-party packages
 **Token optimisation**: Verification commands use [RTK](https://github.com/rtk-ai/rtk) (`rtk pytest` −90%, `rtk ruff check` −80%). RTK is a CLI proxy; prefix `pytest` and `ruff` calls with `rtk` to reduce LLM context cost during development loops.
-**Codebase indexing**: [Code Context Engine](https://github.com/elara-labs/code-context-engine) (CCE) — MCP server that provides semantic search over the indexed codebase (94% input-token savings vs full-file reads). Agents call `context_search` instead of reading entire hook files. Setup once with `cce init --agent copilot`. See CCE Workflow section below.
-
-## CCE Workflow
-
-CCE saves tokens at the **reading** phase — when the agent explores existing hooks to understand patterns before writing new ones. This happens at the start of every phase. RTK and CCE address different cost buckets: RTK compresses terminal output; CCE compresses file-reading context.
-
-One-time setup:
-
-```
-uv tool install "code-context-engine[local]"
-cce init --agent copilot
-```
-
-| CCE MCP Tool | When to use in this plan | Example call |
-|---|---|---|
-| `context_search` | Before writing any hook: find the existing hook pattern (argparse wiring, `main()` signature, `sys.exit` idiom) without reading full files | `context_search "hook script argparse main return int sys.exit"` |
-| `record_decision` | After Phase 1: persist the canonical hook structure so every subsequent phase session starts informed without re-reading all hooks | `record_decision "hook structure: module docstring + ADR ref + argparse + find_violations() + main()->int + sys.exit(main())"` |
-| `session_recall` | At the start of Phases 2–10: retrieve the hook structure decision from Phase 1 | `session_recall "hook structure pattern"` |
-| `reindex` | After adding each new hook file: keep the index current so later phases can search it | `reindex hooks/check-no-argparse.py` |
-| `context_search` | Phase 8 specifically: find which existing hooks already carry an `ADR-` reference in their docstring | `context_search "ADR reference docstring hooks"` |
+**Codebase indexing**: [Code Context Engine](https://github.com/elara-labs/code-context-engine) (CCE) via the `cce-mcp` skill — semantic search over the indexed codebase instead of full-file reads (94% input-token savings). See `.agents/skills/cce-mcp/SKILL.md` for setup and tool reference.
 
 ## Design Decisions
 
@@ -79,7 +60,7 @@ temp SKILL.md containing a banned agent name and asserts the hook exits non-zero
 **CCE usage**: This is the only phase that modifies an existing hook rather than creating one.
 Use `context_search "check banned words hooks directory argparse"` to retrieve the relevant
 functions without reading the full file. After completing this phase, call
-`record_decision "hook structure: module docstring + ADR ref + argparse + find_violations() + main()->int + sys.exit(main())"` so phases 2–10 begin informed via `session_recall`.
+`record_decision` to persist the canonical hook structure (see `cce-mcp` skill).
 
 **Deliverables**:
 
@@ -330,9 +311,8 @@ that scans `src/` but has no ADR reference; assert exit 1. Hook with `See ADR-01
 assert exit 0.
 
 **CCE usage**: Before writing the hook logic, use `context_search "ADR reference docstring
-hooks"` to get a list of which existing hooks already carry an `ADR-\d+` citation and
-which do not — this directly defines the test fixtures and the hook's expected violation
-set, without reading every hook file individually.
+hooks"` to identify which existing hooks already carry an `ADR-\d+` citation and which do not
+(see `cce-mcp` skill for tool reference).
 
 **Deliverables**:
 

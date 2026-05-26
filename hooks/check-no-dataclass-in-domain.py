@@ -8,6 +8,7 @@ Scan every .py file under src/rl/ and fail if any line imports from the
 dataclasses stdlib module, so the mistake is caught at commit time rather
 than in review.
 """
+# no-adr: enforces python-domain-modeling skill convention; no governing ADR
 
 import re
 import sys

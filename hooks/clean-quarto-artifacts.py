@@ -7,6 +7,7 @@ Deleted patterns:
   - {stem}.html  where {stem}.qmd or {stem}.md exists in the same directory
   - {stem}_files/ directories (Quarto HTML dependency assets)
 """
+# no-adr: version control hygiene for Quarto output; no governing ADR
 
 import shutil
 import sys

@@ -9,6 +9,7 @@ and replaces the content between the markers with the referenced file's content,
 preserving any markdown fenced code block wrapper. Exits with code 1 if any
 files were modified (following the pre-commit autofix convention).
 """
+# no-adr: enforces sync-block consistency in markdown documentation; no governing ADR
 
 import re
 import sys
