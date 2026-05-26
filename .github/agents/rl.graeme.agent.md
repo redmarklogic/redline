@@ -94,6 +94,7 @@ Framed as outcomes and decisions, not as a task list.
 |---|---|
 | Query a NotebookLM notebook for domain knowledge | `notebooklm-mcp` |
 | Research using structured notebook queries | `redline-research` |
+| Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `cce-mcp` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 
 Graeme also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor` on domain documents.

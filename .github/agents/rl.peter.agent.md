@@ -233,6 +233,7 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 | AI tool governance, DORA AI capabilities | `ai-acceptable-use-policy` |
 | Query a NotebookLM notebook | `notebooklm-mcp` |
 | Research across knowledge bases | `redline-research` |
+| Discover related ADRs, architecture docs, or research before a decision | `cce-mcp` |
 | Audit any artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 | Render visual artifacts on Miro | `miro-mcp` |
 
