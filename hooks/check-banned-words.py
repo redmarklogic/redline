@@ -4,6 +4,9 @@ Scans all Python files in the hooks directory for occurrences of words that
 should not appear. This enforces generality in hooks by preventing them from
 referencing project-specific names. The banned words are provided as
 positional command-line arguments.
+
+Enforces ADR-011 P4: hook bodies must be generic; project-specific values live
+in configuration. See ADR-011 (docs/adr/adr-011-hook-first-enforcement.md).
 """
 
 import argparse
