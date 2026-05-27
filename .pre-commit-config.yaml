@@ -33,6 +33,20 @@ repos:
         language: fail
         files: \.ipynb$
         priority: 0
+  - repo: local
+    hooks:
+      # Prevent committing .github/copilot-instructions.md (ADR-012: AGENTS.md is the single
+      # canonical instruction file; .github/copilot-instructions.md duplicates it and violates
+      # ADR-001 single-source-of-truth. Add agent instructions to AGENTS.md instead.)
+      - id: forbidden-copilot-instructions-file
+        name: forbidden .github/copilot-instructions.md
+        entry: >-
+          .github/copilot-instructions.md must not exist. Per ADR-012, AGENTS.md is the
+          single canonical instruction file for all AI agents. Put agent instructions in
+          AGENTS.md, not in .github/copilot-instructions.md.
+        language: fail
+        files: \.github/copilot-instructions\.md$
+        priority: 0
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.24.1
     hooks:
@@ -224,6 +238,14 @@ repos:
         name: check-no-debug-statements
         entry: uv run --frozen --offline hooks/check-no-debug-statements.py
         args: ["--dirs=src", "--dirs=tests"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-user-paths
+        name: check-no-user-paths
+        entry: uv run --frozen --offline hooks/check-no-user-paths.py
+        args: ["--dirs=.agents", "--dirs=docs", "--dirs=hooks", "--dirs=scripts", "--dirs=src", "--dirs=specs", "--dirs=tests"]
         language: system
         always_run: true
         pass_filenames: false
