@@ -45,7 +45,7 @@ For each code block moving to a tool:
 1. Create `.agents/tools/<domain>/<script-name>.py` (or `.sh`).
 2. Add a module docstring explaining purpose, usage, and CLI args.
 3. Where the skill had a monolithic block, split into importable helper functions and a runnable entry point.
-4. **Never hardcode user-specific paths** (e.g., `C:\Users\harel\...`). Use relative paths from the repo root, `pathlib.Path(__file__).resolve().parents[N]`, `$env:TEMP` in PowerShell, or `tempfile.gettempdir()` in Python. See the no-hardcoded-paths rule in `writing-skills`.
+4. **Never hardcode user-specific paths** (e.g., `C:\Users\harel\...`). Use relative paths from the repo root, `pathlib.Path(__file__).resolve().parents[N]`, `$env:TEMP` in PowerShell, or `tempfile.gettempdir()` in Python. See the no-hardcoded-paths rule in `writing-skills`. <!-- hook: allow -->
 
 ### Step 3 — Create procedures
 

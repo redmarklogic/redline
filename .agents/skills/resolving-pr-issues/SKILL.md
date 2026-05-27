@@ -54,6 +54,7 @@ These rules apply regardless of time pressure, sunk cost, or authority:
 4. **Two-stage quality gate** — fast local gate first, then CI presubmit. Not one, not three.
 5. **Completion requires reviewer re-consent + CI green + threads resolved** — pushing the branch is not completion.
 6. **Disagree path requires evidence and closure** — for disagree comments: (1) reply with concrete evidence (spec reference, benchmark, or code example), (2) post PTAL, (3) if disagreement persists escalate to tech lead or team convention, and (4) record the final decision in the thread.
+7. **Never resolve threads before CI is green** — thread resolution is the final act, after fixes are committed + pushed + CI green + reviewer LGTM. Resolving threads with unflushed local fixes is a false signal to reviewers.
 
 ## Common Mistakes (Baseline Failures)
 
@@ -65,10 +66,43 @@ These rules apply regardless of time pressure, sunk cost, or authority:
 | Running pre-commit only | Run fast local gate (pre-commit + impacted tests), then push and let CI run in parallel |
 | Treating "push branch" as done | Done = reviewer re-consent + CI green + all threads resolved |
 | Applying postmortem/lessons to every comment | Batch reflection for `low`-tier items; immediate for `critical`/`behavioral-defect` |
+| Resolving threads before pushing or before CI green | Thread resolution is the final act — commit, push, CI green, reviewer LGTM, then resolve |
 
 ## Full Procedure
 
 See `procedures/resolve-comments.md`.
+
+## Control Flow
+
+```mermaid
+graph TD
+    Entry(Entry) --> Fetch["Step 1: Fetch all PR comments"]
+    Fetch --> Triage["Step 2: Triage ALL comments<br>Decision · Priority · Type"]
+    Triage --> Dec1{agree or disagree?}
+    Dec1 -->|agree| Repro["Step 3: Reproducibility gate"]
+    Dec1 -->|disagree| Ctx["Step 4: Context analysis"]
+    Repro -->|cannot reproduce| Ctx
+    Repro -->|reproduced| Dec2{critical tier?}
+    Dec2 -->|yes| PM["Step 5: Postmortem-lite + 5 Whys"]
+    Dec2 -->|no| Dec3{behavioral defect?}
+    PM --> Dec3
+    Dec3 -->|yes| FFT["Step 6: Write fail-first test"]
+    Dec3 -->|no| Fix["Step 7: Implement minimal fix"]
+    FFT --> Fix
+    Ctx --> Reply["Reply with evidence, post PTAL"]
+    Fix --> Gate["Step 8: Fast local gate<br>pre-commit + pytest"]
+    Reply --> Gate
+    Gate -->|fails| Fix
+    Gate -->|passes| Push["Step 9: Commit + push"]
+    Push --> PTAL["Post PTAL comment on PR"]
+    PTAL --> CI["Step 10: Wait for CI<br>lint · tests · SonarQube"]
+    CI -->|CI fails| Fix
+    CI -->|CI green| Dec4{reviewer LGTM?}
+    Dec4 -->|changes requested| Fix
+    Dec4 -->|LGTM| Resolve["Step 11: Resolve all threads<br>(final act)"]
+    Resolve --> Prevent["Step 12: Capture prevention actions"]
+    Prevent --> Done(Complete)
+```
 
 ## Automation Capture Priority
 
