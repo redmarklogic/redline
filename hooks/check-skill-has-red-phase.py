@@ -29,6 +29,17 @@ def _staged_new_files() -> list[Path]:
     return [Path(p) for p in result.stdout.splitlines()]
 
 
+def _staged_all_files() -> set[Path]:
+    """Return the full set of paths currently in the git index (staging area)."""
+    result = subprocess.run(
+        ["git", "ls-files", "--cached"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return {Path(p) for p in result.stdout.splitlines()}
+
+
 def _is_new_skill(path: Path) -> bool:
     try:
         relative = path.relative_to(_SKILLS_ROOT)
@@ -38,11 +49,12 @@ def _is_new_skill(path: Path) -> bool:
     return len(parts) == 2 and parts[1] == "SKILL.md"
 
 
-def _has_red_phase(skill_dir: Path) -> bool:
-    if (skill_dir / _BASELINE_FILE).is_file():
+def _has_red_phase(skill_dir: Path, staged_all: set[Path]) -> bool:
+    """Check baseline presence in the git index, not the working tree."""
+    if (skill_dir / _BASELINE_FILE) in staged_all:
         return True
     tests_dir = skill_dir / _TESTS_DIR
-    return bool(tests_dir.is_dir() and any(tests_dir.glob("*.md")))
+    return any(p.parent == tests_dir and p.suffix == ".md" for p in staged_all)
 
 
 def main() -> int:
@@ -52,10 +64,11 @@ def main() -> int:
     if not new_skills:
         return 0
 
+    staged_all = _staged_all_files()
     failed: list[str] = []
     for skill_md in new_skills:
         skill_dir = skill_md.parent
-        if not _has_red_phase(skill_dir):
+        if not _has_red_phase(skill_dir, staged_all):
             failed.append(str(skill_dir))
 
     if failed:
