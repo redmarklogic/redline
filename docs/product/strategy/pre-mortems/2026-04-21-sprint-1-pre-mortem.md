@@ -1,4 +1,4 @@
-﻿# Pre-Mortem Analysis: Sprint 1 — 30-Day Vertical Slice
+# Pre-Mortem Analysis: Sprint 1 — 30-Day Vertical Slice
 
 **Date:** 2026-04-21
 **Author:** Ron (Strategy & GTM Advisor)

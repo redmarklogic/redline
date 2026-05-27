@@ -1,4 +1,4 @@
-﻿# Initiative: Pre-Investigation Scope Check
+# Initiative: Pre-Investigation Scope Check
 
 **Owner**: Mark (PM)
 **Status**: Logged option (not yet prioritised)

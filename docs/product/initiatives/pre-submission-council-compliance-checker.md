@@ -1,4 +1,4 @@
-﻿# Initiative: Pre-Submission Council Compliance Checker
+# Initiative: Pre-Submission Council Compliance Checker
 
 **Owner**: Mark (PM)
 **Status**: Logged option (not yet prioritised)

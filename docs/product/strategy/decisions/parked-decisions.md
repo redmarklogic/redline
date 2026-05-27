@@ -1,4 +1,4 @@
-﻿# Decisions Parked — Master Register
+# Decisions Parked — Master Register
 
 **Status**: Living register. **Owner**: Ron.
 **Rule**: A parked decision is not a forgotten decision. Each entry has a trigger

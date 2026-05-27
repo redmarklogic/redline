@@ -1,4 +1,4 @@
-﻿# Competitor Profile: Microsoft Legal Agent (Frontier)
+# Competitor Profile: Microsoft Legal Agent (Frontier)
 
 **Last updated**: May 22, 2026
 **Purpose**: Inform Redline product roadmap, architecture validation, and competitive positioning

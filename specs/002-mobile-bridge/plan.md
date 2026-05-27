@@ -1,4 +1,4 @@
-﻿# Implementation Plan: Mobile Bridge for Persona Access
+# Implementation Plan: Mobile Bridge for Persona Access
 
 **Date**: 2026-04-18 | **Spec**: [spec.md](spec.md)
 **Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub

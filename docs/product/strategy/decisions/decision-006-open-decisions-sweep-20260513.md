@@ -1,4 +1,4 @@
-﻿# Open Decisions — Document Sweep Findings (2026-05-13)
+# Open Decisions — Document Sweep Findings (2026-05-13)
 
 **Status**: All decided (2026-05-13).
 **Raised by**: Document consistency sweep (2026-05-13).

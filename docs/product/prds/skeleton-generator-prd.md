@@ -1,4 +1,4 @@
-﻿# PRD: Free Skeleton Generator (Feature A)
+# PRD: Free Skeleton Generator (Feature A)
 
 **Status**: Draft v1. **Owner**: Mark. **Date**: 2026-04-20.
 **Target reader**: Engineering.

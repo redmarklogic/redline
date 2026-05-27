@@ -1,4 +1,4 @@
-﻿# Microsoft Word Legal Agent, Robin AI, and Legora Signal
+# Microsoft Word Legal Agent, Robin AI, and Legora Signal
 
 **Date**: 2026-05-03
 **Queried by**: Ron, Mark, Copilot

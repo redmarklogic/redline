@@ -1,4 +1,4 @@
-﻿# AI-Assisted Workflow Expansion Boundaries
+# AI-Assisted Workflow Expansion Boundaries
 
 **Sub-domain**: contracts-and-risk
 **Last verified**: 2026-05-03

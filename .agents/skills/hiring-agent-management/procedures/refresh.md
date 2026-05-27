@@ -1,4 +1,4 @@
-﻿# REFRESH Workflow
+# REFRESH Workflow
 
 Detect and resolve drift between business decisions and agent definitions. Business decisions evolve continuously; agent JDs and skills are point-in-time artifacts that go stale.
 

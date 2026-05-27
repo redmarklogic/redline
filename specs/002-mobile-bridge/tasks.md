@@ -1,4 +1,4 @@
-﻿# Tasks: Mobile Bridge for Persona Access
+# Tasks: Mobile Bridge for Persona Access
 
 **Input**: [plan.md](plan.md)
 **Status**: **PARKED** (2026-04-19). GitHub Copilot is accessible via the GitHub

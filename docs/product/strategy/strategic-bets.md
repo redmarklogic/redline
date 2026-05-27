@@ -1,4 +1,4 @@
-﻿# Strategic Bets — H2 2026
+# Strategic Bets — H2 2026
 
 **Status**: Draft v2. **Owner**: Ron. **Period**: 2026-06-01 → 2026-11-30.
 

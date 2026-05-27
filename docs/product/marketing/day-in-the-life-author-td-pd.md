@@ -1,4 +1,4 @@
-﻿# A Day in the Life -- Author, Technical Director, Practice Director
+# A Day in the Life -- Author, Technical Director, Practice Director
 
 **Owner**: John (Marketing), with Graeme (domain grounding)
 **Status**: Pre-discovery draft v1

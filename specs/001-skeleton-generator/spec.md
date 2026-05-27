@@ -1,4 +1,4 @@
-﻿# Feature Specification: GIR Skeleton Generator (Phases 0-3)
+# Feature Specification: GIR Skeleton Generator (Phases 0-3)
 
 **Branch**: `feature/map-doc-writing-process`
 **Created**: 2026-04-12

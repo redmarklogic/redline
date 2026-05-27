@@ -1,4 +1,4 @@
-﻿# Checklist Collection Analysis -- Cross-Jurisdiction Geotechnical Report Review
+# Checklist Collection Analysis -- Cross-Jurisdiction Geotechnical Report Review
 
 **Date**: 2026-05-13
 **Type**: Empirical analysis

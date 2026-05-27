@@ -1,4 +1,4 @@
-﻿# Decision 002 — "Before the Fact" First; "After the Fact" Phase 2
+# Decision 002 — "Before the Fact" First; "After the Fact" Phase 2
 
 **Status**: Decided. **Date**: 2026-05-03. **Deciders**: Founder, Mark, Graeme.
 

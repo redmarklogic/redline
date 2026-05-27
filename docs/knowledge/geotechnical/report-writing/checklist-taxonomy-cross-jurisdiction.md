@@ -1,4 +1,4 @@
-﻿# Checklist Taxonomy -- Cross-Jurisdiction Convergence
+# Checklist Taxonomy -- Cross-Jurisdiction Convergence
 
 **Sub-domain**: report-writing
 **Last verified**: 2026-05-13

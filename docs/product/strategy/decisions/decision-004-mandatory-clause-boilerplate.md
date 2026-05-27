@@ -1,4 +1,4 @@
-﻿# Decision 004 — Mandatory Clause Boilerplate in Skeleton Generator
+# Decision 004 — Mandatory Clause Boilerplate in Skeleton Generator
 
 **Status**: Decided. **Date**: 2026-05-10. **Deciders**: Founder, Mark, Graeme.
 

@@ -1,4 +1,4 @@
-﻿# Implementation Plan: GIR Skeleton Generator (Phases 0-3)
+# Implementation Plan: GIR Skeleton Generator (Phases 0-3)
 
 **Date**: 2026-04-12 | **Spec**: [spec.md](spec.md)
 **Status**: Draft

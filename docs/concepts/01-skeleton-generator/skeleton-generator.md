@@ -1,4 +1,4 @@
-﻿# Concept: Report Skeleton Generator
+# Concept: Report Skeleton Generator
 
 > **Audience**: Product owners, automation engineers, and domain engineers.
 > This document describes an automated pipeline that ingests pre-field
