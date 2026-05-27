@@ -37,7 +37,7 @@ jobs:
                   GIT_CONFIG_KEY_0: core.autocrlf
                   GIT_CONFIG_VALUE_0: "false"
               run: |
-                  npx skills experimental_install
+                  npx skills experimental_install || true
                   if ! git diff --exit-code --quiet; then
                       echo "::warning::skills-lock.json is out of date. Removing installed skills and reverting changes."
                       rm -rf .agents/skills
