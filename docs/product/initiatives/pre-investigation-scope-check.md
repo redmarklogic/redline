@@ -61,7 +61,7 @@ project manager.
 
 ## Dependencies
 
-- Shared taxonomy (ADR-006) must exist
+- Shared taxonomy (ADR-007) must exist
 - Investigation scoping standards must be encoded (USACE 2001, NZGS 2022)
 - Pre-Review engine maturity (Phase 1) proves the NLP pipeline works
 

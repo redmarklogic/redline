@@ -666,5 +666,37 @@
     ],
     "access": "open",
     "added": "2026-05-23"
+  },
+  {
+    "id": "claude-max-20x-developer-workflow-research",
+    "name": "Claude Max 20x — Developer Workflow Adaptation Research",
+    "url": "https://notebooklm.google.com/notebook/80e38ee8-d540-454e-9f39-413a4d4086d4",
+    "description": "Evidence-based research on Claude Max 20x subscription usage limits, rate-limit behaviour, and workflow adaptations for professional developer teams and multi-agent orchestration architects. Covers the first-party vs third-party billing split (ACP vs CLI), prompt caching mechanics and the Cache Cliff, sub-agent pre-allocation token consumption, Haiku-as-Scout multi-model routing, LiteLLM gateway governance for team subscriptions, and the impact of the May 2026 SpaceX compute deal on limit doubling.",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "Claude Max 20x subscription",
+      "usage limits and rate limits",
+      "prompt caching",
+      "Cache Cliff",
+      "multi-agent orchestration",
+      "model routing",
+      "Haiku-as-Scout pattern",
+      "first-party vs third-party billing",
+      "ACP and Agent SDK credits",
+      "LiteLLM gateway governance",
+      "session management",
+      "sub-agent token consumption",
+      "developer workflow adaptation"
+    ],
+    "content_types": ["official documentation", "community discussions", "technical guides", "blog posts"],
+    "use_cases": [
+      "Understanding the real-world token budget for Claude Max 20x across a full development day",
+      "Designing multi-agent workflows (VS Code, Kabilan, Ron, Graeme) that stay within subscription quotas",
+      "Implementing Haiku-as-Scout model routing to preserve Sonnet/Opus quota for complex tasks",
+      "Configuring LiteLLM as a governance gateway for team-wide Claude subscription management",
+      "Mitigating the Cache Cliff with .claudeignore, session partitioning, and cache TTL discipline"
+    ],
+    "access": "open",
+    "added": "2026-05-23"
   }
 ]

@@ -493,7 +493,7 @@ FHWA 37-year checklist durability). None require fabrication or exaggeration.
 - Persona archetypes: [personas.md](../strategy/personas.md) (Perrie, Anna, Prisca)
 - Incumbent process: [incumbent-process.md](../../concepts/01-skeleton-generator/incumbent-process.md)
 - Chain of gates: [checklist-taxonomy-cross-jurisdiction.md](../../knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md) (TDOT precedent)
-- Workflow moments: [ADR-006](../../adr/adr-006-shared-taxonomy-skeleton-checklist-prereview.md)
+- Workflow moments: [ADR-007](../../adr/adr-007-shared-taxonomy-skeleton-checklist-prereview.md)
 - Sign-off workflows: [audit-trail-sign-off-workflows.md](../../knowledge/geotechnical/report-writing/audit-trail-sign-off-workflows.md)
 - Persona grounding: [20260503-persona-grounding-firm-segmentation.md](../research/20260503-persona-grounding-firm-segmentation.md)
 - Review time data: Graeme domain grounding (15-25 reports/month per senior, 1-3 hrs each)

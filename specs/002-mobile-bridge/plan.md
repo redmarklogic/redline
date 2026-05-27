@@ -109,9 +109,9 @@ modules = ["rl", "mobile_bridge"]
 ### Phase 0 -- Architecture Decision Records (no code)
 
 Create three ADRs documenting the binding decisions:
-- **ADR-005**: Telegram + Azure Container Apps for mobile persona access (records D2, D6)
-- **ADR-006**: Session persistence via Azure Table Storage (records D3)
-- **ADR-007**: NotebookLM scoped to desktop only -- Ron's mobile tool list filtered (records D9)
+- **ADR-010**: Telegram + Azure Container Apps for mobile persona access (records D2, D6)
+- **ADR-011**: Session persistence via Azure Table Storage (records D3)
+- **ADR-012**: NotebookLM scoped to desktop only -- Ron's mobile tool list filtered (records D9)
 
 ### Phase 1 -- FastAPI skeleton, settings, security middleware
 

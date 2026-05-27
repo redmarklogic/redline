@@ -132,7 +132,7 @@ Use skill name with explicit markers — never `@file` syntax (force-loads conte
 
 ## No Hardcoded User Paths
 
-Never embed machine-specific paths (`C:\Users\<USER>\...`). Use:
+Never embed machine-specific paths (`C:\Users\<USER>\...`). Use: <!-- hook: allow -->
 
 | Context | Use |
 |---|---|

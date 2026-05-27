@@ -306,7 +306,7 @@ curated registry is a defensible asset.
 **internal-only and citation-only**. It stores clause references and applicability
 mappings — never full proprietary text. It is never exposed as a public-facing query
 interface. This is confirmed professionally defensible by Graeme (high confidence).
-See `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+See `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`
 and `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`.
 
 **Mode-neutral data model requirement** *(added 2026-05-03)*: The Standards Knowledge
@@ -353,7 +353,7 @@ documents. They provide a free, low-risk starting corpus for the Standards Knowl
 encode council checklist rules as Depth 1 (presence) checks, then layer Depth 2 (content
 quality) rules from professional standards on top. This avoids the licensing risk (P-026)
 for the initial rule library while still demonstrating the Knowledge Store architecture.
-Council checklists also validate the shared taxonomy (ADR-006) empirically --- 10 checklists
+Council checklists also validate the shared taxonomy (ADR-007) empirically --- 10 checklists
 from 5 jurisdictions converge on the same 10-node taxonomy. Provenance:
 `docs/research/20260513-checklist-collection-analysis.md`.
 
@@ -495,6 +495,54 @@ workflows. Provenance:
 
 ---
 
+## Bet 7 — "The Verification Shift" Positions Redline as the Category-Defining AI Review Platform for Civil Engineering
+
+**Bet**: The problems AI is creating for software development teams today (verification
+bottleneck, batch size inflation, expertise paradox, culture amplification) will manifest
+in civil engineering report production within 12-18 months. Firms that recognise this
+pattern and invest in verification infrastructure now will have competitive advantage.
+Redline, positioned at the intersection of geotechnical engineering and AI workflow
+expertise, becomes the category-defining verification platform by translating lessons
+from software (DORA 2024-2026) into actionable tools and thought leadership for civil
+engineers.
+
+**Why it might be true**: Ground Engineering magazine (March 2026) documents that Mott
+MacDonald (EMMA), Arup (ProjectGPT), and A-squared Studio are already deploying AI for
+report generation. The "intelligent editor" role shift is named explicitly in the
+industry press. Jim De Waele (BGA) and Domenico Lombardi (A-squared) have publicly
+raised the junior engineer training gap. A leading NZ consultancy is already building
+an automated pre-review tool ("Faultless"). The pattern mirrors DORA's finding that AI
+adoption increases throughput while degrading stability -- and Redline's Pre-Review
+product directly addresses the verification bottleneck this creates.
+
+**Assumption stack**:
+
+- The DORA-documented pattern (increased throughput + decreased stability from AI
+  adoption) transfers from software development to civil engineering report production.
+- Civil engineering firms will experience reviewer strain from AI-generated report
+  volume within 12-18 months of adopting AI writing tools.
+- Thought leadership positioning at the software-engineering intersection is credible
+  and differentiated -- few people have expertise in both domains.
+- LinkedIn content translating DORA findings into civil engineering terms will generate
+  engagement and inbound interest from engineering leaders.
+
+**Kill criterion**: After 6 months of consistent LinkedIn content (by 2027-01-01),
+fewer than 3 inbound enquiries or speaking invitations from engineering firms or
+industry bodies referencing the "verification shift" framing. Indicates the theory
+resonates in software circles but does not transfer to the civil engineering audience.
+
+**Cross-references**: See
+`docs/knowledge/geotechnical/report-writing/ai-verification-shift-evidence.md` for GE
+magazine evidence. See
+`docs/research/software-development/20260526-accelerate-problem-diagnosis-ai-era.md`
+for the DORA structural mapping. Reinforces Bet 2 (Pre-Review as paid product) -- this
+bet provides the thought leadership and market education that makes Bet 2's value
+proposition legible to buyers.
+
+**OKR ladder**: KR5 (thought leadership engagement -- to be defined).
+
+---
+
 ## Provenance
 
 Bet 1, 2, 4, 5 are strategy synthesis grounded in
@@ -505,3 +553,7 @@ against the entrepreneurship-startup-strategy notebook on 2026-04-18. Bet 1 comp
 validation, Bet 2 insurance bifurcation, and Bet 6 named watch items and market
 segmentation added 2026-04-20 from Archie competitive intelligence session;
 see `docs/research/20260420-archie-competitive-intelligence-prompt.md`.
+Bet 7 grounded in DORA 2024-2026 research
+(`docs/research/software-development/20260526-accelerate-problem-diagnosis-ai-era.md`)
+and Ground Engineering magazine March 2026 AI coverage
+(`docs/knowledge/geotechnical/report-writing/ai-verification-shift-evidence.md`).

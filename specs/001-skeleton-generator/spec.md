@@ -9,7 +9,7 @@
 | Source                                                                                                          | Authority                     | Status                            |
 | --------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------------------------------- |
 | [skeleton-generator.md](../../docs/concepts/01-skeleton-generator/skeleton-generator.md)                           | Primary -- concept doc        | Updated with canonical headings   |
-| [ADR-001](../../docs/adr/adr-001-docx-generation-engine-facade.md)                                                 | Binding -- facade pattern     | No conflicts                      |
+| [ADR-002](../../docs/adr/adr-002-docx-generation-engine-facade.md)                                                 | Binding -- facade pattern     | No conflicts                      |
 | [20260411-gir-skeleton-acceptance-criteria.md](../../docs/research/20260411-gir-skeleton-acceptance-criteria.md)   | Supporting -- AC research     | Integrated into concept doc ACs   |
 | [20260411-gir-skeleton-section-placeholders.md](../../docs/research/20260411-gir-skeleton-section-placeholders.md) | Supporting -- section content | Referenced for Phase 8 (deferred) |
 | [incumbent-process.md](../../docs/concepts/01-skeleton-generator/incumbent-process.md)                             | Supporting -- current process | Heading discrepancies resolved    |
@@ -191,7 +191,7 @@ verify the metadata values appear in the document text.
 - **FR-005**: System MUST populate project metadata (project number, client name, site
   address, date, document code) from a typed `ProjectMetadata` object. (Addresses AC5.)
 - **FR-006**: System MUST access the DOCX engine exclusively through the `DocumentFacade`
-  protocol defined in ADR-001. The facade MUST accept only primitive types (`str`, `int`,
+  protocol defined in ADR-002. The facade MUST accept only primitive types (`str`, `int`,
   `list[str]`). No domain value objects, Pydantic models, or enums may cross the facade
   boundary. (Addresses architectural constraint.)
 - **FR-007**: System MUST use a `.docx` copy of the company template when one is provided
@@ -214,7 +214,7 @@ verify the metadata values appear in the document text.
 - **ProjectMetadata**: Data object for project-level metadata. Key attributes:
   `project_number` (str), `client_name` (str), `site_address` (str), `date` (date),
   `document_code` (str).
-- **DocumentFacade**: Protocol for DOCX engine abstraction (from ADR-001).
+- **DocumentFacade**: Protocol for DOCX engine abstraction (from ADR-002).
   Key methods: `add_heading`, `add_paragraph`, `add_table`, `add_metadata_block`, `save`.
   **Boundary rule**: accepts only primitive types.
 - **PythonDocxFacade**: Concrete implementation of `DocumentFacade` using python-docx.
@@ -254,7 +254,7 @@ verify the metadata values appear in the document text.
 | python-docx heading styles don't match corporate template styles            | Generated headings render without formatting in the real template | Facade encapsulates style mapping; test with real template early                  |
 | Sequential renumbering logic has off-by-one errors with nested conditionals | Incorrectly numbered sections undermine trust                     | Exhaustive flag-combination tests (16 combinations)                               |
 | DocumentFacade protocol grows too large as features are added               | Facade becomes a leaky abstraction                                | Keep facade minimal; add methods only when needed by a concrete scenario          |
-| Template `.dotx` format not supported by python-docx                      | Cannot use the corporate template directly                        | ADR-001 documents this: use a `.docx` copy of the template                      |
+| Template `.dotx` format not supported by python-docx                      | Cannot use the corporate template directly                        | ADR-002 documents this: use a `.docx` copy of the template                      |
 | ReportDefinition model may not generalise well to non-geotechnical reports  | Architecture rework needed when environmental reports are added    | Validate model shape with 2-3 hypothetical definitions before committing          |
 | Company template has existing content that conflicts with generated sections | Merge logic would be complex and error-prone                      | "Styles only" strategy: clear all content, keep styles. Defer merge scenario.   |
 | Jinja placeholder syntax in template collides with user template content    | Template rendering errors                                         | Defer Jinja entirely; use programmatic building for Phases 0-3                    |

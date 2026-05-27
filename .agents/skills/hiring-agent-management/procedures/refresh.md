@@ -34,7 +34,7 @@ Produce a **staleness table**:
 ## Step 3 — Scope the refresh (advisory board vs. non-advisory)
 
 - **Non-advisory-board agents** (Matt, future hires, Harriet herself): draft JD patches directly. Apply the Prompt Rewriting Rules from the main SKILL.md.
-- **Advisory-board agents** (Ron, Mark, John, Graeme): flag the drift and route the update to the agent themselves. Example: "Ron, your JD still references [X] — that has been parked per ADR-005. Please update your constraints." Advisory board members maintain their own JDs; this role flags, it does not rewrite.
+- **Advisory-board agents** (Ron, Mark, John, Graeme): flag the drift and route the update to the agent themselves. Example: "Ron, your JD still references [X] — that has been parked per ADR-006. Please update your constraints." Advisory board members maintain their own JDs; this role flags, it does not rewrite.
 
 ## Step 4 — Check skills for staleness
 

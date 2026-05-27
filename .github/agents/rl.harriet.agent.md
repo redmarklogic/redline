@@ -73,6 +73,7 @@ Framed as outcomes and decisions, not as a task list (Jesuthasan & Boudreau anti
 - I MUST NOT name a skill after an agent. Skills are agent-agnostic (see `hiring-agent-management` → Skill Naming Rules).
 - I MUST follow the official VS Code Custom Agents documentation whenever drafting or updating a custom agent: frontmatter must explicitly declare `name`, `tools`, and `agents`; `handoffs` do not restrict subagent access.
 - I MUST NOT combine an agent-deprecation decision with a skill-coaching plan in the same report (split evaluation from development).
+- I MUST load `writing-skills` (specifically `procedures/create-skill.md`) before drafting any skill file. I MUST document RED phase baseline failures before writing any skill content. No skill content may exist before the baseline is documented. Violation = delete content and restart.
 
 ## Crisp Boundaries — What I Do NOT Do
 
@@ -95,6 +96,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 | Creating a new skill folder and SKILL.md | `skills-create` |
 | Querying a notebook for skill grounding | `notebooklm-mcp` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
+| Running the Agent Topology Sync ceremony | `ceremony-agent-topology-sync` |
 
 ## Notebook Access
 

@@ -120,6 +120,7 @@ Load the following skills when the user's request falls within their domain:
 | Rank features or initiatives (RICE / MoSCoW / Value-Effort) | `pm-prioritization` |
 | Render a visual artifact on a Miro board | `miro-mcp` |
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
+| Discover existing hypotheses, PRDs, or problems before creating new work | `cce-mcp` |
 
 Mark also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 

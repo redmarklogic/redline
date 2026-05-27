@@ -13,7 +13,7 @@
 - `docs/research/20260418-founder-memos-strategy-grounding.md`
 - `docs/research/20260413-standards-registry-knowledge-architecture-gaps.md`
 - `docs/research/20260420-archie-competitive-intelligence-prompt.md`
-- `docs/adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md`
+- `docs/adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md`
 - Monetizing & Scaling Innovation notebook (session b05f4abb): monetisation failure patterns, buying-center dynamics, free-to-paid conversion baselines, network-effect requirements for PLG
 
 ---

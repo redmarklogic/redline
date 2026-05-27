@@ -192,6 +192,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Before claiming done | `verification-before-completion` |
 | Before starting creative work | `brainstorming` |
 | CrewAI agents | `python-crewai` |
+| Codebase exploration / session start / discover company docs | `cce-mcp` |
 
 ## What I Do NOT Do
 

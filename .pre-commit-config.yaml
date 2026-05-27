@@ -24,6 +24,29 @@ repos:
         language: fail
         files: ((./tests/.*/test.py)|(./tests/test.py))$
         priority: 0
+  - repo: local
+    hooks:
+      # Prevent committing Jupyter notebooks (AGENTS.md forbids notebook creation)
+      - id: forbidden-ipynb-files
+        name: forbidden ipynb files
+        entry: found .ipynb notebook file; AGENTS.md forbids notebook creation; remove it
+        language: fail
+        files: \.ipynb$
+        priority: 0
+  - repo: local
+    hooks:
+      # Prevent committing .github/copilot-instructions.md (ADR-012: AGENTS.md is the single
+      # canonical instruction file; .github/copilot-instructions.md duplicates it and violates
+      # ADR-001 single-source-of-truth. Add agent instructions to AGENTS.md instead.)
+      - id: forbidden-copilot-instructions-file
+        name: forbidden .github/copilot-instructions.md
+        entry: >-
+          .github/copilot-instructions.md must not exist. Per ADR-012, AGENTS.md is the
+          single canonical instruction file for all AI agents. Put agent instructions in
+          AGENTS.md, not in .github/copilot-instructions.md.
+        language: fail
+        files: \.github/copilot-instructions\.md$
+        priority: 0
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.24.1
     hooks:
@@ -104,10 +127,25 @@ repos:
         always_run: true
         pass_filenames: false
         priority: 0
+      - id: check-skill-has-red-phase
+        name: check-skill-has-red-phase
+        entry: uv run --frozen --offline hooks/check-skill-has-red-phase.py
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
       - id: check-banned-words
         name: check-banned-words
         entry: uv run --frozen --offline hooks/check-banned-words.py
         args: ["--hooks-dir=hooks", "redline"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-skills-persona-names
+        name: check-skills-persona-names
+        entry: uv run --frozen --offline hooks/check-banned-words.py
+        args: ["--md-dir=.agents/skills", "Ron", "Mark", "Graeme", "John", "Peter", "Matt", "Kabilan", "Linda", "Harriet"]
         language: system
         always_run: true
         pass_filenames: false
@@ -148,10 +186,80 @@ repos:
         always_run: true
         pass_filenames: false
         priority: 0
+      - id: check-hook-adr-reference
+        name: check-hook-adr-reference
+        entry: uv run --frozen --offline hooks/check-hook-adr-reference.py
+        args: ["--hooks-dir=hooks"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-argparse
+        name: check-no-argparse
+        entry: uv run --frozen --offline hooks/check-no-argparse.py
+        args: ["--dirs=src", "--dirs=scripts"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-archive-imports
+        name: check-no-archive-imports
+        entry: uv run --frozen --offline hooks/check-no-archive-imports.py
+        args: ["--dirs=src"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-env-loader
+        name: check-no-env-loader
+        entry: uv run --frozen --offline hooks/check-no-env-loader.py
+        args: ["--dirs=src", "--dirs=scripts"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-env-defaults
+        name: check-no-env-defaults
+        entry: uv run --frozen --offline hooks/check-no-env-defaults.py
+        args: ["--dirs=src", "--dirs=scripts"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-section-rules
+        name: check-no-section-rules
+        entry: uv run --frozen --offline hooks/check-no-section-rules.py
+        args: ["--dirs=src"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-debug-statements
+        name: check-no-debug-statements
+        entry: uv run --frozen --offline hooks/check-no-debug-statements.py
+        args: ["--dirs=src", "--dirs=tests"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-no-user-paths
+        name: check-no-user-paths
+        entry: uv run --frozen --offline hooks/check-no-user-paths.py
+        args: ["--dirs=.agents", "--dirs=docs", "--dirs=hooks", "--dirs=scripts", "--dirs=src", "--dirs=specs", "--dirs=tests"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:
       - id: rst-backticks
+        priority: 0
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
         priority: 0
 default_install_hook_types:
   - pre-commit

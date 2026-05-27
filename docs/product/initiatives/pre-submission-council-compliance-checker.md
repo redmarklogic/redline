@@ -63,7 +63,7 @@ Council checklists are public documents. Copyright risk is minimal because:
 
 ## Dependencies
 
-- Shared taxonomy (ADR-006) must exist before council-specific overlays can be built
+- Shared taxonomy (ADR-007) must exist before council-specific overlays can be built
 - Report parsing capability (from Bet 2 Pre-Review) is a prerequisite
 - At least 3-5 council checklists should be encoded before launch to demonstrate breadth
 

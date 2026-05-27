@@ -170,7 +170,7 @@ Product-quality metric (informing iteration, not bet-kill): activation rate
   scope documents. Scoped inside this PRD, not filed separately.
 - **Feature N — Standards Knowledge Store (MVP)**: NZ-only subset (3-5 documents).
   Scoped inside this PRD. Architecture per
-  [ADR-005](../../adr/adr-005-standards-knowledge-store-citation-only-internal-architecture.md):
+  [ADR-006](../../adr/adr-006-standards-knowledge-store-citation-only-internal-architecture.md):
   citation-only, internal, never exposed as a public query interface.
 
 ## Open Questions

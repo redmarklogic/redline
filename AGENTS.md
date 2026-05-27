@@ -15,6 +15,27 @@
   create a lesson when the observation is too vague, the conversation is still evolving, or
   the insight is already covered.
 
+## Context Engine (CCE)
+
+This project uses Code Context Engine for intelligent code retrieval and cross-session memory.
+
+**Use `context_search` instead of reading files directly** when exploring the codebase, answering questions about code, or understanding how things work. `context_search` returns the most relevant code chunks with confidence scores instead of whole files.
+
+When to use `context_search`:
+- Answering questions about the codebase ("how does X work?", "where is Y?")
+- Exploring structure or architecture
+- Finding related code, functions, or patterns
+
+Other tools:
+- `expand_chunk` for full source of a compressed result
+- `related_context` for what calls/imports a function
+- `session_recall` to recall past decisions
+
+Cross-session memory:
+- Call `session_recall("topic phrase")` before answering non-trivial questions.
+- Call `record_decision(decision="...", reason="...")` after making choices.
+- Call `record_code_area(file_path="...", description="...")` after meaningful work.
+
 ## Skills
 
 All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) before starting any task that falls within their domain.
@@ -77,6 +98,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`git-push-batched`**: Push changes to git in thematically organised commits — groups dirty files into cohesive batches, proposes them for user confirmation, then stages and commits each batch before pushing. By default, auto-commits without waiting for confirmation.
 - **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
 - **`python-mcp-tools`**: MCP tooling usage in this repo
+- **`cce-mcp`**: Code Context Engine MCP server — indexes the codebase for semantic search (`context_search`), cross-session decision persistence (`record_decision` / `session_recall`), and 94% input-token savings vs full-file reads. Install once with `cce init --agent copilot`.
 - **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
 - **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
 - **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.
@@ -143,55 +165,6 @@ permitted only when clearly labelled as such.
   Competence and Second-Order Thinking. Writes to `src/rl/`, `tests/`, `scripts/`,
   `hooks/`, `output/`.
   Invoke: "Kabilan, [request]"
-
-**Engineering skills (loaded on demand by Kabilan):**
-
-See Kabilan's agent file for the full skills table. Key skill categories: Python core
-(`python-style`, `python-patterns`, `python-typing`, `python-linting`), testing
-(`python-testing-unit`, `test-driven-development`), domain modeling
-(`python-domain-modeling`, `data-tidy`), environment (`dev-environment`, `python-deptry`),
-git (`version-control`, `git-push-batched`), and verification
-(`python-static-checks`, `verification-before-completion`).
-
-**PM skills (loaded on demand by Mark and/or Ron):**
-
-- `pm-problem-framer`, `pm-hypothesis-builder`, `pm-prd-builder`, `pm-decision-architect`,
-  `pm-product-strategist`, `pm-structural-integrity-auditor`
-- `strategy-pre-mortem` — pre-mortem stress-testing of un-implemented plans (Ron-owned)
-- `strategy-psf-domain` — PSF/A/E/C domain grounding for competitor analysis, market segmentation, PI insurance, and engineering workflows (Ron-owned)
-- `pm-personas` — customer archetypes (Mark + Ron co-owned)
-- `pm-roadmap` — visual roadmaps and opportunity solution trees (Mark-owned, Ron-contributed)
-- `pm-prioritization` — portfolio-level RICE / MoSCoW / Value-Effort (Mark-owned). Distinct
-  from `spec-kit`'s scenario-level RICE; see `docs/architecture/skills-architecture.md`.
-
-**Marketing skills (loaded on demand by John):**
-
-- `marketing-content-big-5` — They Ask You Answer / Big 5 content framework
-- `marketing-product-led-seo` — Product-Led SEO co-design with Mark (marketing brief → PRD)
-- `marketing-social-selling-linkedin` — PIPA profiles, 10:1 LCS rule, Sales Navigator targeting
-- `marketing-ai-content-review` — AI-assisted drafting with mandatory Graeme/Mark/Ron sign-off
-- John also uses `pm-personas` (shared), `pm-prioritization` (campaign ranking),
-  `pm-structural-integrity-auditor` (`/challenge`), `qmd-narrative-design` (long-form), and
-  `miro-mcp` (Content Segmentation Grid, campaign maps).
-
-**UX skills (loaded on demand by Matt):**
-
-- `ux-professional-software` — information-dense UI design, document-centric interaction patterns
-- `ux-conversion-design` — co-development partner conversion UX (quota-exhaustion, SSO gate, onboarding)
-- `ux-document-design` — document-as-product design for generated DOCX output
-- `ux-design-critique` — structured self-review checklist (Nielsen heuristics, cognitive load, AI Language Policy). *Embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file.*
-- Matt also uses `pm-personas` (shared read-only), `pm-structural-integrity-auditor` (`/challenge`),
-  `miro-mcp` (wireframes, user flows), and `notebooklm-mcp` (Product Design & UX notebook).
-
-**Engineering skills (loaded on demand by Peter):**
-
-- `ddd-strategic` — Strategic DDD: subdomain classification, context mapping, EventStorming, ACL, UL stewardship, model evolution governance
-- `engineering-architecture` — system design, component boundaries, API design, ADR writing
-- `evaluation-architecture` — LLM evaluation lifecycle, rubric design, LLM-as-judge patterns
-- `shaping` — Shape Up shaping process (Pitch format, breadboarding, rabbit holes, appetite)
-- `ai-acceptable-use-policy` — AI tool governance, DORA AI capabilities, small-batch enforcement
-- Peter also uses `pm-structural-integrity-auditor` (`/challenge`), `notebooklm-mcp`
-  (Software Development Methodology notebook), `redline-research`, and `miro-mcp`.
 
 **Handoff chain (non-negotiable):**
 ```
@@ -292,21 +265,9 @@ Two platform agents that serve all other agents. Neither makes domain decisions.
   skills taxonomy. Draft-first maturity.
   Invoke: "Harriet, [request]"
 
-### Marketing (loaded on demand by John)
-
-- **`marketing-content-big-5`**: Use when planning content marketing topics, deciding what blog posts, videos, or pages to publish next, or when prospects keep asking the same sales questions — applies the They Ask You Answer / Big 5 framework.
-- **`marketing-product-led-seo`**: Use when planning SEO strategy beyond blog content, considering free programmatic tools or calculators to capture organic search traffic, or when handing an SEO idea off to product and engineering.
-- **`marketing-social-selling-linkedin`**: Use when building LinkedIn presence for the founder or sales team, optimising LinkedIn profiles, planning prospecting outreach, or designing comment-and-engagement campaigns on LinkedIn.
-- **`marketing-ai-content-review`**: Use when drafting marketing content with generative AI for a technical domain, or before publishing any AI-assisted content that makes domain claims requiring expert verification.
-
 ### Redline Project Research
 
 - **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Notebook register at `.agents/skills/redline-research/register.json`. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
-
-### Skills Management
-
-- **`skills-create`**: Creating new skills
-- **`ceremony-agent-topology-sync`**: Periodic cross-agent sync — knowledge-grounded JD reflection, patch drafting, orphan/overlap analysis, skill gap triggers. Run quarterly or on: new hire, strategy pivot, major milestone, client feedback batch. Invoke via Harriet.
 
 ### External Skills (obra/superpowers)
 
@@ -392,6 +353,14 @@ Source: <https://github.com/obra/superpowers>
 ## Perform static checks before finishing
 
 Always finish by using the `python-static-checks` skill to check for linting errors, type errors, and other static issues before finalizing your response. This ensures that the code you provide is clean and adheres to our quality standards.
+
+## Output Style
+
+Respond in compressed style. Drop articles (a, an, the) in prose. Use sentence fragments over full sentences. Use short synonyms (fix not resolve, check not investigate). Pattern: [thing] [action] [reason]. [next step]. No filler, hedging, pleasantries, trailing summaries, or restating what the user said. One sentence if one sentence is enough.
+
+When suggesting code changes, show only the changed lines with 3 lines of context. Never rewrite entire files. Multiple changes in one file: show each change separately. Never echo back unchanged code the user already has.
+
+Code blocks, file paths, commands, error messages: always written in full. Security warnings and destructive action confirmations: use full clarity.
 
 # Coding Guidelines
 

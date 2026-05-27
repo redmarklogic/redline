@@ -186,7 +186,7 @@ audit trail.
 
 1. **One canonical taxonomy, three consumers**: Skeleton Generator ("generate these sections"),
    Checklist Engine ("are these sections present?"), Pre-Review Engine ("is the content in these
-   sections compliant?"). See ADR-006.
+   sections compliant?"). See ADR-007.
 2. **Every rule carries a `workflow_moment` dimension**: Pre-Investigation, During Drafting,
    Pre-Review, Pre-Submission.
 3. **Every rule carries a `depth` dimension**: Presence (Depth 1), Content Quality (Depth 2),

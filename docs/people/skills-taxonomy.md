@@ -1,12 +1,14 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-22  
-**Source of truth for:** all skills in `.agents/skills/`, their domain category, and which agents use them.
+**Last updated:** 2026-05-24  
+**Source of truth for:** all skills in `.agents/skills/` and their domain category.
 
 > Update this file whenever a skill is created, retired, or reassigned.
 >
-> **Note:** "Engineering" in the Used by column refers to **Kabilan** (Python Developer, hired 2026-05-22). Kabilan loads these skills on demand per task type.
+> **Derived column — Used by:** The "Used by" column is a human-readable derivative of the `owner_agent` arrays in `skills-lock.json` (the authoritative source per ADR-001, ADR-009). It must not be treated as canonical. When `skills-lock.json` and this column disagree, `skills-lock.json` wins.
+>
+> **Note:** "Engineering" in the Used by column refers to **Kabilan** (Python Developer, hired 2026-05-22; slug: `kabilan` in `skills-lock.json`). Kabilan loads these skills on demand per task type.
 
 ---
 
@@ -213,3 +215,6 @@
 | `evaluation-architecture` (LLM evaluation lifecycle, rubric design) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` and `AI System Engineering` notebooks; ground stub at `.agents/skills/evaluation-architecture/` | Stub promoted — notebook grounding pending |
 | `shaping` (Shape Up process adapted for Redline) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for Shape Up content; ground stub at `.agents/skills/shaping/` | Stub promoted — notebook grounding pending |
 | `ai-acceptable-use-policy` (DORA AI capabilities, small-batch enforcement) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for DORA content; incorporate external DORA 2024-2026 research; ground stub at `.agents/skills/ai-acceptable-use-policy/` | Stub promoted — notebook grounding + external research pending |
+| `dev-environment` extension: dependency management guidance | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `dev-environment` skill: `uv add` / `uv remove` patterns, `pyproject.toml` dependency declarations, when to escalate to Peter. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
+| `python-domain-modeling` extension: layer architecture | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `python-domain-modeling` skill: visual reference for Redline's layer architecture (`domain/`, `functions/`, `api/`), what belongs in each layer, prohibited cross-layer imports, escalation triggers. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
+| `version-control` extension: PR discipline thresholds | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `version-control` skill: maximum PR size (lines/files), "one logical change" definition, how to split PRs, SonarQube/Copilot detection, author-side AI feedback window. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |

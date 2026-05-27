@@ -6,6 +6,7 @@ Two checks are performed:
 2. External skills in skills-lock.json (those not starting with the prefix) must
    appear in AGENTS.md.
 """
+# no-adr: enforces AGENTS.md documentation discipline for skills; no governing ADR
 
 import argparse
 import sys

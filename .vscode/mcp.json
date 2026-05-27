@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "context-engine": {
+      "command": "C:\\Users\\harel\\.local\\bin\\cce.exe",
+      "args": [
+        "serve",
+        "--project-dir",
+        "C:\\Users\\harel\\Documents\\products\\redline"
+      ]
+    }
+  }
+}

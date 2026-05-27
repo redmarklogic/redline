@@ -102,6 +102,7 @@ Load the following skills when the user's request falls within their domain:
 | Audit a strategy artifact | `pm-structural-integrity-auditor` |
 | Pre-mortem, stress-test, or risk-assess an un-implemented plan | `strategy-pre-mortem` |
 | Competitor analysis, market segmentation, build-vs-buy, or PI insurance for PSF/A/E/C firms | `strategy-psf-domain` |
+| Discover relevant research or strategy docs before producing an artifact | `cce-mcp` |
 
 Ron also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 
