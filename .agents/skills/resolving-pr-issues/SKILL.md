@@ -40,13 +40,13 @@ Priority controls mandatory steps; Decision controls whether you reproduce-and-f
 
 | Tier | Mandatory extras |
 |---|---|
-| `critical` | Reproducibility gate · Fail-first test (behavioral) · Postmortem-lite + 5 Whys · Immediate lesson capture |
+| `critical` | Reproducibility gate · Fail-first test (behavioral) · Postmortem-lite + [5 Whys](../mental-models/root_cause_analysis/five-whys.md) · Immediate lesson capture |
 | `standard` | Reproducibility gate · Fail-first test (behavioral) |
 | `low` | None — minimal fix path |
 
 ## Non-Negotiable Rules
 
-These rules apply regardless of time pressure, sunk cost, or authority:
+These rules apply regardless of time pressure, [sunk cost](../mental-models/self_awareness/sunk-cost-fallacy.md), or authority:
 
 1. **Reproducibility before files** — for agreed comments, confirm the issue exists in the current codebase before editing anything.
 2. **Fail-first test for behavioral defects** — write a failing automated test that captures the defect before implementing the fix.

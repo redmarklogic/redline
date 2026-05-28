@@ -20,7 +20,7 @@ description: Use when asked to stress-test, pre-mortem, or risk-assess an un-imp
 
 ## Overview
 
-Assume the plan has already failed. Work backward to find why. A pre-mortem removes optimism bias by making failure concrete before execution begins.
+See [pre-mortem](../mental-models/strategic_decisions/pre-mortem.md) for the full definition and methodology.
 
 **Core principle:** A pre-mortem is a stress-testing tool, not a verdict tool. The output is reinforced risks and mitigations, never a go/no-go recommendation.
 

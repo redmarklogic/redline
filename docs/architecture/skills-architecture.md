@@ -1,27 +1,13 @@
-# Skills Architecture
+# Skills Architecture — Handoff Chain
 
-## Who this is for
-
-You — even if you have never written a line of Python or used GitHub Copilot before. This
-document explains how Redline organises the "skills" that the AI agents use, why they are
-layered the way they are, and how to know which one applies to a given task.
-
-## What is a skill?
-
-A **skill** is a small Markdown file that teaches the AI a single, well-defined competence.
-Think of it like a recipe card pinned to a kitchen wall. The AI does not memorise the
-recipe; it walks over to the wall, reads the card, and follows the steps when the situation
-calls for it.
-
-Each skill lives in its own folder at `.agents/skills/<skill-name>/SKILL.md` and answers
-three questions:
-
-1. **When should I use this?** (the trigger)
-2. **When should I NOT use this?** (the guardrail)
-3. **How do I do it?** (the steps)
-
-We currently have around 60 skills. Without organisation, the AI would have to read all of
-them every time you ask a question. So we layer them.
+> **Handoff chain reference.** This document describes the execution flow: who hands work
+> to whom, in what sequence, and why skipping a layer is a defect.
+>
+> For the full layer map (which skills live at which layer) and dependency rules, see
+> [skills-taxonomy.md](skills-taxonomy.md).
+>
+> For narrative context, onboarding prose, and worked examples, see
+> [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md).
 
 ## The six layers
 
@@ -30,62 +16,28 @@ and hands off to the layer below it.
 
 ```mermaid
 flowchart TD
-    subgraph L1[Layer 1 - Strategy: Why are we building this?]
-        Ron[Ron - Strategy & GTM Advisor]
-        ProdStrat[pm-product-strategist]
-        Ron -.uses.-> ProdStrat
+    subgraph L1[Layer 1 - Strategy]
+        Ron[Ron]
     end
 
-    subgraph L2[Layer 2 - Product: What problem are we solving, for whom?]
-        Mark[Mark - Principal Product Manager]
-        Framer[pm-problem-framer]
-        Hyp[pm-hypothesis-builder]
-        Personas[pm-personas]
-        Roadmap[pm-roadmap]
-        Prio[pm-prioritization]
-        Decision[pm-decision-architect]
-        PRD[pm-prd-builder]
-        Audit[pm-structural-integrity-auditor]
-        Mark -.uses.-> Framer
-        Mark -.uses.-> Hyp
-        Mark -.uses.-> Personas
-        Mark -.uses.-> Roadmap
-        Mark -.uses.-> Prio
-        Mark -.uses.-> Decision
-        Mark -.uses.-> PRD
-        Mark -.uses.-> Audit
+    subgraph L2[Layer 2 - Product]
+        Mark[Mark]
     end
 
-    subgraph L25[Layer 2.5 - Shaping: Is this buildable? What are the boundaries?]
-        Peter[Peter - Principal Engineer]
-        Shaping[shaping]
-        EngArch[engineering-architecture]
-        EvalArch[evaluation-architecture]
-        AIPolicy[ai-acceptable-use-policy]
-        Peter -.uses.-> Shaping
-        Peter -.uses.-> EngArch
-        Peter -.uses.-> EvalArch
-        Peter -.uses.-> AIPolicy
+    subgraph L25[Layer 2.5 - Shaping]
+        Peter[Peter]
     end
 
-    subgraph L3[Layer 3 - Engineering Spec: What exactly do we build?]
-        SpecKit[spec-kit - specs, plans, tasks]
+    subgraph L3[Layer 3 - Engineering Spec]
+        SpecKit[spec-kit]
     end
 
-    subgraph L4[Layer 4 - Implementation: How do we build it well?]
-        Style[python-style, python-typing, python-linting]
-        Patterns[python-patterns, python-function-design, python-class-design]
-        Testing[python-testing-unit, python-testing-api, test-driven-development]
-        Data[python-data-ingestion, data-tidy, python-domain-modeling]
-        Reporting[eda-codebook, eda-qa, qmd-narrative-design]
+    subgraph L4[Layer 4 - Implementation]
+        Kabilan[Kabilan]
     end
 
-    subgraph L5[Layer 5 - Tools & Platform: What capabilities can we call?]
-        Miro[miro-mcp - render to Miro boards]
-        Notebook[notebooklm-mcp - query NotebookLM]
-        Research[redline-research - structured research]
-        DevEnv[dev-environment, version-control, security]
-        Research -.uses.-> Notebook
+    subgraph L5[Layer 5 - Tools & Platform]
+        Tools[MCPs / platform tools]
     end
 
     L1 ==> L2
@@ -125,12 +77,7 @@ and connections, no visual design. Mark sets the business appetite; Peter sets t
 appetite. The Pitch is the handoff to spec-kit.
 
 This layer sits between Product (L2) and Engineering Spec (L3) because shaping translates
-product intent into buildable scope. It prevents two common failures: specs that are
-technically infeasible (skipping feasibility) and specs that contain hidden rabbit holes
-(skipping risk triage).
-
-Skills at this layer: `shaping`, `engineering-architecture`, `evaluation-architecture`,
-`ai-acceptable-use-policy`.
+product intent into buildable scope.
 
 ### Layer 3 — Engineering spec
 
@@ -142,31 +89,13 @@ It is the bridge between product and code.
 
 These are the rules that govern *how* code is written: style, types, tests, error handling,
 data modelling, reporting. They activate whenever someone is actually editing Python files.
+For the full skill list at this layer, see [skills-taxonomy.md](skills-taxonomy.md).
 
 ### Layer 5 — Tools & platform
 
 These are not about *what* to build; they are about *what tools you can use* while building.
 Miro for visual artifacts, NotebookLM for research, Git for version control, the dev
 environment itself. Any layer above can reach into this layer.
-
-## A worked example: the trip from idea to code
-
-Suppose you say: *"I want users to be able to export their reports as PDF."*
-
-| Step | Layer | What happens |
-|---|---|---|
-| 1 | L1 — Ron | "Does this map to one of our strategic bets? If yes, which one? If no, stop and revisit." |
-| 2 | L2 — Mark | "Who exactly wants PDF export? (loads `pm-personas`) What problem does it solve? (loads `pm-problem-framer`) Is this top of the list? (loads `pm-prioritization`) Write the PRD. (loads `pm-prd-builder`)" |
-| 3 | L2.5 — Peter | "Is this feasible in 6 weeks? Shape it: set boundaries, remove rabbit holes, write the Pitch." |
-| 4 | L3 — spec-kit | "Turn the Pitch into a spec with acceptance scenarios, a plan, and a task list." |
-| 5 | L4 — implementation | "Write the code following `python-style`, `python-function-design`, and `python-testing-unit`." |
-| 6 | L5 — tools | At any point, the team can use `miro-mcp` to draft a roadmap, `redline-research` to look up prior decisions, or `version-control` to commit work. |
-
-Skipping a layer is the most common failure mode. A PRD without a strategic bet (skipping
-L1) produces work nobody wanted. A spec without a PRD (skipping L2) produces a feature the
-team cannot explain. A spec without shaping (skipping L2.5) produces scope with hidden
-rabbit holes. Code without a spec (skipping L3) produces something that works but
-solves the wrong problem.
 
 ## Two RICE skills, two altitudes — why we did not merge them
 
@@ -225,7 +154,8 @@ system is recursive).
 
 ## References
 
-- `AGENTS.md` — the canonical index of every skill and persona.
+- [skills-taxonomy.md](skills-taxonomy.md) — authoritative layer map and dependency rules.
+- [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md) — narrative, worked examples, onboarding prose.
+- `AGENTS.md` — the invocation manifest: which skills each agent calls.
 - `.agents/skills/writing-skills/SKILL.md` — how skills are authored and tested.
-- `.agents/skills/skills-create/SKILL.md` — checklist for adding a new skill.
-- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, and `.github/agents/rl.peter.agent.md` --- the personas.
+- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, `.github/agents/rl.peter.agent.md` — the personas.

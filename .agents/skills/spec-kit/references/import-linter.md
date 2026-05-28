@@ -73,13 +73,6 @@ type = "layers"
 layers = ["readers"]
 containers = ["rl.functions"]
 exhaustive = true
-
-[[tool.importlinter.contracts]]
-name = "rl.functions.readers layers"
-type = "layers"
-layers = ["retaining_wall"]
-containers = ["rl.functions.readers"]
-exhaustive = true
 ```
 
 **When to add a nested contract:** Any time a subpackage grows its own internal
@@ -109,7 +102,6 @@ that must stay decoupled).
 name = "reader independence"
 type = "independence"
 modules = [
-    "rl.functions.readers.retaining_wall",
     "rl.functions.readers.foundation",
 ]
 ```

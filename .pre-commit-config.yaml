@@ -63,7 +63,7 @@ repos:
         args: ["--quiet"]
         priority: 0
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.21.0
+    rev: v2.21.2
     hooks:
       - id: pyproject-fmt
         priority: 1
@@ -76,7 +76,7 @@ repos:
         priority: 1
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.8
+    rev: v0.15.14
     hooks:
       - id: ruff-check
         args: ["--fix", "--ignore", "FIX", "--unsafe-fixes"]
@@ -230,6 +230,21 @@ repos:
         name: check-no-section-rules
         entry: uv run --frozen --offline hooks/check-no-section-rules.py
         args: ["--dirs=src"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: check-mermaid-syntax
+        name: check-mermaid-syntax
+        entry: uv run --frozen --offline hooks/check-mermaid-syntax.py
+        args: ["--dirs=.agents", "--dirs=docs", "--dirs=specs"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
+      - id: sync-layer-to-lock
+        name: sync-layer-to-lock
+        entry: uv run --frozen --offline hooks/sync-layer-to-lock.py
         language: system
         always_run: true
         pass_filenames: false

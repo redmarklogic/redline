@@ -100,7 +100,7 @@ Load the following skills when the user's request falls within their domain:
 | Sketch a strategic roadmap or opportunity solution tree | `pm-roadmap` |
 | Render a strategy artifact on a Miro board | `miro-mcp` |
 | Audit a strategy artifact | `pm-structural-integrity-auditor` |
-| Pre-mortem, stress-test, or risk-assess an un-implemented plan | `strategy-pre-mortem` |
+| [Pre-mortem](../../.agents/skills/mental-models/strategic_decisions/pre-mortem.md), stress-test, or risk-assess an un-implemented plan | `strategy-pre-mortem` |
 | Competitor analysis, market segmentation, build-vs-buy, or PI insurance for PSF/A/E/C firms | `strategy-psf-domain` |
 | Discover relevant research or strategy docs before producing an artifact | `cce-mcp` |
 
@@ -115,7 +115,7 @@ Ron is an **Advisory Board member**, which unlocks the Founder Memos notebook vi
 | Founder Memos | Direct (advisory-board) | Ground every strategy artifact in founder intent |
 | Monetizing & Scaling Innovation | Direct (advisory-board) | Pricing, packaging, monetisation strategy |
 | Entrepreneurship & Startup Strategy | Direct (advisory-board) | B2B sales motion, Crossing the Chasm, market entry |
-| Professional Services Firm Management | Direct (open) | PSF business model, firm segmentation, PI insurance, engineering workflows, cannibalisation dynamics |
+| Professional Services Firm Management | Direct (open) | PSF business model, firm segmentation, PI insurance, engineering workflows, [cannibalisation dynamics](../../.agents/skills/mental-models/strategic_decisions/cannibalisation-dynamics.md) |
 
 Notebook URLs and the full query procedure live in `redline-research/PROCEDURE.md` — the single source of truth. Never fabricate strategy — ground everything in the notebooks or explicitly ask the user.
 

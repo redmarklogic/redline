@@ -48,10 +48,10 @@ Assessed by the TR and, for complex analyses, specialist Subject Matter Experts 
 
 ```mermaid
 flowchart TD
-    L1["Layer 1 — Mechanical & Formatting (Author, BIS)"]
-    L2["Layer 2 — Structural Completeness (Author, TR)"]
-    L3["Layer 3 — Linguistic & Liability Risk (TR, PD)"]
-    L4[/"Layer 4 — Technical Defensibility (TR, SME) — NOT automatable"/]
+    L1["Layer 1 - Mechanical & Formatting (Author, BIS)"]
+    L2["Layer 2 - Structural Completeness (Author, TR)"]
+    L3["Layer 3 - Linguistic & Liability Risk (TR, PD)"]
+    L4[/"Layer 4 - Technical Defensibility (TR, SME) - NOT automatable"/]
     L1 --> L2 --> L3 --> L4
 ```
 
@@ -155,11 +155,11 @@ sequenceDiagram
     TR-->>A: Changes required
     A->>TR: Revised draft
     TR->>PD: Technical sign-off (Section A)
-    PD->>C: Release draft (Section B — DRAFT gate)
+    PD->>C: Release draft (Section B - DRAFT gate)
     C-->>A: Client comments
     A->>TR: Revised final
     TR->>PD: Re-check interpretation
-    PD->>C: Issue final (Section B — FINAL gate)
+    PD->>C: Issue final (Section B - FINAL gate)
 ```
 
 **Stage 1 — Self-Review (Author)**

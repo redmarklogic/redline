@@ -209,6 +209,7 @@ __marimo__/
 # Agent config
 # .agents/skills/*
 # !.agents/skills/redline-*
+docs/module-tree.txt
 data/projects/
 docs/**/*.html
 data/**/*.html

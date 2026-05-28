@@ -238,11 +238,11 @@ Automated tests are systematic. They run the same way every time.
 
 **"Deleting X hours of work is wasteful"**
 
-Sunk cost fallacy. The time is already gone. Your choice now:
+[Sunk cost fallacy](../mental-models/self_awareness/sunk-cost-fallacy.md). The time is already gone. Your choice now:
 - Delete and rewrite with TDD (X more hours, high confidence)
 - Keep it and add tests after (30 min, low confidence, likely bugs)
 
-The "waste" is keeping code you can't trust. Working code without real tests is technical debt.
+The "waste" is keeping code you can't trust. Working code without real tests is [technical debt](../mental-models/strategic_decisions/technical-debt.md).
 
 **"TDD is dogmatic, being pragmatic means adapting"**
 
@@ -272,7 +272,7 @@ Tests-first force edge case discovery before implementing. Tests-after verify yo
 | "I'll test after" | Tests passing immediately prove nothing. |
 | "Tests after achieve same goals" | Tests-after = "what does this do?" Tests-first = "what should this do?" |
 | "Already manually tested" | Ad-hoc ≠ systematic. No record, can't re-run. |
-| "Deleting X hours is wasteful" | Sunk cost fallacy. Keeping unverified code is technical debt. |
+| 'Deleting X hours is wasteful' | [Sunk cost fallacy](../mental-models/self_awareness/sunk-cost-fallacy.md). Keeping unverified code is [technical debt](../mental-models/strategic_decisions/technical-debt.md). |
 | "Keep as reference, write tests first" | You'll adapt it. That's testing after. Delete means delete. |
 | "Need to explore first" | Fine. Throw away exploration, start with TDD. |
 | "Test hard = design unclear" | Listen to test. Hard to test = hard to use. |
