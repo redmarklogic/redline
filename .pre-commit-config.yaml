@@ -234,6 +234,14 @@ repos:
         always_run: true
         pass_filenames: false
         priority: 0
+      - id: check-mermaid-syntax
+        name: check-mermaid-syntax
+        entry: uv run --frozen --offline hooks/check-mermaid-syntax.py
+        args: ["--dirs=.agents", "--dirs=docs", "--dirs=specs"]
+        language: system
+        always_run: true
+        pass_filenames: false
+        priority: 0
       - id: check-no-debug-statements
         name: check-no-debug-statements
         entry: uv run --frozen --offline hooks/check-no-debug-statements.py
