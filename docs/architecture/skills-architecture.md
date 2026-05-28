@@ -154,7 +154,8 @@ system is recursive).
 
 ## References
 
-- `AGENTS.md` — the canonical index of every skill and persona.
+- [skills-taxonomy.md](skills-taxonomy.md) — authoritative layer map and dependency rules.
+- [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md) — narrative, worked examples, onboarding prose.
+- `AGENTS.md` — the invocation manifest: which skills each agent calls.
 - `.agents/skills/writing-skills/SKILL.md` — how skills are authored and tested.
-- `.agents/skills/skills-create/SKILL.md` — checklist for adding a new skill.
-- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, and `.github/agents/rl.peter.agent.md` --- the personas.
+- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, `.github/agents/rl.peter.agent.md` — the personas.
