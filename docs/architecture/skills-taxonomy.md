@@ -168,10 +168,10 @@ flowchart TD
     end
 
     subgraph L6["Layer 6 - Python Implementation"]
-        PP["python-patterns / function-design\nclass-design / module-structure"]
-        PD["python-domain-modeling / data-ingestion\npython-crewai"]
-        PDOC["python-documentation / error-handling"]
-        PSCR["python-script / script-numbering\npins / plot-colors"]
+        PP["python-patterns / python-function-design\npython-class-design / python-module-structure"]
+        PD["python-domain-modeling / python-data-ingestion\npython-crewai"]
+        PDOC["python-documentation / python-error-handling"]
+        PSCR["python-script / python-script-numbering\npython-pins-data-version-control / python-plot-colors"]
     end
 
     subgraph L7["Layer 7 - Applied Capabilities"]
