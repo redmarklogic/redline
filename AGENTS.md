@@ -38,73 +38,23 @@ Cross-session memory:
 
 ## Skills
 
-All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) before starting any task that falls within their domain.
+All skills live at `.agents/skills/<name>/SKILL.md`.
+Named agents carry task-to-skill routing tables in their JDs — invoke by name for full routing.
+Default agent routing:
 
-### Python --- Core
-
-- **`python-style`**: General style and `uv` usage conventions
-- **`python-patterns`**: Idiomatic patterns and idioms
-- **`python-typing`**: Type hint standards
-- **`python-linting`**: Ruff/lint compliance and safe suppressions
-- **`python-paths`**: File path conventions (pathlib, importlib.resources, repo\_)
-- **`python-error-handling`**: Exception handling, error translation, and logging
-- **`python-documentation`**: Docstring standards (Google Style)
-- **`python-function-design`**: Function decomposition, signatures, and side effects
-- **`python-class-design`**: Class responsibilities, init, and composition
-- **`python-domain-modeling`**: Value objects, Pandera/Pydantic, DataFrame-first APIs
-- **`python-module-structure`**: How to order functions within a Python module --- the step-down rule, public-before-private ordering, helper extraction, and separating executable code from implementation.
-
-### Python --- Testing
-
-- **`python-testing-unit`**: Unit testing standards
-- **`python-testing-api`**: FastAPI component and contract tests
-- **`test-driven-development`**: RED-GREEN-REFACTOR cycle --- enforces write failing test, watch it fail, write minimal code, watch it pass, commit; deletes code written before tests.
-
-### Python --- Tooling & Environment
-
-- **`dev-environment`**: Bootstrap and maintain the dev environment (uv, tasks, pre-commit)
-- **`python-usethis`**: Add/remove dev tools (pyproject-fmt, ruff, deptry, etc.)
-- **`python-static-checks`**: Running static checks (always do this before finishing)
-- **`python-deptry`**: Dependency hygiene with deptry
-- **`python-performance`**: Profiling and optimisation patterns
-
-### Python --- Scripts
-
-- **`python-script`**: Script conventions (stepdown rule, thin orchestration, Spyder-style cells)
-- **`python-script-numbering`**: Script naming and execution order conventions
-
-### Data & Domain
-
-- **`data-tidy`**: Tidy data principles (Wickham) and guidelines for designing tidy tables, DataFrame schemas, and value-object models (language-agnostic).
-- **`python-pins-data-version-control`**: Dataset versioning with the pins library
-- **`python-data-ingestion`**: Data ingestion and validation (import/process/read pattern, Pandera schemas, multi-worksheet handling, TDD workflow)
-- **`python-crewai`**: CrewAI agent, task, flow, and output model conventions
-
-### EDA & Reporting
-
-- **`eda-codebook`**: Generates and updates comprehensive Markdown codebooks (data dictionary + statistical profile) for CSV and Excel datasets.
-- **`eda-interpreting-data`**: Pre-flight data quality screening and post-plot insight writing (apply before any distribution, scatter, or time-series plot)
-- **`eda-qa`**: Ingests an existing codebook + raw dataset, nominates data quality problems, validates hypotheses, and updates the codebook's Findings section with concrete findings. If no codebook exists, stops and directs the user to run `eda-codebook` first.
-- **`eda-visual-design`**: Chart type selection, encoding, labelling, cognitive load (apply _after_ `eda-interpreting-data`)
-- **`python-plot-colors`**: Color selection, colormap choice, color-blindness safety, and cross-figure consistency for all plotting libraries used in this repo.
-- **`qmd-tables`**: Rendering tables in Quarto documents (great_tables GT, HTML/PDF helpers)
-- **`qmd-narrative-design`**: Narrative design for reports and presentations (Hook-Problem-Insight-Proof-Action arc)
-- **`mermaid-diagrams`**: Mermaid diagram type selection, syntax constraints (v8.8.0 ceiling), when-to-diagram rules, and quality guidance for Markdown documents
-
-### Infrastructure & Security
-
-- **`security`**: Secure coding (secrets, configuration, logging)
-- **`version-control`**: Commit conventions, hygiene, pre-commit, and pre-push checks
-- **`git-push-batched`**: Push changes to git in thematically organised commits — groups dirty files into cohesive batches, proposes them for user confirmation, then stages and commits each batch before pushing. By default, auto-commits without waiting for confirmation.
-- **`pre-commit-hooks-create`**: Writing bespoke pre-commit hooks
-- **`python-mcp-tools`**: MCP tooling usage in this repo
-- **`cce-mcp`**: Code Context Engine MCP server — indexes the codebase for semantic search (`context_search`), cross-session decision persistence (`record_decision` / `session_recall`), and 94% input-token savings vs full-file reads. Install once with `cce init --agent copilot`.
-- **`notebooklm-mcp`**: NotebookLM MCP server setup, authentication, and allowed/forbidden tools in VS Code
-- **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
-- **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.
-- **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
-- **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for [RICE](.agents/skills/mental-models/strategic_decisions/rice.md) scoring, [MoSCoW](.agents/skills/mental-models/strategic_decisions/moscow.md), vertical slice sizing, and domain impact assessment.
-- **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
+| Trigger | Skills to load |
+|---|---|
+| Python coding | `python-style`, `python-patterns`, `python-typing`, `python-linting`, `python-paths`, `python-error-handling`, `python-documentation`, `python-function-design`, `python-class-design`, `python-domain-modeling`, `python-module-structure` |
+| Tests / TDD | `python-testing-unit`, `python-testing-api`, `test-driven-development` |
+| Dev tooling | `dev-environment`, `python-usethis`, `python-static-checks`, `python-deptry`, `python-performance` |
+| Scripts | `python-script`, `python-script-numbering` |
+| Data / ingestion | `data-tidy`, `python-pins-data-version-control`, `python-data-ingestion`, `python-crewai` |
+| EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
+| Security / infra | `security`, `version-control`, `git-push-batched`, `pre-commit-hooks-create`, `python-mcp-tools`, `cce-mcp`, `notebooklm-mcp` |
+| Engineering spec | `spec-kit`, `doc-updater` |
+| Workflow | `systematic-debugging`, `verification-before-completion`, `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
+| New features | `brainstorming` |
+| Research | `redline-research` |
 
 ### Advisory Board (Product & Strategy)
 
@@ -264,26 +214,6 @@ Two platform agents that serve all other agents. Neither makes domain decisions.
   audits, PIPs, skill gap management, org design. Maintains agent register, org chart, and
   skills taxonomy. Draft-first maturity.
   Invoke: "Harriet, [request]"
-
-### Redline Project Research
-
-- **`redline-research`**: Structured research workflow for Redline --- queries multiple NotebookLM knowledge bases with iterative cross-referencing; outputs cited Markdown documents to `docs/research/`. Never uses online search. Notebook register at `.agents/skills/redline-research/register.json`. Apply whenever the user asks to "research", "investigate", or "look up" something in the Redline knowledge base.
-
-### External Skills (obra/superpowers)
-
-Source: <https://github.com/obra/superpowers>
-
-- **`brainstorming`**: Socratic design refinement --- activates before writing code; teases out a spec through questions, explores alternatives, and presents design in sections for validation. Terminal state invokes `spec-kit`.
-- **`dispatching-parallel-agents`**: Concurrent subagent workflows --- dispatches multiple agents in parallel to work on independent tasks.
-- **`finishing-a-development-branch`**: Merge/PR decision workflow --- verifies tests, presents options (merge/PR/keep/discard), cleans up worktrees.
-- **`requesting-code-review`**: Pre-review checklist --- reviews against plan, reports issues by severity before submitting for review.
-- **`resolving-pr-issues`**: Resolve incoming PR code-review comments --- structured triage → reproduce → fail-first test → fix → two-stage gate → PTAL → CI closure cycle.
-- **`subagent-driven-development`**: Fast iteration with two-stage review --- dispatches fresh subagent per task with spec compliance then code quality review.
-- **`systematic-debugging`**: 4-phase root cause process --- structured debugging with root-cause-tracing, defense-in-depth, and condition-based-waiting techniques.
-- **`using-git-worktrees`**: Parallel development branches --- creates isolated workspaces on new branches, runs project setup, verifies clean test baseline.
-- **`using-superpowers`**: Introduction to the skills system --- explains how to load and use skills effectively.
-- **`verification-before-completion`**: Ensure it's actually fixed --- verifies that errors are truly resolved before declaring success.
-- **`writing-skills`**: Create new skills following best practices --- includes testing methodology for skill creation.
 
 ## General Style
 

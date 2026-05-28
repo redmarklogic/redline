@@ -188,6 +188,10 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Before starting creative work | `brainstorming` |
 | CrewAI agents | `python-crewai` |
 | Codebase exploration / session start / discover company docs | `cce-mcp` |
+| EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
+| MCP tooling | `python-mcp-tools`, `notebooklm-mcp` |
+| Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
+| Documentation maintenance | `doc-updater` |
 
 ## What I Do NOT Do
 
