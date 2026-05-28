@@ -40,7 +40,7 @@ dev = [
 ]
 test = [
   "coverage[toml]>=7.13.5",
-  "pytest>=9.0.2",
+  "pytest>=9.0.3",
   "pytest-cov>=7.1.0",
 ]
 doc = [
@@ -58,6 +58,9 @@ build.targets.wheel.packages = [ "src/rl" ]
 [tool.uv]
 default-groups = [ "doc", "dev", "test" ]
 link-mode = "symlink"
+constraint-dependencies = [
+  "gitpython>=3.1.50",
+]
 
 [tool.ruff]
 line-length = 88
@@ -135,9 +138,3 @@ layers = [ "readers" ]
 containers = [ "rl.functions" ]
 exhaustive = true
 
-[[tool.importlinter.contracts]]
-name = "rl.functions.readers layers"
-type = "layers"
-layers = [ "retaining_wall" ]
-containers = [ "rl.functions.readers" ]
-exhaustive = true

@@ -25,7 +25,6 @@ foundation and retaining wall assessments for New Zealand council compliance.
 
 | Context            | Package                        | Independence Contract |
 | ------------------ | ------------------------------ | --------------------- |
-| Retaining wall     | `rl.functions.readers.retaining_wall` | N/A (single context)  |
 
 ## Layer Architecture
 

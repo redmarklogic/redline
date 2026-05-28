@@ -2,6 +2,9 @@ version = 1
 revision = 3
 requires-python = ">=3.14"
 
+[manifest]
+constraints = [{ name = "gitpython", specifier = ">=3.1.50" }]
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -1203,7 +1206,7 @@ ocr = [
 ]
 test = [
     { name = "coverage", extras = ["toml"], specifier = ">=7.13.5" },
-    { name = "pytest", specifier = ">=9.0.2" },
+    { name = "pytest", specifier = ">=9.0.3" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
 ]
 

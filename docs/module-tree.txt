@@ -2,5 +2,4 @@ rl                          # Redline package.
 ├── domain                  # Domain package for Redline.
 ├── functions               # Functions package for Redline.
 │   └── readers             # Readers package for Redline.
-│       └── retaining_wall  # Retaining wall readers for Redline.
 └── schemas                 # Schemas package for Redline.
