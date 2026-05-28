@@ -49,8 +49,13 @@ When writing or updating another skill that needs a mental model, reference a fi
 | Risk Analysis | Swiss Cheese Model | Designing layered defences or diagnosing how a failure slipped through quality gates | `risk_analysis/swiss-cheese-model.md` |
 | Root Cause Analysis | Cargo Cult | Copying patterns or "best practices" without understanding why they work | `root_cause_analysis/cargo-cult.md` |
 | Strategic Decisions | Trade-off Analysis | Choosing between options with competing constraints; explicitly price what you are sacrificing | `strategic_decisions/trade-off-analysis.md` |
+| Strategic Decisions | Cannibalisation Dynamics | Evaluating whether a company will commercialise an internal capability, or identifying a market gap created by incumbents who rationally refuse to | `strategic_decisions/cannibalisation-dynamics.md` |
 | Strategic Decisions | Pre-mortem | Before committing to a plan; assume it has already failed and work backward to surface hidden risks | `strategic_decisions/pre-mortem.md` |
+| Strategic Decisions | MoSCoW | After prioritisation, to translate a ranked list into unambiguous release-criteria buckets (Must/Should/Could/Won't) | `strategic_decisions/moscow.md` |
+| Strategic Decisions | Value-Effort Matrix | Triaging a backlog visually by relative value versus total delivery cost; escalate to ROI Scorecard for large lists | `strategic_decisions/value-effort.md` |
+| Strategic Decisions | Kano Model | Classifying features by tier of customer need (Dissatisfier/Satisfier/Delighter) to guide differentiation investment | `strategic_decisions/kano.md` |
 | Self-Awareness | Sunk-Cost Fallacy | Tempted to continue a failing effort because of past investment; evaluate only future returns | `self_awareness/sunk-cost-fallacy.md` |
+| Self-Awareness | Dunning-Kruger Effect | Feeling confident in unfamiliar territory, or assessing a junior's skill level before assigning independent work | `self_awareness/dunning-kruger.md` |
 | General Thinking | Deep Modules | Evaluating whether an abstraction is worth its interface cost; prefer few, powerful modules | `general_thinking/deep-modules.md` |
 | General Thinking | Zero-One-Infinity Rule | Adding a hardcoded limit to a system; any specific number other than 0 or 1 is a design smell | `general_thinking/zero-one-infinity.md` |
 | General Thinking | Nielsen's 10 Usability Heuristics | Reviewing a UI design or diagnosing a usability problem without access to user testing | `general_thinking/nielsens-heuristics.md` |
