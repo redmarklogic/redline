@@ -36,6 +36,9 @@ For general commit hygiene, pre-commit, and push checklist, see the `version-con
 ## Context & Guidelines
 
 - **Scope**: Any time the user wants to push uncommitted changes to a remote branch.
+- **Protected branches — hard stop**: Before doing anything, check the current branch.
+  If it is `master` or `main`, **stop immediately**. Do not stage, do not commit, do not push.
+  Tell the developer they are on a protected branch and ask them to check out a feature branch.
 - **Auto-commit by default**: Show the batch plan, then execute immediately. Only wait
   for confirmation when the user explicitly requests a review step.
 - **Never amend published commits**: Only create new commits on the current branch.
@@ -52,6 +55,18 @@ For general commit hygiene, pre-commit, and push checklist, see the `version-con
 - **Docs and skills** always form a separate `docs:` commit.
 
 ## Procedure
+
+### 0. Check Branch (Hard Stop)
+
+```powershell
+git branch --show-current
+```
+
+If the output is `master` or `main`, **stop here**. Do not proceed.
+Tell the developer:
+
+> "You are on `<branch>`, which is a protected branch. I cannot commit or push here.
+> Please check out a feature branch and try again."
 
 ### 1. Discover Changes
 
@@ -126,6 +141,9 @@ If pre-commit fails with a blocking error (not an auto-fix), stop, report the er
 and ask the user how to proceed before continuing to the next batch.
 
 ### 5. Push
+
+Confirm the current branch is not `master` or `main` (Step 0 already checked this,
+but verify again in case something changed mid-session).
 
 After all batches are committed:
 
