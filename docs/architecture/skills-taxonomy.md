@@ -1,35 +1,24 @@
 # Skills Taxonomy & Layered Architecture
 
-## Who this is for
-
-Anyone adding a new skill, placing an existing skill in context, or deciding whether a
-skill may reference another. This document establishes the **taxonomy** (classification of
-all skills by layer) and the **architectural rules** that govern reference direction.
-
----
-
-## What this is NOT
-
-This document does not describe the **handoff chain** (who hands work to whom in
-execution). That chain — Ron → Mark → Peter → spec-kit → Kabilan — is documented in
-[skills-architecture.md](skills-architecture.md). Handoff direction and dependency direction
-are separate concerns.
-
-The handoff chain answers: *"Who gives work to whom?"*
-The taxonomy answers: *"Which skills may a skill reference?"*
+> **SOT for layer assignments.** This document is the single authoritative source for
+> skill-to-layer classification (L0-L9). The `layer` field in `skills-lock.json` is
+> derived from this document via `hooks/sync-layer-to-lock.py`.
+>
+> For narrative context — what layers mean, why they are ordered this way, worked examples,
+> and onboarding prose — see
+> [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md).
+>
+> For the handoff chain (who hands work to whom), see
+> [skills-architecture.md](skills-architecture.md).
 
 ---
 
 ## Principles
 
-### 1. Dependency Direction (the import rule)
+### 1. Dependency Direction
 
 A skill at layer N may reference skills at layers 0 through N. It must **never** reference
 a skill at layer N+1 or above.
-
-This mirrors the Python import rule: a module in a lower layer must not import from a layer
-above it. For skills, "import" means "reference" — invoking, loading, or pointing to
-another skill as a prerequisite or cross-reference.
 
 ```
 Layer 6  ─────────────────────────────────────
@@ -42,39 +31,23 @@ Layer 2  ───────────────────────�
 
 ### 2. Stability Gradient (lower = more stable)
 
-Lower layers change less often. Upper layers are more volatile and application-specific.
-A change to a foundational skill (Layer 0) affects everything above it, so foundational
-skills must be conservative. A change to a Python implementation pattern (Layer 6) affects
-only its own callers.
-
-Mental model: **Reversible vs Irreversible** (`mental-models/strategic_decisions/reversible-vs-irreversible.md`).
-Changes to lower layers are harder to reverse because the blast radius is larger.
-
-*Corollary*: skills that change frequently as defects are found (implementation patterns,
-coding guidance) belong in upper layers, not lower ones. Platform adapters and standards
-that rarely change belong near the foundation.
+Lower layers change less often. Upper layers are more volatile. Skills that change
+frequently belong in upper layers; stable standards and adapters belong near the foundation.
 
 ### 3. Vendor Boundary (Layer 0, immutable)
 
-All vendor-maintained skills sit at Layer 0. They cannot reference project-owned skills
-because vendor updates overwrite local modifications. Two vendor sources exist today:
+All vendor-maintained skills sit at Layer 0. They cannot reference project-owned skills —
+vendor updates overwrite local modifications.
 
 | Vendor | Skills |
 |---|---|
 | `specify` (spec-kit) | `spec-kit` |
 | `obra/superpowers` | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
-Rule: *Don't depend on what you can't control* (Dependency Inversion Principle, sourced
-from AI System Engineering notebook).
-
 ### 4. Single Source of Truth (registries at the bottom)
 
-Foundation registries (`mental-models`) define concepts once. Other skills reference their
-files rather than redefining concepts inline. This applies ADR-001 (single source of truth)
-to the skill layer: definitions live in one place and callers point to them.
-
-Anti-pattern: embedding a mental model definition inline in a skill rather than
-referencing `mental-models/`. Each inline definition is a fork that drifts.
+Foundation registries (`mental-models`) define concepts once. All other skills reference
+their files — never redefine concepts inline.
 
 ### 5. Polyglot Before Language-Specific
 
@@ -85,11 +58,8 @@ language, it belongs in a lower layer.
 
 ### 6. Deep Modules at Layer Boundaries
 
-Each layer should expose a minimal, stable interface upward. Prefer a small number of
-powerful, information-hiding skills in a layer over many shallow skills that leak
-implementation details.
-
-Mental model: **Deep Modules** (`mental-models/general_thinking/deep-modules.md`).
+Each layer exposes a minimal, stable interface upward. Prefer fewer powerful skills per
+layer over many shallow ones that leak implementation details.
 
 ### 7. Horizontal Independence (within a layer)
 
@@ -115,7 +85,7 @@ When placing a new skill, ask:
 │  Layer 8: Engineering Workflows                                      │
 │  shaping · engineering-architecture · evaluation-architecture        │
 │  ai-acceptable-use-policy · doc-updater · git-push-batched           │
-│  resolving-pr-issues                                                 │
+│  resolving-pr-issues · skills-create                                 │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Applied Capabilities                                       │
 │  eda-* · qmd-* · redline-research · notebooklm-index                │
@@ -275,9 +245,6 @@ vendor update.
 
 **Rule**: May reference Layers 0-1.
 
-Standards that apply regardless of programming language. Python-specific skills in Layer 4+
-are implementations or customisations of these polyglot concepts.
-
 | Skill | Scope |
 |---|---|
 | `data-tidy` | Tidy data principles (Wickham) — applies to any DataFrame library |
@@ -290,10 +257,6 @@ are implementations or customisations of these polyglot concepts.
 ### Layer 3 — Platform Integrations (MCPs)
 
 **Rule**: May reference Layers 0-2.
-
-Narrow adapters connecting the project to external platforms. Stable, rarely changing.
-Skills above this layer use MCPs to perform work; MCPs themselves know nothing about how
-they are used.
 
 | Skill | Platform |
 |---|---|
@@ -309,10 +272,6 @@ they are used.
 
 **Rule**: May reference Layers 0-3.
 
-Stable Python conventions that change infrequently. These define the baseline coding style
-that all Python skills assume. They sit above polyglot standards (Layer 2) because they
-are Python-specific implementations of those language-agnostic principles.
-
 | Skill | Scope |
 |---|---|
 | `python-style` | Formatting, `uv` usage, general Python idioms |
@@ -326,10 +285,6 @@ are Python-specific implementations of those language-agnostic principles.
 
 **Rule**: May reference Layers 0-4.
 
-Skills that verify, check, or install. Testing and static analysis depend on core language
-standards (Layer 4) and MCPs (Layer 3), but not on implementation patterns (Layer 6).
-Implementation patterns reference quality skills — not the other way around.
-
 | Group | Skills |
 |---|---|
 | Testing | `python-testing-unit`, `python-testing-api` |
@@ -341,11 +296,6 @@ Implementation patterns reference quality skills — not the other way around.
 ### Layer 6 — Python Implementation (volatile)
 
 **Rule**: May reference Layers 0-5.
-
-The most volatile Python layer. These skills define how to write functions, classes,
-modules, and domain models. They change frequently as defects are discovered in coding
-workflows. They reference quality tools (Layer 5), MCPs (Layer 3), and core standards
-(Layer 4) to do their work.
 
 | Group | Skills |
 |---|---|
@@ -361,11 +311,6 @@ workflows. They reference quality tools (Layer 5), MCPs (Layer 3), and core stan
 
 **Rule**: May reference Layers 0-6.
 
-Compound domain-specific workflows that combine Python implementation, MCPs, and quality
-tools into coherent capabilities. EDA workflows use plotting (Layer 6), testing (Layer 5),
-and MCPs (Layer 3). Research workflows use `notebooklm-mcp` (Layer 3) and
-`rag-prompting` (Layer 3).
-
 | Group | Skills |
 |---|---|
 | EDA & visualisation | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design` |
@@ -379,25 +324,17 @@ and MCPs (Layer 3). Research workflows use `notebooklm-mcp` (Layer 3) and
 
 **Rule**: May reference Layers 0-7.
 
-End-to-end engineering processes: shaping, architecture governance, code review, and
-release workflows. Combines applied capabilities (Layer 7), quality tools (Layer 5), and
-platform integrations (Layer 3) into repeatable engineering ceremonies.
-
 | Group | Skills |
 |---|---|
 | Architecture | `shaping`, `engineering-architecture`, `evaluation-architecture`, `ai-acceptable-use-policy` |
 | Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater` |
+| Skill authoring | `skills-create` |
 
 ---
 
 ### Layer 9 — Product, Strategy & Organisation
 
 **Rule**: May reference Layers 0-8.
-
-Highest abstraction. Agent-level skills used by named personas (Ron, Mark, John, Matt,
-Peter, Harriet). These reference research (Layer 7), MCPs (Layer 3), and engineering
-workflows (Layer 8) to produce strategic and product artifacts. Most volatile in terms
-of business context.
 
 | Group | Skills |
 |---|---|
@@ -443,32 +380,6 @@ Verification: when adding a cross-skill reference, check the layer of both skill
 If the referenced skill is in a higher layer than the referencing skill, stop and either:
 - Move the referenced skill to a lower layer, or
 - Extract the shared concept into an existing lower-layer skill.
-
----
-
-## Design Record: Why This Ordering?
-
-### Mistakes corrected from v1
-
-The first version of this taxonomy cargo-culted the onion architecture from software (domain
-core at center, infrastructure outside) and applied it to skills without verifying the
-causal mechanism.
-
-| v1 error | Root cause | Correction |
-|---|---|---|
-| Python implementation patterns at Layer 2 (low) | Assumed code patterns are stable like domain models — they are not; they change as defects are found | Moved to Layer 6 (high, volatile) |
-| Quality & tooling above implementation patterns | Assumed tests depend on patterns — actually patterns reference tests | Inverted: Quality (L5) below Implementation (L6) |
-| Only `spec-kit` identified as vendor | Missed 12 skills from `obra/superpowers` | All vendor skills at Layer 0 |
-| Language-agnostic and Python-specific mixed in same layer | No polyglot principle | Separated: polyglot at Layer 2, Python at Layer 4+ |
-| MCPs placed above quality/tooling | Assumed platform adapters are volatile — they are not; they are narrow and stable | MCPs at Layer 3, below quality |
-
-Mental models that would have prevented these errors:
-- **Cargo Cult** (`mental-models/root_cause_analysis/cargo-cult.md`) — reproducing the form
-  of onion architecture without verifying the causal mechanism (reference direction) applies
-  to skills
-- **First Principles** (`mental-models/general_thinking/first-principles.md`) — should have
-  started from "which skill actually references which" and built layers from observed
-  dependencies, not from analogy to software architecture
 
 ---
 

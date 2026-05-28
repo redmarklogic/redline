@@ -6,672 +6,976 @@
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["peter", "ron"],
-      "status": "active"
+      "owner_agent": [
+        "peter",
+        "ron"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "brainstorming": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "8df9b47092524833138b58682d03f2e153a242e550d1693657afdbee0cc9cdb0",
       "tier": "planning",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "cce-mcp": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan", "peter"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan",
+        "peter"
+      ],
+      "status": "active",
+      "layer": 3
     },
     "ceremony-agent-topology-sync": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
-      "owner_agent": ["harriet"],
-      "status": "active"
+      "owner_agent": [
+        "harriet"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "ceremony-monthly-editorial-session": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
-      "owner_agent": ["graeme", "john"],
-      "status": "active"
+      "owner_agent": [
+        "graeme",
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "data-tidy": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 2
     },
     "ddd-strategic": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
-      "owner_agent": ["peter"],
-      "status": "active"
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "dev-environment": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "dispatching-parallel-agents": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "e21044ae7496fc285f1df9ff3fb518a3a20bea6f5216c1f59f4987e12c769a0a",
       "tier": "planning",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "doc-updater": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "eda-codebook": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "eda-interpreting-data": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "eda-qa": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "eda-visual-design": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "engineering-architecture": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["peter"],
-      "status": "active"
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "evaluation-architecture": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["peter"],
-      "status": "active"
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "finishing-a-development-branch": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "9edba9a38684c060fdc38290f640e1dc0c37de286723ac9be73bacacf7cd6f3d",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "git-push-batched": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "hiring-agent-management": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
-      "owner_agent": ["harriet"],
-      "status": "active"
+      "owner_agent": [
+        "harriet"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "library-management": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["linda"],
-      "status": "active"
+      "owner_agent": [
+        "linda"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "marketing-ai-content-review": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["john"],
-      "status": "active"
+      "owner_agent": [
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "marketing-content-big-5": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["john"],
-      "status": "active"
+      "owner_agent": [
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "marketing-product-led-seo": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["john"],
-      "status": "active"
+      "owner_agent": [
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "marketing-social-selling-linkedin": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["john"],
-      "status": "active"
+      "owner_agent": [
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "mermaid-diagrams": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan", "mark", "ron", "john", "matt"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan",
+        "mark",
+        "ron",
+        "john",
+        "matt"
+      ],
+      "status": "active",
+      "layer": 2
     },
     "miro-mcp": {
       "source": "miroapp/miro-ai",
       "sourceType": "github",
       "computedHash": "eec5b0e2012e5964630d657317ebe4427737f23c1c764e4b035d2e172136e155",
       "tier": "atomic",
-      "owner_agent": ["mark", "john", "ron", "peter", "matt"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "john",
+        "ron",
+        "peter",
+        "matt"
+      ],
+      "status": "active",
+      "layer": 3
     },
     "notebooklm-deep-research": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
-      "owner_agent": ["ron", "mark", "peter", "linda"],
-      "status": "active"
+      "owner_agent": [
+        "ron",
+        "mark",
+        "peter",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "notebooklm-index": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["linda"],
-      "status": "active"
+      "owner_agent": [
+        "linda"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "notebooklm-mcp": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["harriet", "graeme", "ron", "john", "mark", "linda", "peter", "matt"],
-      "status": "active"
+      "owner_agent": [
+        "harriet",
+        "graeme",
+        "ron",
+        "john",
+        "mark",
+        "linda",
+        "peter",
+        "matt"
+      ],
+      "status": "active",
+      "layer": 3
     },
     "pm-decision-architect": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark", "ron"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "ron"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-hypothesis-builder": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark"],
-      "status": "active"
+      "owner_agent": [
+        "mark"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-personas": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark", "ron", "john"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "ron",
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-prd-builder": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark"],
-      "status": "active"
+      "owner_agent": [
+        "mark"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-prioritization": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark", "john"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-problem-framer": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark"],
-      "status": "active"
+      "owner_agent": [
+        "mark"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-product-strategist": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["ron"],
-      "status": "active"
+      "owner_agent": [
+        "ron"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-roadmap": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark", "ron"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "ron"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pm-structural-integrity-auditor": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["mark", "ron", "john", "peter", "graeme", "matt"],
-      "status": "active"
+      "owner_agent": [
+        "mark",
+        "ron",
+        "john",
+        "peter",
+        "graeme",
+        "matt"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "pre-commit-hooks-create": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "python-class-design": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-crewai": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-data-ingestion": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-deptry": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "python-documentation": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-domain-modeling": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-error-handling": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-function-design": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-linting": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 4
     },
     "python-mcp-tools": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 3
     },
     "python-module-structure": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-paths": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 4
     },
     "python-patterns": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-performance": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "python-pins-data-version-control": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-plot-colors": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-script": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-script-numbering": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
     },
     "python-static-checks": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "python-style": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 4
     },
     "python-testing-api": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "python-testing-unit": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "python-typing": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 4
     },
     "python-usethis": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
     },
     "qmd-narrative-design": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["john", "kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "john",
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "qmd-tables": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "rag-prompting": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["graeme", "ron", "mark", "john", "linda"],
-      "status": "active"
+      "owner_agent": [
+        "graeme",
+        "ron",
+        "mark",
+        "john",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 3
     },
     "receiving-code-review": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "2760c85d4f4117b0006e7ba755f4bbd61f8f4c185f347999763c97f507274e30",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "deprecated"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "deprecated",
+      "layer": 0
     },
     "redline-research": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["graeme", "ron", "mark", "john", "peter", "linda"],
-      "status": "active"
+      "owner_agent": [
+        "graeme",
+        "ron",
+        "mark",
+        "john",
+        "peter",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 7
     },
     "requesting-code-review": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "246e65cd72a7e360987d94e6c61564ce6d71c6361d1784d529d70e4cbbe8522d",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "resolving-pr-issues": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "security": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 2
     },
     "shaping": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["peter", "mark"],
-      "status": "active"
+      "owner_agent": [
+        "peter",
+        "mark"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "skills-create": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["harriet", "kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "harriet",
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
     },
     "spec-kit": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "strategy-pre-mortem": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["ron"],
-      "status": "active"
+      "owner_agent": [
+        "ron"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "strategy-psf-domain": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "functional",
-      "owner_agent": ["ron"],
-      "status": "active"
+      "owner_agent": [
+        "ron"
+      ],
+      "status": "active",
+      "layer": 9
     },
     "subagent-driven-development": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "a197f8e5fba5ea59013e1adbaa90dd42db35de8f074feca200c8038de584a83b",
       "tier": "planning",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "systematic-debugging": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "72e9ab72627e4fd8ed26a582e82309a98ecdc4f6e1c99418430ac05682c9e91d",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "test-driven-development": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "126f1ebf6ccd414f42544f6e83d8cc5adb089e1108eaffb7c400701e37eecd9f",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "using-git-worktrees": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "52bbb4b6e80918e83e92a1514f3b3757712154c2a8a42de24919e48a794c54fc",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "using-superpowers": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "e0eced9fbb205c212f420aded0c6f2bf5d5f059254679a8459b4fe72390160be",
       "tier": "atomic",
-      "owner_agent": ["kabilan", "peter", "harriet", "graeme", "ron", "john", "mark", "matt", "linda"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan",
+        "peter",
+        "harriet",
+        "graeme",
+        "ron",
+        "john",
+        "mark",
+        "matt",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "verification-before-completion": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "9b446f0c7fe1cfb560b1d34439523b1a76d5f177290007b2c053a1c749a4a8ba",
       "tier": "functional",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     },
     "version-control": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "atomic",
-      "owner_agent": ["kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 2
     },
     "writing-skills": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "computedHash": "c0a92e629e39ea91b1f54da67a6aa92723008a8ef5b500c6de078f55485937c7",
       "tier": "functional",
-      "owner_agent": ["harriet", "kabilan"],
-      "status": "active"
+      "owner_agent": [
+        "harriet",
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 0
     }
   }
 }

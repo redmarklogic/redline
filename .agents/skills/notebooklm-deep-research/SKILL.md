@@ -5,7 +5,7 @@ description: Use when running NotebookLM deep research with strict 5 Whys intake
 
 # NotebookLM Deep Research
 
-Use one intake framework only: 5 Whys.
+Use one intake framework only: [5 Whys](../mental-models/root_cause_analysis/five-whys.md).
 
 ## Boundary Contract
 
