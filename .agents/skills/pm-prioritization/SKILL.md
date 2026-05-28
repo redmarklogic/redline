@@ -13,7 +13,7 @@ Rank **what to build next** across initiatives, bets, or opportunities at the po
 
 ### Inputs
 - List of features, initiatives, or opportunities to rank
-- Chosen framework (RICE, MoSCoW, Value-Effort, or Kano)
+- Chosen framework ([RICE](../mental-models/strategic_decisions/rice.md), [MoSCoW](../mental-models/strategic_decisions/moscow.md), [Value-Effort](../mental-models/strategic_decisions/value-effort.md), or [Kano](../mental-models/strategic_decisions/kano.md))
 
 ### Outputs
 - Ranked priority table with scores and rationale
@@ -34,12 +34,14 @@ Rank **what to build next** across initiatives, bets, or opportunities at the po
 
 | Framework | Best for | Output |
 |---|---|---|
-| **RICE** (Reach x Impact x Confidence / Effort) | 5-20 initiatives with rough quantitative inputs | Ranked table with score |
+| [**RICE**](../mental-models/strategic_decisions/rice.md) | 5-20 initiatives with rough quantitative inputs | Ranked table with score |
 | **MoSCoW** (Must / Should / Could / Won't) | Scope-cutting a fixed-deadline release | Four buckets |
 | **Value vs Effort** (2x2 matrix) | Visual stakeholder review of a small set | Miro 2x2 |
 | **Kano** (Basic / Performance / Delight) | Differentiating must-have from delight | Three categories |
 
 Choose ONE framework per session. Mixing produces incomparable scores.
+
+> Framework definitions: `mental-models/strategic_decisions/rice.md`, `mental-models/strategic_decisions/moscow.md`, `mental-models/strategic_decisions/value-effort.md`, `mental-models/strategic_decisions/kano.md`.
 
 ## Required Inputs
 

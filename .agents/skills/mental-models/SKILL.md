@@ -51,6 +51,7 @@ When writing or updating another skill that needs a mental model, reference a fi
 | Strategic Decisions | Trade-off Analysis | Choosing between options with competing constraints; explicitly price what you are sacrificing | `strategic_decisions/trade-off-analysis.md` |
 | Strategic Decisions | Cannibalisation Dynamics | Evaluating whether a company will commercialise an internal capability, or identifying a market gap created by incumbents who rationally refuse to | `strategic_decisions/cannibalisation-dynamics.md` |
 | Strategic Decisions | Pre-mortem | Before committing to a plan; assume it has already failed and work backward to surface hidden risks | `strategic_decisions/pre-mortem.md` |
+| Strategic Decisions | RICE | Ranking 5-20 initiatives by total impact per time worked when gut-feel prioritisation is insufficient | `strategic_decisions/rice.md` |
 | Strategic Decisions | MoSCoW | After prioritisation, to translate a ranked list into unambiguous release-criteria buckets (Must/Should/Could/Won't) | `strategic_decisions/moscow.md` |
 | Strategic Decisions | Value-Effort Matrix | Triaging a backlog visually by relative value versus total delivery cost; escalate to ROI Scorecard for large lists | `strategic_decisions/value-effort.md` |
 | Strategic Decisions | Kano Model | Classifying features by tier of customer need (Dissatisfier/Satisfier/Delighter) to guide differentiation investment | `strategic_decisions/kano.md` |

@@ -71,7 +71,7 @@ the question: "Does this increase or protect billable hours?"
 revenue destruction unless the firm can redeploy freed hours to higher-value work. Never assume
 PSFs want to automate their core deliverables.
 
-### 2. Cannibalisation Dynamics
+### 2. [Cannibalisation Dynamics](../mental-models/strategic_decisions/cannibalisation-dynamics.md)
 
 **Generic assumption that fails:** A company with a strong internal tool can sell it externally
 to generate a new revenue stream.
