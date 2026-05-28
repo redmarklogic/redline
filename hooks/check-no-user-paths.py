@@ -50,7 +50,9 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str]]:
             if candidate.suffix.lower() not in _TEXT_EXTENSIONS:
                 continue
             try:
-                lines = candidate.read_text(encoding="utf-8", errors="replace").splitlines()
+                lines = candidate.read_text(
+                    encoding="utf-8", errors="replace"
+                ).splitlines()
             except OSError:
                 continue
             for lineno, line in enumerate(lines, start=1):
