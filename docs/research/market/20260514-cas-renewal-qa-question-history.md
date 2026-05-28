@@ -471,7 +471,7 @@ graduate" framing of AI checking obligations.]
 
 ```mermaid
 gantt
-    title NZ PI Insurance History — Key Phases
+    title NZ PI Insurance History - Key Phases
     dateFormat YYYY
     axisFormat %Y
     section Leaky Buildings

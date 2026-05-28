@@ -24,7 +24,7 @@ the Free Skeleton Wedge without revival. See [strategic-bets.md](strategic-bets.
 
 ```mermaid
 gantt
-    title Redline — 90-Day Roadmap (May–Sep 2026)
+    title Redline - 90-Day Roadmap (May-Sep 2026)
     dateFormat  YYYY-MM-DD
     axisFormat  %b %Y
 
@@ -39,7 +39,7 @@ gantt
     M2 60-Day Check            :crit, 2026-07-31, 1d
     M3 Kill Criterion          :crit, 2026-09-01, 1d
 
-    section Stream 1 — Skeleton
+    section Stream 1 - Skeleton
     Feature A GBR Skeleton     :crit, 2026-06-02, 2026-06-30
     Feature M Document Parser  :crit, 2026-06-02, 2026-06-30
     Feature N Standards Store  :2026-06-02, 2026-06-30
@@ -47,7 +47,7 @@ gantt
     Platform P Build           :2026-06-09, 2026-06-30
     Platform P Iterate         :2026-07-01, 2026-07-31
 
-    section Stream 2 — Rule Engine
+    section Stream 2 - Rule Engine
     Feature D Parked           :done, 2026-06-02, 2026-06-30
     Feature G Discovery        :2026-07-01, 2026-07-31
     Feature G Ship             :2026-08-01, 2026-08-31
@@ -55,10 +55,10 @@ gantt
     D Taxonomy-Free Ship       :2026-08-01, 2026-08-31
     D.pc Discovery             :2026-08-01, 2026-08-31
 
-    section Stream 3 — Taxonomy
+    section Stream 3 - Taxonomy
     Pareto 5 Design Types      :active, 2026-05-14, 2026-08-31
 
-    section Stream 4 — Param Rules
+    section Stream 4 - Param Rules
     Parameter Completeness     :2026-08-01, 2026-08-31
 ```
 
