@@ -28,6 +28,36 @@ _EM_DASH = "\u2014"
 _EN_DASH = "\u2013"
 
 
+def _read_text(path: Path) -> str | None:
+    """Return file contents, or None if the file cannot be read."""
+    try:
+        return path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+
+
+def _has_wildcard_in_brackets(line: str) -> bool:
+    """Return True if line contains a glob wildcard (*) inside [...] brackets.
+
+    Exception: ``[*]`` is a valid stateDiagram start/end state token and is
+    not flagged.
+    """
+    in_bracket = False
+    bracket_content: list[str] = []
+    for ch in line:
+        if ch == "[":
+            in_bracket = True
+            bracket_content = []
+        elif ch == "]":
+            if in_bracket and "*" in bracket_content and bracket_content != ["*"]:
+                return True
+            in_bracket = False
+            bracket_content = []
+        elif in_bracket:
+            bracket_content.append(ch)
+    return False
+
+
 def _check_file(path: Path) -> list[tuple[int, str, str, str]]:
     """Return (lineno, line, violation_type, reason) for each violation.
 
@@ -38,9 +68,11 @@ def _check_file(path: Path) -> list[tuple[int, str, str, str]]:
     violations: list[tuple[int, str, str, str]] = []
     in_mermaid = False
 
-    for lineno, line in enumerate(
-        path.read_text(encoding="utf-8").splitlines(), start=1
-    ):
+    text = _read_text(path)
+    if text is None:
+        return violations
+
+    for lineno, line in enumerate(text.splitlines(), start=1):
         stripped = line.strip()
 
         if not in_mermaid:
@@ -78,28 +110,15 @@ def _check_file(path: Path) -> list[tuple[int, str, str, str]]:
             continue
 
         # Check 2: wildcard (*) inside node label brackets [...].
-        # Exception: [*] is a valid stateDiagram start/end state token — skip it.
-        in_bracket = False
-        bracket_content: list[str] = []
-        for ch in line:
-            if ch == "[":
-                in_bracket = True
-                bracket_content = []
-            elif ch == "]":
-                if in_bracket and "*" in bracket_content and bracket_content != ["*"]:
-                    violations.append(
-                        (
-                            lineno,
-                            stripped,
-                            "wildcard",
-                            "wildcard (*) inside node label brackets is not valid Mermaid syntax",
-                        )
-                    )
-                    break
-                in_bracket = False
-                bracket_content = []
-            elif in_bracket:
-                bracket_content.append(ch)
+        if _has_wildcard_in_brackets(line):
+            violations.append(
+                (
+                    lineno,
+                    stripped,
+                    "wildcard",
+                    "wildcard (*) inside node label brackets is not valid Mermaid syntax",
+                )
+            )
 
     return violations
 
@@ -110,7 +129,10 @@ def fix_file(path: Path) -> bool:
     Returns True if any changes were made, False otherwise.
     Wildcards are not auto-fixable and are left untouched.
     """
-    lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+    raw = _read_text(path)
+    if raw is None:
+        return False
+    lines = raw.splitlines(keepends=True)
     in_mermaid = False
     changed = False
 
@@ -147,7 +169,7 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str, str, str]]:
     return violations
 
 
-def main() -> int:
+def main() -> int:  # noqa: PLR0912
     parser = argparse.ArgumentParser(
         description="Check Mermaid blocks for syntax patterns that break v8.8.0.",
     )

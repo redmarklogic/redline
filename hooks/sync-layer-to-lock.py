@@ -27,11 +27,30 @@ LOCK_PATH = REPO_ROOT / "skills-lock.json"
 
 
 def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
-    """Return {skill_name: layer_number} extracted from Layer Definitions."""
+    """Return {skill_name: layer_number} extracted from Layer Definitions section only.
+
+    Parsing is restricted to the ``## Layer Definitions`` section so that
+    backtick-quoted skill names in examples, enforcement notes, or references
+    are never mistakenly treated as layer assignments.
+    Only table rows (lines starting with ``|``) are parsed within that section.
+    """
     layer_map: dict[str, int] = {}
     current_layer: int | None = None
+    in_layer_definitions = False
 
     for line in taxonomy_text.splitlines():
+        # Enter the Layer Definitions section.
+        if re.match(r"^##\s+Layer Definitions", line):
+            in_layer_definitions = True
+            continue
+
+        # Exit on any level-2 heading (## but not ###) after entering.
+        if in_layer_definitions and re.match(r"^##[^#]", line):
+            break
+
+        if not in_layer_definitions:
+            continue
+
         # Detect layer heading: ### Layer N — ...
         heading_match = re.match(r"^###\s+Layer\s+(\d+)", line)
         if heading_match:
@@ -39,6 +58,10 @@ def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
             continue
 
         if current_layer is None:
+            continue
+
+        # Only parse table rows to avoid extracting non-assignment backtick names.
+        if not line.lstrip().startswith("|"):
             continue
 
         # Extract skill names from table cells: | `skill-name` | ... |
@@ -66,8 +89,6 @@ def main() -> int:
         else:
             missing.append(skill_name)
 
-    LOCK_PATH.write_text(json.dumps(lock_data, indent=2) + "\n", encoding="utf-8")
-
     if missing:
         print(
             f"ERROR: {len(missing)} skill(s) in skills-lock.json have no layer "
@@ -80,6 +101,8 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
+
+    LOCK_PATH.write_text(json.dumps(lock_data, indent=2) + "\n", encoding="utf-8")
 
     print(f"Synced layer field for {len(skills)} skills.")
     return 0
