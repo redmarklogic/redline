@@ -259,7 +259,7 @@ Peter is an **Advisory Board member**, which unlocks engineering and AI notebook
 | Notebook | ID | Purpose |
 |---|---|---|
 | Government Contracting, Proposal Management & Systems Engineering | `754a6041-34be-4a37-9d87-12cc4e43c731` | Systems engineering (MBSE, UML/SysML), requirements engineering |
-| Product Roadmapping | `dfb04e76-20c3-44c3-872f-eef2f6c04bb7` | Prioritisation frameworks, Kano, MoSCoW, opportunity-solution trees |
+| Product Roadmapping | `dfb04e76-20c3-44c3-872f-eef2f6c04bb7` | Prioritisation frameworks, [Kano](../../.agents/skills/mental-models/strategic_decisions/kano.md), [MoSCoW](../../.agents/skills/mental-models/strategic_decisions/moscow.md), opportunity-solution trees |
 | Information Architecture and Knowledge Management | `94521cd4-5a7e-49d4-9559-b002254f3e52` | Information architecture, knowledge architectures |
 
 **Access via other agents** (not queried directly):

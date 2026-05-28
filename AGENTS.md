@@ -103,7 +103,7 @@ All skills live at `.agents/skills/<name>/SKILL.md`. Load the relevant skill(s) 
 - **`notebooklm-index`**: Index NotebookLM notebooks into the register spreadsheet at `G:\My Drive\Library\index-notebooklm.xlsx`
 - **`notebooklm-deep-research`**: Run NotebookLM deep research with strict 5 Whys intake, then index the notebook and return a handoff package to the user unless an explicit reviewer is requested.
 - **`rag-prompting`**: Prompt engineering for NotebookLM queries --- prompt anatomy, RAG retrieval rules, structured extraction schemas, and hallucination scoping
-- **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for RICE scoring, MoSCoW, vertical slice sizing, and domain impact assessment.
+- **`spec-kit`**: Specification-driven development (specs, plans, tasks, implementation) --- wraps GitHub Spec Kit CLI with project presets for [RICE](.agents/skills/mental-models/strategic_decisions/rice.md) scoring, [MoSCoW](.agents/skills/mental-models/strategic_decisions/moscow.md), vertical slice sizing, and domain impact assessment.
 - **`doc-updater`**: Documentation and codemap maintenance (codemaps, README, guides)
 
 ### Advisory Board (Product & Strategy)
@@ -162,7 +162,7 @@ permitted only when clearly labelled as such.
   (consumes shaped Pitches, ADRs, architectural decisions), Matt (consumes design specs),
   and SpecKit (consumes task plans). All code subject to founder review; never pushes to
   origin without explicit founder instruction. Decision-making guided by Circle of
-  Competence and Second-Order Thinking. Writes to `src/rl/`, `tests/`, `scripts/`,
+  Decision-making guided by [Circle of Competence](.agents/skills/mental-models/general_thinking/circle-of-competence.md) and [Second-Order Thinking](.agents/skills/mental-models/general_thinking/second-order-thinking.md). Writes to `src/rl/`, `tests/`, `scripts/`,
   `hooks/`, `output/`.
   Invoke: "Kabilan, [request]"
 
@@ -234,7 +234,7 @@ toolset, not a skill that decides what to render.
 | Geotechnical domain knowledge | Markdown (`docs/knowledge/geotechnical/`) | Graeme |
 | Roadmaps, opportunity solution trees, story maps, journey maps | **Miro** (Markdown synthesis optional) | Mark (Ron contributes strategic thread) |
 | Customer archetypes / personas | **Hybrid**: Miro for collaborative drafting; Markdown canonical reference | Mark + Ron |
-| Prioritization matrices (RICE / MoSCoW / Value-Effort) | **Miro** matrix or spreadsheet; Markdown table for the final ranking | Mark |
+| Prioritization matrices ([RICE](.agents/skills/mental-models/strategic_decisions/rice.md) / [MoSCoW](.agents/skills/mental-models/strategic_decisions/moscow.md) / [Value-Effort](.agents/skills/mental-models/strategic_decisions/value-effort.md)) | **Miro** matrix or spreadsheet; Markdown table for the final ranking | Mark |
 | Marketing campaigns, content briefs, signal reports, editorial calendar, style guide | Markdown (`docs/product/marketing/`) | John |
 | Content Segmentation Grid (content × persona × buying-cycle stage) | **Miro** matrix; Markdown index in `docs/product/marketing/` | John |
 | Design specifications, interaction pattern docs | Markdown (`docs/product/design/`) | Matt |

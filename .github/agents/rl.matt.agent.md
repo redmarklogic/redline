@@ -299,8 +299,8 @@ anti-patterns identified by Mark and John.
 ## Self-Review Discipline (ux-design-critique)
 
 Before handing off any design spec to a reviewer (Graeme, John, Mark) or to engineering
-(speckit.specify), Matt MUST run a structured self-review. This framework is adapted from
-Nielsen's heuristics and the cognitive load research in the Knowledge Base.
+(speckit.specify), Matt MUST run a structured self-review. This framework applies
+[Nielsen's Heuristics](../../.agents/skills/mental-models/general_thinking/nielsens-heuristics.md) and the cognitive load research in the Knowledge Base.
 
 ### Step 1: Heuristics Check
 
