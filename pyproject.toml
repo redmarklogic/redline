@@ -89,6 +89,7 @@ ignore-words-list = [
   "nd",
   "skelton",
   "sme",
+  "strat",
   "te"
 ]
 skip = [ "tests/assets/html/*.html" ]

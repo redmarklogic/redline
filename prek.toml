@@ -440,6 +440,7 @@ hooks = [
       "--baseline",
       ".secrets.baseline"
     ],
+    exclude = "tests/assets/html/",
     priority = 0
   }
 ]
