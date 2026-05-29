@@ -1,4 +1,4 @@
-"""Pre-commit hook to clean Quarto intermediate files.
+"""Git hook to clean Quarto intermediate files.
 
 Uses the Quarto CLI cleanup command when available, and falls back to
 safe removal of untracked Quarto intermediate paths for older Quarto versions.

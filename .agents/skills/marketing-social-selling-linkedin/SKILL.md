@@ -94,7 +94,7 @@ list, not random feed posts.
 1. **Profile audit.** Score current profile against PIPA. Identify gaps.
 2. **Rewrite About section** using PIPA. Match Redline brand voice.
 3. **Update headline + banner** to reinforce positioning.
-4. **Build the Sales Navigator list** for their ICP segment (with Ron's input on ICP).
+4. **Build the Sales Navigator list** for their ICP segment (with the Strategy Advisor's input on ICP).
 5. **Run a 2-week shadow.** New team-member shadows the founder's daily ritual.
 6. **Cut them loose** after 2 weeks with a weekly review for the first month.
 
@@ -117,6 +117,6 @@ list, not random feed posts.
 
 ## Cross-References
 
-- ICP segments come from Ron via `pm-personas`. John does not invent ICPs.
+- ICP segments come from the Strategy Advisor via `pm-personas`. the Marketing Lead does not invent ICPs.
 - Original posts that are part of the editorial calendar follow `marketing-content-big-5`.
 - AI-assisted post drafts must go through `marketing-ai-content-review`.

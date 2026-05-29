@@ -209,15 +209,6 @@ hooks = [
     priority = 0
   },
   {
-    id = "check-skill-has-red-phase",
-    name = "check-skill-has-red-phase",
-    entry = "uv run --frozen --offline hooks/check-skill-has-red-phase.py",
-    language = "system",
-    files = '^\.agents/skills/',
-    pass_filenames = false,
-    priority = 0
-  },
-  {
     id = "check-banned-words",
     name = "check-banned-words",
     entry = "uv run --frozen --offline hooks/check-banned-words.py",

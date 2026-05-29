@@ -66,7 +66,7 @@
    }
 
    # Build `row` from the table above. Standards rows need the 5 extra
-   # engineering columns; use status="needs_review" unless Graeme confirms currentness.
+   # engineering columns; use status="needs_review" unless the Domain Expert confirms currentness.
    with WorkbookLock(INDEX_PATH):
        workbook = openpyxl.load_workbook(INDEX_PATH)
        append_index_row(workbook, CATEGORY_TO_WORKSHEET[metadata.category], row)
@@ -83,4 +83,4 @@
    .\.venv\Scripts\python.exe .agents\tools\library\dedup_index.py
    ```
 
-9. **Flag to the domain agent** if the book is domain-relevant (e.g. Graeme for geotechnical engineering).
+9. **Flag to the domain agent** if the book is domain-relevant (e.g. the Domain Expert for geotechnical engineering).

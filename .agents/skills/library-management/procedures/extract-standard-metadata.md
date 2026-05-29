@@ -61,7 +61,7 @@ document starts with "HB" (e.g., "HB 89:2011"), this is a published
 Handbook — NOT a draft. Handbooks have "DRAFT ONLY" or "NOT
 NORMATIVE" in their footer as a formatting convention (they are
 guidance, not requirements). This does NOT mean they are
-pre-publication drafts. Only mark `document_status` as "draft" if:
+pre-publication drafts. Only mark `document_status` as "draft" if: <!-- hook: allow -->
 (1) `standard_code` starts with "DR" (e.g., "DR 05564"), OR
 (2) the document explicitly says "Draft for Public Comment" with a
 comment deadline. If `standard_code` is "HB" or "AS/NZS" (no "DR"
@@ -206,9 +206,9 @@ preface, use the missing-value sentinel. Do not guess.
    | `topics` | `topics` (standard 20) |
    | `verbatim_evidence` | *(audit trail — not stored in worksheet)* |
 
-6. **Flag unknowns** — any field with `"N/A"` or `null` gets `NEEDS_REVIEW` in `notes` and is routed to Graeme.
+6. **Flag unknowns** — any field with `"N/A"` or `null` gets `NEEDS_REVIEW` in `notes` and is routed to the Domain Expert.
 7. **Copyright defaults** — apply the copyright lookup table decision flow. Most purchased standards: `copyright = proprietary`, `reproduction_permitted = clause-reference`, `licence_verified = FALSE`.
-8. **Graeme review** — send the full batch output to Graeme for domain review before writing to the worksheet.
+8. **the Domain Expert review** — send the full batch output to the Domain Expert for domain review before writing to the worksheet.
 
 ## Pilot Protocol
 
@@ -216,6 +216,6 @@ Before scaling to all sources:
 
 1. Select 5-10 sources spanning different types (published standard, draft, amendment, different disciplines).
 2. Run the extraction prompt on each.
-3. Present results to Graeme in a comparison table.
+3. Present results to the Domain Expert in a comparison table.
 4. Calibrate the prompt based on error patterns.
-5. Scale to full batch only after Graeme approves.
+5. Scale to full batch only after the Domain Expert approves.

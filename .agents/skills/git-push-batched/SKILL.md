@@ -18,7 +18,7 @@ by grouping related changes before anything is staged.
 it without waiting for a reply. Only pause for confirmation if the user explicitly says
 something like "show me the batches first", "let me review", or "don't commit yet".
 
-For general commit hygiene, pre-commit, and push checklist, see the `version-control` skill.
+For general commit hygiene, prek hooks, and push checklist, see the `version-control` skill.
 
 ## Boundary Contract
 
@@ -127,17 +127,17 @@ For each confirmed batch in order:
 # Stage only the files in this batch
 git add <file1> <file2> ...
 
-# Run pre-commit on staged files only
-uv run pre-commit run --files <file1> <file2> ...
+# Run prek on staged files only
+uv run prek run --files <file1> <file2> ...
 
-# If pre-commit auto-fixes files, re-stage them
+# If prek auto-fixes files, re-stage them
 git add <file1> <file2> ...
 
 # Commit
 git commit -m "<type>(<scope>): <summary>"
 ```
 
-If pre-commit fails with a blocking error (not an auto-fix), stop, report the error,
+If prek fails with a blocking error (not an auto-fix), stop, report the error,
 and ask the user how to proceed before continuing to the next batch.
 
 ### 5. Push
@@ -162,7 +162,7 @@ Report the push output to the user.
 | `tests/**/*.py` | `test` (or bundle with source) |
 | `docs/**`, `*.md` (not skills) | `docs` |
 | `.agents/skills/**` | `docs` |
-| `pyproject.toml`, `uv.lock`, `.pre-commit-config.yaml` | `chore` |
+| `pyproject.toml`, `uv.lock`, `prek.toml` | `chore` |
 | `*.css`, `*.qmd` (style only) | `style` |
 | `src/scripts/**` | `feat` or `chore` depending on purpose |
 | `data/**` | `chore` (data updates) |

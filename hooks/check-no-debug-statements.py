@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid debug instrumentation in committed code.
+"""Git hook: forbid debug instrumentation in committed code.
 
 The version-control skill mandates that debug instrumentation must be
 removed before committing. Committing breakpoint(), pdb, or ipdb calls

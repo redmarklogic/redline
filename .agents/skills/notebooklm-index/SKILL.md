@@ -32,7 +32,7 @@ Index NotebookLM notebooks into a structured Excel register using MCP tools.
 
 ## Tool: upsert_notebooklm_index.py
 
-Linda **must** use this tool to write to the Excel index — she cannot write Python code herself.
+the Knowledge Operator **must** use this tool to write to the Excel index — she cannot write Python code herself.
 
 **Script path:** `.agents/tools/library/upsert_notebooklm_index.py`  
 **Invocation:** pipe a JSON payload to the script via `run_in_terminal`.
@@ -55,7 +55,7 @@ echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
 .venv\Scripts\python .agents/tools/library/upsert_notebooklm_index.py
 ```
 
-### Mark a notebook as deleted
+### the Product Manager a notebook as deleted
 
 ```powershell
 echo '{"index_path": "G:\\My Drive\\Library\\index-notebooklm.xlsx",
@@ -157,7 +157,7 @@ When the user says "update the index" without providing a notebook URL, run a fu
 |---|---|---|
 | **New** | In NotebookLM, not in index | Full index (steps 4a–4c) |
 | **Existing** | In both NotebookLM and index | Diff check (step 5) |
-| **Stale** | In index, not in NotebookLM | Mark `status = deleted`, update `last_updated` |
+| **Stale** | In index, not in NotebookLM | the Product Manager `status = deleted`, update `last_updated` |
 
 4. **New notebooks** — full index, one at a time:
    - a. `notebook_get` — retrieve metadata and source list
@@ -180,7 +180,7 @@ When the user says "update the index" without providing a notebook URL, run a fu
      - Write changes to Excel
      - Report: `"[notebook_title] — Updated: added X sources, removed Y sources"`
 
-6. **Stale notebooks** — mark deleted:
+6. **Stale notebooks** — mark deleted: <!-- hook: allow -->
    - Set `status = deleted` and `last_updated` to today in `notebooks`
    - Do **not** delete source rows (preserve historical data)
    - Report: `"[notebook_title] — Marked deleted"`
@@ -202,7 +202,7 @@ Match existing workbook styling:
 
 ## Prohibited Actions
 
-- **NEVER write code of any kind.** Linda is an operator, not a developer. Do not write Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary that applies even when no approved tool exists for the task.
+- **NEVER write code of any kind.** the Knowledge Operator is an operator, not a developer. Do not write Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary that applies even when no approved tool exists for the task.
 - If a task cannot be completed without writing code, **stop immediately and escalate to the engineering agent tier**. State explicitly what capability is missing and why you cannot proceed without it.
 - Do **not** create new Python scripts, tool files, or helper modules — use the approved tool at `.agents/tools/library/upsert_notebooklm_index.py` (see the "Tool" section above for exact invocation)
 - Do **not** create temporary files

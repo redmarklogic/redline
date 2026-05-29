@@ -1,0 +1,23 @@
+schema_version: "1.0"
+
+extension:
+  id: verification-gate
+  name: "Verification Gate"
+  version: "1.0.0"
+  description: "Dispatcher: fires verification-before-completion skill after the implement phase"
+  author: redline
+
+requires:
+  speckit_version: ">=0.8.0"
+
+provides:
+  commands:
+    - name: speckit.verification-gate.run
+      file: commands/speckit.verification-gate.run.md
+      description: "Enforce verification before claiming implement complete"
+
+hooks:
+  after_implement:
+    command: speckit.verification-gate.run
+    optional: false
+    description: "Require evidence of passing verification before claiming completion"

@@ -67,8 +67,8 @@ No `__init__.py` files are needed when pytest is configured with
 ### Rules
 
 - One test module per router/server module.
-- Apply `pytestmark = pytest.mark.api_v1` in every API v1 test module (or
-  `pytest.mark.mcp_v1` for MCP v1 tests). These markers allow selective test execution.
+- Apply `pytestmark = pytest.mark.api_v1` in every API v1 test module (or <!-- hook: allow -->
+  `pytest.mark.mcp_v1` for MCP v1 tests). These markers allow selective test execution. <!-- hook: allow -->
 - **Group tests into classes per router** (e.g., `TestHealth`, `TestCreateItem`,
   `TestGetItem`). Classes group related tests, collapse nicely in the test runner,
   and allow class-scoped fixture overrides when needed.
@@ -271,7 +271,7 @@ from fastapi.testclient import TestClient
 
 API_V1_PREFIX = "/api/v1"
 
-pytestmark = pytest.mark.api_v1
+pytestmark = pytest.mark.api_v1 <!-- hook: allow -->
 
 
 class TestHealth:
@@ -310,7 +310,7 @@ class TestHealth:
 class TestUploadFile:
     """Component tests for POST /api/v1/items/upload."""
 
-    @pytest.mark.usefixtures("mock_storage_setup", "mock_item_service")
+    @pytest.mark.usefixtures("mock_storage_setup", "mock_item_service") <!-- hook: allow -->
     def test_returns_200_on_success(self, api_v1_client):
         """File upload returns 200."""
         files = {
@@ -405,14 +405,14 @@ class TestCreateItem:
         assert response.status_code == 422
 ```
 
-#### Using `@pytest.mark.usefixtures` for side-effect fixtures
+#### Using `@pytest.mark.usefixtures` for side-effect fixtures <!-- hook: allow -->
 
 When a fixture is needed only for its patch side effect (not return value), use
-`@pytest.mark.usefixtures()` instead of adding unused parameters. This avoids
+`@pytest.mark.usefixtures()` instead of adding unused parameters. This avoids <!-- hook: allow -->
 lint warnings (`ARG002`) and makes the test signature cleaner.
 
 ```python
-    @pytest.mark.usefixtures("mock_storage_setup", "mock_item_service")
+    @pytest.mark.usefixtures("mock_storage_setup", "mock_item_service") <!-- hook: allow -->
     def test_returns_200_on_success(self, api_v1_client):
         """Endpoint succeeds when all dependencies are mocked."""
         response = api_v1_client.post(
@@ -461,7 +461,7 @@ def parse_sse_events(raw: str) -> list[dict]:
 
 ```python
 class TestProcessItems:
-    @pytest.mark.usefixtures("mock_storage_setup")
+    @pytest.mark.usefixtures("mock_storage_setup") <!-- hook: allow -->
     def test_streams_progress_and_result(
         self, api_v1_client, mocker,
     ):
@@ -601,8 +601,8 @@ schema regressions (missing response models, invalid refs, broken examples) auto
 | **DI mocking**                | `app.dependency_overrides` for `Depends()` callables        |
 | **Function mocking**          | `mocker.patch()` via `pytest-mock`                          |
 | **Outbound HTTP mocking**     | `pytest-httpx`                                              |
-| **Marker (API v1)**           | `pytestmark = pytest.mark.api_v1`                           |
-| **Marker (MCP v1)**           | `pytestmark = pytest.mark.mcp_v1`                           |
+| **Marker (API v1)**           | `pytestmark = pytest.mark.api_v1`                           | <!-- hook: allow -->
+| **Marker (MCP v1)**           | `pytestmark = pytest.mark.mcp_v1`                           | <!-- hook: allow -->
 | **DTO contract tests**        | Test Pydantic models directly with `ValidationError`        |
 | **OpenAPI contract test**     | `openapi-spec-validator` against `/openapi.json`            |
 | **SSE parsing**               | Module-level `parse_sse_events()` helper                    |

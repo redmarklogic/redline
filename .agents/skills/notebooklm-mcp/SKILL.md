@@ -30,9 +30,9 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 | `notebook_get` | Get notebook details and sources |
 | `notebook_describe` | Get AI-generated notebook summary and suggested topics |
 | `source_describe` | Get AI-generated per-source summary and keywords |
-| `source_add` | Upload a new source to a notebook — **Linda only** (library ingestion workflow). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
-| `source_delete` | Remove a source from a notebook — **Linda only** (deduplication / file hygiene) |
-| `source_rename` | Rename a source in a notebook — **Linda only** (canonical naming enforcement) |
+| `source_add` | Upload a new source to a notebook — **the Knowledge Operator only** (library ingestion workflow). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
+| `source_delete` | Remove a source from a notebook — **the Knowledge Operator only** (deduplication / file hygiene) |
+| `source_rename` | Rename a source in a notebook — **the Knowledge Operator only** (canonical naming enforcement) |
 | `refresh_auth` | Refresh auth tokens when expired |
 | `server_info` | Check version and diagnostics |
 
@@ -49,7 +49,7 @@ All other tools (27 of 35) are **forbidden**. See
 ## Post-Source-Change Rule (mandatory)
 
 After **any** operation that adds, removes, or renames a source in a notebook
-(`source_add`, `source_delete`, `source_rename`), Linda **must** update
+(`source_add`, `source_delete`, `source_rename`), the Knowledge Operator **must** update
 `G:\My Drive\Library\index-notebooklm.xlsx` before the task is considered done.
 
 Trigger: load the `notebooklm-index` skill and run the **single-notebook upsert**

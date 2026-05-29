@@ -72,7 +72,7 @@ Folder structure: `<Folder>\<official filename>`
 | `Industry Institutes\ASME` | ASME | |
 | `Industry Institutes\NFPA` | NFPA | |
 | `Industry Institutes\Standard Norge` | Standard Norge | |
-| `UNKNOWN` | None / unresolvable | Flag `NEEDS_REVIEW`; route to Graeme |
+| `UNKNOWN` | None / unresolvable | Flag `NEEDS_REVIEW`; route to the Domain Expert |
 
 **Filename rule:** Never rename a standard to its title. Use the official code as the filename (e.g. `NZS 4402-1986.pdf`, `ASTM D4437.pdf`). Engineers search and cite by code, not title; audits require the specific code and year revision.
 

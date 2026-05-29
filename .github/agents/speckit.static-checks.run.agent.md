@@ -1,0 +1,1 @@
+../../.specify/extensions/static-checks/.specify-dev/agent-commands/copilot/speckit.static-checks.run.agent.md

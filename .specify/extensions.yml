@@ -1,0 +1,47 @@
+installed:
+- shaping-gate
+- source-reconciliation
+- spike-trivial-hook
+- static-checks
+- verification-gate
+settings:
+  auto_execute_hooks: true
+hooks:
+  after_implement:
+  - extension: spike-trivial-hook
+    command: speckit.spike-trivial-hook.noop
+    enabled: true
+    optional: true
+    prompt: Execute speckit.spike-trivial-hook.noop?
+    description: 'Spike: verify this hook survives CLI upgrade'
+    condition: null
+  - extension: static-checks
+    command: speckit.static-checks.run
+    enabled: true
+    optional: false
+    prompt: Execute speckit.static-checks.run?
+    description: Run static checks before claiming implement phase complete
+    condition: null
+  - extension: verification-gate
+    command: speckit.verification-gate.run
+    enabled: true
+    optional: false
+    prompt: Execute speckit.verification-gate.run?
+    description: Require evidence of passing verification before claiming completion
+    condition: null
+  before_specify:
+  - extension: shaping-gate
+    command: speckit.shaping-gate.check
+    enabled: true
+    optional: true
+    prompt: Execute speckit.shaping-gate.check?
+    description: 'Verify shaped Pitch exists. Flip to optional: false when specs/shaped/
+      has 3+ Pitches (see ADR-013)'
+    condition: null
+  - extension: source-reconciliation
+    command: speckit.source-reconciliation.run
+    enabled: true
+    optional: false
+    prompt: Execute speckit.source-reconciliation.run?
+    description: Reconcile all source documents before spec writing begins
+    condition: null

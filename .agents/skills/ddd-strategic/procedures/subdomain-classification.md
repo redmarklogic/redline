@@ -9,7 +9,7 @@
 
 - When adding a new subdomain to `docs/architecture/domain-model.md`.
 - When reviewing whether a Supporting subdomain has become Core (competitive advantage shift).
-- During annual strategy review (Ron-triggered).
+- During annual strategy review (the Strategy Advisor-triggered).
 
 ## Steps
 
@@ -57,6 +57,6 @@ A subdomain may need reclassification when:
 - A competitor builds a comparable feature (Core may become Supporting).
 - A generic solution emerges for what was previously custom (Core/Supporting may become Generic).
 - Market feedback reveals an unexpected competitive advantage (Supporting may become Core).
-- The domain expert (Graeme) identifies new complexity in a previously simple area.
+- The domain expert (the Domain Expert) identifies new complexity in a previously simple area.
 
 Record reclassification decisions as ADRs in `docs/adr/`.

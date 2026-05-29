@@ -57,7 +57,7 @@ System-level design decisions, ADR writing, and architectural constraint express
 | Mistake | Fix |
 |---|---|
 | Expressing architectural constraints as prose rules | Every constraint must be an automated test. If it cannot be tested, it is opinion, not architecture. |
-| Reviewing Matt's design specs (Touch 1.5) | Review only SpecKit output at Touch 2; never touch Matt's design artifacts between Touch 1 and Touch 2. |
+| Reviewing the UI/UX Designer's design specs (Touch 1.5) | Review only SpecKit output at Touch 2; never touch the UI/UX Designer's design artifacts between Touch 1 and Touch 2. |
 | Selecting technology before defining component boundaries | Define boundaries and APIs first; technology selection follows. |
 | Writing detailed specifications | Write shaped Pitches (breadboard level); SpecKit's `specify` agent writes the spec. |
 | Applying general principles without Redline context | Filter every notebook-sourced principle through current stage, kill criteria, and cost envelope before stating it. |

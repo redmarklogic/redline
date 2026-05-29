@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid imports from the archive/ directory.
+"""Git hook: forbid imports from the archive/ directory.
 
 AGENTS.md states that archive/ contains archived code for reference only
 and MUST NOT be imported or used in the current codebase. Any import

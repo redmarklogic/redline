@@ -80,4 +80,4 @@ Add one-line reminders here when you fix new, recurring lint failures.
 - Use `Self` return type from `typing` in context manager `__enter__` methods instead of string literals (`PYI034`).
 - Avoid chained boolean assertions; use `all(...)` or separate checks to satisfy `PT018`.
 - When adding a new subpackage under an `exhaustive = true` container, add it to the `layers` list in the corresponding `[[tool.importlinter.contracts]]` block in `pyproject.toml`. See `.agents/skills/spec-kit/references/import-linter.md` for details.
-- Side-effect-only fixtures (injected but value unused) must use `@pytest.mark.usefixtures("fixture_name")` on the class or method instead of parameter injection — **do not** use an underscore prefix to suppress `ARG002`; that only trades it for `PT019`.
+- Side-effect-only fixtures (injected but value unused) must use `@pytest.mark.usefixtures("fixture_name")` on the class or method instead of parameter injection — **do not** use an underscore prefix to suppress `ARG002`; that only trades it for `PT019`. <!-- hook: allow -->

@@ -1,12 +1,12 @@
 ---
-name: pre-commit-hooks-create
-description: How to implement, register, and test project-specific pre-commit hooks in tasks/hooks/.
+name: git-hooks-create
+description: How to implement, register, and test project-specific git hooks in hooks/.
 ---
 
-# Bespoke Pre-commit Hooks
+# Bespoke Git Hooks
 
-This skill covers how to create project-specific pre-commit hooks that live inside the
-repository under `tasks/hooks/`.
+This skill covers how to create project-specific git hooks that live inside the
+repository under `hooks/`.
 
 ## Boundary Contract
 
@@ -14,7 +14,7 @@ repository under `tasks/hooks/`.
 - Hook requirement (what to check or enforce)
 
 ### Outputs
-- Hook script at `tasks/hooks/`, registration in `.pre-commit-config.yaml`
+- Hook script at `hooks/`, registration in `prek.toml`
 
 ### Out of Scope
 - Dev environment setup (`dev-environment`)
@@ -32,7 +32,7 @@ expressed as a Ruff rule.
 ### When to write a bespoke hook (vs. using an existing tool)
 
 - **Use Ruff** for linting and formatting rules expressible as AST or token checks.
-- **Use an upstream pre-commit repo** when one already provides the check
+- **Use an upstream hook repo** when one already provides the check
   (e.g. `check-merge-conflict`, `trailing-whitespace`).
 - **Write a bespoke hook** when the check is project-specific and not covered by any
   existing tool (e.g. "every script must appear in the README", "no numeric-prefixed
@@ -53,8 +53,8 @@ expressed as a Ruff rule.
 
 ### File Placement
 
-- Hook script: `tasks/hooks/<descriptive_name>.py`
-- Registration: `.pre-commit-config.yaml` (local repo block)
+- Hook script: `hooks/<descriptive_name>.py`
+- Registration: `prek.toml` (local repo block)
 
 ## Procedure
 
@@ -63,7 +63,7 @@ expressed as a Ruff rule.
 Create a new file under `tasks/hooks/` following the established pattern:
 
 ```python
-"""Pre-commit hook to <describe what it checks>.
+"""Git hook to <describe what it checks>.
 
 <Optional: reference to the skill or ADR that defines the convention.>
 """
@@ -101,19 +101,21 @@ Key conventions:
 - `main()` prints human-readable output and returns an exit code.
 - No `argparse`; the hook is not a CLI tool.
 
-### 2. Register in `.pre-commit-config.yaml`
+### 2. Register in `prek.toml`
 
-Add a `- repo: local` block (or append to an existing one):
+Add a `[[repos]]` block (or append to an existing one):
 
-```yaml
-- repo: local
-  hooks:
-    - id: <hook-id-kebab-case>
-      name: <Short human-readable description>
-      entry: uv run tasks/hooks/<hook_name>.py
-      language: system
-      always_run: true
-      pass_filenames: false
+```toml
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "<hook-id-kebab-case>"
+name = "<Short human-readable description>"
+entry = "uv run hooks/<hook_name>.py"
+language = "system"
+always_run = true
+pass_filenames = false
 ```
 
 - `always_run: true` + `pass_filenames: false` is the default for project-wide scans.
@@ -123,12 +125,12 @@ Add a `- repo: local` block (or append to an existing one):
 ### 3. Mention in the governing skill
 
 If a skill defines the convention being enforced, add a reference to the hook in that
-skill's `SKILL.md` under a "Pre-commit hook enforcement" section.
+skill's `SKILL.md` under a "Git hook enforcement" section.
 
 ### 4. Test the hook
 
 ```powershell
-uv run pre-commit run <hook-id> --all-files
+uv run prek run <hook-id> --all-files
 ```
 
 Verify it passes on a clean tree and fails when the violation is present.

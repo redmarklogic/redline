@@ -1,6 +1,6 @@
 ---
 name: version-control
-description: Version control conventions (commits, hygiene, pre-commit, and pre-push checks).
+description: Version control conventions (commits, hygiene, prek hooks, and pre-push checks).
 ---
 
 # Version Control
@@ -10,7 +10,7 @@ This skill defines version control conventions for this repo.
 ## Boundary Contract
 
 ### Applies To
-- Git commits, branch hygiene, pre-commit, and pre-push checks
+- Git commits, branch hygiene, prek hooks, and pre-push checks
 
 ### Produces
 - Clean commit history following repo conventions
@@ -46,13 +46,13 @@ task (e.g. "commit after each file"). Absent that, wait.
 
 ### Before Pushing
 
-- Run pre-commit checks (use the `dev-environment` skill).
+- Run prek hooks (use the `dev-environment` skill).
 - Run the relevant tests for the changed area.
 
 ## Procedure
 
 1. Review staged changes for accidental debug code, secrets, and unrelated edits.
-2. Run pre-commit checks and targeted tests for the modified area.
+2. Run prek hooks and targeted tests for the modified area.
 3. Create a clear commit message that explains intent and scope.
 4. Push only after checks pass and the working tree is clean.
 
@@ -107,18 +107,18 @@ When a task organically exceeds 400 lines, split it into sequential commits or P
 Catch issues before the founder review session, not during it:
 
 ```powershell
-uv run pre-commit run --all-files   # full pre-commit suite
+uv run prek run --all-files   # full hook suite
 uv run ruff check .                 # fast lint pass
 uv run mypy src/                    # type check
 ```
 
-Peter monitors macro-level trends (SonarQube quality gate, Copilot PR comment volume).
-Individual findings are Kabilan's responsibility to resolve before requesting review.
-Do not modify SonarQube quality gate thresholds or Copilot PR rules — those are set by Peter.
+the Principal Engineer monitors macro-level trends (SonarQube quality gate, Copilot PR comment volume).
+Individual findings are the Python Developer's responsibility to resolve before requesting review.
+Do not modify SonarQube quality gate thresholds or Copilot PR rules — those are set by the Principal Engineer.
 
 ## Checklist
 
 - No hardcoded credentials.
 - Public functions/classes have docstrings and type hints (where applicable).
-- Pre-commit passes.
+- prek hooks pass.
 - Tests pass.

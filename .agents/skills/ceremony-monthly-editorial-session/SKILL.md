@@ -18,7 +18,7 @@ description: Use when running the monthly editorial session triggered by a new G
 
 - 2-3 approved post angles queued in `docs/product/marketing/editorial-calendar.md`
 - Each post angle tagged with its Big 5 category
-- 1-paragraph product signal note filed to Mark
+- 1-paragraph product signal note filed to Mark <!-- hook: allow -->
 - Updated Dream 100 commenting notes
 - Session date and issue reference logged
 

@@ -22,7 +22,7 @@ Operating playbook for the People & Agent Development function. Load at the star
 ### Out of Scope
 - Writing skill content (`writing-skills`)
 - Code implementation or architecture decisions
-- Domain expertise (route to Graeme, Ron, Mark, or John)
+- Domain expertise (route to Graeme, Ron, Mark, or John) <!-- hook: allow -->
 
 This skill encodes principles from three sources, queried via the `Organisational Design & Team Topologies` notebook:
 
@@ -88,9 +88,9 @@ This role has no standing notebook access. Query only notebooks relevant to the 
 |---|---|
 | Org design, role boundaries, skills frameworks, performance management | `Organisational Design & Team Topologies` |
 | UX / product design agent work | `Product Design & UX` |
-| Marketing or content agent work | Consult John — route through him |
-| Geotechnical domain agent work | Consult Graeme — route through him |
-| Strategy alignment for a hire | Consult Ron — route through him |
+| Marketing or content agent work | Consult John — route through him | <!-- hook: allow -->
+| Geotechnical domain agent work | Consult Graeme — route through him | <!-- hook: allow -->
+| Strategy alignment for a hire | Consult Ron — route through him | <!-- hook: allow -->
 
 Never query advisory-board-only notebooks directly. Route through the appropriate agent.
 
@@ -99,7 +99,7 @@ Never query advisory-board-only notebooks directly. Route through the appropriat
 Skills are agent-agnostic reusable procedures. **Skills must never be named after an agent** and must never reference a specific agent name inside their content. Agents know which skills to load — skills do not know which agent uses them.
 
 - Skill names use domain or function prefixes: `hiring-`, `python-`, `pm-`, `marketing-`, `eda-`, etc.
-- Skill names must never use personal names (e.g., `ron-`, `john-`) as prefixes or anywhere in the name.
+- Skill names must never use personal names (e.g., `ron-`, `john-`) as prefixes or anywhere in the name. <!-- hook: allow -->
 - Skill content must never address or constrain a named agent. Use "this role", "the invoking agent", or "the operator" instead.
 
 ## Draft-First Rules
@@ -133,7 +133,7 @@ These are the realistic high-pressure prompts an agent in this role will face. W
    Baseline failure: create a functional silo with hand-offs.
    Rule: HIRE Step 0 — single-function silo screen.
 
-3. **"This new agent's work overlaps a bit with Mark's, but it's fine."**
+3. **"This new agent's work overlaps a bit with Mark's, but it's fine."** <!-- hook: allow -->
    Baseline failure: two agents share File Authority, downstream confusion.
    Rule: HIRE Step 4 — overlapping File Authority fails the hire.
 

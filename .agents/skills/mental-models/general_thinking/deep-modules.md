@@ -31,4 +31,4 @@ The best modules maximise information hiding: expose the simplest interface poss
 
 ## Source
 
-*A Philosophy of Software Design* (2nd ed.) -- John Ousterhout (Stanford University Press, 2021)
+*A Philosophy of Software Design* (2nd ed.) -- the Marketing Lead Ousterhout (Stanford University Press, 2021)

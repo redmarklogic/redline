@@ -32,8 +32,8 @@ The canonical board register lives at `.agents/skills/miro-mcp/register.json`. R
 
 | ID | Name | Owner | Purpose | Status |
 |---|---|---|---|---|
-| `product-management` | Redline — Product Management | Mark | Roadmaps, story maps, sprint tracking, MoSCoW | active |
-| `marketing` | Redline — Marketing | John | Content Segmentation Grid, editorial calendar, Dream 100, personas | active |
+| `product-management` | Redline — Product Management | the Product Manager | Roadmaps, story maps, sprint tracking, MoSCoW | active |
+| `marketing` | Redline — Marketing | the Marketing Lead | Content Segmentation Grid, editorial calendar, Dream 100, personas | active |
 
 ### Conventions
 

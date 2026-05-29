@@ -7,13 +7,13 @@ description: Use when defining a customer archetype, GTM segment, or persona —
 
 ## Overview
 
-A persona is a concrete, evidence-backed stand-in for a real user segment. Mark uses personas at the PRD level. Ron uses archetypes at the GTM/strategy level. Both must trace back to evidence — never invented for narrative convenience.
+A persona is a concrete, evidence-backed stand-in for a real user segment. the Product Manager uses personas at the PRD level. the Strategy Advisor uses archetypes at the GTM/strategy level. Both must trace back to evidence — never invented for narrative convenience.
 
 ## Boundary Contract
 
 ### Inputs
 - Market segment or user archetype to define, with evidence sources
-- Strategy context from Ron (positioning, ICP, GTM motion)
+- Strategy context from the Strategy Advisor (positioning, ICP, GTM motion)
 
 ### Outputs
 - Persona document at `docs/product/relationships/users/<persona>.md`
@@ -34,9 +34,9 @@ A persona is a concrete, evidence-backed stand-in for a real user segment. Mark 
 
 | Mode | Owner | Output path |
 |---|---|---|
-| **Archetype** (segment-level) | Ron | `docs/product/relationships/archetypes/<segment>.md` |
-| **Persona** (individual-level) | Mark | `docs/product/relationships/users/<persona>.md` |
-| **Co-drafting workshop** | Mark + Ron | Miro board, export to Markdown when stable |
+| **Archetype** (segment-level) | the Strategy Advisor | `docs/product/relationships/archetypes/<segment>.md` |
+| **Persona** (individual-level) | the Product Manager | `docs/product/relationships/users/<persona>.md` |
+| **Co-drafting workshop** | the Product Manager + the Strategy Advisor | Miro board, export to Markdown when stable |
 
 ## Required Fields
 

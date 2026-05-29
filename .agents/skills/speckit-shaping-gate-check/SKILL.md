@@ -1,0 +1,1 @@
+../../../.specify/extensions/shaping-gate/.specify-dev/agent-commands/codex/speckit-shaping-gate-check/SKILL.md

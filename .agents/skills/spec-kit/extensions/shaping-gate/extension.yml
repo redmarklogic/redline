@@ -1,0 +1,23 @@
+schema_version: "1.0"
+
+extension:
+  id: shaping-gate
+  name: "Shaping Gate"
+  version: "1.0.0"
+  description: "Before specify: verify a shaped Pitch exists in specs/shaped/ for this feature"
+  author: redline
+
+requires:
+  speckit_version: ">=0.8.0"
+
+provides:
+  commands:
+    - name: speckit.shaping-gate.check
+      file: commands/speckit.shaping-gate.check.md
+      description: "Check for a shaped Pitch before allowing specify to proceed"
+
+hooks:
+  before_specify:
+    command: speckit.shaping-gate.check
+    optional: true
+    description: "Verify shaped Pitch exists. Flip to optional: false when specs/shaped/ has 3+ Pitches (see ADR-013)"

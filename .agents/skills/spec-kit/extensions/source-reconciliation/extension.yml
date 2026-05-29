@@ -1,0 +1,23 @@
+schema_version: "1.0"
+
+extension:
+  id: source-reconciliation
+  name: "Source Reconciliation"
+  version: "1.0.0"
+  description: "Before specify: reconcile source documents and prior artifacts to prevent silent drift"
+  author: redline
+
+requires:
+  speckit_version: ">=0.8.0"
+
+provides:
+  commands:
+    - name: speckit.source-reconciliation.run
+      file: commands/speckit.source-reconciliation.run.md
+      description: "Reconcile source documents before writing any spec content"
+
+hooks:
+  before_specify:
+    command: speckit.source-reconciliation.run
+    optional: false
+    description: "Reconcile all source documents before spec writing begins"

@@ -1,6 +1,6 @@
 # REFACTOR Workflow
 
-**Trigger:** User says "Harriet, refactor skill `<skill-name>`" — or asks to restructure, modularise, or split a skill.
+**Trigger:** User says "Harriet, refactor skill `<skill-name>`" — or asks to restructure, modularise, or split a skill. <!-- hook: allow -->
 
 ## What "refactor" means
 

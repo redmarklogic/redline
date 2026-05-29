@@ -375,9 +375,9 @@ For Python-specific test conventions (pytest, AAA pattern, fixtures, parametrize
 
 - This repo uses **pytest** with settings in `pyproject.toml` under `[tool.pytest.ini_options]`.
 - Default pytest run excludes integration tests (`-m "not integration"`).
-- Integration tests use `@pytest.mark.integration` and live under `tests/integration/`.
+- Integration tests use `@pytest.mark.integration` and live under `tests/integration/`. <!-- hook: allow -->
 - Run coverage with: `python -m pytest --cov=src --cov-report=term-missing`
-- After TDD is complete, run static checks with `uv run pre-commit run -a` (use the `python-static-checks` skill).
+- After TDD is complete, run static checks with `uv run prek run -a` (use the `python-static-checks` skill).
 
 ## Final Rule
 

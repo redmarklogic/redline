@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid stdlib dataclass usage in src/rl/.
+"""Git hook: forbid stdlib dataclass usage in src/rl/.
 
 The python-domain-modeling skill mandates Pydantic BaseModel for all domain
 value objects and entities. stdlib @dataclass / dataclasses.field are

@@ -1,4 +1,4 @@
-"""Pre-commit hook to delete Quarto-generated output artifacts.
+"""Git hook to delete Quarto-generated output artifacts.
 
 Quarto produces HTML files and companion *_files/ asset directories alongside
 source .qmd/.md files. These artifacts must not be committed to version control.

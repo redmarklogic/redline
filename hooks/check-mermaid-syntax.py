@@ -1,4 +1,4 @@
-"""Pre-commit hook: check Mermaid diagram blocks for syntax that breaks v8.8.0.
+"""Git hook: check Mermaid diagram blocks for syntax that breaks v8.8.0.
 
 Scans .md and .qmd files for Mermaid fenced code blocks and flags:
 

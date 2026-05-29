@@ -112,14 +112,14 @@ When creating tests for a feature, follow this sequence:
 - **Use `yield` for teardown** — code before `yield` is setup; code after is guaranteed cleanup (runs even if the test fails).
 - **Use fixture scope wisely** — default `function` scope is safest for isolation. Only widen to `module`/`session` for expensive setup (e.g. database connections). Combine with a narrow-scope fixture that resets state per test to maintain isolation.
 - **Avoid `autouse=True`** unless the fixture must run for every test in scope (e.g. timing hooks). Prefer explicit fixture injection.
-- **Use `@pytest.mark.usefixtures` for side-effect-only fixtures** — fixtures that patch or configure but return no value the test body references. Never inject them as function parameters (triggers ARG001/ARG002).
+- **Use `@pytest.mark.usefixtures` for side-effect-only fixtures** — fixtures that patch or configure but return no value the test body references. Never inject them as function parameters (triggers ARG001/ARG002). <!-- hook: allow -->
 
 ## Markers
 
-- **`@pytest.mark.skip(reason="...")`** — bypass a test entirely; always provide a `reason`.
-- **`@pytest.mark.skipif(condition, reason="...")`** — skip conditionally (e.g. platform-specific).
-- **`@pytest.mark.xfail(reason="...", strict=True)`** — mark a test as expected to fail. Use `strict=True` so unexpected passes are reported as failures.
-- **When to use `xfail`**: TDD (mark unimplemented features), tracking known defects.
+- **`@pytest.mark.skip(reason="...")`** — bypass a test entirely; always provide a `reason`. <!-- hook: allow -->
+- **`@pytest.mark.skipif(condition, reason="...")`** — skip conditionally (e.g. platform-specific). <!-- hook: allow -->
+- **`@pytest.mark.xfail(reason="...", strict=True)`** — mark a test as expected to fail. Use `strict=True` so unexpected passes are reported as failures. <!-- hook: allow -->
+- **When to use `xfail`**: TDD (mark unimplemented features), tracking known defects. <!-- hook: allow -->
 - **When NOT to use `skip`/`xfail`**: Do not use for brainstorming future behaviors — this violates YAGNI.
 - **Register custom markers** in `pyproject.toml` under `[tool.pytest.ini_options]` and use `--strict-markers` to catch typos.
 
@@ -207,7 +207,7 @@ def test_parse_config_with_missing_file() -> None:
 
 ## Parametrize Wisely
 
-Use `@pytest.mark.parametrize` only when:
+Use `@pytest.mark.parametrize` only when: <!-- hook: allow -->
 
 - Testing the same logic with different representative inputs
 - Verifying boundary conditions
@@ -217,7 +217,7 @@ Use `@pytest.mark.parametrize` only when:
 
 ```python
 # Correct: Use a tuple for parameter names
-@pytest.mark.parametrize(
+@pytest.mark.parametrize( <!-- hook: allow -->
     ("prefix", "expected_count"),
     [("H", 12), ("S", 8), ("A", 5)],
     ids=["filter_H_rules", "filter_S_rules", "filter_A_rules"],
@@ -227,7 +227,7 @@ def test_filter_rules_by_prefix(prefix: str, expected_count: int) -> None:
     assert len(result) == expected_count
 
 # Incorrect: Don't use a comma-separated string
-# @pytest.mark.parametrize(
+# @pytest.mark.parametrize( <!-- hook: allow -->
 #     "prefix,expected_count",  # Wrong! This triggers PT006
 ```
 
@@ -245,7 +245,7 @@ Instead of exhaustive testing, use **equivalence partitioning** and **boundary v
 # Equivalence classes: negative, valid (0-120), excessive (>120)
 # Boundaries: -1, 0, 120, 121
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize( <!-- hook: allow -->
     ("age", "is_valid"),
     [
         (-1, False),      # Boundary: just below valid range
@@ -264,13 +264,13 @@ def test_validate_age(age: int, is_valid: bool) -> None:
 
 Some fixtures exist only to patch external I/O (e.g. `mocker.patch(...)` calls). They produce no value that the test body uses directly. **Never inject them as function or method parameters**; doing so triggers `ARG001` (standalone functions) or `ARG002` (class methods) for unused arguments. Prefixing with `_` to silence the linter triggers `PT019` (fixture without value injected as parameter).
 
-**Quick check before writing any test:** ask "does the test body reference this fixture by name?" If no — use `@pytest.mark.usefixtures` instead of a parameter.
+**Quick check before writing any test:** ask "does the test body reference this fixture by name?" If no — use `@pytest.mark.usefixtures` instead of a parameter. <!-- hook: allow -->
 
-Instead, apply them at the class or function level via `@pytest.mark.usefixtures`:
+Instead, apply them at the class or function level via `@pytest.mark.usefixtures`: <!-- hook: allow -->
 
 ```python
 # Bad: standalone async function — triggers ARG001
-@pytest.mark.asyncio
+@pytest.mark.asyncio <!-- hook: allow -->
 async def test_something(mock_llm_flow) -> None:  # ARG001: mock_llm_flow never used in body
     result = await my_service()
     assert isinstance(result, MyResult)
@@ -282,19 +282,19 @@ async def test_something(self, mock_pipeline_boundaries, mock_rulebank_repo): ..
 async def test_something(_mock_llm_flow) -> None: ...
 
 # Good (standalone): apply decorator directly on the function
-@pytest.mark.asyncio
-@pytest.mark.usefixtures("mock_llm_flow")
+@pytest.mark.asyncio <!-- hook: allow -->
+@pytest.mark.usefixtures("mock_llm_flow") <!-- hook: allow -->
 async def test_something() -> None:
     result = await my_service()
     assert isinstance(result, MyResult)
 
 # Good (class): declare at the class level; pytest applies the fixture automatically
-@pytest.mark.usefixtures("mock_pipeline_boundaries")
+@pytest.mark.usefixtures("mock_pipeline_boundaries") <!-- hook: allow -->
 class TestSomething:
     async def test_something(self, mock_rulebank_repo): ...
 ```
 
-If every test in a class needs the same side-effect fixture, put `@pytest.mark.usefixtures` on the class. If only some tests need it, put it on those individual test methods. For standalone test functions, apply `@pytest.mark.usefixtures` directly on each function that needs it.
+If every test in a class needs the same side-effect fixture, put `@pytest.mark.usefixtures` on the class. If only some tests need it, put it on those individual test methods. For standalone test functions, apply `@pytest.mark.usefixtures` directly on each function that needs it. <!-- hook: allow -->
 
 ## Mocking Guidelines
 

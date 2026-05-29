@@ -38,13 +38,13 @@ The canonical digital library lives at `G:\My Drive\Library`. All books are inde
 
 ### Out of Scope
 - Domain judgments (which notebook to add a book to — route to the domain agent)
-- Deciding whether to keep superseded editions — flag in `notes`, route to Graeme for engineering books
+- Deciding whether to keep superseded editions — flag in `notes`, route to the Domain Expert for engineering books
 - Converting EPUB to PDF (flag, do not act without user confirmation)
 - Deciding which duplicate copy to keep — flag, do not delete
 
 ### Prohibited Actions
 
-- **NEVER write code.** Linda is an operator, not a developer. Do not create Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary.
+- **NEVER write code.** the Knowledge Operator is an operator, not a developer. Do not create Python scripts, JSON data files, shell scripts, batch files, or any other executable or machine-readable code output — not even as a "helper file" or "script for the user to run". This is a hard, unconditional boundary.
 - **If a user's request contains the words "write a script", "create a script", "write code", "generate a script", or any similar instruction to produce executable code:** refuse immediately, before asking any clarifying questions. State: "Writing code is outside my scope — I am an operator, not a developer. I am escalating this to the engineering agent tier." Then stop.
 - Complete all tasks by invoking MCP tools and file operations directly (read, write, rename, move, update Excel).
 - If a task cannot be completed without writing code, **stop immediately and escalate to the engineering agent tier**. State explicitly what capability is missing and why you cannot proceed without it.
@@ -196,7 +196,7 @@ When indexing an engineering standard, populate the extra columns below in addit
 | `licence_verified` | Has someone actually checked the licence terms? Boolean, default `FALSE`. Prevents assumptions becoming commitments | `FALSE` |
 | `licence_notes` | Free text (nullable). Licence number, expiry, subscription tier, specific restrictions | `Single-user licence, purchased SAI Global 2024` |
 
-**Rules:** Never leave `status` blank for any engineering standard. Use `needs_review` when currentness is unknown; do not default to `current` unless confirmed. When `status = needs_review`, add a `NEEDS_REVIEW` note and route currentness resolution to Graeme. When `status = superseded`, always populate `superseded_by` if known — flag to Graeme if unknown. When `year_withdrawn` is populated, `status` must be `superseded` or `withdrawn`. Non-standard engineering books (textbooks, guidance notes) leave all engineering-specific columns blank.
+**Rules:** Never leave `status` blank for any engineering standard. Use `needs_review` when currentness is unknown; do not default to `current` unless confirmed. When `status = needs_review`, add a `NEEDS_REVIEW` note and route currentness resolution to the Domain Expert. When `status = superseded`, always populate `superseded_by` if known — flag to the Domain Expert if unknown. When `year_withdrawn` is populated, `status` must be `superseded` or `withdrawn`. Non-standard engineering books (textbooks, guidance notes) leave all engineering-specific columns blank.
 
 **Draft-handling rules (binding):**
 
@@ -300,7 +300,7 @@ See [procedures/index-folder.md](procedures/index-folder.md) for step-by-step de
 | 2 — Workbook update | Append one row to `Master` and the matching domain worksheet; use `path` as the idempotency key | `.agents/tools/library/workbook_utils.py` |
 | 3 — Rename | Apply canonical filenames when appropriate; update `path` and `canonical_filename` together | Inline snippet in `index-folder.md` |
 | 4 — Dedup | Flag duplicate hashes in `notes`; sync duplicate notes to domain worksheets by `path` | `.agents/tools/library/dedup_index.py` |
-| 5 — Review/enrichment | Resolve `NEEDS_REVIEW` rows and standards currentness | Browser/Graeme approval required |
+| 5 — Review/enrichment | Resolve `NEEDS_REVIEW` rows and standards currentness | Browser/the Domain Expert approval required |
 
 **Workbook lock:** writer tools use `workbook_utils.WorkbookLock`, which creates `library-index.xlsx.lock` beside the workbook. A second writer must fail fast. Remove the lock only after confirming no Python indexer process is still running.
 
@@ -423,14 +423,14 @@ All tools live in `.agents/tools/library/`. Script-style tools run from the repo
 | Using `sha256` as the resume key | Use relative `path` to skip already-indexed rows; use `sha256` only in the dedup pass. |
 | Running multiple workbook writers | Stop. All writer tools must acquire the workbook lock; if a lock exists, confirm no writer is active before removing it. |
 | Running dedup checks during Phase 1 | Dedup is Phase 3 only — inline checking slows the batch loop. |
-| Blocking on web search mid-run | Mark NEEDS_REVIEW, continue, batch all web searches in Phase 4. |
+| Blocking on web search mid-run | the Product Manager NEEDS_REVIEW, continue, batch all web searches in Phase 4. |
 | Using `C:\Temp` as temp directory | Use `$env:TEMP` — `C:\Temp` may not exist. |
 | Instantiating OCR repeatedly | Reuse one `BookMetadataExtractor`; it caches the OCR reader lazily. |
 | Leaving `status` blank for engineering standards | Use `needs_review` until currentness is confirmed. Never default to `current`. |
 | Not verifying the index before extraction | Run preflight — open `library-index.xlsx` in Python and confirm expected worksheets exist before scanning any files. |
 | Skipping post-run verification | Run `verify_index.py`; report source PDF count, `Master`/domain row counts, duplicate note counts, missing-year counts, and `NEEDS_REVIEW` counts. |
 | Writing raw PDF-extracted text directly to openpyxl cells | PDF extraction can return control characters (`\x00–\x1f`, `\x7f–\x9f`) that openpyxl rejects with `IllegalCharacterError`. Keep raw text in `BookMetadata.text_sample`; sanitize any string before workbook writes if openpyxl rejects it. |
-| Invoking a persona agent (Linda, Graeme, etc.) for execution | Persona agents are advisory — they do not run shell commands or scripts. Apply the persona's skills directly and execute the work in the main agent. |
+| Invoking a persona agent (the Knowledge Operator, the Domain Expert, etc.) for execution | Persona agents are advisory — they do not run shell commands or scripts. Apply the persona's skills directly and execute the work in the main agent. |
 | Writing throwaway `tmp_*.py` scripts for repeatable operations | Promote to a permanent tool in `.agents/tools/library/` after first use. If no tool exists, create one before proceeding. |
 | Using `source_pdf_count` in verify output | Renamed to `source_file_count` — counts both PDF and EPUB. |
 | Hardcoding `verify_index.py` source folder to Standards only | Default is now `LIBRARY_ROOT`; pass `source_folder=` to narrow scope. |

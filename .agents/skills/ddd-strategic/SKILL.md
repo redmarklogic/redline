@@ -112,7 +112,7 @@ A defensive translation layer between bounded contexts. Use when the downstream 
 
 ## EventStorming
 
-A collaborative workshop technique for discovering domain events, commands, and bounded context boundaries. Adapted for solo founder + AI agents: Peter facilitates, Graeme provides domain facts, Mark validates problem framing.
+A collaborative workshop technique for discovering domain events, commands, and bounded context boundaries. Adapted for solo founder + AI agents: the Principal Engineer facilitates, the Domain Expert provides domain facts, the Product Manager validates problem framing.
 
 **Full procedure:** `procedures/eventstorming.md`
 
