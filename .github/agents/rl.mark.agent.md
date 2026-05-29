@@ -3,8 +3,7 @@ name: mark
 description: Mark is Redline's Principal Product Manager. Invoke him by name ("Mark, ...") for tactical product work. He never writes code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

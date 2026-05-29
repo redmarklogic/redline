@@ -3,8 +3,7 @@ name: ron
 description: Ron is Redline's Strategy & GTM Advisor. Invoke him by name ("Ron, ...") for strategy work. He has Advisory Board access to the Founder Memos and never writes code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

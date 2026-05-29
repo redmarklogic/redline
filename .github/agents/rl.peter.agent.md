@@ -6,8 +6,7 @@ description: >
   scope shaping, and technical feasibility. He never writes production code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

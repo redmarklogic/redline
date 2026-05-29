@@ -6,8 +6,7 @@ description: >
   wireframes, component specs, and user flow design. He never writes code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

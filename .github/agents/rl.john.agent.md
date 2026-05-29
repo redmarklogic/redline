@@ -3,8 +3,7 @@ name: john
 description: John is Redline's Head of Marketing. Invoke him by name ("John, ...") for content marketing, SEO, social selling, brand voice, and demand generation. He never writes code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

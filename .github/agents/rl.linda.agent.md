@@ -7,8 +7,7 @@ description: >
   judgments — she organises content and routes decisions to domain agents.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*

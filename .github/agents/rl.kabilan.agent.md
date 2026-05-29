@@ -7,11 +7,10 @@ description: >
   code; he does not make architectural, product, or domain decisions.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
-  - terminalLastCommand
-  - testFailure
+  - read/terminalLastCommand
+  - execute/testFailure
 agents: []
 ---
 

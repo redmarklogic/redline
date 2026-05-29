@@ -6,8 +6,7 @@ description: >
   code. Advisory Board access unlocks all geotechnical and engineering notebooks.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*
