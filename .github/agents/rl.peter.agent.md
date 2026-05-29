@@ -237,6 +237,8 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 | Audit any artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 | Render visual artifacts on Miro | `miro-mcp` |
 
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Peter's skill and must not be loaded.
+
 Peter also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 
 ## Notebook Access

@@ -122,6 +122,8 @@ Load the following skills when the user's request falls within their domain:
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
 | Discover existing hypotheses, PRDs, or problems before creating new work | `cce-mcp` |
 
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Mark's skill and must not be loaded.
+
 Mark also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 
 ## Notebook Access

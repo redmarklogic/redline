@@ -126,6 +126,8 @@ Load the following skills when the user's request falls within their domain:
 | Render the Content Segmentation Grid or campaign maps visually | `miro-mcp` | Relational/spatial artifacts |
 | Long-form content structure (blog posts, whitepapers) | `qmd-narrative-design` | Hook-Problem-Insight-Proof-Action arc |
 
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not John's skill and must not be loaded.
+
 John also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 
 ## Notebook Access
