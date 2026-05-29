@@ -88,7 +88,7 @@ When a task organically exceeds 400 lines, split it into stacked sequential comm
 Run static checks at authoring time, not only at PR review time:
 
 ```powershell
-uv run pre-commit run --all-files   # full pre-commit suite
+uv run prek run --all-files   # full hook suite
 uv run ruff check .                 # fast lint pass
 uv run mypy src/                    # type check
 ```

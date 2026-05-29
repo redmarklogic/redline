@@ -90,7 +90,7 @@ When placing a new skill, ask:
 │  Layer 7: Applied Capabilities                                       │
 │  eda-* · qmd-* · redline-research · notebooklm-index                │
 │  notebooklm-deep-research · library-management                       │
-│  pre-commit-hooks-create                                             │
+│  git-hooks-create                                                    │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 6: Python Implementation (volatile)                           │
 │  python-patterns · python-function-design · python-class-design      │
@@ -178,7 +178,7 @@ flowchart TD
         EDA["eda-codebook / eda-interpreting-data\neda-qa / eda-visual-design"]
         QMD["qmd-narrative-design / qmd-tables"]
         RES["redline-research / notebooklm-index\nnotebooklm-deep-research"]
-        LIB["library-management\npre-commit-hooks-create"]
+        LIB["library-management\ngit-hooks-create"]
     end
 
     subgraph L8["Layer 8 - Engineering Workflows"]
@@ -316,7 +316,7 @@ vendor update.
 | EDA & visualisation | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design` |
 | Reporting | `qmd-narrative-design`, `qmd-tables` |
 | Research | `redline-research`, `notebooklm-index`, `notebooklm-deep-research` |
-| Infrastructure | `pre-commit-hooks-create`, `library-management` |
+| Infrastructure | `git-hooks-create`, `library-management` |
 
 ---
 
