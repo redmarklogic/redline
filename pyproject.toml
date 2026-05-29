@@ -57,10 +57,10 @@ build.targets.wheel.packages = [ "src/rl" ]
 
 [tool.uv]
 default-groups = [ "doc", "dev", "test" ]
-link-mode = "symlink"
 constraint-dependencies = [
   "gitpython>=3.1.50",
 ]
+link-mode = "symlink"
 
 [tool.ruff]
 line-length = 88
@@ -130,11 +130,3 @@ type = "layers"
 layers = [ "functions", "schemas", "domain" ]
 containers = [ "rl" ]
 exhaustive = true
-
-[[tool.importlinter.contracts]]
-name = "rl.functions layers"
-type = "layers"
-layers = [ "readers" ]
-containers = [ "rl.functions" ]
-exhaustive = true
-

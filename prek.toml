@@ -1,0 +1,454 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = [
+  "pre-commit",
+  "pre-push",
+  "post-checkout",
+  "post-merge",
+  "post-rewrite"
+  ]
+default_stages = [
+  "pre-commit",
+  "pre-push"
+  ]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "forbidden-copier-rej-files",
+    name = "forbidden copier rej files",
+    entry = "found Copier update rejection files; review them and remove them",
+    language = "fail",
+    files = '\.rej$',
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "forbidden-testpy-files",
+    name = "forbidden testpy files",
+    entry = "found test.py file inside tests directory; rename or remove them",
+    language = "fail",
+    files = "((./tests/.*/test.py)|(./tests/test.py))$",
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "forbidden-ipynb-files",
+    name = "forbidden ipynb files",
+    entry = "found .ipynb notebook file; AGENTS.md forbids notebook creation; remove it",
+    language = "fail",
+    files = '\.ipynb$',
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "forbidden-copilot-instructions-file",
+    name = "forbidden .github/copilot-instructions.md",
+    entry = ".github/copilot-instructions.md must not exist. Per ADR-012, AGENTS.md is the single canonical instruction file for all AI agents. Put agent instructions in AGENTS.md, not in .github/copilot-instructions.md.",
+    language = "fail",
+    files = '\.github/copilot-instructions\.md$',
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "https://github.com/abravalheri/validate-pyproject"
+rev = "v0.24.1"
+hooks = [
+  {
+    id = "validate-pyproject",
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.9.9"
+hooks = [
+  {
+    id = "uv-lock",
+    priority = 0
+  },
+  {
+    id = "uv-sync",
+    priority = 1
+  },
+  {
+    id = "uv-export",
+    args = ["--quiet"],
+    priority = 2
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "pyproject-fmt",
+    name = "pyproject-fmt",
+    language = "system",
+    entry = "uvx --python 3.12 --from 'pyproject-fmt==2.15.3' --with 'toml-fmt-common<1.1.0' pyproject-fmt",
+    files = '^pyproject\.toml$',
+    priority = 1
+  }
+]
+
+[[repos]]
+repo = "https://github.com/python-formate/flake8-dunder-all"
+rev = "v0.5.0"
+hooks = [
+  {
+    id = "ensure-dunder-all",
+    files = '.*/__init__\.py$',
+    exclude = "tests/assets/",
+    priority = 1
+  }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.15.14"
+hooks = [
+  {
+    id = "ruff-check",
+    args = [
+      "--fix",
+      "--ignore",
+      "FIX",
+      "--unsafe-fixes"
+    ],
+    priority = 0
+  },
+  {
+    id = "ruff-format",
+    priority = 2
+  }
+]
+
+[[repos]]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v6.0.0"
+hooks = [
+  {
+    id = "check-added-large-files",
+    args = ["--maxkb=100000"],
+    priority = 0
+  },
+  {
+    id = "check-merge-conflict",
+    args = ["--assume-in-merge"],
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "deptry",
+    name = "deptry",
+    entry = "uv run --frozen --offline deptry src",
+    language = "system",
+    files = '^src/.*\.py$|^pyproject\.toml$',
+    pass_filenames = false,
+    priority = 3
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "import-linter",
+    name = "import-linter",
+    entry = "uv run --frozen --offline lint-imports",
+    language = "system",
+    files = '^src/.*\.py$|^pyproject\.toml$',
+    pass_filenames = false,
+    priority = 3
+  }
+]
+
+[[repos]]
+repo = "https://github.com/codespell-project/codespell"
+rev = "v2.4.2"
+hooks = [
+  {
+    id = "codespell",
+    additional_dependencies = ["tomli"],
+    priority = 3
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "check-skills-documented",
+    name = "check-skills-documented",
+    entry = "uv run --frozen --offline hooks/check-skills-documented.py",
+    args = ["--prefix=redline-"],
+    language = "system",
+    files = '(^\.agents/skills/|AGENTS\.md$|skills-lock\.json$)',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-skill-has-red-phase",
+    name = "check-skill-has-red-phase",
+    entry = "uv run --frozen --offline hooks/check-skill-has-red-phase.py",
+    language = "system",
+    files = '^\.agents/skills/',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-banned-words",
+    name = "check-banned-words",
+    entry = "uv run --frozen --offline hooks/check-banned-words.py",
+    args = [
+      "--hooks-dir=hooks",
+      "redline"
+    ],
+    language = "system",
+    files = '^hooks/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-skills-persona-names",
+    name = "check-skills-persona-names",
+    entry = "uv run --frozen --offline hooks/check-banned-words.py",
+    args = [
+      "--md-dir=.agents/skills",
+      "Ron",
+      "Mark",
+      "Graeme",
+      "John",
+      "Peter",
+      "Matt",
+      "Kabilan",
+      "Linda",
+      "Harriet"
+    ],
+    language = "system",
+    files = '^\.agents/skills/',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-dataclass-in-domain",
+    name = "check-no-dataclass-in-domain",
+    entry = "uv run --frozen --offline hooks/check-no-dataclass-in-domain.py",
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-overused-underscore",
+    name = "Check overused underscores",
+    entry = "uv run --frozen --offline hooks/check_overused_underscore.py",
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "fix-doc-sync",
+    name = "fix-doc-sync",
+    entry = "uv run --frozen --offline hooks/fix-doc-sync.py",
+    args = ["AGENTS.md"],
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 1
+  },
+  {
+    id = "clean-quarto-artifacts",
+    name = "clean-quarto-artifacts",
+    entry = "uv run --frozen --offline hooks/clean-quarto-artifacts.py",
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "clean-quarto-intermediates",
+    name = "clean-quarto-intermediates",
+    entry = "uv run --frozen --offline hooks/clean-quarto-intermediates.py",
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-hook-adr-reference",
+    name = "check-hook-adr-reference",
+    entry = "uv run --frozen --offline hooks/check-hook-adr-reference.py",
+    args = ["--hooks-dir=hooks"],
+    language = "system",
+    files = '^hooks/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-argparse",
+    name = "check-no-argparse",
+    entry = "uv run --frozen --offline hooks/check-no-argparse.py",
+    args = [
+      "--dirs=src",
+      "--dirs=scripts"
+    ],
+    language = "system",
+    files = '^(src|scripts)/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-archive-imports",
+    name = "check-no-archive-imports",
+    entry = "uv run --frozen --offline hooks/check-no-archive-imports.py",
+    args = ["--dirs=src"],
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-env-loader",
+    name = "check-no-env-loader",
+    entry = "uv run --frozen --offline hooks/check-no-env-loader.py",
+    args = [
+      "--dirs=src",
+      "--dirs=scripts"
+    ],
+    language = "system",
+    files = '^(src|scripts)/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-env-defaults",
+    name = "check-no-env-defaults",
+    entry = "uv run --frozen --offline hooks/check-no-env-defaults.py",
+    args = [
+      "--dirs=src",
+      "--dirs=scripts"
+    ],
+    language = "system",
+    files = '^(src|scripts)/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-section-rules",
+    name = "check-no-section-rules",
+    entry = "uv run --frozen --offline hooks/check-no-section-rules.py",
+    args = ["--dirs=src"],
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-mermaid-syntax",
+    name = "check-mermaid-syntax",
+    entry = "uv run --frozen --offline hooks/check-mermaid-syntax.py",
+    args = [
+      "--dirs=.agents",
+      "--dirs=docs",
+      "--dirs=specs"
+    ],
+    language = "system",
+    files = '\.(md|qmd)$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "sync-layer-to-lock",
+    name = "sync-layer-to-lock",
+    entry = "uv run --frozen --offline hooks/sync-layer-to-lock.py",
+    language = "system",
+    files = '(docs/architecture/skills-taxonomy\.md|skills-lock\.json)$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-debug-statements",
+    name = "check-no-debug-statements",
+    entry = "uv run --frozen --offline hooks/check-no-debug-statements.py",
+    args = [
+      "--dirs=src",
+      "--dirs=tests"
+    ],
+    language = "system",
+    files = '^(src|tests)/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-no-user-paths",
+    name = "check-no-user-paths",
+    entry = "uv run --frozen --offline hooks/check-no-user-paths.py",
+    args = [
+      "--dirs=.agents",
+      "--dirs=docs",
+      "--dirs=hooks",
+      "--dirs=scripts",
+      "--dirs=src",
+      "--dirs=specs",
+      "--dirs=tests"
+    ],
+    language = "system",
+    files = '\.(py|md|yaml|yml|toml|json|sh|ps1|txt|rst|cfg|ini)$',
+    pass_filenames = false,
+    priority = 0  },
+  {
+    id = "check-extension-residue",
+    name = "check-extension-residue",
+    entry = "uv run --frozen --offline hooks/check-extension-residue.py",
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 0  }
+]
+
+[[repos]]
+repo = "https://github.com/pre-commit/pygrep-hooks"
+rev = "v1.10.0"
+hooks = [
+  {
+    id = "rst-backticks",
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "https://github.com/Yelp/detect-secrets"
+rev = "v1.5.0"
+hooks = [
+  {
+    id = "detect-secrets",
+    args = [
+      "--baseline",
+      ".secrets.baseline"
+    ],
+    priority = 0
+  }
+]
