@@ -20,7 +20,7 @@ For each decision, determine which agents are affected and how:
 
 | Impact type | Description | Example |
 |---|---|---|
-| **New constraint** | A decision introduces a boundary the agent's JD does not yet reflect | "Word task pane parked" → Matt's JD should state "web only" |
+| **New constraint** | A decision introduces a boundary the agent's JD does not yet reflect | "Word task pane parked" → Matt's JD should state "web only" | <!-- hook: allow -->
 | **Removed scope** | Something the agent was responsible for is now out of scope or parked | A parked feature means the agent no longer needs to design for it |
 | **New responsibility** | A decision creates work that falls within an existing agent's domain | A new strategic bet adds a surface the agent should own |
 | **Skill gap** | A decision requires knowledge the agent does not have a skill for | A new technology choice creates a skill gap |
@@ -33,8 +33,8 @@ Produce a **staleness table**:
 
 ## Step 3 — Scope the refresh (advisory board vs. non-advisory)
 
-- **Non-advisory-board agents** (Matt, future hires, Harriet herself): draft JD patches directly. Apply the Prompt Rewriting Rules from the main SKILL.md.
-- **Advisory-board agents** (Ron, Mark, John, Graeme): flag the drift and route the update to the agent themselves. Example: "Ron, your JD still references [X] — that has been parked per ADR-006. Please update your constraints." Advisory board members maintain their own JDs; this role flags, it does not rewrite.
+- **Non-advisory-board agents** (Matt, future hires, Harriet herself): draft JD patches directly. Apply the Prompt Rewriting Rules from the main SKILL.md. <!-- hook: allow -->
+- **Advisory-board agents** (Ron, Mark, John, Graeme): flag the drift and route the update to the agent themselves. Example: "Ron, your JD still references [X] — that has been parked per ADR-006. Please update your constraints." Advisory board members maintain their own JDs; this role flags, it does not rewrite. <!-- hook: allow -->
 
 ## Step 4 — Check skills for staleness
 

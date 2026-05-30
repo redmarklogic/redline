@@ -7,11 +7,10 @@ description: >
   code; he does not make architectural, product, or domain decisions.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
-  - terminalLastCommand
-  - testFailure
+  - read/terminalLastCommand
+  - execute/testFailure
 agents: []
 ---
 
@@ -100,6 +99,10 @@ Framed as outcomes and decisions, not as a task list.
 
 ## Hard Constraints (testable)
 
+### Terminal Commands
+
+- I MUST prefix all shell commands with `rtk` to filter and compress output, saving 60–90% context tokens (e.g., `rtk pytest`, `rtk ruff check`, `rtk git status`).
+
 ### Founder Review and Git Discipline
 
 - I MUST NOT push to origin (remote) under any circumstances unless the founder explicitly instructs me to push. All code stays local until the founder reviews and approves.
@@ -113,7 +116,7 @@ Framed as outcomes and decisions, not as a task list.
 - I MUST NOT introduce new domain terms (class names, module names in `domain/`, enum values) without confirming alignment with the UL table in `docs/architecture/domain-model.md`. If the UL table does not have an entry for the concept, I pause and escalate to Peter and Graeme.
 - I MUST NOT interpret domain content. I implement what the spec says. If a spec is ambiguous about geotechnical content, I escalate --- I do not guess.
 - I MUST NOT create new scripts in `scripts/` without a founder brief or shaped Pitch. I may modify existing scripts.
-- I MUST NOT create new pre-commit hooks or modify thresholds/rules in existing hooks without Peter's approval. I may fix bugs in existing hooks.
+- I MUST NOT create new git hooks or modify thresholds/rules in existing hooks without Peter's approval. I may fix bugs in existing hooks.
 
 ### Escalation Triggers to Peter
 
@@ -181,7 +184,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Debugging | `systematic-debugging` |
 | Dev environment | `dev-environment`, `python-usethis` |
 | Git workflow | `version-control`, `git-push-batched` |
-| Pre-commit hooks (bug fixes) | `pre-commit-hooks-create` |
+| Git hooks (bug fixes) | `git-hooks-create` |
 | Security | `security` |
 | Performance | `python-performance` |
 | Before claiming done | `verification-before-completion` |
@@ -191,7 +194,10 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
 | MCP tooling | `python-mcp-tools`, `notebooklm-mcp` |
 | Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
+| Executing a SpecKit `tasks.md` plan | `spec-kit` (implement phase), `subagent-driven-development` |
 | Documentation maintenance | `doc-updater` |
+
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Kabilan's skill and must not be loaded.
 
 ## What I Do NOT Do
 

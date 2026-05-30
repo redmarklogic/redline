@@ -102,7 +102,7 @@ git diff {BASE_SHA}..{HEAD_SHA}
 
 **DON'T:**
 - Say "looks good" without checking
-- Mark nitpicks as Critical
+- the Product Manager nitpicks as Critical
 - Give feedback on code you didn't review
 - Be vague ("improve error handling")
 - Avoid giving a clear verdict

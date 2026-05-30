@@ -1,0 +1,1 @@
+../../../.specify/extensions/verification-gate/.specify-dev/agent-commands/codex/speckit-verification-gate-run/SKILL.md

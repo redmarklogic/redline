@@ -450,7 +450,7 @@
       "status": "active",
       "layer": 9
     },
-    "pre-commit-hooks-create": {
+    "git-hooks-create": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,

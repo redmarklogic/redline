@@ -12,7 +12,7 @@ MoSCoW is not a prioritisation method -- it is a translation layer that converts
 
 - After completing prioritisation, to communicate what "high priority" means in practice
 - When a team is uncertain about what must ship in the current release
-- Before sprint or release planning to pre-empt scope debates
+- Before sprint or release planning to preempt scope debates
 - When coordinating across teams who need unambiguous go/no-go criteria
 
 ## How to apply

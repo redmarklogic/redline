@@ -1,0 +1,23 @@
+schema_version: "1.0"
+
+extension:
+  id: static-checks
+  name: "Static Checks Gate"
+  version: "1.0.0"
+  description: "Dispatcher: fires python-static-checks skill after the implement phase"
+  author: redline
+
+requires:
+  speckit_version: ">=0.8.0"
+
+provides:
+  commands:
+    - name: speckit.static-checks.run
+      file: commands/speckit.static-checks.run.md
+      description: "Run static checks at end of implement phase"
+
+hooks:
+  after_implement:
+    command: speckit.static-checks.run
+    optional: false
+    description: "Run static checks before claiming implement phase complete"

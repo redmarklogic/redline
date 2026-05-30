@@ -170,7 +170,7 @@ Use three gates:
 | Stage | Scope | Purpose |
 | ------ | ------- | --------- |
 | Initial CI health gate | Existing PR branch CI status before comment resolution | Avoid resolving reviewer comments against broken code; comments may still be read for context |
-| Fast local gate | `uv run pre-commit run -a` + impacted tests | Catch obvious regressions before push with low latency |
+| Fast local gate | `uv run prek run -a` + impacted tests | Catch obvious regressions before push with low latency |
 | CI presubmit | lint, full test suite, SonarQube (parallel) after push/PTAL | Authoritative quality decision before review closure |
 
 Any failure from the initial CI gate, fast local gate, or final CI presubmit becomes

@@ -109,7 +109,7 @@ A violation exists when:
   following line as the cell preview — the comment is what the developer sees.
 - The **first cell** (imports + constants) has `# %%` with **no comment** on the next
   line.
-- **Never use decorative `print("=== Section ===")` calls** to mark sections. The
+- **Never use decorative `print("=== Section ===")` calls** to mark sections. The <!-- hook: allow -->
   `# %%` cell comment is the section label. Plain `print()` calls are for data output
   only.
 - **Don't over-functionalize bespoke orchestration**. If logic is called only once,
@@ -131,7 +131,7 @@ When creating or reviewing a script:
 1. Check that domain logic lives in the package, not the script.
 2. Verify the stepdown rule: high-level functions first, helpers last.
 3. Ensure the script is documented in `src/scripts/README.md` per the `python-script-numbering` skill.
-4. Run `uv run pre-commit run scripts-in-readme` to verify registration.
+4. Run `uv run prek run scripts-in-readme` to verify registration.
 
 ## Examples
 

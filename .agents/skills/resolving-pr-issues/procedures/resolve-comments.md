@@ -67,7 +67,7 @@ Minimal change. No unrelated refactors.
 ## Step 8 — Fast local gate
 
 ```powershell
-.\.venv\Scripts\activate; uv run pre-commit run -a
+.\.venv\Scripts\activate; uv run prek run -a
 .\.venv\Scripts\activate; python -m pytest <impacted test files> -x
 ```
 

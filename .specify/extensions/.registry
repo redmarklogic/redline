@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "static-checks": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:f6e1afbde36a8c0327fca5712f8ea04952ed37aee417baf7f1e0fa41036b7a53",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.static-checks.run"
+        ],
+        "codex": [
+          "speckit.static-checks.run"
+        ],
+        "copilot": [
+          "speckit.static-checks.run"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-05-29T10:53:50.067364+00:00"
+    },
+    "verification-gate": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:c70a0117b0d1f2d98cc917d3e3ea1c549e6b19e83531e45650343f9d14a3c2c5",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.verification-gate.run"
+        ],
+        "codex": [
+          "speckit.verification-gate.run"
+        ],
+        "copilot": [
+          "speckit.verification-gate.run"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-05-29T10:53:58.285456+00:00"
+    },
+    "shaping-gate": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:36f73f24067e218c5e34c6a67d8b4872daa2a3d5b3dea01ba17e873f50d70d2b",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.shaping-gate.check"
+        ],
+        "codex": [
+          "speckit.shaping-gate.check"
+        ],
+        "copilot": [
+          "speckit.shaping-gate.check"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-05-29T10:54:06.182303+00:00"
+    },
+    "source-reconciliation": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:924c087d48824aa147ec90cce9e38cb00fff8edd42e0a6660bfd91a4e2d4fe8b",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.source-reconciliation.run"
+        ],
+        "codex": [
+          "speckit.source-reconciliation.run"
+        ],
+        "copilot": [
+          "speckit.source-reconciliation.run"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-05-29T10:54:13.497518+00:00"
+    }
+  }
+}

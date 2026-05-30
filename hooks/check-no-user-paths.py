@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid absolute user-home paths in committed files.
+"""Git hook: forbid absolute user-home paths in committed files.
 
 Absolute paths that contain a user's home directory (e.g.
 ``C:\\Users\\harel\\Documents\\...``) are machine-specific and must never be

@@ -42,7 +42,7 @@
 
 | Skill | Purpose | Used by |
 |---|---|---|
-| `dev-environment` | Bootstrap and maintain dev environment (uv, tasks, pre-commit) | Engineering |
+| `dev-environment` | Bootstrap and maintain dev environment (uv, tasks, prek) | Engineering |
 | `python-usethis` | Add/remove dev tools via usethis CLI | Engineering |
 | `python-static-checks` | Running static checks (ruff, mypy) | Engineering |
 | `python-deptry` | Dependency hygiene with deptry | Engineering |
@@ -82,9 +82,9 @@
 | Skill | Purpose | Used by |
 |---|---|---|
 | `security` | Secure coding (secrets, configuration, logging) | Engineering |
-| `version-control` | Commit conventions, hygiene, pre-commit, pre-push | Engineering |
+| `version-control` | Commit conventions, hygiene, prek hooks, pre-push | Engineering |
 | `git-push-batched` | Push changes in thematically cohesive commits | Engineering |
-| `pre-commit-hooks-create` | Writing bespoke pre-commit hooks | Engineering |
+| `git-hooks-create` | Writing bespoke git hooks | Engineering |
 | `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
 | `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda, Peter |
 | `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron, Peter |

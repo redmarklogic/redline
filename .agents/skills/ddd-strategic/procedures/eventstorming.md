@@ -3,7 +3,7 @@
 **Parent skill:** `ddd-strategic`
 **Source:** Khononov (*Learning DDD*), Vernon (*Implementing DDD*)
 **Tooling:** Miro via `miro-mcp` (`layout_create`). Never Mermaid.
-**Adapted for:** Solo founder + AI agents (Peter facilitates, Graeme provides domain facts, Mark validates problem framing).
+**Adapted for:** Solo founder + AI agents (the Principal Engineer facilitates, the Domain Expert provides domain facts, the Product Manager validates problem framing).
 
 ---
 
@@ -46,7 +46,7 @@ Arrange events left-to-right in chronological order. Identify parallel flows (ev
 
 ### Step 3: Pain Points
 
-Mark problematic areas with **light pink** sticky notes. Bottlenecks, manual workarounds, knowledge gaps, process breakdowns.
+the Product Manager problematic areas with **light pink** sticky notes. Bottlenecks, manual workarounds, knowledge gaps, process breakdowns.
 
 **Note:** Physical workshops rotate pain points 45 degrees. Miro sticky notes do not support rotation -- use colour differentiation instead.
 
@@ -54,7 +54,7 @@ Mark problematic areas with **light pink** sticky notes. Bottlenecks, manual wor
 
 ### Step 4: Pivotal Events
 
-Identify events that represent significant business transitions (e.g., "Order Placed" separates browsing from fulfillment). Mark with vertical divider lines. These often become bounded context boundaries.
+Identify events that represent significant business transitions (e.g., "Order Placed" separates browsing from fulfillment). the Product Manager with vertical divider lines. These often become bounded context boundaries.
 
 **Tool:** `layout_create` with shape item (tall narrow rectangle).
 

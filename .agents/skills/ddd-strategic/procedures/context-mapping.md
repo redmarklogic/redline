@@ -11,7 +11,7 @@
 - After EventStorming identifies bounded contexts (Step 10).
 - When adding a new bounded context or top-level package.
 - When integration pain suggests a relationship has changed.
-- During quarterly evaluation retros (Peter + Graeme).
+- During quarterly evaluation retros (the Principal Engineer + the Domain Expert).
 
 ## Steps
 

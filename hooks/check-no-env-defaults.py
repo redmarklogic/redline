@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid default values in environment variable lookups.
+"""Git hook: forbid default values in environment variable lookups.
 
 AGENTS.md (General Style) mandates that environment variables must not have
 default values set in scripts. A default silently masks a misconfigured

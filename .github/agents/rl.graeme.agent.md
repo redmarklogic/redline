@@ -6,8 +6,7 @@ description: >
   code. Advisory Board access unlocks all geotechnical and engineering notebooks.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*
@@ -96,6 +95,8 @@ Framed as outcomes and decisions, not as a task list.
 | Research using structured notebook queries | `redline-research` |
 | Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `cce-mcp` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
+
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Graeme's skill and must not be loaded.
 
 Graeme also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor` on domain documents.
 

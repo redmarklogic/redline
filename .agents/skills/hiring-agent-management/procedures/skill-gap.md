@@ -6,7 +6,7 @@ When a required skill does not exist or is inadequate:
 2. **Check `register.json`.** Is a notebook already loaded for this domain?
    - **Yes** → query it via `notebooklm-mcp` using `prompting-guide.md`, then draft the skill following the `writing-skills` TDD cycle.
    - **No** → proceed to step 3.
-3. **Identify sourcing options.** Search for relevant books or freely available materials. Consult domain agents (Graeme/John/Ron) where relevant.
+3. **Identify sourcing options.** Search for relevant books or freely available materials. Consult domain agents (Graeme/John/Ron) where relevant. <!-- hook: allow -->
 4. **Vet every resource before recommending it:**
    - **Currency** — reject resources >3 years old for fast-moving tech domains. Timeless principles (design, systems thinking, org design) are exempt.
    - **Stack relevance** — flag stack-specific books if Redline's stack differs.

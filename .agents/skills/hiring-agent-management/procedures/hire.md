@@ -47,7 +47,7 @@ Every agent must publish a **Team API** before hire is approved. The Team API st
 
 | Field | Example |
 |---|---|
-| Inputs the agent accepts | "PRD draft from Mark, market signal from John" |
+| Inputs the agent accepts | "PRD draft from Mark, market signal from John" | <!-- hook: allow -->
 | Outputs the agent produces | "Marketing brief in `docs/product/marketing/briefs/`" |
 | Preferred interaction mode | Collaboration / X-as-a-Service / Facilitating |
 | File authority | Exact directories the agent may write to |

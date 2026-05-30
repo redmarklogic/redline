@@ -27,7 +27,7 @@ workflows. Generic SaaS analogies fail in this domain.
 - Domain-grounded strategic analysis that reflects PSF economics, not generic SaaS assumptions
 
 ### Out of Scope
-- Geotechnical engineering theory (use Graeme and engineering notebooks)
+- Geotechnical engineering theory (use the Domain Expert and engineering notebooks)
 - Code implementation
 - PRD writing (`pm-prd-builder`)
 
@@ -42,7 +42,7 @@ workflows. Generic SaaS analogies fail in this domain.
 
 **When NOT to use:**
 - Pure SaaS-vs-SaaS competitor analysis (no PSF dynamics involved)
-- Geotechnical engineering theory questions (use Graeme)
+- Geotechnical engineering theory questions (use the Domain Expert)
 
 ## Mandatory Notebook Query
 

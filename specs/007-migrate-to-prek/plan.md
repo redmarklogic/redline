@@ -1,6 +1,6 @@
 # Implementation Plan: Migrate from pre-commit to prek
 
-**Branch**: `feature/token-optimisation` | **Date**: 2026-05-27 | **Spec**: [spec.md](spec.md)
+**Branch**: `feature/migrate-to-prek` | **Date**: 2026-05-27 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `specs/007-migrate-to-prek/spec.md`
 

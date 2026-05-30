@@ -1,0 +1,1 @@
+../../.specify/extensions/shaping-gate/.specify-dev/agent-commands/copilot/speckit.shaping-gate.check.agent.md

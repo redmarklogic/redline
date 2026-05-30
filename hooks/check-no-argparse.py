@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid argparse usage in project source code.
+"""Git hook: forbid argparse usage in project source code.
 
 AGENTS.md (General Style) mandates that project scripts are configured via
 environment variables or constants, not CLI argument parsers. argparse is a

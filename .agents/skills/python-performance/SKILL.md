@@ -122,7 +122,7 @@ Measure-Command { python <script.py> } | Select-Object TotalSeconds
 Confirm the speedup is meaningful relative to the baseline. Then run:
 
 ```powershell
-uv run pre-commit run <hook-id>
+uv run prek run <hook-id>
 uv run pytest tests/
 ```
 

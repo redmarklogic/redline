@@ -38,7 +38,7 @@ caught at pre-commit time and in CI.
 | `domain` | `src/rl/domain/` | Core business logic: entities, value objects, aggregates, domain events | Nothing within `src/rl/` |
 
 Layers not listed here (`adapters/`, `api/`, `web/`) **do not exist yet**. They are
-described in architecture docs as future intent. Do not create them without Peter's approval.
+described in architecture docs as future intent. Do not create them without the Principal Engineer's approval.
 
 ### Machine enforcement
 
@@ -55,7 +55,7 @@ exhaustive = true   # no other top-level packages are permitted
 
 `exhaustive = true` means the linter will **fail** if any package other than `functions`,
 `schemas`, or `domain` appears directly under `src/rl/`. Adding a new top-level package
-is an architectural decision — escalate to Peter, who updates both the architecture docs
+is an architectural decision — escalate to the Principal Engineer, who updates both the architecture docs
 and the linter config.
 
 ### Prohibited imports (enforced)
@@ -72,7 +72,7 @@ Violations fail the `lint-imports` pre-commit hook. Do not suppress this hook.
 `scripts/` sits outside `src/rl/` and is the thin orchestration layer. Scripts wire
 layers together — they may import from any layer. Scripts must not contain business logic.
 
-### When to escalate to Peter
+### When to escalate to the Principal Engineer
 
 - Adding any new top-level package under `src/rl/` (e.g., `services/`, `adapters/`)
 - Moving code between layers

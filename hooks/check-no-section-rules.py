@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid section-rule comment separator lines in Python code.
+"""Git hook: forbid section-rule comment separator lines in Python code.
 
 AGENTS.md (General Style) explicitly forbids section separator comment lines
 such as:

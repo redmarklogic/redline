@@ -49,7 +49,7 @@ Only `Standards` has extra engineering columns.
 **Rules:**
 - Never leave `status` blank. Use `needs_review` when currentness is unknown.
 - Never default to `current` unless confirmed.
-- When `status = superseded`, populate `superseded_by` if known; flag to Graeme if unknown.
+- When `status = superseded`, populate `superseded_by` if known; flag to the Domain Expert if unknown.
 - Non-standard engineering books leave all five columns blank.
 
 ---

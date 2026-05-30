@@ -1,0 +1,1 @@
+../../../.specify/extensions/static-checks/.specify-dev/agent-commands/codex/speckit-static-checks-run/SKILL.md

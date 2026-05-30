@@ -30,11 +30,12 @@ description: >
 | **Custom Agent** | `.github/agents/*.agent.md` | Manual (agent picker) | Via hooks only | VS Code + GitHub |
 | **Skill** | `.agents/skills/<name>/SKILL.md` | Auto (relevance) or `/slash` | Yes (linked scripts) | Open standard — VS Code, CLI, cloud |
 | **VS Code Hook** | `.github/hooks/*.json` | Automatic (lifecycle event) | Yes — shell command | VS Code + Claude Code + CLI |
+| **Spec-Kit Extension** | `.specify/extensions/<id>/` | Automatic (spec-kit lifecycle) | Yes — commands + hooks | Spec-kit workflow only |
 | **Plugin** | directory + `plugin.json` | Installed | Yes (bundles above) | Cross-tool |
 
 ### VS Code Hooks vs git pre-commit hooks
 
-These are different systems. A common confusion documented in the RED phase baseline.
+These are different systems.
 
 | | VS Code Hook | git pre-commit hook |
 |---|---|---|
@@ -92,6 +93,11 @@ Events: `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`,
 
 **Key test**: Is it a *procedure* (how to do X) rather than a *rule* (do/don't)? Does it need more than text? → Skill.
 
+**Cross-check**: If this procedure fires at a specific spec-kit lifecycle point
+(before/after specify, plan, tasks, implement, etc.), also evaluate step 6
+(Spec-Kit Extension) before deciding. A procedure that maps to a lifecycle hook
+may be better served as an extension than a standalone skill.
+
 ### 5. Is this a one-off task invoked manually, with no scripts and no persistent persona?
 → **Prompt File** (`.github/prompts/*.prompt.md`)
 
@@ -100,7 +106,46 @@ Events: `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`,
 
 **Key test**: Would you invoke it exactly once per task with no cross-tool portability? → Prompt File.
 
-### 6. Are you packaging multiple of the above for distribution?
+### 6. Does this fire at a specific spec-kit workflow lifecycle point?
+→ **Spec-Kit Extension** (`.specify/extensions/<id>/`)
+
+Spec-kit hooks: `before/after_specify`, `before/after_clarify`, `before/after_plan`,
+`before/after_tasks`, `before/after_analyze`, `before/after_implement`,
+`before/after_checklist`, `before/after_constitution`, `before/after_taskstoissues`.
+
+- "Run static checks after every implement phase" → `after_implement` hook
+- "Verify a shaped Pitch exists before specify starts" → `before_specify` hook
+- "Cross-reference spec terms against a glossary after spec is written" → `after_specify` hook
+- "Trigger code review after implementation" → `after_implement` hook
+
+**Key tests (all three must be YES):**
+
+1. **Lifecycle trigger**: Does this fire at a specific moment in the
+   specify → plan → tasks → implement pipeline? (Not "broadly during coding.")
+2. **Structural enforcement > convention**: Does the skill's own language say
+   "MUST", "Iron Law", "NO X WITHOUT Y" — demanding enforcement that a
+   convention-loaded skill cannot guarantee?
+3. **Forgetting = quality failure**: If an agent forgets to load this skill at the
+   right moment, does the quality gate silently disappear?
+
+If all three are YES → spec-kit extension. If the trigger is broad ("all Python files")
+rather than lifecycle-specific ("after implement completes") → stays a skill or instruction.
+
+See `procedures/speckit-extension-triage.md` for the full evaluation procedure.
+
+### vs. VS Code Hooks
+
+| | VS Code Hook | Spec-Kit Extension Hook |
+|---|---|---|
+| **Triggers** | Agent session events (SessionStart, PostToolUse, Stop) | Spec-kit workflow events (before_specify, after_implement) |
+| **Scope** | Every agent session, any file edit | Only during spec-kit workflow execution |
+| **File** | `.github/hooks/*.json` | `.specify/extensions/<id>/extension.yml` |
+| **Use for** | "Run X after every agent edit" | "Run X after spec-kit implement completes" |
+
+When someone says "run X after every file edit" → **VS Code Hook** (PostToolUse).
+When someone says "run X after spec-kit implementation" → **Spec-Kit Extension** (after_implement).
+
+### 7. Are you packaging multiple of the above for distribution?
 → **Plugin** (`plugin.json` bundle)
 
 ---
@@ -134,6 +179,9 @@ When a request names a mechanism, verify before proceeding. State the correction
 | "add an agent to scaffold a component" | Single task, no persona or scripts | **Prompt File** |
 | "add a skill for a debugging/ingestion workflow with scripts" | Multi-step, portable, needs scripts | **Skill** (correct) |
 | "add a hook for a step-by-step testing procedure" | Reusable knowledge, no lifecycle trigger | **Skill** |
+| "add a skill to verify code after spec-kit implement" | Spec-kit lifecycle gate | **Spec-Kit Extension** (`after_implement`) |
+| "add a skill that MUST run before spec-kit specify" | Spec-kit lifecycle gate | **Spec-Kit Extension** (`before_specify`) |
+| "add a spec-kit extension for Google-style docstrings" | Passive rule, no lifecycle trigger | **Instruction** |
 
 ---
 
@@ -147,5 +195,6 @@ When a request names a mechanism, verify before proceeding. State the correction
    - **VS Code Hook** → create `.github/hooks/<name>.json` with correct lifecycle event
    - **Custom Agent** → draft in `docs/people/drafts/agents/` (Harriet's draft-first constraint applies)
    - **Skill** → use `skills-create` then `writing-skills`
+   - **Spec-Kit Extension** → use `procedures/speckit-extension-triage.md`, then draft in `docs/people/drafts/skills/`
    - **Prompt File** → create `.github/prompts/*.prompt.md`
    - **Plugin** → `plugin.json` bundle

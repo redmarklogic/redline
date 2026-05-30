@@ -54,7 +54,7 @@ means `docs/` company memory (ADRs, research, strategy, knowledge docs) is fully
 | `related_context` | Graph walk — follows CALLS/IMPORTS edges | When you need callers or dependencies of a found chunk |
 | `record_decision` | Persist an architectural decision to SQLite | After resolving a non-obvious design choice |
 | `session_recall` | Retrieve past decisions by keyword | At session start to reload relevant context |
-| `record_code_area` | Mark which files were worked on | After each work session |
+| `record_code_area` | the Product Manager which files were worked on | After each work session |
 | `index_status` | Check index freshness | Before a file-heavy task |
 | `reindex` | Re-index a file or the full project | After adding a new file |
 | `set_output_compression` | Adjust response verbosity (`off / lite / standard / max`) | When output tokens are the bottleneck |

@@ -25,7 +25,7 @@ These create, modify, or delete resources without explicit user intent:
 | `notebook_create` / `notebook_delete` / `notebook_rename` | Destructive notebook management |
 | `source_delete` / `source_list_drive` / `source_sync_drive` / `source_rename` | Destructive or bulk source management |
 
-> **Exception — `source_add`:** Permitted for Linda only, to ingest new library files into NotebookLM notebooks as part of the library ingestion workflow. All other agents must not call `source_add`.
+> **Exception — `source_add`:** Permitted for the Knowledge Operator only, to ingest new library files into NotebookLM notebooks as part of the library ingestion workflow. All other agents must not call `source_add`.
 | `studio_create` / `studio_status` / `studio_delete` / `studio_revise` | Content generation (audio, video, reports) |
 | `download_artifact` / `export_artifact` | File downloads and exports |
 | `notebook_share_status` / `notebook_share_public` / `notebook_share_invite` / `notebook_share_batch` | Sharing management |

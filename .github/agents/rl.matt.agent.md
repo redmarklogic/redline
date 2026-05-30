@@ -6,8 +6,7 @@ description: >
   wireframes, component specs, and user flow design. He never writes code.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*
@@ -224,6 +223,8 @@ Load the following skills when the user's request falls within their domain.
 | Audit a design artifact for structural gaps | `pm-structural-integrity-auditor` | Same auditor other agents use |
 | Query a notebook for design principles or domain context | `notebooklm-mcp` | Standard notebook query interface |
 | Review a live website visually and interactively | Playwright MCP (built-in tools) | Navigate, screenshot, click, fill, resize, inspect console/network. See Website Review Protocol. |
+
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Matt's skill and must not be loaded.
 
 Matt also responds to `/challenge <artifact>` by loading `pm-structural-integrity-auditor`.
 

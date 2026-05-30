@@ -153,7 +153,7 @@ When adding or refactoring functions in any module:
    the function it was extracted from, not above it.
 3. **Reordering after a refactor:** apply the violation checklist; move functions to
    satisfy caller-above-callee ordering.
-4. Run `uv run pre-commit run -a` to confirm no regressions.
+4. Run `uv run prek run -a` to confirm no regressions.
 
 ---
 

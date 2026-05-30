@@ -1,4 +1,4 @@
-"""Pre-commit hook: verify that hook scripts reference their governing ADR.
+"""Git hook: verify that hook scripts reference their governing ADR.
 
 ADR-011 P6 mandates that every hook script enforcing a principle with a
 corresponding ADR must:

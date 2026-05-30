@@ -55,7 +55,7 @@ Record the starting worksheet row counts and `NEEDS_REVIEW` counts.
 
 For each PDF in the folder, run [add-single-book.md](add-single-book.md). The canonical extraction path is `MetadataExtractionRequest` plus `BookMetadataExtractor.extract_metadata()` from `.agents/tools/library/metadata_extractor.py`.
 
-Do not block the folder on missing OCR/API metadata. Append the physical-file row with the known fields and mark missing metadata with `NEEDS_REVIEW` in `notes`.
+Do not block the folder on missing OCR/API metadata. Append the physical-file row with the known fields and mark missing metadata with `NEEDS_REVIEW` in `notes`. <!-- hook: allow -->
 
 ---
 
@@ -173,14 +173,14 @@ for filename, note in needs_review:
     print(f"  {filename}: {note}")
 ```
 
-**Request permission before browsing any URL.** Route standards currentness decisions to Graeme. After resolving each item, update `status`, update `superseded_by` where relevant, and remove the corresponding `NEEDS_REVIEW` flag. Save after each update.
+**Request permission before browsing any URL.** Route standards currentness decisions to the Domain Expert. After resolving each item, update `status`, update `superseded_by` where relevant, and remove the corresponding `NEEDS_REVIEW` flag. Save after each update.
 
-### Structured Graeme Review Request
+### Structured the Domain Expert Review Request
 
-Before invoking Graeme for standards review, prepare a structured handoff using the following template. Do not send free-text descriptions.
+Before invoking the Domain Expert for standards review, prepare a structured handoff using the following template. Do not send free-text descriptions.
 
 ```markdown
-## Library Review Request for Graeme
+## Library Review Request for the Domain Expert
 
 ### Current State
 - Master rows: <count>
@@ -197,7 +197,7 @@ Before invoking Graeme for standards review, prepare a structured handoff using 
 1. **Safe enrichment already applied:** years filled from filenames (<n>), statuses normalized (<n>). Any corrections needed?
 2. **Duplicates:** <n> rows flagged. Which copy to keep for each group?
 3. **Standards currentness:** <n> standards have `status=needs_review`. Which require official metadata lookup vs. can be resolved from filename/issuer alone?
-4. **Red lines:** Any rows that must NOT be modified without Graeme's explicit approval?
+4. **Red lines:** Any rows that must NOT be modified without the Domain Expert's explicit approval?
 
 ### Expected Response Format
 For each decision point, respond with:

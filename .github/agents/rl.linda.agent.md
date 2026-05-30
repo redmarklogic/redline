@@ -7,8 +7,7 @@ description: >
   judgments — she organises content and routes decisions to domain agents.
 tools:
   - search
-  - codebase
-  - fetch
+  - web/fetch
   - edit
   - agent
   - notebooklm/*
@@ -116,6 +115,8 @@ Framed as outcomes and decisions, not as a task list.
 | `library-management` | Add books to `G:\My Drive\Library`, extract metadata, update `library-index.xlsx`, deduplicate, and verify the workbook |
 | `notebooklm-mcp` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to call `source_add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
 | `redline-research` | Query notebooks and use the register |
+
+**This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Linda's skill and must not be loaded.
 
 ## Notebook Access
 

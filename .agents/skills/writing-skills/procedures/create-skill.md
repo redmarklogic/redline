@@ -41,7 +41,7 @@ Use TodoWrite to track these items for **each** skill.
 
 **RED Phase:**
 - [ ] 3+ pressure scenarios created (time + sunk cost + authority)
-- [ ] Baseline run documented verbatim — no skill loaded
+- [ ] Baseline run completed without skill loaded
 - [ ] Rationalization patterns identified
 
 **GREEN Phase:**

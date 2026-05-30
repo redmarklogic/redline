@@ -106,8 +106,8 @@ the year, chronological survey rounds), use that order instead.
   values are self-interpreting without prose.
 - Annotate contextual reference marks (vertical lines, bands, threshold markers)
   directly on the plot with a short label. Do not rely solely on a title string
-  or figure caption to explain what a reference mark represents. A reader who
-  sees only the rendered image must understand the mark without reading surrounding
+  or figure caption to explain what a reference mark represents. A reader who <!-- hook: allow -->
+  sees only the rendered image must understand the mark without reading surrounding <!-- hook: allow -->
   text.
 
 ## 7. Label Completely and Unambiguously

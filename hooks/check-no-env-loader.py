@@ -1,4 +1,4 @@
-"""Pre-commit hook: forbid custom .env file loaders in project source code.
+"""Git hook: forbid custom .env file loaders in project source code.
 
 AGENTS.md (General Style) mandates that the environment is assumed to be
 correctly configured by the caller (shell, orchestrator, or container).

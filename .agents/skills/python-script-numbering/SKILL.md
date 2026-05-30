@@ -82,7 +82,7 @@ Two pre-commit hooks enforce the naming and documentation conventions:
 
 1. Create the `.py` file in the appropriate subfolder.
 2. Add a numbered or bulleted entry in `src/scripts/README.md`.
-3. Run `uv run pre-commit run scripts-in-readme` to verify.
+3. Run `uv run prek run scripts-in-readme` to verify.
 
 ### Applying to a new codebase
 

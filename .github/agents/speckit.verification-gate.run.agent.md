@@ -1,0 +1,1 @@
+../../.specify/extensions/verification-gate/.specify-dev/agent-commands/copilot/speckit.verification-gate.run.agent.md
