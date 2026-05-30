@@ -102,7 +102,7 @@ hooks = [
     id = "pyproject-fmt",
     name = "pyproject-fmt",
     language = "system",
-    entry = "uvx --python 3.12 --from 'pyproject-fmt==2.15.3' --with 'toml-fmt-common<1.1.0' pyproject-fmt",
+    entry = "uvx --python 3.14 --from 'pyproject-fmt==2.15.3' --with 'toml-fmt-common<1.1.0' pyproject-fmt",
     files = '^pyproject\.toml$',
     priority = 1
   }
@@ -372,6 +372,21 @@ hooks = [
     priority = 0
   },
   {
+    id = "check-mental-model-links",
+    name = "check-mental-model-links",
+    entry = "uv run --frozen --offline hooks/check-mental-model-links.py",
+    args = [
+      "--dirs=.agents/skills",
+      "--dirs=.github/agents",
+      "--dirs=docs",
+      "--dirs=specs"
+    ],
+    language = "system",
+    files = '\.md$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
     id = "sync-layer-to-lock",
     name = "sync-layer-to-lock",
     entry = "uv run --frozen --offline hooks/sync-layer-to-lock.py",
@@ -417,7 +432,32 @@ hooks = [
     language = "system",
     always_run = true,
     pass_filenames = false,
-    priority = 0  }
+    priority = 0  },
+  {
+    id = "check-rtk-in-docs",
+    name = "check-rtk-in-docs",
+    entry = "uv run --frozen --offline hooks/check-rtk-in-docs.py",
+    args = [
+      "--dirs=.agents/skills",
+      "--dirs=.github/instructions",
+      "--dirs=.github/agents",
+      "--dirs=docs",
+      "--dirs=specs"
+    ],
+    language = "system",
+    files = '\.(md|qmd)$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-py-file-location",
+    name = "check-py-file-location",
+    entry = "uv run --frozen --offline hooks/check-py-file-location.py",
+    language = "system",
+    files = '\.py$',
+    pass_filenames = false,
+    priority = 0
+  }
 ]
 
 [[repos]]
@@ -438,7 +478,7 @@ hooks = [
     id = "detect-secrets",
     args = [
       "--baseline",
-      ".secrets.baseline"
+      ".config/secrets.baseline"
     ],
     exclude = "tests/assets/html/",
     priority = 0
