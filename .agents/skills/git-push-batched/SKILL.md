@@ -55,6 +55,8 @@ and ask the user how to proceed before continuing to the next batch.
 | `data/**` | `chore` (data updates) |
 | `hooks/**` | `chore` |
 
+<!-- rtk:skip -->
+```
 # NEVER do this
 git add .
 git commit -m "updates"

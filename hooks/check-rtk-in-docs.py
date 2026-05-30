@@ -71,7 +71,7 @@ def _extract_first_command(line: str) -> str | None:
     return None
 
 
-def _check_file(path: Path) -> list[tuple[int, str, str]]:  # noqa: PLR0912
+def _check_file(path: Path) -> list[tuple[int, str, str]]:  # noqa: PLR0912,PLR0915
     """Return (lineno, command_line, suggestion) for each violation."""
     violations: list[tuple[int, str, str]] = []
     text = _read_text(path)
@@ -80,11 +80,17 @@ def _check_file(path: Path) -> list[tuple[int, str, str]]:  # noqa: PLR0912
 
     lines = text.splitlines()
     in_shell_block = False
+    in_skip_block = False
     skip_next_block = False
 
     for lineno_0, line in enumerate(lines):
         lineno = lineno_0 + 1
         stripped = line.strip()
+
+        if in_skip_block:
+            if _FENCE_CLOSE.match(stripped):
+                in_skip_block = False
+            continue
 
         if not in_shell_block:
             if stripped == _SUPPRESSION:
@@ -93,17 +99,23 @@ def _check_file(path: Path) -> list[tuple[int, str, str]]:  # noqa: PLR0912
 
             if _NON_SHELL_LANG.match(stripped):
                 # Explicitly non-shell block; skip entirely
+                in_skip_block = True
                 skip_next_block = False
                 continue
 
             if _FENCE_OPEN.match(stripped):
                 if skip_next_block:
-                    # Skip this entire block
-                    in_shell_block = False
-                    # Find closing fence
-                    for rest_idx in range(lineno_0 + 1, len(lines)):
-                        if _FENCE_CLOSE.match(lines[rest_idx].strip()):
-                            break
+                    in_skip_block = True
+                    skip_next_block = False
+                    continue
+                in_shell_block = True
+                skip_next_block = False
+                continue
+
+            # Untagged code block (``` with no language tag) — treat as shell-eligible
+            if _FENCE_CLOSE.match(stripped):
+                if skip_next_block:
+                    in_skip_block = True
                     skip_next_block = False
                     continue
                 in_shell_block = True

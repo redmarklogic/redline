@@ -265,6 +265,7 @@ changes the project's architectural structure. This catches drift at design-time
 
 ## Domain Impact
 
+```
 **Modularity assessment**: [New top-level package / subpackage of existing -- state
 which signals from the decision matrix drove the choice]
 **New packages**: [None / list with target import-linter contract]
