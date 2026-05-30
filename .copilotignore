@@ -1,23 +1,19 @@
-# All dot-prefixed folders (tooling, caches, runtime state)
-.*/
-
-# All underscore-prefixed folders
-_*/
-
-# Any folder containing _cache in its name, at any depth
-**/*_cache*/
-
-# Re-include critical agent and config folders
-!.agents/
-!.github/
-!.specify/
-
-# Dot-prefixed files not covered by the folder rule
+# Cache and tooling artifacts
+.venv/
+.git/
+.ruff_cache/
+.pytest_cache/
+.import_linter_cache/
 .coverage
-.secrets.baseline
+.playwright-mcp/
 
 # Lockfiles (thousands of lines, zero signal)
 uv.lock
 
-# Generated output
-output/
+# Generated output data
+output/*.json
+output/*.csv
+output/*.ps1
+
+# Secrets baseline
+.secrets.baseline
