@@ -220,14 +220,63 @@ These overrides live in `.agents/skills/` (Redline's custom skills layer) and ta
 
 ---
 
-## 5. Open Questions for Brainstorm Session
+## 5. Decisions Log
 
-1. **Brainstorming suppression**: Should `brainstorming` be fully disabled, redirected to warm up `speckit.specify`, or kept as an optional pre-step for complex ideation before any specifying begins?
+| # | Question | Decision | Status |
+|---|---|---|---|
+| Q1 | Should `brainstorming` be suppressed, redirected, or kept? | **Keep as optional pre-step.** `brainstorming` has unique value for complex ideation and mockup creation not covered by `speckit.specify`. It is not a substitute for `speckit.specify`; it feeds into it. Trigger condition: agent may invoke `brainstorming` before `speckit.specify` only when the user's intent is exploratory or visual. | Decided |
+| Q2 | Worktree strategy: Spec-Kit branch vs. Superpowers worktree isolation? | **Suppress `using-git-worktrees` as a default flow.** Spec-Kit owns branch creation; `using-git-worktrees` is opt-in only for explicit multi-feature parallelism, which is not the default state. Isolation value does not justify the overhead at this team size. The operative rule: `using-git-worktrees` must not fire automatically when Spec-Kit is active; redirect to the Spec-Kit branch instead. _(Peter)_ | Decided |
+| Q3 | `receiving-code-review` gap: acceptable or needs a Spec-Kit extension? | **No Spec-Kit extension. The gap is a correct scope boundary.** `receiving-code-review` stays as a pure Superpowers skill. Spec-Kit's pipeline ends when the PR is opened; "reviewer responded" is not a pipeline phase and has no Spec-Kit hook point. Adding it as an extension would conflate specification management with developer workflow. _(Peter)_ | Decided |
+| Q4 | Constitution vs. `AGENTS.md` drift | **Partial migration only — do not wholesale move governance to `speckit.constitution`.** Engineering-specific quality gates (TDD gates, static check gates) can move to `speckit.constitution`. General agent governance principles that apply to all agents must stay in `AGENTS.md` — narrowing to engineering scope would break routing for non-engineering agents and conflict with ADR-001 (single source of truth). _(Q4 original decision revised in light of Harriet's assessment)_ | Decided |
+| Q5 | Bridge implementation: Spec-Kit extension or Superpowers skill override? | **Do not implement the bridge extension.** The existing `AGENTS.md` instruction ("never invoke `speckit.implement` directly") combined with the `.specify/templates/overrides/implement.md` template override already achieves the same result with higher visibility and zero vendor-upgrade risk. A bridge extension adds a hidden layer that will not survive `specify upgrade` without manual re-registration. _(Q5 original decision reversed in light of Harriet's assessment)_ | Decided |
 
-2. **Worktree strategy**: Spec-Kit branches live inside the main working tree. Superpowers worktrees isolate work in separate directories. Do we want that isolation, and if so, how do we reconcile it with Spec-Kit's `specs/NNN/` directory assumption?
+---
 
-3. **Receiving-code-review gap**: Spec-Kit has no equivalent for `receiving-code-review`. Is this acceptable (out of Spec-Kit's scope), or should it be added as an extension?
+## 6. Harriet's Assessment (People & Agent Development)
 
-4. **Constitution vs. AGENTS.md**: Spec-Kit's `speckit.constitution` produces a `memory/constitution.md`; Redline's `AGENTS.md` already encodes many of the same principles. How do we prevent dual governance documents from drifting apart?
+_Assessment of the problem diagnostic and proposed approach. Harriet is Head of People & Agent Development._
 
-5. **Extension vs. skill for the bridge**: Should the Superpowers execution bridge be implemented as a Spec-Kit extension (modifying `speckit.implement`) or as a Superpowers skill override (modifying `subagent-driven-development` input source)? The answer depends on which framework "owns" the execution phase contract.
+### Pre-Assessment: Factual Corrections
+
+- `writing-plans` and `executing-plans` are listed as Superpowers skills to be suppressed. **Neither exists in this repo.** The conflict analysis around "Planning / Task Decomposition" and the suppression clause are based on phantom skills. If they exist upstream in obra/superpowers but were never adopted by Redline, they require no suppression.
+- The "Agentic Execution (High)" conflict is **already resolved**. `AGENTS.md` contains an explicit override: _"Never invoke `/speckit.implement` directly. Always use Kabilan."_ `.specify/templates/overrides/implement.md` enforces this at the template level. This should be reclassified as Resolved/Monitored.
+
+### Diagnostic Quality
+
+| Area | Verdict |
+|---|---|
+| Ideation & Discovery (High) | **Overstated.** The `brainstorming` SKILL.md already documents the handoff to Spec-Kit in its own Common Mistakes section. This is a sequencing convention, not a live source-of-truth conflict. Lower to Medium or Resolved. |
+| Agentic Execution (High) | **Already resolved** — AGENTS.md + implement.md override already enforce the partition. Reclassify as Resolved/Monitored. |
+| Version Control (Medium) | **Framing slightly wrong.** A worktree runs _on_ a Spec-Kit branch; these are complementary mechanics, not dual branches. The real issue is sequencing (who creates the branch first). Reclassify as Low. |
+| Governance gap | **Correctly identified.** `speckit.constitution` fills a real gap. |
+| Missing gap | **Undiagnosed: spec-kit phase ownership.** The partition assigns Spec-Kit to the "artifact layer" but does not specify which agent invokes each phase. Who runs `speckit.specify` — Mark, Peter, or Kabilan? Who maintains `speckit.constitution`? Not addressed by this document. |
+
+### Proposed Partition
+
+Directionally correct and consistent with current `AGENTS.md` routing. One structural risk: **the `redline-superpowers-bridge` extension** (since withdrawn) would have added a hidden layer invisible to new sessions, vulnerable to `specify upgrade`, and duplicating an enforcement already in place.
+
+### Skill Coverage After Reconciliation
+
+No real agent capability gaps. `systematic-debugging` is Superpowers-only in the frameworks comparison, but Kabilan already has it — this is a frameworks gap, not an agent capability gap.
+
+**Real undocumented gap:** spec-kit phase ownership is not reflected in the skills taxonomy. After reconciliation, `docs/people/skills-taxonomy.md` must be updated to add a "Framework Integration" category mapping which framework owns which domain.
+
+### Agent Confusion Risk
+
+**High if the bridge extension is implemented; low if AGENTS.md + template override remain the single enforcement point.**
+
+Recommended mitigations:
+
+1. Abandon the bridge extension (done — Q5 reversed).
+2. Add a "Framework Integration" section to Kabilan's JD explicitly stating: Spec-Kit owns artifact phases (specify through constitution); `subagent-driven-development` is the execution engine for `tasks.md`; do not invoke `speckit.implement` directly.
+3. Update `docs/people/skills-taxonomy.md` with an "Agent Workflow Frameworks" section mapping the artifact/runtime partition.
+4. Do not weaken `brainstorming`'s HARD-GATE language — keep the handoff to `speckit.specify` mandatory, not optional.
+
+### Summary Verdict
+
+| Assessment Area | Verdict |
+|---|---|
+| Diagnostic quality | Mostly sound. Two misclassifications. Two phantom skills cited. |
+| Proposed partition | Correct partition logic. Bridge extension unnecessary and risky. Governance migration conflates team-wide and engineering-scoped concerns. |
+| Coverage after reconciliation | No real agent capability gaps. Taxonomy update required. Phase-ownership ambiguity unaddressed. |
+| Confusion risk | High if bridge implemented. Low if AGENTS.md + template override remain the single enforcement point. |
