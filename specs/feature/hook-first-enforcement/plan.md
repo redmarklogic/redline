@@ -14,7 +14,7 @@ first). Each phase adds one hook (or extends one existing hook) and wires it int
 
 ## Technical Context
 
-**Language**: Python 3.12
+**Language**: Python 3.14
 **Package manager**: uv
 **Testing**: pytest (TDD workflow per `test-driven-development` skill)
 **Hook location**: `hooks/` (Python scripts, wired into `.pre-commit-config.yaml`)

@@ -22,7 +22,7 @@ applied via the `gh` CLI. The developer's only manual steps are:
 
 ## Technical Context
 
-**Language**: Python 3.12
+**Language**: Python 3.14
 **Package manager**: uv
 **Web framework**: FastAPI + uvicorn
 **Testing**: pytest + httpx + respx (per `python-testing-unit` and `python-testing-api` skills)
@@ -36,7 +36,7 @@ deployment unit with its own dependency footprint and rate of change)
 `azure-data-tables`, `azure-identity`, `azure-keyvault-secrets`, `github-copilot-sdk`
 (public preview, per the architectural analysis)
 **Test deps**: `pytest`, `pytest-asyncio`, `respx`, `pytest-mock`
-**Container base**: `python:3.12-slim` multi-stage with `uv` install
+**Container base**: `python:3.14-slim` multi-stage with `uv` install
 **Cloud**: Azure Container Apps (Consumption), Azure Container Registry (Basic),
 Azure Table Storage, Azure Key Vault, Log Analytics
 **CI/CD**: GitHub Actions with OIDC federated credential (no stored secrets)
@@ -170,8 +170,8 @@ fast-path.
 ### Phase 7 -- Containerization
 
 Multi-stage `Dockerfile`:
-- Stage 1: `python:3.12-slim` + `uv`, install deps to `/opt/venv`
-- Stage 2: `python:3.12-slim` runtime, copy venv, copy source, copy `.github/agents/`,
+- Stage 1: `python:3.14-slim` + `uv`, install deps to `/opt/venv`
+- Stage 2: `python:3.14-slim` runtime, copy venv, copy source, copy `.github/agents/`,
   drop to non-root user, set `read_only_root_filesystem`-compatible paths
 
 Add `.dockerignore`. Local validation: `docker build`, `docker run`, smoke test via
