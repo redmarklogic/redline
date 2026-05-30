@@ -41,7 +41,7 @@ Rank **what to build next** across initiatives, bets, or opportunities at the po
 
 Choose ONE framework per session. Mixing produces incomparable scores.
 
-> Framework definitions: `mental-models/strategic_decisions/rice.md`, `mental-models/strategic_decisions/moscow.md`, `mental-models/strategic_decisions/value-effort.md`, `mental-models/strategic_decisions/kano.md`.
+> Framework definitions: [RICE](../mental-models/strategic_decisions/rice.md), [MoSCoW](../mental-models/strategic_decisions/moscow.md), [Value-Effort](../mental-models/strategic_decisions/value-effort.md), [Kano](../mental-models/strategic_decisions/kano.md).
 
 ## Required Inputs
 

@@ -29,7 +29,7 @@ Apply these rules whenever you add or refactor Python code in `src/`.
 
 ### Core Rules
 
-- **Never** use `from __future__ import annotations`; the codebase targets Python 3.12+ where PEP 604 (`X | Y`) and built-in generics (`list[int]`) are native — no backport shim is needed.
+- **Never** use `from __future__ import annotations`; the codebase targets Python 3.14+ where PEP 604 (`X | Y`) and built-in generics (`list[int]`) are native — no backport shim is needed.
 - Type annotations are mandatory for function/method signatures (parameters and return type).
 - Avoid `Any` unless absolutely necessary; prefer precise types or `TypeAlias`.
 - Prefer narrow, intention-revealing types.
@@ -40,7 +40,7 @@ Apply these rules whenever you add or refactor Python code in `src/`.
 ### Ruff-Driven Typing Rules
 
 - Avoid deprecated `typing` collection aliases like `typing.Dict` and `typing.List`; use built-in generics.
-- Prefer Python 3.12 type parameters over `Generic[...]` base classes when writing generic code.
+- Prefer Python 3.14 type parameters over `Generic[...]` base classes when writing generic code.
 
 ### Third-Party API Typing
 
@@ -105,7 +105,7 @@ class Resource:
 
 ```
 
-### Good Example (Python 3.12 type parameters)
+### Good Example (Python 3.14 type parameters)
 
 ```python
 class Box[T]:

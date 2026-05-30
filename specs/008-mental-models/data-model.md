@@ -6,7 +6,7 @@
 
 ## Entity 1 — Mental Model File
 
-**Path pattern**: `.agents/skills/mental-models/<category>/<slug>.md`
+**Path pattern**: `.agents/skills/mental-models/<category>/<slug>.md` <!-- mental-model-link: allow -->
 
 **Required sections** (in this order):
 
@@ -30,7 +30,7 @@
 
 ## Entity 2 — SKILL.md Catalog
 
-**Path**: `.agents/skills/mental-models/SKILL.md`
+**Path**: `.agents/skills/mental-models/SKILL.md` <!-- mental-model-link: allow -->
 
 **Required frontmatter**:
 ```yaml

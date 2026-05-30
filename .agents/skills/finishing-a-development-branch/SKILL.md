@@ -52,6 +52,7 @@ Stop. Don't proceed to Step 2.
 
 ### Step 2: Determine Base Branch
 
+<!-- rtk:skip -->
 ```bash
 # Try common base branches
 git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
@@ -82,19 +83,19 @@ Which option?
 
 ```bash
 # Switch to base branch
-git checkout <base-branch>
+rtk git checkout <base-branch>
 
 # Pull latest
-git pull
+rtk git pull
 
 # Merge feature branch
-git merge <feature-branch>
+rtk git merge <feature-branch>
 
 # Verify tests on merged result
 <test command>
 
 # If tests pass
-git branch -d <feature-branch>
+rtk git branch -d <feature-branch>
 ```
 
 Then: Cleanup worktree (Step 5)
@@ -103,7 +104,7 @@ Then: Cleanup worktree (Step 5)
 
 ```bash
 # Push branch
-git push -u origin <feature-branch>
+rtk git push -u origin <feature-branch>
 
 # Create PR
 gh pr create --title "<title>" --body "$(cat <<'EOF'
@@ -140,8 +141,8 @@ Wait for exact confirmation.
 
 If confirmed:
 ```bash
-git checkout <base-branch>
-git branch -D <feature-branch>
+rtk git checkout <base-branch>
+rtk git branch -D <feature-branch>
 ```
 
 Then: Cleanup worktree (Step 5)
@@ -151,13 +152,14 @@ Then: Cleanup worktree (Step 5)
 **For Options 1, 2, 4:**
 
 Check if in worktree:
+<!-- rtk:skip -->
 ```bash
 git worktree list | grep $(git branch --show-current)
 ```
 
 If yes:
 ```bash
-git worktree remove <worktree-path>
+rtk git worktree remove <worktree-path>
 ```
 
 **For Option 3:** Keep worktree.

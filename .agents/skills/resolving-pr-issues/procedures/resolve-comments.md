@@ -15,7 +15,7 @@ gh api repos/<owner>/<repo>/pulls/<number>/reviews
 If the GitHub API returns 404 (private repo / limited token), fall back to local diff:
 
 ```powershell
-git diff origin/HEAD..HEAD --stat
+rtk git diff origin/HEAD..HEAD --stat
 ```
 
 ---
@@ -78,7 +78,7 @@ If either fails: fix and re-run before pushing. Do not push a failing local gate
 ## Step 9 — Commit + push and request PTAL
 
 ```powershell
-git push origin <branch>
+rtk git push origin <branch>
 gh pr comment <number> --body "Addressed <N> comments. Please take another look — PTAL."
 ```
 

@@ -28,14 +28,23 @@ means `docs/` company memory (ADRs, research, strategy, knowledge docs) is fully
 
 ## When to Use
 
-**Use when:**
-- About to call `read_file` just to understand a pattern or find a function (code)
-- About to search across `docs/` company memory to discover relevant strategy, ADRs, research, or knowledge docs before producing an artifact
-- Starting a new session on multi-phase work (reload prior decisions via `session_recall`)
-- Creating a new file that subsequent queries should discover (call `reindex`)
+**Decision tree — follow before calling `read_file`:**
+
+1. **Am I discovering or exploring?** (finding a function, pattern, or doc I haven't read yet)
+   → Use `context_search`. Do NOT open files to browse.
+
+2. **Do I know the exact file and need its full content for editing?**
+   → Use `read_file` directly.
+
+3. **Do I need a specific function or section from a known file?**
+   → Use `context_search` to locate it, then `expand_chunk` for the full body.
+
+**Additional triggers:**
+- Starting a new session on multi-phase work → `session_recall` to reload prior decisions
+- Just created a new file → `reindex` immediately
+- Searching `docs/` company memory (ADRs, research, strategy, knowledge) → `context_search`
 
 **Do not use when:**
-- You already know the exact file and need its full content — use `read_file` directly
 - Compressing terminal output — use `rtk` instead
 - Querying external knowledge (ebooks, PDFs, standards not authored by us) — use NotebookLM via `redline-research`
 
@@ -85,6 +94,7 @@ reindex hooks/check-no-argparse.py
 |---|---|
 | `read_file` to understand a pattern | Use `context_search` first; fall back to `expand_chunk` only for the full body |
 | Reading every `docs/research/` file to find relevant context | Use `context_search` across docs/ instead |
+| Using `grep_search` for semantic queries | Use `context_search` which combines vector + BM25; reserve `grep_search` for exact literal matches only |
 | Using `related_context` on Markdown docs | It follows CALLS/IMPORTS edges — code only; skip for docs |
 | Querying NotebookLM for company-authored `docs/` content | NotebookLM is for external knowledge (ebooks, PDFs, standards); use CCE for `docs/` |
 | No `record_decision` after phase 1 | Record the canonical pattern before ending the phase |
@@ -94,7 +104,7 @@ reindex hooks/check-no-argparse.py
 ## Installation
 
 ```bash
-uv tool install "code-context-engine[local]"
+rtk uv tool install "code-context-engine[local]"
 cce init --agent copilot   # or: claude | all
 # Restart editor after init. Index builds automatically.
 ```

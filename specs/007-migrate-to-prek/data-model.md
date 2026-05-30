@@ -177,7 +177,7 @@ Removed after `prek.toml` is verified.
 
 Generated via:
 ```powershell
-uv run prek util yaml-to-toml --output prek.toml
+rtk uv run prek util yaml-to-toml --output prek.toml
 ```
 
 Post-conversion review checklist:

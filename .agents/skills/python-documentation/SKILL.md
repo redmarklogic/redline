@@ -102,7 +102,7 @@ def fetch_smalltable_rows(
 
 ## Type Hint Integration
 
-Since the codebase uses Python 3.12+ with type hints, documentation should obey the following rules to avoid redundancy:
+Since the codebase uses Python 3.14+ with type hints, documentation should obey the following rules to avoid redundancy:
 
 - **Do not** include type information in the docstring (args or returns) if it is already present in the function signature.
 - **Do** describe the _purpose_ of the argument or return value.

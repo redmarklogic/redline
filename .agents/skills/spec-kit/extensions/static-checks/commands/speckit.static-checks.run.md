@@ -7,7 +7,7 @@ This hook fires at the end of the `implement` workflow phase.
 Load and apply the `python-static-checks` skill. Run:
 
 ```bash
-uv run prek run -a
+rtk uv run prek run -a
 ```
 
 Fix **all** errors and warnings before claiming the implement phase complete.

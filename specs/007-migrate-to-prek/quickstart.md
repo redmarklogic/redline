@@ -7,13 +7,13 @@ After migration, `prek` is the sole git hook runner for this project.
 
 ```powershell
 # 1. Install dependencies
-uv sync
+rtk uv sync
 
 # 2. Install git hooks
-uv run prek install
+rtk uv run prek install
 
 # 3. Verify all hooks pass
-uv run prek run --all-files
+rtk uv run prek run --all-files
 ```
 
 That's it. Hooks will now fire automatically on every `git commit`.

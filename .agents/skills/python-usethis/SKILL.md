@@ -107,7 +107,7 @@ any file.
 
 ```powershell
 uvx usethis tool pyproject-fmt
-uv run pyproject-fmt pyproject.toml   # normalize existing file
+rtk uv run pyproject-fmt pyproject.toml   # normalize existing file
 ```
 
 ### Remove deptry

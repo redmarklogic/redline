@@ -51,7 +51,7 @@ specify version
 If `specify` is not found:
 
 ```powershell
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+rtk uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
 ### 2. Project init
@@ -108,7 +108,7 @@ This decision affects:
 When the user asks to upgrade spec-kit:
 
 ```powershell
-uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
+rtk uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
 specify init --here --ai copilot --script ps --force --no-git
 ```
 
@@ -123,7 +123,7 @@ predecessors before the next one is written (see Incremental Analysis below).
 | Step | Command       | Human Input                             | Automated by Preset                                    |
 | ---- | ------------- | --------------------------------------- | ------------------------------------------------------ |
 | 0    | reconcile     | None (automated)                        | Source document reconciliation (see `speckit.source-reconciliation.run`) |
-| 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.12, layout from architecture.yml, TDD, single-dev |
+| 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.14, layout from architecture.yml, TDD, single-dev |
 | 2    | specify       | Feature description (chat or .md file)  | RICE scoring for scenario prioritisation                |
 | 3    | clarify       | Answers to ambiguity questions (if any) | Triggers only if spec has NEEDS CLARIFICATION markers   |
 | 4    | plan          | Minimal -- preset fills tech context    | Tech context, MoSCoW, Domain Impact section             |
@@ -207,7 +207,7 @@ than "create all models, then all services, then all endpoints."
 
 The plan template pre-fills these values so the agent does not need to ask:
 
-- **Language**: Python 3.12
+- **Language**: Python 3.14
 - **Package manager**: uv
 - **Testing**: pytest (TDD workflow per `test-driven-development` skill)
 - **Project layout**: Read from `.specify/architecture.yml` (`monorepo` or `single-package`)

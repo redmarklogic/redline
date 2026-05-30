@@ -11,6 +11,7 @@ applyTo: "**"
 
 Always prefix shell commands with `rtk`:
 
+<!-- rtk:skip -->
 ```bash
 # Instead of:              Use:
 git status                 rtk git status

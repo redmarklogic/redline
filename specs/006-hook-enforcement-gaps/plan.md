@@ -16,7 +16,7 @@ Close 10 pre-commit enforcement gaps identified against `AGENTS.md` and `.agents
 
 | Field | Value |
 |-------|-------|
-| **Language** | Python 3.12 |
+| **Language** | Python 3.14 |
 | **Package manager** | uv |
 | **Testing** | pytest (TDD — `test-driven-development` skill) |
 | **Architecture** | Standalone scripts in `hooks/` — no dependency on `src/rl/` |
@@ -398,8 +398,8 @@ rtk ruff check hooks/check-hook-adr-reference.py
 
 **Setup step** (before writing tests — run once on clean repository):
 ```
-uv run detect-secrets scan > .secrets.baseline
-git add .secrets.baseline
+rtk uv run detect-secrets scan > .secrets.baseline
+rtk git add .secrets.baseline
 ```
 
 **TDD approach**: Write `tests/hooks/test_detect_secrets.py` first.

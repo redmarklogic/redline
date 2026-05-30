@@ -130,7 +130,7 @@ skill's `SKILL.md` under a "Git hook enforcement" section.
 ### 4. Test the hook
 
 ```powershell
-uv run prek run <hook-id> --all-files
+rtk uv run prek run <hook-id> --all-files
 ```
 
 Verify it passes on a clean tree and fails when the violation is present.
@@ -138,7 +138,7 @@ Verify it passes on a clean tree and fails when the violation is present.
 ### 5. Lint the hook
 
 ```powershell
-uv run ruff check tasks/hooks/<hook_name>.py
+rtk uv run ruff check tasks/hooks/<hook_name>.py
 ```
 
 ## Examples

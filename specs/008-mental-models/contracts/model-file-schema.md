@@ -7,7 +7,7 @@
 
 ## Required sections
 
-Every file at `.agents/skills/mental-models/<category>/<slug>.md` must contain
+Every file at `.agents/skills/mental-models/<category>/<slug>.md` must contain <!-- mental-model-link: allow -->
 these six H2 headings in this exact order:
 
 ```

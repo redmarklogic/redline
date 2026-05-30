@@ -72,7 +72,7 @@ nlm --version
 If not installed:
 
 ```powershell
-uv tool install notebooklm-mcp-cli
+rtk uv tool install notebooklm-mcp-cli
 ```
 
 This installs two executables: `nlm` (CLI) and `notebooklm-mcp` (MCP server).

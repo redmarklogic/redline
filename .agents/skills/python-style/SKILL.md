@@ -76,11 +76,6 @@ via `repo_`, banned patterns), use the `python-paths` skill.
 2. Ensure Ruff and formatting rules are satisfied (see linting skill).
 3. Keep dependency changes via `uv add` and `uv lock`.
 
-### Quarto Table Rendering
-
-For conventions on rendering tabular output in `.qmd` documents (`great_tables.GT`,
-cross-format helpers, percentage formatting), see `.agents/skills/qmd-tables/SKILL.md`.
-
 ## Refactoring & Maintenance
 
 - **No default backward compatibility**: Unless explicitly instructed, do not maintain backward compatibility with external systems (APIs, legacy files, databases, or external consumers) during refactors or renames.

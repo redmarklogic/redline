@@ -4,7 +4,7 @@
 
 **Created**: 2026-05-27
 
-**Status**: Draft
+**Status**: Delivered
 
 **Input**: Design and implement a `mental-models` skill for the Redline agent system — a reusable, agent-agnostic library of mental models (thinking frameworks) that advisory and expert agents can reference.
 
@@ -18,12 +18,12 @@ An advisory agent (Ron, Mark, Graeme, Peter, or Matt) is reasoning through a pro
 
 **Why this priority**: This is the primary consumer workflow. Without retrievable model files there is no skill.
 
-**Independent Test**: Load `mental-models/general_thinking/circle-of-competence.md` in isolation and verify it contains all required sections (What it is / Core principle / When to invoke / How to apply / Anti-patterns / Source). No other files required.
+**Independent Test**: Load `mental-models/general_thinking/circle-of-competence.md` in isolation and verify it contains all required sections (What it is / Core principle / When to invoke / How to apply / Anti-patterns / Source). No other files required. <!-- mental-model-link: allow -->
 
 **Acceptance Scenarios**:
 
-1. **Given** an agent needs to apply second-order thinking, **When** it references `mental-models/general_thinking/second-order-thinking.md`, **Then** the file exists, is self-contained, and contains all six required sections.
-2. **Given** an agent is performing root cause analysis, **When** it references `mental-models/root_cause_analysis/five-whys.md`, **Then** the file describes the 5-Whys method with application steps and anti-patterns.
+1. **Given** an agent needs to apply second-order thinking, **When** it references `mental-models/general_thinking/second-order-thinking.md`, **Then** the file exists, is self-contained, and contains all six required sections. <!-- mental-model-link: allow -->
+2. **Given** an agent is performing root cause analysis, **When** it references `mental-models/root_cause_analysis/five-whys.md`, **Then** the file describes the 5-Whys method with application steps and anti-patterns. <!-- mental-model-link: allow -->
 3. **Given** any mental model file, **When** read in isolation, **Then** it contains no references to agent names, agent JD files, or other skill files (standalone constraint).
 
 ---
@@ -46,48 +46,60 @@ An advisory agent produces a response. The agent must be able to state (1) which
 
 ### User Story 3 — SKILL.md catalog enables discovery of all available models (Priority: P2)
 
-An agent or developer opens `mental-models/SKILL.md` to discover what models exist, how they are organised, and where each model file lives.
+An agent or developer opens `mental-models/SKILL.md` to discover what models exist, how they are organised, and where each model file lives. <!-- mental-model-link: allow -->
 
 **Why this priority**: Discoverability is necessary for agents to browse and select models without knowing filenames in advance.
 
-**Independent Test**: Read `SKILL.md` alone and verify it lists all 10 model files, their categories, and a one-line description. No other skill files required.
+**Independent Test**: Read `SKILL.md` alone and verify it lists all 36 model files, their categories, and a one-line description. No other skill files required.
 
 **Acceptance Scenarios**:
 
-1. **Given** `mental-models/SKILL.md`, **When** read, **Then** it lists all 10 models grouped by category subfolder with file paths and one-line descriptions.
-2. **Given** `mental-models/SKILL.md`, **When** read, **Then** it contains no agent names, agent JD references, or cross-skill references (bottom-layer constraint).
+1. **Given** `mental-models/SKILL.md`, **When** read, **Then** it lists all 36 models grouped by category subfolder with file paths and one-line descriptions. <!-- mental-model-link: allow -->
+2. **Given** `mental-models/SKILL.md`, **When** read, **Then** it contains no agent names, agent JD references, or cross-skill references (bottom-layer constraint). <!-- mental-model-link: allow -->
 3. **Given** a new model is added to a category subfolder, **When** `SKILL.md` is updated, **Then** the new entry appears in the correct category section.
 
 ---
 
 ### User Story 4 — Agent JDs updated to declare mental model competence (Priority: P2)
 
-The five agent JD files (Ron, Mark, Graeme, Peter, Matt) each gain a `## Mental Models` section declaring four universal models plus one role-specific model, with a role-calibration paragraph.
+The agent JD files (Ron, Mark, Graeme, Peter, Matt, John, Kabilan) reference mental model files inline at the point of use rather than via a dedicated `## Mental Models` section. Each relevant decision, task routing row, or epistemic constraint in the JD links directly to the corresponding model file.
 
 **Why this priority**: Without JD updates agents cannot reference the skill with any specificity; the Accountable Response Protocol cannot be enforced.
 
-**Independent Test**: Update Ron's JD only. Verify it contains the `## Mental Models` section with Circle of Competence, Inversion, Second-Order Thinking, Probabilistic Thinking, and Reversible vs. Irreversible Decisions, plus a calibration paragraph.
+**Independent Test**: Read Ron's JD and verify it contains at least one inline link to a file under `.agents/skills/mental-models/` at the point where the model governs the agent's behaviour.
 
 **Acceptance Scenarios**:
 
-1. **Given** Ron's JD, **When** read, **Then** it contains `## Mental Models` with all 4 universal models + Reversible vs. Irreversible Decisions.
-2. **Given** Matt's JD, **When** read, **Then** it contains `## Mental Models` with all 4 universal models + Third Story.
-3. **Given** any updated JD, **When** its `## Mental Models` section is read, **Then** each model entry links to its corresponding file in `.agents/skills/mental-models/`.
+1. **Given** Ron's JD, **When** read, **Then** it contains inline links to `pre-mortem.md` and `cannibalisation-dynamics.md` at the relevant task-routing rows.
+2. **Given** Matt's JD, **When** read, **Then** it contains an inline link to `nielsens-heuristics.md` in the UI evaluation section.
+3. **Given** any updated JD, **When** read, **Then** each mental-model link resolves to a file under `.agents/skills/mental-models/`.
 
 ---
 
-### User Story 5 — `resolving-pr-issues` skill refactored to reference 5-Whys model (Priority: P3)
+### User Story 5 — Skills refactored to reference mental model files instead of defining models inline (Priority: P3)
 
-The inline 5-Whys description in `resolving-pr-issues/SKILL.md` and `procedures/resolve-comments.md` is stripped and replaced with a pointer to `mental-models/root_cause_analysis/five-whys.md`.
+Six skills that previously embedded mental model definitions inline were refactored to reference the canonical files in `mental-models/`. The scope extended beyond the originally planned `resolving-pr-issues` to cover all skills where inline definitions were found.
 
 **Why this priority**: Reduces duplication and establishes `mental-models` as the canonical source; lower priority than creating the skill itself.
 
-**Independent Test**: After refactoring `resolving-pr-issues/SKILL.md`, verify the inline 5-Whys steps are removed and a reference link to `five-whys.md` is present.
+**Refactored skills**:
+
+| Skill | Models removed inline → now referenced |
+|---|---|
+| `resolving-pr-issues` | `five-whys.md`, `sunk-cost-fallacy.md` |
+| `test-driven-development` | `sunk-cost-fallacy.md`, `technical-debt.md` |
+| `notebooklm-deep-research` | `five-whys.md` |
+| `strategy-pre-mortem` | `pre-mortem.md` |
+| `strategy-psf-domain` | `cannibalisation-dynamics.md` |
+| `pm-prioritization` | `rice.md`, `moscow.md`, `value-effort.md`, `kano.md` |
+
+**Independent Test**: Read `resolving-pr-issues/SKILL.md` and verify it contains no inline 5-Whys steps and includes a link to `mental-models/root_cause_analysis/five-whys.md`. <!-- mental-model-link: allow -->
 
 **Acceptance Scenarios**:
 
-1. **Given** `resolving-pr-issues/SKILL.md`, **When** read after refactoring, **Then** it contains no inline 5-Whys explanation and includes a reference to `mental-models/root_cause_analysis/five-whys.md`.
-2. **Given** `procedures/resolve-comments.md`, **When** read after refactoring, **Then** the inline 5-Whys label is replaced with a link to `five-whys.md`.
+1. **Given** `resolving-pr-issues/SKILL.md`, **When** read, **Then** it contains no inline 5-Whys explanation and links to `mental-models/root_cause_analysis/five-whys.md`. <!-- mental-model-link: allow -->
+2. **Given** `test-driven-development/SKILL.md`, **When** read, **Then** `sunk-cost-fallacy.md` and `technical-debt.md` are referenced, not defined inline.
+3. **Given** `pm-prioritization/SKILL.md`, **When** read, **Then** RICE, MoSCoW, Value-Effort, and Kano are each linked to their respective files under `mental-models/strategic_decisions/`.
 
 ---
 
@@ -111,8 +123,8 @@ The inline 5-Whys description in `resolving-pr-issues/SKILL.md` and `procedures/
 - **FR-005**: Model definitions MUST be sourced from the "Strategy and Mental Models" NotebookLM notebook (ID: c56b0801-40c9-4208-b31f-72ed360da184), which contains *Super Thinking* (Weinberg), *The Great Mental Models Vol. 1* (Parrish), *The Decision Book* (Krogerus), and *The Art of Strategy* (Dixit & Nalebuff).
 - **FR-006**: The five agent JDs (Ron, Mark, Graeme, Peter, Matt) MUST each gain a `## Mental Models` section containing the four universal models (Circle of Competence, Inversion, Second-Order Thinking, Probabilistic Thinking) plus one role-specific model, with a role-calibration paragraph.
 - **FR-007**: Role-specific model assignments MUST be: Ron → Reversible vs. Irreversible Decisions; Mark → Cognitive Biases; Graeme → Black Swan; Peter → OODA Loop; Matt → Third Story.
-- **FR-008**: `resolving-pr-issues/SKILL.md` MUST be refactored to remove any inline 5-Whys description and replace it with a reference link to `mental-models/root_cause_analysis/five-whys.md`.
-- **FR-009**: `procedures/resolve-comments.md` (if it exists and contains an inline 5-Whys label) MUST be updated to reference `mental-models/root_cause_analysis/five-whys.md` instead.
+- **FR-008**: `resolving-pr-issues/SKILL.md` MUST be refactored to remove any inline 5-Whys description and replace it with a reference link to `mental-models/root_cause_analysis/five-whys.md`. <!-- mental-model-link: allow -->
+- **FR-009**: `procedures/resolve-comments.md` (if it exists and contains an inline 5-Whys label) MUST be updated to reference `mental-models/root_cause_analysis/five-whys.md` instead. <!-- mental-model-link: allow -->
 - **FR-010**: The `.specify/feature.json` MUST be updated to reflect `specs/008-mental-models` as the active feature directory.
 
 ### Key Entities

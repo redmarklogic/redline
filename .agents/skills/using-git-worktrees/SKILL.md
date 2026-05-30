@@ -67,6 +67,7 @@ Which would you prefer?
 
 **MUST verify directory is ignored before creating worktree:**
 
+<!-- rtk:skip -->
 ```bash
 # Check if directory is ignored (respects local, global, and system gitignore)
 git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
@@ -107,7 +108,7 @@ case $LOCATION in
 esac
 
 # Create worktree with new branch
-git worktree add "$path" -b "$BRANCH_NAME"
+rtk git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
 
@@ -138,7 +139,7 @@ Run tests to ensure worktree starts clean:
 # Examples - use project-appropriate command
 npm test
 cargo test
-pytest
+rtk pytest
 go test ./...
 ```
 

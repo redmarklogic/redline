@@ -89,7 +89,7 @@ instead.
 ### Running deptry
 
 ```powershell
-uv run deptry src
+rtk uv run deptry src
 ```
 
 deptry also runs automatically as a pre-commit hook (id: `deptry`).

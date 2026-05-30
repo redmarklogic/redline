@@ -23,7 +23,7 @@ description: Perform static code checks
 To perform static checks on the codebase, run:
 
 ```bash
-uv run prek run -a
+rtk uv run prek run -a
 ```
 
 Note that we are interested in both errors and warnings from these tools - we should always fix both.

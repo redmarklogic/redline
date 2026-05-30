@@ -8,7 +8,7 @@
 
 1. **Choose the right category subfolder** from the taxonomy in `data-model.md`. If none fits, add a new subfolder and update `SKILL.md`.
 
-2. **Create the file** at `.agents/skills/mental-models/<category>/<slug>.md` using kebab-case slug.
+2. **Create the file** at `.agents/skills/mental-models/<category>/<slug>.md` using kebab-case slug. <!-- mental-model-link: allow -->
 
 3. **Use the 6-section template**:
 
@@ -62,7 +62,7 @@ Select-String -Path .agents/skills/mental-models/<category>/<slug>.md `
    - The agent's assigned role-specific model (see `data-model.md` assignment table)
    - A calibration paragraph per model using a domain-specific example from that agent's work
 
-3. Link each model to its file: `.agents/skills/mental-models/<category>/<slug>.md`
+3. Link each model to its file: `.agents/skills/mental-models/<category>/<slug>.md` <!-- mental-model-link: allow -->
 
 4. Do **not** copy model definitions into the JD — only the calibration paragraph belongs there.
 

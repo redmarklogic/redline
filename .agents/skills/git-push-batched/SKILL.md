@@ -54,33 +54,57 @@ For general commit hygiene, prek hooks, and push checklist, see the `version-con
   in which case they may be grouped with it.
 - **Docs and skills** always form a separate `docs:` commit.
 
+## Helper Functions
+
+### Get-LocalBranch
+
+Always call this helper to obtain the **local** branch name. Never infer the branch
+from attachment metadata, repository context objects, or any other source — those
+reflect the remote default branch, not the checked-out local branch.
+
+<!-- rtk:skip -->
+```powershell
+function Get-LocalBranch {
+    git branch --show-current
+}
+```
+
+Usage: `$branch = Get-LocalBranch`
+
+---
+
 ## Procedure
 
 ### 0. Check Branch (Hard Stop)
 
+Call the helper to get the actual local branch:
+
 ```powershell
-git branch --show-current
+$branch = Get-LocalBranch   # calls: git branch --show-current
 ```
 
-If the output is `master` or `main`, **stop here**. Do not proceed.
+If `$branch` is `master` or `main`, **stop here**. Do not proceed.
 Tell the developer:
 
 > "You are on `<branch>`, which is a protected branch. I cannot commit or push here.
 > Please check out a feature branch and try again."
+
+**Important**: Do NOT use the branch name from attachment metadata or repository context.
+Those show the remote default branch. Always use `Get-LocalBranch`.
 
 ### 1. Discover Changes
 
 Run the following to get the full picture of dirty files:
 
 ```powershell
-git status --short
-git diff --stat HEAD
+rtk git status --short
+rtk git diff --stat HEAD
 ```
 
 Also run to capture untracked files:
 
 ```powershell
-git ls-files --others --exclude-standard
+rtk git ls-files --others --exclude-standard
 ```
 
 ### 2. Read the Diffs
@@ -125,16 +149,16 @@ For each confirmed batch in order:
 
 ```powershell
 # Stage only the files in this batch
-git add <file1> <file2> ...
+rtk git add <file1> <file2> ...
 
 # Run prek on staged files only
-uv run prek run --files <file1> <file2> ...
+rtk uv run prek run --files <file1> <file2> ...
 
 # If prek auto-fixes files, re-stage them
-git add <file1> <file2> ...
+rtk git add <file1> <file2> ...
 
 # Commit
-git commit -m "<type>(<scope>): <summary>"
+rtk git commit -m "<type>(<scope>): <summary>"
 ```
 
 If prek fails with a blocking error (not an auto-fix), stop, report the error,
@@ -142,13 +166,14 @@ and ask the user how to proceed before continuing to the next batch.
 
 ### 5. Push
 
-Confirm the current branch is not `master` or `main` (Step 0 already checked this,
-but verify again in case something changed mid-session).
+Call `Get-LocalBranch` again to confirm the branch hasn't changed mid-session.
+If it is `master` or `main`, stop and report.
 
 After all batches are committed:
 
 ```powershell
-git push origin <current-branch>
+$branch = Get-LocalBranch
+rtk git push origin $branch
 ```
 
 Report the push output to the user.
@@ -188,6 +213,7 @@ chore: add openpyxl to dependencies
 
 ### Bad — single monolithic commit
 
+<!-- rtk:skip -->
 ```
 # NEVER do this
 git add .

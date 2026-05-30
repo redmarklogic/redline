@@ -94,6 +94,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    **Detection & Creation Logic**:
    - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
 
+<!-- rtk:skip -->
      ```sh
      git rev-parse --git-dir 2>/dev/null
      ```
