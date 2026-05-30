@@ -480,7 +480,7 @@ hooks = [
       "--baseline",
       ".config/secrets.baseline"
     ],
-    exclude = "tests/assets/html/",
+    exclude = "tests/assets/html/|\\.config/secrets\\.baseline",
     priority = 0
   }
 ]

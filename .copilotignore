@@ -16,4 +16,4 @@ output/*.csv
 output/*.ps1
 
 # Secrets baseline
-.secrets.baseline
+.config/secrets.baseline

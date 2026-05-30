@@ -101,7 +101,7 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 
 ## Version and Package Assumptions
 
-- The workspace is Python 3.12-only, so code should not branch on `sys.version_info`, package
+- The workspace is Python 3.14-only, so code should not branch on `sys.version_info`, package
   `__version__`, or similar interpreter/package predicates.
 - Supported Python versions are declared in `pyproject.toml` under `project.requires-python`.
 - Dependencies are declared in `pyproject.toml` and reproduced via the `uv.lock` lockfile.
