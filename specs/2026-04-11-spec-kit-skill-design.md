@@ -45,7 +45,7 @@ templates for the actual work.
 1. **CLI check**: Run `specify version`. If the command is not found:
 
    ```powershell
-   uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+   rtk uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
    ```
 
 2. **Project init**: If `.specify/` does not exist:
@@ -65,7 +65,7 @@ templates for the actual work.
 When the user asks to upgrade spec-kit:
 
 ```powershell
-uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
+rtk uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
 specify init --here --ai copilot --script ps --force --no-git
 ```
 
@@ -84,10 +84,10 @@ and in what order.
 
 | Step | Command        | Human input                              | Automated by preset                                     |
 | ---- | -------------- | ---------------------------------------- | ------------------------------------------------------- |
-| 1    | constitution   | Project principles (first time only)     | Pre-fill: Python 3.12, layered arch, TDD, single-dev    |
+| 1    | constitution   | Project principles (first time only)     | Pre-fill: Python 3.14, layered arch, TDD, single-dev    |
 | 2    | specify        | Feature description (chat or .md file)   | RICE scoring for scenario prioritisation                 |
 | 3    | clarify        | Answers to ambiguity questions (if any)  | Triggers only if spec has NEEDS CLARIFICATION markers    |
-| 4    | plan           | Minimal -- preset fills tech context     | Python 3.12, uv, pytest, layered arch, MoSCoW section   |
+| 4    | plan           | Minimal -- preset fills tech context     | Python 3.14, uv, pytest, layered arch, MoSCoW section   |
 | 5    | tasks          | None                                     | Vertical slice sizing, behaviour-based phases            |
 | 6    | analyze        | None                                     | Read-only consistency check, max 30 findings             |
 | 7    | implement      | None                                     | Execute tasks in order, mark completed                   |
@@ -155,7 +155,7 @@ models, then all services, then all endpoints."
 
 The plan template pre-fills these values:
 
-- **Language**: Python 3.12
+- **Language**: Python 3.14
 - **Package manager**: uv
 - **Testing**: pytest (TDD workflow per `test-driven-development` skill)
 - **Architecture**: Layered (domain -> functions -> scripts)

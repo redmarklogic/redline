@@ -66,7 +66,7 @@ Before pushing, check the size of your diff against the base branch:
 
 ```powershell
 # Check diff size against the default branch (from repo root)
-git diff --stat origin/master
+rtk git diff --stat origin/master
 
 # Count total changed lines (additions + deletions combined)
 (git diff origin/master | Where-Object { $_ -match '^[+\-]' -and $_ -notmatch '^(\+\+\+|---)' } | Measure-Object).Count
@@ -88,9 +88,9 @@ When a task organically exceeds 400 lines, split it into stacked sequential comm
 Run static checks at authoring time, not only at PR review time:
 
 ```powershell
-uv run prek run --all-files   # full hook suite
-uv run ruff check .                 # fast lint pass
-uv run mypy src/                    # type check
+rtk uv run prek run --all-files   # full hook suite
+rtk uv run ruff check .                 # fast lint pass
+rtk uv run mypy src/                    # type check
 ```
 
 Catching issues before the founder review session is better than catching them during it.

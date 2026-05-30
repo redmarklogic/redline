@@ -53,7 +53,7 @@ rtk ruff check hooks/check-no-argparse.py
 ## Call a hook directly (without pre-commit)
 
 ```powershell
-uv run --frozen --offline hooks/check-no-argparse.py --dirs=src --dirs=scripts
+rtk uv run --frozen --offline hooks/check-no-argparse.py --dirs=src --dirs=scripts
 ```
 
 Exit code `0` = clean, `1` = violations found.
@@ -65,8 +65,8 @@ Exit code `0` = clean, `1` = violations found.
 Run once on a clean repository before activating the `detect-secrets` hook:
 
 ```powershell
-uv run detect-secrets scan > .secrets.baseline
-git add .secrets.baseline
+rtk uv run detect-secrets scan > .secrets.baseline
+rtk git add .secrets.baseline
 ```
 
 ---

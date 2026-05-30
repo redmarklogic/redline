@@ -177,8 +177,8 @@ This catches architectural drift at design-time, not at pre-commit-time.
 
 ```powershell
 # Full check (same as pre-commit)
-uv run lint-imports
+rtk uv run lint-imports
 
 # Verbose output (shows import chains)
-uv run lint-imports --verbose
+rtk uv run lint-imports --verbose
 ```

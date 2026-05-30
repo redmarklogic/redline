@@ -175,7 +175,7 @@ from the bot and a structured log entry recording the rejection.
 
 ## Constraints
 
-- **Python 3.12 only** (per `AGENTS.md`).
+- **Python 3.14 only** (per `AGENTS.md`).
 - **No defaults for env vars** (per `AGENTS.md`); fail fast on missing config.
 - **No `argparse`**; configuration is env-driven only.
 - **Read-only repo access** in v1: GitHub PAT scoped to `repo:read`.

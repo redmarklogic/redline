@@ -68,9 +68,9 @@ infrastructure outside) and applied it to skills without verifying the causal me
 | MCPs placed above quality/tooling | Assumed platform adapters are volatile — they are not; they are narrow and stable | MCPs at Layer 3, below quality |
 
 Mental models that would have prevented these errors:
-- **Cargo Cult** (`mental-models/root_cause_analysis/cargo-cult.md`) — reproducing the
+- **Cargo Cult** ([mental-models/root_cause_analysis/cargo-cult.md](../../../.agents/skills/mental-models/root_cause_analysis/cargo-cult.md)) — reproducing the
   form of onion architecture without verifying the causal mechanism
-- **First Principles** (`mental-models/general_thinking/first-principles.md`) — start from
+- **First Principles** ([mental-models/general_thinking/first-principles.md](../../../.agents/skills/mental-models/general_thinking/first-principles.md)) — start from
   observed dependencies, not analogies
 
 ---
@@ -85,7 +85,7 @@ Inversion Principle).
 **Layer 1 — Foundational Registries**: Concepts defined once, referenced everywhere.
 `mental-models` has zero outbound references by design — it is the bedrock. Everything
 above can cite it; it cites nothing. A change here has the largest blast radius in the
-system (Reversible vs Irreversible: `mental-models/strategic_decisions/reversible-vs-irreversible.md`).
+system (Reversible vs Irreversible: [mental-models/strategic_decisions/reversible-vs-irreversible.md](../../../.agents/skills/mental-models/strategic_decisions/reversible-vs-irreversible.md)).
 
 **Layer 2 — Language-Agnostic Standards**: Rules that apply regardless of programming
 language. Placed above foundational registries and below language-specific rules because
@@ -220,7 +220,7 @@ verified when adding any cross-skill reference.
 ### Stability Gradient — the corollary
 
 Changes to lower layers are harder to reverse because the blast radius is larger
-(`mental-models/strategic_decisions/reversible-vs-irreversible.md`). Skills that change
+([mental-models/strategic_decisions/reversible-vs-irreversible.md](../../../.agents/skills/mental-models/strategic_decisions/reversible-vs-irreversible.md)). Skills that change
 frequently as defects are found (implementation patterns, coding guidance) belong in upper
 layers, not lower ones. Platform adapters and standards that rarely change belong near the
 foundation.
@@ -248,7 +248,7 @@ of programming language, it belongs in a lower layer.
 
 Each layer exposes a minimal, stable interface upward. Prefer fewer powerful skills per
 layer over many shallow ones that leak implementation details
-(`mental-models/general_thinking/deep-modules.md`).
+([mental-models/general_thinking/deep-modules.md](../../../.agents/skills/mental-models/general_thinking/deep-modules.md)).
 
 ### Horizontal Independence
 
@@ -272,8 +272,8 @@ When placing a new skill:
 - `hooks/sync-layer-to-lock.py` — derives `layer` field in lock file from taxonomy
 - ADR-001 — single source of truth policy
 - ADR-009 — skill classification and governance registry
-- `mental-models/general_thinking/deep-modules.md`
-- `mental-models/general_thinking/systems-thinking.md`
-- `mental-models/strategic_decisions/reversible-vs-irreversible.md`
-- `mental-models/root_cause_analysis/cargo-cult.md`
-- `mental-models/general_thinking/first-principles.md`
+- [mental-models/general_thinking/deep-modules.md](../../../.agents/skills/mental-models/general_thinking/deep-modules.md)
+- [mental-models/general_thinking/systems-thinking.md](../../../.agents/skills/mental-models/general_thinking/systems-thinking.md)
+- [mental-models/strategic_decisions/reversible-vs-irreversible.md](../../../.agents/skills/mental-models/strategic_decisions/reversible-vs-irreversible.md)
+- [mental-models/root_cause_analysis/cargo-cult.md](../../../.agents/skills/mental-models/root_cause_analysis/cargo-cult.md)
+- [mental-models/general_thinking/first-principles.md](../../../.agents/skills/mental-models/general_thinking/first-principles.md)

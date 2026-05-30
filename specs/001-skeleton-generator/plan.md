@@ -19,7 +19,7 @@ tools.
 
 ## Technical Context
 
-**Language**: Python 3.12
+**Language**: Python 3.14
 **Package manager**: uv
 **Testing**: pytest (TDD workflow per `test-driven-development` skill; conventions per `python-testing-unit` skill)
 **Project layout**: Monorepo (from `.specify/architecture.yml`)

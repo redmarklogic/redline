@@ -1,0 +1,14 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "${env:USERPROFILE}\\.local\\bin;${env:PATH}"
+    },
+    "github.copilot.chat.otel.dbSpanExporter.enabled": true,
+    "chat.tools.compressOutput.enabled": true,
+    "chat.includeReferencedInstructions": true,
+    "github.copilot.chat.agent.backgroundTodoAgent.enabled": true,
+    "chat.hookFilesLocations": {
+        // ".claude/settings.json": false,
+        // ".claude/settings.local.json": false,
+        ".agents/hooks": true,
+    }
+}

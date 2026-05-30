@@ -98,7 +98,7 @@ In `[dependency-groups].dev`:
 #### Task P1.2 — Regenerate `uv.lock`
 
 ```powershell
-uv sync --upgrade-package prek
+rtk uv sync --upgrade-package prek
 ```
 
 Verify `pre-commit` and `pre-commit-update` no longer appear in `uv.lock`.
@@ -106,7 +106,7 @@ Verify `pre-commit` and `pre-commit-update` no longer appear in `uv.lock`.
 #### Task P1.3 — Smoke test
 
 ```powershell
-uv run prek run --all-files
+rtk uv run prek run --all-files
 ```
 
 All hooks must pass (same results as before). Fix any environmental regressions before proceeding.
@@ -214,7 +214,7 @@ Also: `hooks/fix-doc-sync.py` references `"the pre-commit autofix convention"` �
 #### Task P3.1 — Convert YAML config to TOML
 
 ```powershell
-uv run prek util yaml-to-toml --output prek.toml
+rtk uv run prek util yaml-to-toml --output prek.toml
 ```
 
 Review the generated `prek.toml`. Confirm all hooks present. Re-add any operational comments
@@ -229,7 +229,7 @@ Key things to verify in the TOML output:
 #### Task P3.2 — Smoke test with TOML config
 
 ```powershell
-uv run prek run --all-files
+rtk uv run prek run --all-files
 ```
 
 prek prefers `prek.toml` over `.pre-commit-config.yaml` when both exist. Confirm all hooks pass.
@@ -238,7 +238,7 @@ prek prefers `prek.toml` over `.pre-commit-config.yaml` when both exist. Confirm
 
 ```powershell
 Remove-Item ".pre-commit-config.yaml"
-uv run prek run --all-files  # re-confirm with TOML as sole config
+rtk uv run prek run --all-files  # re-confirm with TOML as sole config
 ```
 
 #### Task P3.4 — Update `git-hooks-create/SKILL.md` registration block
@@ -272,11 +272,11 @@ After all three tiers complete, run the following checks. All must pass:
 
 ```powershell
 # 1. pre-commit package absent from environment
-uv run python -c "import pre_commit" 2>&1
-# Expected: ModuleNotFoundError
+  rtk uv run python -c "import pre_commit" 2>&1
+  # Expected: ModuleNotFoundError
 
-# 2. All hooks pass under prek.toml
-uv run prek run --all-files
+  # 2. All hooks pass under prek.toml
+  rtk uv run prek run --all-files
 # Expected: exit 0
 
 # 3. No actionable pre-commit CLI invocations remain in skills/agents/docs
@@ -289,8 +289,7 @@ Test-Path ".pre-commit-config.yaml"
 # Expected: False
 
 # 5. prek.toml valid
-uv run prek validate-config prek.toml
-# Expected: exit 0
+  rtk uv run prek validate-config prek.toml
 
 # 6. Skill directory renamed
 Test-Path ".agents/skills/pre-commit-hooks-create"

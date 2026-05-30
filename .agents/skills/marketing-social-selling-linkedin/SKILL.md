@@ -9,17 +9,6 @@ Source: `Digital Marketing & Social Selling` notebook.
 
 ## Boundary Contract
 
-### Inputs
-- LinkedIn profile to optimise or prospecting campaign to design
-
-### Outputs
-- PIPA profile recommendations, engagement strategy, and targeting criteria
-
-### Out of Scope
-- Content topic selection (`marketing-content-big-5`)
-- SEO strategy (`marketing-product-led-seo`)
-- AI content review (`marketing-ai-content-review`)
-
 ## Core Principle
 
 B2B buyers buy from people they trust before they buy from companies. LinkedIn
@@ -38,45 +27,6 @@ burn them.
 - Comment volume on Redline posts is flat and prospects aren't engaging back
 
 ## The Three Pillars
-
-### 1. Profile (PIPA framework for the "About" section)
-
-Every team-member profile must follow PIPA. The profile is the landing page —
-treat it like one.
-
-| Letter | Stands for | Redline example (Principal Geotech) |
-|--------|------------|-------------------------------------|
-| **P** | **Pain** — name the prospect's core problem | "Senior geotechnical engineers spend 40% of project time on report formatting instead of engineering judgment." |
-| **I** | **Insight** — reframe the problem with a sharp angle | "The bottleneck isn't drafting speed — it's the cognitive cost of switching between thinking and formatting." |
-| **P** | **Position** — position the person as the expert who solves this | "I lead Redline's product, where we're rebuilding the geotechnical reporting workflow around AI-assisted drafting that engineers actually trust." |
-| **A** | **Action** — low-pressure call to action | "DM me if you want to see a 15-minute demo, or follow for weekly notes on AI in civil engineering." |
-
-Headline, banner, and featured section reinforce the same message.
-
-### 2. The 10:1 LCS Rule (Like, Comment, Share)
-
-For every **1 original post** the team publishes, leave **10 thoughtful comments**
-on prospects' posts. Comments are where relationships actually form.
-
-**A thoughtful comment:**
-- Adds a perspective, asks a question, or shares a relevant experience
-- Is at least 2 sentences (one-liners read as filler)
-- Never pitches Redline directly — at most, a soft mention if directly relevant
-
-**A bad comment:** "Great post!" / "Totally agree!" / "Check out our tool: [link]"
-
-### 3. Sales Navigator Targeting
-
-LinkedIn Sales Navigator is the targeting layer. Build saved lists per ICP segment.
-Filter on:
-- Company headcount (e.g. 20-200 engineers — Redline's ICP)
-- Industry (Civil Engineering / Geotechnical Engineering)
-- Role (Principal/Senior Geotechnical Engineer, Director of Engineering)
-- Seniority + tenure (decision-makers with 5+ years at firm)
-- Geography (target market launch order)
-
-The list feeds the daily 10:1 LCS time-block — comment on prospects from the saved
-list, not random feed posts.
 
 ## Daily Ritual: Social Selling Time-Block
 
@@ -98,17 +48,6 @@ list, not random feed posts.
 5. **Run a 2-week shadow.** New team-member shadows the founder's daily ritual.
 6. **Cut them loose** after 2 weeks with a weekly review for the first month.
 
-## Anti-Patterns
-
-- **Pitch in comments.** Destroys trust faster than anything else on LinkedIn.
-- **Automated commenting tools.** They produce generic comments and get accounts
-  flagged. Manual only.
-- **Posting without commenting.** Original posts without 10:1 LCS get no reach
-  because the algorithm rewards engagement, not just publishing.
-- **Sales Navigator list drift.** Lists get stale fast. Refresh quarterly.
-- **Ignoring DMs from non-ICP.** Even if they're not the ICP, they may know someone
-  who is. Reply briefly.
-
 ## Output Location
 
 - LinkedIn playbook: `docs/product/marketing/social-selling/linkedin-playbook.md`
@@ -120,3 +59,14 @@ list, not random feed posts.
 - ICP segments come from the Strategy Advisor via `pm-personas`. the Marketing Lead does not invent ICPs.
 - Original posts that are part of the editorial calendar follow `marketing-content-big-5`.
 - AI-assisted post drafts must go through `marketing-ai-content-review`.
+
+
+See `procedures/marketing-social-selling-linkedin.md` for detailed rules, examples, and extended reference.
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Sending a connection request with a pitch in the same message | Connect first with a personalised note; send the value offer only after the connection is accepted |
+| Posting company content without a personal founder angle | LinkedIn reach is personal; reframe company news from the founder's perspective and experience |
+| Treating every comment as a direct sales opportunity | Comment to add insight, not to promote � the goal is visibility and trust, not immediate conversion |

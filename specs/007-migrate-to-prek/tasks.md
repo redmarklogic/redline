@@ -167,16 +167,16 @@
 - [X] T029 Run full verification gate from plan.md (all 6 checks):
   ```powershell
   # 1. Package absent
-  uv run python -c "import pre_commit" 2>&1
+  rtk uv run python -c "import pre_commit" 2>&1
   # 2. Hooks pass
-  uv run prek run --all-files
+  rtk uv run prek run --all-files
   # 3. No CLI references
   Select-String -Path ".agents/skills/**/*.md","AGENTS.md",".github/agents/*.md" `
     -Pattern "uv run pre-commit|pre-commit install|pre-commit run" -Recurse
   # 4. YAML config deleted
   Test-Path ".pre-commit-config.yaml"
   # 5. TOML config valid
-  uv run prek validate-config prek.toml
+  rtk uv run prek validate-config prek.toml
   # 6. Skill renamed
   Test-Path ".agents/skills/pre-commit-hooks-create"
   Test-Path ".agents/skills/git-hooks-create"

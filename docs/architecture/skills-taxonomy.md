@@ -386,10 +386,10 @@ If the referenced skill is in a higher layer than the referencing skill, stop an
 ## References
 
 - [skills-architecture.md](skills-architecture.md) — handoff chain and persona routing
-- `mental-models/general_thinking/deep-modules.md` — module depth principle applied to layer cohesion
-- `mental-models/general_thinking/systems-thinking.md` — evaluating blast radius of changes to lower layers
-- `mental-models/strategic_decisions/reversible-vs-irreversible.md` — changes to lower layers are harder to reverse
-- `mental-models/root_cause_analysis/cargo-cult.md` — guard against copying architecture patterns without verifying fit
-- `mental-models/general_thinking/first-principles.md` — build from observed dependencies, not analogies
+- [Deep Modules](../../.agents/skills/mental-models/general_thinking/deep-modules.md) — module depth principle applied to layer cohesion
+- [Systems Thinking](../../.agents/skills/mental-models/general_thinking/systems-thinking.md) — evaluating blast radius of changes to lower layers
+- [Reversible vs Irreversible](../../.agents/skills/mental-models/strategic_decisions/reversible-vs-irreversible.md) — changes to lower layers are harder to reverse
+- [Cargo Cult](../../.agents/skills/mental-models/root_cause_analysis/cargo-cult.md) — guard against copying architecture patterns without verifying fit
+- [First Principles](../../.agents/skills/mental-models/general_thinking/first-principles.md) — build from observed dependencies, not analogies
 - ADR-001 — single source of truth (motivation for `mental-models` as Layer 1 registry)
 - AI System Engineering notebook — Onion Architecture, Dependency Inversion Principle, vendor lock-in mitigation

@@ -1,0 +1,19 @@
+# Cache and tooling artifacts
+.venv/
+.git/
+.ruff_cache/
+.pytest_cache/
+.import_linter_cache/
+.coverage
+.playwright-mcp/
+
+# Lockfiles (thousands of lines, zero signal)
+uv.lock
+
+# Generated output data
+output/*.json
+output/*.csv
+output/*.ps1
+
+# Secrets baseline
+.config/secrets.baseline

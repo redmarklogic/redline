@@ -11,7 +11,7 @@ name the affected layers, and state *why* this change matters before *how* it wo
 
 ## Technical Context
 
-**Language**: Python 3.12
+**Language**: Python 3.14
 **Package manager**: uv
 **Testing**: pytest (TDD workflow per `test-driven-development` skill)
 **Project layout**: [Read from `.specify/architecture.yml`: `monorepo` or `single-package`]

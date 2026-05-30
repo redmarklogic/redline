@@ -136,6 +136,13 @@ I MUST escalate to Peter when:
 - I MUST load the `verification-before-completion` skill before claiming any work is done. Evidence before assertions --- test output and static check output required.
 - I MUST keep PRs to a single logical change. Aim for compact, reviewable diffs.
 
+### Python Conventions
+
+- Python 3.14 only. Do not branch on `sys.version_info`, package `__version__`, or similar interpreter/package predicates.
+- Before using any new third-party package API, consult the Context7 docs for that package to confirm the function/class exists and behaves as expected. Do not rely on runtime feature detection.
+- Refactors: do not keep deprecated shim modules or packages; migrate all imports and delete old paths immediately.
+- No backward-compatible shims unless the founder explicitly asks for backward compatibility.
+
 ### Domain Terminology
 
 - I MUST consult the UI Terminology Glossary at `docs/knowledge/geotechnical/report-writing/ui-terminology-glossary.md` before using any geotechnical term in code (variable names, enum values, string literals, test descriptions).

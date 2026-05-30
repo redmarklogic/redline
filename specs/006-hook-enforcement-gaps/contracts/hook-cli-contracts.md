@@ -10,7 +10,7 @@ These are the command-line contracts for each Python hook. All project-specific 
 ## check-banned-words (Gap 1 — check-skills-persona-names)
 
 ```
-uv run --frozen --offline hooks/check-banned-words.py \
+rtk uv run --frozen --offline hooks/check-banned-words.py \
   --md-dir=.agents/skills \
   Ron Mark Graeme John Peter Matt Kabilan Linda Harriet
 ```
@@ -28,7 +28,7 @@ Exit: `0` clean, `1` violations found.
 ## check-no-argparse (Gap 2)
 
 ```
-uv run --frozen --offline hooks/check-no-argparse.py \
+rtk uv run --frozen --offline hooks/check-no-argparse.py \
   --dirs=src \
   --dirs=scripts
 ```
@@ -44,7 +44,7 @@ Exit: `0` clean, `1` violations found.
 ## check-no-archive-imports (Gap 3)
 
 ```
-uv run --frozen --offline hooks/check-no-archive-imports.py \
+rtk uv run --frozen --offline hooks/check-no-archive-imports.py \
   --dirs=src
 ```
 
@@ -70,7 +70,7 @@ Config-only. No Python script.
 ## check-no-env-loader (Gap 5)
 
 ```
-uv run --frozen --offline hooks/check-no-env-loader.py \
+rtk uv run --frozen --offline hooks/check-no-env-loader.py \
   --dirs=src \
   --dirs=scripts
 ```
@@ -82,7 +82,7 @@ Same `--dirs` contract as check-no-argparse.
 ## check-no-env-defaults (Gap 6)
 
 ```
-uv run --frozen --offline hooks/check-no-env-defaults.py \
+rtk uv run --frozen --offline hooks/check-no-env-defaults.py \
   --dirs=src \
   --dirs=scripts
 ```
@@ -94,7 +94,7 @@ Same `--dirs` contract as check-no-argparse.
 ## check-no-section-rules (Gap 7)
 
 ```
-uv run --frozen --offline hooks/check-no-section-rules.py \
+rtk uv run --frozen --offline hooks/check-no-section-rules.py \
   --dirs=src
 ```
 
@@ -105,7 +105,7 @@ Scans `src/` only. `hooks/` and `tests/` are exempt (per spec Assumptions).
 ## check-hook-adr-reference (Gap 8)
 
 ```
-uv run --frozen --offline hooks/check-hook-adr-reference.py \
+rtk uv run --frozen --offline hooks/check-hook-adr-reference.py \
   --hooks-dir=hooks
 ```
 
@@ -130,7 +130,7 @@ Managed by pre-commit. Not a project script.
 
 Baseline regeneration (run once on clean repo before activation):
 ```
-uv run detect-secrets scan > .secrets.baseline
+rtk uv run detect-secrets scan > .secrets.baseline
 ```
 
 ---
@@ -138,7 +138,7 @@ uv run detect-secrets scan > .secrets.baseline
 ## check-no-debug-statements (Gap 10)
 
 ```
-uv run --frozen --offline hooks/check-no-debug-statements.py \
+rtk uv run --frozen --offline hooks/check-no-debug-statements.py \
   --dirs=src \
   --dirs=tests
 ```

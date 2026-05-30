@@ -55,26 +55,26 @@ Default sync (`uv sync`) installs `dev`, `test`, and `doc`. The `ocr` group is h
 
 ```powershell
 # Add a package to the dev group
-uv add --group dev <package>
+rtk uv add --group dev <package>
 
 # Add a package to a named group (--dev is shorthand for --group dev)
-uv add --group test <package>
+rtk uv add --group test <package>
 
 # Remove a package
-uv remove <package>                  # from project dependencies
-uv remove --group dev <package>      # from a specific group
+rtk uv remove <package>                  # from project dependencies
+rtk uv remove --group dev <package>      # from a specific group
 
 # Sync the default groups (dev + test + doc)
-uv sync
+rtk uv sync
 
 # Sync and include the opt-in ocr group
-uv sync --group ocr
+rtk uv sync --group ocr
 
 # Frozen sync — enforce lockfile without updating (CI/CD use)
-uv sync --frozen
+rtk uv sync --frozen
 
 # Inspect the installed dependency tree
-uv tree
+rtk uv tree
 ```
 
 ### Escalation rules
