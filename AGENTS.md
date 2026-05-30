@@ -6,7 +6,6 @@
 - Run scripts and tests in virtual environment: .\.venv\Scripts\activate; python -m <...>
 - Every time I ask you to fix linter errors and provide the error messages, update the linting skill (`.agents/skills/python-linting/SKILL.md`) accordingly (add a concise one-line reminder only if it's not already covered).
 - Never tell me what I want to hear. I want you to look at things objectively, contradict me when needed. If you think otherwise, go with your strong opinion.
-- Never create notebooks (ipynb files) unless asked explicitly.
 - For lessons (reusable observations from LLM conversations and review sessions), see `docs/lessons/lesson_template.md` for format and filing rules.
 - **Lessons workflow**: When a concrete, non-obvious insight emerges during a conversation
   (or the user asks to document a learning), create a new file in `docs/lessons/` following
@@ -78,11 +77,6 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 > **must not be edited manually**. Running `specify upgrade` will overwrite manual changes.
 > All Redline-specific extensions belong in `.specify/extensions.yml`, not in these files.
 
-> **`speckit.implement` is superseded by Kabilan.** Never invoke `/speckit.implement` directly.
-> Always use Kabilan to execute a `tasks.md` plan — he loads Redline Python conventions, TDD,
-> static checks, and layer boundary rules that the generic spec-kit template does not.
-> The override at `.specify/templates/overrides/implement.md` enforces this at the template level.
-
 ### Internal Operations (platform functions)
 
 - **Linda** (`rl.linda.agent.md`): Knowledge Infrastructure -- library curation, NotebookLM, standards monitoring. "Linda, [request]"
@@ -90,22 +84,7 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 
 ## General Style
 
-- **MUST** use meaningful, descriptive variable and function names.
-- **MUST** use spaces for indentation (never tabs).
 - **NEVER** use emoji or unicode that emulates emoji (e.g. ✓, ✗). Exception: tests for multibyte characters.
-- **NEVER** import `argparse`. Configure scripts via env vars or constants.
-- **NEVER** implement custom env loaders (manual `.env` parsers). Assume env is correctly configured.
-- **NEVER** set default values for env vars unless explicitly asked.
-- **AVOID** unnecessary helper functions; assume happy path unless domain logic requires error handling.
-- **NEVER** introduce section rules, e.g. `# ---------------------------------------------------------------------------`.
-
-## Version and Package Assumptions
-
-- The workspace is Python 3.14-only, so code should not branch on `sys.version_info`, package
-  `__version__`, or similar interpreter/package predicates.
-- Supported Python versions are declared in `pyproject.toml` under `project.requires-python`.
-- Dependencies are declared in `pyproject.toml` and reproduced via the `uv.lock` lockfile.
-- Before using any new third-party API, consult the Context7 docs for that package to confirm the function/class exists and behaves as expected---do not rely on runtime feature detection.
 
 ## Documentation & Workflow Management
 
@@ -119,23 +98,10 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
     plans, or tasks (upward dependencies); scratchpad notes (ephemeral). Embed any
     relevant research findings directly in the ADR body instead.
 
-## Refactors
-
-- Do not keep deprecated shim modules/packages after refactors; migrate imports and delete old paths immediately.
-- You may offer backward-compatibility options, but do not implement backward compatibility unless the user explicitly asks for it.
-
-## Archive
-
-- The `archive/` directory contains archived code from previous implementations. This code is for **reference only** and **MUST NOT** be imported or used in the current codebase.
-
 ## Ask for clarification
 
 - If any part of the request is ambiguous or unclear, ask for clarification before proceeding.
 - Ask questions, enumerate the alternatives, recommend the best option, and wait for confirmation before proceeding.
-
-## Perform static checks before finishing
-
-Always finish by using the `python-static-checks` skill to check for linting errors, type errors, and other static issues before finalizing your response. This ensures that the code you provide is clean and adheres to our quality standards.
 
 ## Output Style
 
