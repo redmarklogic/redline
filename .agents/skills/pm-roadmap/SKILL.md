@@ -11,20 +11,6 @@ Miro is the canonical surface for roadmaps, opportunity solution trees, story ma
 
 ## Boundary Contract
 
-### Inputs
-- Active strategic bet from `docs/product/strategy/strategic-bets.md`
-- Primary persona from `docs/product/relationships/users/`
-- Measurable outcome from `docs/product/strategy/kpis.md`
-
-### Outputs
-- Visual roadmap or opportunity solution tree on Miro
-- Markdown synthesis at `docs/product/strategy/roadmap.md` or `opportunity-tree.md`
-
-### Out of Scope
-- Strategy definition (`pm-product-strategist`)
-- PRD writing (`pm-prd-builder`)
-- Prioritization scoring (`pm-prioritization`)
-
 ## When NOT to Use
 
 - User wants a release plan with dates and engineering owners — use `spec-kit`.
@@ -60,6 +46,9 @@ Miro is the canonical surface for roadmaps, opportunity solution trees, story ma
 - Every item must link to a strategic bet ID. Unlinked items are flagged as misaligned.
 - Time horizons are **now / next / later**, not Q1/Q2/Q3. Calendar quarters create false precision.
 - Markdown is truth for what was decided. Miro is truth for how it relates.
+
+
+See `procedures/pm-roadmap.md` for detailed rules, examples, and extended reference.
 
 ## Common Mistakes
 

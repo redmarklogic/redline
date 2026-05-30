@@ -1,6 +1,6 @@
 ---
 name: python-error-handling
-description: Standards for exception handling, error translation, and logging in this repo.
+description: Use when writing exception handling, translating errors across layers, or adding structured logging in this repo
 ---
 
 # Python Error Handling
@@ -100,3 +100,11 @@ def parse_positive_int(*, text: str) -> int:
             raise ValueError("Expected a positive integer")
         return value
 ```
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Catching Exception at every call site | Catch specific exceptions; let unexpected errors propagate to the top-level handler |
+| Logging and re-raising the same exception | Log once at the boundary where context is richest; don't log intermediate re-raises |
+| Raising ValueError across layer boundaries | Define domain-specific exceptions at each layer; callers shouldn't parse ValueError messages |

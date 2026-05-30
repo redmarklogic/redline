@@ -1,6 +1,6 @@
 ---
 name: python-pins-data-version-control
-description: Conventions for versioning datasets with the pins library — board layout, naming rules, read/write patterns, and when to prefer pins over git-tracked data.
+description: Use when versioning datasets with the pins library -- board layout, naming rules, read/write patterns, or deciding when to prefer pins over git-tracked data
 ---
 
 # Python Pins Data Version Control
@@ -25,14 +25,6 @@ For related topics:
 - General style (`python-style`)
 - Data ingestion pipelines (`python-data-ingestion`)
 
-## Context & Guidelines
-
-### Scope
-
-Apply whenever code reads or writes datasets that are too large, too volatile, or too
-numerous to track in git. Pins is the default mechanism for sharing pipeline outputs
-and analysis results.
-
 ### When to Use Pins vs Git-Tracked Data
 
 | Criterion  | Git-tracked `data/`           | Pins board                              |
@@ -45,34 +37,6 @@ and analysis results.
 **Default to pins** unless the file is a tiny, stable reference table that benefits
 from being versioned alongside the code.
 
-### Board Layout
-
-Boards live on the `T:` network drive under a project-level `pins/` directory.
-The main board is always at a named subdirectory — never at the bare `pins/` root:
-
-```
-T:/path/to/project/pins/
-    main/              <- general-purpose board
-    site_readings/     <- dedicated board for parameterized datasets
-    model_outputs/     <- another dedicated board
-```
-
-The bare `pins/` directory is a namespace that holds multiple boards. Each board
-is a subdirectory.
-
-### Board Setup
-
-Always use `pins.board("file", ...)`. Never use `pins.board_folder()`.
-
-```python
-import pins
-
-board = pins.board("file", "T:/path/to/project/pins/main")
-```
-
-### Reading and Writing
-
-```python
 # Read a pinned dataset
 df = board.pin_read("survey_flux_tidy")
 
@@ -80,15 +44,6 @@ df = board.pin_read("survey_flux_tidy")
 board.pin_write(df, "survey_flux_tidy", type="parquet")
 ```
 
-### Pin Naming Rules
-
-- Always use `snake_case`.
-- Never embed IDs, parameters, or dynamic values in the pin name.
-
-If a dataset is parameterized (e.g., one table per site), create a **dedicated board**
-for that dataset family and use the bare identifier as the pin name:
-
-```python
 # BAD -- parameterized pin name on the main board
 board = pins.board("file", "T:/project/pins/main")
 board.pin_write(df, f"site_readings_{site_id}", type="parquet")
@@ -102,25 +57,13 @@ site_board = pins.board("file", "T:/project/pins/site_readings")
 df = site_board.pin_read(f"{site_id}")
 ```
 
-### Preferred Format
 
-Use `type="parquet"` for DataFrames. Parquet preserves types, is compact, and is
-fast to read.
+See `procedures/python-pins-data-version-control.md` for detailed rules, examples, and extended reference.
 
-### Relationship to `data/`
+## Common Mistakes
 
-Pins replaces the pattern of writing pipeline outputs to `data/processed/`.
-Git-tracked data under `data/` remains as a fallback for tiny, stable reference
-tables only.
-
-## Procedure
-
-1. Determine whether the dataset should be git-tracked or pinned (see decision
-   table above).
-2. If pinned, identify whether it belongs on the main board or needs a dedicated
-   board (parameterized data always gets a dedicated board).
-3. Set up the board with `pins.board("file", "T:/.../pins/<board_name>")`.
-4. Write with `board.pin_write(df, "pin_name", type="parquet")`.
-5. Read with `board.pin_read("pin_name")`.
-6. Never hardcode the full `T:` path in library code; define board paths as
-   constants in scripts or configuration.
+| Mistake | Fix |
+|---|---|
+| Writing a dataset directly to the file system instead of using a pins board | Use oard.pin_write() so the version history and metadata are tracked automatically |
+| Using the same pin name for different schema versions | Use versioned pin names or ersioned=True; mixing schemas breaks readers silently |
+| Committing large CSVs to git when pins is available | Use a pins board for files over 100 KB; git is for code, not data |

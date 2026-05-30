@@ -7,7 +7,7 @@ description: Use when designing an LLM evaluation lifecycle, structuring evaluat
 
 ## Overview
 
-Evaluation criteria are defined **before** implementation begins — Evaluation-Driven Development (Huyen). The architect designs the harness structure; the domain expert fills it with domain truth content. No rubric ships without the domain expert's explicit sign-off.
+Evaluation criteria are defined **before** implementation begins â€” Evaluation-Driven Development (Huyen). The architect designs the harness structure; the domain expert fills it with domain truth content. No rubric ships without the domain expert's explicit sign-off.
 
 ## Boundary Contract
 
@@ -16,7 +16,7 @@ Evaluation criteria are defined **before** implementation begins — Evaluation-
 - Evaluation rubric structure: scoring systems, test formats, automation approaches
 - LLM-as-judge prompt design and calibration against human evaluation
 - Ground truth management: structuring the collection process for domain expert review
-- Evaluation pipeline architecture (FTI — Feature/Training/Inference pattern)
+- Evaluation pipeline architecture (FTI â€” Feature/Training/Inference pattern)
 - HITL (Human-in-the-Loop) review design: sampling strategies, reviewer calibration
 - Production monitoring: drift detection, quality alerts, continuous training triggers
 
@@ -27,10 +27,10 @@ Evaluation criteria are defined **before** implementation begins — Evaluation-
 - Ground truth collection process documents
 
 ### Does Not Cover
-- Geotechnical domain content for rubrics — domain expert owns this (blocking gate)
-- Python implementation of evaluation pipelines — use SpecKit
-- Strategic DDD decisions — use `ddd-strategic`
-- Shaping work for SpecKit — use `shaping`
+- Geotechnical domain content for rubrics â€” domain expert owns this (blocking gate)
+- Python implementation of evaluation pipelines â€” use SpecKit
+- Strategic DDD decisions â€” use `ddd-strategic`
+- Shaping work for SpecKit â€” use `shaping`
 
 ## Evaluation Levels
 
@@ -38,10 +38,10 @@ Four levels. Every rubric must be classified before design begins.
 
 | Level | What is measured | Automation |
 |---|---|---|
-| Per-task | Single atomic task output (e.g., one extracted clause) | High — unit-test style |
+| Per-task | Single atomic task output (e.g., one extracted clause) | High â€” unit-test style |
 | Per-turn | One conversation turn or agent action | Moderate |
-| End-to-end | Full report generation pipeline | Lower — integration-test style |
-| Production monitoring | Live output quality over time | Continuous — drift detection |
+| End-to-end | Full report generation pipeline | Lower â€” integration-test style |
+| Production monitoring | Live output quality over time | Continuous â€” drift detection |
 
 ## Workflow Procedure
 
@@ -52,6 +52,14 @@ steps, deployment gates) is defined in the `/evaluation-workflow` prompt.
 
 Queried via `redline-research`:
 
-- *AI Engineering* (Huyen) — Evaluation-Driven Development, rubric design, domain expert role
-- *LLM Engineer's Handbook* (Iusztin & Labonne) — FTI architecture, testing pipeline
-- *Building Applications with AI Agents* (Albada) — HITL review, executor/reviewer/governor pattern, feedback pipelines
+- *AI Engineering* (Huyen) â€” Evaluation-Driven Development, rubric design, domain expert role
+- *LLM Engineer's Handbook* (Iusztin & Labonne) â€” FTI architecture, testing pipeline
+- *Building Applications with AI Agents* (Albada) â€” HITL review, executor/reviewer/governor pattern, feedback pipelines
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Defining a rubric without anchoring scores to observable output examples | Every rubric level needs a concrete example of output that achieves that score |
+| Using a single judge model without a second-pass reviewer | Apply maker-checker: one model generates, a different (or same) model judges — never self-evaluation |
+| Skipping the calibration phase before deploying an LLM judge | Run the judge on a labelled hold-out set first; uncalibrated judges have unknown reliability |

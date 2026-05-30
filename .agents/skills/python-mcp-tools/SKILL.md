@@ -1,6 +1,6 @@
 ---
 name: python-mcp-tools
-description: Guidance for using MCP tools and servers in this repo.
+description: Use when calling MCP tools or servers from Python code in this repo
 ---
 
 # Python MCP Tools
@@ -37,3 +37,11 @@ Apply these rules when working on MCP servers, transports, or integrations.
 1. Identify the MCP entrypoint and transport used.
 2. Implement changes with clear request/response structures.
 3. Add/adjust tests where appropriate.
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Calling a deferred MCP tool without loading it first via 	ool_search | Always run 	ool_search for the capability before invoking a deferred tool |
+| Passing a workspace-relative path where an absolute URI is expected | Use absolute paths with the ile:// scheme or the tool's documented path format |
+| Ignoring an MCP tool error and retrying with the same arguments | Change the argument (e.g. use absolute path, fix a missing field) before retrying |

@@ -32,7 +32,7 @@ RTK_ELIGIBLE_COMMANDS: frozenset[str] = frozenset(
     }
 )
 
-_FENCE_OPEN = re.compile(r"^```(bash|sh|shell|console|powershell)?\s*$")
+_FENCE_OPEN = re.compile(r"^```(bash|sh|shell|console|powershell)\s*$")
 _FENCE_CLOSE = re.compile(r"^```\s*$")
 _NON_SHELL_LANG = re.compile(
     r"^```(python|py|json|yaml|yml|toml|javascript|js|typescript|ts|sql|html|css|xml|mermaid|text|plaintext|ini|cfg|markdown|md|r|ruby|go|java|c|cpp|csharp|dockerfile|makefile|hcl|terraform)\s*$"

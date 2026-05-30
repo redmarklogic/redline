@@ -11,19 +11,6 @@ A persona is a concrete, evidence-backed stand-in for a real user segment. the P
 
 ## Boundary Contract
 
-### Inputs
-- Market segment or user archetype to define, with evidence sources
-- Strategy context from the Strategy Advisor (positioning, ICP, GTM motion)
-
-### Outputs
-- Persona document at `docs/product/relationships/users/<persona>.md`
-- Archetype document at `docs/product/relationships/archetypes/<segment>.md`
-
-### Out of Scope
-- Product strategy and positioning (`pm-product-strategist`)
-- PRD writing (`pm-prd-builder`)
-- Marketing content creation (`marketing-*` skills)
-
 ## When NOT to Use
 
 - PRD already cites a persona validated in research within 6 months — reuse, do not duplicate.
@@ -60,6 +47,9 @@ A persona is a concrete, evidence-backed stand-in for a real user segment. the P
 - Pains are observed, not assumed. Quoted sources required.
 - One archetype can have multiple personas. Personas without an archetype are red-flagged.
 - A persona is stale after 12 months. Revisit before reusing.
+
+
+See `procedures/pm-personas.md` for detailed rules, examples, and extended reference.
 
 ## Common Mistakes
 

@@ -12,7 +12,7 @@ description: Use when running the monthly editorial session triggered by a new G
 - Latest Ground Engineering magazine issue
 - Access to `ground-engineering-magazine` NotebookLM notebook
 - Current Dream 100 target list
-- Current editorial calendar (`docs/product/marketing/editorial-calendar.md`) — created by this ceremony if absent
+- Current editorial calendar (`docs/product/marketing/editorial-calendar.md`) â€” created by this ceremony if absent
 
 ### Outputs
 
@@ -34,3 +34,11 @@ This ceremony is a multi-agent orchestration workflow. The full procedure lives 
 prompt file that can be invoked directly.
 
 **To run:** type `/monthly-editorial-session` in chat.
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Processing editorial signals without first checking the most recent issue date | Confirm the issue date before processing — stale signals misattribute trends to the wrong period |
+| Recording a product signal without linking it to a hypothesis | Every signal should map to an existing hypothesis or trigger creation of a new one |
+| Treating all editorial mentions equally | Weight signals by source authority and recency; a leading journal mention outweighs a trade note |

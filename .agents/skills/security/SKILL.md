@@ -1,6 +1,6 @@
 ---
 name: security
-description: Secure coding rules for secrets, configuration, and logging in this repo.
+description: Use when writing secure code in this repo -- secrets handling, configuration safety, or structured logging rules
 ---
 
 # Security
@@ -44,3 +44,11 @@ This skill defines security rules for day-to-day development in this repo.
 1. Treat any credential as sensitive.
 2. Store secrets in environment variables or the deployment secret store.
 3. Keep logs safe: redact or omit sensitive values.
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---|---|
+| Hardcoding secrets or API keys in source code | Use environment variables; never commit secrets — rotate immediately if exposed |
+| Logging request bodies or user input at INFO level | Log at DEBUG only and disable DEBUG in production; request bodies may contain PII or credentials |
+| Using eval() or exec() on untrusted input | Never evaluate user-supplied strings as code; use allowlists or structured parsers instead |
