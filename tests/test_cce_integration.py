@@ -1,5 +1,6 @@
 """Tests for CCE integration - binary availability, skill bootstrap, and workflow mandates."""
 
+import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -11,6 +12,8 @@ MCE_SKILL = REPO_ROOT / ".agents" / "skills" / "mcp-cce" / "SKILL.md"
 ARCH_SKILL = REPO_ROOT / ".agents" / "skills" / "arch-engineering" / "SKILL.md"
 AGENTS_MD = REPO_ROOT / "AGENTS.md"
 AGENTS_DIR = REPO_ROOT / ".github" / "agents"
+HOOKS_DIR = REPO_ROOT / ".github" / "hooks"
+VSCODE_SETTINGS = REPO_ROOT / ".vscode" / "settings.json"
 
 # Every rl.*.agent.md file — these are the Redline agent JDs
 RL_AGENT_JDS = sorted(AGENTS_DIR.glob("rl.*.agent.md"))
@@ -132,11 +135,11 @@ class TestAgentJdCceToolSearchBootstrap:
 
 
 class TestAgentJdCceToolsAllowlist:
-    """Every rl.*.agent.md frontmatter tools: must include context-engin/*.
+    """Every rl.*.agent.md frontmatter tools: must include context-engine/*.
 
-    CCE MCP tools are served by the context-engin MCP server. If the agent's
-    frontmatter tools: list does not include context-engin/*, the subagent
-    infrastructure blocks CCE tool calls regardless of JD instructions.
+    CCE MCP server is registered as 'context-engine' in .vscode/mcp.json.
+    The frontmatter tools: glob must match this name exactly — 'context-engin/*'
+    (without the 'e') produces 'Unknown tool' warnings and is silently ignored.
     """
 
     @pytest.mark.parametrize(
@@ -146,9 +149,9 @@ class TestAgentJdCceToolsAllowlist:
     )
     def test_agent_frontmatter_allows_cce_tools(self, jd_path: Path) -> None:
         content = jd_path.read_text(encoding="utf-8")
-        assert "context-engin/*" in content, (
-            f"{jd_path.name} frontmatter tools: missing `context-engin/*`. "
-            "CCE MCP tools are blocked at infrastructure level without this."
+        assert "context-engine/*" in content, (
+            f"{jd_path.name} frontmatter tools: missing `context-engine/*`. "
+            "CCE MCP server is 'context-engine' in .vscode/mcp.json."
         )
 
 
@@ -173,23 +176,83 @@ class TestAgentJdCceDiscoveryConstraint:
         )
 
 
-class TestCceSubagentLimitation:
-    """mcp-cce SKILL.md must document the subagent MCP limitation.
+class TestCceSubagentUsage:
+    """mcp-cce SKILL.md must document subagent frontmatter requirements.
 
-    Subagents invoked via runSubagent cannot call deferred MCP tools.
-    The skill must document this and prescribe the orchestrator pattern
-    where the calling agent calls CCE and passes results to the subagent.
+    Subagents need context-engine/* in frontmatter tools: and the server
+    name must match .vscode/mcp.json exactly.
     """
 
-    def test_subagent_limitation_documented(self) -> None:
+    def test_subagent_usage_documented(self) -> None:
         content = MCE_SKILL.read_text(encoding="utf-8")
         assert "subagent" in content.lower(), (
-            "mcp-cce SKILL.md missing subagent limitation documentation."
+            "mcp-cce SKILL.md missing subagent usage documentation."
         )
 
-    def test_orchestrator_pattern_documented(self) -> None:
+    def test_correct_server_name_documented(self) -> None:
         content = MCE_SKILL.read_text(encoding="utf-8")
-        assert "orchestrator" in content.lower(), (
-            "mcp-cce SKILL.md missing orchestrator pattern for passing "
-            "CCE results to subagents via prompt injection."
+        assert "context-engine/*" in content, (
+            "mcp-cce SKILL.md missing correct server name `context-engine/*`."
         )
+
+
+class TestCceHookEnforcement:
+    """Agent hooks must exist to deterministically inject CCE context into subagents.
+
+    JD text constraints are advisory — the model may ignore them. Hooks provide
+    a code-executed defence layer (Swiss Cheese Model: diverse layer types).
+    """
+
+    def test_subagent_hook_config_exists(self) -> None:
+        hook_file = HOOKS_DIR / "cce-subagent.json"
+        assert hook_file.exists(), (
+            ".github/hooks/cce-subagent.json missing. "
+            "This hook injects CCE context into subagent conversations."
+        )
+
+    def test_subagent_hook_config_valid_json(self) -> None:
+        hook_file = HOOKS_DIR / "cce-subagent.json"
+        content = hook_file.read_text(encoding="utf-8")
+        data = json.loads(content)
+        assert "hooks" in data, "Hook config missing top-level 'hooks' key"
+        assert "SubagentStart" in data["hooks"], (
+            "Hook config missing 'SubagentStart' event"
+        )
+
+    def test_subagent_hook_references_script(self) -> None:
+        hook_file = HOOKS_DIR / "cce-subagent.json"
+        content = hook_file.read_text(encoding="utf-8")
+        assert "cce-inject.ps1" in content, (
+            "Hook config does not reference cce-inject.ps1 script"
+        )
+
+    def test_hook_script_exists(self) -> None:
+        script = HOOKS_DIR / "cce-inject.ps1"
+        assert script.exists(), (
+            ".github/hooks/cce-inject.ps1 missing. "
+            "This script calls CCE and returns additionalContext JSON."
+        )
+
+    def test_hook_script_returns_additional_context(self) -> None:
+        script = HOOKS_DIR / "cce-inject.ps1"
+        content = script.read_text(encoding="utf-8")
+        assert "additionalContext" in content, (
+            "cce-inject.ps1 missing 'additionalContext' in output — "
+            "hook must return hookSpecificOutput.additionalContext."
+        )
+
+    def test_hook_script_mentions_context_search(self) -> None:
+        script = HOOKS_DIR / "cce-inject.ps1"
+        content = script.read_text(encoding="utf-8")
+        assert "context_search" in content, (
+            "cce-inject.ps1 missing 'context_search' instruction — "
+            "injected context must tell subagent to use context_search."
+        )
+
+    def test_vscode_settings_enables_agent_hooks(self) -> None:
+        content = VSCODE_SETTINGS.read_text(encoding="utf-8")
+        assert "chat.useCustomAgentHooks" in content, (
+            ".vscode/settings.json missing 'chat.useCustomAgentHooks'. "
+            "Agent-scoped hooks require this setting to be enabled."
+        )
+
