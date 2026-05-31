@@ -35,14 +35,23 @@ try {
     $context = @"
 [CCE Session Context - Auto-injected by SubagentStart hook]
 
-IMPORTANT: You have CCE (Code Context Engine) tools available via context-engine/*.
-For ANY workspace exploration or discovery, use context_search — NOT read_file, semantic_search, or list_dir.
-read_file is ONLY for targeted edits when you already know the exact file path.
+## MANDATORY TOOL LOADING — DO THIS FIRST
 
-To load CCE tools: call tool_search('code context engine MCP') first.
-Then call session_recall to load prior decisions.
+You have deferred MCP tools from the 'context-engine' server that are NOT yet loaded.
+They will NOT appear in your tool list until you load them.
 
-Recent decisions and session context:
+Step 1: Call the tool literally named "tool_search" with query "context engine MCP session recall"
+        — this is NOT semantic_search. tool_search is a SEPARATE tool that loads deferred tools.
+Step 2: After tool_search returns tool names, call "mcp_context-engin_session_recall" with topic relevant to user request.
+Step 3: Use "mcp_context-engin_context_search" for workspace discovery instead of read_file/semantic_search/list_dir.
+
+WARNING: "semantic_search" searches FILE CONTENTS — it cannot access CCE memory.
+         "tool_search" LOADS DEFERRED TOOLS — it makes new tools callable. They are different tools.
+
+DO NOT use semantic_search, read_file, or list_dir for workspace exploration.
+DO NOT skip tool_search — CCE tools are invisible until loaded.
+
+## Recent CCE Decisions
 $decisions
 "@
 
