@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "type": "command",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .github/hooks/cce-inject.ps1",
+        "cwd": ".",
+        "timeout": 15
+      }
+    ]
+  }
+}
