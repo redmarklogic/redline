@@ -74,16 +74,16 @@ When placing a new skill, ask:
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │  Layer 9: Product, Strategy & Organisation                           │
-│  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic   │
+│  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic    │
 │  marketing-* · hiring-agent-management · ceremony-*                  │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 8: Engineering Workflows                                      │
-│  shaping · arch-engineering · evaluation-architecture        │
+│  shaping · arch-engineering · evaluation-architecture     	       │
 │  ai-acceptable-use-policy · doc-updater · git-push-batched           │
 │  resolving-pr-issues · skills-create                                 │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Applied Capabilities                                       │
-│  eda-* · qmd-* · redline-research · notebooklm-index                │
+│  eda-* · qmd-* · redline-research · notebooklm-index                 │
 │  notebooklm-deep-research · library-management                       │
 │  git-hooks-create                                                    │
 ├──────────────────────────────────────────────────────────────────────┤
@@ -104,11 +104,11 @@ When placing a new skill, ask:
 │  python-style · python-typing · python-linting · python-paths        │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 3: Platform Integrations (MCPs)                               │
-│  miro-mcp · mcp-notebooklm · mcp-cce · python-mcp-tools             │
+│  miro-mcp · mcp-notebooklm · mcp-cce · python-mcp-tools              │
 │  rag-prompting                                                       │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 2: Language-Agnostic Standards (polyglot)                     │
-│  data-tidy · security · git-version-control · mermaid-diagrams           │
+│  data-tidy · security · git-version-control · mermaid-diagrams       │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 1: Foundational Registries                                    │
 │  mental-models                                                       │
@@ -134,11 +134,10 @@ When placing a new skill, ask:
 **Rule**: No outbound references to project-owned skills. Modifications are overwritten on
 vendor update.
 
-| Source                | Skills                                                                                                                                                                                                                                                                                                                                        |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `specify`           | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
-| `obra/superpowers`  | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
-
+| Source               | Skills                                                                                                                                                                                                                                                                                                                                        |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `specify`          | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
+| `obra/superpowers` | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
 ---
 
