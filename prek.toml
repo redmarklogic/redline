@@ -540,6 +540,20 @@ hooks = [
 ]
 
 [[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "check-adr-constitution-sync",
+    name = "check-adr-constitution-sync",
+    entry = "uv run --frozen --offline hooks/check-adr-constitution-sync.py",
+    language = "system",
+    files = '^docs/adr/adr-.*\.md$',
+    pass_filenames = false,
+    priority = 0
+  }
+]
+
+[[repos]]
 repo = "https://github.com/Yelp/detect-secrets"
 rev = "v1.5.0"
 hooks = [
