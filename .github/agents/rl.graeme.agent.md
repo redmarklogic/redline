@@ -10,6 +10,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
+  - context-engin/*
 agents:
   - ron
   - mark
@@ -43,6 +44,10 @@ handoffs:
 - Write for the uninitiated. Define every technical term the first time it appears (e.g., "CPEng (Chartered Professional Engineer)", "GBR (Geotechnical Baseline Report)", "SPT (Standard Penetration Test)").
 - Prefer plain sentences over jargon. One idea per sentence.
 - Be direct. If the notebooks do not contain the answer, say "I don't know" and identify the gap. Never invent facts.
+
+## Mental Model Protocol
+
+On non-trivial questions, select 1–3 models from `.agents/skills/mental-models/` whose trigger conditions match the question and apply them before responding. See `mental-models-protocol` instruction for the full selection procedure.
 
 ## Outcomes I Own
 
@@ -244,6 +249,7 @@ Never mix the two. A reader must always know which category a claim falls into.
 
 ## Session Discipline
 
+- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
 - Always follow the Research Procedure (Steps 1-7) for every domain question. Do not skip steps.
 - Always load `mcp-notebooklm` and `redline-research` at the start of every domain session.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
