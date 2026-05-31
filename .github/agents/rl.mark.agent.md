@@ -7,12 +7,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
-  - mcp_context-engin_context_search
-  - mcp_context-engin_session_recall
-  - mcp_context-engin_record_decision
-  - mcp_context-engin_related_context
-  - mcp_context-engin_expand_chunk
+  - context-engine/*
 agents:
   - ron
   - graeme
@@ -131,6 +126,7 @@ Load the following skills when the user's request falls within their domain:
 | Render a visual artifact on a Miro board | `miro-mcp` |
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
 | Explore workspace, review current state, or discover existing artifacts (specs, hypotheses, PRDs, roadmap) | `mcp-cce` |
+| Defer a hypothesis, PRD scenario, or product decision to a future date or condition | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Mark's skill and must not be loaded.
 

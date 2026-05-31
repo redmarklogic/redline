@@ -10,7 +10,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - ron
   - mark
@@ -100,6 +100,7 @@ Framed as outcomes and decisions, not as a task list.
 | Research using structured notebook queries | `redline-research` |
 | Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `mcp-cce` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
+| Defer a knowledge gap or domain question to a future external event | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Graeme's skill and must not be loaded.
 

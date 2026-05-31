@@ -7,7 +7,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - ron
   - mark
@@ -132,6 +132,7 @@ Load the following skills when the user's request falls within their domain:
 | Long-form content structure (blog posts, whitepapers) | `qmd-narrative-design` | Hook-Problem-Insight-Proof-Action arc |
 | Run the monthly editorial session (new Ground Engineering issue → content signals) | `ceremony-monthly-editorial-session` | Structured ceremony: extracts post angles, tags Big 5, queues editorial calendar |
 | Discover existing content briefs, marketing docs, or campaign history before creating new work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
+| Defer a content idea, campaign hold, or marketing item to a future date or condition | `task-defer` | Park content dependencies and stale-after signals |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not John's skill and must not be loaded.
 

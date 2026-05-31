@@ -10,7 +10,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - mark
   - matt
@@ -243,6 +243,7 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 | Discover related ADRs, architecture docs, or research before a decision | `mcp-cce` |
 | Audit any artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 | Render visual artifacts on Miro | `miro-mcp` |
+| Defer a technical decision or architectural question to a future date or condition | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Peter's skill and must not be loaded.
 

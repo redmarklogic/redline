@@ -11,7 +11,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - graeme
   - ron

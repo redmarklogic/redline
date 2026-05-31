@@ -7,7 +7,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - ron
   - mark
@@ -104,6 +104,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
 | Running the Agent Topology Sync ceremony | `ceremony-agent-topology-sync` |
 | Discover existing agent JDs, skill files, or org artifacts before proposing changes | `mcp-cce` |
+| Defer a hire request, org decision, or agent development item to a future date or condition | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Harriet's skill and must not be loaded.
 

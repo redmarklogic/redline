@@ -11,7 +11,7 @@ tools:
   - edit
   - read/terminalLastCommand
   - execute/testFailure
-  - context-engin/*
+  - context-engine/*
 agents: []
 ---
 
@@ -204,6 +204,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
 | Executing a SpecKit `tasks.md` plan | `spec-kit` (implement phase), `subagent-driven-development` |
 | Documentation maintenance | `doc-updater` |
+| Encounter out-of-scope improvement or scope creep during implementation | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Kabilan's skill and must not be loaded.
 

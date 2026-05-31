@@ -567,3 +567,18 @@ hooks = [
     priority = 0
   }
 ]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "check-deferred-overdue",
+    name = "check-deferred-overdue",
+    entry = "uv run --frozen --offline hooks/check-deferred-overdue.py",
+    args = ["--deferred-dir=docs/deferred"],
+    language = "system",
+    stages = ["pre-push"],
+    pass_filenames = false,
+    priority = 0
+  }
+]

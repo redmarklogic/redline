@@ -31,7 +31,7 @@ tools:
   - mcp_microsoft_pla_browser_drag
   - mcp_microsoft_pla_browser_drop
   - mcp_microsoft_pla_browser_handle_dialog
-  - context-engin/*
+  - context-engine/*
 agents:
   - mark
   - graeme
@@ -231,6 +231,7 @@ Load the following skills when the user's request falls within their domain.
 | Query a notebook for design principles or domain context | `mcp-notebooklm` | Standard notebook query interface |
 | Review a live website visually and interactively | Playwright MCP (built-in tools) | Navigate, screenshot, click, fill, resize, inspect console/network. See Website Review Protocol. |
 | Discover existing design specs or design decisions before starting new design work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
+| Defer a design decision, surface prioritisation, or research-gated item | `task-defer` | Park design artifacts with surface and artifact-ref context |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Matt's skill and must not be loaded.
 

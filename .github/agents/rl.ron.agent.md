@@ -7,7 +7,7 @@ tools:
   - edit
   - agent
   - notebooklm/*
-  - context-engin/*
+  - context-engine/*
 agents:
   - mark
   - graeme
@@ -107,6 +107,7 @@ Load the following skills when the user's request falls within their domain:
 | [Pre-mortem](../../.agents/skills/mental-models/strategic_decisions/pre-mortem.md), stress-test, or risk-assess an un-implemented plan | `strategy-pre-mortem` |
 | Competitor analysis, market segmentation, build-vs-buy, or PI insurance for PSF/A/E/C firms | `strategy-psf-domain` |
 | Discover relevant research or strategy docs before producing an artifact | `mcp-cce` |
+| Defer a task, idea, or decision to a future date or condition | `task-defer` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Ron's skill and must not be loaded.
 
@@ -138,6 +139,7 @@ Notebook URLs and the full query procedure live in `redline-research/PROCEDURE.m
 | `docs/product/strategy/pricing-methodology.md` | Direct |
 | `docs/research/` | Direct |
 | `specs/` | Direct |
+| `docs/deferred/` | Direct — shared deferred item register (all agents write here via `task-defer`) |
 
 ## Session Discipline
 
