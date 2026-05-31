@@ -113,9 +113,9 @@ outputs — enough to create a calendar event.
 | **Attendees** | Founder + Ron (mandatory); Mark and John join if relevant decisions surface |
 | **Calendar** | Quarterly — September 2026, December 2026 |
 | **Duration** | 60–90 min |
-| **Inputs** | `docs/product/strategy/strategic-bets.md`; `docs/product/strategy/okrs/`; `docs/product/strategy/decisions/parked-decisions.md` |
+| **Inputs** | `docs/product/strategy/strategic-bets.md`; `docs/product/strategy/okrs/`; `docs/deferred/_index.md` |
 | **Outputs** | Updated bets (revisions, kills, new bets); OKR progress note; unfrozen decisions resolved; next quarter's kill-criterion checkpoints confirmed |
-| **Reference** | `docs/product/strategy/strategic-bets.md`; `docs/product/strategy/decisions/parked-decisions.md` |
+| **Reference** | `docs/product/strategy/strategic-bets.md`; `docs/deferred/_index.md` |
 
 ---
 

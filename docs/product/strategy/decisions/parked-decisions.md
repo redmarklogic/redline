@@ -1,6 +1,14 @@
-# Decisions Parked — Master Register
+# Decisions Parked — ARCHIVED
 
-**Status**: Living register. **Owner**: Ron.
+> **ARCHIVED 2026-05-31.** All entries have been migrated to individual files under
+> [`docs/deferred/`](../../../deferred/_index.md). This file is kept as a historical
+> reference only. Do not add new entries here — use the `task-defer` skill instead.
+
+---
+
+# Decisions Parked — Master Register (historical)
+
+**Status**: Archived. **Owner**: Ron.
 **Rule**: A parked decision is not a forgotten decision. Each entry has a trigger
 event that unfreezes it.
 
