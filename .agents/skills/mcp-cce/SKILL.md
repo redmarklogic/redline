@@ -35,3 +35,9 @@ Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decis
 | `read_file` to find a pattern | Use `context_search` first |
 | `grep_search` for semantic queries | Use `context_search`; `grep_search` is for exact matches only |
 | No `reindex` after creating a file | `reindex <file>` immediately after creation |
+
+## Subagent Usage
+
+Subagents need `context-engine/*` in their frontmatter `tools:` list. The server name must match the key in `.vscode/mcp.json` exactly — `context-engin/*` (missing trailing `e`) silently fails with "Unknown tool" warning.
+
+Each agent JD's Session Discipline must instruct: `tool_search('code context engine MCP')` → `session_recall` → `context_search` for discovery.
