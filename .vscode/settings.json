@@ -10,6 +10,6 @@
     "chat.hookFilesLocations": {
         // ".claude/settings.json": false,
         // ".claude/settings.local.json": false,
-        ".agents/hooks": true,
+        ".github/hooks": true,
     }
 }

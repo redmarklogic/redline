@@ -84,9 +84,7 @@ def main() -> int:
     args = parser.parse_args()
 
     today = (
-        datetime.strptime(args.today, "%Y-%m-%d").date()
-        if args.today
-        else date.today()
+        datetime.strptime(args.today, "%Y-%m-%d").date() if args.today else date.today()
     )
     deferred_dir = Path(args.deferred_dir)
 
@@ -97,9 +95,7 @@ def main() -> int:
     if not overdue:
         return 0
 
-    print(
-        f"\n[WARNING] {len(overdue)} deferred item(s) past their revisit_by date:\n"
-    )
+    print(f"\n[WARNING] {len(overdue)} deferred item(s) past their revisit_by date:\n")
     for filename, revisit_by in overdue:
         print(f"  {filename}  (revisit_by: {revisit_by})")
     print(
