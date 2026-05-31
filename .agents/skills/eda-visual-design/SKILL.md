@@ -1,4 +1,4 @@
----
+﻿---
 name: eda-visual-design
 description: Use when choosing chart types, encoding data, reducing cognitive load, or annotating EDA and statistical visualisations
 ---
@@ -25,4 +25,4 @@ See `procedures/eda-visual-design.md` for detailed rules, examples, and extended
 |---|---|
 | Using a bar chart for continuous data | Use a histogram or KDE for distributions; bar charts are for discrete/categorical comparisons |
 | Omitting axis labels and units | Every axis must have a label including units; unlabelled axes force readers to guess |
-| Using 3D charts for 2D data | Never use 3D effects for 2D data � they distort perception and add no information |
+| Using 3D charts for 2D data | Never use 3D effects for 2D data — they distort perception and add no information |

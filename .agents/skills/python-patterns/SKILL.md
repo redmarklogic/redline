@@ -10,12 +10,7 @@ It intentionally avoids redefining rules that already exist in other skills.
 
 For related topics, defer to these canonical skills:
 
-- Style and repo conventions: use the `python-style` skill.
-- Typing rules: use the `python-typing` skill.
-- Error handling and logging: use the `python-error-handling` skill.
 - Function design: use the `python-function-design` skill.
-- Class design: use the `python-class-design` skill.
-- Domain/value objects: use the `python-domain-modeling` skill.
 - Linting and suppressions: use the `python-linting` skill.
 
 ## Boundary Contract

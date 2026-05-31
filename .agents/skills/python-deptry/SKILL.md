@@ -1,4 +1,4 @@
----
+﻿---
 name: python-deptry
 description: Use when fixing deptry dependency hygiene violations or understanding which deptry rules apply in this repo
 ---
@@ -7,11 +7,6 @@ description: Use when fixing deptry dependency hygiene violations or understandi
 
 This skill explains what deptry does, how it is configured in this repo, and how to
 resolve each of its rule violations correctly.
-
-For related topics:
-
-- Adding/removing packages: use the `python-style` skill.
-- Dev environment setup: use the `dev-environment` skill.
 
 ## Boundary Contract
 
@@ -50,4 +45,4 @@ See `procedures/python-deptry.md` for detailed rules, examples, and extended ref
 |---|---|
 | Adding a # noqa: DEP003 suppression without checking if the import is actually needed | Remove the import first; only suppress if the dependency is truly required but indirect |
 | Declaring a package in both dependencies and dev-dependencies | Keep it in one group only; deptry flags this as a duplicate |
-| Ignoring deptry output because "it worked before" | Stale dependencies create install-time failures in CI � fix all violations before merging |
+| Ignoring deptry output because "it worked before" | Stale dependencies create install-time failures in CI — fix all violations before merging |

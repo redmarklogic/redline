@@ -1,4 +1,4 @@
----
+﻿---
 name: python-linting
 description: Use when resolving Ruff lint violations or deciding whether a suppression is safe in this repo
 ---
@@ -24,6 +24,7 @@ This skill defines how to keep Python code compliant with the repo's linting rul
 ## Repo Reminders
 
 Add one-line reminders here when you fix new, recurring lint failures.
+When fixing lint errors, add a concise one-line reminder to this section if not already covered.
 
 - Ensure all module-level imports are placed at the top of the file before any other code (`E402`)
 - Do not pass the exception object to `logger.exception()` as it is redundant (`TRY401`).
@@ -44,7 +45,7 @@ See `procedures/python-linting.md` for detailed rules, examples, and extended re
 
 | Mistake | Fix |
 |---|---|
-| Adding # noqa without a rule code | Always specify the rule: # noqa: E501 � bare # noqa suppresses everything silently |
+| Adding # noqa without a rule code | Always specify the rule: # noqa: E501 — bare # noqa suppresses everything silently |
 | Suppressing a lint rule instead of fixing the code | Suppressions are for unavoidable violations only; fix the code first |
 | Running 
 uff check --fix on generated files | Exclude generated files in pyproject.toml [tool.ruff] exclude; never auto-fix code you don't own |

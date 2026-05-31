@@ -9,10 +9,10 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |
 |--------|-------|------|---------------|----------------|
-| 1. Merge locally | ✓ | - | - | ✓ |
-| 2. Create PR | - | ✓ | ✓ | - |
-| 3. Keep as-is | - | - | ✓ | - |
-| 4. Discard | - | - | - | ✓ (force) |
+| 1. Merge locally | [x] | - | - | [x] |
+| 2. Create PR | - | [x] | [x] | - |
+| 3. Keep as-is | - | - | [x] | - |
+| 4. Discard | - | - | - | [x] (force) |
 
 
 See `procedures/finishing-a-development-branch.md` for detailed rules, examples, and extended reference.

@@ -190,16 +190,16 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Static checks (every task) | `python-static-checks`, `python-deptry` |
 | Debugging | `systematic-debugging` |
 | Dev environment | `dev-environment`, `python-usethis` |
-| Git workflow | `version-control`, `git-push-batched` |
+| Git workflow | `git-version-control`, `git-push-batched` |
 | Git hooks (bug fixes) | `git-hooks-create` |
 | Security | `security` |
 | Performance | `python-performance` |
 | Before claiming done | `verification-before-completion` |
 | Before starting creative work | `brainstorming` |
 | CrewAI agents | `python-crewai` |
-| Codebase exploration / session start / discover company docs | `cce-mcp` |
+| Codebase exploration / session start / discover company docs | `mcp-cce` |
 | EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
-| MCP tooling | `python-mcp-tools`, `notebooklm-mcp` |
+| MCP tooling | `python-mcp-tools`, `mcp-notebooklm` |
 | Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
 | Executing a SpecKit `tasks.md` plan | `spec-kit` (implement phase), `subagent-driven-development` |
 | Documentation maintenance | `doc-updater` |

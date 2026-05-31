@@ -1,4 +1,4 @@
----
+﻿---
 name: git-push-batched
 description: Use when pushing changes to git -- organises dirty files into thematically cohesive commits before pushing
 ---
@@ -70,5 +70,5 @@ See `procedures/git-push-batched.md` for detailed rules, examples, and extended 
 | Mistake | Fix |
 |---|---|
 | Creating a single commit for all changes regardless of theme | Group changes by theme (feat, fix, chore, docs) into separate commits for a clean history |
-| Using vague commit messages like "updates" or "fixes" | Write conventional commit messages: eat(scope): what changed � be specific |
+| Using vague commit messages like "updates" or "fixes" | Write conventional commit messages: eat(scope): what changed — be specific |
 | Including generated or build artefacts in the commit | Add generated paths to .gitignore before committing; never commit .pyc, dist/, or lock files modified unintentionally |

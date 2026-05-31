@@ -7,11 +7,6 @@ description: Use when versioning datasets with the pins library -- board layout,
 
 This skill defines how to version and share datasets using the `pins` library.
 
-For related topics:
-
-- Path resolution conventions: use the `python-paths` skill.
-- General Python style: use the `python-style` skill.
-
 ## Boundary Contract
 
 ### Applies To

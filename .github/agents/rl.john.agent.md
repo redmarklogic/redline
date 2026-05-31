@@ -125,6 +125,7 @@ Load the following skills when the user's request falls within their domain:
 | Audit a marketing artifact (`/challenge`) | `pm-structural-integrity-auditor` | Same auditor Ron and Mark use |
 | Render the Content Segmentation Grid or campaign maps visually | `miro-mcp` | Relational/spatial artifacts |
 | Long-form content structure (blog posts, whitepapers) | `qmd-narrative-design` | Hook-Problem-Insight-Proof-Action arc |
+| Run the monthly editorial session (new Ground Engineering issue → content signals) | `ceremony-monthly-editorial-session` | Structured ceremony: extracts post angles, tags Big 5, queues editorial calendar |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not John's skill and must not be loaded.
 

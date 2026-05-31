@@ -1,161 +1,262 @@
-# Skills Architecture — Handoff Chain
+# Skills Architecture — Layered Architecture
 
-> **Handoff chain reference.** This document describes the execution flow: who hands work
-> to whom, in what sequence, and why skipping a layer is a defect.
+> **SOT for layer assignments.** This document is the single authoritative source for
+> skill-to-layer classification (L0-L9). The `layer` field in `skills-lock.json` is
+> derived from this document via `hooks/sync-layer-to-lock.py`.
 >
-> For the full layer map (which skills live at which layer) and dependency rules, see
-> [skills-taxonomy.md](skills-taxonomy.md).
->
-> For narrative context, onboarding prose, and worked examples, see
+> For narrative context — what layers mean, why they are ordered this way, worked examples,
+> and onboarding prose — see
 > [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md).
 
-## The six layers
+---
 
-Redline's skills sit in a six-layer stack. Each layer answers a different kind of question
-and hands off to the layer below it.
+## Principles
 
-```mermaid
-flowchart TD
-    subgraph L1[Layer 1 - Strategy]
-        Ron[Ron]
-    end
+### 1. Dependency Direction
 
-    subgraph L2[Layer 2 - Product]
-        Mark[Mark]
-    end
+A skill at layer N may reference skills at layers 0 through N. It must **never** reference a skill at layer N+1 or above.
 
-    subgraph L25[Layer 2.5 - Shaping]
-        Peter[Peter]
-    end
+```
+Layer 6  ─────────────────────────────────────
+  can reference →  Layer 5, 4, 3, 2, 1, 0
 
-    subgraph L3[Layer 3 - Engineering Spec]
-        SpecKit[spec-kit]
-    end
-
-    subgraph L4[Layer 4 - Implementation]
-        Kabilan[Kabilan]
-    end
-
-    subgraph L5[Layer 5 - Tools & Platform]
-        Tools[MCPs / platform tools]
-    end
-
-    L1 ==> L2
-    L2 ==> L25
-    L25 ==> L3
-    L3 ==> L4
-    L4 -.calls.-> L5
-    L2 -.calls.-> L5
-    L25 -.calls.-> L5
-    L1 -.calls.-> L5
+Layer 2  ─────────────────────────────────────
+  can reference →  Layer 1, 0
+  CANNOT reference →  Layer 3, 4, 5, 6, ...
 ```
 
-The thick arrows are the **handoff chain** — work flows downward, and each layer must be
-satisfied before the next can begin. The dotted arrows are **tool calls** — any layer can
-reach into Layer 5 to use a platform capability without changing layer.
+### 2. Stability Gradient (lower = more stable)
 
-## Reading the layers in plain English
+Lower layers change less often. Upper layers are more volatile. Skills that change frequently belong in upper layers; stable standards and adapters belong near the foundation.
 
-### Layer 1 — Strategy
+### 3. Vendor Boundary (Layer 0, immutable)
 
-Ron answers questions like *"Should we build this at all?"*, *"Who is this for, in market
-terms?"*, *"What is the bet we are making?"*. He produces strategic bets, OKRs, positioning
-documents, and GTM plans. He never writes code. He hands off to Mark.
+All vendor-maintained skills sit at Layer 0. They cannot reference project-owned skills — vendor updates overwrite local modifications.
 
-### Layer 2 — Product
+| Vendor                 | Skills                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `specify` (spec-kit) | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
+| `obra/superpowers`   | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
-Mark turns Ron's bets into something a team can actually build. He frames problems,
-identifies personas, prioritises features, and writes the Product Requirements Document
-(PRD) that tells engineering what to build and why. He never writes code either. He hands
-off to Peter for shaping.
+### 4. Single Source of Truth (registries at the bottom)
 
-### Layer 2.5 — Shaping
+Foundation registries (`mental-models`) define concepts once. All other skills reference
+their files — never redefine concepts inline.
 
-Peter takes Mark's PRD and shapes it into a Pitch: rough scope boundaries, rabbit holes
-removed, technical risks triaged. The Pitch uses breadboard-level abstraction — components
-and connections, no visual design. Mark sets the business appetite; Peter sets the technical
-appetite. The Pitch is the handoff to spec-kit.
+### 5. Polyglot Before Language-Specific
 
-This layer sits between Product (L2) and Engineering Spec (L3) because shaping translates
-product intent into buildable scope.
+Language-agnostic skills (data-tidy, security, git-version-control, mermaid-diagrams) sit
+below language-specific skills (python-*). Python skills are implementations or
+customisations of polyglot concepts. If a concept applies regardless of programming
+language, it belongs in a lower layer.
 
-### Layer 3 — Engineering spec
+### 6. Deep Modules at Layer Boundaries
 
-spec-kit takes Mark's PRD and Peter's shaped Pitch and breaks them into a formal specification,
-an implementation plan, and a task list. This is where words become acceptance criteria.
-It is the bridge between product and code.
+Each layer exposes a minimal, stable interface upward. Prefer fewer powerful skills per
+layer over many shallow ones that leak implementation details.
 
-### Layer 4 — Implementation
+### 7. Horizontal Independence (within a layer)
 
-These are the rules that govern *how* code is written: style, types, tests, error handling,
-data modelling, reporting. They activate whenever someone is actually editing Python files.
-For the full skill list at this layer, see [skills-taxonomy.md](skills-taxonomy.md).
+Skills within the same layer may reference each other when logically necessary. This is
+not a violation. The rule applies only to **vertical** dependencies: no upward references.
 
-### Layer 5 — Tools & platform
+### 8. Placement Rule
 
-These are not about *what* to build; they are about *what tools you can use* while building.
-Miro for visual artifacts, NotebookLM for research, Git for version control, the dev
-environment itself. Any layer above can reach into this layer.
+When placing a new skill, ask:
 
-## Two RICE skills, two altitudes — why we did not merge them
+> *"What is the highest-numbered layer containing all the skills this skill needs to reference?"*
+> Place the new skill at that layer + 1 (or at that same layer if it references nothing).
 
-You will notice two skills that both mention RICE prioritization:
+---
 
-- `pm-prioritization` (Layer 2) — ranks **initiatives across the portfolio**. Should we
-  build the PDF exporter, or the new dashboard, or the integration with Salesforce?
-- `spec-kit` (Layer 3) — ranks **acceptance scenarios within a single spec**. Inside the
-  PDF exporter spec, which scenarios do we ship in v1 and which in v2?
+## Layer Map
 
-These are different decisions made by different people at different times. Merging them
-would force the engineering team to import portfolio-level concerns into every spec, and
-force product to think about acceptance scenarios when ranking initiatives. We keep them
-separate on purpose.
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│  Layer 9: Product, Strategy & Organisation                           │
+│  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic   │
+│  marketing-* · hiring-agent-management · ceremony-*                  │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 8: Engineering Workflows                                      │
+│  shaping · arch-engineering · evaluation-architecture        │
+│  ai-acceptable-use-policy · doc-updater · git-push-batched           │
+│  resolving-pr-issues · skills-create                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 7: Applied Capabilities                                       │
+│  eda-* · qmd-* · redline-research · notebooklm-index                │
+│  notebooklm-deep-research · library-management                       │
+│  git-hooks-create                                                    │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 6: Python Implementation (volatile)                           │
+│  python-patterns · python-function-design · python-class-design      │
+│  python-module-structure · python-domain-modeling                    │
+│  python-documentation · python-error-handling                        │
+│  python-data-ingestion · python-crewai                               │
+│  python-script · python-script-numbering                             │
+│  python-pins-data-version-control · python-plot-colors               │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 5: Quality & Tooling                                          │
+│  python-testing-unit · python-testing-api                            │
+│  python-static-checks · python-deptry · python-performance           │
+│  dev-environment · python-usethis                                    │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 4: Core Language Standards                                    │
+│  python-style · python-typing · python-linting · python-paths        │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 3: Platform Integrations (MCPs)                               │
+│  miro-mcp · mcp-notebooklm · mcp-cce · python-mcp-tools             │
+│  rag-prompting                                                       │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 2: Language-Agnostic Standards (polyglot)                     │
+│  data-tidy · security · git-version-control · mermaid-diagrams           │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 1: Foundational Registries                                    │
+│  mental-models                                                       │
+├──────────────────────────────────────────────────────────────────────┤
+│  Layer 0: Vendor Primitives (immutable)                              │
+│  specify:     spec-kit                                               │
+│  superpowers: brainstorming · dispatching-parallel-agents            │
+│               finishing-a-development-branch · receiving-code-review │
+│               requesting-code-review · subagent-driven-development   │
+│               systematic-debugging · test-driven-development         │
+│               using-git-worktrees · using-superpowers                │
+│               verification-before-completion · writing-skills        │
+└──────────────────────────────────────────────────────────────────────┘
+         Dependencies flow DOWNWARD only  ↓  (upper may use lower)
+```
 
-## Two media for artifacts — Markdown and Miro
+---
 
-Some artifacts are best as text, others as visual layouts. The split is codified in the
-"Visual Artifacts Policy" section of `AGENTS.md`. Short version:
+## Layer Definitions
 
-- **Markdown wins** for narrative, decisions, and version-controlled records: PRDs,
-  strategic bets, OKRs, positioning, decision logs, hypotheses.
-- **Miro wins** for spatial and relational artifacts: roadmaps, opportunity solution trees,
-  story maps, journey maps, prioritization matrices.
-- **Hybrid** for personas: Miro to draft collaboratively, Markdown as the canonical
-  reference once stable.
+### Layer 0 — Vendor Primitives (immutable)
 
-Miro is rendered via the `miro-mcp` skill in Layer 5. Skills in Layers 1 and 2 declare
-which medium they own; `miro-mcp` is the rendering tool, not the decision-maker.
+**Rule**: No outbound references to project-owned skills. Modifications are overwritten on
+vendor update.
 
-## What about the named agents (Mark and Ron)?
+| Source                | Skills                                                                                                                                                                                                                                                                                                                                        |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `specify`           | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
+| `obra/superpowers`  | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
-Mark, Ron, Peter, and Matt are not skills. They are **personas** --- addressable identities you invoke by
-name ("Mark, ...", "Ron, ...", or "Peter, ..."). Each persona has a routing table that tells it which
-skills to load when. Think of them as the chefs who know which recipe cards to pick off
-the wall.
 
-The persona files live in `.github/agents/<name>.agent.md` and are governed by the same
-handoff rules described above.
+---
 
-## How to find the right skill yourself
+### Layer 1 — Foundational Registries
 
-If you are scoping a piece of work and want to know which skill applies:
+**Rule**: No outbound references to any other skill. Pure reference registry.
 
-1. **Identify the layer** using the questions above (strategy / product / spec / code / tool).
-2. **Open the index in `AGENTS.md`** — every skill is listed under its layer with a
-   one-line description.
-3. **Read the skill's `description:` line** — it starts with "Use when..." and tells you
-   the trigger. If your situation matches the trigger, the skill applies.
-4. **Read the "When NOT to Use" section** — this is often where you discover you are
-   reaching for the wrong skill.
+| Skill             | Reason                                                                                                                                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mental-models` | Single source of truth for reusable thinking frameworks. Other skills reference its files rather than defining models inline. Zero outbound references by design. |
 
-If a skill is missing for a real, recurring need, that is a gap worth raising. New skills
-are created by following the `skills-create` skill (which is itself a skill — yes, the
-system is recursive).
+---
 
-## References
+### Layer 2 — Language-Agnostic Standards (polyglot)
 
-- [skills-taxonomy.md](skills-taxonomy.md) — authoritative layer map and dependency rules.
-- [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md) — narrative, worked examples, onboarding prose.
-- `AGENTS.md` — the invocation manifest: which skills each agent calls.
-- `.agents/skills/writing-skills/SKILL.md` — how skills are authored and tested.
-- `.github/agents/rl.mark.agent.md`, `.github/agents/rl.ron.agent.md`, `.github/agents/rl.peter.agent.md` — the personas.
+**Rule**: May reference Layers 0-1.
+
+| Skill                   | Scope                                                              |
+| ----------------------- | ------------------------------------------------------------------ |
+| `data-tidy`           | Tidy data principles (Wickham) — applies to any DataFrame library |
+| `security`            | Secrets, configuration, logging — language-agnostic policy        |
+| `git-version-control` | Commit conventions, hygiene — applies to any VCS workflow         |
+| `mermaid-diagrams`    | Diagram syntax and selection — applies to any Markdown document   |
+
+---
+
+### Layer 3 — Platform Integrations (MCPs)
+
+**Rule**: May reference Layers 0-2.
+
+| Skill                | Platform                           |
+| -------------------- | ---------------------------------- |
+| `miro-mcp`         | Miro boards                        |
+| `mcp-notebooklm`   | NotebookLM (setup, auth, config)   |
+| `mcp-cce`          | Code Context Engine                |
+| `python-mcp-tools` | General MCP tooling guidance       |
+| `rag-prompting`    | Prompt engineering for RAG queries |
+
+---
+
+### Layer 4 — Core Language Standards
+
+**Rule**: May reference Layers 0-3.
+
+| Skill              | Scope                                                |
+| ------------------ | ---------------------------------------------------- |
+| `python-style`   | Formatting,`uv` usage, general Python idioms       |
+| `python-typing`  | Type hint standards                                  |
+| `python-linting` | Ruff/lint compliance and safe suppressions           |
+| `python-paths`   | File path conventions (pathlib, importlib.resources) |
+
+---
+
+### Layer 5 — Quality & Tooling
+
+**Rule**: May reference Layers 0-4.
+
+| Group           | Skills                                                              |
+| --------------- | ------------------------------------------------------------------- |
+| Testing         | `python-testing-unit`, `python-testing-api`                     |
+| Static analysis | `python-static-checks`, `python-deptry`, `python-performance` |
+| Environment     | `dev-environment`, `python-usethis`                             |
+
+---
+
+### Layer 6 — Python Implementation (volatile)
+
+**Rule**: May reference Layers 0-5.
+
+| Group         | Skills                                                                                                |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| Code design   | `python-patterns`, `python-function-design`, `python-class-design`, `python-module-structure` |
+| Domain & data | `python-domain-modeling`, `python-data-ingestion`, `python-crewai`                              |
+| Communication | `python-documentation`, `python-error-handling`                                                   |
+| Scripts       | `python-script`, `python-script-numbering`                                                        |
+| Specialised   | `python-pins-data-version-control`, `python-plot-colors`                                          |
+
+---
+
+### Layer 7 — Applied Capabilities
+
+**Rule**: May reference Layers 0-6.
+
+| Group               | Skills                                                                         |
+| ------------------- | ------------------------------------------------------------------------------ |
+| EDA & visualisation | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design` |
+| Reporting           | `qmd-narrative-design`, `qmd-tables`                                       |
+| Research            | `redline-research`, `notebooklm-index`, `notebooklm-deep-research`       |
+| Infrastructure      | `git-hooks-create`, `library-management`                                   |
+
+---
+
+### Layer 8 — Engineering Workflows
+
+**Rule**: May reference Layers 0-7.
+
+| Group            | Skills                                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| Architecture     | `shaping`, `arch-engineering`, `evaluation-architecture`, `ai-acceptable-use-policy` |
+| Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`                               |
+| Skill authoring  | `skills-create`                                                                            |
+
+---
+
+### Layer 9 — Product, Strategy & Organisation
+
+**Rule**: May reference Layers 0-8.
+
+| Group              | Skills                                                                                                                                                                                       |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Product management | `pm-problem-framer`, `pm-hypothesis-builder`, `pm-personas`, `pm-roadmap`, `pm-prioritization`, `pm-decision-architect`, `pm-prd-builder`, `pm-structural-integrity-auditor` |
+| Strategy           | `pm-product-strategist`, `strategy-pre-mortem`, `strategy-psf-domain`, `ddd-strategic`                                                                                               |
+| Marketing          | `marketing-content-big-5`, `marketing-product-led-seo`, `marketing-social-selling-linkedin`, `marketing-ai-content-review`                                                           |
+| Organisation       | `hiring-agent-management`, `ceremony-agent-topology-sync`, `ceremony-monthly-editorial-session`                                                                                        |
+
+---
+
+## Vendor Sources
+
+- [obra/superpowers](https://github.com/obra/superpowers) — General AI agent superpowers (brainstorming, subagent-driven-development, systematic-debugging, etc.)
+- [github/spec-kit](https://github.com/github/spec-kit) — Specification-driven development (spec-kit)

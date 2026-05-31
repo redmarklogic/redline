@@ -1,11 +1,19 @@
 ---
-name: cce-mcp
+name: mcp-cce
 description: Use when discovering code or docs/ company memory, starting multi-phase work needing context persistence, or after creating a new file.
 ---
 
 # Code Context Engine MCP
 
-CCE indexes the project so the agent searches instead of reading files. 94% input-token savings. Indexes code, Markdown, YAML, JSON � including `docs/` (ADRs, research, strategy).
+CCE indexes the project so the agent searches instead of reading files. 94% input-token savings. Indexes code, Markdown, YAML, JSON - including `docs/` (ADRs, research, strategy).
+
+## Prerequisite
+
+CCE tools are deferred. Call `tool_search("code context engine MCP")` before any CCE tool call. Without this step the tools are invisible and the agent falls back to `read_file`.
+
+## Session Start
+
+Before any file exploration, call `session_recall` to load prior decisions and active work areas. This prevents context compaction events and avoids re-explaining architecture every session.
 
 ## Boundary Contract
 

@@ -95,7 +95,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 | Writing or auditing a skill file | `writing-skills` |
 | Creating a new skill folder and SKILL.md | `skills-create` |
 | Creating, updating, or auditing a skill/JD that may interact with spec-kit workflow | `customization-mechanism-triage` (load `procedures/speckit-extension-triage.md` to evaluate extension candidacy) |
-| Querying a notebook for skill grounding | `notebooklm-mcp` |
+| Querying a notebook for skill grounding | `mcp-notebooklm` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
 | Running the Agent Topology Sync ceremony | `ceremony-agent-topology-sync` |
 

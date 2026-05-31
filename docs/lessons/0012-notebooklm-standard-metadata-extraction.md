@@ -331,16 +331,16 @@ standards in remaining 180+ sources. Estimated ~5-10 Handbooks in full notebook.
 
 | Standard Code | Discipline | Status | File Hygiene |
 |---|---|---|---|
-| AS/NZS 1158.3.1:2005 | electrical | published | ✓ OK |
-| AS/NZS 1158.3.1:2020 | electrical | published | ✓ OK |
-| AS/NZS 1158.3.1:2005 | electrical | published | ⚠ Possible duplicate |
-| AS/NZS 1163:2016 | structural | published | ✓ OK |
-| AS/NZS 1170.0:2002 | structural | published | ✓ OK |
-| AS/NZS 1170.0 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
-| AS/NZS 1170.0 Supp 1:2002 | structural | published | ❌ Supplement duplicate |
-| AS/NZS 1170.1:2002 | structural | published | ✓ OK |
-| AS/NZS 1170.1 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
-| AS/NZS 1170.2 Supp 1:2002 | structural | published | ❌ Supplement (filename mismatch) |
+| AS/NZS 1158.3.1:2005 | electrical | published | [x] OK |
+| AS/NZS 1158.3.1:2020 | electrical | published | [x] OK |
+| AS/NZS 1158.3.1:2005 | electrical | published | [?] Possible duplicate |
+| AS/NZS 1163:2016 | structural | published | [x] OK |
+| AS/NZS 1170.0:2002 | structural | published | [x] OK |
+| AS/NZS 1170.0 Supp 1:2002 | structural | published | [!] Supplement (filename mismatch) |
+| AS/NZS 1170.0 Supp 1:2002 | structural | published | [!] Supplement duplicate |
+| AS/NZS 1170.1:2002 | structural | published | [x] OK |
+| AS/NZS 1170.1 Supp 1:2002 | structural | published | [!] Supplement (filename mismatch) |
+| AS/NZS 1170.2 Supp 1:2002 | structural | published | [!] Supplement (filename mismatch) |
 
 ### What worked in Batch 2
 
@@ -430,7 +430,7 @@ This breaks JSON parsing because it starts with ````json`, not `{`.
   - "DO NOT start with ```json"
   - "DO NOT start with ``` or any other code fence"
   - "DO NOT end with ```"
-  - Added examples: ✓ RIGHT vs ✗ WRONG formats
+  - Added examples: [x] RIGHT vs [ ] WRONG formats
 - Saved as `extraction_prompt_refined.txt` *(file removed from repo after workflow stabilised; canonical prompt is now embedded in `.agents/skills/library-management/procedures/extract-standard-metadata.md`)*
 
 **REFACTOR (Update Documentation):**

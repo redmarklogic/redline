@@ -113,7 +113,9 @@ Framed as outcomes and decisions, not as a task list.
 | Skill | Purpose |
 |---|---|
 | `library-management` | Add books to `G:\My Drive\Library`, extract metadata, update `library-index.xlsx`, deduplicate, and verify the workbook |
-| `notebooklm-mcp` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to call `source_add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
+| `mcp-notebooklm` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to call `source_add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
+| `notebooklm-index` | Add, update, or audit a NotebookLM notebook entry in `index-notebooklm.xlsx`. Load whenever a notebook is created, renamed, or decommissioned. |
+| `notebooklm-deep-research` | Run a deep research session in NotebookLM with 5 Whys intake. Linda initiates the session and returns the handoff package to the requester. |
 | `redline-research` | Query notebooks and use the register |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Linda's skill and must not be loaded.

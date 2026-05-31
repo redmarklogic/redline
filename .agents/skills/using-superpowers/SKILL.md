@@ -26,6 +26,6 @@ See `procedures/skill-flow.md` for the decision flowchart, red-flag reference ta
 
 | Mistake | Fix |
 |---|---|
-| Answering before checking for a skill | Skill check is FIRST � before any response |
+| Answering before checking for a skill | Skill check is FIRST -- before any response |
 | Loading a skill that does not match the task | Match the trigger condition before loading |
 | Assuming a skill is current | Read the file; skills evolve |

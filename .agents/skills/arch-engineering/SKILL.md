@@ -1,5 +1,5 @@
 ---
-name: engineering-architecture
+name: arch-engineering
 description: Use when making system-level design decisions, writing ADRs, defining component boundaries, or reviewing architectural compliance of shaped work and SpecKit output.
 ---
 
@@ -34,13 +34,25 @@ description: Use when making system-level design decisions, writing ADRs, defini
 | Architectural constraint | Automated test | Tests directory |
 
 
+## ADR Conventions
+
+ADRs are immutable decision records, not project management tools.
+
+- **Include**: Decision, Status, Context, Options Considered, Rationale, Consequences, References (other ADRs, external docs, RFCs, library docs only).
+- **Exclude**: follow-up actions or task checklists (belong in tasks.md); links to specs, plans, or tasks (upward dependencies); scratchpad notes (ephemeral). Embed any relevant research findings directly in the ADR body instead.
+
 See `procedures/engineering-architecture.md` for detailed rules, examples, and extended reference.
+
+## Decision Persistence
+
+After resolving any non-obvious design choice, call `record_decision` (via CCE MCP) immediately - not at session end. This ensures decisions survive context compaction and are available via `session_recall` in future sessions.
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---|---|
 | Expressing architectural constraints as prose rules | Every constraint must be an automated test. If it cannot be tested, it is opinion, not architecture. |
+| Resolving a design choice without persisting it | Call `record_decision` immediately after the choice is made, not at session end. |
 | Reviewing the UI/UX Designer's design specs (Touch 1.5) | Review only SpecKit output at Touch 2; never touch the UI/UX Designer's design artifacts between Touch 1 and Touch 2. |
 | Selecting technology before defining component boundaries | Define boundaries and APIs first; technology selection follows. |
 | Writing detailed specifications | Write shaped Pitches (breadboard level); SpecKit's `specify` agent writes the spec. |

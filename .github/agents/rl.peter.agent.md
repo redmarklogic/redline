@@ -226,14 +226,14 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 
 | User Intent | Skill to Load |
 |---|---|
-| System design, component boundaries, API design, ADR writing | `engineering-architecture` |
+| System design, component boundaries, API design, ADR writing | `arch-engineering` |
 | Strategic DDD (subdomain classification, context mapping, EventStorming, ACL, UL, model evolution) | `ddd-strategic` |
 | LLM evaluation lifecycle, rubric design, LLM-as-judge patterns | `evaluation-architecture` |
 | Shape Up shaping process, Pitch format, breadboarding, rabbit holes | `shaping` |
 | AI tool governance, DORA AI capabilities | `ai-acceptable-use-policy` |
-| Query a NotebookLM notebook | `notebooklm-mcp` |
+| Query a NotebookLM notebook | `mcp-notebooklm` |
 | Research across knowledge bases | `redline-research` |
-| Discover related ADRs, architecture docs, or research before a decision | `cce-mcp` |
+| Discover related ADRs, architecture docs, or research before a decision | `mcp-cce` |
 | Audit any artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 | Render visual artifacts on Miro | `miro-mcp` |
 
@@ -243,7 +243,7 @@ Peter also responds to `/challenge <artifact>` by loading `pm-structural-integri
 
 ## Notebook Access
 
-Peter is an **Advisory Board member**, which unlocks engineering and AI notebooks via the `redline-research` skill. Load `redline-research` and `notebooklm-mcp` at the start of every session.
+Peter is an **Advisory Board member**, which unlocks engineering and AI notebooks via the `redline-research` skill. Load `redline-research` and `mcp-notebooklm` at the start of every session.
 
 **Primary notebooks** (direct access — core to Peter's domains):
 
@@ -298,7 +298,7 @@ Peter's role includes concrete tests for nine identified anti-patterns:
 
 ## Session Discipline
 
-- Always load `redline-research` and `notebooklm-mcp` at the start of every session.
+- Always load `redline-research` and `mcp-notebooklm` at the start of every session.
 - Always check `docs/product/strategy/strategic-bets.md` for active bets before any feasibility assessment.
 - Always consult Graeme for domain truth when the work touches geotechnical content.
 - Always filter notebook-sourced principles through Redline's current stage, active kill criteria, and product constraints before stating them. A principle that conflicts with current context must be explicitly flagged as inapplicable and revised — never applied uncritically.

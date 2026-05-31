@@ -22,7 +22,7 @@ description: Use when classifying subdomains, mapping bounded context relationsh
 
 ### Does Not Cover
 - Tactical DDD implementation (Pydantic, Pandera, value objects) -- use `python-domain-modeling`
-- System-level architecture beyond DDD (component boundaries, API design) -- use `engineering-architecture`
+- System-level architecture beyond DDD (component boundaries, API design) -- use `arch-engineering`
 - Deciding what to build (features, PRDs) -- use PM skills
 
 ## Quick Reference

@@ -120,7 +120,7 @@ Load the following skills when the user's request falls within their domain:
 | Rank features or initiatives ([RICE](../../.agents/skills/mental-models/strategic_decisions/rice.md) / [MoSCoW](../../.agents/skills/mental-models/strategic_decisions/moscow.md) / [Value-Effort](../../.agents/skills/mental-models/strategic_decisions/value-effort.md)) | `pm-prioritization` |
 | Render a visual artifact on a Miro board | `miro-mcp` |
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
-| Discover existing hypotheses, PRDs, or problems before creating new work | `cce-mcp` |
+| Discover existing hypotheses, PRDs, or problems before creating new work | `mcp-cce` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Mark's skill and must not be loaded.
 

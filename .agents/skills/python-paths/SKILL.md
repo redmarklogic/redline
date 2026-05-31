@@ -7,12 +7,6 @@ description: Use when resolving file paths in Python -- choosing between pathlib
 
 This skill defines how to resolve file and directory paths across the codebase.
 
-For related topics:
-
-- Data versioning with pins: use the `python-pins-data-version-control` skill.
-- General Python style: use the `python-style` skill.
-- Lint rules (including `os.path` ban): use the `python-linting` skill.
-
 ## Boundary Contract
 
 ### Applies To

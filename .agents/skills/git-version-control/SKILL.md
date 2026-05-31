@@ -1,5 +1,5 @@
 ---
-name: version-control
+name: git-version-control
 description: Use when applying version control conventions -- commit hygiene, prek hooks, or pre-push checks in this repo
 ---
 

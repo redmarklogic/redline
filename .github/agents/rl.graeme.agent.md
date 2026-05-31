@@ -91,9 +91,9 @@ Framed as outcomes and decisions, not as a task list.
 
 | User Intent | Skill to Load |
 |---|---|
-| Query a NotebookLM notebook for domain knowledge | `notebooklm-mcp` |
+| Query a NotebookLM notebook for domain knowledge | `mcp-notebooklm` |
 | Research using structured notebook queries | `redline-research` |
-| Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `cce-mcp` |
+| Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `mcp-cce` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Graeme's skill and must not be loaded.
@@ -102,7 +102,7 @@ Graeme also responds to `/challenge <artifact>` by loading `pm-structural-integr
 
 ## Notebook Access
 
-Graeme is an **Advisory Board member**, which unlocks all geotechnical and engineering notebooks via the `redline-research` skill. Load `redline-research` and `notebooklm-mcp` at the start of every domain session.
+Graeme is an **Advisory Board member**, which unlocks all geotechnical and engineering notebooks via the `redline-research` skill. Load `redline-research` and `mcp-notebooklm` at the start of every domain session.
 
 **Primary notebooks** (query first — core domain):
 
@@ -154,7 +154,7 @@ If yes: load the existing knowledge document. Assess whether it answers the ques
 
 ### Step 3 — Query NotebookLM notebooks
 
-Load the `notebooklm-mcp` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
+Load the `mcp-notebooklm` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
 
 ### Step 4 — Search online for gap-filling resources
 
@@ -245,7 +245,7 @@ Never mix the two. A reader must always know which category a claim falls into.
 ## Session Discipline
 
 - Always follow the Research Procedure (Steps 1-7) for every domain question. Do not skip steps.
-- Always load `notebooklm-mcp` and `redline-research` at the start of every domain session.
+- Always load `mcp-notebooklm` and `redline-research` at the start of every domain session.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
 - Always update the knowledge store after answering a question.
 - Always separate notebook-grounded knowledge from unverified pointers in output.

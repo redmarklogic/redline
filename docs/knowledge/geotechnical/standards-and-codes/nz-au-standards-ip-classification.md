@@ -5,7 +5,7 @@
 **Confidence**: single-source (professional practice knowledge; no notebook citation possible — NotebookLM unavailable at time of authorship)
 **Sources**: Graeme's professional experience (25+ years, large NZ geotechnical consultancy); existing Redline research documents `20260412-standards-management-and-mapping.md`, `20260413-standards-clause-extraction.md`
 
-**⚠ External verification required before acting on Q1 and Q3 findings — see Open Questions.**
+**WARNING: External verification required before acting on Q1 and Q3 findings — see Open Questions.**
 
 ---
 

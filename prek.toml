@@ -243,6 +243,33 @@ hooks = [
     priority = 0
   },
   {
+    id = "check-skill-dag",
+    name = "check-skill-dag",
+    entry = "uv run --frozen --offline hooks/check-skill-dag.py",
+    language = "system",
+    files = '^\.agents/skills/.*SKILL\.md$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-skill-routing-redundancy",
+    name = "check-skill-routing-redundancy",
+    entry = "uv run --frozen --offline hooks/check-skill-routing-redundancy.py",
+    language = "system",
+    files = '^\.agents/skills/.*SKILL\.md$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-orphan-skills",
+    name = "check-orphan-skills",
+    entry = "uv run --frozen --offline hooks/check-orphan-skills.py",
+    language = "system",
+    files = '(^\.agents/skills/|^\.github/agents/.*\.agent\.md$|AGENTS\.md$)',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
     id = "check-no-dataclass-in-domain",
     name = "check-no-dataclass-in-domain",
     entry = "uv run --frozen --offline hooks/check-no-dataclass-in-domain.py",
@@ -387,15 +414,6 @@ hooks = [
     priority = 0
   },
   {
-    id = "sync-layer-to-lock",
-    name = "sync-layer-to-lock",
-    entry = "uv run --frozen --offline hooks/sync-layer-to-lock.py",
-    language = "system",
-    files = '(docs/architecture/skills-taxonomy\.md|skills-lock\.json)$',
-    pass_filenames = false,
-    priority = 0
-  },
-  {
     id = "check-no-debug-statements",
     name = "check-no-debug-statements",
     entry = "uv run --frozen --offline hooks/check-no-debug-statements.py",
@@ -457,6 +475,42 @@ hooks = [
     files = '\.py$',
     pass_filenames = false,
     priority = 0
+  },
+  {
+    id = "check-no-emoji",
+    name = "check-no-emoji",
+    entry = "uv run --frozen --offline hooks/check-no-emoji.py",
+    args = [
+      "--dirs=.agents",
+      "--dirs=docs",
+      "--dirs=hooks",
+      "--dirs=scripts",
+      "--dirs=src",
+      "--dirs=specs",
+      "--dirs=tests"
+    ],
+    language = "system",
+    files = '\.(py|md|toml|yml|yaml)$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
+    id = "check-replacement-char",
+    name = "check-replacement-char",
+    entry = "uv run --frozen --offline hooks/check-replacement-char.py",
+    args = [
+      "--dirs=.agents",
+      "--dirs=docs",
+      "--dirs=hooks",
+      "--dirs=scripts",
+      "--dirs=src",
+      "--dirs=specs",
+      "--dirs=tests"
+    ],
+    language = "system",
+    files = '\.(py|md|toml|yml|yaml)$',
+    pass_filenames = false,
+    priority = 0
   }
 ]
 
@@ -466,6 +520,21 @@ rev = "v1.10.0"
 hooks = [
   {
     id = "rst-backticks",
+    priority = 0
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "cce-reindex",
+    name = "cce-reindex",
+    entry = "cce index",
+    language = "system",
+    stages = ["post-checkout", "post-merge"],
+    always_run = true,
+    pass_filenames = false,
     priority = 0
   }
 ]
