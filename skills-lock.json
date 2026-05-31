@@ -976,6 +976,24 @@
       ],
       "status": "active",
       "layer": 0
+    },
+    "task-defer": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "ron",
+        "mark",
+        "peter",
+        "graeme",
+        "john",
+        "matt",
+        "harriet",
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
     }
   }
 }
