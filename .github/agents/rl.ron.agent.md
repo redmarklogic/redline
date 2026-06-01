@@ -143,7 +143,7 @@ Notebook URLs and the full query procedure live in `redline-research/PROCEDURE.m
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and query the Founder Memos notebook before forming any strategy artifact.
 - Always ask Graeme for domain grounding before any strategic bet that touches geotechnical content.
 - Strategy work is iterative — propose, challenge, refine. Never produce a final artifact without at least one round of questioning.

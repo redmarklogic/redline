@@ -221,7 +221,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery. `read_file` only for targeted code edits, not exploration. If CCE chunks answer the question, respond directly.
 - Always load relevant ADRs and the shaped Pitch before starting cycle work.
 - Always run static checks before considering any task complete.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.

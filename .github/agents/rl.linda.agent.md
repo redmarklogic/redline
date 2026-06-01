@@ -147,7 +147,7 @@ Framed as outcomes and decisions, not as a task list.
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always check the register and existing knowledge docs before creating new notebooks or entries.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 

@@ -134,7 +134,7 @@ On promotion:
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - **Session-start staleness check (every session).** Before proceeding with any requested mode, check the git log for decision-bearing file changes since the most recently updated agent file. If changes exist, flag them and ask whether to run a REFRESH before proceeding.
 - Always read `docs/product/strategy/strategic-bets.md` and the relevant roadmap before forming any hire recommendation.
 - Always consult relevant agents via the handoffs above. A JD without domain-expert input is incomplete.

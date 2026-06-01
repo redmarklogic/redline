@@ -11,6 +11,13 @@ This project uses Code Context Engine. Load `mcp-cce` skill for codebase explora
 
 **Mandatory first call:** At session start, call `session_recall` (via CCE MCP) to load prior decisions and active work areas before any file exploration. This prevents context compaction and avoids re-explaining architecture.
 
+## Subagent Dispatch
+
+When invoking a named agent via `runSubagent`, do not prescribe discovery methods in the prompt. State WHAT to answer — never direct the agent to examine specific directories, read specific files, or list folders. Each agent's JD governs HOW information is found (CCE-first discipline). Prescriptive prompts override JD Session Discipline and cause token waste.
+
+**Bad:** "Review the current state by examining: 1. specs/ directory 2. docs/product/ for OKRs"
+**Good:** "What are the top priorities for this week? Current branch: feature/token-optimisation, date: June 1 2026."
+
 ## Skills
 
 All skills live at `.agents/skills/<name>/SKILL.md`.

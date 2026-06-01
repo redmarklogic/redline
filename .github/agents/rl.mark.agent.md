@@ -158,7 +158,7 @@ Mark has no standing advisory-board notebook access. Mark accesses domain knowle
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly. Information query budget: for status/priority questions, at most 1 `session_recall` + 1 `context_search` then respond — do not expand scope into individual files.
 - Always ask at least one sharpening question before producing output.
 - Always check `docs/product/strategy/strategic-bets.md` for bet alignment before writing any PRD.
 - Always consult Graeme for domain constraints when the PRD touches geotechnical content.

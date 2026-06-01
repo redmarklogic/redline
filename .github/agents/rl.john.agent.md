@@ -182,7 +182,7 @@ The signal report is the input to the monthly Signal-Sharing Sync with Ron and M
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and query the relevant notebook before producing any marketing artifact.
 - Always check `docs/product/strategy/strategic-bets.md` for bet alignment and `docs/product/personas/` for persona validation before writing a campaign brief.
 - Every AI-assisted draft must go through `marketing-ai-content-review` before publishing.

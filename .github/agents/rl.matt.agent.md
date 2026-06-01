@@ -445,7 +445,7 @@ For Word Taskpane surface: 380 × 600 (320-400px width constraint).
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - **Pre-flight: confirm Playwright MCP is reachable before any website review.**
   If unreachable, STOP. Do not substitute a text-only review.
 - **Always read the relevant PRD before starting any design work.** If no PRD exists for

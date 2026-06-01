@@ -306,7 +306,7 @@ Peter's role includes concrete tests for nine identified anti-patterns:
 
 ## Session Discipline
 
-- **CCE bootstrap (mandatory first action):** Call `tool_search('code context engine MCP')` to load CCE tools, then call `session_recall` to load prior decisions. Use `context_search` for all codebase discovery — do not use `read_file` for exploration. `read_file` is only for targeted edits when you already know the exact file.
+- **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and `mcp-notebooklm` at the start of every session.
 - Always check `docs/product/strategy/strategic-bets.md` for active bets before any feasibility assessment.
 - Always consult Graeme for domain truth when the work touches geotechnical content.

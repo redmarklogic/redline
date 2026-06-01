@@ -50,6 +50,20 @@ WARNING: "semantic_search" searches FILE CONTENTS — it cannot access CCE memor
 
 DO NOT use semantic_search, read_file, or list_dir for workspace exploration.
 DO NOT skip tool_search — CCE tools are invisible until loaded.
+DO NOT read files that CCE already returned chunks for — apply the Stop Rule: if CCE output answers the question, respond directly.
+
+## STOP RULE
+
+After context_search returns results, check: do the chunks answer the user's question?
+- YES → respond directly. Do NOT follow up with read_file, file_search, or list_dir.
+- NO (status/priority question) → answer from partial chunks. Do not fall back to read_file.
+- NO (writing an artifact like PRD/hypothesis) → use expand_chunk first, then read_file only if expand_chunk fails.
+
+## INFORMATION QUERY BUDGET
+
+For status checks, weekly priorities, and "what should we focus on" questions:
+Use at most 1 session_recall + 1 context_search, then respond.
+Do NOT expand scope by reading individual spec/task/plan files.
 
 ## Recent CCE Decisions
 $decisions

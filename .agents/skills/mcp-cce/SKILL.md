@@ -22,9 +22,16 @@ Before any file exploration, call `session_recall` to load prior decisions and a
 ## When to Use
 
 - **Exploring/discovering** → `context_search` (not `read_file`)
+- **Answering a question (no editing)** → `context_search` is the final source. If the returned chunks answer the question, respond directly. Do NOT follow up with `read_file`, `expand_chunk`, `file_search`, or `list_dir` on files CCE already covered.
 - **Full file needed for editing** → `read_file`
 - **Specific section** → `context_search` + `expand_chunk`
 - **Session start** → `session_recall` | **New file** → `reindex`
+
+### Stop Rule
+
+After `context_search`, check: do chunks answer the question? If yes → respond directly. If no and it's a status/info query → answer from partial chunks (no `read_file`). If no and you're writing an artifact → try `expand_chunk` first, then `read_file` only if needed.
+
+Never use `semantic_search` when CCE is available — `context_search` replaces it.
 
 Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decision` (design choice), `session_recall` (session start), `reindex` (new file). See `procedures/cce-usage.md` for all 9 tools and examples.
 
@@ -32,9 +39,11 @@ Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decis
 
 | Mistake | Fix |
 |---|---|
-| `read_file` to find a pattern | Use `context_search` first |
-| `grep_search` for semantic queries | Use `context_search`; `grep_search` is for exact matches only |
-| No `reindex` after creating a file | `reindex <file>` immediately after creation |
+| `read_file` for exploration | `context_search` first; `read_file` only for edits |
+| `semantic_search` when CCE loaded | `context_search` replaces it |
+| `expand_chunk` fails → `read_file` | For info queries, answer from partial chunks |
+| `file_search`/`list_dir` after `context_search` | CCE indexes full tree |
+| No `reindex` after creating file | `reindex <file>` immediately |
 
 ## Subagent Usage
 
