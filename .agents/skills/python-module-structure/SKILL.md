@@ -8,12 +8,6 @@ description: Use when ordering functions within a Python module -- step-down rul
 This skill governs the internal organisation of Python modules: how functions are
 ordered, when to extract helpers, and what code may appear at module level.
 
-For related topics:
-
-- Function design (signatures, parameters, side effects): use the `python-function-design` skill.
-- Script cell structure and Spyder conventions: use the `python-script` skill.
-- Cognitive complexity reduction through helper extraction: use the `python-function-design` skill.
-
 ## Boundary Contract
 
 ### Applies To

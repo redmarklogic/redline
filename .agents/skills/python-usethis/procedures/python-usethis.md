@@ -50,7 +50,7 @@ Do **not** install `usethis` into the project venv or declare it in `pyproject.t
 ### Adding a tool
 
 1. Run `uvx usethis tool <tool-name>` from the repo root.
-2. Review the printed `✔` (automated) and `☐` (manual) action summary.
+2. Review the printed `[x]` (automated) and `[ ]` (manual) action summary.
 3. Run the tool once to normalize any existing files (e.g., `uv run pyproject-fmt pyproject.toml`).
 4. Commit `pyproject.toml`, `uv.lock`, and `.pre-commit-config.yaml` together.
 

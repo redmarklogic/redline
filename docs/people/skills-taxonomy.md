@@ -113,6 +113,7 @@
 | `resolving-pr-issues` | Resolve incoming PR code-review comments (structured triage, fail-first test, fix, CI closure) | Engineering |
 | `verification-before-completion` | Verify errors are truly resolved before claiming done | Engineering |
 | `systematic-debugging` | 4-phase root cause debugging process | Engineering |
+| `task-defer` | Defer a task, idea, decision, or knowledge gap to a future date or condition; register in `docs/deferred/` with a mandatory unfreeze condition | Ron, Mark, Peter, Graeme, John, Matt, Harriet, Engineering |
 
 ### Product Management
 

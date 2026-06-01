@@ -1,4 +1,4 @@
----
+﻿---
 name: python-plot-colors
 description: Use when selecting colors for plots -- colormap choice, color-blindness safety, or maintaining cross-figure consistency across plotting libraries
 ---
@@ -24,5 +24,5 @@ See `procedures/python-plot-colors.md` for detailed rules, examples, and extende
 | Mistake | Fix |
 |---|---|
 | Using a rainbow (jet) colormap for continuous data | Use a perceptually uniform sequential colormap (iridis, plasma) instead |
-| Relying on color alone to distinguish categories | Add shape, pattern, or label annotations � required for color-blind accessibility |
+| Relying on color alone to distinguish categories | Add shape, pattern, or label annotations — required for color-blind accessibility |
 | Redefining the color palette per figure | Define a shared palette constant once and import it in every plot module |

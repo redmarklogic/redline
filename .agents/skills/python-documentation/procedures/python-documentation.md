@@ -74,7 +74,7 @@ def fetch_smalltable_rows(
 
 ## Examples
 
-### ✅ Correct (with Type Hints)
+### Correct (with Type Hints)
 
 The types are defined in the signature, so the docstring only describes what the argument is.
 
@@ -92,7 +92,7 @@ def repeat_message(msg: str, count: int) -> list[str]:
     return [msg] * count
 ```
 
-### ❌ Incorrect (Redundant Types)
+### Incorrect (Redundant Types)
 
 Do not include the type inside parentheses in `Args` or at the start of `Returns` if they are already in the signature.
 
@@ -110,7 +110,7 @@ def repeat_message(msg: str, count: int) -> list[str]:
     return [msg] * count
 ```
 
-### ✅ Correct (Doctest Examples)
+### Correct (Doctest Examples)
 
 When a function has behaviour worth illustrating, use standard `doctest` format
 so examples are machine-verifiable.
@@ -130,7 +130,7 @@ def zero_pad_id(raw: str) -> str:
     ...
 ```
 
-### ❌ Incorrect (Ad-hoc Examples)
+### Incorrect (Ad-hoc Examples)
 
 Do not use arrow notation or other non-standard formats in `Examples:` sections.
 These are not verifiable by `pytest --doctest-modules`.

@@ -7,14 +7,6 @@ description: Use when applying Python style conventions in this repo -- uv usage
 
 This skill defines general Python coding conventions for this repo.
 
-For related topics:
-
-- Lint rules and suppressions: use the `python-linting` skill.
-- Type hints: use the `python-typing` skill.
-- Error handling: use the `python-error-handling` skill.
-- Function design: use the `python-function-design` skill.
-- Docstrings: use the `python-documentation` skill.
-
 ## Boundary Contract
 
 ### Applies To

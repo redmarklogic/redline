@@ -1,4 +1,4 @@
----
+﻿---
 name: marketing-social-selling-linkedin
 description: Use when building LinkedIn presence for the founder or sales team, optimising LinkedIn profiles, planning prospecting outreach, or designing comment-and-engagement campaigns on LinkedIn.
 ---
@@ -69,4 +69,4 @@ See `procedures/marketing-social-selling-linkedin.md` for detailed rules, exampl
 |---|---|
 | Sending a connection request with a pitch in the same message | Connect first with a personalised note; send the value offer only after the connection is accepted |
 | Posting company content without a personal founder angle | LinkedIn reach is personal; reframe company news from the founder's perspective and experience |
-| Treating every comment as a direct sales opportunity | Comment to add insight, not to promote � the goal is visibility and trust, not immediate conversion |
+| Treating every comment as a direct sales opportunity | Comment to add insight, not to promote — the goal is visibility and trust, not immediate conversion |

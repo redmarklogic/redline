@@ -9,10 +9,7 @@ This skill defines how scripts under `src/scripts/` should be structured.
 
 For related topics:
 
-- Script naming and execution order: use the `python-script-numbering` skill.
-- Function design (decomposition, signatures): use the `python-function-design` skill.
 - General Python style: use the `python-style` skill.
-- Function ordering within any module (step-down rule, public-before-private): use the `python-module-structure` skill.
 
 ## Boundary Contract
 

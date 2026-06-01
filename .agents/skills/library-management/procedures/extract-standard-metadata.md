@@ -85,9 +85,9 @@ Your response MUST be raw JSON with NO wrapping.
 - DO NOT write any text after closing }
 
 **EXAMPLES:**
-- ✓ RIGHT: { "standard_code": "AS/NZS 1170.2:2021", ... }
-- ✗ WRONG: ```json { ... } ```
-- ✗ WRONG: Here is the JSON: { ... }
+- RIGHT: { "standard_code": "AS/NZS 1170.2:2021", ... }
+- WRONG: ```json { ... } ```
+- WRONG: Here is the JSON: { ... }
 
 SCHEMA:
 - "standard_code":    [String]  The full designation printed on the

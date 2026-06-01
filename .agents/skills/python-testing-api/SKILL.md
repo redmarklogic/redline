@@ -1,4 +1,4 @@
----
+﻿---
 name: python-testing-api
 description: Use when writing API component tests or contract tests for FastAPI endpoints in this repo
 ---
@@ -41,6 +41,6 @@ See `procedures/python-testing-api.md` for detailed rules, examples, and extende
 
 | Mistake | Fix |
 |---|---|
-| Testing internal implementation details instead of the HTTP contract | Test request/response shape, status codes, and headers � not internal service calls |
+| Testing internal implementation details instead of the HTTP contract | Test request/response shape, status codes, and headers — not internal service calls |
 | Using a real database in an API component test | Use an in-memory or test database with fixtures; isolate the API layer from persistence |
 | Asserting on the full response body when only one field matters | Assert on the specific field; brittle full-body assertions break on unrelated changes |

@@ -1,4 +1,4 @@
----
+﻿---
 name: spec-kit
 description: Use when planning a feature, writing a specification, breaking work into tasks, or executing an implementation plan - wraps GitHub Spec Kit CLI for specification-driven development
 ---
@@ -20,6 +20,6 @@ See `procedures/spec-kit.md` for detailed rules, examples, and extended referenc
 
 | Mistake | Fix |
 |---|---|
-| Invoking /speckit.implement directly instead of using Kabilan | Always use Kabilan to execute a tasks.md � he loads Redline conventions that the generic template omits | <!-- hook: allow -->
+| Invoking /speckit.implement directly instead of using Kabilan | Always use Kabilan to execute a tasks.md — he loads Redline conventions that the generic template omits | <!-- hook: allow -->
 | Editing vendor-generated spec-kit files manually | All Redline-specific extensions belong in .specify/extensions.yml; manual edits are overwritten by specify upgrade |
 | Starting speckit.specify before a shaped Pitch exists | Spec-kit requires a shaped Pitch from Peter; unshaped work enters planning with undefined scope | <!-- hook: allow -->

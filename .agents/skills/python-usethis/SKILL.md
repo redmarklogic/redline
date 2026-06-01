@@ -1,4 +1,4 @@
----
+﻿---
 name: python-usethis
 description: Use when adding, removing, or inspecting development tools with the usethis CLI -- pre-commit hooks, pyproject.toml config, or dependencies in this repo
 ---
@@ -30,6 +30,6 @@ See `procedures/python-usethis.md` for detailed rules, examples, and extended re
 
 | Mistake | Fix |
 |---|---|
-| Manually editing pyproject.toml to add a dev tool instead of using usethis | Use usethis tool add <name> � it adds the correct config section and dependencies atomically |
+| Manually editing pyproject.toml to add a dev tool instead of using usethis | Use usethis tool add <name> — it adds the correct config section and dependencies atomically |
 | Running usethis outside the repo root | Always run from the repo root where pyproject.toml lives |
 | Using usethis to add a tool that is already configured | Run usethis tool show first to check current status before adding |

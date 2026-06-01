@@ -8,13 +8,6 @@ description: Use when designing Python functions -- decomposing responsibilities
 This skill covers function design in this repo: decomposition, naming, signatures, and
 minimizing side effects.
 
-For related topics:
-
-- Typing: use the `python-typing` skill.
-- Docstrings: use the `python-documentation` skill.
-- Exceptions/logging: use the `python-error-handling` skill.
-- Module-level function ordering and step-down rule: use the `python-module-structure` skill.
-
 ## Boundary Contract
 
 ### Applies To

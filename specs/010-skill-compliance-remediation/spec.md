@@ -101,7 +101,7 @@ Each skill remediation follows the writing-skills Iron Law: RED (document baseli
 1. **Given** a skill queued for remediation, **When** work begins, **Then** a baseline failure is documented before any change is made.
 2. **Given** a skill with a documented baseline failure, **When** the fix is applied, **Then** the same test passes (GREEN).
 3. **Given** a passing skill, **When** refactoring for loopholes, **Then** compliance is maintained across all 6 principles.
-4. **Given** all remediations are complete, **When** a final compliance audit runs, **Then** an agent produces a full audit table with one row per skill and columns for each of the 6 principles (Frontmatter, "Use when…" desc, Boundary Contract, Token Efficiency, Common Mistakes, No Hardcoded Paths), using ✅/ℹ️/❌ per cell, and the table contains zero ❌ cells across all 82 editable skills.
+4. **Given** all remediations are complete, **When** a final compliance audit runs, **Then** an agent produces a full audit table with one row per skill and columns for each of the 6 principles (Frontmatter, "Use when…" desc, Boundary Contract, Token Efficiency, Common Mistakes, No Hardcoded Paths), using ✅/ℹ️/❌ per cell, and the table contains zero ❌ cells across all 82 editable skills. <!-- hook: allow -->
 
 ---
 
@@ -144,7 +144,7 @@ Each skill remediation follows the writing-skills Iron Law: RED (document baseli
 - **SC-004**: Every editable SKILL.md contains both `## Boundary Contract` and `## Common Mistakes` sections.
 - **SC-005**: Every `description:` field starts with `"Use when"` and contains no workflow summary.
 - **SC-006**: Each remediated skill has a documented RED→GREEN→REFACTOR record showing the Iron Law was followed.
-- **SC-007**: A post-remediation audit table is generated (one row per skill, six principle columns, ✅/ℹ️/❌ per cell) and contains zero ❌ cells and zero ℹ️ cells across all 82 editable skills.
+- **SC-007**: A post-remediation audit table is generated (one row per skill, six principle columns, ✅/ℹ️/❌ per cell) and contains zero ❌ cells and zero ℹ️ cells across all 82 editable skills. <!-- hook: allow -->
 
 ## Assumptions
 

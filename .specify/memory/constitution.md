@@ -1,50 +1,116 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Redline Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Single Source of Truth
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+For every well-defined concern, exactly one authoritative location exists. All other
+locations import, derive, or query from it. Duplication of an authoritative artifact
+-- by copy-paste, static snapshot, or parallel definition -- is a defect, not a
+shortcut.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+*Grounded in ADR-001.*
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Hook-First Enforcement
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+For every project rule that can be expressed as a deterministic pattern check, a
+pre-commit hook is the required enforcement mechanism. An instruction in `AGENTS.md`
+or a skill document alone is insufficient for architectural invariants. If it cannot
+be expressed as an automated check, it is guidance, not a constraint.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+*Grounded in ADR-011.*
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Defence-in-Depth (No Layer Substitutes for Another)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Git hooks (deterministic), agent instructions in `AGENTS.md` (probabilistic), and
+spec-kit lifecycle extensions (probabilistic) coexist as independent enforcement
+layers. Each layer catches failures the others miss. None substitutes for the others
+-- adding a hook does not remove the obligation to document the rule in the governing
+skill.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+*Grounded in ADR-013.*
+
+### IV. Dependency Direction: Skills Inward, Agents Outward
+
+Skills are the stable inner core. Agent manifests are the volatile outer
+orchestration layer. All dependencies point inward: agents may reference skills,
+but skills must never reference agents by name. Violating this direction couples
+stable abstractions to volatile personalities.
+
+*Grounded in ADR-010.*
+
+### V. Facade Boundaries -- Primitives Only Across Layers
+
+Components communicate through stable protocol interfaces (Facades). Only primitive
+types (`str`, `int`, `list[str]`) cross component boundaries. Domain objects,
+Pydantic models, and enums are translated by the caller before they cross a boundary.
+This preserves the ability to swap implementations without propagating changes inward.
+
+*Grounded in ADR-002, ADR-004.*
+
+### VI. Data-Driven Configuration Over Hard-Coded Logic
+
+Variant behavior (jurisdiction, report type, company convention) is captured in
+explicit data objects, not in conditional branches or hard-coded constants. Each
+variation produces a distinct configuration instance. This makes behavior inspectable
+and testable independently of the code that consumes it.
+
+*Grounded in ADR-003.*
+
+### VII. Shared Taxonomy, Multiple Consumers
+
+One canonical taxonomy serves multiple feature components. Each component attaches
+its own logic (templates, rules, checks) to shared nodes. There is never a
+per-component fork of the taxonomy -- forks drift and create consistency defects.
+
+*Grounded in ADR-007.*
+
+### VIII. Determinism Over LLM Inference for Factual Lookups
+
+Factual lookups (applicable standards, registry entries, known identifiers) must be
+sourced from human-curated registries. LLM inference of factual values is prohibited.
+LLMs reason; registries remember.
+
+*Grounded in ADR-008.*
+
+### IX. Citation-Only Knowledge Storage
+
+The Standards Knowledge Store holds clause references and applicability mappings only.
+Proprietary standard text is never stored, reproduced, or served. The system cites;
+it does not republish.
+
+*Grounded in ADR-006.*
+
+## Architectural Constraints
+
+All new features must be assessed against the following before entering SpecKit:
+
+- Does the feature introduce a new SSOT concern? Document it in ADR-001's authority
+  table.
+- Does the feature add a component boundary? Apply Principles V and VI.
+- Does the feature depend on standards data? Apply Principles VIII and IX.
+- Does the feature introduce a new agent rule? Apply Principle II (write a hook first).
+
+## Development Workflow
+
+- **ADR before code**: Every new system-level decision is recorded in `docs/adr/`
+  before implementation begins.
+- **Shaped Pitch before SpecKit**: No feature enters `speckit.specify` without a
+  shaped Pitch with scope boundaries set and rabbit holes removed.
+- **Constitution updated on ADR acceptance**: When an ADR with cross-cutting
+  implications is accepted or amended, the principal engineer updates this document
+  in the same commit. Enforced by the `check-adr-constitution-sync` pre-commit hook.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other practices where they conflict. Amendments
+require:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. A new or amended ADR grounding the change.
+2. The principal engineer's review for cross-cutting implications.
+3. This document updated in the same commit as the ADR.
+
+The principal engineer is the sole custodian of this constitution. The sync procedure
+is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
+
+**Version**: 1.0.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-05-31

@@ -2,21 +2,21 @@
 
 ## General Guidelines
 
-- We are using Windows for development and Linux for deployment. So, when running commands in terminal, use Windows commands, like ";" instead of "&&" to separate commands.
-- Run scripts and tests in virtual environment: .\.venv\Scripts\activate; python -m <...>
-- Every time I ask you to fix linter errors and provide the error messages, update the linting skill (`.agents/skills/python-linting/SKILL.md`) accordingly (add a concise one-line reminder only if it's not already covered).
 - Never tell me what I want to hear. I want you to look at things objectively, contradict me when needed. If you think otherwise, go with your strong opinion.
 - For lessons (reusable observations from LLM conversations and review sessions), see `docs/lessons/lesson_template.md` for format and filing rules.
-- **Lessons workflow**: When a concrete, non-obvious insight emerges during a conversation
-  (or the user asks to document a learning), create a new file in `docs/lessons/` following
-  the template (`NNNN-kebab-slug.md`). Before creating, check existing lesson files to avoid
-  duplication -- update the existing file if the insight refines a known principle. Do NOT
-  create a lesson when the observation is too vague, the conversation is still evolving, or
-  the insight is already covered.
 
 ## Context Engine (CCE)
 
-This project uses Code Context Engine. Load `cce-mcp` skill for codebase exploration, semantic search, and cross-session decision memory.
+This project uses Code Context Engine. Load `mcp-cce` skill for codebase exploration, semantic search, and cross-session decision memory.
+
+**Mandatory first call:** At session start, call `session_recall` (via CCE MCP) to load prior decisions and active work areas before any file exploration. This prevents context compaction and avoids re-explaining architecture.
+
+## Subagent Dispatch
+
+When invoking a named agent via `runSubagent`, do not prescribe discovery methods in the prompt. State WHAT to answer — never direct the agent to examine specific directories, read specific files, or list folders. Each agent's JD governs HOW information is found (CCE-first discipline). Prescriptive prompts override JD Session Discipline and cause token waste.
+
+**Bad:** "Review the current state by examining: 1. specs/ directory 2. docs/product/ for OKRs"
+**Good:** "What are the top priorities for this week? Current branch: feature/token-optimisation, date: June 1 2026."
 
 ## Skills
 
@@ -82,21 +82,9 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 - **Linda** (`rl.linda.agent.md`): Knowledge Infrastructure -- library curation, NotebookLM, standards monitoring. "Linda, [request]"
 - **Harriet** (`rl.harriet.agent.md`): People & Agent Development -- hiring, audits, PIPs, org design. "Harriet, [request]"
 
-## General Style
-
-- **NEVER** use emoji or unicode that emulates emoji (e.g. ✓, ✗). Exception: tests for multibyte characters.
-
 ## Documentation & Workflow Management
 
-- **ALWAYS** report which skills from `.agents/skills/` were used and for what purpose in your final response using the format **skill-name**: <what did you apply> on what **element**, and link to `.agents/skills/<skill-name>/SKILL.md`. IF you did not use any skills, explicitly state "No skills applied".
 - Document reusable knowledge (e.g., library versions, fixes, corrections) in the `Lessons` section of `scratchpad.md`.
-- ADRs are immutable decision records, not project management tools. They sit at
-  the bottom of the documentation hierarchy. Rules:
-  - **Include**: Decision, Status, Context, Options Considered, Rationale, Consequences,
-    References (other ADRs, external docs, RFCs, library docs only).
-  - **Exclude**: follow-up actions or task checklists (belong in tasks.md); links to specs,
-    plans, or tasks (upward dependencies); scratchpad notes (ephemeral). Embed any
-    relevant research findings directly in the ADR body instead.
 
 ## Ask for clarification
 

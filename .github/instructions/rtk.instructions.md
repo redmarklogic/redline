@@ -21,6 +21,10 @@ ruff check                 rtk ruff check
 docker ps                  rtk docker ps
 ```
 
+## Platform
+
+Windows dev, Linux deploy. Use `;` not `&&` to chain commands in terminal.
+
 ## Meta commands (use directly)
 
 ```bash

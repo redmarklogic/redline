@@ -1,4 +1,4 @@
----
+﻿---
 name: python-documentation
 description: Use when writing Python docstrings or documentation -- Google Style, type hint integration, or fixing missing or incorrect documentation
 ---
@@ -57,5 +57,5 @@ See `procedures/python-documentation.md` for detailed rules, examples, and exten
 | Mistake | Fix |
 |---|---|
 | Writing Args: with positional-only descriptions and no type hint | Type hints belong in the signature; Args: should describe intent, not type |
-| Documenting self in the Args: section | Never document self or cls � they are implicit |
+| Documenting self in the Args: section | Never document self or cls — they are implicit |
 | Putting implementation details in the docstring summary line | Summary is the what, not the how; move implementation notes to the body or inline comments |

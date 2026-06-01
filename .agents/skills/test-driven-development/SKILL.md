@@ -1,4 +1,4 @@
----
+﻿---
 name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation code
 ---
@@ -38,6 +38,6 @@ See `procedures/test-driven-development.md` for detailed rules, examples, and ex
 
 | Mistake | Fix |
 |---|---|
-| Writing implementation code before a failing test | No code without a red test first � this is the Iron Law; delete and restart if violated |
-| Writing multiple failing tests before any implementation | Write one failing test, make it pass, then write the next � the RED-GREEN cycle is one test at a time |
+| Writing implementation code before a failing test | No code without a red test first — this is the Iron Law; delete and restart if violated |
+| Writing multiple failing tests before any implementation | Write one failing test, make it pass, then write the next — the RED-GREEN cycle is one test at a time |
 | Refactoring while a test is red | Refactor only when all tests are green; red + refactor means two unknowns at once |

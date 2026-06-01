@@ -31,7 +31,7 @@ Use for ANY technical issue:
 
 | Phase | Key Activities | Success Criteria |
 |-------|---------------|------------------|
-| **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
+| **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY — run Five Whys to a falsifiable fact, not just the proximate cause |
 | **2. Pattern** | Find working examples, compare | Identify differences |
 | **3. Hypothesis** | Form theory, test minimally | Confirmed or new hypothesis |
 | **4. Implementation** | Create test, fix, verify | Bug resolved, tests pass |
@@ -46,3 +46,4 @@ See `procedures/systematic-debugging.md` for detailed rules, examples, and exten
 | Proposing a fix before reproducing the bug reliably | Write a reproduction case first; a fix without a reproduction may solve the wrong problem |
 | Changing multiple variables at once while debugging | Change one thing at a time; parallel changes make it impossible to identify the actual cause |
 | Treating the first passing test as proof the bug is fixed | Verify the root cause is addressed, not just the symptom; add a regression test before closing the bug |
+| Stopping at the proximate cause ("tool X doesn't work") | Run Five Whys to a falsifiable fact — a config value, a name mismatch, a missing file. Architectural explanations that can't be verified are not root causes. Check the actual config before concluding system-level limitations. |

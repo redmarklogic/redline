@@ -1,4 +1,4 @@
----
+﻿---
 name: python-performance
 description: Use when profiling or optimising Python code -- choosing a profiling tool, diagnosing bottlenecks, or applying algorithmic fixes
 ---
@@ -56,5 +56,5 @@ See `procedures/python-performance.md` for detailed rules, examples, and extende
 | Mistake | Fix |
 |---|---|
 | Optimising before profiling | Profile first with cProfile or py-spy; never guess the bottleneck |
-| Using a list comprehension to build a set | Use a set comprehension {x for x in ...} � O(n) vs O(n log n) for membership checks |
+| Using a list comprehension to build a set | Use a set comprehension {x for x in ...} — O(n) vs O(n log n) for membership checks |
 | Repeated DataFrame .apply() for element-wise operations | Prefer vectorised pandas/numpy operations; .apply() with Python lambdas is slow |

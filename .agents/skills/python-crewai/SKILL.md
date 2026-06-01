@@ -1,4 +1,4 @@
----
+﻿---
 name: python-crewai
 description: Use when building CrewAI agents, tasks, flows, or output models in this repo
 ---
@@ -23,6 +23,6 @@ See `procedures/python-crewai.md` for detailed rules, examples, and extended ref
 
 | Mistake | Fix |
 |---|---|
-| Defining output schema inline with dict instead of a Pydantic model | Use a typed BaseModel as the task output_pydantic � enables validation and serialisation |
+| Defining output schema inline with dict instead of a Pydantic model | Use a typed BaseModel as the task output_pydantic — enables validation and serialisation |
 | Giving an agent a tool it doesn't need | Scope tools per agent; unused tools increase hallucination surface |
 | Using blocking I/O in a CrewAI task without async | Wrap in a thread if the tool is synchronous; don't block the event loop |
