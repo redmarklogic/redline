@@ -86,7 +86,7 @@ Use this template verbatim. Do not rename sections. Do not add sections.
 
 ### Step 6 — Write to CCE (primary output)
 
-For each item that qualifies as a **scope change, architectural choice, or deferred decision**, call:
+**Step 6a — Record decisions.** For each item that qualifies as a **scope change, architectural choice, or deferred decision**, call:
 
 ```
 mcp_context-engin_record_decision(
@@ -95,7 +95,20 @@ mcp_context-engin_record_decision(
 )
 ```
 
-Call this once per qualifying item. The printed note (Step 5) is human-readable confirmation. CCE is the durable record. Both are required.
+Call this once per qualifying item.
+
+**Step 6b — Record code areas.** For each file that appears in the bounded git log (Step 2) where meaningful work was done, call:
+
+```
+mcp_context-engin_record_code_area(
+    file_path = "<path from git log>",
+    description = "<one sentence: what was changed and why>"
+)
+```
+
+Skip trivial changes (formatting, comment typos). Include any file where logic, schema, or behaviour changed. This builds CCE's file-touch map for future session retrieval.
+
+The printed note (Step 5) is human-readable confirmation. CCE is the durable record. Both `record_decision` and `record_code_area` calls are required — neither is optional.
 
 ---
 
