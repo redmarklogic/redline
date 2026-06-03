@@ -68,6 +68,14 @@ _EMOJI_LIKE = (
 
 _PATTERN = re.compile(f"[{_EMOJI_RANGES}{re.escape(_EMOJI_LIKE)}]")
 
+# Global character exceptions — allowed everywhere without per-line suppression
+_ALLOWED_CHARS: frozenset[str] = frozenset(
+    {
+        "\u2705",  # ✅ WHITE HEAVY CHECK MARK  # hook: allow
+        "\u274c",  # ❌ CROSS MARK  # hook: allow
+    }
+)
+
 
 def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str]]:
     """Return (file, lineno, line) triples where emoji is detected."""
@@ -89,6 +97,8 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str]]:
                 if not _PATTERN.search(line):
                     continue
                 if suppress in line:
+                    continue
+                if all(ch in _ALLOWED_CHARS for ch in _PATTERN.findall(line)):
                     continue
                 violations.append((path, lineno, line.strip()))
     return violations

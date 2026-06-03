@@ -1,4 +1,4 @@
-# Skills Architecture — Layered Architecture
+﻿# Skills Architecture — Layered Architecture
 
 > **SOT for layer assignments.** This document is the single authoritative source for
 > skill-to-layer classification (L0-L9). The `layer` field in `skills-lock.json` is
@@ -80,7 +80,7 @@ When placing a new skill, ask:
 │  Layer 8: Engineering Workflows                                      │
 │  shaping · arch-engineering · evaluation-architecture     	       │
 │  ai-acceptable-use-policy · doc-updater · git-push-batched           │
-│  resolving-pr-issues · skills-create                                 │
+│  resolving-pr-issues · skills-create · session-handover              │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Applied Capabilities                                       │
 │  eda-* · qmd-* · redline-research · notebooklm-index                 │
@@ -234,11 +234,12 @@ vendor update.
 
 **Rule**: May reference Layers 0-7.
 
-| Group            | Skills                                                                                       |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| Architecture     | `shaping`, `arch-engineering`, `evaluation-architecture`, `ai-acceptable-use-policy` |
-| Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`                               |
-| Skill authoring  | `skills-create`                                                                            |
+| Group              | Skills                                                                                       |
+| ------------------ | -------------------------------------------------------------------------------------------- |
+| Architecture       | `shaping`, `arch-engineering`, `evaluation-architecture`, `ai-acceptable-use-policy` |
+| Release & review   | `resolving-pr-issues`, `git-push-batched`, `doc-updater`                               |
+| Skill authoring    | `skills-create`                                                                            |
+| Session discipline | `session-handover`                                                                         |
 
 ---
 
@@ -259,3 +260,195 @@ vendor update.
 
 - [obra/superpowers](https://github.com/obra/superpowers) — General AI agent superpowers (brainstorming, subagent-driven-development, systematic-debugging, etc.)
 - [github/spec-kit](https://github.com/github/spec-kit) — Specification-driven development (spec-kit)
+
+---
+
+## Agent–Skill Topology
+
+First-degree skill invocations from agent JDs (direct routing table entries only, not transitive). Updated: June 2026.
+
+Split into three team clusters for readability. Skill nodes are labelled with their layer (L0–L9).
+
+---
+
+### Engineering
+
+```mermaid
+graph LR
+    kab[kabilan]
+    pet[peter]
+
+    subgraph L0[L0 Vendor]
+        sysd[systematic-debugging]
+        vbc[verification-before-completion]
+    end
+
+    subgraph L2[L2 Polyglot]
+        gvc[git-version-control]
+    end
+
+    subgraph L3[L3 Platform]
+        cce[mcp-cce]
+        nlm[mcp-notebooklm]
+    end
+
+    subgraph L5[L5 Quality]
+        ptu[python-testing-unit]
+    end
+
+    subgraph L6[L6 Python]
+        pst[python-style]
+        du[doc-updater]
+    end
+
+    subgraph L7[L7 Applied]
+        rr[redline-research]
+    end
+
+    subgraph L8[L8 Eng Workflows]
+        ae[arch-engineering]
+        shp[shaping]
+        evl[evaluation-architecture]
+        sh[session-handover]
+    end
+
+    subgraph L9[L9 Strategy]
+        ddd[ddd-strategic]
+    end
+
+    kab --> pst
+    kab --> ptu
+    kab --> sysd
+    kab --> gvc
+    kab --> du
+    kab --> vbc
+    kab --> cce
+    kab --> sh
+
+    pet --> ae
+    pet --> shp
+    pet --> evl
+    pet --> ddd
+    pet --> rr
+    pet --> nlm
+    pet --> cce
+    pet --> sh
+```
+
+---
+
+### Product and Strategy
+
+```mermaid
+graph LR
+    mrk[mark]
+    ron[ron]
+    jhn[john]
+
+    subgraph L3[L3 Platform]
+        cce[mcp-cce]
+        mro[miro-mcp]
+    end
+
+    subgraph L7[L7 Applied]
+        rr[redline-research]
+        qnd[qmd-narrative-design]
+        cme[ceremony-monthly-editorial-session]
+    end
+
+    subgraph L9[L9 Product and Strategy]
+        pprb[pm-prd-builder]
+        ppf[pm-problem-framer]
+        phb[pm-hypothesis-builder]
+        prm[pm-roadmap]
+        psi[pm-structural-integrity-auditor]
+        pps[pm-product-strategist]
+        spm[strategy-pre-mortem]
+        spf[strategy-psf-domain]
+        mbb[marketing-content-big-5]
+        mps[marketing-product-led-seo]
+        msl[marketing-social-selling-linkedin]
+    end
+
+    mrk --> pprb
+    mrk --> ppf
+    mrk --> phb
+    mrk --> prm
+    mrk --> psi
+    mrk --> cce
+    mrk --> mro
+
+    ron --> pps
+    ron --> spm
+    ron --> spf
+    ron --> rr
+    ron --> mro
+    ron --> cce
+
+    jhn --> mbb
+    jhn --> mps
+    jhn --> msl
+    jhn --> qnd
+    jhn --> cme
+    jhn --> rr
+```
+
+---
+
+### Knowledge, Domain and Org
+
+```mermaid
+graph LR
+    grm[graeme]
+    mtt[matt]
+    lnd[linda]
+    hrr[harriet]
+
+    subgraph L0[L0 Vendor]
+        ws[writing-skills]
+    end
+
+    subgraph L3[L3 Platform]
+        cce[mcp-cce]
+        nlm[mcp-notebooklm]
+        mro[miro-mcp]
+    end
+
+    subgraph L7[L7 Applied]
+        rr[redline-research]
+        nli[notebooklm-index]
+        nld[notebooklm-deep-research]
+        lib[library-management]
+    end
+
+    subgraph L9[L9 Org]
+        psi[pm-structural-integrity-auditor]
+        ppers[pm-personas]
+        ham[hiring-agent-management]
+        cat[ceremony-agent-topology-sync]
+    end
+
+    grm --> nlm
+    grm --> rr
+    grm --> psi
+    grm --> cce
+
+    mtt --> mro
+    mtt --> nlm
+    mtt --> psi
+    mtt --> cce
+    mtt --> ppers
+
+    lnd --> lib
+    lnd --> nli
+    lnd --> nld
+    lnd --> nlm
+    lnd --> rr
+    lnd --> cce
+
+    hrr --> ham
+    hrr --> ws
+    hrr --> cat
+    hrr --> mro
+    hrr --> cce
+```
