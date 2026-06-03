@@ -33,5 +33,10 @@ Bullets with symptoms and use cases; when NOT to use.
 See `procedures/writing-skills.md` for detailed rules, examples, and extended reference.
 
 ## Common Mistakes
-What goes wrong + fixes.
+
+| Mistake | Fix |
+|---|---|
+| Running `check-skill-*` hooks only at commit time, not during drafting. | Run all prek hooks at the end of GREEN phase (before Deployment). Fix violations before proceeding to the next step. |
+| Persona names in skill file content (agent names). | Skill files are agent-agnostic. Name capabilities and functions, not people. Run `check-banned-words.py` hook to verify. |
+| Not registering the skill in `docs/architecture/skills-architecture.md`. | Every skill must have a layer assignment before the deployment checklist is complete. No layer assignment = not deployed. |
 ```

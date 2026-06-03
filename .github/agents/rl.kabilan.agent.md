@@ -13,6 +13,17 @@ tools:
   - execute/testFailure
   - context-engine/*
 agents: []
+hooks:
+  PostToolUse:
+    - type: command
+      windows: "powershell -NoProfile -File hooks\\session-track-writes.ps1"
+      env:
+        WRITE_PATTERN: "src/"
+      timeout: 5
+  Stop:
+    - type: command
+      windows: "powershell -NoProfile -File hooks\\session-stop-handover.ps1"
+      timeout: 10
 ---
 
 # Kabilan --- Python Developer (Senior Software Engineer)
@@ -199,6 +210,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Before starting creative work | `brainstorming` |
 | CrewAI agents | `python-crewai` |
 | Codebase exploration / session start / discover company docs | `mcp-cce` |
+| Session end — handover note, CCE writes, uncommitted-change flag | `session-handover` |
 | EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
 | MCP tooling | `python-mcp-tools`, `mcp-notebooklm` |
 | Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
@@ -224,6 +236,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 - **CCE first:** Use `context_search` for discovery. `read_file` only for targeted code edits, not exploration. If CCE chunks answer the question, respond directly.
 - Always load relevant ADRs and the shaped Pitch before starting cycle work.
 - Always run static checks before considering any task complete.
+- End every implementation session by invoking `session-handover`.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 
 ## How to Invoke Kabilan

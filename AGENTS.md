@@ -26,6 +26,8 @@ Default agent: load skills matching the current task from `.agents/skills/`. For
 
 Domain-specific skills: `redline-research` (knowledge base lookup before online search).
 
+- **`session-handover`**: Use when ending a development session to produce a structured handover note, write decisions to CCE, and flag uncommitted work.
+
 ### Advisory Board (Product & Strategy)
 
 Four named personas. Invoke by name. None writes code.

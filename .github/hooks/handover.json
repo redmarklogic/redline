@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "windows": "powershell -NoProfile -File hooks\\session-start-anchor.ps1",
+        "timeout": 10
+      }
+    ]
+  }
+}
