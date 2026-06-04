@@ -1,23 +1,31 @@
-# VS Code PostToolUse hook — writes a session flag when file-editing tools target paths
-# matching WRITE_PATTERN. The session-stop-handover.ps1 Stop hook reads this flag to
-# decide whether a handover is needed. If no flag exists, Stop allows the session to
-# end silently (Q&A sessions never trigger handover).
+# PostToolUse hook (Copilot / Claude Code) — writes a session flag when file-editing tools
+# target paths matching WRITE_PATTERN. The session-stop-handover.ps1 Stop hook reads this
+# flag to decide whether a handover is needed. If no flag exists, Stop exits silently.
 #
-# Environment variables (set in agent frontmatter hooks config):
-#   WRITE_PATTERN  Substring to match against filePath. Use "src/" to require src/ writes.
+# Environment variables:
+#   WRITE_PATTERN  Substring to match against the file path. Default: "src/"
 #                  Use "any" to flag on any file write regardless of path.
-#                  Default: "src/"
 #
-# File-writing tool names (VS Code camelCase — see VS Code hooks FAQ):
-#   create_file, replace_string_in_file, multi_replace_string_in_file, edit_notebook_file
+# Copilot: registered in agent frontmatter hooks.PostToolUse (WRITE_PATTERN set there).
+# Claude Code: registered in .claude/settings.json PostToolUse matcher Write|Edit|MultiEdit.
+#
+# Tool name reference:
+#   Copilot/VS Code: create_file, replace_string_in_file, multi_replace_string_in_file, edit_notebook_file
+#   Claude Code:     Write, Edit, MultiEdit, NotebookEdit
 
 param()
 
 $FILE_WRITING_TOOLS = @(
+    # Copilot / VS Code tool names
     "create_file",
     "replace_string_in_file",
     "multi_replace_string_in_file",
-    "edit_notebook_file"
+    "edit_notebook_file",
+    # Claude Code tool names
+    "Write",
+    "Edit",
+    "MultiEdit",
+    "NotebookEdit"
 )
 
 $writePattern = if ($env:WRITE_PATTERN) { $env:WRITE_PATTERN } else { "src/" }
@@ -30,7 +38,10 @@ try {
 }
 
 $toolName = $inputData.tool_name
-$filePath = $inputData.tool_input.filePath
+# Copilot uses camelCase filePath; Claude Code uses snake_case file_path.
+$filePath = if ($inputData.tool_input.filePath) { $inputData.tool_input.filePath }
+            elseif ($inputData.tool_input.file_path) { $inputData.tool_input.file_path }
+            else { $null }
 
 if (-not $toolName -or -not $filePath) { exit 0 }
 

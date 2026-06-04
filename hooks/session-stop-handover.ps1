@@ -1,9 +1,13 @@
-# VS Code Stop hook — conditionally blocks the agent from finishing.
+# Stop hook (Copilot agentStop / Claude Code Stop).
+# Conditionally blocks the agent from finishing.
 # Only blocks if session-track-writes.ps1 set .session/wrote-files.flag this session,
 # indicating qualifying file writes occurred. Pure Q&A sessions exit 0 silently.
 #
-# Registered in agent frontmatter hooks.Stop for kabilan and peter agents.
-# See .github/agents/rl.kabilan.agent.md and rl.peter.agent.md.
+# Copilot: registered in agent frontmatter hooks.Stop — blocks via decision:"block" JSON.
+# Claude Code: registered in .claude/settings.json Stop — blocks via exit code 2.
+# Both mechanisms applied simultaneously; each tool reads what it understands.
+#
+# Copilot agent frontmatter: .github/agents/rl.kabilan.agent.md, rl.peter.agent.md.
 
 $inputData = [Console]::In.ReadToEnd() | ConvertFrom-Json
 
@@ -34,3 +38,4 @@ $output = @{
 } | ConvertTo-Json -Compress -Depth 5
 
 Write-Output $output
+exit 2  # Claude Code Stop hook: exit 2 = block. Copilot reads decision:"block" above; exit code is irrelevant to Copilot.
