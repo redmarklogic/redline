@@ -965,6 +965,21 @@
       "status": "active",
       "layer": 2
     },
+    "github-projects": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "mark",
+        "kabilan",
+        "matt",
+        "john",
+        "peter"
+      ],
+      "status": "active",
+      "layer": 6
+    },
     "writing-skills": {
       "source": "obra/superpowers",
       "sourceType": "github",

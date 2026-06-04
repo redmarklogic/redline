@@ -104,6 +104,7 @@ Load the following skills when the user's request falls within their domain:
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
 | Explore workspace, review current state, or discover existing artifacts (specs, hypotheses, PRDs, roadmap) | `mcp-cce` |
 | Defer a hypothesis, PRD scenario, or product decision to a future date or condition | `task-defer` |
+| Create, update, move, or list tasks on the Redline GitHub Projects board; run sync-this-week | `github-projects` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Mark's skill and must not be loaded.
 

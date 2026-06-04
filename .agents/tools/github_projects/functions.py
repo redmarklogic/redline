@@ -17,8 +17,6 @@ Conventions:
   It is the only persistent state this module owns.
 """
 
-from __future__ import annotations
-
 import json
 import subprocess
 from dataclasses import dataclass
@@ -44,7 +42,7 @@ _CACHE_TTL: timedelta = timedelta(hours=24)
 
 # Custom field name constants — defined once to avoid duplicated string literals.
 _FIELD_STATUS = "Status"
-_FIELD_TYPE = "Type"
+_FIELD_TYPE = "Task Type"
 _FIELD_AGENT = "Agent"
 _FIELD_SPRINT = "Sprint"
 _FIELD_START_DATE = "Start date"
@@ -341,7 +339,76 @@ def _resolve_fields_from_api(
         options = field.get("options", [])
         if options:
             option_ids[name] = {opt["name"]: opt["id"] for opt in options}
+
+    # Fetch iteration IDs for ITERATION fields via GraphQL (gh field-list omits them)
+    iteration_ids = _resolve_iteration_ids(project_number, owner)
+    option_ids.update(iteration_ids)
     return field_ids, option_ids
+
+
+def _resolve_iteration_ids(
+    project_number: int,
+    owner: str,
+) -> dict[str, dict[str, str]]:
+    """Return {field_name: {iteration_title: iteration_id}} for all iteration fields."""
+    query = (
+        "query($login: String!, $num: Int!) {"
+        "  organization(login: $login) {"
+        "    projectV2(number: $num) {"
+        "      fields(first: 30) {"
+        "        nodes {"
+        "          ... on ProjectV2IterationField {"
+        "            name"
+        "            configuration {"
+        "              iterations { id title }"
+        "              completedIterations { id title }"
+        "            }"
+        "          }"
+        "        }"
+        "      }"
+        "    }"
+        "  }"
+        "}"
+    )
+    import json as _json
+
+    body = _json.dumps(
+        {"query": query, "variables": {"login": owner, "num": project_number}}
+    )
+    import subprocess as _sub
+
+    result = _sub.run(
+        ["gh", "api", "graphql", "--input", "-"],
+        input=body,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return {}
+    try:
+        data = _json.loads(result.stdout)
+    except Exception:
+        return {}
+    fields = (
+        data.get("data", {})
+        .get("organization", {})
+        .get("projectV2", {})
+        .get("fields", {})
+        .get("nodes", [])
+    )
+    result_map: dict[str, dict[str, str]] = {}
+    for field in fields:
+        fname = field.get("name")
+        if not fname:
+            continue
+        config = field.get("configuration") or {}
+        iterations = config.get("iterations", []) + config.get(
+            "completedIterations", []
+        )
+        if iterations:
+            result_map[fname] = {it["title"]: it["id"] for it in iterations}
+    return result_map
 
 
 # ---------------------------------------------------------------------------
@@ -356,6 +423,11 @@ def _build_body(task: TaskCreate) -> str:
     parts.append(f"## Source\n`{task.source}`")
     if task.done_when:
         parts.append(f"## Done when\n{task.done_when}")
+    parts.append(f"## Agents\n{', '.join(sorted(task.agents))}")
+    if task.depends_on:
+        parts.append(
+            f"## Depends on\n{', '.join(f'#{n}' for n in sorted(task.depends_on))}"
+        )
     if task.body:
         parts.append(task.body)
     return "\n\n".join(parts)
@@ -419,26 +491,27 @@ def create_task(task: TaskCreate, config: ProjectConfig) -> TaskResult:
     Returns TaskResult with issue_url and item_id on success.
     status_code 207 means the issue was created but some fields failed to set.
     """
-    create_args = [
-        "issue",
-        "create",
-        "--title",
-        task.title,
-        "--body",
-        _build_body(task),
-        "--json",
-        "url,number",
+    # Use REST API — gh issue create dropped --json support in v2.x
+    api_args = [
+        "api",
+        f"repos/{config.owner}/redline/issues",
+        "--method",
+        "POST",
+        "--field",
+        f"title={task.title}",
+        "--field",
+        f"body={_build_body(task)}",
     ]
     for label in task.labels:
-        create_args += ["--label", label]
+        api_args += ["--field", f"labels[]={label}"]
 
-    rc, data, stderr = _run_gh(*create_args)
+    rc, data, stderr = _run_gh(*api_args)
     if rc != 0:
         return _err(
             status_code=_map_gh_error(stderr),
             message=f"Failed to create issue: {stderr}",
         )
-    issue_url: str = (data or {}).get("url", "")
+    issue_url: str = (data or {}).get("html_url", "")
     if not issue_url:
         return _err(status_code=500, message="Issue created but URL not returned")
 
@@ -454,7 +527,7 @@ def create_task(task: TaskCreate, config: ProjectConfig) -> TaskResult:
     fields = _FieldValues(
         status=task.status,
         task_type=task.task_type,
-        agent=task.agent,
+        agent=task.primary_agent,
         start_date=task.start_date,
         target_date=task.target_date,
         source=task.source,
@@ -502,7 +575,7 @@ def update_task(update: TaskUpdate, config: ProjectConfig) -> TaskResult:
     fields = _FieldValues(
         status=update.status,
         task_type=update.task_type,
-        agent=update.agent,
+        agent=min(update.agents) if update.agents else None,
         start_date=update.start_date,
         target_date=update.target_date,
         source=update.source,
@@ -633,6 +706,8 @@ def list_tasks(
         config.owner,
         "--format",
         "json",
+        "--limit",
+        "100",
     )
     if rc != 0:
         raise RuntimeError(f"gh project item-list failed: {stderr}")
@@ -640,7 +715,7 @@ def list_tasks(
     if status is not None:
         records = [r for r in records if r.status == status]
     if agent is not None:
-        records = [r for r in records if r.agent == agent]
+        records = [r for r in records if r.primary_agent == agent]
     if sprint is not None:
         records = [r for r in records if r.sprint == sprint]
     return records
@@ -671,18 +746,27 @@ def _add_issue_to_project(issue_url: str, config: ProjectConfig) -> tuple[str, s
 
 
 def _item_to_record(item: dict[str, Any]) -> TaskRecord:
-    """Convert a raw gh project item dict to a TaskRecord."""
+    """Convert a raw gh project item dict to a TaskRecord.
+
+    gh v2.x returns a flat dict with lowercase field names rather than the
+    nested fieldValues structure used by older versions. Build a case-insensitive
+    lookup over the flat item to handle both formats.
+    """
     from datetime import date as Date
 
-    field_values: dict[str, Any] = {}
-    for fv in item.get("fieldValues", []):
-        name = fv.get("field", {}).get("name") or fv.get("name")
-        value = fv.get("name") or fv.get("text") or fv.get("date") or fv.get("title")
-        if name and value is not None:
-            field_values[name] = value
+    # Build case-insensitive lookup from the flat item (gh v2.x format).
+    flat: dict[str, Any] = {
+        k.lower(): v
+        for k, v in item.items()
+        if k not in ("id", "title", "content", "repository")
+    }
 
-    def _parse_date(key: str) -> Date | None:
-        raw = field_values.get(key)
+    def _get(field_name: str) -> Any:
+        """Lookup field by exact name then by lowercase."""
+        return item.get(field_name) or flat.get(field_name.lower())
+
+    def _parse_date(field_name: str) -> Date | None:
+        raw = _get(field_name)
         if not raw:
             return None
         try:
@@ -690,19 +774,23 @@ def _item_to_record(item: dict[str, Any]) -> TaskRecord:
         except ValueError:
             return None
 
-    raw_status = field_values.get(_FIELD_STATUS, "Backlog")
+    raw_status = _get(_FIELD_STATUS) or "Backlog"
     status: StatusValue = raw_status if raw_status in _VALID_STATUSES else "Backlog"  # type: ignore[assignment]
+
+    raw_agent = _get(_FIELD_AGENT)
 
     return TaskRecord(
         item_id=str(item.get("id", "")),
         issue_url=str(item.get("content", {}).get("url", "")),
         title=str(item.get("title") or item.get("content", {}).get("title", "")),
         status=status,
-        task_type=field_values.get(_FIELD_TYPE),  # type: ignore[arg-type]
+        task_type=_get(_FIELD_TYPE),  # type: ignore[arg-type]
         start_date=_parse_date(_FIELD_START_DATE),
         target_date=_parse_date(_FIELD_TARGET_DATE),
-        source=field_values.get(_FIELD_SOURCE),  # type: ignore[arg-type]
-        agent=field_values.get(_FIELD_AGENT),  # type: ignore[arg-type]
-        sprint=field_values.get(_FIELD_SPRINT),  # type: ignore[arg-type]
-        blocked_by=field_values.get(_FIELD_BLOCKED_BY),  # type: ignore[arg-type]
+        source=_get(_FIELD_SOURCE),  # type: ignore[arg-type]
+        agents=frozenset({raw_agent}) if raw_agent else None,  # type: ignore[arg-type]
+        sprint=(_get(_FIELD_SPRINT) or {}).get("title")
+        if isinstance(_get(_FIELD_SPRINT), dict)
+        else _get(_FIELD_SPRINT),  # type: ignore[arg-type]
+        blocked_by=_get(_FIELD_BLOCKED_BY),  # type: ignore[arg-type]
     )

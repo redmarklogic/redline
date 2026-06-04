@@ -17,7 +17,14 @@ import subprocess
 import sys
 from pathlib import PurePosixPath
 
-ALLOWED_PREFIXES = ("src/", "tests/", "hooks/", ".agents/tools/", "scripts/")
+ALLOWED_PREFIXES = (
+    "src/",
+    "tests/",
+    "hooks/",
+    ".agents/tools/",
+    "scripts/",
+    ".github/scripts/",
+)
 
 
 def find_violations() -> list[str]:
