@@ -22,11 +22,17 @@ When invoking a named agent via `runSubagent`, do not prescribe discovery method
 
 All skills live at `.agents/skills/<name>/SKILL.md`.
 Named agents carry task-to-skill routing tables in their JDs — invoke by name for full routing.
-Default agent: load skills matching the current task from `.agents/skills/`. For full routing, open the relevant agent JD in `.github/agents/`. For Python work, `rl.kabilan.agent.md` is the canonical skill routing reference.
+Default agent: load skills matching the current task from `.agents/skills/`. For full routing, open the relevant agent JD in `.claude/agents/`. For Python work, `kabilan.md` is the canonical skill routing reference.
 
 Domain-specific skills: `redline-research` (knowledge base lookup before online search).
 
 - **`session-handover`**: Use when ending a development session to produce a structured handover note, write decisions to CCE, and flag uncommitted work.
+
+<!-- Claude Code: the files below are auto-loaded by Copilot via applyTo globs.
+     Included here so Claude Code picks them up. RTK is covered by ~/.claude/RTK.md. -->
+@.github/instructions/mental-models-protocol.instructions.md
+@.github/instructions/visual-artifacts.instructions.md
+@.github/instructions/skills-reporting.instructions.md
 
 ### Advisory Board (Product & Strategy)
 
@@ -38,16 +44,16 @@ know" and identify the gap. They never invent facts, fabricate citations, or pre
 ungrounded speculation as knowledge. Unverified pointers to external resources are
 permitted only when clearly labelled as such.
 
-- **Ron** (`rl.ron.agent.md`): Strategy & GTM -- vision, bets, OKRs, positioning. "Ron, [request]"
-- **Mark** (`rl.mark.agent.md`): Product Manager -- problem framing, hypotheses, PRDs. "Mark, [request]"
-- **Graeme** (`rl.graeme.agent.md`): Geotechnical Engineer -- domain expert, knowledge curation. "Graeme, [request]"
-- **John** (`rl.john.agent.md`): Marketing -- content, SEO, social selling, brand, signal reports. "John, [request]"
-- **Matt** (`rl.matt.agent.md`): UI/UX Designer -- interaction design, wireframes, component specs. "Matt, [request]"
-- **Peter** (`rl.peter.agent.md`): Principal Engineer -- architecture, shaping, evaluation, feasibility. "Peter, [request]"
+- **Ron** (`ron.md`): Strategy & GTM -- vision, bets, OKRs, positioning. "Ron, [request]"
+- **Mark** (`mark.md`): Product Manager -- problem framing, hypotheses, PRDs. "Mark, [request]"
+- **Graeme** (`graeme.md`): Geotechnical Engineer -- domain expert, knowledge curation. "Graeme, [request]"
+- **John** (`john.md`): Marketing -- content, SEO, social selling, brand, signal reports. "John, [request]"
+- **Matt** (`matt.md`): UI/UX Designer -- interaction design, wireframes, component specs. "Matt, [request]"
+- **Peter** (`peter.md`): Principal Engineer -- architecture, shaping, evaluation, feasibility. "Peter, [request]"
 
 ### Engineering (execution)
 
-- **Kabilan** (`rl.kabilan.agent.md`): Python Developer -- implementation, testing, debugging, pipelines. All code subject to founder review. "Kabilan, [request]"
+- **Kabilan** (`kabilan.md`): Python Developer -- implementation, testing, debugging, pipelines. All code subject to founder review. "Kabilan, [request]"
 
 **Key interaction rules** (full details in individual JDs):
 
@@ -81,8 +87,8 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 
 ### Internal Operations (platform functions)
 
-- **Linda** (`rl.linda.agent.md`): Knowledge Infrastructure -- library curation, NotebookLM, standards monitoring. "Linda, [request]"
-- **Harriet** (`rl.harriet.agent.md`): People & Agent Development -- hiring, audits, PIPs, org design. "Harriet, [request]"
+- **Linda** (`linda.md`): Knowledge Infrastructure -- library curation, NotebookLM, standards monitoring. "Linda, [request]"
+- **Harriet** (`harriet.md`): People & Agent Development -- hiring, audits, PIPs, org design. "Harriet, [request]"
 
 ## Documentation & Workflow Management
 
