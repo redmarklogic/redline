@@ -2,7 +2,7 @@
 
 ### Inputs
 - Hire, audit, refresh, or org-audit request from user
-- Agent files in `.github/agents/` and `docs/people/agent-register.md`
+- Agent files in `.claude/agents/` and `docs/people/agent-register.md`
 - Decision-bearing files in `docs/product/strategy/`, `docs/adr/`, `specs/`
 
 ### Outputs
@@ -49,7 +49,7 @@ If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh age
 
 ## Custom Agent Frontmatter Governance
 
-When drafting, updating, auditing, or refreshing `.github/agents/*.agent.md`, follow the official VS Code Custom Agents documentation: https://code.visualstudio.com/docs/copilot/customization/custom-agents.
+When drafting, updating, auditing, or refreshing `.claude/agents/*.md`, follow the Claude Code subagent format. Person agent JDs live in `.claude/agents/`; vendor-generated SpecKit agents remain in `.github/agents/`.
 
 Every Redline-owned custom agent must declare these YAML frontmatter fields explicitly:
 
@@ -57,9 +57,7 @@ Every Redline-owned custom agent must declare these YAML frontmatter fields expl
 |---|---|
 | `name` | Use the identifier that handoffs and subagent lists reference. |
 | `description` | Keep the invocation and role summary concise. |
-| `tools` | List the least-privilege tools or tool sets available to the agent. Include `agent` when `agents` is non-empty. Use official MCP server wildcard syntax such as `notebooklm/*`; do not use ad hoc names such as `mcp_notebooklm_*`. |
-| `agents` | List the exact subagents this agent may invoke. Use `[]` to block subagent use. |
-| `handoffs` | Treat as suggested workflow transitions only. Handoffs do not restrict subagent access and every handoff target must also appear in `agents`. |
+| `tools` | List the Claude Code tools available to the agent (Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent, etc.). |
 
 Vendor-generated agents, including `speckit.*`, must not be manually edited. If they violate this governance, report the drift and fix it through the vendor generation path rather than patching the generated file.
 
@@ -101,7 +99,7 @@ Skills are agent-agnostic reusable procedures. **Skills must never be named afte
 
 Apply when the invoking agent is in Draft-first maturity mode.
 
-- **NEVER** write directly to `.github/agents/` or `.agents/skills/`.
+- **NEVER** write directly to `.claude/agents/` or `.agents/skills/`.
 - All draft agent files → `docs/people/drafts/agents/`
 - All draft skill files → `docs/people/drafts/skills/`
 - All reports → `docs/people/drafts/reports/`

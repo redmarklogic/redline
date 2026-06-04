@@ -4,14 +4,14 @@ Detect and resolve drift between business decisions and agent definitions. Busin
 
 ## Step 1 — Gather the decision delta
 
-1. For each agent in `.github/agents/`, read the file's last-modified date from git: `git log -1 --format="%ai" -- .github/agents/<file>`.
+1. For each agent in `.claude/agents/`, read the file's last-modified date from git: `git log -1 --format="%ai" -- .claude/agents/<file>`.
 2. Collect all commits to decision-bearing paths since that date:
    - `docs/product/strategy/` (strategic bets, OKRs, positioning, GTM, non-goals)
    - `docs/adr/` (architecture decision records)
    - `specs/` (feature specs, plans, tasks)
    - `docs/product/operations/` (cadences, pricing)
    - `docs/research/` (research findings that inform constraints)
-   - `AGENTS.md` and `.github/agents/` (organisational boundaries, handoff chains, agent scope)
+   - `AGENTS.md` and `.claude/agents/` (organisational boundaries, handoff chains, agent scope)
 3. Read each changed file. Extract the concrete decisions: what was added, changed, or parked.
 
 ## Step 2 — Classify impact per agent

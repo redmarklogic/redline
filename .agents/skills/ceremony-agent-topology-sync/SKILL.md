@@ -62,4 +62,4 @@ See `procedures/ceremony-agent-topology-sync.md` for detailed rules, examples, a
 | Facilitating agent writes JD patches without Delta Statements as input | Delta Statements from Steps R1–R4 are the required evidence base for every patch |
 | Sync triggered by a single routine JD change | Use `hiring-agent-management` REFRESH mode instead |
 | Advisory board agents omitted because "they don't have JDs to update" | Advisory board agents reflect on their knowledge bases and handoff definitions; they participate fully |
-| Draft JD patches written directly to `.github/agents/` | Draft-first constraint: all patches to `docs/people/drafts/agents/` until user promotes |
+| Draft JD patches written directly to `.claude/agents/` | Draft-first constraint: all patches to `docs/people/drafts/agents/` until user promotes |

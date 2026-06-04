@@ -2,7 +2,7 @@
 
 Apply Team Topologies' boundary tests:
 
-1. **Read all files in `.github/agents/`** and cross-reference `docs/people/agent-register.md`.
+1. **Read all files in `.claude/agents/`** and cross-reference `docs/people/agent-register.md`.
 2. **Gap-less ownership map** (Larson). Every responsibility named in `strategic-bets.md` and `roadmap.md` must map to exactly one agent. Report holes (no owner) and overlaps (multiple owners).
 3. **Cognitive load check.** Flag any agent whose File Authority spans more than two distinct domains. Cognitive overload is a fracture-plane signal — propose a split.
 4. **Interaction mode check.** Each pair of frequently-collaborating agents should have a declared mode (Collaboration / X-as-a-Service / Facilitating). Flag pairs that talk constantly when they should be X-as-a-Service.
