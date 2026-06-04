@@ -1,0 +1,63 @@
+{
+  "project_number": 1,
+  "project_node_id": "PVT_kwDOEUOu2c4BZrkB",
+  "owner": "redmarklogic",
+  "field_ids": {
+    "Title": "PVTF_lADOEUOu2c4BZrkBzhUojY0",
+    "Assignees": "PVTF_lADOEUOu2c4BZrkBzhUojY4",
+    "Status": "PVTSSF_lADOEUOu2c4BZrkBzhUojY8",
+    "Labels": "PVTF_lADOEUOu2c4BZrkBzhUojZA",
+    "Linked pull requests": "PVTF_lADOEUOu2c4BZrkBzhUojZE",
+    "Milestone": "PVTF_lADOEUOu2c4BZrkBzhUojZI",
+    "Repository": "PVTF_lADOEUOu2c4BZrkBzhUojZM",
+    "Reviewers": "PVTF_lADOEUOu2c4BZrkBzhUojZU",
+    "Parent issue": "PVTF_lADOEUOu2c4BZrkBzhUojZY",
+    "Sub-issues progress": "PVTF_lADOEUOu2c4BZrkBzhUojZc",
+    "Created": "PVTF_lADOEUOu2c4BZrkBzhUojZg",
+    "Updated": "PVTF_lADOEUOu2c4BZrkBzhUojZk",
+    "Closed": "PVTF_lADOEUOu2c4BZrkBzhUojZo",
+    "Task Type": "PVTSSF_lADOEUOu2c4BZrkBzhUoj84",
+    "Agent": "PVTSSF_lADOEUOu2c4BZrkBzhUoj9Y",
+    "Start date": "PVTF_lADOEUOu2c4BZrkBzhUoj-Q",
+    "Target date": "PVTF_lADOEUOu2c4BZrkBzhUoj-U",
+    "Blocked by": "PVTF_lADOEUOu2c4BZrkBzhUoj_M",
+    "Source": "PVTF_lADOEUOu2c4BZrkBzhUokA4",
+    "Depends on": "PVTF_lADOEUOu2c4BZrkBzhUokA8",
+    "Sprint": "PVTIF_lADOEUOu2c4BZrkBzhUokG0"
+  },
+  "option_ids": {
+    "Sprint": {
+      "Sprint 1 - Jun 1-7": "af810814",
+      "Sprint 2 - Jun 8-14": "a8c49ec8",
+      "Sprint 3 - Jun 15-21": "9894385c",
+      "Sprint 4 - Jun 22-28": "2a9943f7"
+    },
+    "Status": {
+      "Backlog": "f75ad846",
+      "In Progress": "47fc9ee4",
+      "Blocked": "9fa26b6c",
+      "To Review": "3ced9463",
+      "Done": "98236657"
+    },
+    "Task Type": {
+      "Feature": "a2e4db18",
+      "Design": "199dd67c",
+      "Content": "a4cc231f",
+      "Ops": "e3944051",
+      "Research": "a709ee3b"
+    },
+    "Agent": {
+      "Kabilan": "16b9f565",
+      "Mark": "f65b23a5",
+      "Matt": "8043fcd8",
+      "John": "d306ed42",
+      "Peter": "ca1be753",
+      "Ron": "d546d87b",
+      "Graeme": "f287bdab",
+      "Linda": "0149947b",
+      "Harriet": "6529decf",
+      "Founder": "c3165db9"
+    }
+  },
+  "resolved_at": "2026-06-04T11:00:00.000000Z"
+}

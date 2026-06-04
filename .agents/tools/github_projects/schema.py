@@ -88,11 +88,12 @@ class TaskCreate(BaseModel):
     task_type: Annotated[
         TaskType,
         Field(
-            alias="Type",
+            alias="Task Type",
             title="Task type",
             description=(
                 "Discriminates the task category and determines which body template is used. "
-                "Maps to the 'Type' single-select custom field on the GitHub Project board."
+                "Maps to the 'Task Type' single-select custom field on the GitHub Project board. "
+                "(GitHub reserves the name 'Type' — field was created as 'Task Type'.)"
             ),
             examples=["Feature"],
         ),
@@ -360,9 +361,9 @@ class TaskUpdate(BaseModel):
         TaskType | None,
         Field(
             default=None,
-            alias="Type",
+            alias="Task Type",
             title="Task type",
-            description="Updated task type. If None, the existing Type field is unchanged.",
+            description="Updated task type. If None, the existing Task Type field is unchanged.",
             examples=["Design"],
         ),
     ]
@@ -671,9 +672,9 @@ class TaskRecord(BaseModel):
         TaskType | None,
         Field(
             default=None,
-            alias="Type",
+            alias="Task Type",
             title="Task type",
-            description="Value of the 'Type' custom field. None if not set on the board item.",
+            description="Value of the 'Task Type' custom field. None if not set on the board item.",
         ),
     ]
     start_date: Annotated[

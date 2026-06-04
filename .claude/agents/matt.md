@@ -184,6 +184,7 @@ Load the following skills when the user's request falls within their domain.
 | Review a live website visually and interactively | Playwright MCP (built-in tools) | Navigate, screenshot, click, fill, resize, inspect console/network. See Website Review Protocol. |
 | Discover existing design specs or design decisions before starting new design work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
 | Defer a design decision, surface prioritisation, or research-gated item | `task-defer` | Park design artifacts with surface and artifact-ref context |
+| Create a design task on the board or check Matt's current sprint assignments | `github-projects` | Board write access for design tasks |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Matt's skill and must not be loaded.
 

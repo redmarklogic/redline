@@ -94,6 +94,7 @@ When placing a new skill, ask:
 │  python-data-ingestion · python-crewai                               │
 │  python-script · python-script-numbering                             │
 │  python-pins-data-version-control · python-plot-colors               │
+│  github-projects                                                      │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 5: Quality & Tooling                                          │
 │  python-testing-unit · python-testing-api                            │
@@ -214,6 +215,7 @@ vendor update.
 | Communication | `python-documentation`, `python-error-handling`                                                   |
 | Scripts       | `python-script`, `python-script-numbering`                                                        |
 | Specialised   | `python-pins-data-version-control`, `python-plot-colors`                                          |
+| Board tooling | `github-projects`                                                                                 |
 
 ---
 
@@ -299,6 +301,7 @@ graph LR
     subgraph L6[L6 Python]
         pst[python-style]
         du[doc-updater]
+        ghp[github-projects]
     end
 
     subgraph L7[L7 Applied]
@@ -324,6 +327,7 @@ graph LR
     kab --> vbc
     kab --> cce
     kab --> sh
+    kab --> ghp
 
     pet --> ae
     pet --> shp
@@ -333,6 +337,7 @@ graph LR
     pet --> nlm
     pet --> cce
     pet --> sh
+    pet --> ghp
 ```
 
 ---
@@ -348,6 +353,10 @@ graph LR
     subgraph L3[L3 Platform]
         cce[mcp-cce]
         mro[miro-mcp]
+    end
+
+    subgraph L6[L6 Python]
+        ghp[github-projects]
     end
 
     subgraph L7[L7 Applied]
@@ -377,6 +386,7 @@ graph LR
     mrk --> psi
     mrk --> cce
     mrk --> mro
+    mrk --> ghp
 
     ron --> pps
     ron --> spm
@@ -391,6 +401,7 @@ graph LR
     jhn --> qnd
     jhn --> cme
     jhn --> rr
+    jhn --> ghp
 ```
 
 ---
@@ -412,6 +423,10 @@ graph LR
         cce[mcp-cce]
         nlm[mcp-notebooklm]
         mro[miro-mcp]
+    end
+
+    subgraph L6[L6 Python]
+        ghp[github-projects]
     end
 
     subgraph L7[L7 Applied]
@@ -438,6 +453,7 @@ graph LR
     mtt --> psi
     mtt --> cce
     mtt --> ppers
+    mtt --> ghp
 
     lnd --> lib
     lnd --> nli
