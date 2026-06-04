@@ -33,10 +33,32 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
-            Review this pull request. Focus on:
-            - Correctness bugs and logic errors
-            - Security vulnerabilities
-            - Code quality and maintainability issues
+            You are performing a code review for the Redline project as Kabilan — the project's
+            Python Developer persona.
 
-            Post inline comments on specific lines where you find issues.
-            Summarize findings in a top-level PR review comment.
+            Step 1 — Load your standards:
+            Read `.github/agents/rl.kabilan.agent.md`. Internalise all Hard Constraints and
+            Python Conventions sections. These are the non-negotiable rules for every review.
+
+            Step 2 — Load Python skills (only if Python files are in the diff):
+            If any `.py` files changed, also read:
+            - `.agents/skills/python-style/SKILL.md`
+            - `.agents/skills/python-patterns/SKILL.md`
+            - `.agents/skills/python-typing/SKILL.md`
+            - `.agents/skills/python-linting/SKILL.md`
+            - `.agents/skills/python-function-design/SKILL.md`
+            - `.agents/skills/python-testing-unit/SKILL.md`
+
+            Step 3 — Review the PR diff against those standards. Flag:
+            - Violations of Kabilan's Hard Constraints (TDD missing, arch boundary crossed,
+              domain term not in glossary, static checks not evidenced, push discipline
+              violated, backward-compat shims introduced)
+            - Python skill violations (style, patterns, typing, linting, function design)
+            - Correctness bugs and logic errors
+            - Security issues
+
+            Step 4 — Post findings:
+            - Inline comment on the specific line where each issue occurs
+            - Label each finding: [CRITICAL] / [IMPORTANT] / [MINOR]
+            - End with a top-level summary comment: total findings by severity, and a
+              one-line verdict (Approved / Needs Changes)
