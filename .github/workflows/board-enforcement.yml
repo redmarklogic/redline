@@ -1,0 +1,44 @@
+name: Board Field Enforcement
+# Runs every weekday at 08:00 NZT (UTC+12). Scans all Redline project board items for field
+# violations (e.g. Blocked with no reason, Source pointing to a missing spec path) and
+# applies labels so gaps are visible without manual auditing. Can also be triggered manually.
+
+on:
+  schedule:
+    # Daily at 08:00 NZST (UTC+12) = 20:00 UTC previous day
+    - cron: "0 20 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  enforce:
+    name: Check field compliance
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install "pydantic>=2"
+
+      - name: Ensure labels exist
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          gh label create "missing-block-reason" \
+            --color "D93F0B" --description "Blocked item has no Blocked-by reason" \
+            --repo redmarklogic/redline 2>/dev/null || true
+          gh label create "missing-spec-link" \
+            --color "E4E669" --description "Board item Source field points to missing path" \
+            --repo redmarklogic/redline 2>/dev/null || true
+
+      - name: Run enforcement checks
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: python .github/scripts/enforce_board.py

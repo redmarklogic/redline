@@ -1,0 +1,71 @@
+name: Board — PR opened sets To Review
+# Fires when a PR is opened or reopened. Parses the PR body for "Closes/Fixes/Resolves #N"
+# keywords and moves each linked issue's Status field to "To Review" on the GitHub Projects
+# board via GraphQL — keeping board state in sync with PR activity automatically.
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  set-to-review:
+    name: Move linked issues to To Review
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+
+    steps:
+      - name: Move linked issues to To Review
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          PROJECT_ID="PVT_kwDOEUOu2c4BZrkB"
+          STATUS_FIELD_ID="PVTSSF_lADOEUOu2c4BZrkBzhUojY8"
+          TO_REVIEW_OPT="3ced9463"
+
+          # Extract issue numbers from "Closes #N", "Fixes #N", "Resolves #N"
+          ISSUES=$(echo "$PR_BODY" | grep -oiE '(closes|fixes|resolves)\s+#[0-9]+' | grep -oE '[0-9]+' || true)
+
+          if [ -z "$ISSUES" ]; then
+            echo "No linked issues found in PR body."
+            exit 0
+          fi
+
+          for ISSUE_NUM in $ISSUES; do
+            echo "Processing issue #$ISSUE_NUM..."
+
+            # Get project item ID for this issue
+            ITEM_ID=$(gh api graphql -f query="
+            query {
+              repository(owner: \"redmarklogic\", name: \"redline\") {
+                issue(number: $ISSUE_NUM) {
+                  projectItems(first: 5) {
+                    nodes {
+                      id
+                      project { id }
+                    }
+                  }
+                }
+              }
+            }" --jq ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" 2>/dev/null || true)
+
+            if [ -z "$ITEM_ID" ]; then
+              echo "  Issue #$ISSUE_NUM not on the Redline board — skipping."
+              continue
+            fi
+
+            # Set status to To Review
+            gh api graphql -f query="
+            mutation {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: \"$PROJECT_ID\"
+                itemId: \"$ITEM_ID\"
+                fieldId: \"$STATUS_FIELD_ID\"
+                value: { singleSelectOptionId: \"$TO_REVIEW_OPT\" }
+              }) { projectV2Item { id } }
+            }" > /dev/null
+
+            echo "  Issue #$ISSUE_NUM -> To Review"
+          done
