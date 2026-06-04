@@ -19,8 +19,8 @@
 
 ### Acceptance Gate
 
-- [ ] T007 [Phase 0] `gh repo view redmarklogic/redline --json name,owner` returns `{"name": "redline", "owner": {"login": "redmarklogic"}}`
-- [ ] T008 [Phase 0] `project_config.json` is committed and contains all 9 field IDs (non-empty `field_ids` dict)
+- [x] T007 [Phase 0] `gh repo view redmarklogic/redline --json name,owner` returns `{"name": "redline", "owner": {"login": "redmarklogic"}}`
+- [x] T008 [Phase 0] `project_config.json` is committed and contains all 9 field IDs (non-empty `field_ids` dict)
 
 ---
 
