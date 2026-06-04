@@ -1,6 +1,7 @@
 ---
 name: python-static-checks
 description: Use when running static code checks -- linting, type errors, or pre-commit validation in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Static Checks

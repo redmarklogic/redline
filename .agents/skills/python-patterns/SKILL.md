@@ -1,6 +1,7 @@
 ---
 name: python-patterns
 description: Use when writing idiomatic Python -- control-flow, iteration, resource management, composition, or concurrency patterns in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Patterns

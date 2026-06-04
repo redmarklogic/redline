@@ -1,6 +1,7 @@
 ---
 name: python-testing-unit
 description: Use when writing unit tests in this repo -- test structure, fixtures, mocking, or coverage patterns
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 ## Boundary Contract

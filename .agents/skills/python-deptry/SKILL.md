@@ -1,6 +1,7 @@
 ﻿---
 name: python-deptry
 description: Use when fixing deptry dependency hygiene violations or understanding which deptry rules apply in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Dependency Checking (deptry)

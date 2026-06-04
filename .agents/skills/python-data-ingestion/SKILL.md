@@ -1,6 +1,7 @@
 ---
 name: python-data-ingestion
 description: Use when implementing data ingestion or validation -- import/process/read patterns, Pandera contracts, multi-worksheet handling, or schema reuse
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 ## Boundary Contract

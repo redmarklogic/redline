@@ -1,6 +1,8 @@
 ---
 name: library-management
-description: Use when indexing, renaming, or adding books to the digital library at <library-root> -- covers scanning folders, extracting metadata from PDFs, using the SNZ scraper for NZ/AU standard metadata (title, status, canonical code), updating the Excel index, and renaming files to the canonical convention.
+description: Use when indexing, renaming, or adding books to the digital library at $library_root -- covers scanning folders, extracting metadata from PDFs, using the SNZ scraper for NZ/AU standard metadata (title, status, canonical code), updating the Excel index, and renaming files to the canonical convention.
+arguments: [library_root]
+argument-hint: "<path-to-library-root>"
 ---
 
 # Library Management

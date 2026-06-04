@@ -1,8 +1,3 @@
----
-description: Run the monthly Ground Engineering editorial session — archive queries, NZ/AU filter, Big 5 mapping, product signal extraction, and optional strategic check.
-name: monthly-editorial-session
----
-
 # Monthly Editorial Session
 
 A structured ceremony that processes each new Ground Engineering magazine issue through

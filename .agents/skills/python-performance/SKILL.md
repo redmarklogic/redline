@@ -1,6 +1,7 @@
 ﻿---
 name: python-performance
 description: Use when profiling or optimising Python code -- choosing a profiling tool, diagnosing bottlenecks, or applying algorithmic fixes
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Performance

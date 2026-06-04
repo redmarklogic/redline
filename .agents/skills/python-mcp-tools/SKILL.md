@@ -1,6 +1,7 @@
 ---
 name: python-mcp-tools
 description: Use when calling MCP tools or servers from Python code in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python MCP Tools

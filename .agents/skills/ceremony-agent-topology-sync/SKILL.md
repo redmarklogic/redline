@@ -1,9 +1,12 @@
 ---
 name: ceremony-agent-topology-sync
 description: Use when running a periodic Agent Topology Sync — triggered quarterly, on a new agent hire, a major strategy pivot, a significant product milestone, or a significant batch of client feedback. Facilitates a structured cross-agent session where each agent reflects using their assigned knowledge bases and proposes JD patches.
+disable-model-invocation: true
 ---
 
 # Agent Topology Sync
+
+<!-- Manual-only: writes JD patches and org-chart updates — must not auto-invoke. -->
 
 ## Boundary Contract
 

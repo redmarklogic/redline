@@ -1,6 +1,7 @@
 ﻿---
 name: python-crewai
 description: Use when building CrewAI agents, tasks, flows, or output models in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 ## Boundary Contract

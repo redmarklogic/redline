@@ -1,11 +1,15 @@
 ---
 name: redline-research
 description: Use when asked to "research", "investigate", "look up", or "find out" something in the Redline knowledge base — before any online search.
+arguments: [topic]
+argument-hint: "<research-topic>"
 ---
 # Redline Research
 
+**Research topic:** $topic
+
 Queries multiple NotebookLM knowledge bases with iterative cross-referencing and writes a
-cited research document to `docs/research/YYYYMMDD-<topic>.md`.
+cited research document to `docs/research/YYYYMMDD-$topic.md`.
 
 ## Boundary Contract
 

@@ -162,6 +162,8 @@ Write skill before testing? Delete it. Start over. Edit without testing? Same vi
 | `testing-skills-with-subagents.md` | Full pressure-scenario testing methodology |
 | `persuasion-principles.md` | Research foundation for bulletproofing discipline skills |
 | `graphviz-conventions.dot` | Flowchart style rules |
+| `skill-advanced-techniques.md` | Advanced frontmatter options, decision table, and audit checklist — load when creating, editing, or auditing any skill for `paths:`, `!` injection, `arguments`, `context: fork`, or `disable-model-invocation` |
+
 Same benefits: Better quality, fewer surprises, bulletproof results.
 
 If you follow TDD for code, follow it for skills. It's the same discipline applied to documentation.

@@ -1,6 +1,7 @@
 ﻿---
 name: python-documentation
 description: Use when writing Python docstrings or documentation -- Google Style, type hint integration, or fixing missing or incorrect documentation
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Documentation Standards

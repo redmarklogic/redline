@@ -1,6 +1,7 @@
 ﻿---
 name: python-linting
 description: Use when resolving Ruff lint violations or deciding whether a suppression is safe in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Linting (Ruff)

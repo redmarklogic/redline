@@ -1,8 +1,3 @@
----
-description: Structured workflow for designing and running an LLM evaluation cycle. Orchestrates the architect (Peter) and domain expert (Graeme) through rubric design, judge prompt validation, calibration, and deployment.
-name: evaluation-workflow
----
-
 # Evaluation Workflow
 
 Step-by-step procedure for designing and shipping an LLM evaluation cycle. This prompt

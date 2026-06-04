@@ -1,6 +1,8 @@
 ---
 name: notebooklm-index
-description: Use when adding, updating, or auditing a NotebookLM notebook in the index spreadsheet at <library-root>\index-notebooklm.xlsx.
+description: Use when adding, updating, or auditing a NotebookLM notebook in the index spreadsheet at $library_root\index-notebooklm.xlsx.
+arguments: [library_root]
+argument-hint: "<path-to-library-root>"
 ---
 
 ## Boundary Contract

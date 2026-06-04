@@ -1,6 +1,7 @@
 ---
 name: python-script
 description: Use when writing Python scripts in src/scripts/ -- thin orchestration, Spyder-style cell structure, or keeping reusable logic in the package
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Script Conventions
