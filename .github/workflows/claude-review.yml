@@ -3,6 +3,8 @@ name: Claude PR Review
 on:
   issue_comment:
     types: [created]
+  pull_request:
+    types: [review_requested]
 
 permissions:
   contents: read
@@ -11,10 +13,13 @@ permissions:
 
 jobs:
   claude-review:
-    # Only run when @claude is mentioned in a PR comment (not plain issue comments)
+    # Run when @claude is mentioned in a PR comment, OR when review is requested from the ai-review team
     if: >
-      github.event.issue.pull_request != null &&
-      contains(github.event.comment.body, '@claude')
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request != null &&
+       contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request' &&
+       github.event.requested_team.slug == 'ai-review')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
