@@ -39,27 +39,23 @@ rtk uv tool install notebooklm-mcp-cli
 
 This installs two executables: `nlm` (CLI) and `notebooklm-mcp` (MCP server).
 
-### Step 2 — Configure VS Code
+### Step 2 — Configure Claude Code
 
-The server is configured at the **user level** in
-`%APPDATA%\Code\User\mcp.json` (not workspace-level `.vscode/mcp.json`):
+The server is configured in the project-level `.mcp.json` at the repo root.
+Add the `notebooklm-mcp` entry under `mcpServers`:
 
 ```json
 {
-  "servers": {
-    "notebooklm": {
-      "command": "notebooklm-mcp",
-      "type": "stdio",
-      "env": {
-        "NOTEBOOKLM_QUERY_TIMEOUT": "300"
-      }
+  "mcpServers": {
+    "notebooklm-mcp": {
+      "command": "notebooklm-mcp"
     }
   }
 }
 ```
 
-If missing, add it and reload the VS Code window (**Developer: Reload Window**).
-Do **not** duplicate in workspace-level `.vscode/mcp.json`.
+If `.mcp.json` already has other servers, append the `"notebooklm-mcp"` key alongside them — do not replace the file.
+Restart Claude Code (or use `/mcp` to reconnect) after editing.
 
 ### Step 3 — Authenticate
 
@@ -184,5 +180,5 @@ notebook used by any skill (including `redline-research`) is listed there.
 - Use `nlm doctor` to diagnose installation, auth, and config issues.
 - Free-tier rate limit is ~50 queries/day.
 - Environment variables set in a terminal have **no effect** on the MCP server — it is a
-  child process of VS Code, not the shell. All env overrides must be placed in
-  `%APPDATA%\Code\User\mcp.json` under the server's `"env"` block.
+  child process of Claude Code, not the shell. All env overrides must be placed in
+  `.mcp.json` under the server's `"env"` block.

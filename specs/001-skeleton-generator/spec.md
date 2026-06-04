@@ -1,8 +1,19 @@
 # Feature Specification: GIR Skeleton Generator (Phases 0-3)
 
-**Branch**: `feature/map-doc-writing-process`
+**Branch**: `feature/4-gir-skeleton-generator-phases-0-3`
 **Created**: 2026-04-12
 **Status**: Draft
+
+## Pre-Execution Gate (Peter)
+
+Before Kabilan starts Phase 0, Peter produces a short go/no-go memo confirming:
+
+- ADR-002 is still current and the facade pattern is unchanged
+- No open rabbit holes in the risk register block execution
+- All acceptance gates are testable as written
+- No escalation-requiring dependencies (new packages, layer changes) are unresolved
+
+This is a currency check, not a reshaping session. Peter does not rewrite specs or resequence tasks.
 
 ## Source Document Reconciliation
 
@@ -32,12 +43,22 @@
 
 ## Scope
 
-This spec covers **Phases 0-3 only** of the skeleton generator concept (Steps 0-3 in the
-concept doc). These phases use pure DOCX generation with no LLM -- they produce a
-structurally correct document from deterministic rules and metadata extraction.
+Phases 0-3 only. Pure DOCX generation, no LLM. The function accepts:
 
-Phases 4-8 (LLM-powered extraction, standards mapping, placeholder injection) are
-deferred to a subsequent spec.
+1. `structure: ReportStructure` — ordered, non-empty value object wrapping a sequence of `SectionHeading` items (each carrying a heading string). Flat for Phases 0-3; hierarchy extensible without breaking the API. No duplicate top-level headings.
+2. `metadata: ProjectMetadata` — typed value object with project-level fields (project number, client, site address, date); full field list subject to Graeme design session
+3. `output_path: Path` — where to write the output DOCX
+
+The function returns `None` on success and raises on failure (see pending ADR).
+
+**Design principle (applied here and to all core functions):** function signatures prefer named value objects over raw collections. A `list[str]` becomes `ReportStructure`; a plain string address would become `SiteLocation`. This keeps the API stable while the domain model evolves.
+
+**Deferred to future specs:**
+
+- Geotechnical-specific section tree and conditional flags (foundation_assessment, slope_stability, etc.)
+- Metadata table layout and field set (pending Graeme design session)
+- Phases 4-8 (LLM-powered extraction, standards mapping, placeholder injection)
+- Fork of python-docx to internal GitHub org (separate feature, out of scope)
 
 ## Scenarios (mandatory)
 
@@ -177,8 +198,8 @@ verify the metadata values appear in the document text.
 
 ### Functional Requirements
 
-- **FR-001**: System MUST generate a DOCX file with sections defined by a `ReportDefinition`
-  data object. The builder MUST NOT hard-code any section names, ordering, or heading
+- **FR-001**: System MUST generate a DOCX file with sections defined by a `ReportStructure`
+  value object. The builder MUST NOT hard-code any section names, ordering, or heading
   conventions. (Addresses AC2, AC11. Enables multi-jurisdiction and multi-report-type
   evolution.)
 - **FR-002**: System MUST include or exclude conditional sections based on boolean flags
@@ -202,15 +223,10 @@ verify the metadata values appear in the document text.
 
 ### Key Entities (if data is involved)
 
-- **ReportDefinition**: Data object describing a report type's section structure.
-  Key attributes: `report_type` (str), `jurisdiction` (str), `heading_case` (str),
-  `front_matter` (list[SectionSpec]), `body_sections` (list[SectionSpec]),
-  `back_matter` (list[SectionSpec]), `condition_flags` (list[str]).
-- **SectionSpec**: Data object describing one section. Key attributes: `key` (str),
-  `heading` (str), `level` (int), `mandatory` (bool), `condition_flag` (str | None),
-  `children` (list[SectionSpec]), `table` (TableSpec | None).
-- **SkeletonConfig**: Configuration object controlling which conditional sections
-  to include. Key attribute: `flags` (dict[str, bool]).
+**Phases 0-3 (this spec):**
+
+- **SectionHeading**: Thin value object wrapping a single heading string. No hierarchy in Phases 0-3; designed to carry `level`, `key`, and `condition_flag` in future phases without changing the `ReportStructure` API. Key attribute: `heading` (str).
+- **ReportStructure**: Ordered, non-empty value object wrapping `list[SectionHeading]`. Represents the *resolved* section list — mandatory/conditional decisions already made upstream. Validates: non-empty, no duplicate top-level headings. Replaces `list[str]` as the first argument to `build_skeleton()`. (Graeme design session 2026-06-05.)
 - **ProjectMetadata**: Data object for project-level metadata. Key attributes:
   `project_number` (str), `client_name` (str), `site_address` (str), `date` (date),
   `document_code` (str).
@@ -218,6 +234,15 @@ verify the metadata values appear in the document text.
   Key methods: `add_heading`, `add_paragraph`, `add_table`, `add_metadata_block`, `save`.
   **Boundary rule**: accepts only primitive types.
 - **PythonDocxFacade**: Concrete implementation of `DocumentFacade` using python-docx.
+
+**Future phases (identified, not in scope):**
+
+- **ReportDefinition**: Policy object describing a report type's section structure (mandatory sections, conditional flags, jurisdiction rules). Produces a `ReportStructure` as output via a `resolve_structure()` step. Key attributes: `report_type`, `jurisdiction`, `heading_case`, `front_matter`, `body_sections`, `back_matter`, `condition_flags`.
+- **SectionSpec**: Richer per-section model used inside `ReportDefinition`. Key attributes: `key`, `heading`, `level`, `mandatory`, `condition_flag`, `children`, `table`. Distinct from `SectionHeading` — carries policy, not just text.
+- **SkeletonConfig**: Configuration controlling which conditional sections to include. Key attribute: `flags` (dict[str, bool]).
+- **GIRTemplate**: Policy object encoding standard section sets for a given investigation type and jurisdiction. Input to `resolve_structure()`; produces a `ReportStructure`.
+- **InvestigationScope**: What fieldwork was done (borehole count/type, lab programme, in situ tests). Drives conditional section inclusion. Distinct from `ProjectMetadata`.
+- **SiteLocation**: Coordinates, legal description, regional council jurisdiction. Drives seismic/liquefaction zone defaults. Candidate for extraction from `ProjectMetadata`.
 
 ## Success Criteria (mandatory)
 

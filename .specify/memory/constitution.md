@@ -81,6 +81,18 @@ it does not republish.
 
 *Grounded in ADR-006.*
 
+### X. Raise on Failure — No Sentinel Returns
+
+Functions signal failure by raising typed exceptions. Sentinel return values (`None`,
+`False`, `-1`, empty collections) are never used to communicate failure. On success, a
+function returns its meaningful output or `None` when there is nothing to return. Standard
+Python exceptions are used for standard failure modes (`ValueError`, `TypeError`,
+`OSError`, `pydantic.ValidationError`). A thin `RedlineError` base class covers
+domain-specific failures with no standard equivalent. Subclasses are introduced only when
+callers need to catch a failure mode distinctly — never speculatively.
+
+*Grounded in ADR-014.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -113,4 +125,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-05-31
+**Version**: 1.1.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-05
