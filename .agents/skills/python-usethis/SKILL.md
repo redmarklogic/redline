@@ -1,6 +1,7 @@
 ﻿---
 name: python-usethis
 description: Use when adding, removing, or inspecting development tools with the usethis CLI -- pre-commit hooks, pyproject.toml config, or dependencies in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # python-usethis

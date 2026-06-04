@@ -1,6 +1,7 @@
 ---
 name: python-paths
 description: Use when resolving file paths in Python -- choosing between pathlib, importlib.resources, or repo_ helper, or identifying banned path patterns
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Paths

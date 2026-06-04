@@ -1,7 +1,7 @@
 # Ceremony Agent Topology Sync — Detailed Reference
 
 ### Inputs
-- Agent files in `.github/agents/`
+- Agent files in `.claude/agents/`
 - `docs/product/strategy/strategic-bets.md` and current roadmap
 - New ADRs, specs, and PRDs created since the previous sync
 - Client feedback signals (if available)
@@ -24,7 +24,7 @@ The reflecting agent reads:
 - `docs/product/strategy/strategic-bets.md`
 - All ADRs created since the previous sync
 - All PRDs and specs merged since the previous sync
-- Their own current JD in `.github/agents/`
+- Their own current JD in `.claude/agents/`
 
 ### Step R2 — Knowledge Base Query
 The reflecting agent queries each of their assigned NotebookLM notebooks with:

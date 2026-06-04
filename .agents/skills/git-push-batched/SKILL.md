@@ -1,9 +1,12 @@
 ﻿---
 name: git-push-batched
 description: Use when pushing changes to git -- organises dirty files into thematically cohesive commits before pushing
+disable-model-invocation: true
 ---
 
 # Git Push — Batched Commits
+
+<!-- Manual-only: stages and commits files — must not auto-invoke. -->
 
 This skill is applied whenever the user says anything like:
 "push changes", "commit and push", "push to git", or "push my work".

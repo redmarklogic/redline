@@ -5,6 +5,15 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 ## Boundary Contract
 
+## Current State
+
+**Active branch:** !`git branch --show-current`
+
+**Worktree status:**
+```!
+git status --short
+```
+
 ## Quick Reference
 
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |

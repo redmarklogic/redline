@@ -1,6 +1,7 @@
 ---
 name: python-error-handling
 description: Use when writing exception handling, translating errors across layers, or adding structured logging in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Error Handling

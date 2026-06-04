@@ -6,7 +6,8 @@ Orphans consume token budget on every session without ever being triggered.
 
 Detection sources (in order):
   Degree-1  agent JD backtick mentions     (.github/agents/rl.*.agent.md,
-                                             .github/agents/speckit.*.agent.md)
+                                             .github/agents/speckit.*.agent.md,
+                                             .claude/agents/*.md)
   Degree-2  skill SKILL.md backtick refs   (.agents/skills/*/SKILL.md)
   Degree-1b AGENTS.md backtick mentions
 
@@ -38,6 +39,7 @@ from pathlib import Path
 
 _REPO = Path(__file__).resolve().parents[1]
 _AGENTS_DIR = _REPO / ".github" / "agents"
+_CLAUDE_AGENTS_DIR = _REPO / ".claude" / "agents"
 _SKILLS_DIR = _REPO / ".agents" / "skills"
 _AGENTS_MD = _REPO / "AGENTS.md"
 
@@ -110,8 +112,10 @@ def _degree1_edges(known: set[str]) -> tuple[set[str], list[tuple[str, str]]]:
     agents: set[str] = set()
     edges: list[tuple[str, str]] = []
 
-    patterns = list(_AGENTS_DIR.glob("rl.*.agent.md")) + list(
-        _AGENTS_DIR.glob("speckit.*.agent.md")
+    patterns = (
+        list(_AGENTS_DIR.glob("rl.*.agent.md"))
+        + list(_AGENTS_DIR.glob("speckit.*.agent.md"))
+        + list(_CLAUDE_AGENTS_DIR.glob("*.md"))
     )
     for path in sorted(patterns):
         aid = _agent_id(path)

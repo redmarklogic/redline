@@ -1,6 +1,7 @@
 ---
 name: python-style
 description: Use when applying Python style conventions in this repo -- uv usage, formatting rules, or idiomatic Python patterns
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Style

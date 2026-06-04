@@ -1,6 +1,7 @@
 ---
 name: python-typing
 description: Use when writing type hints in Python -- annotation style, generics, Optional, or fixing mypy type errors in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Typing

@@ -2,6 +2,7 @@
     "terminal.integrated.env.windows": {
         "PATH": "${env:USERPROFILE}\\.local\\bin;${env:PATH}"
     },
+    "chat.useClaudeMdFile": true,
     "github.copilot.chat.otel.dbSpanExporter.enabled": true,
     "chat.tools.compressOutput.enabled": true,
     "chat.includeReferencedInstructions": true,

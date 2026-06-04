@@ -53,7 +53,7 @@ Reflection Protocol.
 15. Advisory board agents validate their own patches; the facilitating agent drafts for
     all other agents.
 16. All patches land at `docs/people/drafts/agents/<agent>.agent.md`.
-    **Never write directly to `.github/agents/` — Draft-first constraint.**
+    **Never write directly to `.claude/agents/` — Draft-first constraint.**
 
 ---
 
@@ -79,7 +79,7 @@ Reflection Protocol.
 ## Promotion Checklist (After User Approval)
 
 - [ ] User has approved each draft JD patch
-- [ ] Approved patches moved from `docs/people/drafts/agents/` to `.github/agents/`
+- [ ] Approved patches moved from `docs/people/drafts/agents/` to `.claude/agents/`
 - [ ] Skill gap triggers handed off to the appropriate skill author
 - [ ] New hire triggers handed off to `hiring-agent-management` HIRE mode
 - [ ] `docs/people/agent-register.md` reflects promoted state

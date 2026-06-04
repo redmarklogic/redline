@@ -1,6 +1,7 @@
 ---
 name: qmd-narrative-design
 description: Use when designing Quarto reports or presentations -- Hook-Problem-Insight-Proof-Action arc, slide composition, speaker notes, or writing quality for revealjs or HTML/PDF output
+paths: "**/*.qmd"
 ---
 
 # QMD Narrative Design

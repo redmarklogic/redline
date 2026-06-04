@@ -1,6 +1,7 @@
 ---
 name: python-domain-modeling
 description: Use when modeling domain objects in Python -- value objects, Pandera/Pydantic contracts, or DataFrame-first API design
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Domain Modeling

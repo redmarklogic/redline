@@ -1,6 +1,7 @@
 ﻿---
 name: python-testing-api
 description: Use when writing API component tests or contract tests for FastAPI endpoints in this repo
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 ## Boundary Contract

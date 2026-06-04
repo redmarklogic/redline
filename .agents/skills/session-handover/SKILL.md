@@ -26,10 +26,22 @@ description: Use when ending a development session before a context switch, long
 - Scratchpad filing
 - Creating or modifying `.github/hooks/handover.json` (infrastructure — not this skill)
 
+## Session Context
+
+**Anchor file:**
+```!
+cat .session/session-start.md 2>/dev/null || echo "ABSENT"
+```
+
+**Files changed this session:**
+```!
+SHA=$(cat .session/session-start.md 2>/dev/null | tr -d '[:space:]') && git log "$SHA..HEAD" --name-only --pretty=format: 2>/dev/null | grep -v '^$' || echo "Cannot run — anchor SHA unavailable."
+```
+
 ## Core Steps
 
-1. Read `.session/session-start.md` → extract HEAD SHA. If absent → **fail loudly** (see `procedures/session-handover.md` Fallback).
-2. Run `rtk git log <sha>..HEAD --name-only` → session-bounded file list.
+1. Check the **Anchor file** block above. If it shows `ABSENT` → **fail loudly** (see `procedures/session-handover.md` Fallback). Do not proceed.
+2. Use the **Files changed this session** block above as the bounded file list.
 3. Recall CCE: call `session_recall` for in-session decisions.
 4. Produce four-section note: **What shipped / In flight / Watch-outs / Open questions**.
 5. Check each of the four footgun categories explicitly; write "Not triggered" if clear.

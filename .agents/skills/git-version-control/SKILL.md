@@ -22,11 +22,9 @@ This skill defines version control conventions for this repo.
 
 ## PR Discipline
 
-# Check diff size against the default branch (from repo root)
-rtk git diff --stat origin/master
-
-# Count total changed lines (additions + deletions combined)
-(git diff origin/master | Where-Object { $_ -match '^[+\-]' -and $_ -notmatch '^(\+\+\+|---)' } | Measure-Object).Count
+**Diff size against master:**
+```!
+git diff --stat origin/master
 ```
 
 If the output exceeds 400 lines, apply the stacking strategy below before pushing.

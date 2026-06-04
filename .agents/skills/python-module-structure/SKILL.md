@@ -1,6 +1,7 @@
 ---
 name: python-module-structure
 description: Use when ordering functions within a Python module -- step-down rule, public-before-private ordering, or separating executable code from implementation
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Module Structure

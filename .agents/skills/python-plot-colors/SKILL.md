@@ -1,6 +1,7 @@
 ﻿---
 name: python-plot-colors
 description: Use when selecting colors for plots -- colormap choice, color-blindness safety, or maintaining cross-figure consistency across plotting libraries
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 ## Boundary Contract

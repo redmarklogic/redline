@@ -1,6 +1,7 @@
 ---
 name: python-pins-data-version-control
 description: Use when versioning datasets with the pins library -- board layout, naming rules, read/write patterns, or deciding when to prefer pins over git-tracked data
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Pins Data Version Control

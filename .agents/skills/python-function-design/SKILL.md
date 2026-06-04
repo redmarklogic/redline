@@ -1,6 +1,7 @@
 ---
 name: python-function-design
 description: Use when designing Python functions -- decomposing responsibilities, defining signatures, or managing side effects
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Function Design

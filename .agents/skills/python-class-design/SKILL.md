@@ -1,6 +1,7 @@
 ﻿---
 name: python-class-design
 description: Use when designing Python classes -- structuring responsibilities, init patterns, or choosing composition over inheritance
+paths: "src/**/*.py,tests/**/*.py"
 ---
 
 # Python Class Design
