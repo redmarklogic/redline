@@ -10,12 +10,12 @@
 
 **Purpose**: Repo transferred to `redmarklogic`; board live with full schema; `project_config.json` committed.
 
-- [ ] T001 [Phase 0] Transfer `harell/redline` to `redmarklogic` org via GitHub Settings → Danger Zone → Transfer — follow `.agents/tools/github_projects/bootstrap-runbook.md` Phase 0
-- [ ] T002 [Phase 0] Update local remote: `git remote set-url origin https://github.com/redmarklogic/redline.git` then `git fetch origin` — verify no error
-- [ ] T003 [Phase 0] Bootstrap board via CLI: run bootstrap-runbook.md Phase 1 steps 1.1–1.6 (`gh auth refresh`, `gh project create`, 8× `gh project field-create`, configure Status columns in UI, enable 4 automations in UI, create 4 milestones via `gh api`)
-- [ ] T004 [Phase 0] Create 2 saved views in GitHub UI: Engineering (`-type:Ops`, default) and Ops (`type:Ops`)
-- [ ] T005 [Phase 0] Run `resolve_project_config(force_refresh=True)` and commit `project_config.json` — see bootstrap-runbook.md step 1.8
-- [ ] T006 [Phase 0] Verify: `gh project field-list N --owner redmarklogic --format json` shows ≥ 9 field names including `Type`, `Agent`, `Sprint`, `Source`, `Depends on`
+- [x] T001 [Phase 0] Transfer `harell/redline` to `redmarklogic` org via GitHub Settings → Danger Zone → Transfer — follow `.agents/tools/github_projects/bootstrap-runbook.md` Phase 0
+- [x] T002 [Phase 0] Update local remote: `git remote set-url origin https://github.com/redmarklogic/redline.git` then `git fetch origin` — verify no error
+- [x] T003 [Phase 0] Bootstrap board via CLI: run bootstrap-runbook.md Phase 1 steps 1.1–1.6 (`gh auth refresh`, `gh project create`, 8× `gh project field-create`, configure Status columns in UI, enable 4 automations in UI, create 4 milestones via `gh api`)
+- [ ] T004 [Phase 0] Create 2 saved views in GitHub UI: Engineering (`-type:Ops`, default) and Ops (`type:Ops`) — **founder action required (GitHub UI only)**
+- [x] T005 [Phase 0] Run `resolve_project_config(force_refresh=True)` and commit `project_config.json` — see bootstrap-runbook.md step 1.8
+- [x] T006 [Phase 0] Verify: `gh project field-list N --owner redmarklogic --format json` shows ≥ 9 field names including `Type`, `Agent`, `Sprint`, `Source`, `Depends on`
 
 ### Acceptance Gate
 
