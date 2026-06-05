@@ -9,7 +9,7 @@ forbidden to prevent context-window pollution and unintended side effects.
 These return massive, unbounded responses:
 
 | Tool | Why forbidden |
-|------|---------------|
+| --- | --- |
 | `cross_notebook_query` | Aggregates responses from multiple notebooks; can return tens of thousands of tokens |
 | `batch` | Batch operations across notebooks; `action="query"` queries all matching notebooks at once |
 | `source_get_content` | Dumps raw source text; a single source can be megabytes |
@@ -22,7 +22,7 @@ These create, modify, or delete resources without explicit user intent:
 
 | Tool | Why forbidden |
 | --- | --- |
-| `notebook_create` / `notebook_delete` / `notebook_rename` | Destructive notebook management |
+| `notebook_delete` / `notebook_rename` | Destructive notebook management |
 | `source_list_drive` / `source_sync_drive` | Bulk Drive source management |
 | `source_delete` | Destructive source removal |
 | `source_rename` | Source renaming |

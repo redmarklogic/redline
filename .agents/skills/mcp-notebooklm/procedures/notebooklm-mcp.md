@@ -133,12 +133,13 @@ How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
 ## Allowed Tools
 
 | Tool | Purpose |
-|------|---------|
+| --- | --- |
 | `notebook_query` | Query a notebook (primary use case) |
 | `notebook_list` | List all notebooks (find notebook IDs) |
 | `notebook_get` | Get notebook details and sources |
 | `notebook_describe` | Get AI-generated notebook summary and suggested topics |
 | `source_describe` | Get AI-generated per-source summary and keywords |
+| `notebook_create` | Create a new notebook — **the Knowledge Operator only** (notebook migration and provisioning workflows) |
 | `source_add` | Upload a new source to a notebook — **the Knowledge Operator only** (library ingestion workflow). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
 | `source_delete` | Remove a source from a notebook — **the Knowledge Operator only** (deduplication / file hygiene) |
 | `source_rename` | Rename a source in a notebook — **the Knowledge Operator only** (canonical naming enforcement) |
