@@ -96,7 +96,7 @@ lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
 lint.per-file-ignores.".github/scripts/**" = [ "INP" ]
 lint.per-file-ignores."hooks/**" = [ "INP" ]
 lint.per-file-ignores."src/scripts/**" = [ "INP" ]
-lint.per-file-ignores."tests/**" = [ "INP" ]
+lint.per-file-ignores."tests/**" = [ "D", "INP" ]
 lint.flake8-tidy-imports.banned-api."pydantic.ValidationError".msg = """\
   Do not import ValidationError in domain/schema tests. Pydantic validation is tested by Pydantic's own suite. Test \
   application behaviour through function calls instead.\
