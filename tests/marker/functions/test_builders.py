@@ -1,4 +1,5 @@
 import pytest
+from docx import Document as DocxDocument
 
 from marker.domain.models import ProjectMetadata, ReportStructure
 from marker.functions.builders import build_skeleton
@@ -21,6 +22,11 @@ def _make_metadata() -> ProjectMetadata:
     )
 
 
+def _headings_from_docx(path) -> list[str]:
+    doc = DocxDocument(str(path))
+    return [p.text for p in doc.paragraphs if p.style.name.startswith("Heading")]
+
+
 class TestBuildSkeleton:
     def test_writes_docx_file(self, tmp_path) -> None:
         structure = _make_structure("Introduction", "Methodology", "Conclusion")
@@ -31,6 +37,19 @@ class TestBuildSkeleton:
 
         assert output.exists()
 
+    def test_headings_written_in_order(self, tmp_path) -> None:
+        structure = _make_structure("Introduction", "Methodology", "Conclusion")
+        metadata = _make_metadata()
+        output = tmp_path / "report.docx"
+
+        build_skeleton(structure, metadata, output)
+
+        assert _headings_from_docx(output) == [
+            "Introduction",
+            "Methodology",
+            "Conclusion",
+        ]
+
     def test_single_section(self, tmp_path) -> None:
         structure = _make_structure("Executive Summary")
         metadata = _make_metadata()
@@ -38,7 +57,7 @@ class TestBuildSkeleton:
 
         build_skeleton(structure, metadata, output)
 
-        assert output.exists()
+        assert _headings_from_docx(output) == ["Executive Summary"]
 
     def test_raises_on_empty_structure(self) -> None:
         with pytest.raises(Exception, match="empty"):
@@ -51,4 +70,7 @@ class TestBuildSkeleton:
 
         build_skeleton(structure, metadata, output)
 
-        assert output.exists()
+        assert _headings_from_docx(output) == [
+            "Site & Location",
+            "Results (Preliminary)",
+        ]
