@@ -162,6 +162,7 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str, str]]:
 
 
 def main() -> int:
+    """Entry point."""
     parser = argparse.ArgumentParser(  # hook: allow
         description="Check RTK prefix enforcement in Markdown shell code blocks.",
     )

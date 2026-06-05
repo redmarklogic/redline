@@ -70,6 +70,7 @@ def find_overdue_items(
 
 
 def main() -> int:
+    """Entry point."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--deferred-dir",

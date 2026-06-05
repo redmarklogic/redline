@@ -1,10 +1,10 @@
-"""Chapter merger — Phase 0 helper when no full-book PDF exists.
+r"""Chapter merger — Phase 0 helper when no full-book PDF exists.
 
 Usage
 -----
     .venv\\Scripts\\python.exe .agents\\tools\\library\\merge_chapters.py <chapter_folder> <output_pdf>
 
-Example
+Example:
 -------
     .venv\\Scripts\\python.exe .agents\\tools\\library\\merge_chapters.py \
         "G:\\My Drive\\Library\\Engineering\\Geotechnical Engineering\\Foundations\\Correlations for Soil Properties" \\

@@ -1,4 +1,4 @@
-"""Upsert a book entry in a library-index.xlsx workbook.
+r"""Upsert a book entry in a library-index.xlsx workbook.
 
 The tool is path-agnostic: it operates on any workbook passed via ``index_path``
 so it works across multiple projects and libraries.

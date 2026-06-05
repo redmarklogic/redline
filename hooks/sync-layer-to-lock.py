@@ -14,8 +14,6 @@ Run automatically as a pre-commit hook. Exits non-zero if any skill in the
 lock file has no layer assignment in the taxonomy.
 """
 
-from __future__ import annotations
-
 import json
 import re
 import sys
@@ -76,6 +74,7 @@ def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
 
 
 def main() -> int:
+    """Entry point."""
     taxonomy_text = TAXONOMY_PATH.read_text(encoding="utf-8")
     layer_map = parse_layer_map(taxonomy_text)
 

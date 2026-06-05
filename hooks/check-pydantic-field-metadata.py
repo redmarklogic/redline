@@ -63,6 +63,7 @@ def _check_file(path: Path) -> list[tuple[int, str, list[str]]]:
 
 
 def main() -> int:
+    """Entry point."""
     all_violations: list[tuple[Path, int, str, list[str]]] = []
     for root in _SCAN_ROOTS:
         for py_file in sorted(root.rglob("*.py")):

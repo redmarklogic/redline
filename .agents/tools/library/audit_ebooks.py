@@ -1,4 +1,4 @@
-"""Ebooks worksheet audit: filename convention, created_date, subfolder review, provisional flags.
+r"""Ebooks worksheet audit: filename convention, created_date, subfolder review, provisional flags.
 
 Permanent tool — do NOT run `tmp_*.py` equivalents.
 
@@ -82,7 +82,6 @@ def is_canonical_filename(filename: str) -> bool:  # noqa: PLR0911
 
 def audit_ebooks(index_path: pathlib.Path = INDEX_PATH) -> None:  # noqa: PLR0912, PLR0915
     """Run full Ebooks audit; update notes columns; print structured report."""
-
     # --- Pre-update verification ---
     pre_wb = openpyxl.load_workbook(index_path, read_only=True, data_only=True)
     pre_ebooks_rows = max(pre_wb[EBOOK_WORKSHEET].max_row - 1, 0)

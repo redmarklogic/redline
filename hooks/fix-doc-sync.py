@@ -124,6 +124,7 @@ def _fix_file(path: Path) -> bool:
 
 
 def main() -> int:
+    """Entry point."""
     if len(sys.argv) < 2:
         print("Usage: fix-doc-sync.py <file> [<file> ...]", file=sys.stderr)
         return 1
