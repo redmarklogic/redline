@@ -89,7 +89,7 @@ lint.select = [
   "TID",
   "UP"
 ]
-lint.ignore = [ "D107", "D417", "PLR2004", "SIM108" ]
+lint.ignore = [ "D105", "D107", "D417", "PLR2004", "SIM108" ]
 lint.per-file-ignores."!tests/**/*.py" = [ "PT" ]
 lint.per-file-ignores."!tests/**/{domain,schemas}/**/test_*.py" = [ "TID251" ]
 lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
