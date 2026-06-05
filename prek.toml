@@ -279,6 +279,15 @@ hooks = [
     priority = 0
   },
   {
+    id = "check-pydantic-field-metadata",
+    name = "check-pydantic-field-metadata",
+    entry = "uv run --frozen --offline hooks/check-pydantic-field-metadata.py",
+    language = "system",
+    files = '^src/.*(domain|schemas)/.*\.py$',
+    pass_filenames = false,
+    priority = 0
+  },
+  {
     id = "check-overused-underscore",
     name = "Check overused underscores",
     entry = "uv run --frozen --offline hooks/check_overused_underscore.py",
