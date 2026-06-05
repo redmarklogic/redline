@@ -19,7 +19,7 @@ begins.
 ## Technical Context
 
 **Infrastructure**: NotebookLM MCP CLI (`notebooklm-mcp-cli`); `nlm` CLI for auth
-**MCP tools used**: `notebook_create`, `notebook_list`, `notebook_get`, `source_add`, `refresh_auth`, `server_info`
+**MCP tools used**: `notebook_create`, `notebook_list`, `notebook_get`, `notebook_delete`, `source_add`, `refresh_auth`, `server_info`
 **Data store**: `.agents/skills/redline-research/register.json` (SSOT for notebook metadata)
 **Library**: `G:\My Drive\Library` (source files for notebook population)
 **Staging path**: `docs/people/drafts/` (all draft outputs before Founder promotion)
@@ -65,29 +65,38 @@ begins.
 
 ## Phased Delivery
 
-### Phase 0: Account Setup (Founder Action)
+### Phase 0: Account Setup
 
-**Goal**: New Google account has an authenticated, operational `mcp-notebooklm` and zero
-notebooks. Old account notebooks are deleted.
+**Goal**: Redline notebooks deleted from old account by Linda via MCP. New Google account
+authenticated and operational. `notebook_list` returns empty list in new account.
 
-**Deliverables (Founder)**:
+**Step 0a — Linda deletes old notebooks (Linda action, old account still active)**:
 
-1. Redline notebooks deleted from old account via NotebookLM web UI (`register.json` entries only — other projects' notebooks left untouched)
-2. `nlm login` completed against new Google account
-3. `nlm login --check` returns success
-4. Verbal confirmation to Linda that MCP is operational
+Linda is currently authenticated against the old account. Before any auth switch:
+
+1. Call `notebook_list` — capture full list of existing notebooks
+2. Cross-reference against `register.json` — identify Redline-owned notebooks only
+3. Call `notebook_delete` for each Redline notebook; leave other projects' notebooks untouched
+4. Call `notebook_list` again — confirm Redline notebooks gone; other notebooks intact
+5. Report deletion summary to Founder (names deleted, names preserved)
+
+**Step 0b — Founder switches auth (Founder action)**:
+
+1. `nlm login` against new Google account
+2. `nlm login --check` returns success
+3. Verbal confirmation to Linda that MCP is now on new account
 
 **Verification**:
 
 ```text
-nlm login --check   → success
+nlm login --check   → success (new account)
 nlm doctor          → no errors
-notebook_list       → returns empty list
+notebook_list       → returns empty list (new account, no notebooks yet)
 ```
 
 **Acceptance Gate** (Founder confirms before Phase 1 starts):
 
-- [ ] Redline notebooks deleted from old account (`register.json` entries only; other projects untouched)
+- [ ] Linda deletion report received; Redline notebooks removed from old account; other projects untouched
 - [ ] `nlm login --check` success in new account
 - [ ] `notebook_list` returns empty list
 
@@ -267,6 +276,7 @@ register.json   → all 26+ entries have live URLs; no stale old-account URLs re
 | Agent consultation yields conflicting manifest decisions | Founder resolves at Phase 1 review gate before Phase 2 begins |
 | Standards notebook exceeds 100 sources even after split | Flag during Phase 2; refine split with Graeme before creation |
 | Library files cannot be located for a register-listed source | Flag in Phase 2 design plan; Founder decides defer, skip, or re-source |
+| Linda deletes a non-Redline notebook in old account | Cross-reference `register.json` before any delete; halt and report to Founder if notebook not in register |
 | MCP auth expires mid-operation | Call `refresh_auth`; fallback to `nlm login`; resume from last confirmed state in register draft |
 | Agent unavailable for consultation | Notify Founder; hold a consultation slot open; proceed with available agents |
 | `notebook_create` rate-limited (bulk creation of 26+ notebooks) | Space creation calls; use `server_info` to check server state; batch in groups of 5–10 |
