@@ -11,12 +11,16 @@
 ## Summary
 
 Redline has migrated to a new Google account. The NotebookLM MCP CLI must be
-re-authenticated, and all notebooks must be recreated in the new account. Rather than a
-direct 1:1 recreation of the 26 notebooks currently in `register.json`, this spec takes a
-redesign-first approach: Linda consults each agent owner before creating anything, opens
-the notebook structure for review, and incorporates any requested decompositions,
-consolidations, or restructuring into a reviewed manifest. Only after the manifest is
-approved does creation begin.
+re-authenticated, and the Redline project notebooks must be recreated in the new account.
+The old Google account contains notebooks from multiple projects — finished projects,
+unrelated initiatives, and Redline. Only the notebooks listed in `register.json` (Redline's
+26 notebooks) are in scope for this migration; notebooks belonging to other projects are
+not created in the new account and are not touched in the old account.
+
+Rather than a direct 1:1 recreation, this spec takes a redesign-first approach: Linda
+consults each agent owner before creating anything, opens the notebook structure for
+review, and incorporates any requested decompositions, consolidations, or restructuring
+into a reviewed manifest. Only after the manifest is approved does creation begin.
 
 ---
 
@@ -63,13 +67,14 @@ stale notebooks from any prior migration attempt.
 
 **Actions (Founder)**:
 
-1. Delete all notebooks from the current (old) Google account via the NotebookLM UI.
+1. In the old Google account: delete only the Redline notebooks (those listed in
+   `register.json`). Do not touch notebooks belonging to other projects.
 2. Install and authenticate the NotebookLM MCP CLI against the **new** Google account.
 3. Confirm to Linda that `mcp-notebooklm` is operational.
 
 **Review gate — Phase 0 Exit**:
 
-- [ ] Founder confirms: old account notebooks deleted
+- [ ] Founder confirms: Redline notebooks deleted from old account (`register.json` entries only)
 - [ ] Founder confirms: `mcp-notebooklm` authenticated to new account and operational
 
 _Linda does not begin Phase 1 until both confirmations are received._
@@ -86,17 +91,25 @@ those agreements.
 
 For each agent in the consultation schedule (see below), Linda:
 
-1. Presents the agent's current notebooks (names, descriptions, source counts where known)
-   from `register.json`.
-2. Asks whether the agent wants to keep, decompose, consolidate, rename, or restructure
+1. Presents the agent's current notebooks (names, descriptions) from `register.json`.
+2. Queries `library-index.xlsx` (via the `library-management` skill) to produce a rough
+   file count per notebook topic area. This count is an estimate for risk-flagging only —
+   the full `SourceFileRecord` list is produced in Phase 2.
+3. Asks whether the agent wants to keep, decompose, consolidate, rename, or restructure
    any of their notebooks.
-3. Answers "what resources do we have?" queries by checking the digital library
-   (`G:\My Drive\Library`) and reporting what files are available in each topic area.
-4. Continues the dialogue until the agent has confirmed the notebook structure they want.
-5. Notes any notebooks whose projected source count exceeds 100 and flags required splits.
+4. Answers "what resources do we have?" queries by reporting the file types and rough
+   counts found in step 2.
+5. Flags any notebook whose estimated source count approaches or exceeds 100 and surfaces
+   quantitative split options (e.g., "split by year range" or "split into two topic
+   groups") for the agent to choose from. Linda proposes structural options based on
+   counts; the agent decides the thematic content of each split — what belongs where
+   is a domain decision Linda does not make.
+6. Continues the dialogue until the agent has confirmed the notebook structure they want.
 
-Linda does not make domain decisions. Thematic boundaries for splits are decided by the
-domain agent, not by Linda.
+**Domain decision boundary**: Linda's role in split discussions is structural and
+quantitative — she counts files and surfaces options. The agent decides thematic
+boundaries (which sources belong in which split). Linda never assigns content to a
+split notebook without the agent's explicit direction.
 
 **Consultation Schedule**:
 
@@ -205,10 +218,15 @@ updated with live URLs and promoted from draft.
 
 For each notebook in the design plan:
 
-1. Upload each source file from `G:\My Drive\Library` to the notebook via `mcp-notebooklm`
-   `source_add`.
-2. Track the running source count per notebook.
-3. After all sources are added, confirm the source count back to the primary owner agent.
+1. For each file in the notebook's `SourceFileRecord` list:
+   - If `upload_status = pending`: call `source_add`; set status to `uploaded` on success
+     or `failed` on error.
+   - If `upload_status = not_found` (flagged in Phase 2): skip the file; do not attempt
+     upload. The skip is permanent for this run — do not retry automatically.
+2. Track the running source count (uploaded files only) per notebook.
+3. After all files are processed, confirm the source count and the count of skipped
+   (`not_found`) files back to the primary owner agent. If any files were skipped, the
+   agent decides whether to re-source them or accept the partial population.
 
 After all notebooks are populated:
 
