@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from marker.domain.models import ProjectMetadata, ReportStructure
+from marker.functions.engines import PythonDocxFacade
 
 
 def build_skeleton(
@@ -8,4 +9,7 @@ def build_skeleton(
     metadata: ProjectMetadata,
     output_path: Path,
 ) -> None:
-    raise NotImplementedError
+    doc = PythonDocxFacade()
+    for section in structure.sections:
+        doc.add_heading(section.heading, level=1)
+    doc.save(str(output_path))
