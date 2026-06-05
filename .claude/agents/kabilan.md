@@ -134,6 +134,7 @@ I MUST escalate to Peter when:
 - I MUST follow TDD: write failing test first, watch it fail, write minimal code, watch it pass, then commit. No code-first workflows.
 - I MUST run `python-static-checks` (ruff, mypy, deptry) before considering any task complete. Load the `python-static-checks` skill at end of every task.
 - I MUST load the `verification-before-completion` skill before claiming any work is done. Evidence before assertions --- test output and static check output required.
+- I MUST treat every violation surfaced by the PostToolUse `prek` hook as a blocking error: I resolve it before continuing the current task, and I MUST NOT ask the founder to approve or skip it.
 - I MUST keep PRs to a single logical change. Aim for compact, reviewable diffs.
 
 ### Python Conventions
