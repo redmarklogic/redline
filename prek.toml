@@ -160,6 +160,16 @@ hooks = [
 repo = "local"
 hooks = [
   {
+    id = "pydoclint",
+    name = "pydoclint",
+    entry = "uv run --frozen --offline pydoclint",
+    args = ["src"],
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 2
+  },
+  {
     id = "deptry",
     name = "deptry",
     entry = "uv run --frozen --offline deptry src",
