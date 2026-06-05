@@ -151,11 +151,11 @@ modules = ["marker", "rl"]
 
 **Acceptance Gate**:
 
-- [ ] `SectionHeading` rejects empty/whitespace strings
-- [ ] `ReportStructure` rejects empty section list and duplicate headings
-- [ ] `ProjectMetadata` is instantiable with valid fields
-- [ ] `ProjectMetadata` raises `ValidationError` on missing required fields
-- [ ] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — all green
+- [x] `SectionHeading` rejects empty/whitespace strings
+- [x] `ReportStructure` rejects empty section list and duplicate headings
+- [x] `ProjectMetadata` is instantiable with valid fields
+- [x] `ProjectMetadata` raises `ValidationError` on missing required fields
+- [x] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — all green
 
 ---
 
@@ -176,9 +176,9 @@ modules = ["marker", "rl"]
 
 **Acceptance Gate**:
 
-- [ ] `PythonDocxFacade` produces a valid DOCX with headings and a table (use `tmp_path`)
-- [ ] `build_skeleton()` tests exist and fail (Red phase confirmed)
-- [ ] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — engine tests green, builder tests red (expected)
+- [x] `PythonDocxFacade` produces a valid DOCX with headings and a table (use `tmp_path`)
+- [x] `build_skeleton()` tests exist and fail (Red phase confirmed)
+- [x] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — engine tests green, builder tests red (expected)
 
 ---
 
@@ -207,9 +207,9 @@ All sections rendered as level-1 headings in order. No conditional logic yet.
 
 **Acceptance Gate**:
 
-- [ ] All builder tests green
-- [ ] DOCX opened with python-docx shows headings in correct order
-- [ ] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — all green
+- [x] All builder tests green
+- [x] DOCX opened with python-docx shows headings in correct order
+- [x] `.venv\Scripts\activate; python -m pytest tests/marker/ -v` — all green
 
 ---
 
