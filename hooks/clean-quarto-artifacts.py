@@ -51,6 +51,7 @@ def _is_hidden_or_venv(path: Path) -> bool:
 
 
 def main() -> int:
+    """Entry point."""
     artifacts = find_artifacts()
 
     if not artifacts:

@@ -9,7 +9,7 @@ forbidden to prevent context-window pollution and unintended side effects.
 These return massive, unbounded responses:
 
 | Tool | Why forbidden |
-|------|---------------|
+| --- | --- |
 | `cross_notebook_query` | Aggregates responses from multiple notebooks; can return tens of thousands of tokens |
 | `batch` | Batch operations across notebooks; `action="query"` queries all matching notebooks at once |
 | `source_get_content` | Dumps raw source text; a single source can be megabytes |
@@ -21,11 +21,11 @@ These return massive, unbounded responses:
 These create, modify, or delete resources without explicit user intent:
 
 | Tool | Why forbidden |
-|------|---------------|
-| `notebook_create` / `notebook_delete` / `notebook_rename` | Destructive notebook management |
-| `source_delete` / `source_list_drive` / `source_sync_drive` / `source_rename` | Destructive or bulk source management |
-
-> **Exception — `source_add`:** Permitted for the Knowledge Operator only, to ingest new library files into NotebookLM notebooks as part of the library ingestion workflow. All other agents must not call `source_add`.
+| --- | --- |
+| `notebook_delete` / `notebook_rename` | Destructive notebook management |
+| `source_list_drive` / `source_sync_drive` | Bulk Drive source management |
+| `source_delete` | Destructive source removal |
+| `source_rename` | Source renaming |
 | `studio_create` / `studio_status` / `studio_delete` / `studio_revise` | Content generation (audio, video, reports) |
 | `download_artifact` / `export_artifact` | File downloads and exports |
 | `notebook_share_status` / `notebook_share_public` / `notebook_share_invite` / `notebook_share_batch` | Sharing management |
@@ -34,3 +34,11 @@ These create, modify, or delete resources without explicit user intent:
 | `save_auth_tokens` | Fallback auth (use `nlm login` CLI instead) |
 | `tag` | Notebook tagging (manage tags via CLI instead) |
 | `notebook_query_start` / `notebook_query_status` | Async query variants (use `notebook_query` instead) |
+
+> **Exceptions — Knowledge Operator only:**
+>
+> - `source_add`: ingest new library files as part of the library ingestion workflow.
+> - `source_delete`: deduplication and file hygiene on notebooks the Knowledge Operator maintains.
+> - `source_rename`: canonical naming enforcement on notebook sources.
+>
+> All other agents must not call these tools.

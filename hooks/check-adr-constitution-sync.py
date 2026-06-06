@@ -23,6 +23,7 @@ ADR_TEMPLATE_MARKER = "adr-template"
 
 
 def get_staged_files() -> list[str]:
+    """Return list of staged file paths."""
     result = subprocess.run(
         ["git", "diff", "--cached", "--name-only"],
         capture_output=True,
@@ -33,6 +34,7 @@ def get_staged_files() -> list[str]:
 
 
 def main() -> int:
+    """Entry point."""
     staged = get_staged_files()
 
     adr_changes = [

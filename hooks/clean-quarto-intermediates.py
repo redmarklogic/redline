@@ -143,6 +143,7 @@ def _fallback_cleanup_untracked_intermediates() -> int:
 
 
 def main() -> int:
+    """Entry point."""
     project_directories = _find_quarto_projects()
     if not project_directories:
         return 0

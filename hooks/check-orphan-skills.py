@@ -26,8 +26,6 @@ Exit codes:
 # no-adr: enforces agent-skill reachability invariant; governance rule lives in
 # ADR-009 (docs/adr/adr-009-skill-taxonomy-and-governance-registry.md)
 
-from __future__ import annotations
-
 import re
 import sys
 from collections import deque
@@ -219,6 +217,7 @@ def _reachable(agent_ids: set[str], all_edges: list[tuple[str, str]]) -> set[str
 
 
 def main() -> int:
+    """Entry point."""
     known = _known_skills()
 
     agent_ids, d1 = _degree1_edges(known)

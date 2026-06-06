@@ -64,6 +64,7 @@ def _check_md_files(
 
 
 def main() -> int:
+    """Entry point."""
     parser = argparse.ArgumentParser(
         description="Check that file sets do not contain banned words.",
     )

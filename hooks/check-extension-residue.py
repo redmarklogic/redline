@@ -63,6 +63,7 @@ def _tagged_files() -> list[tuple[Path, str]]:
 
 
 def main() -> None:
+    """Entry point."""
     installed = _installed_ids()
     orphans = [
         (path, ext_id) for path, ext_id in _tagged_files() if ext_id not in installed

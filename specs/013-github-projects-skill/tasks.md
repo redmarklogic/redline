@@ -91,6 +91,33 @@
 
 ---
 
+---
+
+## Phase 1 Remediation: Constitution Compliance (ADR-014, ADR-015)
+
+**Purpose**: Bring retrospective Phase 1 code into compliance with constitution v1.2.0.
+Constitution audit in plan.md § "Constitution Compliance Audit".
+
+### Principle XI — Argument Ordering (ADR-015)
+
+- [ ] T041 [P] [Remediation] Fix `create_task` signature: `(task, config)` → `(config, task)` in `functions.py:488`
+- [ ] T042 [P] [Remediation] Fix `update_task` signature: `(update, config)` → `(config, update)` in `functions.py:549`
+- [ ] T043 [P] [Remediation] Fix `move_task` signature: `(item_id, status, config, *, blocked_by)` → `(config, item_id, status, *, blocked_by)` in `functions.py:596`
+- [ ] T044 [P] [Remediation] Fix `delete_task` signature: `(item_id, config)` → `(config, item_id)` in `functions.py:649`
+- [ ] T045 [P] [Remediation] Fix `get_task` signature: `(item_id, config)` → `(config, item_id)` in `functions.py:674`
+- [ ] T046 [Remediation] Update all callers of the 5 renamed functions: `seed_backlog.py`, `__init__.py` exports (if any), and all tests in `tests/.agents/tools/github_projects/`
+
+### Acceptance Gate — Principle XI Remediation
+
+- [ ] T046a [Remediation] `uv run pytest tests/.agents/tools/github_projects/ -v` — all green after signature fixes
+- [ ] T046b [Remediation] `uv run ruff check .agents/tools/github_projects/` — no errors
+
+### Principle X — Raise on Failure (ADR-014)
+
+- [ ] T047 [Remediation] Open ADR to resolve `TaskResult(ok=False)` sentinel pattern: either (a) retrofit mutating functions to raise on hard failures + reserve TaskResult for 207 partial-success only, or (b) document an explicit ADR-014 exemption for subprocess-wrapper context. **Blocking for next implementation cycle on this module.**
+
+---
+
 ## Execution Notes
 
 - `[P]` = parallelizable (different files, no dependencies)

@@ -40,6 +40,7 @@ post-8.8.0 and will not render.
 | State | `stateDiagram-v2` | Lifecycle states and transitions | `procedures/sequence-class-state-erd.md` |
 | ER | `erDiagram` | Relational database schemas | `procedures/sequence-class-state-erd.md` |
 | C4 | `flowchart` (approx.) | Software architecture levels | `procedures/c4-diagrams.md` |
+| Function Pipeline | `flowchart LR` | Function signatures, inputs/outputs, data flow | `procedures/function-pipeline-diagram.md` |
 | Gantt | `gantt` | Project timelines | — |
 | Pie | `pie` | Proportional breakdown (≤5 categories) | — |
 | User Journey | `journey` | UX flow with emotional arc | — |

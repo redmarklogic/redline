@@ -230,3 +230,6 @@ data/**/*.html
 
 # Session anchor (written by VS Code SessionStart hook)
 .session/
+
+# Claude Code project-scoped memory (user-local, path-specific)
+.claude/projects/

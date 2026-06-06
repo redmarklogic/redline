@@ -9,6 +9,8 @@
 - `specs/NNN-feature/spec.md` -- feature specification with RICE-scored scenarios
 - `specs/NNN-feature/plan.md` -- implementation plan with MoSCoW and domain impact
 - `specs/NNN-feature/tasks.md` -- dependency-ordered vertical-slice tasks
+- `specs/NNN-feature/pipeline-diagram.md` -- function pipeline (Phase 1, produced during plan)
+- `specs/NNN-feature/class-diagram.md` -- value object class diagram (Phase 2, produced during plan after pipeline approval)
 - `.specify/` project infrastructure (on first use)
 
 ### Out of Scope
@@ -231,7 +233,7 @@ predecessors before the next one is written (see Incremental Analysis below).
 | 1    | constitution  | Project principles (first time only)    | Pre-fill: Python 3.14, layout from architecture.yml, TDD, single-dev |
 | 2    | specify       | Feature description (chat or .md file)  | RICE scoring for scenario prioritisation                |
 | 3    | clarify       | Answers to ambiguity questions (if any) | Triggers only if spec has NEEDS CLARIFICATION markers   |
-| 4    | plan          | Minimal -- preset fills tech context    | Tech context, MoSCoW, Domain Impact section             |
+| 4    | plan          | Minimal -- preset fills tech context    | Tech context, MoSCoW, Domain Impact; pipeline-diagram.md (Phase 1, founder approval gate); class-diagram.md (Phase 2) |
 | 5    | tasks         | None                                    | Vertical slice sizing, behaviour-based phases           |
 | 6    | analyze       | None                                    | Read-only consistency check, max 30 findings            |
 | 7    | implement     | None                                    | Execute tasks in order, mark completed                  | <!-- hook: allow -->
@@ -357,6 +359,7 @@ When executing the plan:
 | `subagent-driven-development`| Preferred execution mode for implement phase                    |
 | `finishing-a-development-branch` | Terminal step after implement phase                          |
 | `verification-before-completion` | Gates completion claims on fresh verification               |
+| `mermaid-diagrams`           | pipeline-diagram.md and class-diagram.md (plan phase)           |
 
 ## Constraints
 

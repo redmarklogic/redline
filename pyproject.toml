@@ -20,7 +20,10 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.14",
 ]
-dependencies = []
+dependencies = [
+  "pydantic>=2.13.4",
+  "python-docx>=1.2.0",
+]
 urls.Documentation = "https://github.com/harell/redline"
 urls.Repository = "https://github.com/harell/redline"
 
@@ -34,6 +37,7 @@ dev = [
   "pre-commit-update>=0.8.0",
   "prek>=0.3.8",
   "pydantic>=2.13.3",
+  "pydoclint>=0.8.6",
   "pypdf>=6.10.2",
   "pyproject-fmt>=2.21.0",
   "ruff>=0.15.8",
@@ -53,7 +57,7 @@ ocr = [
 ]
 
 [tool.hatch]
-build.targets.wheel.packages = [ "src/rl" ]
+build.targets.wheel.packages = [ "src/marker", "src/rl" ]
 
 [tool.uv]
 default-groups = [ "doc", "dev", "test" ]
@@ -65,14 +69,39 @@ link-mode = "symlink"
 [tool.ruff]
 line-length = 88
 format.docstring-code-format = true
-lint.select = [ "A", "C4", "E4", "E7", "E9", "F", "FLY", "FURB", "I", "INP", "PLE", "PLR", "PT", "RUF", "SIM", "UP" ]
-lint.ignore = [ "PLR2004", "SIM108" ]
+lint.select = [
+  "A",
+  "C4",
+  "D",
+  "E4",
+  "E7",
+  "E9",
+  "F",
+  "FLY",
+  "FURB",
+  "I",
+  "INP",
+  "PLE",
+  "PLR",
+  "PT",
+  "RUF",
+  "SIM",
+  "TID",
+  "UP"
+]
+lint.ignore = [ "D105", "D107", "D417", "PLR2004", "SIM108" ]
 lint.per-file-ignores."!tests/**/*.py" = [ "PT" ]
+lint.per-file-ignores."!tests/**/{domain,schemas}/**/test_*.py" = [ "TID251" ]
 lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
 lint.per-file-ignores.".github/scripts/**" = [ "INP" ]
 lint.per-file-ignores."hooks/**" = [ "INP" ]
 lint.per-file-ignores."src/scripts/**" = [ "INP" ]
-lint.per-file-ignores."tests/**" = [ "INP" ]
+lint.per-file-ignores."tests/**" = [ "D", "INP" ]
+lint.flake8-tidy-imports.banned-api."pydantic.ValidationError".msg = """\
+  Do not import ValidationError in domain/schema tests. Pydantic validation is tested by Pydantic's own suite. Test \
+  application behaviour through function calls instead.\
+  """
+lint.pydocstyle.convention = "google"
 
 [tool.codespell]
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
@@ -95,8 +124,17 @@ ignore-words-list = [
 ]
 skip = [ "tests/assets/html/*.html" ]
 
+[tool.pydoclint]
+style = "google"
+arg-type-hints-in-docstring = false
+check-return-types = false
+require-return-section-when-returning-nothing = false
+skip-checking-short-docstrings = true
+exclude = "\\.git|\\.tox|tests"
+
 [tool.deptry]
 ignore_notebooks = false
+per_rule_ignores.DEP002 = [ "python-docx" ]
 
 [tool.pyproject-fmt]
 keep_full_version = true
@@ -125,7 +163,7 @@ report.exclude_also = [
 report.omit = [ "*/pytest-of-*/*" ]
 
 [tool.importlinter]
-root_packages = [ "rl" ]
+root_packages = [ "marker", "rl" ]
 
 [[tool.importlinter.contracts]]
 name = "rl layers"
@@ -133,3 +171,14 @@ type = "layers"
 layers = [ "functions", "schemas", "domain" ]
 containers = [ "rl" ]
 exhaustive = true
+
+[[tool.importlinter.contracts]]
+name = "marker layers"
+type = "layers"
+layers = [ "functions", "domain" ]
+containers = [ "marker" ]
+
+[[tool.importlinter.contracts]]
+name = "marker independence"
+type = "independence"
+modules = [ "marker", "rl" ]

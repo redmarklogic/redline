@@ -1,6 +1,13 @@
 # Configuration file for `prek`, a git hook framework written in Rust.
 # See https://prek.j178.dev for more information.
 #:schema https://www.schemastore.org/prek.json
+#
+# Priority groups (same priority = concurrent execution):
+#   0  — instant blockers (language=fail, near-zero cost binary checks)
+#  10  — fast read-only validators (25+ hooks run concurrently)
+#  20  — formatters / fixers (mutate files; different tools touch different file types)
+#  30  — post-format validators (read the formatted output)
+#  40  — slow deep analysis (import graph, docstrings, deps)
 
 default_install_hook_types = [
   "pre-commit",
@@ -13,6 +20,12 @@ default_stages = [
   "pre-commit",
   "pre-push"
   ]
+
+# ---------------------------------------------------------------------------
+# Priority 0 — Instant blockers
+# language=fail hooks cost nothing; file-existence checks are near-instant.
+# Fail here before spending any CPU on validators or formatters.
+# ---------------------------------------------------------------------------
 
 [[repos]]
 repo = "local"
@@ -67,80 +80,6 @@ hooks = [
 ]
 
 [[repos]]
-repo = "https://github.com/abravalheri/validate-pyproject"
-rev = "v0.24.1"
-hooks = [
-  {
-    id = "validate-pyproject",
-    priority = 0
-  }
-]
-
-[[repos]]
-repo = "https://github.com/astral-sh/uv-pre-commit"
-rev = "0.9.9"
-hooks = [
-  {
-    id = "uv-lock",
-    priority = 0
-  },
-  {
-    id = "uv-sync",
-    priority = 1
-  },
-  {
-    id = "uv-export",
-    args = ["--quiet"],
-    priority = 2
-  }
-]
-
-[[repos]]
-repo = "local"
-hooks = [
-  {
-    id = "pyproject-fmt",
-    name = "pyproject-fmt",
-    language = "system",
-    entry = "uvx --python 3.14 --from 'pyproject-fmt==2.15.3' --with 'toml-fmt-common<1.1.0' pyproject-fmt",
-    files = '^pyproject\.toml$',
-    priority = 1
-  }
-]
-
-[[repos]]
-repo = "https://github.com/python-formate/flake8-dunder-all"
-rev = "v0.5.0"
-hooks = [
-  {
-    id = "ensure-dunder-all",
-    files = '.*/__init__\.py$',
-    exclude = "tests/assets/",
-    priority = 1
-  }
-]
-
-[[repos]]
-repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.15.14"
-hooks = [
-  {
-    id = "ruff-check",
-    args = [
-      "--fix",
-      "--ignore",
-      "FIX",
-      "--unsafe-fixes"
-    ],
-    priority = 0
-  },
-  {
-    id = "ruff-format",
-    priority = 2
-  }
-]
-
-[[repos]]
 repo = "https://github.com/pre-commit/pre-commit-hooks"
 rev = "v6.0.0"
 hooks = [
@@ -160,44 +99,105 @@ hooks = [
 repo = "local"
 hooks = [
   {
-    id = "deptry",
-    name = "deptry",
-    entry = "uv run --frozen --offline deptry src",
+    id = "check-extension-residue",
+    name = "check-extension-residue",
+    entry = "uv run --frozen --offline hooks/check-extension-residue.py",
     language = "system",
-    files = '^src/.*\.py$|^pyproject\.toml$',
+    always_run = true,
     pass_filenames = false,
-    priority = 3
+    priority = 0
+  }
+]
+
+# ---------------------------------------------------------------------------
+# Priority 10 — Fast read-only validators
+# All run concurrently. No file mutations. uv-lock is here because it
+# validates/regenerates the lock file and does not read .py source files.
+# ---------------------------------------------------------------------------
+
+[[repos]]
+repo = "https://github.com/abravalheri/validate-pyproject"
+rev = "v0.24.1"
+hooks = [
+  {
+    id = "validate-pyproject",
+    priority = 10
+  }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.9.9"
+hooks = [
+  {
+    id = "uv-lock",
+    priority = 10
+  }
+]
+
+[[repos]]
+repo = "https://github.com/python-formate/flake8-dunder-all"
+rev = "v0.5.0"
+hooks = [
+  # Runs after ruff-check (priority=20) could have altered __init__.py.
+  # Kept here at 10 — dunder-all checks structure, not style; ruff rarely
+  # touches __all__. Move to 30 if false positives appear.
+  {
+    id = "ensure-dunder-all",
+    files = '.*/__init__\.py$',
+    exclude = "tests/assets/",
+    priority = 10
+  }
+]
+
+[[repos]]
+repo = "https://github.com/pre-commit/pygrep-hooks"
+rev = "v1.10.0"
+hooks = [
+  {
+    id = "rst-backticks",
+    priority = 10
+  }
+]
+
+[[repos]]
+repo = "https://github.com/Yelp/detect-secrets"
+rev = "v1.5.0"
+hooks = [
+  {
+    id = "detect-secrets",
+    args = [
+      "--baseline",
+      ".config/secrets.baseline"
+    ],
+    exclude = "tests/assets/html/|\\.config/secrets\\.baseline",
+    priority = 10
   }
 ]
 
 [[repos]]
 repo = "local"
 hooks = [
+  # Quarto cleanup runs before formatters read the working tree.
   {
-    id = "import-linter",
-    name = "import-linter",
-    entry = "uv run --frozen --offline lint-imports",
+    id = "clean-quarto-artifacts",
+    name = "clean-quarto-artifacts",
+    entry = "uv run --frozen --offline hooks/clean-quarto-artifacts.py",
     language = "system",
-    files = '^src/.*\.py$|^pyproject\.toml$',
+    always_run = true,
     pass_filenames = false,
-    priority = 3
-  }
-]
-
-[[repos]]
-repo = "https://github.com/codespell-project/codespell"
-rev = "v2.4.2"
-hooks = [
+    priority = 10
+  },
   {
-    id = "codespell",
-    additional_dependencies = ["tomli"],
-    priority = 3
-  }
-]
-
-[[repos]]
-repo = "local"
-hooks = [
+    id = "clean-quarto-intermediates",
+    name = "clean-quarto-intermediates",
+    entry = "uv run --frozen --offline hooks/clean-quarto-intermediates.py",
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 10
+  },
+  # --- agent / skill integrity checks ---
   {
     id = "check-skills-documented",
     name = "check-skills-documented",
@@ -206,7 +206,7 @@ hooks = [
     language = "system",
     files = '(^\.agents/skills/|AGENTS\.md$|skills-lock\.json$)',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-banned-words",
@@ -219,7 +219,7 @@ hooks = [
     language = "system",
     files = '^hooks/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-skills-persona-names",
@@ -240,7 +240,7 @@ hooks = [
     language = "system",
     files = '^\.agents/skills/',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-skill-dag",
@@ -249,7 +249,7 @@ hooks = [
     language = "system",
     files = '^\.agents/skills/.*SKILL\.md$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-skill-routing-redundancy",
@@ -258,7 +258,7 @@ hooks = [
     language = "system",
     files = '^\.agents/skills/.*SKILL\.md$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-orphan-skills",
@@ -267,8 +267,9 @@ hooks = [
     language = "system",
     files = '(^\.agents/skills/|^\.github/agents/.*\.agent\.md$|AGENTS\.md$)',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
+  # --- source code structural checks ---
   {
     id = "check-no-dataclass-in-domain",
     name = "check-no-dataclass-in-domain",
@@ -276,7 +277,16 @@ hooks = [
     language = "system",
     files = '^src/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
+  },
+  {
+    id = "check-pydantic-field-metadata",
+    name = "check-pydantic-field-metadata",
+    entry = "uv run --frozen --offline hooks/check-pydantic-field-metadata.py",
+    language = "system",
+    files = '^src/.*(domain|schemas)/.*\.py$',
+    pass_filenames = false,
+    priority = 10
   },
   {
     id = "check-overused-underscore",
@@ -285,35 +295,7 @@ hooks = [
     language = "system",
     files = '^src/.*\.py$',
     pass_filenames = false,
-    priority = 0
-  },
-  {
-    id = "fix-doc-sync",
-    name = "fix-doc-sync",
-    entry = "uv run --frozen --offline hooks/fix-doc-sync.py",
-    args = ["AGENTS.md"],
-    language = "system",
-    always_run = true,
-    pass_filenames = false,
-    priority = 1
-  },
-  {
-    id = "clean-quarto-artifacts",
-    name = "clean-quarto-artifacts",
-    entry = "uv run --frozen --offline hooks/clean-quarto-artifacts.py",
-    language = "system",
-    always_run = true,
-    pass_filenames = false,
-    priority = 0
-  },
-  {
-    id = "clean-quarto-intermediates",
-    name = "clean-quarto-intermediates",
-    entry = "uv run --frozen --offline hooks/clean-quarto-intermediates.py",
-    language = "system",
-    always_run = true,
-    pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-hook-adr-reference",
@@ -323,7 +305,7 @@ hooks = [
     language = "system",
     files = '^hooks/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-argparse",
@@ -336,7 +318,7 @@ hooks = [
     language = "system",
     files = '^(src|scripts)/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-archive-imports",
@@ -346,7 +328,7 @@ hooks = [
     language = "system",
     files = '^src/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-env-loader",
@@ -359,7 +341,7 @@ hooks = [
     language = "system",
     files = '^(src|scripts)/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-env-defaults",
@@ -372,7 +354,7 @@ hooks = [
     language = "system",
     files = '^(src|scripts)/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-section-rules",
@@ -382,8 +364,31 @@ hooks = [
     language = "system",
     files = '^src/.*\.py$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
+  {
+    id = "check-no-debug-statements",
+    name = "check-no-debug-statements",
+    entry = "uv run --frozen --offline hooks/check-no-debug-statements.py",
+    args = [
+      "--dirs=src",
+      "--dirs=tests"
+    ],
+    language = "system",
+    files = '^(src|tests)/.*\.py$',
+    pass_filenames = false,
+    priority = 10
+  },
+  {
+    id = "check-py-file-location",
+    name = "check-py-file-location",
+    entry = "uv run --frozen --offline hooks/check-py-file-location.py",
+    language = "system",
+    files = '\.py$',
+    pass_filenames = false,
+    priority = 10
+  },
+  # --- doc / markdown checks ---
   {
     id = "check-mermaid-syntax",
     name = "check-mermaid-syntax",
@@ -396,7 +401,7 @@ hooks = [
     language = "system",
     files = '\.(md|qmd)$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-mental-model-links",
@@ -411,20 +416,7 @@ hooks = [
     language = "system",
     files = '\.md$',
     pass_filenames = false,
-    priority = 0
-  },
-  {
-    id = "check-no-debug-statements",
-    name = "check-no-debug-statements",
-    entry = "uv run --frozen --offline hooks/check-no-debug-statements.py",
-    args = [
-      "--dirs=src",
-      "--dirs=tests"
-    ],
-    language = "system",
-    files = '^(src|tests)/.*\.py$',
-    pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-user-paths",
@@ -442,15 +434,8 @@ hooks = [
     language = "system",
     files = '\.(py|md|yaml|yml|toml|json|sh|ps1|txt|rst|cfg|ini)$',
     pass_filenames = false,
-    priority = 0  },
-  {
-    id = "check-extension-residue",
-    name = "check-extension-residue",
-    entry = "uv run --frozen --offline hooks/check-extension-residue.py",
-    language = "system",
-    always_run = true,
-    pass_filenames = false,
-    priority = 0  },
+    priority = 10
+  },
   {
     id = "check-rtk-in-docs",
     name = "check-rtk-in-docs",
@@ -465,16 +450,7 @@ hooks = [
     language = "system",
     files = '\.(md|qmd)$',
     pass_filenames = false,
-    priority = 0
-  },
-  {
-    id = "check-py-file-location",
-    name = "check-py-file-location",
-    entry = "uv run --frozen --offline hooks/check-py-file-location.py",
-    language = "system",
-    files = '\.py$',
-    pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-no-emoji",
@@ -492,7 +468,7 @@ hooks = [
     language = "system",
     files = '\.(py|md|toml|yml|yaml)$',
     pass_filenames = false,
-    priority = 0
+    priority = 10
   },
   {
     id = "check-replacement-char",
@@ -510,17 +486,16 @@ hooks = [
     language = "system",
     files = '\.(py|md|toml|yml|yaml)$',
     pass_filenames = false,
-    priority = 0
-  }
-]
-
-[[repos]]
-repo = "https://github.com/pre-commit/pygrep-hooks"
-rev = "v1.10.0"
-hooks = [
+    priority = 10
+  },
   {
-    id = "rst-backticks",
-    priority = 0
+    id = "check-adr-constitution-sync",
+    name = "check-adr-constitution-sync",
+    entry = "uv run --frozen --offline hooks/check-adr-constitution-sync.py",
+    language = "system",
+    files = '^docs/adr/adr-.*\.md$',
+    pass_filenames = false,
+    priority = 10
   }
 ]
 
@@ -535,36 +510,7 @@ hooks = [
     stages = ["post-checkout", "post-merge"],
     always_run = true,
     pass_filenames = false,
-    priority = 0
-  }
-]
-
-[[repos]]
-repo = "local"
-hooks = [
-  {
-    id = "check-adr-constitution-sync",
-    name = "check-adr-constitution-sync",
-    entry = "uv run --frozen --offline hooks/check-adr-constitution-sync.py",
-    language = "system",
-    files = '^docs/adr/adr-.*\.md$',
-    pass_filenames = false,
-    priority = 0
-  }
-]
-
-[[repos]]
-repo = "https://github.com/Yelp/detect-secrets"
-rev = "v1.5.0"
-hooks = [
-  {
-    id = "detect-secrets",
-    args = [
-      "--baseline",
-      ".config/secrets.baseline"
-    ],
-    exclude = "tests/assets/html/|\\.config/secrets\\.baseline",
-    priority = 0
+    priority = 10
   }
 ]
 
@@ -579,6 +525,129 @@ hooks = [
     language = "system",
     stages = ["pre-push"],
     pass_filenames = false,
-    priority = 0
+    priority = 10
+  }
+]
+
+# ---------------------------------------------------------------------------
+# Priority 20 — Formatters / fixers
+# Mutate files. Run concurrently because each tool owns a distinct file type:
+#   ruff-check  → .py files
+#   pyproject-fmt → pyproject.toml
+#   fix-doc-sync  → AGENTS.md
+# ---------------------------------------------------------------------------
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.15.14"
+hooks = [
+  {
+    id = "ruff-check",
+    args = [
+      "--fix",
+      "--ignore",
+      "FIX",
+      "--unsafe-fixes"
+    ],
+    priority = 20
+  },
+  {
+    id = "ruff-format",
+    priority = 30
+  }
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "pyproject-fmt",
+    name = "pyproject-fmt",
+    language = "system",
+    entry = "uvx --python 3.14 --from 'pyproject-fmt==2.15.3' --with 'toml-fmt-common<1.1.0' pyproject-fmt",
+    files = '^pyproject\.toml$',
+    priority = 20
+  },
+  {
+    id = "fix-doc-sync",
+    name = "fix-doc-sync",
+    entry = "uv run --frozen --offline hooks/fix-doc-sync.py",
+    args = ["AGENTS.md"],
+    language = "system",
+    always_run = true,
+    pass_filenames = false,
+    priority = 20
+  }
+]
+
+# ---------------------------------------------------------------------------
+# Priority 30 — Post-format validators
+# Read the output of priority-20 formatters. ruff-format reads the .py files
+# that ruff-check --fix has already written. uv-sync/uv-export consume the
+# lock file that uv-lock (priority=10) has already updated.
+# ---------------------------------------------------------------------------
+
+[[repos]]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.9.9"
+hooks = [
+  {
+    id = "uv-sync",
+    priority = 30
+  },
+  {
+    id = "uv-export",
+    args = ["--quiet"],
+    priority = 30
+  }
+]
+
+# ---------------------------------------------------------------------------
+# Priority 40 — Slow deep analysis
+# Import graph, docstring coverage, dependency audit, spell-check.
+# All run concurrently; each is I/O- or parse-heavy and independent.
+# ---------------------------------------------------------------------------
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "pydoclint",
+    name = "pydoclint",
+    entry = "uv run --frozen --offline pydoclint",
+    args = ["src"],
+    language = "system",
+    files = '^src/.*\.py$',
+    pass_filenames = false,
+    priority = 40
+  },
+  {
+    id = "deptry",
+    name = "deptry",
+    entry = "uv run --frozen --offline deptry src",
+    language = "system",
+    files = '^src/.*\.py$|^pyproject\.toml$',
+    pass_filenames = false,
+    priority = 40
+  },
+  {
+    id = "import-linter",
+    name = "import-linter",
+    entry = "uv run --frozen --offline lint-imports",
+    language = "system",
+    files = '^src/.*\.py$|^pyproject\.toml$',
+    pass_filenames = false,
+    priority = 40
+  }
+]
+
+[[repos]]
+repo = "https://github.com/codespell-project/codespell"
+rev = "v2.4.2"
+hooks = [
+  {
+    id = "codespell",
+    additional_dependencies = ["tomli"],
+    priority = 40
   }
 ]

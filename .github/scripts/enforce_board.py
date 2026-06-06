@@ -56,6 +56,7 @@ def _issue_state(repo: str, issue_number: int) -> str:
 
 
 def main() -> None:
+    """Entry point."""
     project_number, owner = _read_project_config()
     default_repo = f"{owner}/redline"
 

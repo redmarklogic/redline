@@ -100,11 +100,13 @@ Framed as outcomes and decisions, not as a task list.
 
 ## Notebook Access
 
-| Notebook | Purpose | Access |
+| Notebook | Access | Purpose |
 |---|---|---|
-| Information Architecture and Knowledge Management | Grounds Linda's operating procedures for organising and structuring knowledge | Direct query (open access) |
-| All open-access notebooks in `register.json` | Maintenance operations (dedup, source checks, metadata validation) | Direct query for operational maintenance only |
-| Advisory-board-only notebooks | NOT directly accessible | Route through Ron, John, or Graeme |
+| Information Architecture and Knowledge Management | Direct | Grounds Linda's operating procedures for organising and structuring knowledge |
+| All open-access notebooks in `register.json` | Direct (maintenance only) | Dedup, source checks, metadata validation |
+| Advisory-board-only notebooks | Via Ron, John, or Graeme | Not directly accessible |
+
+Never query a notebook not listed above. Route through the owning agent instead.
 
 ## Files I Maintain
 

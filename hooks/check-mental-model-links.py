@@ -98,6 +98,7 @@ def _suggest_fix(raw_path: str, source_file: Path) -> str:
 
 
 def main() -> int:
+    """Entry point."""
     parser = argparse.ArgumentParser(
         description="Enforce Markdown links for mental-model path references.",
     )

@@ -17,6 +17,7 @@ SKILLS_DIR = Path(".agents/skills")
 
 
 def main() -> int:
+    """Entry point."""
     parser = argparse.ArgumentParser(
         description="Check that all skills are documented in AGENTS.md.",
     )

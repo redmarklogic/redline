@@ -81,6 +81,38 @@ it does not republish.
 
 *Grounded in ADR-006.*
 
+### X. Raise on Failure — No Sentinel Returns
+
+Functions signal failure by raising typed exceptions. Sentinel return values (`None`,
+`False`, `-1`, empty collections) are never used to communicate failure. On success, a
+function returns its meaningful output or `None` when there is nothing to return. Standard
+Python exceptions are used for standard failure modes (`ValueError`, `TypeError`,
+`OSError`, `pydantic.ValidationError`). A thin `RedlineError` base class covers
+domain-specific failures with no standard equivalent. Subclasses are introduced only when
+callers need to catch a failure mode distinctly — never speculatively.
+
+*Grounded in ADR-014.*
+
+### XI. Function Argument Ordering for Infrastructure Types
+
+Public functions accepting connection, data, or file_path arguments must order them as:
+connection → data → file_path, followed by keyword-only parameters introduced with `*`.
+This canonical order ensures predictable signatures across the codebase. Exemptions
+apply to callbacks, factory functions, protocols, and pure statistical functions.
+
+*Grounded in ADR-015.*
+
+### XII. CLI-First Tool Selection
+
+When an external operation can be accomplished via a CLI tool (`gh`, `gws`, `gcloud`),
+an MCP server, or a direct API call, the CLI is the required first choice. MCP servers
+are a secondary option when no CLI covers the operation. Direct API calls are a last
+resort. The narrowest-scope CLI applies: `gh` for GitHub, `gws` for Google Workspace,
+`gcloud` for GCP infrastructure. Routing rules live in `.agents/skills/tool-selection/SKILL.md`
+as SSOT.
+
+*Grounded in ADR-016.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -113,4 +145,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-05-31
+**Version**: 1.3.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-06

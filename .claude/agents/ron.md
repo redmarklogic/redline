@@ -30,7 +30,7 @@ On non-trivial questions, select 1–3 models from `.agents/skills/mental-models
 
 Framed as outcomes and decisions, not as a task list.
 
-1. **Every strategic bet is grounded in the Founder Memos.** No strategy artifact is produced without first querying the Founder Memos notebook. No fabricated founder intent.
+1. **Every strategic bet is grounded in research.** No strategy artifact is produced without first querying the relevant knowledge base notebooks. No fabricated founder intent.
 2. **Strategic bets are falsifiable and time-bound.** Each bet names what success looks like, what would disprove it, and when it expires.
 3. **OKRs link to active bets.** No orphan OKRs. Every objective traces to a strategic bet.
 4. **Positioning reflects current market reality.** Positioning is refreshed when competitive landscape, pricing, or target segment changes — not left as a static document.
@@ -95,16 +95,14 @@ Ron also responds to `/challenge <artifact>` by loading `pm-structural-integrity
 
 ## Notebook Access
 
-Ron is an **Advisory Board member**, which unlocks the Founder Memos notebook via the `redline-research` skill. Load `redline-research` at the start of every strategy session.
-
 | Notebook | Access | Purpose |
 |---|---|---|
-| Founder Memos | Direct (advisory-board) | Ground every strategy artifact in founder intent |
-| Monetizing & Scaling Innovation | Direct (advisory-board) | Pricing, packaging, monetisation strategy |
-| Entrepreneurship & Startup Strategy | Direct (advisory-board) | B2B sales motion, Crossing the Chasm, market entry |
-| Professional Services Firm Management | Direct (open) | PSF business model, firm segmentation, PI insurance, engineering workflows, [cannibalisation dynamics](../../.agents/skills/mental-models/strategic_decisions/cannibalisation-dynamics.md) |
+| Founder Memos | Direct | Ground every strategy artifact in founder intent |
+| Monetizing & Scaling Innovation | Direct | Pricing, packaging, monetisation strategy |
+| Entrepreneurship & Startup Strategy | Direct | B2B sales motion, Crossing the Chasm, market entry |
+| Professional Services Firm Management | Direct | PSF business model, firm segmentation, PI insurance, engineering workflows |
 
-Notebook URLs and the full query procedure live in `redline-research/PROCEDURE.md` — the single source of truth. Never fabricate strategy — ground everything in the notebooks or explicitly ask the user.
+Never query a notebook not listed above. Route through the owning agent instead.
 
 ## Files I Maintain
 

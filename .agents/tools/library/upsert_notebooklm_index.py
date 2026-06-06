@@ -1,4 +1,4 @@
-"""Upsert or mark-deleted a NotebookLM notebook in an index-notebooklm.xlsx file.
+r"""Upsert or mark-deleted a NotebookLM notebook in an index-notebooklm.xlsx file.
 
 The tool is path-agnostic: it operates on any index file passed via the JSON
 payload's ``index_path`` key, so it can serve multiple projects and libraries.
@@ -76,6 +76,7 @@ def upsert(
     sources: list[dict],
     index_path: Path | None = None,
 ) -> str:
+    """Upsert notebook and sources into the index workbook."""
     resolved_index_path = index_path or INDEX_PATH
     with WorkbookLock(resolved_index_path):
         wb = openpyxl.load_workbook(resolved_index_path)
@@ -157,6 +158,7 @@ def upsert(
 
 
 def mark_deleted(notebook_id: str, index_path: Path | None = None) -> str:
+    """Mark a notebook as deleted in the index workbook."""
     resolved_index_path = index_path or INDEX_PATH
     with WorkbookLock(resolved_index_path):
         wb = openpyxl.load_workbook(resolved_index_path)

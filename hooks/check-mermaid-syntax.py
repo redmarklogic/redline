@@ -170,6 +170,7 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str, str, str]]:
 
 
 def main() -> int:  # noqa: PLR0912
+    """Entry point."""
     parser = argparse.ArgumentParser(
         description="Check Mermaid blocks for syntax patterns that break v8.8.0.",
     )

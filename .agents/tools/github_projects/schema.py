@@ -292,12 +292,14 @@ class TaskCreate(BaseModel):
 
     @model_validator(mode="after")
     def dates_ordered(self) -> Self:
+        """Validate start_date <= target_date."""
         if self.start_date > self.target_date:
             raise ValueError("start_date must be <= target_date")
         return self
 
     @model_validator(mode="after")
     def blocked_requires_reason(self) -> Self:
+        """Validate blocked_by is set when status is Blocked."""
         if self.status == "Blocked" and not self.blocked_by:
             raise ValueError("blocked_by must be set when status is 'Blocked'")
         return self
@@ -521,6 +523,7 @@ class TaskUpdate(BaseModel):
 
     @model_validator(mode="after")
     def dates_ordered_if_both_present(self) -> Self:
+        """Validate start_date <= target_date when both are present."""
         if (
             self.start_date is not None
             and self.target_date is not None
@@ -531,6 +534,7 @@ class TaskUpdate(BaseModel):
 
     @model_validator(mode="after")
     def blocked_requires_reason(self) -> Self:
+        """Validate blocked_by is set when updating status to Blocked."""
         if self.status == "Blocked" and not self.blocked_by:
             raise ValueError("blocked_by must be set when updating status to 'Blocked'")
         return self
