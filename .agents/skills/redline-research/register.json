@@ -690,5 +690,38 @@
     ],
     "access": "open",
     "added": "2026-04-18"
+  },
+  {
+    "id": "gcp-devops-tactical-playbook",
+    "name": "GCP DevOps Tactical Playbook: Filling the 6 Library Gaps",
+    "url": "https://notebooklm.google.com/notebook/1061dd39-19d1-4386-9e4f-6fdc7bbba51a",
+    "description": "Official Google Cloud documentation covering GCP operational patterns, deployment guides, IAM configuration, Cloud Run, API references, and DevSecOps controls. Complements the foundational DevOps & GCP Infrastructure notebook (8 books) with authoritative first-party Google source material targeting 6 coverage gaps identified during the Brent topology screen (2026-06-06).",
+    "topic_area": "AI & software architecture",
+    "topics": [
+      "GCP",
+      "Google Cloud Platform",
+      "DevOps",
+      "Cloud Run",
+      "IAM",
+      "CI/CD",
+      "infrastructure as code",
+      "cloud-native security",
+      "DevSecOps",
+      "SOC 2 compliance",
+      "cloud operations"
+    ],
+    "content_types": [
+      "official documentation",
+      "tactical guides",
+      "operational playbooks"
+    ],
+    "use_cases": [
+      "Looking up authoritative GCP API references, CLI patterns, and service configurations during infrastructure provisioning",
+      "Verifying current GCP deployment patterns for Cloud Run, IAM least-privilege, and Cloud SQL",
+      "Grounding Brent's 12 DevOps skill files with official GCP documentation",
+      "Cross-referencing GCP security controls and SOC 2 mappings against official Google documentation"
+    ],
+    "access": "open",
+    "added": "2026-06-07"
   }
 ]

@@ -41,3 +41,5 @@ See `procedures/miro-mcp.md` for detailed rules, examples, and extended referenc
 - **Placing all items at `(0, 0)`** — items stack on top of each other. Use spacing: diagrams 2000–3000 units apart, documents 500–1000 units.
 - **Calling `doc_update` without `doc_get` first** — `doc_update` requires the version token from `doc_get`; skipping causes a version conflict error.
 - **Using `table_sync_rows` without `key_column`** — without a key column every call inserts new rows instead of updating existing ones.
+- **Using `diagram_create` for EventStorming** — EventStorming uses `layout_create` (spatial, colour-coded sticky notes), not `diagram_create`.
+- **Skipping `layout_get_dsl` before `layout_create`** — always fetch the DSL spec first.

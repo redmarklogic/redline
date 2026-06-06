@@ -2,7 +2,7 @@
 
 **Parent skill:** `ddd-strategic`
 **Source:** Khononov (*Learning DDD*), Vernon (*Implementing DDD*)
-**Tooling:** Miro via `miro-mcp` (`layout_create`). Never Mermaid.
+**Tooling:** Miro via `miro-mcp` (`layout_create`). Never Mermaid. **Load the `miro-mcp` skill before executing any steps.**
 **Adapted for:** Solo founder + AI agents (the Principal Engineer facilitates, the Domain Expert provides domain facts, the Product Manager validates problem framing).
 
 ---

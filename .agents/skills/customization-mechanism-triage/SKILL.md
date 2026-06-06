@@ -78,7 +78,7 @@ Events: `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`,
 ### 3. Is this a persistent persona — a named role with tool restrictions and/or handoffs?
 → **Custom Agent** (`.github/agents/*.agent.md`)
 
-- Named roles: Harriet, Kabilan, a security reviewer, a read-only planner
+- Named roles: people-ops agent, python-dev agent, a security reviewer, a read-only planner
 - Needs tool restrictions (e.g., cannot edit files)
 - Needs handoffs to other agents
 
@@ -193,7 +193,7 @@ When a request names a mechanism, verify before proceeding. State the correction
 4. Hand off to the appropriate workflow:
    - **Instruction** → create `.instructions.md` with correct `applyTo` glob
    - **VS Code Hook** → create `.github/hooks/<name>.json` with correct lifecycle event
-   - **Custom Agent** → draft in `docs/people/drafts/agents/` (Harriet's draft-first constraint applies)
+   - **Custom Agent** → draft in `docs/people/drafts/agents/` (people-ops agent draft-first constraint applies)
    - **Skill** → use `skills-create` then `writing-skills`
    - **Spec-Kit Extension** → use `procedures/speckit-extension-triage.md`, then draft in `docs/people/drafts/skills/`
    - **Prompt File** → create `.github/prompts/*.prompt.md`

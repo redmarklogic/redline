@@ -1,7 +1,7 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-24  
+**Last updated:** 2026-06-07  
 **Source of truth for:** all skills in `.agents/skills/` and their domain category.
 
 > Update this file whenever a skill is created, retired, or reassigned.
@@ -85,6 +85,7 @@
 | `version-control` | Commit conventions, hygiene, prek hooks, pre-push | Engineering |
 | `git-push-batched` | Push changes in thematically cohesive commits | Engineering |
 | `git-hooks-create` | Writing bespoke git hooks | Engineering |
+| `tool-selection` | CLI-first routing across `gh`, `gws`, `gcloud`, MCP, and direct API (ADR-016) | All |
 | `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
 | `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda, Peter |
 | `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron, Peter |
@@ -146,6 +147,7 @@
 |---|---|---|
 | `skills-create` | Create a new skill folder and SKILL.md | Harriet, Engineering |
 | `writing-skills` | TDD-based skill authoring and testing | Harriet, Engineering |
+| `customization-mechanism-triage` | Select the correct VS Code Copilot customization mechanism (instruction, skill, agent, hook, prompt file, spec-kit extension, or plugin) before creating any artifact; auto-corrects misnamed requests | Harriet, Engineering |
 | `using-superpowers` | Introduction to the skills system | All |
 | `doc-updater` | Keep codemaps and docs in sync with the codebase | Engineering |
 | `redline-research` | Query multiple NotebookLM knowledge bases | All |
@@ -174,7 +176,7 @@
 | `ux-design-critique` | Structured self-review checklist: Nielsen heuristics scoring, cognitive load check, AI Language Policy compliance, cross-surface consistency, persona walk-through. Adapted from pbakaus/impeccable/critique framework for Markdown/Miro outputs | Matt |
 | Playwright MCP *(built-in)* | Live website review via browser automation: navigate, screenshot, interact, inspect console/network, resize viewports. Governed by Matt's Website Review Protocol (pre-flight check, acceptance criteria loop, stop-on-unavailable). No separate skill file — protocol is embedded in Matt's JD. | Matt |
 
-> `ux-professional-software`, `ux-conversion-design`, and `ux-document-design` are pending creation (see Skills Coverage Gaps below). `ux-design-critique` is embedded in Matt's agent JD (`.github/agents/rl.matt.agent.md`) — no separate skill file. Playwright MCP is a built-in tool governed by the Website Review Protocol in Matt's JD.
+> `ux-professional-software`, `ux-conversion-design`, and `ux-document-design` are pending creation (see Skills Coverage Gaps below). `ux-design-critique` is embedded in Matt's agent JD (`.claude/agents/matt.md`) — no separate skill file. Playwright MCP is a built-in tool governed by the Website Review Protocol in Matt's JD.
 
 ### Engineering — Architecture, Evaluation & Governance
 
@@ -219,3 +221,5 @@
 | `dev-environment` extension: dependency management guidance | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `dev-environment` skill: `uv add` / `uv remove` patterns, `pyproject.toml` dependency declarations, when to escalate to Peter. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
 | `python-domain-modeling` extension: layer architecture | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `python-domain-modeling` skill: visual reference for Redline's layer architecture (`domain/`, `functions/`, `api/`), what belongs in each layer, prohibited cross-layer imports, escalation triggers. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
 | `version-control` extension: PR discipline thresholds | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `version-control` skill: maximum PR size (lines/files), "one logical change" definition, how to split PRs, SonarQube/Copilot detection, author-side AI feedback window. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
+| `tool-selection` (CLI-first routing: `gh`, `gws`, `gcloud`, MCP, direct API) | ADR-016 (2026-06-06) | Promoted to `.agents/skills/tool-selection/`. Stale draft duplicate at `docs/people/drafts/skills/tool-selection/` — flag for deletion. | **Live** (2026-06-06) |
+| 12 GCP/DevOps skills: Cloud Run deploy, CI/CD pipeline, IAM least-privilege, Cloud SQL, IAP/OAuth wiring, observability, cost controls, container tuning, WIF, multi-tenancy, Secret Manager, infra-boundary-contract | Harriet (2026-06-06, Brent topology screen) | Ground from "DevOps & GCP Infrastructure" (8 books) and "GCP DevOps Tactical Playbook" (official Google docs, promoted to register 2026-06-07). Author with `writing-skills` TDD cycle. GitHub issue created for next sprint. Until written, Brent uses WebFetch + Context7. | Deferred — next sprint (GitHub issue) |

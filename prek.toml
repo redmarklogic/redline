@@ -235,7 +235,8 @@ hooks = [
       "Matt",
       "Kabilan",
       "Linda",
-      "Harriet"
+      "Harriet",
+      "Brent"
     ],
     language = "system",
     files = '^\.agents/skills/',
