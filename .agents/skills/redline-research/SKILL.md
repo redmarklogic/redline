@@ -35,7 +35,7 @@ for the full list with URLs, descriptions, and access controls. Summary by topic
 | AI & software architecture | AI System Engineering, Software Architecture & DDD |
 | Process & product | BPM, Product Roadmapping, Writing Specs, Information Architecture & KM, Product Design & UX, Organisational Design & Team Topologies, Professional Services Firm Management |
 | Communication & documentation | Engineers' Guide to Technical Communication |
-| Founder strategy _(Advisory Board only)_ | Redline Founder Memos, Monetizing & Scaling Innovation, Entrepreneurship & Startup Strategy, Digital Marketing & Social Selling |
+| Founder strategy _(Advisory Board only)_ | Monetizing & Scaling Innovation, Entrepreneurship & Startup Strategy |
 
 **Advisory Board only** notebooks: skip entirely unless the user's session context explicitly
 identifies them as an advisory board member. Do not mention skipped notebooks.
