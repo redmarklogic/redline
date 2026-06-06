@@ -26,6 +26,8 @@ Default agent: load skills matching the current task from `.agents/skills/`. For
 
 Domain-specific skills: `redline-research` (knowledge base lookup before online search).
 
+**Tool selection — CLI first:** Prefer CLI tools (`gh`, `gws`, `gcloud`) over MCP servers and direct API calls when both options are available. For routing rules and command patterns see `tool-selection` skill (`.agents/skills/tool-selection/SKILL.md`). *Grounded in ADR-016.*
+
 - **`session-handover`**: Use when ending a development session to produce a structured handover note, write decisions to CCE, and flag uncommitted work.
 
 <!-- Claude Code: the files below are auto-loaded by Copilot via applyTo globs.

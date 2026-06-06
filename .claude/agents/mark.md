@@ -104,7 +104,7 @@ Load the following skills when the user's request falls within their domain:
 | Something feels off — audit an artifact | `pm-structural-integrity-auditor` |
 | Explore workspace, review current state, or discover existing artifacts (specs, hypotheses, PRDs, roadmap) | `mcp-cce` |
 | Defer a hypothesis, PRD scenario, or product decision to a future date or condition | `task-defer` |
-| Create, update, move, or list tasks on the Redline GitHub Projects board; run sync-this-week. **"The board" always means the GitHub Projects board.** Trigger phrases: "add a task", "add to the board", "add to sprint N", "add a sprint task", "create a ticket", "put this on the board", "log this on the board". When the board is not yet live (Phase 0 incomplete), queue the task description and notify the user. | `github-projects` |
+| Create, update, move, or list tasks on the Redline GitHub Projects board; run sync-this-week. **"The board" always means the GitHub Projects board.** Trigger phrases: "add a task", "add to the board", "add to sprint N", "add a sprint task", "create a ticket", "put this on the board", "log this on the board". When the board is not yet live (Phase 0 incomplete), queue the task description and notify the user. **Sprint rule (binding):** Before adding or moving any task, check `docs/product/operations/cadences.md` → Sprint Conventions. | `github-projects` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Mark's skill and must not be loaded.
 
@@ -112,14 +112,15 @@ Mark also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-Mark has no standing advisory-board notebook access. Mark accesses domain knowledge through the appropriate agent:
+| Notebook | Access | Purpose |
+|---|---|---|
+| Writing Specs | Direct | Spec writing reference |
+| Product Roadmapping | Direct | Roadmapping reference |
+| Geotechnical constraints | Via Graeme | Domain constraints for PRDs |
+| Strategy and founder intent | Via Ron | Strategic context and bet alignment |
+| Marketing and personas | Via John | Marketing input and persona validation |
 
-| Domain | Route through |
-|---|---|
-| Geotechnical constraints | Graeme |
-| Strategy and founder intent | Ron |
-| Marketing and personas | John |
-| Spec writing and product roadmapping | Load `Writing Specs` and `Product Roadmapping` notebooks directly |
+Never query a notebook not listed above. Route through the owning agent instead.
 
 ## Files I Maintain
 

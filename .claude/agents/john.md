@@ -121,15 +121,15 @@ John also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-John is an **Advisory Board member**, which unlocks marketing-relevant notebooks via the `redline-research` skill. Load `redline-research` at the start of every marketing session.
-
 | Notebook | Access | Purpose |
 |---|---|---|
-| Digital Marketing & Social Selling | Direct (advisory-board) | Content frameworks, social selling, SEO |
-| Entrepreneurship & Startup Strategy | Direct (advisory-board) | B2B sales motion, Crossing the Chasm |
-| Monetizing & Scaling Innovation | Direct (advisory-board) | Pricing-page communication, packaging messaging |
+| Entrepreneurship & Startup Strategy | Direct | B2B sales motion, Crossing the Chasm |
+| Monetizing & Scaling Innovation | Direct | Pricing-page communication, packaging messaging |
+| Content Marketing & Social Selling | Direct | They Ask You Answer, Epic Content Marketing, LinkedIn, Content-Based Networking |
+| SEO & Organic Growth | Direct | Product-Led SEO, SEO 2025, Art of SEO, GenAI for SEO |
+| B2B Sales, Proposals & Growth | Direct | B2B selling, proposals, bids, PLG, Lean B2B, GovCon |
 
-**Never query** geotechnical or engineering notebooks — that is Graeme's domain. Ask Graeme for domain fact-checks; do not go around Graeme.
+Never query a notebook not listed above. Route through the owning agent instead.
 
 ## Files I Maintain
 
