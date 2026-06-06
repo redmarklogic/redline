@@ -138,6 +138,12 @@ outputs — enough to create a calendar event.
 
 ---
 
+## Sprint Conventions
+
+**Tasks do not cross sprint boundaries.** Any task that cannot be completed within a single sprint must be split into sub-tasks before sprint planning closes. Each sub-task is scoped to one sprint. A task carried from a previous sprint without being split is a planning failure — not a scheduling choice.
+
+---
+
 ## Provenance
 
 Cadences derived from `docs/product/strategy/gtm/content-engine.md` (daily, weekly),
