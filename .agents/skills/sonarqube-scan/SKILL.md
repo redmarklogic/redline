@@ -53,6 +53,18 @@ Run: [`procedures/sonarqube-scan.md`](procedures/sonarqube-scan.md)
 Steps: availability check → run `scan.ps1` / `scan.sh` → poll compute-engine
 task (bounded, max ~60 s) → confirm `SUCCESS`.
 
+## Offline Contract
+
+When SonarQube is unreachable, `scan.ps1` must:
+
+- Exit with code 1.
+- Print to stderr: `SonarQube is not available at <url>: <reason>. Start the local stack …`
+- Never proceed to run the scanner container or poll the CE task.
+
+`scan.ps1` delegates its availability gate to `sonar_scan.healthcheck` (line 51), so this
+contract is verified by:
+`tests/.agents/tools/sonar_scan/test_offline_acceptance.py::TestHealthcheckCliOffline`
+
 ## Common Mistakes
 
 | Mistake | Fix |

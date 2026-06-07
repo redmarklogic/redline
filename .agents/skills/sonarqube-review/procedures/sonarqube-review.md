@@ -16,7 +16,10 @@ url     = os.environ["SONARQUBE_URL"]
 project = os.environ["SONAR_PROJECT_KEY"]
 token   = os.environ["SONAR_TOKEN"]
 
-ensure_available(url)  # raises SonarQubeUnavailableError if not UP
+try:
+    ensure_available(url)
+except SonarQubeUnavailableError as exc:
+    raise SystemExit(str(exc)) from None
 ```
 
 ## Step 1 — Retrieve issues

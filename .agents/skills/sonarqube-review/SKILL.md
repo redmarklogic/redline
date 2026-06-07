@@ -72,6 +72,17 @@ Steps: availability recheck → retrieve issues (MCP primary, Python fallback) �
 group by file and severity → triage loop → record false positives → re-run to
 verify.
 
+## Offline Contract
+
+When SonarQube is unreachable, Step 0 must:
+
+- Exit with code 1 via `SystemExit`.
+- Message: `SonarQube is not available at <url>: <reason>. Start the local stack …`
+- Never reach issue retrieval or display a triage list.
+
+Verified by:
+`tests/.agents/tools/sonar_scan/test_offline_acceptance.py::TestReviewStep0Offline`
+
 ## Common Mistakes
 
 | Mistake | Fix |
