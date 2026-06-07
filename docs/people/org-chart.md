@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-05-22  
+**Last updated:** 2026-06-07  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.
@@ -30,7 +30,7 @@ Founder (you)
 │         Outputs: domain knowledge documents, fact-checks
 │         Writes to: docs/knowledge/geotechnical/
 │
-├── Peter — Principal Engineer  [DRAFT-FIRST]
+├── Peter — Principal Engineer  [AUTONOMOUS]
 │     Archetype: Architect (Larson) + Shaper (Singer) + Advisory Tech Lead (Cagan)
 │     Outputs: ADRs, shaped Pitches, evaluation rubric structures, feasibility assessments,
 │              architectural constraint tests, quality gate configurations, improvement loop analyses
@@ -64,7 +64,18 @@ Founder (you)
 │     Constraints: no push to origin without founder instruction,
 │                  founder reviews all code, escalates architecture to Peter,
 │                  escalates domain to Graeme (via Peter), follows Matt's design specs
+│     Peer: Brent (infra dependency: Kabilan requests env vars/buckets/DB connections; Brent provisions)
 │     Decision models: Circle of Competence, Second-Order Thinking
+│
+├── Brent — DevOps Engineer (GCP)  [AUTONOMOUS within JD gates]
+│     Outputs: Cloud Run deployment, .env.example infra contract, IAM config,
+│              CI/CD pipeline, docs/infrastructure/ documentation, infra-ready notes
+│     Writes to: infra/, .github/workflows/, .env.example, docs/infrastructure/
+│     Reads: docs/adr/, specs/003-platform-website/, src/rl/settings.py (env-consuming files), tests/
+│     Constraints: no push to origin without founder instruction,
+│                  Tier-1 GCP services require Peter approval (blocking),
+│                  no Python application code
+│     Peer: Kabilan (infra requests); Escalates to: Peter (Tier-1 GCP, ADR authorship)
 │
 └── Engineering Workflow (speckit.* agents — vendor-managed)
       speckit.specify → speckit.plan → speckit.tasks → speckit.implement
@@ -144,6 +155,11 @@ Who consults whom, and for what.
 | Kabilan | Graeme (via Peter) | Domain terminology ambiguity, domain-content test fixture review |
 | Kabilan | Matt | Design specs for user-facing components, design review before shipping |
 | Kabilan | Founder | Feature scope confirmation for ad-hoc user-facing work, push approval |
+| Kabilan | Brent | Env var / secret / bucket / DB connection requests — Kabilan tells Brent what the app needs |
+| Brent | Peter | Tier-1 GCP service approval (blocking); ADR review for Cloud SQL connection strategy |
+| Brent | Kabilan | Updated .env.example + infra-ready note; OAuth handoff checkpoint (redirect URI, scopes, IAP audience) |
+| Brent | Founder | All infra config for review before push; option tables for multi-option decisions |
+| Linda | Brent | Cloud/DevOps/SOC-2 source-currency triage and notebook-content decisions for GCP/DevOps notebooks |
 
 ---
 
@@ -155,10 +171,11 @@ Who consults whom, and for what.
 | Mark | Autonomous | — (founding member) |
 | John | Autonomous | — (founding member) |
 | Graeme | Autonomous | — (founding member) |
-| Harriet | **Draft-first** | Pending — awaiting trust milestone |
+| Harriet | **Autonomous** *(re-promoted 2026-06-07)* | Pending permanent — re-promoted to complete Brent hire |
 | Matt | **Draft-first** | Pending — awaiting trust milestone |
 | Linda | **Draft-first** | Hired 2026-04-25 |
 | Kabilan | Autonomous | Hired 2026-05-22 |
+| Brent | Autonomous *(within JD gates)* | Hired 2026-06-07 |
 
 ---
 
@@ -172,3 +189,4 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 
 > Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.
 > Kabilan (Python Developer) was hired 2026-05-22 to fill the engineering execution gap --- 39 orphaned Python skills now have a named agent consumer.
+> Brent (DevOps Engineer, GCP) was hired and promoted live 2026-06-07 to fill the cloud/DevOps execution + cloud-source-currency orphan (blocks Bet 1 Skeleton Generator deploy; underwrites Bets 2/4 SOC 2 controls). JD at `.claude/agents/brent.md`; reciprocal handoffs added to Kabilan, Peter, and Linda.

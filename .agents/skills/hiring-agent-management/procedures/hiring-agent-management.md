@@ -49,29 +49,11 @@ If ambiguous, ask: "Do you want me to hire, audit an existing agent, refresh age
 
 ## Custom Agent Frontmatter Governance
 
-When drafting, updating, auditing, or refreshing `.claude/agents/*.md`, follow the Claude Code subagent format. Person agent JDs live in `.claude/agents/`; vendor-generated SpecKit agents remain in `.github/agents/`.
-
-Every Redline-owned custom agent must declare these YAML frontmatter fields explicitly:
-
-| Field | Rule |
-|---|---|
-| `name` | Use the identifier that handoffs and subagent lists reference. |
-| `description` | Keep the invocation and role summary concise. |
-| `tools` | List the Claude Code tools available to the agent (Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent, etc.). |
-
-Vendor-generated agents, including `speckit.*`, must not be manually edited. If they violate this governance, report the drift and fix it through the vendor generation path rather than patching the generated file.
+See [procedures/jd-frontmatter-governance.md](jd-frontmatter-governance.md). Load when drafting, updating, auditing, or refreshing any `.claude/agents/*.md` file.
 
 ## Prompt Rewriting Rules
 
-When rewriting any agent JD, apply `rag-prompting` principles:
-
-- One concrete task per instruction.
-- Every hard constraint must be testable: "You MUST NOT edit files outside X" — not "try to stay in your domain."
-- Replace every pronoun reference with an explicit noun phrase.
-- State output format explicitly for every artifact the agent produces.
-- Replace vague directives ("be helpful", "be accurate") with measurable ones ("query the notebook before answering", "cite the source").
-- Ground every domain constraint in Redline's actual context (geotechnical/civil engineering B2B SaaS for engineers, not generic knowledge workers).
-- Frame responsibilities as outcomes and decisions, not as a fixed task list (Jesuthasan & Boudreau anti-pattern: rigid JD that traps work in a title).
+See [procedures/prompt-rewriting-rules.md](prompt-rewriting-rules.md). Load when rewriting or structurally refactoring any agent JD.
 
 ## Notebook Access (Scoped On-Demand)
 
