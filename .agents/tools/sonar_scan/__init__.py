@@ -7,6 +7,7 @@ raised never sentinelled.
 
 from .functions import (
     DEFAULT_METRICS,
+    UNAVAILABLE_REMEDIATION,
     SonarQubeUnavailableError,
     SonarScanError,
     current_branch,
@@ -19,6 +20,7 @@ from .schema import SonarIssue
 
 __all__ = [
     "DEFAULT_METRICS",
+    "UNAVAILABLE_REMEDIATION",
     "SonarIssue",
     "SonarQubeUnavailableError",
     "SonarScanError",

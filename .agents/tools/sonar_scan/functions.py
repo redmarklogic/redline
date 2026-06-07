@@ -61,6 +61,12 @@ DEFAULT_METRICS: tuple[str, ...] = (
 # ---------------------------------------------------------------------------
 
 
+UNAVAILABLE_REMEDIATION = (
+    "Start the local stack (redmark-sonarqube: ./infra/docker/setup.ps1 "
+    "or `docker compose up -d`) and retry."
+)
+
+
 class SonarScanError(Exception):
     """Base class for sonar_scan failures."""
 
@@ -77,9 +83,7 @@ class SonarQubeUnavailableError(SonarScanError):
         self.url = url
         self.reason = reason
         super().__init__(
-            f"SonarQube is not available at {url}: {reason}. "
-            "Start the local stack (redmark-sonarqube: ./infra/docker/setup.ps1 "
-            "or `docker compose up -d`) and retry."
+            f"SonarQube is not available at {url}: {reason}. " + UNAVAILABLE_REMEDIATION
         )
 
 
