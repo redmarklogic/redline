@@ -1,15 +1,16 @@
-name: Board — PR opened sets To Review
-# Fires when a PR is opened or reopened. Parses the PR body for "Closes/Fixes/Resolves #N"
-# keywords and moves each linked issue's Status field to "To Review" on the GitHub Projects
-# board via GraphQL — keeping board state in sync with PR activity automatically.
+name: Board — PR ready for review sets To Review
+# Fires when a non-draft PR is opened, reopened, or converted from draft to ready.
+# Parses the PR body for "Closes/Fixes/Resolves #N" keywords and moves each linked
+# issue's Status field to "To Review" on the GitHub Projects board via GraphQL.
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   set-to-review:
     name: Move linked issues to To Review
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
