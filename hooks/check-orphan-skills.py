@@ -54,6 +54,9 @@ _FRAMEWORK_BOOTSTRAPS: frozenset[str] = frozenset({"using-superpowers"})
 KNOWN_ORPHANS: dict[str, str] = {
     "executing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
     "writing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
+    "pre-pr-checks": "new skill pending agent JD routing table entry; tracked in spec-014",
+    "sonarqube-review": "new skill pending agent JD routing table entry; tracked in spec-014",
+    "sonarqube-scan": "new skill pending agent JD routing table entry; tracked in spec-014",
 }
 
 # ---------------------------------------------------------------------------

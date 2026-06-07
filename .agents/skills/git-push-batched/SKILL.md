@@ -2,6 +2,7 @@
 name: git-push-batched
 description: Use when pushing changes to git -- organises dirty files into thematically cohesive commits before pushing
 disable-model-invocation: true
+model: haiku
 ---
 
 # Git Push — Batched Commits
