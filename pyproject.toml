@@ -96,7 +96,7 @@ lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
 lint.per-file-ignores.".github/scripts/**" = [ "INP" ]
 lint.per-file-ignores."hooks/**" = [ "INP" ]
 lint.per-file-ignores."src/scripts/**" = [ "INP" ]
-lint.per-file-ignores."tests/**" = [ "D", "INP" ]
+lint.per-file-ignores."tests/**" = [ "D", "INP", "SIM117" ]
 lint.flake8-tidy-imports.banned-api."pydantic.ValidationError".msg = """\
   Do not import ValidationError in domain/schema tests. Pydantic validation is tested by Pydantic's own suite. Test \
   application behaviour through function calls instead.\
@@ -161,6 +161,31 @@ report.exclude_also = [
   "raise NotImplementedError",
 ]
 report.omit = [ "*/pytest-of-*/*" ]
+xml.output = "coverage.xml"
+
+[tool.usethis]
+# Single source of truth for SonarQube scan properties (Phase 2, FR-021).
+# `uvx usethis show sonarqube --output-file=sonar-project.properties` reads this
+# table plus the SONAR_PROJECT_KEY env var and emits a transient (gitignored)
+# sonar-project.properties at scan time. Do not commit the generated file.
+sonarqube.exclusions = [
+  "tests/**",
+  "src/scripts/**",
+  "**/__pycache__/**",
+  "**/*.ipynb",
+  "docs/**",
+  ".agents/**",
+  ".github/**",
+  "hooks/**",
+]
+# Ruff findings imported as external issues when ruff-report.json is present
+# (produced by scan.ps1/scan.sh). Absent report does not fail the scan.
+sonarqube.extra-properties."sonar.python.ruff.reportPaths" = ".cache/sonarqube/ruff-report.json"
+# Captured HTML/data fixtures under tests/assets are test ASSETS, not test code.
+# They live in test scope (sonar.tests=./tests), so sonar.exclusions (main scope)
+# does not filter them — their embedded third-party JS raised 27 issues we do not
+# own. sonar.test.exclusions removes them from test analysis at the root.
+sonarqube.extra-properties."sonar.test.exclusions" = "tests/assets/**"
 
 [tool.importlinter]
 root_packages = [ "marker", "rl" ]

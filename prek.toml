@@ -437,6 +437,22 @@ hooks = [
     priority = 10
   },
   {
+    id = "check-script-encoding",
+    name = "check-script-encoding",
+    entry = "uv run --frozen --offline hooks/check-script-encoding.py",
+    args = [
+      "--files=scan.ps1",
+      "--files=scan.sh",
+      "--dirs=hooks",
+      "--dirs=scripts",
+      "--dirs=src/scripts"
+    ],
+    language = "system",
+    files = '\.(ps1|sh)$',
+    pass_filenames = false,
+    priority = 10
+  },
+  {
     id = "check-rtk-in-docs",
     name = "check-rtk-in-docs",
     entry = "uv run --frozen --offline hooks/check-rtk-in-docs.py",
