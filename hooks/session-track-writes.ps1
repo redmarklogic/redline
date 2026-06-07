@@ -1,4 +1,4 @@
-# PostToolUse hook (Copilot / Claude Code) — writes a session flag when file-editing tools
+# PostToolUse hook (Copilot / Claude Code) - writes a session flag when file-editing tools
 # target paths matching WRITE_PATTERN. The session-stop-handover.ps1 Stop hook reads this
 # flag to decide whether a handover is needed. If no flag exists, Stop exits silently.
 #
@@ -34,7 +34,7 @@ $raw = [Console]::In.ReadToEnd()
 try {
     $inputData = $raw | ConvertFrom-Json
 } catch {
-    exit 0  # Malformed input — non-blocking, do not interfere
+    exit 0  # Malformed input - non-blocking, do not interfere
 }
 
 $toolName = $inputData.tool_name
@@ -63,5 +63,5 @@ if ($isWriteTool -and $pathMatches) {
     Add-Content -Path $flagPath -Value "$toolName : $filePath" -Encoding UTF8
 }
 
-# Always non-blocking — PostToolUse must not interfere with tool execution
+# Always non-blocking - PostToolUse must not interfere with tool execution
 exit 0

@@ -191,6 +191,9 @@ cython_debug/
 # Ruff stuff:
 .ruff_cache/
 
+# SonarQube scan: artifacts generated at scan time into .cache/sonarqube/
+# (covered by .cache above). No additional entries needed.
+
 # PyPI configuration file
 .pypirc
 

@@ -2,14 +2,14 @@
 # Writes HEAD SHA to .session/session-start.md to anchor the session boundary
 # so session-handover can produce a bounded git log.
 #
-# Copilot: registered in .github/hooks/handover.json — fires once per session.
-# Claude Code: registered in .claude/settings.json UserPromptSubmit — fires on every
+# Copilot: registered in .github/hooks/handover.json - fires once per session.
+# Claude Code: registered in .claude/settings.json UserPromptSubmit - fires on every
 # user message. The session-ID guard below makes it idempotent within a session
 # and re-anchors automatically when a new session starts.
 
 # --- Idempotent guard (Claude Code UserPromptSubmit) ---
 # Copilot's SessionStart does not provide session_id, so $currentSessionId is $null
-# and the guard is skipped — behaviour is unchanged for Copilot.
+# and the guard is skipped - behaviour is unchanged for Copilot.
 $raw = [Console]::In.ReadToEnd()
 $inputData = try { $raw | ConvertFrom-Json } catch { $null }
 $currentSessionId = if ($inputData -and $inputData.session_id) { $inputData.session_id } else { $null }
@@ -21,7 +21,7 @@ if ($currentSessionId) {
     if (Test-Path $anchorPath) {
         $existing = Get-Content $anchorPath -Raw -Encoding UTF8
         if ($existing -match "SESSION_ID: $([regex]::Escape($currentSessionId))") {
-            exit 0  # Same session — anchor already written; skip
+            exit 0  # Same session - anchor already written; skip
         }
     }
 }
