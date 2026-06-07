@@ -1,7 +1,7 @@
 # Implementation Plan: Local RedMark SonarQube + Branch Scan Workflow
 
 **Date**: 2026-06-05 | **Spec**: [spec.md](spec.md)
-**Status**: Draft
+**Status**: Complete — all phases done; T014 (Docker Desktop auto-start restart) not live-tested to avoid disruption (policy set, mechanism verified)
 
 ## Summary
 
@@ -226,9 +226,9 @@ rtk docker compose -f infra/docker/docker-compose.yml up -d   # -> project still
 ```
 
 **Acceptance Gate**:
-- [ ] Instance reaches UP via one command
-- [ ] A created project survives a down/up cycle
-- [ ] After a Docker Desktop restart, the instance comes back automatically
+- [x] Instance reaches UP via one command
+- [x] A created project survives a down/up cycle
+- [~] After a Docker Desktop restart, the instance comes back automatically (`restart: unless-stopped` set; live Docker Desktop restart not tested to avoid disruption)
 
 ---
 
@@ -290,8 +290,9 @@ curl "http://localhost:9000/api/issues/search?componentKeys=redline&branch=<bran
 ```
 
 **Acceptance Gate**:
-- [ ] MCP returns the full open-issue set with rule/severity/file/line/message/status
-- [ ] MCP non-secret config is in committed `.vscode/`; token only in untracked `.env`
+
+- [~] MCP returns the full open-issue set with rule/severity/file/line/message/status. **Design gap (T024):** MCP server v1.18.1 connects and authenticates fine; `search_sonar_issues_in_projects` has no `branch` parameter — branch-scoped retrieval must use the Web API fallback (`/api/issues/search?branch=`) or query via `pullRequestId`. Phase 4 procedure updated accordingly.
+- [x] MCP non-secret config is in committed `.vscode/`; token only in untracked `.env`
 
 ---
 
@@ -326,9 +327,9 @@ silent). The skill is standalone and composable.
 ```
 
 **Acceptance Gate**:
-- [ ] End-to-end loop works from a single invocation
-- [ ] False-positive marking persists across scans
-- [ ] Instance-down path raises the typed error (no silent pass / empty result); tests green
+- [x] End-to-end loop works from a single invocation
+- [x] False-positive marking persists across scans
+- [x] Instance-down path raises the typed error (no silent pass / empty result); tests green
 
 ## File Inventory
 
