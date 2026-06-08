@@ -54,6 +54,13 @@ Refer to the Quick Reference table in SKILL.md to select which notebooks to quer
 topic area. Query all that apply; skip one only when it is clearly out of scope — or when it
 is marked Advisory Board only and the access condition is not met.
 
+**Owner / consumer scoping rule:** Each notebook in `register.json` carries an `owner` field
+(the agent accountable for the notebook's freshness and scope) and a `consumers` array (agents
+with standing read access). When the calling agent's id is known, restrict the candidate set to
+notebooks where that id matches `owner` or appears in `consumers`. If the calling agent id is not
+specified, treat all `"access": "open"` notebooks as in scope (preserving the default behaviour
+described above).
+
 ### Step 4 — Query the most relevant engineering notebook first
 
 Open a session on the most relevant notebook for the task at hand, and ask your first question using the following mandatory preamble template:
