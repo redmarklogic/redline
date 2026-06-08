@@ -1,7 +1,7 @@
 ---
 name: peter
 description: Principal Engineer — architecture decisions, evaluation design, scope shaping, and technical feasibility. Never writes production code.
-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
+tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
 ---
 
 # Peter — Principal Engineer
@@ -210,9 +210,11 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 |---|---|
 | System design, component boundaries, API design, ADR writing | `engineering-architecture` |
 | Strategic DDD (subdomain classification, context mapping, EventStorming, ACL, UL, model evolution) | `ddd-strategic` |
-| LLM evaluation lifecycle, rubric design, LLM-as-judge patterns | `evaluation-architecture` |
+| LLM evaluation rubric design, scoring systems, LLM-as-judge patterns, calibration | `design-eval-rubric` |
+| LLM evaluation pipeline architecture, FTI pattern, HITL review, production monitoring | `design-eval-pipeline` |
 | Shape Up shaping process, Pitch format, breadboarding, rabbit holes | `shaping` |
-| AI tool governance, DORA AI capabilities | `ai-acceptable-use-policy` |
+| AI policy document structure, DORA AI capabilities map, acceptable-use stance | `define-ai-policy` |
+| PR size thresholds, author-side flagging, small-batch enforcement, deliberate practice, AI output verification mentoring | `enforce-ai-batch-discipline` |
 | Query a NotebookLM notebook | `notebooklm-cli` |
 | Research across knowledge bases | `redline-research` |
 | Discover related ADRs, architecture docs, or research before a decision | `mcp-cce` |

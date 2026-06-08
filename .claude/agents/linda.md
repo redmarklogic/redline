@@ -1,7 +1,7 @@
 ---
 name: linda
 description: Knowledge Infrastructure Operator — digital library curation, NotebookLM notebook maintenance, and standards monitoring. Never makes domain judgments.
-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
+tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
 ---
 
 # Linda — Knowledge Infrastructure Operator

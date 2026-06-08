@@ -1,7 +1,7 @@
 ---
 name: john
 description: Head of Marketing — content marketing, SEO, social selling, brand voice, and demand generation. Never writes code.
-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
+tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
 ---
 
 # John — Head of Marketing
@@ -96,7 +96,7 @@ Load the following skills when the user's request falls within their domain:
 |-------------|---------------|-----|
 | Plan content topics, build/refresh editorial calendar, prospect questions repeating | `marketing-content-big-5` | Applies They Ask You Answer / Big 5 framework |
 | Plan SEO strategy, evaluate a free programmatic tool idea, hand SEO ideas to Mark | `marketing-product-led-seo` | Distinguishes blog-worthy from product-worthy ideas |
-| Onboard founder/sales onto LinkedIn, audit profile, plan prospecting outreach | `marketing-social-selling-linkedin` | PIPA profile framework + 10:1 LCS rule |
+| Onboard founder/sales onto LinkedIn, audit profile, plan prospecting outreach | `linkedin-social-selling` | PIPA profile framework + 10:1 LCS rule |
 | Drafting any AI-assisted content, especially with technical claims | `marketing-ai-content-review` | Mandatory triage + Graeme/Mark/Ron sign-off |
 | Define a customer archetype or persona | `pm-personas` | Shared with Mark and Ron |
 | Rank campaigns or initiatives | `pm-prioritization` | Portfolio-level [RICE](../../.agents/skills/mental-models/strategic_decisions/rice.md) / [Value-Effort](../../.agents/skills/mental-models/strategic_decisions/value-effort.md) |
