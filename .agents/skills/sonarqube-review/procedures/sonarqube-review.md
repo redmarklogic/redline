@@ -24,7 +24,7 @@ except SonarQubeUnavailableError as exc:
 
 ## Step 1 — Retrieve issues
 
-Primary path — `mcp/sonarqube` MCP (registered in `.vscode/mcp.json`): ask for
+Primary path — `mcp/sonarqube` MCP (registered in `.mcp.json`): ask for
 issues filtered by `project=$SONAR_PROJECT_KEY` and the current branch.
 
 Fallback (no MCP runtime, e.g. CI or tests):

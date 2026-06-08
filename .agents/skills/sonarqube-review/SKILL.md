@@ -25,7 +25,7 @@ larger local quality gate.
 |---|---|
 | P1 | `sonarqube-scan` completed with `SUCCESS` |
 | P2 | `SONARQUBE_URL`, `SONAR_PROJECT_KEY`, `SONAR_TOKEN` in `.env` |
-| P3 | `mcp/sonarqube` MCP registered in `.vscode/mcp.json` (primary path) |
+| P3 | `mcp/sonarqube` MCP registered in `.mcp.json` (primary path) |
 
 ## Guard Conditions
 

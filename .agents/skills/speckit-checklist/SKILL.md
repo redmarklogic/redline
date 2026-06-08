@@ -234,7 +234,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Merge near-duplicates checking the same requirement aspect
    - If >5 low-impact edge cases, create one item: "Are edge cases X, Y, Z addressed in requirements? [Coverage]"
 
-   **ABSOLUTELY PROHIBITED** - These make it an implementation test, not a requirements test:
+   **🚫 ABSOLUTELY PROHIBITED** - These make it an implementation test, not a requirements test: <!-- hook: allow -->
    - ❌ Any item starting with "Verify", "Test", "Confirm", "Check" + implementation behavior
    - ❌ References to code execution, user actions, system behavior
    - ❌ "Displays correctly", "works properly", "functions as expected"
