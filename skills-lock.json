@@ -334,7 +334,7 @@
       "status": "active",
       "layer": 7
     },
-    "mcp-notebooklm": {
+    "notebooklm-cli": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,

@@ -15,9 +15,6 @@
         "${workspaceFolder}"
       ]
     },
-    "notebooklm-mcp": {
-      "command": "notebooklm-mcp"
-    },
     "sonarqube": {
       "command": "docker",
       "args": [

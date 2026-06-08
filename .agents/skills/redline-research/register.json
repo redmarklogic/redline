@@ -802,7 +802,7 @@
     {
       "id": "django-application-development",
       "name": "Django Application Development",
-      "url": "",
+      "url": "https://notebooklm.google.com/notebook/9cee3997-fdbb-49cd-ab95-663bf35fcba6",
       "description": "Django framework knowledge: fundamentals, ORM, DRF/REST APIs, TDD/testing, async/Channels, and production deployment configuration (Docker, PostgreSQL, collectstatic, ASGI/WSGI). Source of truth for Django implementation decisions.",
       "topic_area": "Engineering theory & standards",
       "topics": ["django", "orm", "drf", "rest-api", "tdd", "pytest-django", "async", "channels", "asgi", "wsgi", "postgresql", "docker", "deployment"],
