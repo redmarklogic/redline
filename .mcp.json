@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "env": {
+        "CONTEXT7_API_KEY": "${env:CONTEXT7_API_KEY}"
+      }
+    },
+    "context-engine": {
+      "command": "${env:USERPROFILE}\\.local\\bin\\cce.exe",
+      "args": [
+        "serve",
+        "--project-dir",
+        "${workspaceFolder}"
+      ]
+    },
+    "notebooklm-mcp": {
+      "command": "notebooklm-mcp"
+    }
+  }
+}

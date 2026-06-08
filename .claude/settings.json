@@ -16,6 +16,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"Write-Output '{\\\"hookSpecificOutput\\\": {\\\"hookEventName\\\": \\\"PreToolUse\\\", \\\"additionalContext\\\": \\\"Before searching the web: check redline-research notebooks first — run the redline-research skill if the question touches domain knowledge, standards, frameworks, or strategy.\\\"}}'\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
