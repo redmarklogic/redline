@@ -46,7 +46,7 @@ It does not cover:
 ### Scenario 1 — CCE installs and registers as an MCP server in VS Code
 
 A developer runs `cce init --agent copilot` in the repo root. After restarting VS Code,
-the Copilot agent has access to `context_search` and related CCE tools. The `.vscode/mcp.json`
+the Copilot agent has access to `context_search` and related CCE tools. The `.mcp.json`
 is populated with the CCE server entry. No existing MCP servers are removed or overwritten.
 The embedding model downloads and the initial index completes without error.
 
@@ -59,9 +59,9 @@ are available?" and verify `context_search` is listed.
 
 **Acceptance criteria**:
 
-1. **Given** a clean repo with an empty `.vscode/mcp.json`,
+1. **Given** a clean repo with an empty `.mcp.json`,
    **when** `cce init --agent copilot` runs to completion,
-   **then** `.vscode/mcp.json` contains a valid CCE server entry pointing at the installed
+   **then** `.mcp.json` contains a valid CCE server entry pointing at the installed
    `cce` executable.
 
 2. **Given** CCE is installed,
@@ -226,5 +226,5 @@ baseline, not against Copilot's actual prior behaviour.
 | Recall@5 < 0.70 on Markdown files | Medium | High — feature delivers no value | Scenario 2 is a blocking gate. If recall is poor, do not proceed. |
 | CCE corrupts or conflicts with `AGENTS.md` | Low | High — breaks all agent sessions | Scenario 3 acceptance criteria + `cce uninstall` rollback plan. |
 | Embedding model download fails on Windows | Low | Low — install blocked temporarily | Use `[local]` extra which bundles fastembed; fallback to Ollama if needed. |
-| CCE MCP server conflicts with future MCP servers in `.vscode/mcp.json` | Low | Low — easy to resolve manually | `.vscode/mcp.json` is currently empty; document CCE's entry format. |
+| CCE MCP server conflicts with future MCP servers in `.mcp.json` | Low | Low — easy to resolve manually | `.mcp.json` is currently empty; document CCE's entry format. |
 | Savings are unmeasurable because CCE targets code, not skills | Medium | Medium — investment with no payoff | Scenario 4 acceptance criteria establish a post-hoc exit condition. |

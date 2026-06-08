@@ -47,6 +47,6 @@ Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decis
 
 ## Subagent Usage
 
-Subagents need `context-engine/*` in their frontmatter `tools:` list. The server name must match the key in `.vscode/mcp.json` exactly — `context-engin/*` (missing trailing `e`) silently fails with "Unknown tool" warning.
+Subagents need `context-engine/*` in their frontmatter `tools:` list. The server name must match the key in `.mcp.json` exactly — `context-engin/*` (missing trailing `e`) silently fails with "Unknown tool" warning.
 
 Each agent JD's Session Discipline must instruct: `tool_search('code context engine MCP')` → `session_recall` → `context_search` for discovery.
