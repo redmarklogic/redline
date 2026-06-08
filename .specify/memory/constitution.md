@@ -113,6 +113,15 @@ as SSOT.
 
 *Grounded in ADR-016.*
 
+### XIII. Interface Volatility by Default
+
+All interfaces are volatile unless explicitly declared stable. Breaking changes to
+volatile interfaces are permitted without deprecation, migration paths, or ceremony.
+An interface becomes stable only by explicit declaration using a `# stable: <ADR-number>`
+annotation backed by a recorded ADR. Stability is negotiated and earned — never assumed.
+
+*Grounded in ADR-017.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -145,4 +154,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.3.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-06
+**Version**: 1.4.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-08
