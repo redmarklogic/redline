@@ -92,9 +92,7 @@ def main() -> int:
         return 1
 
     banned: list[str] = args.words
-    patterns = [
-        re.compile(r"\b" + re.escape(word) + r"\b", re.IGNORECASE) for word in banned
-    ]
+    patterns = [re.compile(r"\b" + re.escape(word) + r"\b") for word in banned]
 
     violations: list[str] = []
 
