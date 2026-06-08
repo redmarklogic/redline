@@ -14,7 +14,7 @@
 - If a named reviewer was explicitly requested earlier: reviewer output plus the same notebook package returned to the user.
 
 ### Out of Scope
-- Model Context Protocol setup or authentication (use `notebooklm-mcp`).
+- CLI setup or authentication (use `notebooklm-mcp`).
 - Multi-notebook synthesis orchestration (use `redline-research`).
 - Autonomous execution after the notebook package is returned, unless the user gives a new instruction.
 - Reviewer routing when no explicit reviewer request was made earlier.

@@ -50,4 +50,4 @@ See `procedures/notebooklm-deep-research.md` for detailed rules, examples, and e
 | Vague Why questions | Rewrite each question with one explicit assumption sentence. |
 | Manual numbering in option labels | Remove numbering; rely on chat UI numbering. |
 | Proceeding after package delivery without user instruction | Stop and wait for next user decision. |
-| Using `source_sync_drive` on a file-upload source | `source_sync_drive` only works on Drive-linked sources. Check source type before syncing. |
+| Using `nlm source sync` on a file-upload source | `nlm source sync` only works on Drive-linked sources. Check source type (`nlm source stale`) before syncing. |

@@ -9,9 +9,9 @@
 
 ### Out of Scope
 - Querying notebooks for research (`redline-research`)
-- MCP server setup or authentication (`notebooklm-mcp`)
+- CLI setup or authentication (`notebooklm-mcp`)
 - Physical library indexing (`library-management`)
-- Writing notes into the notebook itself (`note` tool is **forbidden**)
+- Writing notes into the notebook itself (out of scope)
 
 ### Upsert a notebook (add or overwrite)
 
@@ -51,29 +51,29 @@ echo '{"index_path": "<library-root>\\index-notebooklm.xlsx",
 
 ### Single notebook (URL given)
 
-1. `notebook_get` — retrieve notebook ID, title, URL, source count, and source list
-2. `notebook_describe` — retrieve AI-generated summary and suggested topics
-3. `source_describe` — call once per source returned by `notebook_get`
+1. `nlm notebook get` — retrieve notebook ID, title, URL, source count, and source list
+2. `nlm notebook describe` — retrieve AI-generated summary and suggested topics
+3. `nlm source describe` — call once per source returned by `nlm notebook get`
 
 ### Full sync (no URL given)
 
-1. `notebook_list` — retrieve all notebooks
-2. `notebook_get` — call per notebook (always, for diff check)
-3. `notebook_describe` — call only for **new** notebooks
-4. `source_describe` — call only for sources not already in the index
+1. `nlm notebook list` — retrieve all notebooks
+2. `nlm notebook get` — call per notebook (always, for diff check)
+3. `nlm notebook describe` — call only for **new** notebooks
+4. `nlm source describe` — call only for sources not already in the index
 
-`source_describe` calls may run in parallel. Do not call any other MCP tools.
+`nlm source describe` calls may run in parallel. Do not run any other `nlm` commands.
 
 ### Worksheet: `notebooks`
 
 | Column | Source | Format |
 |---|---|---|
-| `notebook_id` | `notebook_get` | UUID string |
-| `title` | `notebook_get` | plain text |
-| `url` | `notebook_get` | full URL |
-| `source_count` | `notebook_get` | integer |
-| `summary` | `notebook_describe` | plain text |
-| `suggested_topics` | `notebook_describe` | pipe-separated (`topic1 \| topic2`), empty string if none |
+| `notebook_id` | `nlm notebook get` | UUID string |
+| `title` | `nlm notebook get` | plain text |
+| `url` | `nlm notebook get` | full URL |
+| `source_count` | `nlm notebook get` | integer |
+| `summary` | `nlm notebook describe` | plain text |
+| `suggested_topics` | `nlm notebook describe` | pipe-separated (`topic1 \| topic2`), empty string if none |
 | `last_updated` | set at index time | `YYYY-MM-DD` |
 | `status` | set at index time | `active` or `deleted` |
 
@@ -81,16 +81,16 @@ echo '{"index_path": "<library-root>\\index-notebooklm.xlsx",
 
 | Column | Source | Format |
 |---|---|---|
-| `notebook_id` | `notebook_get` | UUID string (FK to `notebooks`) |
-| `notebook_title` | `notebook_get` | plain text (denormalized) |
-| `source_id` | `notebook_get` | UUID string |
-| `source_title` | `notebook_get` | plain text |
-| `source_summary` | `source_describe` | plain text |
-| `source_keywords` | `source_describe` | pipe-separated (`kw1 \| kw2`) |
+| `notebook_id` | `nlm notebook get` | UUID string (FK to `notebooks`) |
+| `notebook_title` | `nlm notebook get` | plain text (denormalized) |
+| `source_id` | `nlm notebook get` | UUID string |
+| `source_title` | `nlm notebook get` | plain text |
+| `source_summary` | `nlm source describe` | plain text |
+| `source_keywords` | `nlm source describe` | pipe-separated (`kw1 \| kw2`) |
 
 ### Deleted notebooks
 
-If `notebook_get` fails (notebook no longer exists):
+If `nlm notebook get` fails (notebook no longer exists):
 1. Find the row in `notebooks` by `notebook_id`
 2. Set `status` to `deleted`
 3. Set `last_updated` to today
@@ -102,7 +102,7 @@ When the user says "update the index" without providing a notebook URL, run a fu
 
 ### Procedure
 
-1. Call `notebook_list` to get all notebooks from NotebookLM
+1. Call `nlm notebook list` to get all notebooks from NotebookLM
 2. Read the existing `notebooks` and `sources` worksheets from the Excel index
 3. Classify every notebook into one of three categories:
 
@@ -113,23 +113,23 @@ When the user says "update the index" without providing a notebook URL, run a fu
 | **Stale** | In index, not in NotebookLM | the Product Manager `status = deleted`, update `last_updated` |
 
 4. **New notebooks** — full index, one at a time:
-   - a. `notebook_get` — retrieve metadata and source list
-   - b. `notebook_describe` — retrieve AI summary and suggested topics
-   - c. `source_describe` — call for every source (may run in parallel)
+   - a. `nlm notebook get` — retrieve metadata and source list
+   - b. `nlm notebook describe` — retrieve AI summary and suggested topics
+   - c. `nlm source describe` — call for every source (may run in parallel)
    - d. Write notebook row + all source rows to Excel
    - e. Report: `"[notebook_title] — Successfully indexed N sources"`
 
 5. **Existing notebooks** — diff check:
-   - a. `notebook_get` — retrieve current source list
-   - b. Compare source IDs from `notebook_get` against source IDs in the `sources` worksheet for that `notebook_id`
+   - a. `nlm notebook get` — retrieve current source list
+   - b. Compare source IDs from `nlm notebook get` against source IDs in the `sources` worksheet for that `notebook_id`
    - c. If source IDs match exactly → **skip**. Report: `"[notebook_title] — Skipped (no changes)"`
    - d. If source IDs differ:
-     - Sources in notebook but **not** in index → call `source_describe` for each, add rows to `sources`
+     - Sources in notebook but **not** in index → call `nlm source describe` for each, add rows to `sources`
      - Sources in index but **not** in notebook → delete those rows from `sources`
      - Sources in both → keep existing rows unchanged (do not re-fetch)
-     - Update `source_count` in the `notebooks` row (from `notebook_get`, already called)
+     - Update `source_count` in the `notebooks` row (from `nlm notebook get`, already called)
      - Update `last_updated` to today
-     - Do **not** re-call `notebook_describe` — keep existing summary
+     - Do **not** re-call `nlm notebook describe` — keep existing summary
      - Write changes to Excel
      - Report: `"[notebook_title] — Updated: added X sources, removed Y sources"`
 
@@ -142,17 +142,17 @@ When the user says "update the index" without providing a notebook URL, run a fu
 
 ### Error handling
 
-If `notebook_get` or `source_describe` fails for a specific notebook:
+If `nlm notebook get` or `nlm source describe` fails for a specific notebook:
 - Report: `"[notebook_title] — Failed: [error message]"`
 - Continue to the next notebook (do not abort the full sync)
 
 # NotebookLM Index
 
-Index NotebookLM notebooks into a structured Excel register using MCP tools.
+Index NotebookLM notebooks into a structured Excel register using the `nlm` CLI.
 
 ## Mandatory Trigger Rule
 
-**This skill MUST be invoked immediately after any task that calls `mcp_notebooklm_notebook_create`.** Never declare a task complete if a new notebook was created without first running this skill to add it to the index. This is a non-negotiable workflow gate.
+**This skill MUST be invoked immediately after any task that runs `nlm notebook create`.** Never declare a task complete if a new notebook was created without first running this skill to add it to the index. This is a non-negotiable workflow gate.
 
 **Verification (TDD-style post-condition):** After running, open `<library-root>\index-notebooklm.xlsx` and confirm the `notebooks` worksheet contains a row with the new `notebook_id`. If the row is absent, the index update did not succeed — debug and re-run before finishing.
 
@@ -165,7 +165,7 @@ the Knowledge Operator **must** use this tool to write to the Excel index — sh
 **Script path:** `.agents/tools/library/upsert_notebooklm_index.py`  
 **Invocation:** pipe a JSON payload to the script via `run_in_terminal`.
 
-## MCP Tools
+## NotebookLM CLI
 
 ## Index File
 

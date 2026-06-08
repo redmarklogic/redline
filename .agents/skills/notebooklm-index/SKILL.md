@@ -17,10 +17,10 @@ See `procedures/notebooklm-index.md` for detailed rules, examples, and extended 
 | Using semicolons as separator | Use pipe: ` \| ` |
 | Storing `None` or leaving cell blank for missing fields | Write explicit empty string `""` |
 | Loading `library-management` skill | This skill is self-contained |
-| Calling `note` tool | Forbidden — do not write to the notebook |
+| Writing notes into the notebook | Out of scope — do not write to the notebook |
 | Matching by notebook title | Always match by `notebook_id` |
-| Skipping `source_describe` | Must call for every source |
+| Skipping `nlm source describe` | Must call for every source |
 | Creating new Python scripts or temp files | Use the approved tool — see the "Tool" section above |
 | Omitting `index_path` from the JSON payload | `index_path` is required; no default exists |
 | Updating `register.json` | Out of scope — only update the Excel index |
-| Not running this skill after `notebook_create` | **Oversight** — the mandatory trigger rule (top of this skill) is binding; always update the index before declaring a notebook-creation task complete |
+| Not running this skill after `nlm notebook create` | **Oversight** — the mandatory trigger rule (top of this skill) is binding; always update the index before declaring a notebook-creation task complete |
