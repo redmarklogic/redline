@@ -55,7 +55,7 @@
 
 ## Phase 2: Renames
 
-**Purpose**: Rename `marketing-social-selling-linkedin` → `linkedin-social-selling` and `ceremony-agent-topology-sync` → `sync-agent-topology`; update all agent JD routing tables; mark deprecated originals.
+**Purpose**: Rename `marketing-social-selling-linkedin` → `linkedin-social-selling`, `ceremony-agent-topology-sync` → `sync-agent-topology`, and `sonarqube-find-and-fix` → `sonarqube-quality-gate`; update all agent JD routing tables; mark deprecated originals.
 
 > No TDD cycle — structural rename (per spec assumption).
 
@@ -69,14 +69,17 @@
 - [ ] T018 [US2] Update `.agents/skills/ceremony-agent-topology-sync/SKILL.md` — add `deprecated: true` and `forwarding-to: sync-agent-topology` to frontmatter
 - [ ] T019 [US3] Update `.claude/agents/john.md` — routing table: replace `marketing-social-selling-linkedin` with `linkedin-social-selling`; retain `ceremony-monthly-editorial-session` unchanged
 - [ ] T020 [US3] Update `.claude/agents/harriet.md` — routing table: replace `ceremony-agent-topology-sync` with `sync-agent-topology` (first pass; full harriet update completes in Phase 3)
-- [ ] T021 [US2] Update `docs/architecture/skills-architecture.md` — Layer 9 entries: add `linkedin-social-selling`, add `sync-agent-topology`; mark `marketing-social-selling-linkedin` and `ceremony-agent-topology-sync` as `[deprecated]`
+- [ ] T021 [US2] Create `.agents/skills/sonarqube-quality-gate/SKILL.md` — copied content from `sonarqube-find-and-fix/SKILL.md`; update `name:` to `sonarqube-quality-gate`; description updated to single-concern statement (end-to-end SonarQube quality gate) free of multi-concern "and" patterns
+- [ ] T022 [P] [US2] Create `.agents/skills/sonarqube-quality-gate/srp-exception.md` — category: `justified-orchestrator`; coordinated sub-concerns: `sonarqube-scan` (static analysis trigger + wait), `sonarqube-review` (issue retrieval + FP triage), fix cycle, shift-left prevention; rationale: all steps serve one concern — end-to-end SonarQube quality gate; no agent JD routing updates needed
+- [ ] T023 [US2] Update `.agents/skills/sonarqube-find-and-fix/SKILL.md` — add `deprecated: true` and `forwarding-to: sonarqube-quality-gate` to frontmatter
+- [ ] T024 [US2] Update `docs/architecture/skills-architecture.md` — Layer 9 entries: add `linkedin-social-selling`, add `sync-agent-topology`, add `sonarqube-quality-gate`; mark `marketing-social-selling-linkedin`, `ceremony-agent-topology-sync`, and `sonarqube-find-and-fix` as `[deprecated]`
 
 ### Acceptance Gate
 
-- [ ] T022 [US3] Grep `.claude/agents/*.md` for `marketing-social-selling-linkedin` — confirm 0 routing table hits
-- [ ] T023 [US3] Grep `.claude/agents/*.md` for `ceremony-agent-topology-sync` — confirm 0 routing table hits
-- [ ] T024 [US2] Confirm `.agents/skills/linkedin-social-selling/SKILL.md` and `.agents/skills/sync-agent-topology/SKILL.md` exist with updated frontmatter
-- [ ] T025 [US2] Confirm deprecated markers (`deprecated: true`, `forwarding-to:`) present in both retired `SKILL.md` files
+- [ ] T025 [US3] Grep `.claude/agents/*.md` for `marketing-social-selling-linkedin` — confirm 0 routing table hits
+- [ ] T026 [US3] Grep `.claude/agents/*.md` for `ceremony-agent-topology-sync` — confirm 0 routing table hits
+- [ ] T027 [US2] Confirm `.agents/skills/linkedin-social-selling/SKILL.md`, `.agents/skills/sync-agent-topology/SKILL.md`, and `.agents/skills/sonarqube-quality-gate/SKILL.md` exist with updated frontmatter
+- [ ] T028 [US2] Confirm deprecated markers (`deprecated: true`, `forwarding-to:`) present in all three retired `SKILL.md` files
 
 ---
 
@@ -88,30 +91,30 @@
 
 ### Implementation — `hiring-agent-management` split
 
-- [ ] T026 [US2] Create `.agents/skills/hire-agent/SKILL.md` — single concern: hiring workflow (gap identification, JD drafting, onboarding); name `hire-agent`; description free of multi-concern "and" patterns
-- [ ] T027 [P] [US2] Create `.agents/skills/audit-agent/SKILL.md` — single concern: agent audits and PIPs; name `audit-agent`; description free of multi-concern "and" patterns
-- [ ] T028 [P] [US2] Create `.agents/skills/maintain-agent-registry/SKILL.md` — single concern: org chart and agent register maintenance; name `maintain-agent-registry`; description free of multi-concern "and" patterns
-- [ ] T029 [US2] Distribute procedures from `.agents/skills/hiring-agent-management/procedures/` to appropriate replacement skill `procedures/` directories (hiring → `hire-agent/procedures/`; PIPs/audits → `audit-agent/procedures/`; registry → `maintain-agent-registry/procedures/`)
-- [ ] T030 [US2] Update `.agents/skills/hiring-agent-management/SKILL.md` — add `deprecated: true` and `forwarding-to: hire-agent, audit-agent, maintain-agent-registry` to frontmatter
+- [ ] T029 [US2] Create `.agents/skills/hire-agent/SKILL.md` — single concern: hiring workflow (gap identification, JD drafting, onboarding); name `hire-agent`; description free of multi-concern "and" patterns
+- [ ] T030 [P] [US2] Create `.agents/skills/audit-agent/SKILL.md` — single concern: agent audits and PIPs; name `audit-agent`; description free of multi-concern "and" patterns
+- [ ] T031 [P] [US2] Create `.agents/skills/maintain-agent-registry/SKILL.md` — single concern: org chart and agent register maintenance; name `maintain-agent-registry`; description free of multi-concern "and" patterns
+- [ ] T032 [US2] Distribute procedures from `.agents/skills/hiring-agent-management/procedures/` to appropriate replacement skill `procedures/` directories (hiring → `hire-agent/procedures/`; PIPs/audits → `audit-agent/procedures/`; registry → `maintain-agent-registry/procedures/`)
+- [ ] T033 [US2] Update `.agents/skills/hiring-agent-management/SKILL.md` — add `deprecated: true` and `forwarding-to: hire-agent, audit-agent, maintain-agent-registry` to frontmatter
 
 ### Implementation — `evaluation-architecture` split
 
-- [ ] T031 [P] [US2] Create `.agents/skills/design-eval-rubric/SKILL.md` — single concern: rubric structure, scoring systems, LLM-as-judge, calibration; name `design-eval-rubric`; description free of multi-concern "and" patterns
-- [ ] T032 [P] [US2] Create `.agents/skills/design-eval-pipeline/SKILL.md` — single concern: FTI architecture, HITL, production monitoring, ground truth management; name `design-eval-pipeline`; description free of multi-concern "and" patterns
-- [ ] T033 [US2] Update `.agents/skills/evaluation-architecture/SKILL.md` — add `deprecated: true` and `forwarding-to: design-eval-rubric, design-eval-pipeline` to frontmatter
+- [ ] T034 [P] [US2] Create `.agents/skills/design-eval-rubric/SKILL.md` — single concern: rubric structure, scoring systems, LLM-as-judge, calibration; name `design-eval-rubric`; description free of multi-concern "and" patterns
+- [ ] T035 [P] [US2] Create `.agents/skills/design-eval-pipeline/SKILL.md` — single concern: FTI architecture, HITL, production monitoring, ground truth management; name `design-eval-pipeline`; description free of multi-concern "and" patterns
+- [ ] T036 [US2] Update `.agents/skills/evaluation-architecture/SKILL.md` — add `deprecated: true` and `forwarding-to: design-eval-rubric, design-eval-pipeline` to frontmatter
 
 ### Agent JD routing updates
 
-- [ ] T034 [US3] Update `.claude/agents/harriet.md` — routing table: replace `hiring-agent-management` with `hire-agent`, `audit-agent`, `maintain-agent-registry`
-- [ ] T035 [US3] Update `.claude/agents/peter.md` — routing table: replace `evaluation-architecture` with `design-eval-rubric`, `design-eval-pipeline`
-- [ ] T036 [US2] Update `docs/architecture/skills-architecture.md` — Layer 9: add `hire-agent`, `audit-agent`, `maintain-agent-registry`, mark `hiring-agent-management` `[deprecated]`; Layer 8: add `design-eval-rubric`, `design-eval-pipeline`, mark `evaluation-architecture` `[deprecated]`
+- [ ] T037 [US3] Update `.claude/agents/harriet.md` — routing table: replace `hiring-agent-management` with `hire-agent`, `audit-agent`, `maintain-agent-registry`
+- [ ] T038 [US3] Update `.claude/agents/peter.md` — routing table: replace `evaluation-architecture` with `design-eval-rubric`, `design-eval-pipeline`
+- [ ] T039 [US2] Update `docs/architecture/skills-architecture.md` — Layer 9: add `hire-agent`, `audit-agent`, `maintain-agent-registry`, mark `hiring-agent-management` `[deprecated]`; Layer 8: add `design-eval-rubric`, `design-eval-pipeline`, mark `evaluation-architecture` `[deprecated]`
 
 ### Acceptance Gate
 
-- [ ] T037 [US3] Grep `.claude/agents/*.md` for `hiring-agent-management` — confirm 0 routing table hits
-- [ ] T038 [US3] Grep `.claude/agents/*.md` for `evaluation-architecture` — confirm 0 routing table hits
-- [ ] T039 [US2] Confirm `hire-agent`, `audit-agent`, `maintain-agent-registry`, `design-eval-rubric`, `design-eval-pipeline` SKILL.md files all exist
-- [ ] T040 [US2] Confirm all 5 replacement skill names and descriptions pass SRP rule check (no disallowed "and" patterns)
+- [ ] T040 [US3] Grep `.claude/agents/*.md` for `hiring-agent-management` — confirm 0 routing table hits
+- [ ] T041 [US3] Grep `.claude/agents/*.md` for `evaluation-architecture` — confirm 0 routing table hits
+- [ ] T042 [US2] Confirm `hire-agent`, `audit-agent`, `maintain-agent-registry`, `design-eval-rubric`, `design-eval-pipeline` SKILL.md files all exist
+- [ ] T043 [US2] Confirm all 5 replacement skill names and descriptions pass SRP rule check (no disallowed "and" patterns)
 
 ---
 
@@ -123,16 +126,16 @@
 
 ### Implementation
 
-- [ ] T041 [US2] Create `.agents/skills/define-ai-policy/SKILL.md` — single concern: policy document structure, DORA AI capabilities map, acceptable-use stance; name `define-ai-policy`; description free of multi-concern "and" patterns
-- [ ] T042 [P] [US2] Create `.agents/skills/enforce-ai-batch-discipline/SKILL.md` — single concern: PR size thresholds, author-side flagging, small-batch enforcement, deliberate practice design, AI output verification mentoring; name `enforce-ai-batch-discipline`; description free of multi-concern "and" patterns
-- [ ] T043 [US2] Update `.agents/skills/ai-acceptable-use-policy/SKILL.md` — add `deprecated: true` and `forwarding-to: define-ai-policy, enforce-ai-batch-discipline` to frontmatter
-- [ ] T044 [US3] Update `.claude/agents/peter.md` — routing table: replace `ai-acceptable-use-policy` with `define-ai-policy`, `enforce-ai-batch-discipline`
-- [ ] T045 [US2] Update `docs/architecture/skills-architecture.md` — Layer 8: add `define-ai-policy`, `enforce-ai-batch-discipline`; mark `ai-acceptable-use-policy` `[deprecated]`
+- [ ] T044 [US2] Create `.agents/skills/define-ai-policy/SKILL.md` — single concern: policy document structure, DORA AI capabilities map, acceptable-use stance; name `define-ai-policy`; description free of multi-concern "and" patterns
+- [ ] T045 [P] [US2] Create `.agents/skills/enforce-ai-batch-discipline/SKILL.md` — single concern: PR size thresholds, author-side flagging, small-batch enforcement, deliberate practice design, AI output verification mentoring; name `enforce-ai-batch-discipline`; description free of multi-concern "and" patterns
+- [ ] T046 [US2] Update `.agents/skills/ai-acceptable-use-policy/SKILL.md` — add `deprecated: true` and `forwarding-to: define-ai-policy, enforce-ai-batch-discipline` to frontmatter
+- [ ] T047 [US3] Update `.claude/agents/peter.md` — routing table: replace `ai-acceptable-use-policy` with `define-ai-policy`, `enforce-ai-batch-discipline`
+- [ ] T048 [US2] Update `docs/architecture/skills-architecture.md` — Layer 8: add `define-ai-policy`, `enforce-ai-batch-discipline`; mark `ai-acceptable-use-policy` `[deprecated]`
 
 ### Acceptance Gate
 
-- [ ] T046 [US3] Grep `.claude/agents/*.md` for `ai-acceptable-use-policy` — confirm 0 routing table hits
-- [ ] T047 [US2] Confirm `define-ai-policy` and `enforce-ai-batch-discipline` SKILL.md files exist and pass SRP rule check
+- [ ] T049 [US3] Grep `.claude/agents/*.md` for `ai-acceptable-use-policy` — confirm 0 routing table hits
+- [ ] T050 [US2] Confirm `define-ai-policy` and `enforce-ai-batch-discipline` SKILL.md files exist and pass SRP rule check
 
 ---
 
@@ -144,15 +147,15 @@
 
 ### Implementation
 
-- [ ] T048 [US4] Add mandatory "SRP Compliance Pass" phase to `.agents/skills/sync-agent-topology/procedures/run-topology-sync.md` — phase inserted after Gap & Overlap Analysis; phase must: scan all `SKILL.md` frontmatter `name` and `description` fields for "and" patterns; produce `violations-list.md` in Topology Sync Report folder; report columns: skill name, field flagged, pattern matched, disposition (new-violation / known-exception / false-positive); phase marked as mandatory (not optional)
-- [ ] T049 [US4] Update `.agents/skills/sync-agent-topology/SKILL.md` Output Artifacts table — add `violations-list.md` as required artifact; topology sync run cannot be marked complete without it
-- [ ] T050 [US4] Create `.agents/skills/sync-agent-topology/procedures/srp-scan-procedure.md` — standalone reusable SRP scan procedure containing: scan algorithm; "and" pattern definition (structural conjunction vs grammatical "and" vs domain compound noun); domain compound noun allowlist and false-positive rules; exception record lookup instructions; reference to `srp-exception.md` files created in Phases 1–4 as skip-list entries
+- [ ] T051 [US4] Add mandatory "SRP Compliance Pass" phase to `.agents/skills/sync-agent-topology/procedures/run-topology-sync.md` — phase inserted after Gap & Overlap Analysis; phase must: scan all `SKILL.md` frontmatter `name` and `description` fields for "and" patterns; produce `violations-list.md` in Topology Sync Report folder; report columns: skill name, field flagged, pattern matched, disposition (new-violation / known-exception / false-positive); phase marked as mandatory (not optional)
+- [ ] T052 [US4] Update `.agents/skills/sync-agent-topology/SKILL.md` Output Artifacts table — add `violations-list.md` as required artifact; topology sync run cannot be marked complete without it
+- [ ] T053 [US4] Create `.agents/skills/sync-agent-topology/procedures/srp-scan-procedure.md` — standalone reusable SRP scan procedure containing: scan algorithm; "and" pattern definition (structural conjunction vs grammatical "and" vs domain compound noun); domain compound noun allowlist and false-positive rules; exception record lookup instructions; reference to `srp-exception.md` files created in Phases 1–4 as skip-list entries
 
 ### Acceptance Gate
 
-- [ ] T051 [US4] Read `.agents/skills/sync-agent-topology/procedures/run-topology-sync.md` — confirm "SRP Compliance Pass" phase exists, is listed as mandatory, and output artifact path (`violations-list.md`) is defined (SC-005)
-- [ ] T052 [US4] Read `.agents/skills/sync-agent-topology/SKILL.md` — confirm `violations-list.md` is in Output Artifacts table
-- [ ] T053 [US4] Read `.agents/skills/sync-agent-topology/procedures/srp-scan-procedure.md` — confirm it distinguishes structural "and" from grammatical "and" and domain compound nouns; confirm known exception skills from Phases 1–4 are referenced as skip-list entries
+- [ ] T054 [US4] Read `.agents/skills/sync-agent-topology/procedures/run-topology-sync.md` — confirm "SRP Compliance Pass" phase exists, is listed as mandatory, and output artifact path (`violations-list.md`) is defined (SC-005)
+- [ ] T055 [US4] Read `.agents/skills/sync-agent-topology/SKILL.md` — confirm `violations-list.md` is in Output Artifacts table
+- [ ] T056 [US4] Read `.agents/skills/sync-agent-topology/procedures/srp-scan-procedure.md` — confirm it distinguishes structural "and" from grammatical "and" and domain compound nouns; confirm known exception skills from Phases 1–4 are referenced as skip-list entries
 
 ---
 
@@ -162,20 +165,20 @@
 
 ### Implementation
 
-- [ ] T054 Grep `.agents/skills/*/SKILL.md` for ` and ` in `name:` fields — confirm only exception-documented skills remain; document any newly discovered violations
-- [ ] T055 [P] Grep `.claude/agents/*.md` for all 11 original violation skill names — confirm 0 routing table hits across all agents (SC-003)
-- [ ] T056 [P] Grep `.claude/agents/*.md` for retired skill names in free-text narrative sections — update or annotate any non-routing-table references found
-- [ ] T057 Read `docs/architecture/skills-architecture.md` — confirm all 8 new skill directories are registered; all 5 deprecated skills are marked `[deprecated]`; registry is complete and current
-- [ ] T058 Create `specs/016-skill-srp-enforcement/audit-log.md` — one-page record of all 11 violation decisions: skill name, decision (split / rename / exception / narrow+split), replacement skills or exception category, rationale summary; serves as feature closure artifact
+- [ ] T057 Grep `.agents/skills/*/SKILL.md` for ` and ` in `name:` fields — confirm only exception-documented skills remain; document any newly discovered violations
+- [ ] T058 [P] Grep `.claude/agents/*.md` for all 12 original violation skill names — confirm 0 routing table hits across all agents (SC-003)
+- [ ] T059 [P] Grep `.claude/agents/*.md` for retired skill names in free-text narrative sections — update or annotate any non-routing-table references found
+- [ ] T060 Read `docs/architecture/skills-architecture.md` — confirm all 9 new skill directories are registered; all 6 deprecated skills are marked `[deprecated]`; registry is complete and current
+- [ ] T061 Create `specs/016-skill-srp-enforcement/audit-log.md` — one-page record of all 12 violation decisions: skill name, decision (split / rename / exception / narrow+split), replacement skills or exception category, rationale summary; serves as feature closure artifact
 
 ### Acceptance Gate
 
-- [ ] T059 SC-001: all 11 violations processed — confirm count: 6 exceptions, 2 renames, 2 full splits, 1 narrow+split
-- [ ] T060 SC-002: 0 disallowed "and" patterns in skill names (excluding exception-documented skills) — grep confirms
-- [ ] T061 SC-003: 0 retired skill names in agent JD routing tables — grep confirms
-- [ ] T062 SC-004: SRP rule discoverable in `writing-skills` in < 30 seconds — read and time-check confirms
-- [ ] T063 SC-005: topology sync SRP compliance phase is mandatory; `violations-list.md` is a required artifact — procedure read confirms
-- [ ] T064 SC-006: SRP pass/fail determinable from `writing-skills` alone — confirm no cross-reference to another document is required to reach a verdict
+- [ ] T062 SC-001: all 12 violations processed — confirm count: 6 exceptions, 3 renames, 2 full splits, 1 narrow+split
+- [ ] T063 SC-002: 0 disallowed "and" patterns in skill names (excluding exception-documented skills) — grep confirms
+- [ ] T064 SC-003: 0 retired skill names in agent JD routing tables — grep confirms
+- [ ] T065 SC-004: SRP rule discoverable in `writing-skills` in < 30 seconds — read and time-check confirms
+- [ ] T066 SC-005: topology sync SRP compliance phase is mandatory; `violations-list.md` is a required artifact — procedure read confirms
+- [ ] T067 SC-006: SRP pass/fail determinable from `writing-skills` alone — confirm no cross-reference to another document is required to reach a verdict
 
 ---
 
@@ -207,10 +210,10 @@ Phase 5 must complete before Phase 6 (SRP scan procedure must exist for final au
 |---|---|
 | Phase 0 | T003 (exception template) parallel with T002 (SRP rule section) — different files |
 | Phase 1 | T006–T011 all parallel — 6 independent `srp-exception.md` files in separate skill dirs |
-| Phase 2 | T013+T014 parallel; T016+T017 parallel; T019+T020+T021 parallel after new dirs exist |
-| Phase 3 | T026+T027+T028 parallel; T031+T032 parallel; T034+T035 parallel |
-| Phase 4 | T041+T042 parallel |
-| Phase 6 | T054+T055+T056+T057 parallel |
+| Phase 2 | T013+T014 parallel; T016+T017 parallel; T021+T022 parallel (sonarqube dirs); T019+T020+T024 parallel after new dirs exist |
+| Phase 3 | T029+T030+T031 parallel; T034+T035 parallel; T037+T038 parallel |
+| Phase 4 | T044+T045 parallel |
+| Phase 6 | T057+T058+T059+T060 parallel |
 
 ## Task Summary
 
@@ -218,11 +221,11 @@ Phase 5 must complete before Phase 6 (SRP scan procedure must exist for final au
 |---|---|---|
 | Phase 0: SRP Rule | T001–T005 | US1 |
 | Phase 1: Exceptions | T006–T012 | US2 |
-| Phase 2: Renames | T013–T025 | US2, US3 |
-| Phase 3: Full Splits | T026–T040 | US2, US3 |
-| Phase 4: Narrow + Split | T041–T047 | US2, US3 |
-| Phase 5: Topology Sync | T048–T053 | US4 |
-| Phase 6: Audit & Sweep | T054–T064 | US2, US3 (closure) |
-| **Total** | **64 tasks** | **US1–US4** |
+| Phase 2: Renames | T013–T028 | US2, US3 |
+| Phase 3: Full Splits | T029–T043 | US2, US3 |
+| Phase 4: Narrow + Split | T044–T050 | US2, US3 |
+| Phase 5: Topology Sync | T051–T056 | US4 |
+| Phase 6: Audit & Sweep | T057–T067 | US2, US3 (closure) |
+| **Total** | **67 tasks** | **US1–US4** |
 
 **MVP scope**: Phase 0 alone delivers SC-004 and SC-006 — the SRP rule is codified and testable. Phases 1–4 deliver SC-001 and SC-002. Phase 5 delivers SC-005. Phase 6 closes SC-003.
