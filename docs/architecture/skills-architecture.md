@@ -104,8 +104,8 @@ When placing a new skill, ask:
 │  Layer 4: Core Language Standards                                    │
 │  python-style · python-typing · python-linting · python-paths        │
 ├──────────────────────────────────────────────────────────────────────┤
-│  Layer 3: Platform Integrations (MCPs)                               │
-│  miro-mcp · mcp-notebooklm · mcp-cce · python-mcp-tools              │
+│  Layer 3: Platform Integrations (external-platform adapters)         │
+│  miro-mcp · notebooklm-cli · mcp-cce · python-mcp-tools              │
 │  rag-prompting                                                       │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 2: Language-Agnostic Standards (polyglot)                     │
@@ -165,17 +165,23 @@ vendor update.
 
 ---
 
-### Layer 3 — Platform Integrations (MCPs)
+### Layer 3 — Platform Integrations (external-platform adapters)
 
 **Rule**: May reference Layers 0-2.
 
-| Skill                | Platform                           |
-| -------------------- | ---------------------------------- |
-| `miro-mcp`         | Miro boards                        |
-| `mcp-notebooklm`   | NotebookLM (setup, auth, config)   |
-| `mcp-cce`          | Code Context Engine                |
-| `python-mcp-tools` | General MCP tooling guidance       |
-| `rag-prompting`    | Prompt engineering for RAG queries |
+**Definition**: Narrow, stable adapters to an external platform. The layer is defined by
+this *role* — a thin boundary to an outside service — not by transport. A Layer 3 skill may
+reach its platform via an MCP server, a CLI (e.g. `notebooklm-cli` uses the `nlm`
+command), or a vendor SDK; the transport choice does not change the layer assignment.
+Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-cli-first-tool-selection.md`).
+
+| Skill | Platform | Transport |
+| --- | --- | --- |
+| `miro-mcp` | Miro boards | MCP server |
+| `notebooklm-cli` | NotebookLM (setup, auth, config) | CLI (`nlm`) |
+| `mcp-cce` | Code Context Engine | MCP server |
+| `python-mcp-tools` | General MCP tooling guidance | MCP server |
+| `rag-prompting` | Prompt engineering for RAG queries | n/a (technique) |
 
 ---
 
@@ -291,7 +297,7 @@ graph LR
 
     subgraph L3[L3 Platform]
         cce[mcp-cce]
-        nlm[mcp-notebooklm]
+        nlm[notebooklm-cli]
     end
 
     subgraph L5[L5 Quality]
@@ -421,7 +427,7 @@ graph LR
 
     subgraph L3[L3 Platform]
         cce[mcp-cce]
-        nlm[mcp-notebooklm]
+        nlm[notebooklm-cli]
         mro[miro-mcp]
     end
 
