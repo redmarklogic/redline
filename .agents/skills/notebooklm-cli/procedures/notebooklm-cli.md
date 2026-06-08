@@ -1,25 +1,48 @@
-# Notebooklm Mcp — Detailed Reference
+# NotebookLM CLI — Detailed Reference
 
-### Inputs
-- VS Code environment requiring NotebookLM access
+NotebookLM access is **CLI-only** via the [`nlm`](https://github.com/jacob-bd/notebooklm-mcp-cli)
+command. There is no MCP server in this project (removed per ADR-016, prefer CLI over MCP).
 
-### Outputs
-- Configured, authenticated MCP connection to NotebookLM
+## Inputs
 
-### Out of Scope
+- A terminal with the `nlm` CLI installed and authenticated
+
+## Outputs
+
+- Authenticated `nlm` CLI access to NotebookLM
+
+## Out of Scope
+
 - Query writing and prompt design (`rag-prompting`)
 - Research workflow orchestration (`redline-research`)
 - Notebook registry (`.agents/skills/redline-research/register.json`)
 
-### File Upload Rule
+## File Upload Rule
 
 > **Never refuse a file upload based on assumed format limitations.**
-> The `source_add` `file` type accepts at minimum: PDF, TXT, audio, and **video (MP4)**.
+> `nlm source add --file` accepts at minimum: PDF, TXT, audio, and **video (MP4)**.
 > When asked to upload any file, attempt the upload and let NotebookLM reject it if
 > the format is truly unsupported. Do not preemptively block the user.
 
-All other tools (27 of 35) are **forbidden**. See
-[`forbidden-tools.md`](forbidden-tools.md) for the full list and rationale.
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `nlm notebook query <id> "<question>"` | Query a notebook (primary use case). Scope to specific sources with `--source-ids <id,id>`. Add `--json` for parseable output. |
+| `nlm notebook list --json` | List all notebooks (find notebook IDs) |
+| `nlm notebook get <id>` | Get notebook details and source list |
+| `nlm notebook describe <id>` | AI-generated notebook summary and suggested topics |
+| `nlm source list <notebook>` | List sources in a notebook |
+| `nlm source describe <source-id>` | AI-generated per-source summary and keywords |
+| `nlm notebook create "<title>"` | Create a notebook — **Knowledge Operator only** (migration / provisioning) |
+| `nlm source add <notebook> --url/--text/--file/--youtube/--drive` | Add a source — **Knowledge Operator only** (library ingestion). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
+| `nlm source delete <source-id> --confirm` | Remove a source — **Knowledge Operator only** (deduplication / file hygiene) |
+| `nlm source rename <source-id> "<name>"` | Rename a source — **Knowledge Operator only** (canonical naming enforcement) |
+| `nlm source stale <notebook>` / `nlm source sync <notebook> --confirm` | List / refresh stale Drive-linked sources |
+| `nlm doctor` | Version, auth, and config diagnostics |
+
+> Use `--json` on read commands when parsing output programmatically.
+> `create`, `add`, `delete`, `rename` and `sync` are restricted to the Knowledge Operator.
 
 ## Procedure
 
@@ -37,27 +60,10 @@ If not installed:
 rtk uv tool install notebooklm-mcp-cli
 ```
 
-This installs two executables: `nlm` (CLI) and `notebooklm-mcp` (MCP server).
+This installs the `nlm` CLI. (The package also ships a `notebooklm-mcp` server executable;
+we do **not** use it — CLI only.)
 
-### Step 2 — Configure Claude Code
-
-The server is configured in the project-level `.mcp.json` at the repo root.
-Add the `notebooklm-mcp` entry under `mcpServers`:
-
-```json
-{
-  "mcpServers": {
-    "notebooklm-mcp": {
-      "command": "notebooklm-mcp"
-    }
-  }
-}
-```
-
-If `.mcp.json` already has other servers, append the `"notebooklm-mcp"` key alongside them — do not replace the file.
-Restart Claude Code (or use `/mcp` to reconnect) after editing.
-
-### Step 3 — Authenticate
+### Step 2 — Authenticate
 
 ```powershell
 nlm login --check
@@ -65,31 +71,32 @@ nlm login --check
 
 If not authenticated:
 
-1. User runs `nlm login` in a terminal (opens browser).
-2. User signs in to Google. Cookies saved locally (never committed to VCS).
+1. Run `nlm login` in a terminal (opens browser).
+2. Sign in to Google. Cookies saved locally (never committed to VCS).
 3. Confirm: `nlm login --check` returns success.
 
-Named profiles: `nlm login --profile work`. Diagnostics: `nlm doctor`.
+Named profiles: `nlm login --profile work`, then pass `--profile work` to subsequent
+commands. Switch the active default with `nlm login switch <profile>`. Diagnostics: `nlm doctor`.
 
-### Step 4 — Query
+### Step 3 — Query
 
-Use `notebook_list` to find notebook IDs, then `notebook_query` to query.
+Use `nlm notebook list --json` to find notebook IDs, then `nlm notebook query`.
 
 **REQUIRED SUB-SKILL:** Load `rag-prompting` before writing any query.
 
 ### Step R1 — Check the register
 
 Read `.agents/skills/redline-research/register.json` and check if any entry's `url` field matches the provided URL.
-Also call `notebook_list` to verify the notebook exists in the user's NotebookLM account. If
+Also run `nlm notebook list --json` to verify the notebook exists in the user's NotebookLM account. If
 the notebook is already registered, report that it exists and stop.
 
 ### Step R2 — Find the notebook ID and query for purpose
 
-Call `notebook_list` to find the notebook. Match by URL or name. Note the `notebook_id`.
+Run `nlm notebook list --json` to find the notebook. Match by URL or name. Note the `notebook_id`.
 
-Then call `notebook_query` with that `notebook_id`. Use the following question template:
+Then run `nlm notebook query <notebook_id>` with the following question:
 
-```
+```text
 Explain for the uninitiated. Define any specialist term or acronym the
 first time it appears. Keep citations. Avoid ambiguity.
 
@@ -111,45 +118,26 @@ Append a new JSON object to the array in `.agents/skills/redline-research/regist
 ### Step R4 — Confirm
 
 Report to the user:
+
 - Notebook name and ID assigned.
 - A one-sentence purpose summary.
 - Confirmation that the entry was added to `.agents/skills/redline-research/register.json`.
 
 Do **not** ask the user to provide any metadata — derive everything from the notebook query.
 
-## References
+## Add Notebook to Register
 
-- [notebooklm-mcp-cli GitHub repo](https://github.com/jacob-bd/notebooklm-mcp-cli)
-- [MCP Guide (all 35 tools)](https://github.com/jacob-bd/notebooklm-mcp-cli/blob/main/docs/MCP_GUIDE.md)
-- [Authentication guide](https://github.com/jacob-bd/notebooklm-mcp-cli/blob/main/docs/AUTHENTICATION.md)
-- [CLI Guide](https://github.com/jacob-bd/notebooklm-mcp-cli/blob/main/docs/CLI_GUIDE.md)
-- [VS Code MCP server configuration docs](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+When the user provides a NotebookLM URL and asks to add it to the register or knowledge base,
+follow steps R1–R4 above in order. Do **not** skip steps or ask for metadata — discover
+it from the notebook itself.
 
-# NotebookLM MCP
-
-How to connect GitHub Copilot (Agent mode) to Google NotebookLM via the
-[`notebooklm-mcp-cli`](https://github.com/jacob-bd/notebooklm-mcp-cli) MCP server.
-
-## Allowed Tools
-
-| Tool | Purpose |
-| --- | --- |
-| `notebook_query` | Query a notebook (primary use case) |
-| `notebook_list` | List all notebooks (find notebook IDs) |
-| `notebook_get` | Get notebook details and sources |
-| `notebook_describe` | Get AI-generated notebook summary and suggested topics |
-| `source_describe` | Get AI-generated per-source summary and keywords |
-| `notebook_create` | Create a new notebook — **the Knowledge Operator only** (notebook migration and provisioning workflows) |
-| `source_add` | Upload a new source to a notebook — **the Knowledge Operator only** (library ingestion workflow). Verified file types: PDF, TXT, audio (MP3/M4A/WAV), **video (MP4)** |
-| `source_delete` | Remove a source from a notebook — **the Knowledge Operator only** (deduplication / file hygiene) |
-| `source_rename` | Rename a source in a notebook — **the Knowledge Operator only** (canonical naming enforcement) |
-| `refresh_auth` | Refresh auth tokens when expired |
-| `server_info` | Check version and diagnostics |
+The canonical register is `.agents/skills/redline-research/register.json`. Every
+notebook used by any skill (including `redline-research`) is listed there.
 
 ## Post-Source-Change Rule (mandatory)
 
 After **any** operation that adds, removes, or renames a source in a notebook
-(`source_add`, `source_delete`, `source_rename`), the Knowledge Operator **must** update
+(`nlm source add`, `nlm source delete`, `nlm source rename`), the Knowledge Operator **must** update
 `<library-root>\index-notebooklm.xlsx` before the task is considered done.
 
 Trigger: load the `notebooklm-index` skill and run the **single-notebook upsert**
@@ -161,25 +149,19 @@ This rule applies even when the source operation was part of a larger task
 
 ## Troubleshooting
 
-See [`troubleshooting.md`](troubleshooting.md) for known failure modes
+See [`troubleshooting.md`](../troubleshooting.md) for known failure modes
 and fixes (symptom-based lookup).
-
-## Add Notebook to Register
-
-When the user provides a NotebookLM URL and asks to add it to the register or knowledge base,
-follow this four-step workflow in order. Do **not** skip steps or ask for metadata — discover
-it from the notebook itself.
-
-The canonical register is `.agents/skills/redline-research/register.json`. Every
-notebook used by any skill (including `redline-research`) is listed there.
 
 ## Tips
 
 - Notebook names are case-sensitive; match names exactly when querying.
-- The first query per session may take a few seconds while the server initialises.
 - Authentication cookies expire every 2-4 weeks. Re-run `nlm login` when queries fail.
 - Use `nlm doctor` to diagnose installation, auth, and config issues.
 - Free-tier rate limit is ~50 queries/day.
-- Environment variables set in a terminal have **no effect** on the MCP server — it is a
-  child process of Claude Code, not the shell. All env overrides must be placed in
-  `.mcp.json` under the server's `"env"` block.
+
+## References
+
+- [notebooklm-mcp-cli GitHub repo](https://github.com/jacob-bd/notebooklm-mcp-cli)
+- [CLI Guide](https://github.com/jacob-bd/notebooklm-mcp-cli/blob/main/docs/CLI_GUIDE.md)
+- [Authentication guide](https://github.com/jacob-bd/notebooklm-mcp-cli/blob/main/docs/AUTHENTICATION.md)
+- Always confirm exact flags with `nlm <command> --help` — the published docs can lag the installed binary.
