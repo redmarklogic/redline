@@ -69,9 +69,9 @@ You **MUST** consider the user input before proceeding (if not empty).
      ```text
      | Checklist | Total | Completed | Incomplete | Status |
      |-----------|-------|-----------|------------|--------|
-     | ux.md     | 12    | 12        | 0          | PASS |
-     | test.md   | 8     | 5         | 3          | FAIL |
-     | security.md | 6   | 6         | 0          | PASS |
+     | ux.md     | 12    | 12        | 0          | ✓ PASS |
+     | test.md   | 8     | 5         | 3          | x FAIL |
+     | security.md | 6   | 6         | 0          | ✓ PASS |
      ```
 
    - Calculate overall status:
@@ -104,9 +104,8 @@ You **MUST** consider the user input before proceeding (if not empty).
    **Detection & Creation Logic**:
    - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
 
-<!-- rtk:skip -->
      ```sh
-     git rev-parse --git-dir 2>/dev/null
+     rtk git rev-parse --git-dir 2>/dev/null
      ```
 
    - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore

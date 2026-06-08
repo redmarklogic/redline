@@ -228,7 +228,7 @@ vendor update.
 | EDA & visualisation | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design` |
 | Reporting           | `qmd-narrative-design`, `qmd-tables`                                       |
 | Research            | `redline-research`, `notebooklm-index`, `notebooklm-deep-research`       |
-| Infrastructure      | `git-hooks-create`, `library-management`                                   |
+| Infrastructure      | `git-hooks-create`, `library-management`, `branching-strategy`                 |
 
 ---
 
