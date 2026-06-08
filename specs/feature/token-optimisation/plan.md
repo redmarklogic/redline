@@ -18,7 +18,7 @@ CCE's Markdown retrieval quality is insufficient.
 **Package manager**: uv (`uv tool install`)
 **Embedding backend**: fastembed + ONNX Runtime (`BAAI/bge-small-en-v1.5`, ~60 MB, CPU-only)
 **Index storage**: `.context-engine/` (local, gitignored)
-**MCP config**: `.vscode/mcp.json` (currently empty, to be populated by CCE)
+**MCP config**: `.mcp.json` (currently empty, to be populated by CCE)
 **Instruction injection**: `.github/copilot-instructions.md` (new file, created by CCE)
 **Dev OS**: Windows (requires Visual Studio Build Tools C++ workload + CMake)
 **Key risk**: Recall@5 on Markdown files is unvalidated. Gate blocks merge if < 0.70.
@@ -73,7 +73,7 @@ Copilot Agent (VS Code)
 
 | Category | Items |
 | --- | --- |
-| **Must have** | CCE installed via `uv tool install`; `.vscode/mcp.json` populated; Recall@5 ≥ 0.70 validated; `.github/copilot-instructions.md` injection reviewed |
+| **Must have** | CCE installed via `uv tool install`; `.mcp.json` populated; Recall@5 ≥ 0.70 validated; `.github/copilot-instructions.md` injection reviewed |
 | **Should have** | `.context-engine/` in `.gitignore`; baseline savings recorded in `specs/005-token-optimisation/`; post-commit reindex hook active |
 | **Could have** | `cce savings` dollar estimates tracked per session; `session_recall` / `record_decision` for cross-session memory (separate spec) |
 | **Won't have (this time)** | Output compression level tuning; multi-device sync; Ollama backend; Python source-code AST benchmarking |
@@ -109,7 +109,7 @@ cce --version                     # must print version string
 
 **Deliverables**:
 
-1. `.vscode/mcp.json` — populated with CCE server entry
+1. `.mcp.json` — populated with CCE server entry
 2. `.github/copilot-instructions.md` — created by CCE, reviewed against checklist
 3. Repo fully indexed (`.context-engine/` populated)
 
@@ -127,7 +127,7 @@ cce status                        # reports index current, file count, embedding
 - [ ] `<!-- CCE:BEGIN -->` / `<!-- CCE:END -->` markers present so block is removable
 
 **Acceptance Gate** (must pass before Phase 2 starts):
-- [ ] `.vscode/mcp.json` contains `"context-engine"` server entry
+- [ ] `.mcp.json` contains `"context-engine"` server entry
 - [ ] `cce status` reports index as current
 - [ ] Instruction review checklist fully checked off — no blocking items
 - [ ] VS Code reloaded (`Developer: Reload Window`) and `context_search` is available in Copilot Chat agent mode
@@ -167,7 +167,7 @@ cce search "how to write a failing test before code"   # check top-5 for python-
 **Acceptance Gate**:
 - [ ] Expected file in top-5 results for ≥ 7 of 10 queries (Recall@5 ≥ 0.70)
 - [ ] Results recorded in `specs/005-token-optimisation/recall-baseline.md`
-- [ ] **If Recall@5 < 0.70**: STOP. Do not commit `.vscode/mcp.json`. Run `cce uninstall` to clean up. Open follow-on investigation.
+- [ ] **If Recall@5 < 0.70**: STOP. Do not commit `.mcp.json`. Run `cce uninstall` to clean up. Open follow-on investigation.
 
 ---
 
@@ -204,7 +204,7 @@ WHERE tool_name = 'read_file'
 | Phase | Files Changed / Created | Notes |
 | --- | --- | --- |
 | 0 | `.gitignore` | Add `.context-engine/` |
-| 1 | `.vscode/mcp.json` | Populated by CCE |
+| 1 | `.mcp.json` | Populated by CCE |
 | 1 | `.github/copilot-instructions.md` | Created by CCE, reviewed before commit |
 | 1 | `.context-engine/` | Index directory — gitignored, not committed |
 | 2 | `specs/005-token-optimisation/recall-baseline.md` | Manual results recording |

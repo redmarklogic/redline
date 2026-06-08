@@ -29,7 +29,7 @@ Containers use a restart policy so the stack auto-starts with the Docker runtime
 `[tool.usethis]` (`pyproject.toml`), a generated (gitignored) `sonar-project.properties`, a
 scan script (PowerShell + Bash), a small tested Python helper under `.agents/tools/sonar_scan/`
 (availability check + branch/issue glue, raising typed errors), an MCP server registration in
-`.vscode/mcp.json`, an `.env` (untracked) + `.env` template (committed), and a skill
+`.mcp.json`, an `.env` (untracked) + `.env` template (committed), and a skill
 (`SKILL.md` + procedure).
 
 **Properties generation**: `uvx usethis show sonarqube --output-file=sonar-project.properties`
@@ -42,7 +42,7 @@ runner is emulated.
 
 **Issue retrieval**: official SonarQube MCP server, Docker image `mcp/sonarqube`, env
 `SONARQUBE_URL=http://localhost:9000` + `SONARQUBE_TOKEN` (no organisation for self-hosted
-Server). Non-secret config in committed `.vscode/mcp.json`; token from untracked `.env`.
+Server). Non-secret config in committed `.mcp.json`; token from untracked `.env`.
 
 **Storage**: PostgreSQL data in a named Docker volume by default; optional host bind-mount
 to a fixed path for a visible, backup-friendly database location.
@@ -87,7 +87,7 @@ for redline") before Phase 0 code begins. Flagged, not assumed — founder/Peter
 | D10 | redline scan config | `[tool.usethis]` in `pyproject.toml` is the SSOT; `usethis show sonarqube` generates a gitignored `sonar-project.properties` at scan time | Mirrors wallplanner; one source of truth (Principle I) |
 | D11 | CI vs local | Do NOT emulate GitHub Actions locally (no `act`, no Action wrapper). Mirror the workflow's steps in the local script/skill | The scan-action only wraps `sonar-scanner` + CI plumbing; emulation adds cost, no local benefit (see report) |
 | D12 | Auto-start | Container `restart: unless-stopped` (the stack returns when Docker Desktop starts; a manual stop keeps it down) | Satisfies FR-020; standard Docker mechanism |
-| D13 | Config split | Non-secret in `.vscode/mcp.json` + committed `.env` template; secret `SONARQUBE_TOKEN` in untracked `.env`; MCP loads `.env` | Founder instruction; keeps secrets out of git # pragma: allowlist secret |
+| D13 | Config split | Non-secret in `.mcp.json` + committed `.env` template; secret `SONARQUBE_TOKEN` in untracked `.env`; MCP loads `.env` | Founder instruction; keeps secrets out of git # pragma: allowlist secret |
 | D14 | Failure mode | Availability check raises typed `SonarQubeUnavailableError`; never silent, never empty result | Founder instruction + Constitution Principle X |
 | D15 | Skill shape | Standalone + composable: callable alone today, callable by a future umbrella pre-PR checks skill | Founder instruction; umbrella skill out of scope |
 | D16 | Orchestration home | A small unit-tested Python tool `.agents/tools/sonar_scan/` (like `github_projects`) holds the availability check + glue; the skill/procedure call it | Testable, typed errors, TDD; not a new `src/` package |
@@ -160,7 +160,7 @@ implementation begins (the analogue of the preset's pipeline-approval gate).
 
 | Category | Items |
 | -------- | ----- |
-| **Must have** | Rebrand + strip to RedMark local-only service (Scn 1); local run + persistent DB + auto-start (Scn 2); analyse current branch into a `redline` project, properties from `[tool.usethis]`, scanner run directly (Scn 3); official MCP issue retrieval via `.vscode/mcp.json` (Scn 4); standalone scan-and-triage skill with a typed unavailability error (Scn 5); token only in untracked `.env` |
+| **Must have** | Rebrand + strip to RedMark local-only service (Scn 1); local run + persistent DB + auto-start (Scn 2); analyse current branch into a `redline` project, properties from `[tool.usethis]`, scanner run directly (Scn 3); official MCP issue retrieval via `.mcp.json` (Scn 4); standalone scan-and-triage skill with a typed unavailability error (Scn 5); token only in untracked `.env` |
 | **Should have** | Coverage report fed to the scan; ruff report fed to the scan; false-positive recording so issues are not re-surfaced; host bind-mount option for the DB |
 | **Could have** | `pre-push` hook variant; convenience "open UI" command; new-code-focus / baseline configuration |
 | **Won't have (this time)** | Emulating GitHub Actions locally (`act` or an Action wrapper); a CI/GitHub-Actions integration; the umbrella pre-PR checks skill that composes this one; any cloud/Azure deploy; multi-repository support; shared/hosted instance; multi-user auth hardening; rewriting the service's prior git history beyond a fresh init |
@@ -272,14 +272,14 @@ curl "http://localhost:9000/api/projects/search?projects=redline"   # -> project
 **Goal**: An agent lists redline issues (current branch) through the official MCP server,
 configured under `.vscode/` with the secret in `.env`.
 
-**Approach**: add a `sonarqube` server to `.vscode/mcp.json`:
+**Approach**: add a `sonarqube` server to `.mcp.json`:
 `command: docker`, `args: [run, --init, --pull=always, -i, --rm, -e, SONARQUBE_TOKEN, -e,
 SONARQUBE_URL, mcp/sonarqube]`, with `env: { SONARQUBE_URL: "http://localhost:9000" }` and the
 token loaded from `.env` (`envFile`, or an `${input:...}` prompt as a fallback if the VS Code
 build lacks `envFile`). Record both `SONARQUBE_URL` and `SONARQUBE_TOKEN` in the `.env`
 template. Validate that the MCP issue list matches the Web API for the same project/branch.
 
-**Deliverables**: `.vscode/mcp.json` `sonarqube` entry; `.env` template documenting
+**Deliverables**: `.mcp.json` `sonarqube` entry; `.env` template documenting
 `SONARQUBE_URL` + `SONARQUBE_TOKEN`; a short doc note.
 
 **Verification**:
@@ -338,7 +338,7 @@ silent). The skill is standalone and composable.
 | 0 | service | CHANGE: README, pyproject.toml, docker-compose.yml, Dockerfile, .copier-answers.yml, LICENSE. DELETE: infra/deploy/**, .github/workflows/sonarqube-*.yml, .github/scripts/update-sonarqube.sh, docs/project/production-infrastructure.md, Azure plan/lessons |
 | 1 | service | CHANGE: docker-compose.yml (restart policy + optional bind-mount), README |
 | 2 | redline | CHANGE: pyproject.toml (`[tool.usethis]`), .gitignore. NEW: scan.ps1, scan.sh, .env template |
-| 3 | redline | CHANGE: .vscode/mcp.json (sonarqube server). NEW/CHANGE: .env template entries, doc note |
+| 3 | redline | CHANGE: .mcp.json (sonarqube server). NEW/CHANGE: .env template entries, doc note |
 | 4 | redline | NEW: .agents/tools/sonar_scan/** (+ tests), .agents/skills/sonar-scan/SKILL.md, procedures/sonar-scan.md. CHANGE: agent JD routing table |
 | pre-0 | redline | NEW (recommended): docs/adr/ADR-015-local-sonarqube-quality-gate.md |
 
@@ -363,7 +363,7 @@ silent). The skill is standalone and composable.
 ### mcp/sonarqube (official SonarQube MCP server)
 - Run: `docker run --init --pull=always -i --rm -e SONARQUBE_TOKEN -e SONARQUBE_URL mcp/sonarqube`.
 - Env: `SONARQUBE_URL` (server URL), `SONARQUBE_TOKEN` (user token). `SONARQUBE_ORG` is Cloud-only
-  — omit it for the self-hosted Server. `.vscode/mcp.json` holds the non-secret `env`; the token # pragma: allowlist secret
+  — omit it for the self-hosted Server. `.mcp.json` holds the non-secret `env`; the token # pragma: allowlist secret
   comes from `.env`. Fallback if the server cannot authenticate locally: a thin Web-API skill
   calling `/api/issues/search`.
 

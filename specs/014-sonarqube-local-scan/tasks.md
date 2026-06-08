@@ -59,7 +59,7 @@ generated from a single source and an uncommitted token.
 ### Phase 2 Gate
 
 - [x] T020 [Phase 2] Run `./scan.ps1`; verify `curl "http://localhost:9000/api/projects/search?projects=redline"` shows the project and the UI lists issues for the branch. Verified 2026-06-07: project present (lastAnalysisDate 08:23:37 UTC), 27 open issues on branch `feature/45-local-redmark-sonarqube-branch-scan-workflow`.
-- [x] T021 [Phase 2] Verify no committed `sonar-project.properties` and no token in tracked files: `git status` clean of secrets; `git grep -i <token-prefix>` -> nothing. Verified: `git grep SONARQUBE_TOKEN` hits only `.vscode/mcp.json` (the env-var *name* passed as `-e` to docker, not the secret value); `.env` is gitignored.
+- [x] T021 [Phase 2] Verify no committed `sonar-project.properties` and no token in tracked files: `git status` clean of secrets; `git grep -i <token-prefix>` -> nothing. Verified: `git grep SONARQUBE_TOKEN` hits only `.mcp.json` (the env-var *name* passed as `-e` to docker, not the secret value); `.env` is gitignored.
 
 ---
 
@@ -68,13 +68,13 @@ generated from a single source and an uncommitted token.
 **Purpose**: An agent lists redline issues through the official MCP server, configured under
 `.vscode/` with the secret in `.env`.
 
-- [x] T022 [Phase 3] Add a `sonarqube` server to `.vscode/mcp.json`: `command: docker`, `args: [run, --init, --pull=always, -i, --rm, -e, SONARQUBE_TOKEN, -e, SONARQUBE_URL, mcp/sonarqube]`, `env: { "SONARQUBE_URL": "http://host.docker.internal:9000" }`; load `SONARQUBE_TOKEN` from `.env` via `envFile` (fallback: `${input:sonar_token}` if the VS Code build lacks `envFile`). **Deviation from plan:** URL is `host.docker.internal:9000`, NOT `localhost:9000` — the MCP runs as a Docker container, so `localhost` resolves to the container itself and fails at boot with "Connection refused" (verified empirically). Also removed a stray unofficial `mcpsonarqube` (`uvx mcp-server-sonarqube`) server that was not in scope.
+- [x] T022 [Phase 3] Add a `sonarqube` server to `.mcp.json`: `command: docker`, `args: [run, --init, --pull=always, -i, --rm, -e, SONARQUBE_TOKEN, -e, SONARQUBE_URL, mcp/sonarqube]`, `env: { "SONARQUBE_URL": "http://host.docker.internal:9000" }`; load `SONARQUBE_TOKEN` from `.env` via `envFile` (fallback: `${input:sonar_token}` if the VS Code build lacks `envFile`). **Deviation from plan:** URL is `host.docker.internal:9000`, NOT `localhost:9000` — the MCP runs as a Docker container, so `localhost` resolves to the container itself and fails at boot with "Connection refused" (verified empirically). Also removed a stray unofficial `mcpsonarqube` (`uvx mcp-server-sonarqube`) server that was not in scope.
 - [x] T023 [P] [Phase 3] Record `SONARQUBE_URL` + `SONARQUBE_TOKEN` in the `.env` template with a short note on the envFile/input fallback. URL corrected to `host.docker.internal:9000` with a container-networking note; envFile/`${input:...}` fallback note already present.
 
 ### Phase 3 Gate
 
 - [~] T024 [Phase 3] Via the MCP, list issues for `project=redline` + current branch; compare to `curl "http://localhost:9000/api/issues/search?componentKeys=redline&branch=<branch>"` -> same set, with rule/severity/file/line/message/status. **PARTIAL / design gap found.** MCP server connects and authenticates fine against `host.docker.internal:9000` (server v1.18.1; 17 tools incl. `search_sonar_issues_in_projects` and `change_sonar_issue_status`). MCP and Web API AGREE on the default branch: both return 0 for `main` (never analysed). BUT the official `search_sonar_issues_in_projects` tool exposes **no `branch` parameter** (only `projects`, `pullRequestId`, `issueStatuses`, `severities`, `files`, `issueKey`, paging) — so it cannot scope to an arbitrary feature branch. The 27 branch-attributed issues (`branch=feature/45-...`) are retrievable only via the Web API `&branch=`. **Implication for Phase 4:** branch-scoped retrieval must fall back to `/api/issues/search?branch=` (the plan's documented Web-API fallback), OR analyse the branch as a PR and use `pullRequestId`. The MCP alone cannot satisfy a feature-branch triage workflow.
-- [x] T025 [Phase 3] Verify non-secret MCP config is committed in `.vscode/`; the token exists only in untracked `.env`. Verified: `git grep <token-prefix>` over tracked files -> nothing; `.env` is gitignored; `.vscode/mcp.json` and `.env.example` hold non-secrets only.
+- [x] T025 [Phase 3] Verify non-secret MCP config is committed in `.vscode/`; the token exists only in untracked `.env`. Verified: `git grep <token-prefix>` over tracked files -> nothing; `.env` is gitignored; `.mcp.json` and `.env.example` hold non-secrets only.
 
 ---
 

@@ -70,7 +70,7 @@ You **MUST** consider the user input before proceeding (if not empty).
      | Checklist | Total | Completed | Incomplete | Status |
      |-----------|-------|-----------|------------|--------|
      | ux.md     | 12    | 12        | 0          | ✓ PASS |
-     | test.md   | 8     | 5         | 3          | x FAIL |
+     | test.md   | 8     | 5         | 3          | X FAIL |
      | security.md | 6   | 6         | 0          | ✓ PASS |
      ```
 
@@ -168,7 +168,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - For parallel tasks [P], continue with successful tasks, report failed ones
    - Provide clear error messages with context for debugging
    - Suggest next steps if implementation cannot proceed
-   - **IMPORTANT** For completed tasks, make sure to mark the task off as [X] in the tasks file. <!-- hook: allow -->
+   - **IMPORTANT** For completed tasks, make sure to mark the task off as [X] in the tasks file.
 
 9. Completion validation:
    - Verify all required tasks are completed

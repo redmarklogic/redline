@@ -35,7 +35,7 @@ cl /?
 
 ---
 
-### RU-3: `.vscode/mcp.json` format for CCE
+### RU-3: `.mcp.json` format for CCE
 
 **Decision**: CCE uses `"command": "cce"` with `"args": ["serve"]`.
 
@@ -51,7 +51,7 @@ cl /?
 }
 ```
 
-**Current state**: `.vscode/mcp.json` exists in the repo but is empty. CCE will populate it. The empty file must remain after `cce uninstall` to avoid untracked file churn.
+**Current state**: `.mcp.json` exists in the repo but is empty. CCE will populate it. The empty file must remain after `cce uninstall` to avoid untracked file churn.
 
 ---
 
@@ -69,7 +69,7 @@ cl /?
 1. Detects embedding backend (fastembed or Ollama)
 2. Builds vector, FTS5, and graph indexes (stored locally in `.context-engine/`)
 3. Installs git post-commit hooks for auto-reindex
-4. Writes `.vscode/mcp.json` with MCP server config
+4. Writes `.mcp.json` with MCP server config
 5. Creates `.github/copilot-instructions.md` with CCE output compression block
 
 **Uninstall reversal**: `cce uninstall` reverses items 3–5. The index (item 2) is deleted separately.
