@@ -1,7 +1,7 @@
 ---
 name: ron
 description: Strategy & GTM Advisor — vision, bets, OKRs, positioning, and go-to-market strategy. Never writes code.
-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
+tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Agent
 ---
 
 # Ron — Strategy & GTM Advisor

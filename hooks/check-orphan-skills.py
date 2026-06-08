@@ -57,6 +57,7 @@ KNOWN_ORPHANS: dict[str, str] = {
     "sonarqube-find-and-fix": "new skill pending agent JD routing table entry; tracked in spec-014",
     "sonarqube-review": "new skill pending agent JD routing table entry; tracked in spec-014",
     "sonarqube-scan": "new skill pending agent JD routing table entry; tracked in spec-014",
+    "sonarqube-quality-gate": "new orchestrating skill pending agent JD routing table entry; tracked in spec-016",
 }
 
 # ---------------------------------------------------------------------------

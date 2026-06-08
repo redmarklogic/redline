@@ -5,8 +5,7 @@ description: Use when creating, updating, moving, or querying tasks on the Redli
 
 # GitHub Projects — Board Task Management
 
-Load this skill when an agent needs to interact with the Redline GitHub Project board
-at `github.com/orgs/redmarklogic/projects`.
+Skill for interacting with the Redline GitHub Project board at `github.com/orgs/redmarklogic/projects`.
 
 **Steward**: PM agent. Schema changes (new field, renamed option) go to the PM agent before any other agent acts on them.
 
@@ -22,7 +21,7 @@ gh auth refresh -s project
 ```
 
 `project_config.json` must exist at `.agents/tools/github_projects/project_config.json`.
-If absent, run the `resolve-config` procedure first.
+If absent, run the `resolve-config` procedure first. Commit the file after it runs — node IDs are not secrets.
 
 ## Python Tool
 
@@ -42,14 +41,9 @@ from agents.tools.github_projects import (
 from agents.tools.github_projects.schema import TaskCreate, TaskUpdate
 ```
 
-`project_config.json` is the only persistent state. Commit it after `resolve-config` runs.
-
----
-
 ## Guard Conditions
 
-These conditions are checked before or during every procedure. A procedure MUST abort
-and surface the error if any guard fails.
+Every procedure MUST abort and surface the error if any applicable guard fails.
 
 | # | Condition | Checked when |
 |---|---|---|
@@ -60,8 +54,6 @@ and surface the error if any guard fails.
 | G5 | Agents MUST NOT set `status = "Done"` | At `move-status` call (tool returns 403) |
 | G6 | `start_date <= target_date` | At `TaskCreate`/`TaskUpdate` construction (Pydantic enforces) |
 | G7 | `archive-item` removes from board view only; the GitHub Issue stays open | Before calling `archive-item` — never use to close an issue |
-
----
 
 ## Agent Access Table
 
@@ -76,8 +68,6 @@ and surface the error if any guard fails.
 | resolve-config | ✓ | ✓ | — | — | ✓ | ✓ |
 | sync-this-week | ✓ | — | — | — | — | ✓ |
 | seed-backlog | ✓ | ✓ | — | — | — | ✓ |
-
----
 
 ## Procedures
 
@@ -166,9 +156,6 @@ backlog = list_tasks(config, status="Backlog")
 dev_sprint = list_tasks(config, agent="<agent-name>", sprint="Sprint 1 - Jun 1-14")
 ```
 
-Use this procedure to answer "what is [agent] working on this sprint?":
-`list_tasks(config, agent="<agent-name>", sprint="Sprint 1 - Jun 1-14")`.
-
 ---
 
 ### 5. get-task
@@ -188,8 +175,8 @@ if record is None:
 
 ### 6. archive-item
 
-Remove an item from the board view. **Does NOT close or delete the underlying GitHub Issue.**
-PM-only write. Founder may also call directly.
+Remove an item from the board view. Does NOT close or delete the underlying GitHub Issue.
+PM-only write; Founder may also call directly.
 
 **Guards**: G1, G2, G7
 
@@ -198,15 +185,14 @@ result = delete_task(item_id, config)
 # The issue at result.issue_url remains open in redmarklogic/redline
 ```
 
-To close the issue after archiving, the founder calls `gh issue close <number>` separately.
-Deletion from GitHub entirely is founder-only via GitHub UI — never via this skill.
+To close the issue after archiving, call `gh issue close <number>` separately.
 
 ---
 
 ### 7. resolve-config
 
 Resolve and cache project field and option node IDs. Writes `project_config.json`.
-Run this when the board schema changes (new field, renamed option) using `force_refresh=True`.
+Run when the board schema changes (new field, renamed option) using `force_refresh=True`.
 
 ```python
 # First-time setup or after schema change
@@ -217,8 +203,6 @@ config = resolve_project_config(
 )
 # Commit .agents/tools/github_projects/project_config.json after this runs
 ```
-
-`project_config.json` is safe to commit — node IDs are not secrets.
 
 ---
 
@@ -243,7 +227,7 @@ Steps:
 
 ### 9. seed-backlog
 
-Import open specs as parent issues in Backlog. Run once per spec batch (Phase 3 and future onboarding).
+Import open specs as parent issues in Backlog. Run once per spec batch.
 
 Steps:
 1. `resolve-config` — ensure config is fresh
@@ -257,6 +241,41 @@ Steps:
 
 ---
 
+### 10. set-dependencies (native issue dependencies)
+
+Use GitHub's **native issue dependencies** (GA 2025-08-21) for "blocked by" / "blocking"
+relationships — **not** the legacy `Depends on` custom text field. Native dependencies render
+a **Blocked** badge on the board and support `is:blocked` / `blocked-by:<n>` / `blocking:<n>`
+filters. The legacy `Depends on` / `Blocked by` text fields are deprecated for new tasks; leave
+them blank.
+
+**Direction:** POST to the *blocked* issue, naming the issue that blocks it.
+**Scope:** same-repo only — cross-repo dependencies are not supported. Max 50 links per type.
+**Auth:** the `repo` scope is sufficient (no extra scope needed).
+
+**Critical gotcha:** the request body field is `issue_id` — the **internal numeric database id**,
+NOT the issue number. Fetch it first, and send it as a typed integer (`gh api -F`, not `-f`,
+or the API returns `422 not of type integer`).
+
+```sh
+REPO=redmarklogic/redline
+# 1. resolve the BLOCKER's internal id (issue #4 here)
+BLOCKER_ID=$(gh api repos/$REPO/issues/4 --jq .id)
+# 2. mark the BLOCKED issue (#51) as blocked_by the blocker
+gh api --method POST "repos/$REPO/issues/51/dependencies/blocked_by" -F "issue_id=$BLOCKER_ID"
+# list / remove
+gh api "repos/$REPO/issues/51/dependencies/blocked_by"                       # GET list
+gh api --method DELETE "repos/$REPO/issues/51/dependencies/blocked_by/$BLOCKER_ID"
+```
+
+**Roadmap/Gantt caveat:** the Projects Roadmap view does **not** auto-sequence the Gantt from
+dependencies — it orders bars by the **Start date / Target date** fields. Native dependencies
+drive the Blocked badge and filters only. To make the Gantt read left-to-right in execution
+order, set `start_date` / `target_date` along the dependency chain *in addition to* the
+blocked_by links.
+
+---
+
 ## Common Mistakes
 
 | Mistake | Consequence | Fix |
@@ -267,3 +286,5 @@ Steps:
 | Using stale `project_config.json` after a schema change | Field mutations silently fail or write to wrong field | Run `resolve_project_config(force_refresh=True)` and commit the updated config |
 | Calling `archive-item` expecting the GitHub issue to close | Issue stays open; only the board view is cleared | Close the issue separately with `gh issue close <number>` |
 | Setting `status="Blocked"` without `blocked_by` | Pydantic raises `ValidationError` on `TaskCreate`; `move-status` returns 400 | Always provide a `blocked_by` reason naming the specific unblock condition |
+| Passing the issue *number* (or a string) to the dependencies API | `422 Invalid property /issue_id: not of type integer` | Send the internal DB `id` (`gh api .../issues/N --jq .id`) as a typed integer via `gh api -F` (see `set-dependencies`) |
+| Recording dependencies in the `Depends on` text field | No Blocked badge, no `is:blocked` filter | Use native `set-dependencies` (procedure 10); leave the legacy text field blank |
