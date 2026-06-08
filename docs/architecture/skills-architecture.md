@@ -75,12 +75,15 @@ When placing a new skill, ask:
 ┌──────────────────────────────────────────────────────────────────────┐
 │  Layer 9: Product, Strategy & Organisation                           │
 │  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic    │
-│  marketing-* · hiring-agent-management · ceremony-*                  │
+│  marketing-* · hr-hire-agent · hr-audit-agent · hr-maintain-agent-registry    │
+│  ceremony-monthly-editorial-session · sync-agent-topology            │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 8: Engineering Workflows                                      │
-│  shaping · arch-engineering · evaluation-architecture     	       │
-│  ai-acceptable-use-policy · doc-updater · git-push-batched           │
-│  resolving-pr-issues · skills-create · session-handover              │
+│  shaping · arch-engineering · design-eval-rubric · design-eval-pipeline │
+│  define-ai-policy · enforce-ai-batch-discipline                      │
+│  doc-updater · sonarqube-quality-gate                                │
+│  git-push-batched · resolving-pr-issues · skills-create              │
+│  session-handover                                                     │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Applied Capabilities                                       │
 │  eda-* · qmd-* · redline-research · notebooklm-index                 │
@@ -242,12 +245,12 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 
 **Rule**: May reference Layers 0-7.
 
-| Group              | Skills                                                                                       |
-| ------------------ | -------------------------------------------------------------------------------------------- |
-| Architecture       | `shaping`, `arch-engineering`, `evaluation-architecture`, `ai-acceptable-use-policy` |
-| Release & review   | `resolving-pr-issues`, `git-push-batched`, `doc-updater`                               |
-| Skill authoring    | `skills-create`                                                                            |
-| Session discipline | `session-handover`                                                                         |
+| Group | Skills |
+| --- | --- |
+| Architecture | `shaping`, `arch-engineering`, `design-eval-rubric`, `design-eval-pipeline`, `define-ai-policy`, `enforce-ai-batch-discipline` |
+| Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`, `sonarqube-quality-gate` |
+| Skill authoring | `skills-create` |
+| Session discipline | `session-handover` |
 
 ---
 
@@ -255,12 +258,12 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 
 **Rule**: May reference Layers 0-8.
 
-| Group              | Skills                                                                                                                                                                                       |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Group | Skills |
+| --- | --- |
 | Product management | `pm-problem-framer`, `pm-hypothesis-builder`, `pm-personas`, `pm-roadmap`, `pm-prioritization`, `pm-decision-architect`, `pm-prd-builder`, `pm-structural-integrity-auditor` |
-| Strategy           | `pm-product-strategist`, `strategy-pre-mortem`, `strategy-psf-domain`, `ddd-strategic`                                                                                               |
-| Marketing          | `marketing-content-big-5`, `marketing-product-led-seo`, `marketing-social-selling-linkedin`, `marketing-ai-content-review`                                                           |
-| Organisation       | `hiring-agent-management`, `ceremony-agent-topology-sync`, `ceremony-monthly-editorial-session`                                                                                        |
+| Strategy | `pm-product-strategist`, `strategy-pre-mortem`, `strategy-psf-domain`, `ddd-strategic` |
+| Marketing | `marketing-content-big-5`, `marketing-product-led-seo`, `linkedin-social-selling`, `marketing-ai-content-review` |
+| Organisation | `sync-agent-topology`, `ceremony-monthly-editorial-session`, `hr-hire-agent`, `hr-audit-agent`, `hr-maintain-agent-registry` |
 
 ---
 
@@ -317,7 +320,8 @@ graph LR
     subgraph L8[L8 Eng Workflows]
         ae[arch-engineering]
         shp[shaping]
-        evl[evaluation-architecture]
+        der[design-eval-rubric]
+        dep[design-eval-pipeline]
         sh[session-handover]
     end
 
@@ -337,7 +341,8 @@ graph LR
 
     pet --> ae
     pet --> shp
-    pet --> evl
+    pet --> der
+    pet --> dep
     pet --> ddd
     pet --> rr
     pet --> nlm
@@ -382,7 +387,7 @@ graph LR
         spf[strategy-psf-domain]
         mbb[marketing-content-big-5]
         mps[marketing-product-led-seo]
-        msl[marketing-social-selling-linkedin]
+        msl[linkedin-social-selling]
     end
 
     mrk --> pprb
@@ -445,8 +450,7 @@ graph LR
     subgraph L9[L9 Org]
         psi[pm-structural-integrity-auditor]
         ppers[pm-personas]
-        ham[hiring-agent-management]
-        cat[ceremony-agent-topology-sync]
+        sat[sync-agent-topology]
     end
 
     grm --> nlm
@@ -468,9 +472,8 @@ graph LR
     lnd --> rr
     lnd --> cce
 
-    hrr --> ham
+    hrr --> sat
     hrr --> ws
-    hrr --> cat
     hrr --> mro
     hrr --> cce
 ```
