@@ -65,7 +65,7 @@ infrastructure outside) and applied it to skills without verifying the causal me
 | Quality & tooling above implementation patterns | Assumed tests depend on patterns — actually patterns reference tests | Inverted: Quality (L5) below Implementation (L6) |
 | Only `spec-kit` identified as vendor | Missed 12 skills from `obra/superpowers` | All vendor skills at Layer 0 |
 | Language-agnostic and Python-specific mixed in same layer | No polyglot principle | Separated: polyglot at Layer 2, Python at Layer 4+ |
-| MCPs placed above quality/tooling | Assumed platform adapters are volatile — they are not; they are narrow and stable | MCPs at Layer 3, below quality |
+| Platform adapters placed above quality/tooling | Assumed platform adapters are volatile — they are not; they are narrow and stable | Platform integrations at Layer 3, below quality |
 
 Mental models that would have prevented these errors:
 - **Cargo Cult** ([mental-models/root_cause_analysis/cargo-cult.md](../../../.agents/skills/mental-models/root_cause_analysis/cargo-cult.md)) — reproducing the
@@ -92,16 +92,21 @@ language. Placed above foundational registries and below language-specific rules
 Python skills in Layer 4+ are *implementations* of these polyglot concepts, not the
 other way around.
 
-**Layer 3 — Platform Integrations (MCPs)**: Narrow adapters to external platforms. Stable
-and rarely changing — they know nothing about how they are used. Placed below quality
-tooling because quality tools reference the dev environment and MCP setup, not the reverse.
+**Layer 3 — Platform Integrations (external-platform adapters)**: Narrow adapters to
+external platforms. Stable and rarely changing — they know nothing about how they are used.
+The layer is defined by this *role* (a thin, stable boundary to an outside service), not by
+transport: an adapter may reach its platform via an MCP server, a CLI, or a vendor SDK and
+still belong here. For example, `notebooklm-cli` adapts NotebookLM via the `nlm` command
+rather than an MCP server, yet sits at Layer 3 because its role is unchanged. Transport is
+chosen per the CLI-first policy in ADR-016. Placed below quality tooling because quality
+tools reference the dev environment and platform setup, not the reverse.
 
 **Layer 4 — Core Language Standards**: Baseline Python conventions that change
 infrequently. They assume polyglot standards (Layer 2) and platform adapters (Layer 3)
 but know nothing about how functions or classes are designed (Layer 6).
 
 **Layer 5 — Quality & Tooling**: Skills that verify, check, or install. Testing references
-core language standards (Layer 4) and MCPs (Layer 3). Implementation patterns (Layer 6)
+core language standards (Layer 4) and platform adapters (Layer 3). Implementation patterns (Layer 6)
 reference quality skills — the causality runs upward from tests to code patterns, not
 downward. This inversion from the v1 order is the most counter-intuitive correction.
 
@@ -111,7 +116,7 @@ defects in coding workflows are discovered and corrected here. Belongs high in t
 so lower layers are not destabilised by these changes.
 
 **Layer 7 — Applied Capabilities**: Compound workflows that combine Python implementation,
-MCPs, and quality tools into coherent domain-specific capabilities. EDA, reporting,
+platform adapters, and quality tools into coherent domain-specific capabilities. EDA, reporting,
 research. These are the first layer where the skills are visibly about *Redline's work*
 rather than general programming.
 
