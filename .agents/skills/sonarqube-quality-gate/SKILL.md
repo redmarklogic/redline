@@ -1,9 +1,9 @@
 ---
-name: sonarqube-find-and-fix
-description: Run SonarQube scan, triage findings, fix at root, record false positives with rationale, and shift detection left via prevention candidates
+name: sonarqube-quality-gate
+description: Use when running the end-to-end SonarQube quality gate for the current branch — from scan trigger through triage, fix, false-positive recording, shift-left prevention, and re-scan verification.
 ---
 
-# SonarQube Find and Fix
+# SonarQube Quality Gate
 
 Orchestrates the SonarQube quality-gate sequence for the current branch. Wraps
 the scan sub-skills in a triage → reproduce → fix → prevent loop so findings are

@@ -1,9 +1,9 @@
-﻿---
-name: marketing-social-selling-linkedin
-description: Use when building LinkedIn presence for the founder or sales team, optimising LinkedIn profiles, planning prospecting outreach, or designing comment-and-engagement campaigns on LinkedIn.
+---
+name: linkedin-social-selling
+description: Use when building or auditing a LinkedIn presence for B2B social selling — onboarding founders or sales reps, optimising profiles, planning prospecting outreach, or designing engagement campaigns on LinkedIn.
 ---
 
-# Marketing — LinkedIn Social Selling
+# LinkedIn Social Selling
 
 Source: `Digital Marketing & Social Selling` notebook.
 
