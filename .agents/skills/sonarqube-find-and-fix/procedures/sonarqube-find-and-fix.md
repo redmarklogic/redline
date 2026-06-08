@@ -1,7 +1,7 @@
-# Procedure: pre-pr-checks
+# Procedure: sonarqube-find-and-fix
 
-Orchestrates the full local quality gate for the current branch. See
-`pre-pr-checks/SKILL.md` for the triage schema, gates table, and Common Mistakes.
+Orchestrates the SonarQube quality gate for the current branch. See
+`sonarqube-find-and-fix/SKILL.md` for the triage schema, gates table, and Common Mistakes.
 Each sub-skill carries its own guard conditions — surface failures verbatim; do
 not swallow them here.
 
