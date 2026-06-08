@@ -209,7 +209,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 
 ## Notebook Access
 
-No standing notebook access. Route domain questions through Peter (who routes to Graeme); product questions to the founder or Mark.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## What I Do NOT Do
 
@@ -225,6 +225,7 @@ No standing notebook access. Route domain questions through Peter (who routes to
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery. `read_file` only for targeted code edits, not exploration. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always load relevant ADRs and the shaped Pitch before starting cycle work.
 - Always run static checks before considering any task complete.
 - End every implementation session by invoking `session-handover`.

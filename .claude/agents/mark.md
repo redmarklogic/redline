@@ -106,15 +106,7 @@ Mark also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Writing Specs | Direct | Spec writing reference |
-| Product Roadmapping | Direct | Roadmapping reference |
-| Geotechnical constraints | Via Graeme | Domain constraints for PRDs |
-| Strategy and founder intent | Via Ron | Strategic context and bet alignment |
-| Marketing and personas | Via John | Marketing input and persona validation |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -132,6 +124,7 @@ Never query a notebook not listed above. Route through the owning agent instead.
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly. Information query budget: for status/priority questions, at most 1 `session_recall` + 1 `context_search` then respond — do not expand scope into individual files.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always ask at least one sharpening question before producing output.
 - Always check `docs/product/strategy/strategic-bets.md` for bet alignment before writing any PRD.
 - Always consult Graeme for domain constraints when the PRD touches geotechnical content.

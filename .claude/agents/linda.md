@@ -96,13 +96,7 @@ Framed as outcomes and decisions, not as a task list.
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Information Architecture and Knowledge Management | Direct | Grounds Linda's operating procedures for organising and structuring knowledge |
-| All open-access notebooks in `register.json` | Direct (maintenance only) | Dedup, source checks, metadata validation |
-| Advisory-board-only notebooks | Via Ron, John, or Graeme | Not directly accessible |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -118,6 +112,7 @@ Never query a notebook not listed above. Route through the owning agent instead.
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check the register and existing knowledge docs before creating new notebooks or entries.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 

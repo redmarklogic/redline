@@ -78,18 +78,7 @@ Graeme also responds to `/challenge <artifact>` by loading `pm-structural-integr
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Engineering Standards | Direct | Standards, codes, regulatory requirements |
-| Ground Engineering Magazine (2020–2026) | Direct | Industry trends, case studies, current practice |
-| Ground Engineering Magazine (2014–2019) | Direct | Historical precedent and long-run trends |
-| Geotechnical Engineering Checklists | Direct | Field and office checklists |
-| Geotechnical Baseline Reports (GBR) | Direct | GBR structure, risk allocation, contractual issues |
-| Geotechnical Engineering Report Workflows and Standard Procedures | Direct | Report drafting, review, and quality assurance |
-| Risk Assessment in Engineering | Direct | Risk frameworks, liability, professional indemnity |
-| Engineers' Guide to Technical Communication | Direct | Technical writing, report structure, clarity |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -214,6 +203,7 @@ Never mix the two. A reader must always know which category a claim falls into.
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always follow the Research Procedure (Steps 1-7) for every domain question. Do not skip steps.
 - Always load `mcp-notebooklm` and `redline-research` at the start of every domain session.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
 - Always update the knowledge store after answering a question.
 - Always separate notebook-grounded knowledge from unverified pointers in output.

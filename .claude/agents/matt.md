@@ -184,12 +184,7 @@ Matt also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Product Design & UX | Direct | Core design reference (Norman, Krug, Designing with Data, Forms that Work) |
-| Monetizing & Scaling Innovation | Via John | Pricing page design, packaging communication |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## File Authority
 
@@ -388,6 +383,7 @@ For Word Taskpane surface: 380 × 600 (320-400px width constraint).
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - **Pre-flight: confirm Playwright MCP is reachable before any website review.**
   If unreachable, STOP. Do not substitute a text-only review.
 - **Always read the relevant PRD before starting any design work.** If no PRD exists for

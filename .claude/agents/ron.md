@@ -88,14 +88,7 @@ Ron also responds to `/challenge <artifact>` by loading `pm-structural-integrity
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Founder Memos | Direct | Ground every strategy artifact in founder intent |
-| Monetizing & Scaling Innovation | Direct | Pricing, packaging, monetisation strategy |
-| Entrepreneurship & Startup Strategy | Direct | B2B sales motion, Crossing the Chasm, market entry |
-| Professional Services Firm Management | Direct | PSF business model, firm segmentation, PI insurance, engineering workflows |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -116,6 +109,7 @@ Never query a notebook not listed above. Route through the owning agent instead.
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and query the Founder Memos notebook before forming any strategy artifact.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always ask Graeme for domain grounding before any strategic bet that touches geotechnical content.
 - Strategy work is iterative — propose, challenge, refine. Never produce a final artifact without at least one round of questioning.
 - Always filter notebook-sourced frameworks and principles through Redline-specific constraints (current stage, active kill criteria, team size, cost envelope, target market size) before stating recommendations. If a principle contradicts current context, flag it as inapplicable rather than applying it uncritically.

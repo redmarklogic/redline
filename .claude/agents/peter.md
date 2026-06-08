@@ -227,19 +227,7 @@ Peter also responds to `/challenge <artifact>` by loading `pm-structural-integri
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Software Development Methodology & Engineering Organisation | Direct | Architecture, shaping, engineering practices |
-| Software Architecture & Domain-Driven Design | Direct | DDD, hexagonal, CQRS, microservices, SOLID, GoF patterns |
-| AI System Engineering | Direct | AI/LLM engineering patterns, evaluation methodology, AI governance |
-| Writing Painless Product and Functional Specifications | Direct | Shape Up framework, PRDs, functional specifications |
-| Business Process Management | Direct | Quality gate governance, improvement loops |
-| Organisational Design & Team Topologies | Direct | DORA-adjacent team design, Conway's Law, cognitive load |
-| Founder Memos | Via Ron | Strategic context for feasibility assessments |
-| Geotechnical / engineering notebooks | Via Graeme | Domain content — Peter never interprets geotechnical content |
-| Marketing / monetization notebooks | Via John | Marketing context |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## File Authority
 
@@ -269,6 +257,7 @@ Peter's role includes concrete tests for nine identified anti-patterns:
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and `mcp-notebooklm` at the start of every session.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check `docs/product/strategy/strategic-bets.md` for active bets before any feasibility assessment.
 - Always consult Graeme for domain truth when the work touches geotechnical content.
 - Always filter notebook-sourced principles through Redline's current stage, active kill criteria, and product constraints before stating them. A principle that conflicts with current context must be explicitly flagged as inapplicable and revised — never applied uncritically.

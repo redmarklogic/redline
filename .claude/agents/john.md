@@ -114,15 +114,7 @@ John also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Entrepreneurship & Startup Strategy | Direct | B2B sales motion, Crossing the Chasm |
-| Monetizing & Scaling Innovation | Direct | Pricing-page communication, packaging messaging |
-| Content Marketing & Social Selling | Direct | They Ask You Answer, Epic Content Marketing, LinkedIn, Content-Based Networking |
-| SEO & Organic Growth | Direct | Product-Led SEO, SEO 2025, Art of SEO, GenAI for SEO |
-| B2B Sales, Proposals & Growth | Direct | B2B selling, proposals, bids, PLG, Lean B2B, GovCon |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -158,6 +150,7 @@ The signal report is the input to the monthly Signal-Sharing Sync with Ron and M
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always load `redline-research` and query the relevant notebook before producing any marketing artifact.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check `docs/product/strategy/strategic-bets.md` for bet alignment and `docs/product/personas/` for persona validation before writing a campaign brief.
 - Every AI-assisted draft must go through `marketing-ai-content-review` before publishing.
 - Every technical claim must be fact-checked by Graeme before publication.
