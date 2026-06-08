@@ -1,7 +1,7 @@
 r"""Git hook: forbid absolute user-home paths in committed files.
 
 Absolute paths that contain a user's home directory (e.g.
-``C:\\Users\\harel\\Documents\\...``) are machine-specific and must never be
+``%USERPROFILE%\\Documents\\...``) are machine-specific and must never be
 committed.  They leak developer identity, break reproducibility, and prevent
 team members from using the repository without manual path surgery.
 
@@ -19,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-_USER_PATH_PATTERN = re.compile(r"(?i)[a-z]:[/\\]users[/\\]", re.IGNORECASE)
+_USER_PATH_PATTERN = re.compile(r"(?i)[a-z]:[/\\]{1,2}users[/\\]", re.IGNORECASE)
 _SUPPRESS = "hook: allow"
 
 _TEXT_EXTENSIONS = {
@@ -83,7 +83,7 @@ def main() -> int:
     print(
         "ERROR: absolute user-home paths found.\n"
         "Committed files must not contain machine-specific paths such as\n"
-        "C:\\Users\\<name>\\...  Replace with repo-relative or environment-\n"
+        "%USERPROFILE%\\...  Replace with repo-relative or environment-\n"
         "variable-based paths.\n"
         "To suppress a specific line: add `hook: allow` anywhere on that line.\n",
         file=sys.stderr,
