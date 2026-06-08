@@ -213,7 +213,7 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 | LLM evaluation lifecycle, rubric design, LLM-as-judge patterns | `evaluation-architecture` |
 | Shape Up shaping process, Pitch format, breadboarding, rabbit holes | `shaping` |
 | AI tool governance, DORA AI capabilities | `ai-acceptable-use-policy` |
-| Query a NotebookLM notebook | `mcp-notebooklm` |
+| Query a NotebookLM notebook | `notebooklm-cli` |
 | Research across knowledge bases | `redline-research` |
 | Discover related ADRs, architecture docs, or research before a decision | `mcp-cce` |
 | Audit any artifact (`/challenge`) | `pm-structural-integrity-auditor` |
@@ -256,7 +256,7 @@ Peter's role includes concrete tests for nine identified anti-patterns:
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
-- Always load `redline-research` and `mcp-notebooklm` at the start of every session.
+- Always load `redline-research` and `notebooklm-cli` at the start of every session.
 - Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check `docs/product/strategy/strategic-bets.md` for active bets before any feasibility assessment.
 - Always consult Graeme for domain truth when the work touches geotechnical content.

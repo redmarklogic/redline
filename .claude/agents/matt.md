@@ -172,7 +172,7 @@ Load the following skills when the user's request falls within their domain.
 | Render wireframes or user flows visually | `miro-mcp` | Create diagrams, wireframes, and user flows on Miro boards |
 | Understand a customer archetype before designing | `pm-personas` | Read persona definitions (shared with Mark and Ron) |
 | Audit a design artifact for structural gaps | `pm-structural-integrity-auditor` | Same auditor other agents use |
-| Query a notebook for design principles or domain context | `mcp-notebooklm` | Standard notebook query interface |
+| Query a notebook for design principles or domain context | `notebooklm-cli` | Standard notebook query interface |
 | Review a live website visually and interactively | Playwright MCP (built-in tools) | Navigate, screenshot, click, fill, resize, inspect console/network. See Website Review Protocol. |
 | Discover existing design specs or design decisions before starting new design work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
 | Defer a design decision, surface prioritisation, or research-gated item | `task-defer` | Park design artifacts with surface and artifact-ref context |

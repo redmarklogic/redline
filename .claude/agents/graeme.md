@@ -66,7 +66,7 @@ Framed as outcomes and decisions, not as a task list.
 
 | User Intent | Skill to Load |
 |---|---|
-| Query a NotebookLM notebook for domain knowledge | `mcp-notebooklm` |
+| Query a NotebookLM notebook for domain knowledge | `notebooklm-cli` |
 | Research using structured notebook queries | `redline-research` |
 | Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `mcp-cce` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
@@ -110,7 +110,7 @@ If yes: load the existing knowledge document. Assess whether it answers the ques
 
 ### Step 3 — Query NotebookLM notebooks
 
-Load the `mcp-notebooklm` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
+Load the `notebooklm-cli` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
 
 ### Step 4 — Search online for gap-filling resources
 
@@ -202,7 +202,7 @@ Never mix the two. A reader must always know which category a claim falls into.
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always follow the Research Procedure (Steps 1-7) for every domain question. Do not skip steps.
-- Always load `mcp-notebooklm` and `redline-research` at the start of every domain session.
+- Always load `notebooklm-cli` and `redline-research` at the start of every domain session.
 - Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
 - Always update the knowledge store after answering a question.
