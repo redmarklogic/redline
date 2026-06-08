@@ -1,727 +1,824 @@
-[
-  {
-    "id": "engineering-standards",
-    "name": "Engineering Standards",
-    "url": "https://notebooklm.google.com/notebook/207930eb-2bc8-4005-bc75-0827029ca616",
-    "description": "NZ infrastructure design standards (IDS), earthworks and compaction requirements (NZS 4431), geotechnical QA procedures, and subdivision consent documentation for practitioners working in the Canterbury / NZ regulatory context.",
-    "topic_area": "Engineering theory & standards",
-    "topics": [
-      "NZ infrastructure design standards",
-      "earthworks and compaction",
-      "NZS 4431",
-      "geotechnical QA",
-      "subdivision consent",
-      "Canterbury regulatory context"
-    ],
-    "content_types": [
-      "design standards",
-      "QA procedures",
-      "regulatory documentation"
-    ],
-    "use_cases": [
-      "Checking NZ engineering design standards for geotechnical work",
-      "Verifying earthworks and compaction requirements",
-      "Understanding subdivision consent documentation requirements"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
+{
+  "_meta": {
+    "description": "NotebookLM notebook register for the Redline project. Single source of truth for notebook-agent access mapping. All other locations (agent JDs, agent-register.md) must reference this file — never restate ownership inline.",
+    "ssot": "Governed by ADR-001. Notebook-agent access mapping is authoritative here; stating it elsewhere is a prohibited duplication.",
+    "schema": {
+      "id": "Unique kebab-case identifier for the notebook",
+      "name": "Display name shown in outputs and citations",
+      "url": "NotebookLM notebook URL (empty string if not yet created)",
+      "description": "What the notebook contains and its scope",
+      "topic_area": "One of: 'Engineering theory & standards' | 'Geotechnical domain' | 'AI & software architecture' | 'Process & product' | 'Founder strategy' | 'Communication & documentation'",
+      "topics": "Keyword array used for routing queries to the right notebook",
+      "content_types": "What kind of sources the notebook contains (books, official-docs, etc.)",
+      "use_cases": "Concrete query scenarios this notebook is suited to answer",
+      "access": "Permission gate: 'open' (all agents) | 'advisory-board-only' (Ron, Mark, John only)",
+      "added": "ISO 8601 date the notebook was registered",
+      "owner": "Agent id accountable for notebook freshness, scope decisions, and version pinning. One agent only.",
+      "consumers": "Array of agent ids with standing read access. They query the notebook directly without routing through the owner."
+    },
+    "legend": {
+      "owner": "Accountable agent — maintains the notebook, controls what goes in, pins the framework/standards version. One owner per notebook. Changes to owner require Harriet sign-off.",
+      "consumers": "Standing read access — agents who query this notebook directly as part of their regular work. Consumers do not maintain the notebook. Changes to consumers require Harriet sign-off.",
+      "access=open": "All agents may query this notebook when routing logic selects it.",
+      "access=advisory-board-only": "Restricted to Ron, Mark, John. Other agents must request via Ron.",
+      "empty-url": "Notebook approved but not yet created in NotebookLM. Linda creates it on founder go."
+    },
+    "agent_ids": ["graeme", "peter", "kabilan", "brent", "linda", "harriet", "matt", "ron", "mark", "john"],
+    "last_updated": "2026-06-08",
+    "maintained_by": "linda"
   },
-  {
-    "id": "ground-engineering-magazine-2014-2019",
-    "name": "Ground Engineering Magazine (2014–2019)",
-    "url": "https://notebooklm.google.com/notebook/f8197a88-11f3-425a-958b-4f64b9597c4c",
-    "description": "Issues of Ground Engineering magazine from 2014 to 2019 covering geotechnical industry news, technical papers, and key standards development (Eurocode 7, BS 5930, SPERWall, CIRIA) across piling, foundations, tunnelling, earthworks, and slope stability.",
-    "topic_area": "Engineering theory & standards",
-    "topics": [
-      "geotechnical industry news",
-      "technical papers",
-      "Eurocode 7",
-      "BS 5930",
-      "SPERWall",
-      "CIRIA",
-      "piling",
-      "foundations",
-      "tunnelling",
-      "earthworks",
-      "slope stability"
-    ],
-    "content_types": [
-      "magazine issues",
-      "technical papers",
-      "industry news"
-    ],
-    "use_cases": [
-      "Researching geotechnical engineering standards development (pre-2020)",
-      "Finding technical papers on piling, foundations, or slope stability",
-      "Understanding industry trends in geotechnical engineering 2014-2019"
-    ],
-    "access": "open",
-    "added": "2026-06-06"
-  },
-  {
-    "id": "ground-engineering-magazine-2020-2026",
-    "name": "Ground Engineering Magazine (2020–2026)",
-    "url": "https://notebooklm.google.com/notebook/703a1d77-caa6-44b3-a503-0108ed68560c",
-    "description": "Issues of Ground Engineering magazine from 2020 to 2026 covering geotechnical industry news, technical papers, and current standards development (Eurocode 7 revision, BS 5930) across piling, foundations, tunnelling, earthworks, and slope stability.",
-    "topic_area": "Engineering theory & standards",
-    "topics": [
-      "geotechnical industry news",
-      "technical papers",
-      "Eurocode 7 revision",
-      "BS 5930",
-      "piling",
-      "foundations",
-      "tunnelling",
-      "earthworks",
-      "slope stability"
-    ],
-    "content_types": [
-      "magazine issues",
-      "technical papers",
-      "industry news"
-    ],
-    "use_cases": [
-      "Researching current geotechnical engineering standards development (2020-present)",
-      "Finding recent technical papers on piling, foundations, or slope stability",
-      "Understanding current industry trends in geotechnical engineering"
-    ],
-    "access": "open",
-    "added": "2026-06-06"
-  },
-  {
-    "id": "geotechnical-baseline-reports",
-    "name": "Geotechnical Baseline Reports (GBR)",
-    "url": "https://notebooklm.google.com/notebook/a748df0f-51f6-4b75-b56e-b79bb8e22f38",
-    "description": "Industry guidance on preparing and contractually applying GBRs to allocate subsurface construction risk. Covers Differing Site Conditions claims, ASCE guidelines, CIRIA C807, the NZTS guide, and the FIDIC Emerald Book.",
-    "topic_area": "Geotechnical domain",
-    "topics": [
-      "geotechnical baseline reports",
-      "subsurface risk allocation",
-      "differing site conditions",
-      "ASCE guidelines",
-      "CIRIA C807",
-      "NZTS guide",
-      "FIDIC Emerald Book"
-    ],
-    "content_types": [
-      "industry guidance",
-      "contract frameworks",
-      "risk allocation guidelines"
-    ],
-    "use_cases": [
-      "Preparing geotechnical baseline reports",
-      "Understanding subsurface risk allocation in contracts",
-      "Researching differing site conditions claims"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "geotechnical-report-workflows",
-    "name": "Geotechnical Engineering Report Workflows and Standard Procedures",
-    "url": "https://notebooklm.google.com/notebook/cffffcd3-1c00-4ca7-8ade-c93f20064715",
-    "description": "Professional practice guides, templates, QA checklists, and training materials for geotechnical report structuring, factual/interpretive delineation, and client-centric writing -- compiled from a leading NZ geotechnical consultancy's internal knowledge base.",
-    "topic_area": "Geotechnical domain",
-    "topics": [
-      "geotechnical report structuring",
-      "factual vs interpretive reporting",
-      "QA checklists",
-      "client-centric writing",
-      "professional practice"
-    ],
-    "content_types": [
-      "practice guides",
-      "templates",
-      "QA checklists",
-      "training materials"
-    ],
-    "use_cases": [
-      "Structuring geotechnical engineering reports",
-      "Applying factual/interpretive delineation in reports",
-      "Using QA checklists for report review"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "risk-assessment-engineering",
-    "name": "Risk Assessment in Engineering",
-    "url": "https://notebooklm.google.com/notebook/85786e1b-f3d5-4b4b-a13d-3e396b5e5faf",
-    "description": "Risk management, professional liability, and probabilistic risk assessment in geotechnical engineering. Sources span ASCE, CIRIA, and NZGS guidelines, field manuals, and legal notes covering contracts, non-disclosure agreements, and professional indemnity insurance.",
-    "topic_area": "Geotechnical domain",
-    "topics": [
-      "risk management",
-      "professional liability",
-      "probabilistic risk assessment",
-      "ASCE guidelines",
-      "CIRIA guidelines",
-      "NZGS guidelines",
-      "contracts and insurance",
-      "law for engineers",
-      "tort liability"
-    ],
-    "content_types": [
-      "guidelines",
-      "field manuals",
-      "legal notes",
-      "legal textbooks"
-    ],
-    "use_cases": [
-      "Assessing geotechnical engineering risk",
-      "Understanding professional liability in engineering",
-      "Reviewing contract and insurance requirements"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "geotechnical-checklists",
-    "name": "Geotechnical Engineering Checklists",
-    "url": "https://notebooklm.google.com/notebook/71588c46-32b1-4817-ad03-c777d3a8d9f4",
-    "description": "A curated collection of geotechnical engineering QC checklists, review guidelines, and submittal checklists from US and NZ sources. Covers geotechnical report review (FHWA), geotechnical design QC workflow, earthquake geotechnical investigation practice (NZGS Module 2), ground investigation specification, and building consent lodgement requirements.",
-    "topic_area": "Geotechnical domain",
-    "topics": [
-      "geotechnical report review",
-      "QC checklists",
-      "geotechnical investigations",
-      "ground investigations",
-      "NZGS specifications",
-      "FHWA guidelines",
-      "USACE engineering manual",
-      "earthquake geotechnical engineering",
-      "building consent",
-      "lodgement checklists"
-    ],
-    "content_types": [
-      "QC checklists",
-      "review guidelines",
-      "engineering manuals",
-      "specifications",
-      "submittal checklists"
-    ],
-    "use_cases": [
-      "Reviewing a geotechnical report for completeness and quality",
-      "Checking required content for a soils and geology report or foundation report",
-      "Understanding FHWA or USACE requirements for geotechnical documentation",
-      "Verifying a geotechnical report meets NZ building consent lodgement requirements",
-      "Applying NZGS ground investigation specifications to site investigation planning"
-    ],
-    "access": "open",
-    "added": "2026-05-13"
-  },
-  {
-    "id": "ai-system-engineering",
-    "name": "AI System Engineering",
-    "url": "https://notebooklm.google.com/notebook/838956d2-45f7-4576-88dd-84685d038046",
-    "description": "Generative AI application design and deployment: foundation models, prompt engineering, retrieval-augmented generation (RAG), multiagent orchestration, and FastAPI/Docker serving. Covers MCP, OAuth2, the NIST AI Risk Management Framework, the EU AI Act, and GDPR.",
-    "topic_area": "AI & software architecture",
-    "topics": [
-      "generative AI",
-      "prompt engineering",
-      "RAG",
-      "multiagent orchestration",
-      "FastAPI",
-      "Docker",
-      "MCP",
-      "NIST AI RMF",
-      "EU AI Act",
-      "GDPR"
-    ],
-    "content_types": [
-      "architecture guides",
-      "deployment patterns",
-      "regulatory frameworks"
-    ],
-    "use_cases": [
-      "Designing generative AI applications",
-      "Implementing RAG or multiagent systems",
-      "Understanding AI governance and compliance requirements"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "software-architecture-ddd",
-    "name": "Software Architecture & Domain-Driven Design",
-    "url": "https://notebooklm.google.com/notebook/0c21053c-e146-41cf-a262-b44212a4f8e1",
-    "description": "Ten canonical books (Evans, Vernon, Khononov, Ford, Ousterhout, GoF, and others) covering DDD strategic/tactical patterns (Bounded Contexts, Ubiquitous Language, Aggregates, Repositories, Domain Events), architecture styles (Hexagonal, CQRS, Microservices, Event-Driven), SOLID principles, GoF design patterns, functional domain modeling, EventStorming, Context Mapping, Event Sourcing, saga patterns, and Data Mesh.",
-    "topic_area": "AI & software architecture",
-    "topics": [
-      "domain-driven design",
-      "bounded contexts",
-      "aggregates",
-      "hexagonal architecture",
-      "CQRS",
-      "event sourcing",
-      "SOLID principles",
-      "GoF design patterns",
-      "EventStorming",
-      "Data Mesh"
-    ],
-    "content_types": [
-      "canonical books",
-      "design pattern references"
-    ],
-    "use_cases": [
-      "Applying DDD patterns to Redline architecture",
-      "Choosing architecture styles for new modules",
-      "Reviewing design patterns for domain modeling"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "software-dev-methodology-eng-org",
-    "name": "Software Development Methodology & Engineering Organisation",
-    "url": "https://notebooklm.google.com/notebook/91568710-98b3-4448-b038-04f9b48b7111",
-    "description": "25-source knowledge base spanning software engineering methodology, product discovery, AI/LLM engineering, and engineering leadership. Engineering methodology: Farley's Modern Software Engineering, Mythical Man-Month, Software Engineering at Google, Accelerate (Forsgren et al.), Continuous Delivery, Extreme Programming, Clean Agile, Sprint. Product management and discovery: INSPIRED and Empowered (Cagan), Continuous Discovery Habits (Torres), Lean Product Playbook, Product-Led Growth, Project to Product. AI and LLM engineering: LLM Engineers Handbook (Iusztin), Age of Invisible Machines (Wilson), Co-Intelligence (Mollick), Designing Multi-Agent Systems (Dibia), AI Engineering Building Applications, Building Applications with AI Agents, Building Generative AI Services with FastAPI, Prompt Engineering for LLMs. Engineering organisation and leadership: Staff Engineer (Larson), Team Topologies, Working Backwards (Amazon — Bryar and Carr).",
-    "topic_area": "AI & software architecture",
-    "topics": [
-      "software engineering methodology",
-      "agile and lean development",
-      "continuous delivery and DevOps",
-      "product discovery",
-      "empowered product teams",
-      "product management",
-      "LLM engineering",
-      "AI agent systems",
-      "multiagent orchestration",
-      "engineering leadership",
-      "staff engineer career path",
-      "team topologies",
-      "Working Backwards (Amazon)"
-    ],
-    "content_types": [
-      "software engineering books",
-      "product management books",
-      "AI engineering guides",
-      "organisational frameworks",
-      "leadership frameworks"
-    ],
-    "use_cases": [
-      "Researching software engineering best practices and methodology",
-      "Designing or improving product discovery and continuous delivery workflows",
-      "Understanding LLM engineering, prompt engineering, and AI agent system design",
-      "Applying empowered product team frameworks from Cagan and Torres",
-      "Navigating engineering career development to staff-level and beyond",
-      "Grounding Amazon Working Backwards methodology in product development",
-      "Aligning engineering team structure and flow using Team Topologies"
-    ],
-    "access": "open",
-    "added": "2026-05-16"
-  },
-  {
-    "id": "business-process-management",
-    "name": "Business Process Management",
-    "url": "https://notebooklm.google.com/notebook/d074efff-20fe-4d7c-9269-cbbdea61fe2d",
-    "description": "BPM methodologies and continuous process improvement tools including Lean, Six Sigma, BPMN, 7FE, PDCA, and DMAIC frameworks. Drawn from expert-authored management books and the BPM Common Body of Knowledge (BPM CBOK).",
-    "topic_area": "Process & product",
-    "topics": [
-      "BPM",
-      "Lean",
-      "Six Sigma",
-      "BPMN",
-      "PDCA",
-      "DMAIC",
-      "BPM CBOK",
-      "continuous improvement"
-    ],
-    "content_types": [
-      "management books",
-      "methodology frameworks"
-    ],
-    "use_cases": [
-      "Designing or improving business processes",
-      "Applying Lean or Six Sigma to engineering workflows",
-      "Modelling processes with BPMN"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "product-roadmapping",
-    "name": "Product Roadmapping",
-    "url": "https://notebooklm.google.com/notebook/8e34a7e9-1996-44c9-9c69-60b6df8e17a9",
-    "description": "Strategic product roadmapping for product leaders: defining vision, prioritising customer opportunities, and achieving stakeholder buy-in. Covers Kano model, MoSCoW prioritisation, ROI scorecards, user journey maps, and opportunity-solution trees.",
-    "topic_area": "Process & product",
-    "topics": [
-      "product roadmapping",
-      "Kano model",
-      "MoSCoW prioritisation",
-      "ROI scorecards",
-      "user journey maps",
-      "opportunity-solution trees",
-      "stakeholder buy-in"
-    ],
-    "content_types": [
-      "strategy books",
-      "prioritisation frameworks"
-    ],
-    "use_cases": [
-      "Building or refreshing the product roadmap",
-      "Prioritising features using Kano or MoSCoW",
-      "Creating opportunity-solution trees"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "writing-specs",
-    "name": "Writing Painless Product and Functional Specifications",
-    "url": "https://notebooklm.google.com/notebook/43821e67-85af-42ab-b1a2-cbc396732bc0",
-    "description": "Software product management frameworks and specification writing: PRDs, functional specifications, OKRs, the Shape Up framework, product discovery vs delivery, and alternatives to traditional roadmaps.",
-    "topic_area": "Process & product",
-    "topics": [
-      "PRDs",
-      "functional specifications",
-      "OKRs",
-      "Shape Up",
-      "product discovery",
-      "product delivery"
-    ],
-    "content_types": [
-      "management frameworks",
-      "specification templates"
-    ],
-    "use_cases": [
-      "Writing product requirement documents",
-      "Structuring functional specifications",
-      "Choosing between product discovery and delivery approaches"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "org-design-team-topologies",
-    "name": "Organisational Design & Team Topologies",
-    "url": "https://notebooklm.google.com/notebook/52b9befe-c464-4bd7-b87a-7e5f5d89e2e8",
-    "description": "A curated collection of books on modern organisational leadership, team design, and workforce development. Covers Team Topologies (stream-aligned, platform, enabling teams), Conway's Law, cognitive load management, AI/RPA task deconstruction, deliberate practice, skills-based organisations, and Domain-Driven Design (DDD) for software teams. Case studies from Google, GE, and large healthcare providers.",
-    "topic_area": "Process & product",
-    "topics": [
-      "team topologies",
-      "Conway's Law",
-      "cognitive load",
-      "deliberate practice",
-      "skills-based organization",
-      "AI and automation in the workplace",
-      "organizational design",
-      "Domain-Driven Design",
-      "talent development",
-      "performance management"
-    ],
-    "content_types": [
-      "management books",
-      "organizational frameworks",
-      "case studies",
-      "academic research"
-    ],
-    "use_cases": [
-      "Restructuring software engineering teams around stream-aligned or platform topology",
-      "Deciding which tasks to automate with AI or RPA versus retain for human workers",
-      "Designing deliberate practice programs to develop world-class technical talent",
-      "Transitioning from role-based to skills-based hiring and performance management",
-      "Applying Conway's Law and DDD to align team structure with software architecture"
-    ],
-    "access": "open",
-    "added": "2026-04-20"
-  },
-  {
-    "id": "professional-services-firm-management",
-    "name": "Professional Services Firm Management",
-    "url": "https://notebooklm.google.com/notebook/345aa8a3-0332-4400-93f6-4b889fabebae",
-    "description": "Comprehensive guide to the business, management, and future of professional service firms (PSFs) — engineering, law, and consulting practices. Covers individual career development (resume writing, networking, PE licensure), firm creation and entrepreneurship, day-to-day operations (project management, client relations, IDC), financial and human capital management, A/E/C firm strategy, and technological disruption (the Innovator's Dilemma, AI impact on professions). Contains practical templates, checklists, and worksheets alongside theoretical frameworks from published books and management literature.",
-    "topic_area": "Process & product",
-    "topics": [
-      "professional services firm management",
-      "career development in engineering",
-      "firm creation and entrepreneurship",
-      "project management",
-      "client relations",
-      "financial management",
-      "A/E/C industry strategy",
-      "technological disruption",
-      "AI impact on professions",
-      "organizational operations"
-    ],
-    "content_types": [
-      "business books",
-      "management frameworks",
-      "practical templates",
-      "checklists",
-      "theoretical frameworks"
-    ],
-    "use_cases": [
-      "Managing or growing a professional services or engineering firm",
-      "Planning a career in engineering or consulting",
-      "Assessing risks from technological disruption to professional service business models",
-      "Improving firm operations — project management, client relations, and profitability",
-      "Researching A/E/C firm strategy, niche positioning, and market differentiation"
-    ],
-    "access": "open",
-    "added": "2026-04-22"
-  },
-  {
-    "id": "govcon-systems-engineering",
-    "name": "Government Contracting, Proposal Management & Systems Engineering",
-    "url": "https://notebooklm.google.com/notebook/b64d0f8c-9d7d-4d35-8168-f9d19572c890",
-    "description": "Comprehensive guide to winning government contracts (GovCon). Covers requirements engineering (RE), Model-Based Systems Engineering (MBSE) using UML and SysML, proposal strategy and management, RFP compliance and compliance matrices, and AI-assisted proposal automation including Retrieval-Augmented Generation (RAG) for hallucination-free draft generation. Contains academic textbooks, practical playbooks, compliance matrix templates, decision matrices, and checklists.",
-    "topic_area": "Process & product",
-    "topics": [
-      "requirements engineering",
-      "Model-Based Systems Engineering",
-      "UML and SysML",
-      "government contracting (GovCon)",
-      "proposal management",
-      "RFP compliance and shredding",
-      "compliance matrices",
-      "AI in proposal automation",
-      "Retrieval-Augmented Generation (RAG)",
-      "stakeholder and system requirements"
-    ],
-    "content_types": [
-      "academic textbooks",
-      "business playbooks",
-      "compliance templates",
-      "checklists",
-      "practical guidelines"
-    ],
-    "use_cases": [
-      "Preparing a winning bid for a government contract",
-      "Building requirements engineering frameworks for complex system design",
-      "Adopting AI to automate proposal compliance and draft generation",
-      "Diagnosing and fixing broken proposal processes",
-      "Translating vague customer requirements into precise, testable system specifications"
-    ],
-    "access": "open",
-    "added": "2026-04-23"
-  },
-  {
-    "id": "strategy-competitive-advantage",
-    "name": "Strategy & Competitive Advantage",
-    "url": "https://notebooklm.google.com/notebook/52a3fcf4-cbe9-4e49-9876-72ef9e8ec13c",
-    "description": "Comprehensive guide to strategic thinking, competitive positioning, and sustained advantage. Covers business strategy frameworks (Good Strategy Bad Strategy, Blue Ocean), competitive analysis, resource-based view of the firm, strategic inflection points, and how organizations build defensible competitive moats. Draws on canonical strategy books and case studies for product, firm, and market-level strategic thinking.",
-    "topic_area": "Process & product",
-    "topics": [
-      "strategic thinking",
-      "good strategy bad strategy",
-      "competitive positioning",
-      "competitive advantage",
-      "blue ocean strategy",
-      "resource-based view",
-      "strategic inflection points",
-      "competitive moats",
-      "business strategy frameworks",
-      "market analysis"
-    ],
-    "content_types": [
-      "strategy books",
-      "case studies",
-      "competitive analysis frameworks",
-      "strategic thinking tools"
-    ],
-    "use_cases": [
-      "Developing a coherent strategy with clear diagnosis, guiding policy, and coherent actions",
-      "Analysing competitive positioning and identifying sustainable competitive advantages",
-      "Stress-testing strategic assumptions and identifying strategic risks",
-      "Evaluating Blue Ocean vs Red Ocean opportunities",
-      "Understanding how firms build and defend competitive moats"
-    ],
-    "access": "open",
-    "added": "2026-05-23"
-  },
-  {
-    "id": "monetizing-scaling-innovation",
-    "name": "Monetizing & Scaling Innovation",
-    "url": "https://notebooklm.google.com/notebook/1ff85c77-17d8-49ca-997a-172bfa02d638",
-    "description": "Strategic guide on building profitable, scalable products. Contains Monetizing Innovation and Scaling Innovation by Madhavan Ramanujam et al. Covers willingness-to-pay discovery, pricing models (subscription, usage-based, outcome-based), packaging and bundling (Good-Better-Best tiers), behavioural pricing tactics (anchoring, compromise effect), the four monetisation failure patterns (Feature Shock, Minivation, Hidden Gem, Undead), and scaling strategies covering churn prevention, wallet-share growth, and price negotiation discipline.",
-    "topic_area": "Founder strategy",
-    "topics": [
-      "willingness-to-pay research",
-      "pricing models and strategy",
-      "packaging and bundling",
-      "feature tiering Good-Better-Best",
-      "behavioural pricing",
-      "monetisation failure patterns",
-      "scaling and profitable growth",
-      "churn prevention",
-      "sales negotiation and price integrity"
-    ],
-    "content_types": [
-      "business strategy books",
-      "pricing frameworks",
-      "case studies",
-      "behavioural economics theory",
-      "actionable checklists"
-    ],
-    "use_cases": [
-      "Deciding how to price a new product, feature tier, or service",
-      "Evaluating packaging and Good-Better-Best tier strategies",
-      "Preparing for a company-wide price increase or sales negotiation",
-      "Designing a product go-to-market strategy grounded in customer willingness-to-pay",
-      "Researching known monetisation failure patterns before a product launch"
-    ],
-    "access": "advisory-board-only",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "entrepreneurship-startup-strategy",
-    "name": "Entrepreneurship & Startup Strategy",
-    "url": "https://notebooklm.google.com/notebook/996f9e1a-352a-4f07-84f0-76a45f91a174",
-    "description": "Comprehensive guide for entrepreneurial management, strategic growth, and corporate innovation. Covers disruptive innovation, Lean Startup methodology (MVP, Build-Measure-Learn), customer development and Jobs-to-Be-Done theory, product-market fit, Crossing the Chasm (early adopters vs mainstream), B2B sales tactics, product roadmapping, and the Business Model Canvas. Drawn from authoritative business books, case studies, and operational frameworks.",
-    "topic_area": "Founder strategy",
-    "topics": [
-      "disruptive innovation",
-      "Lean Startup methodology",
-      "customer development",
-      "Jobs-to-Be-Done",
-      "product-market fit",
-      "Crossing the Chasm",
-      "B2B sales strategy",
-      "product roadmapping",
-      "Business Model Canvas",
-      "corporate innovation"
-    ],
-    "content_types": [
-      "business books",
-      "theoretical frameworks",
-      "case studies",
-      "practical checklists",
-      "diagnostic tools"
-    ],
-    "use_cases": [
-      "Launching a new venture and identifying a scalable business model",
-      "Bringing a disruptive technology to market without falling into traditional management traps",
-      "Restructuring a mature organisation to foster an entrepreneurial culture",
-      "Designing a B2B sales strategy targeting the right corporate decision-makers",
-      "Creating a product roadmap that aligns teams around customer value"
-    ],
-    "access": "advisory-board-only",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "product-design-ux",
-    "name": "Product Design & UX",
-    "url": "https://notebooklm.google.com/notebook/6b7fbb6c-3386-4278-9b72-ef7289dfa05a",
-    "description": "Four canonical texts on human-centred design and usability: The Design of Everyday Things (Norman), Don't Make Me Think Revisited (Krug), Designing with Data, and Forms that Work. Covers affordances, signifiers, the psychology of human error, A/B testing, usability testing, web navigation, and form design.",
-    "topic_area": "Process & product",
-    "topics": [
-      "human-centered design",
-      "usability testing",
-      "A/B testing",
-      "form design",
-      "web navigation",
-      "psychology of everyday action",
-      "affordances and signifiers",
-      "data-driven design"
-    ],
-    "content_types": [
-      "design books",
-      "usability guidelines",
-      "experimental frameworks"
-    ],
-    "use_cases": [
-      "Designing intuitive web interfaces or digital products using HCD principles",
-      "Setting up usability tests or A/B experiments to resolve design debates",
-      "Optimising form design for user comprehension and completion rates",
-      "Diagnosing why users make errors or abandon a system",
-      "Grounding product UX decisions in psychology and empirical evidence"
-    ],
-    "access": "open",
-    "added": "2026-04-20"
-  },
-  {
-    "id": "devops-infrastructure",
-    "name": "DevOps & GCP Infrastructure",
-    "url": "https://notebooklm.google.com/notebook/0b5514e1-e12f-48c6-8de6-cc6a6487900e",
-    "description": "Eight books equipping Brent (DevOps/GCP agent) with source material for GCP operations, CI/CD, infrastructure as code, and SOC 2 controls. Covers cloud-native security (Armitage), GCP in depth (Blum, Kanjani), DevSecOps practices and tooling (Suehring), serverless security across AWS/Azure/GCP (Lat), Terraform IaC on GCP (Wang), SOC 2 compliance (SecuriCheck), and the foundational DevOps Handbook (Kim et al.).",
-    "topic_area": "AI & software architecture",
-    "topics": [
-      "GCP",
-      "Google Cloud Platform",
-      "DevOps",
-      "DevSecOps",
-      "CI/CD",
-      "infrastructure as code",
-      "Terraform",
-      "cloud-native security",
-      "serverless security",
-      "SOC 2 compliance",
-      "deployment pipelines",
-      "cloud operations"
-    ],
-    "content_types": [
-      "practical guides",
-      "reference manuals",
-      "compliance checklists"
-    ],
-    "use_cases": [
-      "Understanding GCP services and deployment patterns for production workloads",
-      "Implementing DevSecOps practices and shift-left security in CI/CD pipelines",
-      "Provisioning and managing GCP infrastructure with Terraform",
-      "Assessing and remediating serverless security risks on AWS, Azure, and GCP",
-      "Working towards or auditing SOC 2 compliance for cloud-hosted SaaS products"
-    ],
-    "access": "open",
-    "added": "2026-06-06"
-  },
-  {
-    "id": "technical-communication",
-    "name": "Engineers' Guide to Technical Communication",
-    "url": "https://notebooklm.google.com/notebook/8fd6f6b3-6eac-4dcf-b6f2-e59fdd2fe844",
-    "description": "Technical writing and editing best practices for engineering and scientific audiences: document design, audience analysis, ethics, citation standards (Chicago Manual of Style), and structure for reports, proposals, laboratory studies, specifications, and business correspondence.",
-    "topic_area": "Communication & documentation",
-    "topics": [
-      "technical writing",
-      "document design",
-      "audience analysis",
-      "citation standards",
-      "Chicago Manual of Style",
-      "report structure",
-      "proposals"
-    ],
-    "content_types": [
-      "writing guides",
-      "style references"
-    ],
-    "use_cases": [
-      "Structuring engineering reports and proposals",
-      "Applying citation and documentation standards",
-      "Improving technical writing quality"
-    ],
-    "access": "open",
-    "added": "2026-04-18"
-  },
-  {
-    "id": "gcp-devops-tactical-playbook",
-    "name": "GCP DevOps Tactical Playbook: Filling the 6 Library Gaps",
-    "url": "https://notebooklm.google.com/notebook/1061dd39-19d1-4386-9e4f-6fdc7bbba51a",
-    "description": "Official Google Cloud documentation covering GCP operational patterns, deployment guides, IAM configuration, Cloud Run, API references, and DevSecOps controls. Complements the foundational DevOps & GCP Infrastructure notebook (8 books) with authoritative first-party Google source material targeting 6 coverage gaps identified during the Brent topology screen (2026-06-06).",
-    "topic_area": "AI & software architecture",
-    "topics": [
-      "GCP",
-      "Google Cloud Platform",
-      "DevOps",
-      "Cloud Run",
-      "IAM",
-      "CI/CD",
-      "infrastructure as code",
-      "cloud-native security",
-      "DevSecOps",
-      "SOC 2 compliance",
-      "cloud operations"
-    ],
-    "content_types": [
-      "official documentation",
-      "tactical guides",
-      "operational playbooks"
-    ],
-    "use_cases": [
-      "Looking up authoritative GCP API references, CLI patterns, and service configurations during infrastructure provisioning",
-      "Verifying current GCP deployment patterns for Cloud Run, IAM least-privilege, and Cloud SQL",
-      "Grounding Brent's 12 DevOps skill files with official GCP documentation",
-      "Cross-referencing GCP security controls and SOC 2 mappings against official Google documentation"
-    ],
-    "access": "open",
-    "added": "2026-06-07"
-  }
-]
+  "notebooks": [
+    {
+      "id": "engineering-standards",
+      "name": "Engineering Standards",
+      "url": "https://notebooklm.google.com/notebook/207930eb-2bc8-4005-bc75-0827029ca616",
+      "description": "NZ infrastructure design standards (IDS), earthworks and compaction requirements (NZS 4431), geotechnical QA procedures, and subdivision consent documentation for practitioners working in the Canterbury / NZ regulatory context.",
+      "topic_area": "Engineering theory & standards",
+      "topics": [
+        "NZ infrastructure design standards",
+        "earthworks and compaction",
+        "NZS 4431",
+        "geotechnical QA",
+        "subdivision consent",
+        "Canterbury regulatory context"
+      ],
+      "content_types": [
+        "design standards",
+        "QA procedures",
+        "regulatory documentation"
+      ],
+      "use_cases": [
+        "Checking NZ engineering design standards for geotechnical work",
+        "Verifying earthworks and compaction requirements",
+        "Understanding subdivision consent documentation requirements"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "graeme",
+      "consumers": ["peter", "kabilan", "linda"]
+    },
+    {
+      "id": "ground-engineering-magazine-2014-2019",
+      "name": "Ground Engineering Magazine (2014–2019)",
+      "url": "https://notebooklm.google.com/notebook/f8197a88-11f3-425a-958b-4f64b9597c4c",
+      "description": "Issues of Ground Engineering magazine from 2014 to 2019 covering geotechnical industry news, technical papers, and key standards development (Eurocode 7, BS 5930, SPERWall, CIRIA) across piling, foundations, tunnelling, earthworks, and slope stability.",
+      "topic_area": "Engineering theory & standards",
+      "topics": [
+        "geotechnical industry news",
+        "technical papers",
+        "Eurocode 7",
+        "BS 5930",
+        "SPERWall",
+        "CIRIA",
+        "piling",
+        "foundations",
+        "tunnelling",
+        "earthworks",
+        "slope stability"
+      ],
+      "content_types": [
+        "magazine issues",
+        "technical papers",
+        "industry news"
+      ],
+      "use_cases": [
+        "Researching geotechnical engineering standards development (pre-2020)",
+        "Finding technical papers on piling, foundations, or slope stability",
+        "Understanding industry trends in geotechnical engineering 2014-2019"
+      ],
+      "access": "open",
+      "added": "2026-06-06",
+      "owner": "graeme",
+      "consumers": ["peter"]
+    },
+    {
+      "id": "ground-engineering-magazine-2020-2026",
+      "name": "Ground Engineering Magazine (2020–2026)",
+      "url": "https://notebooklm.google.com/notebook/703a1d77-caa6-44b3-a503-0108ed68560c",
+      "description": "Issues of Ground Engineering magazine from 2020 to 2026 covering geotechnical industry news, technical papers, and current standards development (Eurocode 7 revision, BS 5930) across piling, foundations, tunnelling, earthworks, and slope stability.",
+      "topic_area": "Engineering theory & standards",
+      "topics": [
+        "geotechnical industry news",
+        "technical papers",
+        "Eurocode 7 revision",
+        "BS 5930",
+        "piling",
+        "foundations",
+        "tunnelling",
+        "earthworks",
+        "slope stability"
+      ],
+      "content_types": [
+        "magazine issues",
+        "technical papers",
+        "industry news"
+      ],
+      "use_cases": [
+        "Researching current geotechnical engineering standards development (2020-present)",
+        "Finding recent technical papers on piling, foundations, or slope stability",
+        "Understanding current industry trends in geotechnical engineering"
+      ],
+      "access": "open",
+      "added": "2026-06-06",
+      "owner": "graeme",
+      "consumers": ["peter"]
+    },
+    {
+      "id": "geotechnical-baseline-reports",
+      "name": "Geotechnical Baseline Reports (GBR)",
+      "url": "https://notebooklm.google.com/notebook/a748df0f-51f6-4b75-b56e-b79bb8e22f38",
+      "description": "Industry guidance on preparing and contractually applying GBRs to allocate subsurface construction risk. Covers Differing Site Conditions claims, ASCE guidelines, CIRIA C807, the NZTS guide, and the FIDIC Emerald Book.",
+      "topic_area": "Geotechnical domain",
+      "topics": [
+        "geotechnical baseline reports",
+        "subsurface risk allocation",
+        "differing site conditions",
+        "ASCE guidelines",
+        "CIRIA C807",
+        "NZTS guide",
+        "FIDIC Emerald Book"
+      ],
+      "content_types": [
+        "industry guidance",
+        "contract frameworks",
+        "risk allocation guidelines"
+      ],
+      "use_cases": [
+        "Preparing geotechnical baseline reports",
+        "Understanding subsurface risk allocation in contracts",
+        "Researching differing site conditions claims"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "graeme",
+      "consumers": ["peter", "mark"]
+    },
+    {
+      "id": "geotechnical-report-workflows",
+      "name": "Geotechnical Engineering Report Workflows and Standard Procedures",
+      "url": "https://notebooklm.google.com/notebook/cffffcd3-1c00-4ca7-8ade-c93f20064715",
+      "description": "Professional practice guides, templates, QA checklists, and training materials for geotechnical report structuring, factual/interpretive delineation, and client-centric writing -- compiled from a leading NZ geotechnical consultancy's internal knowledge base.",
+      "topic_area": "Geotechnical domain",
+      "topics": [
+        "geotechnical report structuring",
+        "factual vs interpretive reporting",
+        "QA checklists",
+        "client-centric writing",
+        "professional practice"
+      ],
+      "content_types": [
+        "practice guides",
+        "templates",
+        "QA checklists",
+        "training materials"
+      ],
+      "use_cases": [
+        "Structuring geotechnical engineering reports",
+        "Applying factual/interpretive delineation in reports",
+        "Using QA checklists for report review"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "graeme",
+      "consumers": ["peter", "matt", "mark"]
+    },
+    {
+      "id": "risk-assessment-engineering",
+      "name": "Risk Assessment in Engineering",
+      "url": "https://notebooklm.google.com/notebook/85786e1b-f3d5-4b4b-a13d-3e396b5e5faf",
+      "description": "Risk management, professional liability, and probabilistic risk assessment in geotechnical engineering. Sources span ASCE, CIRIA, and NZGS guidelines, field manuals, and legal notes covering contracts, non-disclosure agreements, and professional indemnity insurance.",
+      "topic_area": "Geotechnical domain",
+      "topics": [
+        "risk management",
+        "professional liability",
+        "probabilistic risk assessment",
+        "ASCE guidelines",
+        "CIRIA guidelines",
+        "NZGS guidelines",
+        "contracts and insurance",
+        "law for engineers",
+        "tort liability"
+      ],
+      "content_types": [
+        "guidelines",
+        "field manuals",
+        "legal notes",
+        "legal textbooks"
+      ],
+      "use_cases": [
+        "Assessing geotechnical engineering risk",
+        "Understanding professional liability in engineering",
+        "Reviewing contract and insurance requirements"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "graeme",
+      "consumers": ["peter", "mark", "ron"]
+    },
+    {
+      "id": "geotechnical-checklists",
+      "name": "Geotechnical Engineering Checklists",
+      "url": "https://notebooklm.google.com/notebook/71588c46-32b1-4817-ad03-c777d3a8d9f4",
+      "description": "A curated collection of geotechnical engineering QC checklists, review guidelines, and submittal checklists from US and NZ sources. Covers geotechnical report review (FHWA), geotechnical design QC workflow, earthquake geotechnical investigation practice (NZGS Module 2), ground investigation specification, and building consent lodgement requirements.",
+      "topic_area": "Geotechnical domain",
+      "topics": [
+        "geotechnical report review",
+        "QC checklists",
+        "geotechnical investigations",
+        "ground investigations",
+        "NZGS specifications",
+        "FHWA guidelines",
+        "USACE engineering manual",
+        "earthquake geotechnical engineering",
+        "building consent",
+        "lodgement checklists"
+      ],
+      "content_types": [
+        "QC checklists",
+        "review guidelines",
+        "engineering manuals",
+        "specifications",
+        "submittal checklists"
+      ],
+      "use_cases": [
+        "Reviewing a geotechnical report for completeness and quality",
+        "Checking required content for a soils and geology report or foundation report",
+        "Understanding FHWA or USACE requirements for geotechnical documentation",
+        "Verifying a geotechnical report meets NZ building consent lodgement requirements",
+        "Applying NZGS ground investigation specifications to site investigation planning"
+      ],
+      "access": "open",
+      "added": "2026-05-13",
+      "owner": "graeme",
+      "consumers": ["peter", "kabilan"]
+    },
+    {
+      "id": "ai-system-engineering",
+      "name": "AI System Engineering",
+      "url": "https://notebooklm.google.com/notebook/838956d2-45f7-4576-88dd-84685d038046",
+      "description": "Generative AI application design and deployment: foundation models, prompt engineering, retrieval-augmented generation (RAG), multiagent orchestration, and FastAPI/Docker serving. Covers MCP, OAuth2, the NIST AI Risk Management Framework, the EU AI Act, and GDPR.",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "generative AI",
+        "prompt engineering",
+        "RAG",
+        "multiagent orchestration",
+        "FastAPI",
+        "Docker",
+        "MCP",
+        "NIST AI RMF",
+        "EU AI Act",
+        "GDPR"
+      ],
+      "content_types": [
+        "architecture guides",
+        "deployment patterns",
+        "regulatory frameworks"
+      ],
+      "use_cases": [
+        "Designing generative AI applications",
+        "Implementing RAG or multiagent systems",
+        "Understanding AI governance and compliance requirements"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "peter",
+      "consumers": ["kabilan", "brent", "ron"]
+    },
+    {
+      "id": "software-architecture-ddd",
+      "name": "Software Architecture & Domain-Driven Design",
+      "url": "https://notebooklm.google.com/notebook/0c21053c-e146-41cf-a262-b44212a4f8e1",
+      "description": "Ten canonical books (Evans, Vernon, Khononov, Ford, Ousterhout, GoF, and others) covering DDD strategic/tactical patterns (Bounded Contexts, Ubiquitous Language, Aggregates, Repositories, Domain Events), architecture styles (Hexagonal, CQRS, Microservices, Event-Driven), SOLID principles, GoF design patterns, functional domain modeling, EventStorming, Context Mapping, Event Sourcing, saga patterns, and Data Mesh.",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "domain-driven design",
+        "bounded contexts",
+        "aggregates",
+        "hexagonal architecture",
+        "CQRS",
+        "event sourcing",
+        "SOLID principles",
+        "GoF design patterns",
+        "EventStorming",
+        "Data Mesh"
+      ],
+      "content_types": [
+        "canonical books",
+        "design pattern references"
+      ],
+      "use_cases": [
+        "Applying DDD patterns to Redline architecture",
+        "Choosing architecture styles for new modules",
+        "Reviewing design patterns for domain modeling"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "peter",
+      "consumers": ["kabilan"]
+    },
+    {
+      "id": "software-dev-methodology-eng-org",
+      "name": "Software Development Methodology & Engineering Organisation",
+      "url": "https://notebooklm.google.com/notebook/91568710-98b3-4448-b038-04f9b48b7111",
+      "description": "25-source knowledge base spanning software engineering methodology, product discovery, AI/LLM engineering, and engineering leadership. Engineering methodology: Farley's Modern Software Engineering, Mythical Man-Month, Software Engineering at Google, Accelerate (Forsgren et al.), Continuous Delivery, Extreme Programming, Clean Agile, Sprint. Product management and discovery: INSPIRED and Empowered (Cagan), Continuous Discovery Habits (Torres), Lean Product Playbook, Product-Led Growth, Project to Product. AI and LLM engineering: LLM Engineers Handbook (Iusztin), Age of Invisible Machines (Wilson), Co-Intelligence (Mollick), Designing Multi-Agent Systems (Dibia), AI Engineering Building Applications, Building Applications with AI Agents, Building Generative AI Services with FastAPI, Prompt Engineering for LLMs. Engineering organisation and leadership: Staff Engineer (Larson), Team Topologies, Working Backwards (Amazon — Bryar and Carr).",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "software engineering methodology",
+        "agile and lean development",
+        "continuous delivery and DevOps",
+        "product discovery",
+        "empowered product teams",
+        "product management",
+        "LLM engineering",
+        "AI agent systems",
+        "multiagent orchestration",
+        "engineering leadership",
+        "staff engineer career path",
+        "team topologies",
+        "Working Backwards (Amazon)"
+      ],
+      "content_types": [
+        "software engineering books",
+        "product management books",
+        "AI engineering guides",
+        "organisational frameworks",
+        "leadership frameworks"
+      ],
+      "use_cases": [
+        "Researching software engineering best practices and methodology",
+        "Designing or improving product discovery and continuous delivery workflows",
+        "Understanding LLM engineering, prompt engineering, and AI agent system design",
+        "Applying empowered product team frameworks from Cagan and Torres",
+        "Navigating engineering career development to staff-level and beyond",
+        "Grounding Amazon Working Backwards methodology in product development",
+        "Aligning engineering team structure and flow using Team Topologies"
+      ],
+      "access": "open",
+      "added": "2026-05-16",
+      "owner": "peter",
+      "consumers": ["kabilan", "mark", "ron", "harriet"]
+    },
+    {
+      "id": "business-process-management",
+      "name": "Business Process Management",
+      "url": "https://notebooklm.google.com/notebook/d074efff-20fe-4d7c-9269-cbbdea61fe2d",
+      "description": "BPM methodologies and continuous process improvement tools including Lean, Six Sigma, BPMN, 7FE, PDCA, and DMAIC frameworks. Drawn from expert-authored management books and the BPM Common Body of Knowledge (BPM CBOK).",
+      "topic_area": "Process & product",
+      "topics": [
+        "BPM",
+        "Lean",
+        "Six Sigma",
+        "BPMN",
+        "PDCA",
+        "DMAIC",
+        "BPM CBOK",
+        "continuous improvement"
+      ],
+      "content_types": [
+        "management books",
+        "methodology frameworks"
+      ],
+      "use_cases": [
+        "Designing or improving business processes",
+        "Applying Lean or Six Sigma to engineering workflows",
+        "Modelling processes with BPMN"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "peter",
+      "consumers": ["mark", "ron"]
+    },
+    {
+      "id": "product-roadmapping",
+      "name": "Product Roadmapping",
+      "url": "https://notebooklm.google.com/notebook/8e34a7e9-1996-44c9-9c69-60b6df8e17a9",
+      "description": "Strategic product roadmapping for product leaders: defining vision, prioritising customer opportunities, and achieving stakeholder buy-in. Covers Kano model, MoSCoW prioritisation, ROI scorecards, user journey maps, and opportunity-solution trees.",
+      "topic_area": "Process & product",
+      "topics": [
+        "product roadmapping",
+        "Kano model",
+        "MoSCoW prioritisation",
+        "ROI scorecards",
+        "user journey maps",
+        "opportunity-solution trees",
+        "stakeholder buy-in"
+      ],
+      "content_types": [
+        "strategy books",
+        "prioritisation frameworks"
+      ],
+      "use_cases": [
+        "Building or refreshing the product roadmap",
+        "Prioritising features using Kano or MoSCoW",
+        "Creating opportunity-solution trees"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "mark",
+      "consumers": ["ron", "peter"]
+    },
+    {
+      "id": "writing-specs",
+      "name": "Writing Painless Product and Functional Specifications",
+      "url": "https://notebooklm.google.com/notebook/43821e67-85af-42ab-b1a2-cbc396732bc0",
+      "description": "Software product management frameworks and specification writing: PRDs, functional specifications, OKRs, the Shape Up framework, product discovery vs delivery, and alternatives to traditional roadmaps.",
+      "topic_area": "Process & product",
+      "topics": [
+        "PRDs",
+        "functional specifications",
+        "OKRs",
+        "Shape Up",
+        "product discovery",
+        "product delivery"
+      ],
+      "content_types": [
+        "management frameworks",
+        "specification templates"
+      ],
+      "use_cases": [
+        "Writing product requirement documents",
+        "Structuring functional specifications",
+        "Choosing between product discovery and delivery approaches"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "mark",
+      "consumers": ["peter", "ron"]
+    },
+    {
+      "id": "org-design-team-topologies",
+      "name": "Organisational Design & Team Topologies",
+      "url": "https://notebooklm.google.com/notebook/52b9befe-c464-4bd7-b87a-7e5f5d89e2e8",
+      "description": "A curated collection of books on modern organisational leadership, team design, and workforce development. Covers Team Topologies (stream-aligned, platform, enabling teams), Conway's Law, cognitive load management, AI/RPA task deconstruction, deliberate practice, skills-based organisations, and Domain-Driven Design (DDD) for software teams. Case studies from Google, GE, and large healthcare providers.",
+      "topic_area": "Process & product",
+      "topics": [
+        "team topologies",
+        "Conway's Law",
+        "cognitive load",
+        "deliberate practice",
+        "skills-based organization",
+        "AI and automation in the workplace",
+        "organizational design",
+        "Domain-Driven Design",
+        "talent development",
+        "performance management"
+      ],
+      "content_types": [
+        "management books",
+        "organizational frameworks",
+        "case studies",
+        "academic research"
+      ],
+      "use_cases": [
+        "Restructuring software engineering teams around stream-aligned or platform topology",
+        "Deciding which tasks to automate with AI or RPA versus retain for human workers",
+        "Designing deliberate practice programs to develop world-class technical talent",
+        "Transitioning from role-based to skills-based hiring and performance management",
+        "Applying Conway's Law and DDD to align team structure with software architecture"
+      ],
+      "access": "open",
+      "added": "2026-04-20",
+      "owner": "harriet",
+      "consumers": ["peter", "ron", "mark"]
+    },
+    {
+      "id": "professional-services-firm-management",
+      "name": "Professional Services Firm Management",
+      "url": "https://notebooklm.google.com/notebook/345aa8a3-0332-4400-93f6-4b889fabebae",
+      "description": "Comprehensive guide to the business, management, and future of professional service firms (PSFs) — engineering, law, and consulting practices. Covers individual career development (resume writing, networking, PE licensure), firm creation and entrepreneurship, day-to-day operations (project management, client relations, IDC), financial and human capital management, A/E/C firm strategy, and technological disruption (the Innovator's Dilemma, AI impact on professions). Contains practical templates, checklists, and worksheets alongside theoretical frameworks from published books and management literature.",
+      "topic_area": "Process & product",
+      "topics": [
+        "professional services firm management",
+        "career development in engineering",
+        "firm creation and entrepreneurship",
+        "project management",
+        "client relations",
+        "financial management",
+        "A/E/C industry strategy",
+        "technological disruption",
+        "AI impact on professions",
+        "organizational operations"
+      ],
+      "content_types": [
+        "business books",
+        "management frameworks",
+        "practical templates",
+        "checklists",
+        "theoretical frameworks"
+      ],
+      "use_cases": [
+        "Managing or growing a professional services or engineering firm",
+        "Planning a career in engineering or consulting",
+        "Assessing risks from technological disruption to professional service business models",
+        "Improving firm operations — project management, client relations, and profitability",
+        "Researching A/E/C firm strategy, niche positioning, and market differentiation"
+      ],
+      "access": "open",
+      "added": "2026-04-22",
+      "owner": "ron",
+      "consumers": ["mark", "graeme"]
+    },
+    {
+      "id": "govcon-systems-engineering",
+      "name": "Government Contracting, Proposal Management & Systems Engineering",
+      "url": "https://notebooklm.google.com/notebook/b64d0f8c-9d7d-4d35-8168-f9d19572c890",
+      "description": "Comprehensive guide to winning government contracts (GovCon). Covers requirements engineering (RE), Model-Based Systems Engineering (MBSE) using UML and SysML, proposal strategy and management, RFP compliance and compliance matrices, and AI-assisted proposal automation including Retrieval-Augmented Generation (RAG) for hallucination-free draft generation. Contains academic textbooks, practical playbooks, compliance matrix templates, decision matrices, and checklists.",
+      "topic_area": "Process & product",
+      "topics": [
+        "requirements engineering",
+        "Model-Based Systems Engineering",
+        "UML and SysML",
+        "government contracting (GovCon)",
+        "proposal management",
+        "RFP compliance and shredding",
+        "compliance matrices",
+        "AI in proposal automation",
+        "Retrieval-Augmented Generation (RAG)",
+        "stakeholder and system requirements"
+      ],
+      "content_types": [
+        "academic textbooks",
+        "business playbooks",
+        "compliance templates",
+        "checklists",
+        "practical guidelines"
+      ],
+      "use_cases": [
+        "Preparing a winning bid for a government contract",
+        "Building requirements engineering frameworks for complex system design",
+        "Adopting AI to automate proposal compliance and draft generation",
+        "Diagnosing and fixing broken proposal processes",
+        "Translating vague customer requirements into precise, testable system specifications"
+      ],
+      "access": "open",
+      "added": "2026-04-23",
+      "owner": "mark",
+      "consumers": ["peter", "ron"]
+    },
+    {
+      "id": "strategy-competitive-advantage",
+      "name": "Strategy & Competitive Advantage",
+      "url": "https://notebooklm.google.com/notebook/52a3fcf4-cbe9-4e49-9876-72ef9e8ec13c",
+      "description": "Comprehensive guide to strategic thinking, competitive positioning, and sustained advantage. Covers business strategy frameworks (Good Strategy Bad Strategy, Blue Ocean), competitive analysis, resource-based view of the firm, strategic inflection points, and how organizations build defensible competitive moats. Draws on canonical strategy books and case studies for product, firm, and market-level strategic thinking.",
+      "topic_area": "Process & product",
+      "topics": [
+        "strategic thinking",
+        "good strategy bad strategy",
+        "competitive positioning",
+        "competitive advantage",
+        "blue ocean strategy",
+        "resource-based view",
+        "strategic inflection points",
+        "competitive moats",
+        "business strategy frameworks",
+        "market analysis"
+      ],
+      "content_types": [
+        "strategy books",
+        "case studies",
+        "competitive analysis frameworks",
+        "strategic thinking tools"
+      ],
+      "use_cases": [
+        "Developing a coherent strategy with clear diagnosis, guiding policy, and coherent actions",
+        "Analysing competitive positioning and identifying sustainable competitive advantages",
+        "Stress-testing strategic assumptions and identifying strategic risks",
+        "Evaluating Blue Ocean vs Red Ocean opportunities",
+        "Understanding how firms build and defend competitive moats"
+      ],
+      "access": "open",
+      "added": "2026-05-23",
+      "owner": "ron",
+      "consumers": ["mark", "peter"]
+    },
+    {
+      "id": "monetizing-scaling-innovation",
+      "name": "Monetizing & Scaling Innovation",
+      "url": "https://notebooklm.google.com/notebook/1ff85c77-17d8-49ca-997a-172bfa02d638",
+      "description": "Strategic guide on building profitable, scalable products. Contains Monetizing Innovation and Scaling Innovation by Madhavan Ramanujam et al. Covers willingness-to-pay discovery, pricing models (subscription, usage-based, outcome-based), packaging and bundling (Good-Better-Best tiers), behavioural pricing tactics (anchoring, compromise effect), the four monetisation failure patterns (Feature Shock, Minivation, Hidden Gem, Undead), and scaling strategies covering churn prevention, wallet-share growth, and price negotiation discipline.",
+      "topic_area": "Founder strategy",
+      "topics": [
+        "willingness-to-pay research",
+        "pricing models and strategy",
+        "packaging and bundling",
+        "feature tiering Good-Better-Best",
+        "behavioural pricing",
+        "monetisation failure patterns",
+        "scaling and profitable growth",
+        "churn prevention",
+        "sales negotiation and price integrity"
+      ],
+      "content_types": [
+        "business strategy books",
+        "pricing frameworks",
+        "case studies",
+        "behavioural economics theory",
+        "actionable checklists"
+      ],
+      "use_cases": [
+        "Deciding how to price a new product, feature tier, or service",
+        "Evaluating packaging and Good-Better-Best tier strategies",
+        "Preparing for a company-wide price increase or sales negotiation",
+        "Designing a product go-to-market strategy grounded in customer willingness-to-pay",
+        "Researching known monetisation failure patterns before a product launch"
+      ],
+      "access": "advisory-board-only",
+      "added": "2026-04-18",
+      "owner": "ron",
+      "consumers": ["mark", "john"]
+    },
+    {
+      "id": "entrepreneurship-startup-strategy",
+      "name": "Entrepreneurship & Startup Strategy",
+      "url": "https://notebooklm.google.com/notebook/996f9e1a-352a-4f07-84f0-76a45f91a174",
+      "description": "Comprehensive guide for entrepreneurial management, strategic growth, and corporate innovation. Covers disruptive innovation, Lean Startup methodology (MVP, Build-Measure-Learn), customer development and Jobs-to-Be-Done theory, product-market fit, Crossing the Chasm (early adopters vs mainstream), B2B sales tactics, product roadmapping, and the Business Model Canvas. Drawn from authoritative business books, case studies, and operational frameworks.",
+      "topic_area": "Founder strategy",
+      "topics": [
+        "disruptive innovation",
+        "Lean Startup methodology",
+        "customer development",
+        "Jobs-to-Be-Done",
+        "product-market fit",
+        "Crossing the Chasm",
+        "B2B sales strategy",
+        "product roadmapping",
+        "Business Model Canvas",
+        "corporate innovation"
+      ],
+      "content_types": [
+        "business books",
+        "theoretical frameworks",
+        "case studies",
+        "practical checklists",
+        "diagnostic tools"
+      ],
+      "use_cases": [
+        "Launching a new venture and identifying a scalable business model",
+        "Bringing a disruptive technology to market without falling into traditional management traps",
+        "Restructuring a mature organisation to foster an entrepreneurial culture",
+        "Designing a B2B sales strategy targeting the right corporate decision-makers",
+        "Creating a product roadmap that aligns teams around customer value"
+      ],
+      "access": "advisory-board-only",
+      "added": "2026-04-18",
+      "owner": "ron",
+      "consumers": ["mark", "john"]
+    },
+    {
+      "id": "product-design-ux",
+      "name": "Product Design & UX",
+      "url": "https://notebooklm.google.com/notebook/6b7fbb6c-3386-4278-9b72-ef7289dfa05a",
+      "description": "Four canonical texts on human-centred design and usability: The Design of Everyday Things (Norman), Don't Make Me Think Revisited (Krug), Designing with Data, and Forms that Work. Covers affordances, signifiers, the psychology of human error, A/B testing, usability testing, web navigation, and form design.",
+      "topic_area": "Process & product",
+      "topics": [
+        "human-centered design",
+        "usability testing",
+        "A/B testing",
+        "form design",
+        "web navigation",
+        "psychology of everyday action",
+        "affordances and signifiers",
+        "data-driven design"
+      ],
+      "content_types": [
+        "design books",
+        "usability guidelines",
+        "experimental frameworks"
+      ],
+      "use_cases": [
+        "Designing intuitive web interfaces or digital products using HCD principles",
+        "Setting up usability tests or A/B experiments to resolve design debates",
+        "Optimising form design for user comprehension and completion rates",
+        "Diagnosing why users make errors or abandon a system",
+        "Grounding product UX decisions in psychology and empirical evidence"
+      ],
+      "access": "open",
+      "added": "2026-04-20",
+      "owner": "matt",
+      "consumers": ["mark", "peter"]
+    },
+    {
+      "id": "devops-infrastructure",
+      "name": "DevOps & GCP Infrastructure",
+      "url": "https://notebooklm.google.com/notebook/0b5514e1-e12f-48c6-8de6-cc6a6487900e",
+      "description": "Eight books equipping Brent (DevOps/GCP agent) with source material for GCP operations, CI/CD, infrastructure as code, and SOC 2 controls. Covers cloud-native security (Armitage), GCP in depth (Blum, Kanjani), DevSecOps practices and tooling (Suehring), serverless security across AWS/Azure/GCP (Lat), Terraform IaC on GCP (Wang), SOC 2 compliance (SecuriCheck), and the foundational DevOps Handbook (Kim et al.).",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "GCP",
+        "Google Cloud Platform",
+        "DevOps",
+        "DevSecOps",
+        "CI/CD",
+        "infrastructure as code",
+        "Terraform",
+        "cloud-native security",
+        "serverless security",
+        "SOC 2 compliance",
+        "deployment pipelines",
+        "cloud operations"
+      ],
+      "content_types": [
+        "practical guides",
+        "reference manuals",
+        "compliance checklists"
+      ],
+      "use_cases": [
+        "Understanding GCP services and deployment patterns for production workloads",
+        "Implementing DevSecOps practices and shift-left security in CI/CD pipelines",
+        "Provisioning and managing GCP infrastructure with Terraform",
+        "Assessing and remediating serverless security risks on AWS, Azure, and GCP",
+        "Working towards or auditing SOC 2 compliance for cloud-hosted SaaS products"
+      ],
+      "access": "open",
+      "added": "2026-06-06",
+      "owner": "brent",
+      "consumers": ["peter", "kabilan"]
+    },
+    {
+      "id": "technical-communication",
+      "name": "Engineers' Guide to Technical Communication",
+      "url": "https://notebooklm.google.com/notebook/8fd6f6b3-6eac-4dcf-b6f2-e59fdd2fe844",
+      "description": "Technical writing and editing best practices for engineering and scientific audiences: document design, audience analysis, ethics, citation standards (Chicago Manual of Style), and structure for reports, proposals, laboratory studies, specifications, and business correspondence.",
+      "topic_area": "Communication & documentation",
+      "topics": [
+        "technical writing",
+        "document design",
+        "audience analysis",
+        "citation standards",
+        "Chicago Manual of Style",
+        "report structure",
+        "proposals"
+      ],
+      "content_types": [
+        "writing guides",
+        "style references"
+      ],
+      "use_cases": [
+        "Structuring engineering reports and proposals",
+        "Applying citation and documentation standards",
+        "Improving technical writing quality"
+      ],
+      "access": "open",
+      "added": "2026-04-18",
+      "owner": "linda",
+      "consumers": ["graeme", "mark", "matt"]
+    },
+    {
+      "id": "gcp-devops-tactical-playbook",
+      "name": "GCP DevOps Tactical Playbook: Filling the 6 Library Gaps",
+      "url": "https://notebooklm.google.com/notebook/1061dd39-19d1-4386-9e4f-6fdc7bbba51a",
+      "description": "Official Google Cloud documentation covering GCP operational patterns, deployment guides, IAM configuration, Cloud Run, API references, and DevSecOps controls. Complements the foundational DevOps & GCP Infrastructure notebook (8 books) with authoritative first-party Google source material targeting 6 coverage gaps identified during the Brent topology screen (2026-06-06).",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "GCP",
+        "Google Cloud Platform",
+        "DevOps",
+        "Cloud Run",
+        "IAM",
+        "CI/CD",
+        "infrastructure as code",
+        "cloud-native security",
+        "DevSecOps",
+        "SOC 2 compliance",
+        "cloud operations"
+      ],
+      "content_types": [
+        "official documentation",
+        "tactical guides",
+        "operational playbooks"
+      ],
+      "use_cases": [
+        "Looking up authoritative GCP API references, CLI patterns, and service configurations during infrastructure provisioning",
+        "Verifying current GCP deployment patterns for Cloud Run, IAM least-privilege, and Cloud SQL",
+        "Grounding Brent's 12 DevOps skill files with official GCP documentation",
+        "Cross-referencing GCP security controls and SOC 2 mappings against official Google documentation"
+      ],
+      "access": "open",
+      "added": "2026-06-07",
+      "owner": "brent",
+      "consumers": ["peter", "kabilan"]
+    },
+    {
+      "id": "django-application-development",
+      "name": "Django Application Development",
+      "url": "https://notebooklm.google.com/notebook/9cee3997-fdbb-49cd-ab95-663bf35fcba6",
+      "description": "Django framework knowledge: fundamentals, ORM, DRF/REST APIs, TDD/testing, async/Channels, and production deployment configuration (Docker, PostgreSQL, collectstatic, ASGI/WSGI). Source of truth for Django implementation decisions.",
+      "topic_area": "Engineering theory & standards",
+      "topics": ["django", "orm", "drf", "rest-api", "tdd", "pytest-django", "async", "channels", "asgi", "wsgi", "postgresql", "docker", "deployment"],
+      "content_types": ["books", "official-docs"],
+      "use_cases": [
+        "Framework API recall",
+        "ORM query patterns",
+        "DRF serializer and viewset design",
+        "Testing setup with pytest-django",
+        "Deployment configuration",
+        "Capability and limitation checks for design"
+      ],
+      "access": "open",
+      "added": "2026-06-08",
+      "owner": "kabilan",
+      "consumers": ["peter", "brent", "matt"]
+    }
+  ]
+}

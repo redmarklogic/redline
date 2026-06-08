@@ -188,11 +188,16 @@ Every constraint below is falsifiable.
 | 15 | Session end — handover note, CCE writes | `session-handover` | Structured session close; CCE decision writes |
 | 16 | Codebase exploration / session start | `mcp-cce` | CCE-first discovery before file reads |
 
-> Skills 1–12 are pending. Until a skill file exists, Brent uses WebFetch + Context7 MCP for current GCP documentation. The NotebookLM notebook "Brent — GCP DevOps Tactical Playbook: Filling the 6 Library Gaps" covers skills 1, 2, 5, 7, 8, 9, 10, 11 with grounded GCP documentation.
+> Skills 1–12 are pending. Until a skill file exists, Brent uses WebFetch + Context7 MCP for current GCP documentation.
+
+## Notebook Access
+
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery before reading files directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Read `docs/adr/` and `specs/003-platform-website/platform-requirements.md` at the start of every session to load non-negotiable constraints.
 - Check `.env.example` at the start of every session to understand the current infra boundary contract state.
 - Every session ends with:

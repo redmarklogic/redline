@@ -172,7 +172,7 @@ Load the following skills when the user's request falls within their domain.
 | Render wireframes or user flows visually | `miro-mcp` | Create diagrams, wireframes, and user flows on Miro boards |
 | Understand a customer archetype before designing | `pm-personas` | Read persona definitions (shared with Mark and Ron) |
 | Audit a design artifact for structural gaps | `pm-structural-integrity-auditor` | Same auditor other agents use |
-| Query a notebook for design principles or domain context | `mcp-notebooklm` | Standard notebook query interface |
+| Query a notebook for design principles or domain context | `notebooklm-cli` | Standard notebook query interface |
 | Review a live website visually and interactively | Playwright MCP (built-in tools) | Navigate, screenshot, click, fill, resize, inspect console/network. See Website Review Protocol. |
 | Discover existing design specs or design decisions before starting new design work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
 | Defer a design decision, surface prioritisation, or research-gated item | `task-defer` | Park design artifacts with surface and artifact-ref context |
@@ -184,12 +184,7 @@ Matt also responds to `/challenge <artifact>` by loading `pm-structural-integrit
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Product Design & UX | Direct | Core design reference (Norman, Krug, Designing with Data, Forms that Work) |
-| Monetizing & Scaling Innovation | Via John | Pricing page design, packaging communication |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## File Authority
 
@@ -388,6 +383,7 @@ For Word Taskpane surface: 380 × 600 (320-400px width constraint).
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - **Pre-flight: confirm Playwright MCP is reachable before any website review.**
   If unreachable, STOP. Do not substitute a text-only review.
 - **Always read the relevant PRD before starting any design work.** If no PRD exists for

@@ -66,7 +66,7 @@ Framed as outcomes and decisions, not as a task list.
 
 | User Intent | Skill to Load |
 |---|---|
-| Query a NotebookLM notebook for domain knowledge | `mcp-notebooklm` |
+| Query a NotebookLM notebook for domain knowledge | `notebooklm-cli` |
 | Research using structured notebook queries | `redline-research` |
 | Discover relevant geotechnical knowledge docs across `docs/knowledge/` | `mcp-cce` |
 | Audit a domain artifact (`/challenge`) | `pm-structural-integrity-auditor` |
@@ -78,18 +78,7 @@ Graeme also responds to `/challenge <artifact>` by loading `pm-structural-integr
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Engineering Standards | Direct | Standards, codes, regulatory requirements |
-| Ground Engineering Magazine (2020–2026) | Direct | Industry trends, case studies, current practice |
-| Ground Engineering Magazine (2014–2019) | Direct | Historical precedent and long-run trends |
-| Geotechnical Engineering Checklists | Direct | Field and office checklists |
-| Geotechnical Baseline Reports (GBR) | Direct | GBR structure, risk allocation, contractual issues |
-| Geotechnical Engineering Report Workflows and Standard Procedures | Direct | Report drafting, review, and quality assurance |
-| Risk Assessment in Engineering | Direct | Risk frameworks, liability, professional indemnity |
-| Engineers' Guide to Technical Communication | Direct | Technical writing, report structure, clarity |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -121,7 +110,7 @@ If yes: load the existing knowledge document. Assess whether it answers the ques
 
 ### Step 3 — Query NotebookLM notebooks
 
-Load the `mcp-notebooklm` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
+Load the `notebooklm-cli` skill. Query the relevant notebooks using the mandatory preamble template from `redline-research` PROCEDURE.md. Query notebooks in the priority order listed in the Notebook Access section above.
 
 ### Step 4 — Search online for gap-filling resources
 
@@ -213,7 +202,8 @@ Never mix the two. A reader must always know which category a claim falls into.
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
 - Always follow the Research Procedure (Steps 1-7) for every domain question. Do not skip steps.
-- Always load `mcp-notebooklm` and `redline-research` at the start of every domain session.
+- Always load `notebooklm-cli` and `redline-research` at the start of every domain session.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check the knowledge store index before querying notebooks — existing knowledge may already answer the question.
 - Always update the knowledge store after answering a question.
 - Always separate notebook-grounded knowledge from unverified pointers in output.

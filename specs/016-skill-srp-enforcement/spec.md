@@ -86,7 +86,7 @@ The `ceremony-agent-topology-sync` skill includes an SRP compliance pass as a na
 - **FR-001**: The `writing-skills` skill MUST contain a named SRP rule section that defines: (a) a skill name must be a single verb-noun pair; (b) the skill owns exactly one concern end-to-end; (c) no "and" is permitted in the name or in the primary responsibility statement.
 - **FR-002**: The SRP rule MUST include a concrete pass/fail test format usable by a practitioner without additional tools.
 - **FR-003**: The SRP rule MUST define an exception path for justified orchestrators and justified pipelines, requiring a documented exception record.
-- **FR-004**: Each of the 11 identified SRP violations MUST be processed: either split into focused replacement skills, narrowed in scope with excess concerns extracted, or retained with a documented justified-exception record.
+- **FR-004**: Each of the 12 identified SRP violations MUST be processed: either split into focused replacement skills, narrowed in scope with excess concerns extracted, or retained with a documented justified-exception record.
 - **FR-005**: Each replacement or narrowed skill MUST have a single-verb-noun name and a `description` field free of multi-concern "and" patterns.
 - **FR-006**: Every agent JD in `.claude/agents/` that references a renamed or retired skill MUST be updated so all skill routing table entries point to current, valid skill names.
 - **FR-007**: The `ceremony-agent-topology-sync` skill MUST include an SRP compliance pass as a mandatory named phase, producing a flagged violations list as a required output artifact in the Topology Sync Report.
@@ -106,7 +106,7 @@ The `ceremony-agent-topology-sync` skill includes an SRP compliance pass as a na
 
 ### Measurable Outcomes
 
-- **SC-001**: 100% of the 11 identified violations are processed (split, narrowed, or documented as exceptions) before the feature is closed.
+- **SC-001**: 100% of the 12 identified violations are processed (split, narrowed, or documented as exceptions) before the feature is closed.
 - **SC-002**: Zero skill names in the corpus contain a disallowed "and" pattern after remediation, as confirmed by a scan of all `SKILL.md` frontmatter `name` fields.
 - **SC-003**: Zero agent JDs reference a retired skill name in their routing tables after the update pass.
 - **SC-004**: The `writing-skills` skill's SRP rule section is discoverable in under 30 seconds by a practitioner consulting it cold (i.e., it appears as a named, scannable section — not buried in prose).
@@ -115,7 +115,7 @@ The `ceremony-agent-topology-sync` skill includes an SRP compliance pass as a na
 
 ## Assumptions
 
-- The 11 skills listed in the requirements are the known violations at the time of specification; the actual audit may uncover additional violations, which are in scope for the same feature.
+- The 12 skills listed in the requirements are the known violations; one (`sonarqube-find-and-fix`) was introduced after the initial spec by renaming `pre-pr-checks` post-spec-creation. The actual audit may uncover further violations, which are in scope for the same feature.
 - "Justified orchestrator" and "justified pipeline" are the two recognised exception categories; no other exception types are assumed without explicit founder approval.
 - The `resolving-pr-issues` skill is treated as a candidate pipeline (not a presumed violation) — the split vs. retain decision is deferred to the planning/implementation phase.
 - The `spec-kit` skill (the agent-facing skill, not the CLI) is treated as a candidate orchestrator — evaluation of whether it needs splitting is in scope.

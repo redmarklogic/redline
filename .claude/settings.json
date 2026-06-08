@@ -16,6 +16,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"Write-Output '{\\\"hookSpecificOutput\\\": {\\\"hookEventName\\\": \\\"PreToolUse\\\", \\\"additionalContext\\\": \\\"Before searching the web: check redline-research notebooks first — run the redline-research skill if the question touches domain knowledge, standards, frameworks, or strategy.\\\"}}'\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -48,6 +58,15 @@
             "timeout": 60
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Users\\harel\\.cce\\hooks\\cce_hook.cmd\" PostToolUse"
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -57,6 +76,15 @@
             "type": "command",
             "command": "powershell -NoProfile -File hooks/session-start-anchor.ps1",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Users\\harel\\.cce\\hooks\\cce_hook.cmd\" SessionStart"
           }
         ]
       }
@@ -87,6 +115,37 @@
           {
             "type": "command",
             "command": "powershell -NoProfile -Command \"Write-Output '{\\\"systemMessage\\\": \\\"Work complete. Do not git commit or push. Await founder review.\\\"}'\""
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Users\\harel\\.cce\\hooks\\cce_hook.cmd\" Stop"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Users\\harel\\.cce\\hooks\\cce_hook.cmd\" UserPromptSubmit"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Users\\harel\\.cce\\hooks\\cce_hook.cmd\" SessionEnd"
           }
         ]
       }

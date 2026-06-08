@@ -1,7 +1,7 @@
 # Skills Taxonomy
 
 **Owner:** Harriet  
-**Last updated:** 2026-06-07  
+**Last updated:** 2026-06-08  
 **Source of truth for:** all skills in `.agents/skills/` and their domain category.
 
 > Update this file whenever a skill is created, retired, or reassigned.
@@ -87,7 +87,7 @@
 | `git-hooks-create` | Writing bespoke git hooks | Engineering |
 | `tool-selection` | CLI-first routing across `gh`, `gws`, `gcloud`, MCP, and direct API (ADR-016) | All |
 | `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
-| `notebooklm-mcp` | Query NotebookLM notebooks from Copilot Agent | Harriet, Graeme, Ron, John, Mark, Linda, Peter |
+| `notebooklm-cli` | Query NotebookLM notebooks via the `nlm` CLI (setup, auth, config) | Harriet, Graeme, Ron, John, Mark, Linda, Peter, Kabilan |
 | `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron, Peter |
 
 ### Research & Knowledge

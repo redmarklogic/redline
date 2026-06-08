@@ -86,7 +86,7 @@ Framed as outcomes and decisions, not as a task list.
 | Skill | Purpose |
 |---|---|
 | `library-management` | Add books to `G:\My Drive\Library`, extract metadata, update `library-index.xlsx`, deduplicate, and verify the workbook |
-| `mcp-notebooklm` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to call `source_add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
+| `notebooklm-cli` | Create, query, and maintain NotebookLM notebooks. Linda is the **only agent permitted to run `nlm source add`** — used exclusively when ingesting a new library file into a notebook as part of the library ingestion workflow. |
 | `notebooklm-index` | Add, update, or audit a NotebookLM notebook entry in `index-notebooklm.xlsx`. Load whenever a notebook is created, renamed, or decommissioned. |
 | `notebooklm-deep-research` | Run a deep research session in NotebookLM with 5 Whys intake. Linda initiates the session and returns the handoff package to the requester. |
 | `redline-research` | Query notebooks and use the register |
@@ -96,13 +96,7 @@ Framed as outcomes and decisions, not as a task list.
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Information Architecture and Knowledge Management | Direct | Grounds Linda's operating procedures for organising and structuring knowledge |
-| All open-access notebooks in `register.json` | Direct (maintenance only) | Dedup, source checks, metadata validation |
-| Advisory-board-only notebooks | Via Ron, John, or Graeme | Not directly accessible |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -118,6 +112,7 @@ Never query a notebook not listed above. Route through the owning agent instead.
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - Always check the register and existing knowledge docs before creating new notebooks or entries.
 - If the user's request is ambiguous, enumerate options and ask before proceeding.
 

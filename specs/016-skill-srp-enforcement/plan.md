@@ -7,12 +7,16 @@
 
 This feature enforces the Single Responsibility Principle across the skills corpus. It has
 three interrelated parts: (1) codify a named SRP rule in `writing-skills` so every future
-skill is governed before it is created; (2) process all 11 known violations — splitting,
+skill is governed before it is created; (2) process all 12 known violations — splitting,
 narrowing, or issuing documented exceptions; (3) extend `ceremony-agent-topology-sync` with
 a mandatory SRP compliance pass. No net-new behaviour is introduced; all work is structural
 extraction of existing concerns or procedural additions to existing artifacts. TDD pressure
 scenarios are therefore scoped to the SRP rule section only (new authored rule), not to
 the splits themselves.
+
+> **Corpus update (post-spec)**: `pre-pr-checks` was renamed to `sonarqube-find-and-fix`
+> after the spec was authored, introducing a 12th violation. No agent JD references this
+> skill; disposition is rename → `sonarqube-quality-gate` + justified-orchestrator exception.
 
 ---
 
@@ -145,13 +149,14 @@ Detailed split/exception decision for each of the 11 violations:
 | `marketing-social-selling-linkedin` | Name is a triple compound (marketing + social-selling + linkedin). But the concern is singular: LinkedIn social selling for B2B. The three pillars are sub-steps. Description covers: profile optimisation, prospecting outreach, comment campaigns — all within one concern. **→ Evaluate as justified single-focus skill; name is domain compound noun, not conjunction.** | **→ Rename to `linkedin-social-selling`** (cleaner verb-noun form) to remove the marketing-prefix collision. No split needed. Companion note in exception record for the name rationale. | L9 |
 | `ceremony-agent-topology-sync` | Name is a compound (ceremony + agent-topology-sync). Concerns in description: periodic sync, agent reflection, JD patches, org chart — all sub-steps of one ceremony. **→ Justified orchestrator.** | **→ Rename to `sync-agent-topology`** (verb-noun). Exception record documents orchestrator status. | L9 |
 | `library-management` | Description: indexing, renaming, adding books, scanning folders, metadata extraction, SNZ scraping, updating Excel index, renaming files — 7 operations. But all serve one concern: digital library management at `<library_root>`. **→ Evaluate as justified single-focus skill.** The operations are all sub-tasks of library maintenance. | **→ Justified pipeline exception**: all operations are steps in managing one library. Exception record required. | L7 |
+| `sonarqube-find-and-fix` | Name contains structural "and" joining find + fix. Introduced after initial spec by renaming `pre-pr-checks`. Description lists scan, triage, fix, record FPs, shift-left prevention — all sub-steps of one concern: end-to-end SonarQube quality gate. No agent JD routing references. **→ Justified orchestrator.** | **→ Rename to `sonarqube-quality-gate`** (noun-qualifier + concern, no "and"). Exception record documents orchestrator wrapping `sonarqube-scan` + `sonarqube-review`. | L9 |
 
 **Revised violation tally** (post-assessment):
 
 | Category | Count | Skills |
 |---|---|---|
 | Justified exception (document only) | 6 | `resolving-pr-issues`, `spec-kit`, `mcp-cce`, `ceremony-monthly-editorial-session`, `pm-product-strategist`, `library-management` |
-| Rename only (no split) | 2 | `marketing-social-selling-linkedin` → `linkedin-social-selling`, `ceremony-agent-topology-sync` → `sync-agent-topology` |
+| Rename only (no split) | 3 | `marketing-social-selling-linkedin` → `linkedin-social-selling`, `ceremony-agent-topology-sync` → `sync-agent-topology`, `sonarqube-find-and-fix` → `sonarqube-quality-gate` |
 | Full split required | 2 | `hiring-agent-management` (→ 3 skills), `evaluation-architecture` (→ 2 skills) |
 | Narrow + split | 1 | `ai-acceptable-use-policy` (→ 2 skills) |
 
@@ -241,23 +246,28 @@ updated. Deprecated markers added to old directories.
 4. `.agents/skills/ceremony-agent-topology-sync/SKILL.md` — `deprecated: true`, `forwarding-to: sync-agent-topology` added
 5. `.agents/skills/sync-agent-topology/srp-exception.md` — orchestrator exception record (ceremony structure is justified)
 6. `.agents/skills/linkedin-social-selling/srp-exception.md` — domain compound noun rationale record
-7. `.claude/agents/john.md` — routing table updated: `ceremony-monthly-editorial-session` → retained; `marketing-social-selling-linkedin` → `linkedin-social-selling`
-8. `.claude/agents/harriet.md` — routing table: `ceremony-agent-topology-sync` → `sync-agent-topology`
-9. `docs/architecture/skills-architecture.md` — Layer 9 map updated with new names, old names marked `[deprecated]`
+7. `.agents/skills/sonarqube-quality-gate/SKILL.md` — copied from `sonarqube-find-and-fix`, name updated to `sonarqube-quality-gate`, description updated to single-concern statement free of multi-concern "and"
+8. `.agents/skills/sonarqube-quality-gate/srp-exception.md` — justified-orchestrator exception record; sub-concerns: `sonarqube-scan` (static analysis), `sonarqube-review` (triage + false-positive recording), fix cycle, shift-left prevention; rationale: all steps serve one concern — end-to-end SonarQube quality gate
+9. `.agents/skills/sonarqube-find-and-fix/SKILL.md` — `deprecated: true`, `forwarding-to: sonarqube-quality-gate` added to frontmatter
+10. `.claude/agents/john.md` — routing table updated: `ceremony-monthly-editorial-session` → retained; `marketing-social-selling-linkedin` → `linkedin-social-selling`
+11. `.claude/agents/harriet.md` — routing table: `ceremony-agent-topology-sync` → `sync-agent-topology`
+12. `docs/architecture/skills-architecture.md` — Layer 9 map updated with new names, old names marked `[deprecated]`
 
 **Verification**:
 
 ```
 Grep .claude/agents/*.md for "marketing-social-selling-linkedin" → 0 results (routing tables only)
 Grep .claude/agents/*.md for "ceremony-agent-topology-sync" → 0 routing table results
+Grep .claude/agents/*.md for "sonarqube-find-and-fix" → 0 results (no agent JD references this skill)
 Confirm .agents/skills/linkedin-social-selling/SKILL.md exists
 Confirm .agents/skills/sync-agent-topology/SKILL.md exists
+Confirm .agents/skills/sonarqube-quality-gate/SKILL.md exists
 ```
 
 **Acceptance Gate**:
 - [ ] No routing table entry in any `.claude/agents/*.md` references the old names
 - [ ] New skill directories exist with updated frontmatter
-- [ ] Deprecated markers in place on retired directories
+- [ ] Deprecated markers in place on all three retired directories
 
 ---
 
@@ -415,19 +425,20 @@ Read docs/architecture/skills-architecture.md → all 11 original violations res
 |---|---|---|---|
 | 0 | `writing-skills/procedures/writing-skills.md` (section add), `writing-skills/procedures/srp-exception-template.md` | — | — |
 | 1 | 6 × `srp-exception.md` | — | — |
-| 2 | `linkedin-social-selling/SKILL.md`, `sync-agent-topology/SKILL.md`, 2 × `srp-exception.md` | `john.md`, `harriet.md`, `skills-architecture.md` | `marketing-social-selling-linkedin`, `ceremony-agent-topology-sync` |
+| 2 | `linkedin-social-selling/SKILL.md`, `sync-agent-topology/SKILL.md`, `sonarqube-quality-gate/SKILL.md`, 3 × `srp-exception.md` | `john.md`, `harriet.md`, `skills-architecture.md` | `marketing-social-selling-linkedin`, `ceremony-agent-topology-sync`, `sonarqube-find-and-fix` |
 | 3 | `hire-agent/SKILL.md`, `audit-agent/SKILL.md`, `maintain-agent-registry/SKILL.md`, `design-eval-rubric/SKILL.md`, `design-eval-pipeline/SKILL.md` | `harriet.md`, `peter.md`, `skills-architecture.md` | `hiring-agent-management`, `evaluation-architecture` |
 | 4 | `define-ai-policy/SKILL.md`, `enforce-ai-batch-discipline/SKILL.md` | `peter.md`, `skills-architecture.md` | `ai-acceptable-use-policy` |
 | 5 | `sync-agent-topology/procedures/srp-scan-procedure.md` | `sync-agent-topology/procedures/run-topology-sync.md`, `sync-agent-topology/SKILL.md` | — |
 | 6 | `specs/016-skill-srp-enforcement/audit-log.md` | `skills-architecture.md` (final), narrative JD mentions | — |
 
-**Total new skill directories**: 8 (hire-agent, audit-agent, maintain-agent-registry,
+**Total new skill directories**: 9 (hire-agent, audit-agent, maintain-agent-registry,
 design-eval-rubric, design-eval-pipeline, define-ai-policy, enforce-ai-batch-discipline,
-linkedin-social-selling)
-**Total renames**: 2 (marketing-social-selling-linkedin, ceremony-agent-topology-sync)
-**Total deprecated (not deleted)**: 5 (hiring-agent-management, evaluation-architecture,
-ai-acceptable-use-policy, marketing-social-selling-linkedin, ceremony-agent-topology-sync)
-**Total exception records**: 8 (6 justified exceptions + 2 rename rationale records)
+linkedin-social-selling, sonarqube-quality-gate)
+**Total renames**: 3 (marketing-social-selling-linkedin, ceremony-agent-topology-sync, sonarqube-find-and-fix)
+**Total deprecated (not deleted)**: 6 (hiring-agent-management, evaluation-architecture,
+ai-acceptable-use-policy, marketing-social-selling-linkedin, ceremony-agent-topology-sync,
+sonarqube-find-and-fix)
+**Total exception records**: 9 (6 justified exceptions + 3 rename rationale records)
 
 ---
 

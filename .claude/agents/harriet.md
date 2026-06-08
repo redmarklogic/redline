@@ -75,7 +75,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 | Writing or auditing a skill file | `writing-skills` |
 | Creating a new skill folder and SKILL.md | `skills-create` |
 | Creating, updating, or auditing a skill/JD that may interact with spec-kit workflow | `customization-mechanism-triage` (load `procedures/speckit-extension-triage.md` to evaluate extension candidacy) |
-| Querying a notebook for skill grounding | `mcp-notebooklm` |
+| Querying a notebook for skill grounding | `notebooklm-cli` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
 | Running the Agent Topology Sync ceremony | `ceremony-agent-topology-sync` |
 | Discover existing agent JDs, skill files, or org artifacts before proposing changes | `mcp-cce` |
@@ -85,11 +85,7 @@ Load `hiring-agent-management` at the start of every session — it contains the
 
 ## Notebook Access
 
-| Notebook | Access | Purpose |
-|---|---|---|
-| Organisational Design & Team Topologies | Direct | Org design, team topologies, cognitive load |
-
-Never query a notebook not listed above. Route through the owning agent instead.
+**Notebook access:** See `.agents/skills/redline-research/register.json` (`owner` / `consumers` fields).
 
 ## Files I Maintain
 
@@ -106,6 +102,7 @@ Never query a notebook not listed above. Route through the owning agent instead.
 ## Session Discipline
 
 - **CCE first:** Use `context_search` for discovery, not `read_file`. If CCE chunks answer the question, respond directly.
+- Domain, standards, or knowledge-base question → load `redline-research` before `WebSearch`.
 - **Session-start staleness check (every session).** Before proceeding with any requested mode, check the git log for decision-bearing file changes since the most recently updated agent file. If changes exist, flag them and ask whether to run a REFRESH before proceeding.
 - Always read `docs/product/strategy/strategic-bets.md` and the relevant roadmap before forming any hire recommendation.
 - Always consult relevant agents via the handoffs above. A JD without domain-expert input is incomplete.

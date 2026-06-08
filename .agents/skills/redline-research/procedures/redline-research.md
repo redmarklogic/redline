@@ -14,6 +14,6 @@
 - Specification writing (`spec-kit`) or design exploration (`brainstorming`)
 
 ### Prerequisites
-- **`notebooklm-mcp`**: MCP server must be installed and authenticated.
+- **`notebooklm-mcp`**: `nlm` CLI must be installed and authenticated.
 - **`rag-prompting`**: Load before writing any notebook query.
 - **`mermaid-diagrams`**: Load when the research document benefits from visual aids (concept maps, causal chains, system flows).

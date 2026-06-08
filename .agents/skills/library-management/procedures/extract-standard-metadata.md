@@ -1,20 +1,20 @@
 # Extract Standard Metadata from NotebookLM
 
-Procedure for extracting structured metadata from engineering standards uploaded to a NotebookLM notebook. Uses `notebook_query` scoped to individual sources — not `source_describe`.
+Procedure for extracting structured metadata from engineering standards uploaded to a NotebookLM notebook. Uses `nlm notebook query` scoped to individual sources — not `nlm source describe`.
 
 ## Prerequisites
 
 - NotebookLM notebook ID containing uploaded standards
-- Source list retrieved via `source_list` (need source IDs)
-- **Skills required:** `rag-prompting` (structured extraction), `notebooklm-mcp` (tool permissions)
+- Source list retrieved via `nlm source list` (need source IDs)
+- **Skills required:** `rag-prompting` (structured extraction), `notebooklm-mcp` (CLI access)
 
-## Why `notebook_query`, not `source_describe`
+## Why `nlm notebook query`, not `nlm source describe`
 
-`source_describe` is a summarisation tool — it conflates drafts with published editions, uses wrong titles, and misses precise metadata (committee IDs, DR prefixes, exact years). `notebook_query` with a structured extraction prompt gets the precise fields we need by asking the model to quote verbatim from the title page.
+`nlm source describe` is a summarisation tool — it conflates drafts with published editions, uses wrong titles, and misses precise metadata (committee IDs, DR prefixes, exact years). `nlm notebook query` with a structured extraction prompt gets the precise fields we need by asking the model to quote verbatim from the title page.
 
 ## Extraction Prompt
 
-Use this prompt verbatim with `notebook_query`, scoped to one `source_id` at a time.
+Use this prompt verbatim with `nlm notebook query`, scoped to one source at a time via `--source-ids <source-id>`.
 
 ```
 Explain for the uninitiated. Define any specialist term the first time
@@ -184,10 +184,10 @@ preface, use the missing-value sentinel. Do not guess.
 
 ## Workflow
 
-1. **List sources** — call `source_list` to get all source IDs and filenames.
-2. **Loop per source** — for each source, call `notebook_query` with the prompt above, passing the `source_id` to scope the query.
+1. **List sources** — call `nlm source list` to get all source IDs and filenames.
+2. **Loop per source** — for each source, run `nlm notebook query <notebook-id> "<prompt>" --source-ids <source-id>` to scope the query to that one source.
 3. **Parse JSON** — extract the JSON object from the response.
-4. **Preserve raw response** — store the full `notebook_query` response alongside the parsed fields for audit.
+4. **Preserve raw response** — store the full `nlm notebook query` response alongside the parsed fields for audit.
 5. **Map to worksheet columns** — align extracted fields to the Standards worksheet schema:
 
    | Extracted field | Worksheet column |

@@ -24,6 +24,17 @@
       "status": "active",
       "layer": 0
     },
+    "branching-strategy": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 7
+    },
     "mcp-cce": {
       "source": "local",
       "sourceType": "local",
@@ -323,7 +334,7 @@
       "status": "active",
       "layer": 7
     },
-    "mcp-notebooklm": {
+    "notebooklm-cli": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,

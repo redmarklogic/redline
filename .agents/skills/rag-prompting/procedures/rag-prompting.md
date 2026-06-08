@@ -8,7 +8,7 @@
 - Well-formed query string ready to send to NotebookLM
 
 ### Out of Scope
-- MCP tool configuration or authentication (`notebooklm-mcp`)
+- CLI configuration or authentication (`notebooklm-mcp`)
 - Research workflow orchestration (`redline-research`)
 - Notebook management (creating, deleting, sharing)
 
@@ -98,7 +98,7 @@ steps are **separate** — this has concrete consequences for prompt design.
 
 ## When NOT to Use
 
-- Setting up the MCP server or authenticating (`notebooklm-mcp`).
+- Setting up the `nlm` CLI or authenticating (`notebooklm-mcp`).
 - Orchestrating a multi-notebook research session (`redline-research`).
 
 ## Prompt Anatomy

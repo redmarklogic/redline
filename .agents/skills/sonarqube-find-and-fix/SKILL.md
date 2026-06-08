@@ -1,23 +1,23 @@
 ---
-name: pre-pr-checks
-description: Use before opening or merging a PR to confirm the current branch passes every local quality gate with no unresolved findings
+name: sonarqube-find-and-fix
+description: Run SonarQube scan, triage findings, fix at root, record false positives with rationale, and shift detection left via prevention candidates
 ---
 
-# Pre-PR Checks
+# SonarQube Find and Fix
 
-Orchestrates the local quality-gate sequence for the current branch before a pull
-request. Wraps the SonarQube sub-skills in a triage → reproduce → fix → prevent
-loop so findings are fixed at the root, false positives are recorded with
-rationale, and detection shifts left over time.
+Orchestrates the SonarQube quality-gate sequence for the current branch. Wraps
+the scan sub-skills in a triage → reproduce → fix → prevent loop so findings are
+fixed at the root, false positives are recorded with rationale, and detection
+shifts left over time.
 
 **Boundary contract:**
 
-- **Input**: a checked-out branch ready for PR; all sub-skill prerequisites met.
+- **Input**: a checked-out branch; all sub-skill prerequisites met.
 - **Output**: branch confirmed clean — every finding fixed, or transitioned to
   RESOLVED (false positive / won't fix) with rationale; re-scan verified;
   prevention candidates captured for critical/repeat findings.
-- **Out of scope**: linting, type-check, and coverage-threshold gates (future);
-  conducting a PR review (`resolving-pr-issues`); merge/branch decisions.
+- **Out of scope**: linting, type-check, and coverage-threshold gates; PR review
+  (`resolving-pr-issues`); merge/branch decisions.
 
 ## Gates (in order)
 
@@ -52,7 +52,7 @@ per-issue `falsepositive` / `wontfix` for genuine one-offs (procedure Step 6).
 
 ## Procedure
 
-Run: `procedures/pre-pr-checks.md`
+Run: `procedures/sonarqube-find-and-fix.md`
 
 Steps: script-health → scan → retrieve → triage → reproduce (behavioral) → fix →
 record false positives with rationale → prevent (shift-left) → re-scan verify →

@@ -16,6 +16,11 @@ cited research document to `docs/research/YYYYMMDD-$topic.md`.
 ## When to Use
 
 - User asks to "research", "investigate", "look up", or "find out" something in the Redline knowledge base.
+- **Geotechnical or engineering standards question** — anything touching NZ/AU codes (NZS, AS/NZS, Eurocode NZ application), soil mechanics, foundation design, GBR/GIR workflows, ground investigation, risk classification, or geotechnical report structure.
+- **Regulatory or professional practice question** — NZ Building Code, Australian Standards, CPEng obligations, professional liability for PSF/A/E/C firms, or industry guidance notes.
+- **Framework or implementation question covered by a notebook** — Django, DDD (Domain-Driven Design), GCP architecture, AI/RAG system design, software architecture patterns, BPM, or information architecture. Check the Quick Reference table below before reaching for WebSearch.
+- **Product, strategy, or org-design question** — professional services firm management, product roadmapping, startup strategy, team topologies, organisational design, or monetising innovation. These notebooks are the grounded source; WebSearch is a fallback.
+- **Any question where the answer is likely in a known notebook** — if the topic appears in the Quick Reference table below, query the relevant notebook first. Use WebSearch only when the notebooks cannot answer the question or when real-time data is required.
 
 ## When NOT to Use
 

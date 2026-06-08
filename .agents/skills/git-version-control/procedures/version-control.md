@@ -29,6 +29,26 @@ task (e.g. "commit after each file"). Absent that, wait.
 - Run prek hooks (use the `dev-environment` skill).
 - Run the relevant tests for the changed area.
 
+## Branch Naming Convention
+
+Feature branches follow this pattern:
+
+```text
+feature/<NNN>-<feature-slug>
+```
+
+Where `<NNN>` is the spec number (zero-padded to three digits, matching the `specs/NNN-*/` directory) and `<feature-slug>` is a short kebab-case description of the feature.
+
+Examples: `feature/016-skill-srp-enforcement`, `feature/042-pdf-export`
+
+**Rules:**
+
+- Never commit directly to `master`.
+- Branch from `master` unless explicitly stacking on a parent feature branch.
+- The canonical branch name for a feature is recorded in `specs/NNN-feature/tasks.md` under `**Feature Branch**:`.
+
+---
+
 ## Procedure
 
 1. Review staged changes for accidental debug code, secrets, and unrelated edits.
