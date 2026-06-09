@@ -45,3 +45,11 @@ class DocumentFacade(Protocol):
             path: Destination file path.
         """
         ...
+
+    def to_bytes(self) -> bytes:
+        """Render the document to bytes without touching disk.
+
+        Returns:
+            Raw .docx bytes (ZIP/OOXML, starts with PK\\x03\\x04).
+        """
+        ...

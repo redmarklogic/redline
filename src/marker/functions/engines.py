@@ -1,5 +1,6 @@
 """Concrete document engine implementations."""
 
+import io
 from pathlib import Path
 
 from docx import Document as DocxDocument
@@ -62,3 +63,13 @@ class PythonDocxFacade:
             path: Destination file path.
         """
         self._doc.save(path)
+
+    def to_bytes(self) -> bytes:
+        """Render the document to bytes without touching disk.
+
+        Returns:
+            Raw .docx bytes (ZIP/OOXML, starts with PK\\x03\\x04).
+        """
+        buffer = io.BytesIO()
+        self._doc.save(buffer)
+        return buffer.getvalue()
