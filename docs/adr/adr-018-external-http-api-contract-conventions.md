@@ -34,7 +34,7 @@ The bundled decisions:
    framework-level binding, not per-route try/except.
 4. **Validation split: `422` versus `400`.** A request that is well-formed but fails
    semantic or body validation returns `422` (Unprocessable Content). A request that is
-   malformed or unparseable (bad JSON, wrong content type) returns `400` (Bad Request).
+   malformed or unparsable (bad JSON, wrong content type) returns `400` (Bad Request).
 5. **Creation semantics.** Creating an addressable resource returns `201` with a
    `Location` header. A synchronous create-and-return of a streamed artifact — the
    skeleton case — returns `200` with the artifact as the body. Long-running work
@@ -150,7 +150,7 @@ mechanism, file-link exchange, ETA calibration).
   the OpenAPI document as the source of truth adds drag (stub generation, drift between
   hand-written contract and implementation) before the API shape is proven. ADR-017's
   volatility logic applies — generate the description from the implementation instead.
-- **Option E — Mandate a specific token format (JWT only).** Rejected: pre-empts the open
+- **Option E — Mandate a specific token format (JWT only).** Rejected: preempts the open
   SSO provider selection decision and excludes the IAP-injected-identity carrier. A
   format-agnostic bearer pattern keeps the auth decision where it belongs.
 - **Option F — Introduce `/v1/` versioning now.** Rejected: a single endpoint with no
@@ -170,7 +170,7 @@ Redline's Phase-1 context:
    for body-validation failures by default, and RFC 9110 §15.5.21 defines `422
    Unprocessable Content` as core HTTP. Adopting the default rather than remapping it to
    `400` removes a standing source of per-route friction and keeps the generated OpenAPI
-   honest. `400` is reserved for genuinely malformed/unparseable requests, where the
+   honest. `400` is reserved for genuinely malformed/unparsable requests, where the
    distinction carries real diagnostic value.
 
 2. **A single boundary, decided once.** Because every external response shares one error

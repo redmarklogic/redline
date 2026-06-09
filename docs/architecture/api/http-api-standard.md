@@ -58,7 +58,7 @@ Status codes in scope:
 | `200` | OK | Successful read, or synchronous create-and-return of a streamed artifact (§5). |
 | `201` | Created | An addressable resource was created. MUST include a `Location` header (§5). |
 | `202` | Accepted | Work accepted for asynchronous processing; client polls a job (§8). |
-| `400` | Bad Request | Request is malformed or unparseable — bad JSON, wrong content type (§4). |
+| `400` | Bad Request | Request is malformed or unparsable — bad JSON, wrong content type (§4). |
 | `401` | Unauthorized | No/invalid credentials. MUST set `WWW-Authenticate: Bearer` (§7). |
 | `403` | Forbidden | Authenticated but not permitted. |
 | `422` | Unprocessable Content | Request is well-formed but fails semantic / body validation (§4). |

@@ -1,4 +1,4 @@
-﻿r"""Upsert or mark-deleted a NotebookLM notebook in an index-notebooklm.xlsx file.
+r"""Upsert or mark-deleted a NotebookLM notebook in an index-notebooklm.xlsx file.
 
 The tool is path-agnostic: it operates on any index file passed via the JSON
 payload's ``index_path`` key, so it can serve multiple projects and libraries.
@@ -31,7 +31,6 @@ operation : str
     ``"upsert"`` (default if omitted), ``"mark_deleted"``, or
     ``"bulk_set_column"``.
 """
-
 
 import importlib.util
 import json

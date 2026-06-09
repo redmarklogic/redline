@@ -118,6 +118,7 @@ ignore-words-list = [
   "bund",
   "bunds",
   "constructure",
+  "ege",
   "gage",
   "gir",
   "linz",
@@ -200,7 +201,7 @@ root_packages = [ "marker", "rl" ]
 [[tool.importlinter.contracts]]
 name = "rl layers"
 type = "layers"
-layers = [ "functions", "schemas", "domain", "greeting" ]
+layers = [ "functions", "schemas", "domain" ]
 containers = [ "rl" ]
 exhaustive = true
 

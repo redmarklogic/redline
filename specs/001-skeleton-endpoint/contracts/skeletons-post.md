@@ -30,7 +30,7 @@
 | Status | When | Body | Key headers |
 |--------|------|------|-------------|
 | `200 OK` | authenticated + valid | raw `.docx` bytes (streamed) | `Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document`; `Content-Disposition: attachment; filename="<safe-name>.docx"` (`project_number` sanitized to `[A-Za-z0-9._-]`, fallback `skeleton`) |
-| `400 Bad Request` | body unparseable (bad JSON, wrong content type) | error envelope, `code: BAD_REQUEST` | — |
+| `400 Bad Request` | body unparsable (bad JSON, wrong content type) | error envelope, `code: BAD_REQUEST` | — |
 | `401 Unauthorized` | missing/invalid bearer | error envelope, `code: HTTP_401` | `WWW-Authenticate: Bearer` |
 | `422 Unprocessable Content` | parsed but invalid (missing field, empty/blank/duplicate section, extra field) | error envelope, `code: VALIDATION_ERROR`, `details: [...]` | — |
 | `500 Internal Server Error` | unhandled fault | error envelope, `code: INTERNAL_ERROR`, **no internal detail in `message`** | — |
@@ -46,7 +46,7 @@ Error envelope shape (every non-2xx): `{ "code": str, "message": str, "trace_id"
 | §1 plural URI | path is `/skeletons` | `test_skeletons_route_registered_plural_unversioned` |
 | §3 envelope | every error body has `{code, message, trace_id}` | `test_422_uses_error_envelope`, `test_500_envelope_contains_no_internal_detail` |
 | §3 no leak | `message` has no stack/class/path | `test_500_envelope_contains_no_internal_detail` |
-| §4 422 vs 400 | invalid→422 (DTO **and** domain rules), unparseable→400 | `test_rejects_missing_required_field`, `test_domain_invalid_sections_returns_422`, `test_400_for_malformed_json_body` |
+| §4 422 vs 400 | invalid→422 (DTO **and** domain rules), unparsable→400 | `test_rejects_missing_required_field`, `test_domain_invalid_sections_returns_422`, `test_400_for_malformed_json_body` |
 | §6 binary | `200`, DOCX media type, `attachment`, body starts `PK\x03\x04` | `test_returns_docx_bytes_with_correct_headers` |
 | §7 auth | `401` + `WWW-Authenticate: Bearer` | `test_rejects_unauthenticated_with_401_and_www_authenticate`, `test_rejects_malformed_token` |
 | §9 no SSE | response is DOCX, explicitly not `text/event-stream` | `test_returns_docx_bytes_with_correct_headers` (media-type assertion) |

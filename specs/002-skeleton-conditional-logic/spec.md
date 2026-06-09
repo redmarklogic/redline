@@ -38,7 +38,7 @@ An engineer submits a skeleton request that describes their project's site condi
 
 An engineer submits a request with no section flags — or omits them entirely. The system accepts the request and produces a skeleton containing only the sections that are always structurally required by the guideline template. No conditional sections are incorrectly included by default.
 
-**Why this priority**: Safe defaults are as important as correct conditionals. A practitioner who does not yet know the site's hazard profile must receive a skeleton they can complete — not one that pre-selects incorrect sections.
+**Why this priority**: Safe defaults are as important as correct conditionals. A practitioner who does not yet know the site's hazard profile must receive a skeleton they can complete — not one that preselects incorrect sections.
 
 **Independent Test**: Submit a valid request body with no `section_flags` field. Confirm the response is 200 and the skeleton contains only mandatory sections (including the Section 7 heading, but no hazard sub-sections).
 

@@ -79,7 +79,7 @@ marker.domain         (EXISTING)
 **Request → response flow for `POST /skeletons`:**
 
 1. `require_bearer` dependency runs first. No/invalid `Authorization: Bearer` → raise `HTTPException(401, headers={"WWW-Authenticate": "Bearer"})` → global handler emits envelope. (Token verification is a stub: presence-only at v0.1.)
-2. FastAPI parses + validates the body against `CreateSkeletonRequest`. Unparseable → `RequestValidationError(json_invalid)` → global handler → `400`. Parsed-but-invalid (missing field, blank/duplicate heading, empty sections) → `RequestValidationError` → `422`. Both via the envelope.
+2. FastAPI parses + validates the body against `CreateSkeletonRequest`. Unparsable → `RequestValidationError(json_invalid)` → global handler → `400`. Parsed-but-invalid (missing field, blank/duplicate heading, empty sections) → `RequestValidationError` → `422`. Both via the envelope.
 3. Route translates the DTO → domain `ReportStructure` + `ProjectMetadata`. The DTO mirrors **all** domain constraints, so a semantic failure is caught at step 2 as `RequestValidationError` → `422`; a defensive `pydantic.ValidationError` → `422` handler covers anything that slips through the DTO — it must **never** fall to the catch-all `500` (see data-model §1; this is the top analyze finding).
 4. Route calls `build_skeleton_bytes(structure, metadata)` → `bytes`.
 5. Route returns `StreamingResponse(BytesIO(bytes), media_type=DOCX_MEDIA_TYPE, headers={Content-Disposition: attachment; filename="<safe-name>.docx"}, status_code=200)`, where `<safe-name>` is `project_number` sanitized to `[A-Za-z0-9._-]` (fallback `"skeleton"`) — an unsanitized value could break/inject the header.
@@ -105,7 +105,7 @@ marker.domain         (EXISTING)
 
 | Category | Items |
 | -------- | ----- |
-| **Must have** | `POST /skeletons` returns `200` + DOCX bytes with correct `Content-Type`/`Content-Disposition` (§6); `401` + `WWW-Authenticate: Bearer` when unauthenticated (§7); uniform error envelope on every error with no internal leakage (§3); `422` for parsed-but-invalid, `400` for unparseable (§4); single global exception handler (§3); no `/v1/` prefix (§14); no SSE (§9); generated OpenAPI (§12); one contract test per in-scope clause; PR note stating handler is placeholder vs final (#78). |
+| **Must have** | `POST /skeletons` returns `200` + DOCX bytes with correct `Content-Type`/`Content-Disposition` (§6); `401` + `WWW-Authenticate: Bearer` when unauthenticated (§7); uniform error envelope on every error with no internal leakage (§3); `422` for parsed-but-invalid, `400` for unparsable (§4); single global exception handler (§3); no `/v1/` prefix (§14); no SSE (§9); generated OpenAPI (§12); one contract test per in-scope clause; PR note stating handler is placeholder vs final (#78). |
 | **Should have** | Bytes seam in `functions` (D3) so the builder stays disk-free for HTTP; adversarial auth test (malformed `Authorization` scheme); 500-safety test patching the builder to raise. |
 | **Could have** | Schemathesis property-based conformance test (gated on principal-engineer approval — see Risk Register); request-ID middleware to share one `trace_id` across log + response. |
 | **Won't have (this time)** | LOE upload / metadata extraction (Feature M); standards-grounded clause content (Feature N); quota + audit trail; conditional section logic (blocked pending Peter shaping); `202`+poll / SSE progress; `Accept: application/json` violations representation; by-reference (signed-URL) artifact exchange; real token verification (SSO #50/#73/#48b); versioning. |

@@ -56,7 +56,7 @@ Every failure — bad credentials, invalid input, malformed input, or an interna
 **Acceptance Scenarios**:
 
 1. **Given** an authenticated caller submits a request body that parses but fails validation (e.g. an empty sections list, a duplicate heading, a missing metadata field), **When** they call `POST /skeletons`, **Then** they receive `422` with the uniform error envelope.
-2. **Given** a caller submits a malformed or unparseable request (bad JSON, wrong content type), **When** they call `POST /skeletons`, **Then** they receive `400` with the uniform error envelope.
+2. **Given** a caller submits a malformed or unparsable request (bad JSON, wrong content type), **When** they call `POST /skeletons`, **Then** they receive `400` with the uniform error envelope.
 3. **Given** any error response (`401`, `400`, `422`, `500`), **When** the caller reads `message`, **Then** it is human-readable and contains no stack traces, exception/class names, file paths, or other internal detail.
 4. **Given** any error response, **When** the caller parses the body, **Then** it has the shape `{code, message, trace_id, details?}`.
 
@@ -68,7 +68,7 @@ Every failure — bad credentials, invalid input, malformed input, or an interna
 - **Duplicate section headings** → parsed-but-invalid → `422`.
 - **Blank/whitespace-only heading** → parsed-but-invalid → `422`.
 - **Missing required metadata field** (project number, client name, site address, date) → parsed-but-invalid → `422`.
-- **Malformed JSON or wrong content type** → unparseable → `400`.
+- **Malformed JSON or wrong content type** → unparsable → `400`.
 - **Valid auth + valid body, but document generation faults internally** → `500` with the uniform envelope and no internal leakage.
 - **Expired/invalid token** → `401` with `WWW-Authenticate: Bearer` (treated as unauthenticated for this endpoint; finer-grained `403` is out of scope until roles exist).
 

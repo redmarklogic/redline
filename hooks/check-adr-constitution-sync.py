@@ -36,11 +36,7 @@ def main() -> int:
     """Entry point."""
     staged = get_staged_files()
 
-    adr_changes = [
-        f
-        for f in staged
-        if f.startswith(ADR_PATH_PREFIX)
-    ]
+    adr_changes = [f for f in staged if f.startswith(ADR_PATH_PREFIX)]
     constitution_staged = CONSTITUTION_PATH in staged
 
     if not adr_changes or constitution_staged:

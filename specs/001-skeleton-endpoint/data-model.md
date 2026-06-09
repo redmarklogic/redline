@@ -82,7 +82,7 @@ Status → code mapping:
 
 | Status | When | `code` |
 |--------|------|--------|
-| 400 | unparseable body (`json_invalid`) | `BAD_REQUEST` |
+| 400 | unparsable body (`json_invalid`) | `BAD_REQUEST` |
 | 401 | no/invalid bearer | `HTTP_401` |
 | 422 | parsed-but-invalid body | `VALIDATION_ERROR` |
 | 500 | unhandled fault | `INTERNAL_ERROR` |
