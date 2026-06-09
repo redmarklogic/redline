@@ -208,7 +208,8 @@ Peter + Mark shape work before it reaches SpecKit. This inserts a Layer 1.5 (Sha
 
 | User Intent | Skill to Load |
 |---|---|
-| System design, component boundaries, API design, ADR writing | `engineering-architecture` |
+| System design, component boundaries, API design | `engineering-architecture` |
+| Writing or reviewing an ADR: structure, link-graph compliance, DAG rule | `create-adr` |
 | Strategic DDD (subdomain classification, context mapping, EventStorming, ACL, UL, model evolution) | `ddd-strategic` |
 | LLM evaluation rubric design, scoring systems, LLM-as-judge patterns, calibration | `design-eval-rubric` |
 | LLM evaluation pipeline architecture, FTI pattern, HITL review, production monitoring | `design-eval-pipeline` |

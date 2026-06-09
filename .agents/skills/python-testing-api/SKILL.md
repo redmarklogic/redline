@@ -23,7 +23,7 @@ paths: "src/**/*.py,tests/**/*.py"
 | ----------------------------- | ----------------------------------------------------------- |
 | **Test framework**            | `pytest`                                                    |
 | **HTTP client (component)**   | `fastapi.testclient.TestClient` (sync)                      |
-| **HTTP client (integration)** | `httpx.AsyncClient` (async, hits running server)            |
+| **HTTP client (integration)** | `httpx.AsyncClient(transport=ASGITransport(app=app))` (async, in-process ASGI) |
 | **DI mocking**                | `app.dependency_overrides` for `Depends()` callables        |
 | **Function mocking**          | `mocker.patch()` via `pytest-mock`                          |
 | **Outbound HTTP mocking**     | `pytest-httpx`                                              |

@@ -63,7 +63,7 @@ flowchart TD
 
 > **Live reference**: This table is replicated here at the date of this ADR (2026-05-13)
 > for completeness. The canonical, maintained version is in
-> [checklist-taxonomy-cross-jurisdiction.md](../knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md).
+> `docs/knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md`.
 > If the node names or descriptions change, the knowledge document is the authoritative source.
 > ADRs are immutable; this table is a snapshot.
 
@@ -158,8 +158,7 @@ Both dimensions are required on every rule.
 ## References
 
 - ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for the geotechnical report section taxonomy
-- [Checklist taxonomy analysis](../knowledge/geotechnical/report-writing/checklist-taxonomy-cross-jurisdiction.md)
-- [FHWA reviewer vocabulary](../knowledge/geotechnical/report-writing/fhwa-reviewer-checklist-rule-vocabulary.md)
-- [Strategic bets](../product/strategy/strategic-bets.md) -- Bets 1, 2, 3
-- [Standards registry concept](../concepts/02-standards-registry/standards-registry.md) -- rule
-  structure with `source_standard` and `source_section`
+- Checklist taxonomy analysis (source data for the 10-node convergence across 5 jurisdictions) — see `docs/knowledge/geotechnical/report-writing/`
+- FHWA reviewer vocabulary (rule vocabulary used for the US jurisdiction overlay) — see `docs/knowledge/geotechnical/report-writing/`
+- Strategic bets (Bets 1, 2, 3) — see `docs/product/strategy/`
+- Standards registry concept (rule structure with `source_standard` and `source_section`) — see `docs/concepts/02-standards-registry/`

@@ -47,7 +47,8 @@ alone as its own skill without losing meaning.
 **Examples (violations):**
 - `hiring-and-assessment` — hiring and assessment are independent concerns.
 - `find-and-fix` (as in `sonarqube-find-and-fix`) — finding issues and fixing them are
-  separate concerns; `sonarqube-quality-gate` is the correct single-concern form.
+  separate concerns; however, this skill is approved as a known exception
+  (`justified-orchestrator`) — all steps serve one end-to-end quality-gate concern.
 - `marketing-social-selling-linkedin` — marketing strategy and social selling tactics
   are separable; `linkedin-social-selling` is the correct form.
 
@@ -111,7 +112,7 @@ authoritative record. To add a new exception, extend this table directly.
 | `library-management` | `justified-pipeline` | All operations serve one concern — digital library maintenance |
 | `linkedin-social-selling` | `domain-compound-noun` | "social selling" is a domain compound noun; "linkedin" is the platform qualifier |
 | `sync-agent-topology` | `justified-orchestrator` | Single concern: topology synchronisation |
-| `sonarqube-quality-gate` | `justified-orchestrator` | All steps serve one concern — end-to-end SonarQube quality gate |
+| `sonarqube-find-and-fix` | `justified-orchestrator` | All steps serve one concern — end-to-end SonarQube quality gate |
 
 ---
 

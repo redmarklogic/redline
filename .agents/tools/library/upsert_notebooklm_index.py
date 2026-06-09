@@ -28,10 +28,9 @@ index_path : str
     Absolute path to the target ``index-notebooklm.xlsx`` workbook.
     **Must be provided by the caller.** The tool has no built-in default path.
 operation : str
-    ``"upsert"`` (default if omitted) or ``"mark_deleted"``.
+    ``"upsert"`` (default if omitted), ``"mark_deleted"``, or
+    ``"bulk_set_column"``.
 """
-
-from __future__ import annotations
 
 import importlib.util
 import json
@@ -157,6 +156,72 @@ def upsert(
     )
 
 
+def bulk_set_column(
+    column_name: str,
+    value: object,
+    match_ids: list[str] | str,
+    index_path: Path | None = None,
+) -> str:
+    """Set a column value on matching rows in the notebooks worksheet.
+
+    Parameters
+    ----------
+    column_name:
+        Header to create (if absent) or update.
+    value:
+        Value to write into each matched cell.
+    match_ids:
+        List of ``notebook_id`` strings to target, or ``"*"`` for all rows.
+    index_path:
+        Path to the index workbook.  Falls back to ``INDEX_PATH``.
+    """
+    resolved_index_path = index_path or INDEX_PATH
+    with WorkbookLock(resolved_index_path):
+        wb = openpyxl.load_workbook(resolved_index_path)
+        ws_nb = wb["notebooks"]
+
+        # Locate or create the target column.
+        header_row = ws_nb[1]
+        col_letter: int | None = None
+        for cell in header_row:
+            if cell.value == column_name:
+                col_letter = cell.column
+                break
+
+        if col_letter is None:
+            # Append new column after the last used column.
+            new_col = ws_nb.max_column + 1
+            header_cell = ws_nb.cell(row=1, column=new_col, value=column_name)
+            header_cell.font = HEADER_FONT
+            header_cell.fill = HEADER_FILL
+            col_letter = new_col
+
+        # Find the zero-based index of notebook_id column for matching.
+        headers = [cell.value for cell in ws_nb[1]]
+        if "notebook_id" not in headers:
+            return "ERROR: 'notebook_id' column not found in notebooks worksheet"
+        nid_col = headers.index("notebook_id")
+
+        match_all = match_ids == "*"
+        match_set = set() if match_all else set(match_ids)  # type: ignore[arg-type]
+
+        updated = 0
+        for row in ws_nb.iter_rows(min_row=2, max_row=ws_nb.max_row):
+            row_nid = row[nid_col].value
+            if match_all or row_nid in match_set:
+                ws_nb.cell(row=row[0].row, column=col_letter, value=value)
+                updated += 1
+
+        save_workbook_atomically(wb, resolved_index_path)
+
+    return (
+        f"bulk_set_column complete\n"
+        f"column: {column_name!r}\n"
+        f"value: {value!r}\n"
+        f"rows updated: {updated}"
+    )
+
+
 def mark_deleted(notebook_id: str, index_path: Path | None = None) -> str:
     """Mark a notebook as deleted in the index workbook."""
     resolved_index_path = index_path or INDEX_PATH
@@ -204,6 +269,13 @@ if __name__ == "__main__":
         result = upsert(data["notebook"], data["sources"], index_path=index_path)
     elif operation == "mark_deleted":
         result = mark_deleted(data["notebook_id"], index_path=index_path)
+    elif operation == "bulk_set_column":
+        result = bulk_set_column(
+            column_name=data["column_name"],
+            value=data["value"],
+            match_ids=data["match_ids"],
+            index_path=index_path,
+        )
     else:
         print(f"ERROR: unknown operation {operation!r}", file=sys.stderr)
         sys.exit(1)
