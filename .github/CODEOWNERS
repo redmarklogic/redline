@@ -1,0 +1,11 @@
+# CODEOWNERS
+# Maps file paths to required reviewers. PRs touching a path must be approved
+# by at least one listed owner before merging (when "Require review from Code Owners"
+# is enabled in branch protection).
+
+# Default: all changes require founder review
+*                   @harel-redmarklogic
+
+# Spec planning artifacts are deleted by the automated spec-archive workflow.
+# No human review required — CI still runs (and passes instantly for .md-only changes).
+specs/
