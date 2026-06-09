@@ -65,10 +65,10 @@ class PythonDocxFacade:
         self._doc.save(path)
 
     def to_bytes(self) -> bytes:
-        """Render the document to bytes without touching disk.
+        r"""Render the document to bytes without touching disk.
 
         Returns:
-            Raw .docx bytes (ZIP/OOXML, starts with PK\\x03\\x04).
+            Raw .docx bytes (ZIP/OOXML, starts with PK\x03\x04).
         """
         buffer = io.BytesIO()
         self._doc.save(buffer)

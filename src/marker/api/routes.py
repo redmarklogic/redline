@@ -5,7 +5,7 @@ from io import BytesIO
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-from starlette.responses import StreamingResponse
+from fastapi.responses import StreamingResponse
 
 from marker.api.dependencies.auth import require_bearer
 from marker.api.schemas import CreateSkeletonRequest
@@ -34,7 +34,7 @@ def _safe_filename(project_number: str) -> str:
         Safe filename stem (without .docx extension).
     """
     safe = _SAFE_FILENAME_PATTERN.sub("", project_number)
-    return safe if safe else "skeleton"
+    return safe or "skeleton"
 
 
 @router.post("/skeletons", status_code=200)

@@ -65,14 +65,14 @@ def build_skeleton_bytes(
     structure: ReportStructure,
     metadata: ProjectMetadata,
 ) -> bytes:
-    """Build a .docx report skeleton and return it as raw bytes.
+    r"""Build a .docx report skeleton and return it as raw bytes.
 
     Args:
         structure: Report structure whose sections populate the skeleton.
         metadata: Project metadata written as a table before the sections.
 
     Returns:
-        Raw .docx bytes (ZIP/OOXML, starts with PK\\x03\\x04).
+        Raw .docx bytes (ZIP/OOXML, starts with PK\x03\x04).
     """
     doc = PythonDocxFacade()
     build_metadata(metadata, doc)

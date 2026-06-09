@@ -140,7 +140,7 @@ exclude = "\\.git|\\.tox|tests"
 
 [tool.deptry]
 ignore_notebooks = false
-per_rule_ignores.DEP002 = [ "python-docx", "schemathesis" ]
+per_rule_ignores.DEP002 = [ "python-docx", "schemathesis", "uvicorn" ]
 
 [tool.pyproject-fmt]
 keep_full_version = true

@@ -12,9 +12,9 @@ import uuid
 
 import pydantic
 from fastapi import FastAPI, Request
+from fastapi.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
 
 logger = logging.getLogger(__name__)
 
@@ -119,7 +119,7 @@ def register_exception_handlers(app: FastAPI) -> None:
     ) -> JSONResponse:
         """Map RequestValidationError to the standard error envelope.
 
-        Unparseable bodies (json_invalid) → 400 BAD_REQUEST.
+        Unparsable bodies (json_invalid) → 400 BAD_REQUEST.
         All other validation failures → 422 VALIDATION_ERROR with details.
 
         Args:
