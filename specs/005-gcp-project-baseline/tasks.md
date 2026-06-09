@@ -57,14 +57,37 @@ correct IAM roles before any GCP resource is created.
 
 **Gate**: #48 and #63 must be closed before this phase runs.
 
+> BLOCKED: This entire phase (and all phases that follow) is gated on two GitHub issues.
+> Neither issue is closed as of 2026-06-10.
+>
+> **Blocker 1 — Issue #48** "Platform P — ratify Cloud Run runtime + Artifact Registry (B-1a)"
+> Must be closed before any GCP resource provisioning begins. This issue ratifies the
+> hosting architecture decision (Cloud Run + Artifact Registry) that all subsequent infra
+> work depends on.
+>
+> **Blocker 2 — Issue #63** "Infra ADR + Tier-1 GCP approval (Cloud Run + Artifact Registry)"
+> Must be closed (ADR-020 merged, Tier-1 approval recorded) before Phase 2 runs.
+> ADR-020 is the governance gate for the deploy chain.
+>
+> **Additional pre-condition for T008** (see note on T008 below): Brent must fill two
+> placeholder values in `infra/terraform/terraform.tfvars` before the bootstrap script
+> can run. See T008 annotation.
+>
+> **How to resume**: Close #48 first (architecture ratification), then close #63 (ADR-020
+> merge + Tier-1 sign-off), then restart from T003. Verify `terraform.tfvars` placeholders
+> are filled before running T008.
+
+<!-- BLOCKED: T003 cannot run until issues #48 and #63 are both closed. -->
 - [ ] T003 Verify `gcloud` CLI is installed and authenticated:
   (a) run `gcloud auth list` and confirm the correct account is active;
   (b) run `gcloud organizations get-iam-policy <org_id>` or
   `gcloud resource-manager folders get-iam-policy <folder_id>` and confirm the active
   account holds `roles/owner` or (`roles/resourcemanager.projectCreator` +
   `roles/billing.user`); provisioning fails silently without this check
+<!-- BLOCKED: T004 cannot run until issues #48 and #63 are both closed. -->
 - [ ] T004 Confirm the billing account in `terraform.tfvars` is active:
   run `gcloud billing accounts list` and match against the recorded value
+<!-- BLOCKED: T005 cannot run until issues #48 and #63 are both closed. -->
 - [ ] T005 Verify `terraform` CLI is installed: run `terraform version` and confirm
   version matches the constraint in `infra/terraform/versions.tf` (to be written in T006)
 
@@ -94,6 +117,13 @@ zero changes (idempotency). Verify all FR-003 APIs report ENABLED via
     `gcloud storage buckets describe "gs://$STATE_BUCKET" 2>/dev/null || gcloud storage buckets create "gs://$STATE_BUCKET" --project "$PROJECT_ID" --location "$REGION"`
   - Read `PROJECT_ID`, `FOLDER_ID`/`ORG_ID`, `STATE_BUCKET`, `REGION` from
     `infra/terraform/terraform.tfvars` (parse with grep/sed or pass as env vars)
+<!-- BLOCKED: T008 cannot run until issues #48 and #63 are both closed AND Brent has
+     filled the two placeholder values in infra/terraform/terraform.tfvars:
+       billing_account = "XXXXXX-XXXXXX-XXXXXX"  →  replace with real billing account ID
+       folder_id       = "000000000000"           →  replace with real GCP folder ID,
+                                                      OR remove and use org_id instead
+     The bootstrap script reads these values at runtime; it will fail or operate against
+     the wrong account if placeholders remain. -->
 - [ ] T008 [US1] Run `infra/bootstrap/bootstrap.sh`; confirm GCP project and state
   bucket exist via `gcloud projects describe` and `gcloud storage buckets describe`
 
@@ -114,16 +144,22 @@ zero changes (idempotency). Verify all FR-003 APIs report ENABLED via
   is safe to re-apply)
 - [x] T014 [US1] Implement `infra/terraform/outputs.tf`: output `project_number`
   (from data source), `project_id`, `region`, `state_bucket`
+<!-- BLOCKED: T015 cannot run until #48 and #63 are closed and T008 has completed
+     (GCP project + state bucket must exist before remote state can initialise). -->
 - [ ] T015 [US1] Run `terraform init` from `infra/terraform/`; confirm remote state
   initializes against the GCS bucket created in T008
+<!-- BLOCKED: T016 cannot run until T015 succeeds. Requires #48 and #63 closed. -->
 - [ ] T016 [US1] Run `terraform plan`; review diff — expect resources for all FR-003
   APIs and billing linkage; confirm no unexpected additions
+<!-- BLOCKED: T017 cannot run until T016 plan is reviewed and approved. Requires #48 and #63 closed. -->
 - [ ] T017 [US1] Run `terraform apply`; confirm exit code 0 and all resources show
   `Apply complete`
+<!-- BLOCKED: T018 cannot run until T017 completes. Requires #48 and #63 closed. -->
 - [ ] T018 [US1] Verify post-apply state:
   - `gcloud services list --enabled --project=<project_id>` — all FR-003 APIs present (SC-002)
   - `gcloud billing projects describe <project_id>` — billing linked and active (SC-005)
   - `terraform output project_number` — non-empty value returned (SC-003)
+<!-- BLOCKED: T019 cannot run until T018 passes. Requires #48 and #63 closed. -->
 - [ ] T019 [US1] Re-run `terraform apply`; confirm `0 to add, 0 to change, 0 to destroy`
   (idempotency, SC-004); record timing against SC-001 (< 15 min end-to-end)
 
