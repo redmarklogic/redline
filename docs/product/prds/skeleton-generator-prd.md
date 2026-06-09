@@ -60,7 +60,7 @@ Tier 2 NZ/AU geotechnical consultancies (5-50 person firms). Explicitly not Tier
   tokens. Clauses and their inclusion conditions:
 
   | Clause ID | Name | Included when |
-  |---|---|---|
+  | --- | --- | --- |
   | SCOPE-CLAUSE-01 | Inferred conditions caveat | Always (NZ/AU) |
   | SCOPE-CLAUSE-05 | Third-party reliance | Always (NZ/AU) |
   | SCOPE-CLAUSE-NEW | Temporal validity of recommendations | Always (NZ/AU) |
@@ -86,6 +86,14 @@ Tier 2 NZ/AU geotechnical consultancies (5-50 person firms). Explicitly not Tier
 
 ### Out of Scope
 
+- **GBR (Geotechnical Baseline Report) skeleton generation**: GBR is out of scope for
+  the 2023 EnggNZ/NZGS guideline and for this version. A separate initiative with a
+  different primary reference is required.
+- **Complex project types** (commercial, infrastructure, multi-hazard): the 2023
+  guideline is scoped to simple, low-risk, residential projects. If a user's LOE
+  indicates a non-residential or complex project, the skeleton generator must surface
+  this boundary — it must not silently generate a skeleton that is structurally
+  insufficient for the project type.
 - Pre-Review annotations or inline comments (Bet 2 / Sprint 2-3).
 - Adversarial Scan (Phase-2).
 - House Rules configuration (Sprint 5+).
@@ -121,7 +129,7 @@ trail your insurer will ask for."
 Per Bet 1's kill criterion:
 
 | Metric | Target | Kill threshold |
-|---|---|---|
+| --- | --- | --- |
 | Verified-email signups (90 days) | 50+ | < 50 kills the wedge |
 | Outbound response rate (quota-exhausted users) | 5%+ | < 5% kills the wedge |
 | 60-day warning signal | 30+ signups by Day 60 | Below 30 triggers course correction |
@@ -191,7 +199,7 @@ Product-quality metric (informing iteration, not bet-kill): activation rate
 ## Risks
 
 | Risk | Mitigation |
-|---|---|
+| --- | --- |
 | Skeleton quality too low — engineers don't trust it | Grounded in prior research (acceptance criteria + section placeholders). Iterate based on Day 1-30 feedback. |
 | Quota cap too generous — no conversion pressure | Start at 3 documents. Increase only if activation rate is low. |
 | SSO gating loses casual users | Acceptable tradeoff — unverified signups have no outbound path. |
@@ -202,6 +210,303 @@ Product-quality metric (informing iteration, not bet-kill): activation rate
 
 Sprint 2 PRD for D (Inline Annotation Engine) + G (Justification Email Generator) is
 drafted in parallel, per the [feature-backlog.md](../strategy/feature-backlog.md) handoff.
+
+---
+
+## EnggNZ/NZGS 2023 Conformance (Standards Grounding Amendment)
+
+**Added**: 2026-06-09. **Owner**: Mark. **Status**: Partially grounded — see gap markers.
+
+**What this section is**: An amendment to the Acceptance Criteria above, replacing the
+vague reference in AC2 ("section headings consistent with GIR skeleton acceptance
+criteria") with explicit, standards-grounded requirements derived from the
+Engineering New Zealand (EnggNZ) / New Zealand Geotechnical Society (NZGS) joint
+document "Geotechnical Reports Guideline and Template" (August 2023). This guideline
+is now the primary source in the `geotechnical-report-workflows` NotebookLM notebook.
+
+**Primary reference**: EnggNZ/NZGS "Geotechnical Reports Guideline and Template,"
+August 2023. Available at: <https://d2rjvl4n5h2b61.cloudfront.net/media/documents/Geotech_report_template.pdf>
+
+**Supporting references** (loaded in same notebook):
+
+- CEDD GeoGuide 2 — Guide to Site Investigation (2017)
+- CEDD GeoGuide 3 — Guide to Rock and Soil Descriptions (2017)
+- FHWA-NHI-16-072 Geotechnical Engineering Circular No. 5 (2016)
+
+---
+
+### Diagnosis
+
+Redline's current stage is pre-launch, single jurisdiction (NZ), with a small cost
+envelope and no live users. The binding constraint is shipping a skeleton that engineers
+trust enough to use — not comprehensive standards coverage. The ENZ/NZGS 2023 guideline
+is the authoritative NZ practitioner reference for residential and low-risk geotechnical
+report structure. Conformance to this guideline is the minimum credibility bar for
+the NZ beachhead. The supporting CEDD and FHWA references provide secondary
+validation but are not the conformance target for Sprint 1.
+
+**Surviving the Round test**: Conformance to the 2023 guideline is justified at the
+short-runway horizon (3–6 months): engineers will not trust a skeleton that violates
+the primary NZ practitioner standard. The control logic elements (see below) are only
+justified under the long-runway assumption — do not implement control logic in Sprint 1
+without a Peter-shaped scope. Ship structural correctness first; conditional branching
+follows.
+
+---
+
+### Grounded structural requirements
+
+These requirements are grounded in prior notebook queries against `geotechnical-report-workflows`
+(see `docs/research/domain/20260411-gir-skeleton-acceptance-criteria.md` and
+`docs/research/domain/20260411-gir-skeleton-section-placeholders.md`). The notebook
+has since been refreshed with the 2023 guideline as its primary source. The requirements
+below are consistent with those prior queries. Where the 2023 guideline may provide
+more specific or divergent requirements, those are flagged as gaps requiring Graeme's
+direct query (see Gap Markers section below).
+
+#### Mandatory sections — GIR (Geotechnical Interpretive Report)
+
+The skeleton must include all of the following sections, in this order:
+
+| # | Section | Notes |
+| --- | ------- | ----- |
+| FM-1 | Document Control (version table + distribution matrix) | Always |
+| FM-2 | Table of Contents | Always |
+| FM-3 | Client Summary (default) OR Executive Summary (only if LOE requests it) | Always; "Client Summary" is the default heading per the guideline; "Executive Summary" carries risk of contradicting the report body |
+| 1 | Introduction | Always; includes client, site, purpose, superseded reports |
+| 1.1 | Scope of Work | Conditional — see control logic below |
+| 1.2 | Site Description | Always |
+| 1.3 | Proposed Development | Always |
+| 2 | Assessment and Interpretation | Always |
+| 2.1 | Ground and groundwater conditions | Always |
+| 2.1.4 | Geotechnical Model Table | Always; must be a structured table, never narrative text only |
+| 2.2 | Seismic shaking hazard | Always for NZ sites |
+| 2.3 | Liquefaction assessment | Always for most NZ sites — see control logic below |
+| 4 | Residual Geotechnical Risk | Always; failing to include this exposes the firm to legal claims |
+| 5 | Further Work | Always |
+| 6 | Applicability (legal boilerplate) | Always — includes mandatory limitation clauses |
+| REF | References | Always |
+| APP-A | Appendix A: Figures | Always |
+
+#### Conditional sections — GIR
+
+| Section | Included when |
+| ------- | ------------ |
+| 2.4 — Other geotechnical hazards (slope stability, fault rupture) | Only when site conditions indicate relevance; not default |
+| 2.5 — Geotechnical issues identified (summary table) | Optional — authoring decision |
+| 3 — Foundation Assessment | Only when the LOE specifically requires foundation design or engineering parameters |
+| 3.X — Ground Improvement | Only when natural ground is assessed as inadequate |
+| APP-B/C/D — Investigation logs, lab results | Conditional; if a separate GFR exists, appendices cross-reference the GFR rather than duplicating raw data |
+
+#### GBR scope boundary — resolved (GBR-STRUCT-01 closed)
+
+**Resolved 2026-06-09. Gap marker GBR-STRUCT-01 closed.**
+
+The 2023 EnggNZ/NZGS guideline does not cover Geotechnical Baseline Reports (GBR).
+GBR is out of scope for this guideline. The only in-scope report type is the
+**Geotechnical Assessment Report**.
+
+Skeleton generator v1 therefore targets the Geotechnical Assessment Report only.
+GBR and complex project types (commercial, infrastructure, multi-hazard) are
+explicitly out of scope for v1. A separate initiative is required before GBR
+skeleton generation can be built — it would need a different primary reference
+(e.g., ASCE/CIRIA C807) and a separate shaping session with Peter.
+
+Note on terminology: the 2023 guideline uses "Geotechnical Assessment Report" as
+its primary term. Where this PRD and earlier research used "GIR (Geotechnical
+Interpretive Report)", treat these as equivalent for the purposes of Sprint 1 — the
+structural requirements derived from prior notebook queries remain valid. The
+distinction is clarified here for record-keeping only and does not require renaming
+artifacts in this sprint.
+
+#### Geotechnical Model Table structure (mandatory)
+
+The skeleton must include an empty Geotechnical Model Table in section 2.1.4 with
+these column headers (text-only soil profile descriptions are explicitly prohibited):
+
+| Column | Required |
+| ------ | ------- |
+| Layer / Unit | Yes |
+| Description | Yes |
+| Top of Layer (m) / Depth | Yes |
+| Top of Layer (RL — Reduced Level, elevation relative to datum) | Yes |
+| Layer Thickness (m) | Yes |
+| Typical Test Values (SPT N-value and/or CPT qc) | Yes |
+
+#### NZ standards references (per section)
+
+The skeleton must include standards references for the following sections.
+These are drawn from the NZ engineering standards registry:
+
+- Section 2.2 (Seismic hazard): NZS 1170.5:2004, Section 3.1.3 (Site Subsoil
+  Classification, Classes A–E).
+- Section 2.3 (Liquefaction): NZGS Module 3 (liquefaction hazard identification,
+  assessment, and mitigation).
+- Section 3 (Foundation Assessment, when included): NZS 3604:2011, Sections 3.1.2
+  (Good Ground definition), 3.2 and 3.3.7 (exclusions), 3.3.1/3.3.4 (Scala
+  Penetrometer testing requirements), Section 17 (expansive soils).
+- Appendix B/C/D (investigation logs): NZGS Field Description of Soil and Rock (2005),
+  mandatory format for borehole and test pit log appendices.
+
+**Resolved 2026-06-09. Gap marker STD-REF-01 closed.**
+
+Graeme confirmed the standards the skeleton must respect per the 2023 guideline:
+
+- **New Zealand Building Code (current edition)** — mandatory compliance for all NZ
+  geotechnical reports.
+- **NZS 1170.5** — the site subsoil class section (Section 6.5 of that standard) must
+  be referenced in the seismic hazard section of the skeleton. This supersedes the
+  prior reference to NZS 1170.5:2004 §3.1.3 listed above; retain both section
+  references until Graeme confirms whether 2004 §3.1.3 and the current §6.5 cite
+  the same classification schema.
+- **NZGS Field Description of Soil and Rock** — investigation logs must reference
+  this standard. Mandatory format for borehole and test pit log appendices. (Consistent
+  with prior research.)
+- **MBIE Earthquake Geotechnical Engineering Practice Module 1** — recommended
+  reference for collaboration sections. Not mandatory, but expected by practitioners.
+- **"Most recent NZ guidelines and standards from professional societies and MBIE"**
+  — blanket requirement cited explicitly in the 2023 guideline. The skeleton must
+  not pin outdated standards versions without checking against current editions at
+  the time of implementation.
+
+---
+
+### Control logic — known and flagged
+
+**What "control logic" means here**: The 2023 guideline likely contains decision rules
+of the form "include section X only if condition Y is true." These rules must be
+implemented somewhere — either as hard-coded rules in the skeleton generator, as
+prompts that ask the user to decide, or as LLM-inferred decisions from the LOE.
+Each approach has different implementation complexity and different risk of error.
+
+#### Control logic — grounded (known from prior research)
+
+These conditional rules are established from prior notebook queries:
+
+| Rule ID | Condition | Section affected | Branch |
+| ------- | --------- | --------------- | ------ |
+| CL-01 | LOE explicitly requests "Executive Summary" | FM-3 | Use "Executive Summary"; otherwise default to "Client Summary" |
+| CL-02 | Introduction adequately covers scope | 1.1 Scope of Work | Omit 1.1 if Introduction is sufficient; include 1.1 if not |
+| CL-03 | Site conditions indicate slope instability, fault proximity | 2.4 Other hazards | Include when relevant; omit when not |
+| CL-04 | LOE requires foundation design or engineering parameters | Section 3 | Include when required; omit when not |
+| CL-05 | Natural ground assessed as inadequate | 3.X Ground Improvement | Include when inadequate; omit otherwise |
+| CL-06 | Separate GFR exists for the same project | Appendices B/C/D | Cross-reference GFR; do not duplicate raw data |
+| CL-07 | Report supports a consent application | Section 6 legal boilerplate | Add Council/Regulatory Authority clause |
+| CL-08 | Groundwater section is present in the skeleton | SCOPE-CLAUSE-03 | Include groundwater fluctuation clause |
+
+**CL-02 is a known design problem**: The rule "include 1.1 if Introduction does not
+adequately cover scope" requires either (a) an LLM judgment call on "adequate" — which
+is subjective and hard to test — or (b) always defaulting to include 1.1 (safe but
+potentially redundant). This is an authoring decision, not a product decision. For
+Sprint 1, default to including 1.1 unless the LOE extraction produces a scope statement
+that meets a defined minimum word/element count. This default is safe; it can be relaxed
+later.
+
+#### Control logic — unknown (requires Graeme's 2023 guideline query)
+
+**Resolved 2026-06-09. Gap marker CL-2023-01 closed.**
+
+Graeme confirmed 8 conditional rules from the 2023 guideline, all explicit in the
+document. These are the authoritative rules for conditional section inclusion in the
+Geotechnical Assessment Report skeleton:
+
+| Rule ID | Condition | Section / Element affected | Branch |
+| ------- | --------- | ------------------------- | ------ |
+| CL-G1 | Nature of site and development | Section 7 (Geotechnical Hazards), sub-sections 7.1–7.15 | Include sub-sections as appropriate |
+| CL-G2 | Detailed analysis/assessment undertaken (e.g. liquefaction) | Section 7 — full analysis details | Mandatory include when detailed analysis performed |
+| CL-G3 | Nature of site and development | Section 8.2 (Foundations), sub-sections 8.2.1–8.2.9 | Include sub-sections as appropriate |
+| CL-G4 | Nature of site and development | Section 8.3 (Filling and Earthworks) | Include as appropriate |
+| CL-G5 | Existing or proposed retaining walls present | Section 8.4 (Retaining Walls) | Include when retaining walls present |
+| CL-G6 | Flooding information is uncertain | Section 4.3 | Modify to include recommendations for specialist assessment |
+| CL-G7a | Proposed works footprint available at time of reporting | Appendices — site plan | Include footprint on site plan |
+| CL-G7b | Required by client or authority | Appendices — statement of professional opinion | Include statement |
+| CL-G8 | Local regulatory or region-specific variables not covered by guideline | Author-added sections | Author responsibility; explicitly noted in guideline |
+
+**Graeme's domain notes (binding on product design):**
+
+1. **"As appropriate" triggers (CL-G1, CL-G3, CL-G4) are practitioner judgement calls.**
+   The guideline does not specify which project inputs activate "as appropriate." The
+   skeleton generator requires its own input model — project type flags and site condition
+   parameters — to operationalise these rules. This is a product design decision, not a
+   guidelines question. It must be resolved in a scoping discussion with Peter before
+   implementation.
+
+2. **Sections 8.5 (Slope design) and 8.6 (Other engineering considerations):** Conditional
+   status is not stated in the guideline. Graeme infers these are conditional, but this
+   is not cited. Treat as conditionally included; do not hard-code as always-on. Flag
+   as requiring further confirmation if they appear in the skeleton.
+
+3. **Guideline scope boundary:** The 2023 EnggNZ/NZGS guideline is explicitly scoped to
+   **simple, low-risk, residential projects**. If the skeleton generator targets more
+   complex project types (commercial, infrastructure, multi-hazard), this guideline is
+   an insufficient reference for those cases. This boundary must be enforced in v1 scope
+   and surfaced to users if their LOE indicates a non-residential or complex project.
+
+---
+
+### Hard design gate — control logic requires Peter before implementation
+
+**This is not a straightforward generation task.**
+
+The control logic rules above (CL-01 through CL-08) vary in implementation complexity:
+
+- CL-01 (Executive vs Client Summary): Simple — LOE extraction looks for keyword.
+- CL-07, CL-08 (consent application, groundwater clause): Simple — keyword or
+  section-presence check.
+- CL-04, CL-05 (foundation assessment, ground improvement): Medium — depends on
+  LOE scope statement clarity.
+- CL-02 (Scope of Work conditional): Hard — requires defining "adequate coverage"
+  in a way the LLM can evaluate reliably.
+- CL-2023-01 (unknown 2023 guideline rules): Unknown complexity until Graeme queries
+  the notebook.
+
+**Implication**: Some rules are safe to implement as keyword-based logic in Sprint 1.
+Others require an LLM judgment call that could produce wrong outputs at high frequency.
+The design of the conditional logic — what the system decides vs what the user decides —
+is an architectural question that belongs in a Peter-shaped Pitch, not in this PRD.
+
+**Gate**: No implementation of conditional section logic beyond the keyword-based rules
+(CL-G6, CL-G7a, CL-G7b, CL-G5) is permitted until:
+
+1. Peter reviews and shapes the input model for "as appropriate" triggers (CL-G1,
+   CL-G3, CL-G4) — project type flags and site condition parameters are a product
+   design decision not resolved by the guideline. This is the primary open design
+   problem for conditional section logic.
+2. A Pitch exists in `specs/shaped/` covering this scope.
+
+Conditional logic (Rules CL-G1 through CL-G8) requires a scoping discussion with
+Peter before implementation. The input model for activating conditional sections is
+a product design decision not resolved by the guideline.
+
+---
+
+### Updated acceptance criteria (replacing AC2 in the main PRD)
+
+The following replaces the vague reference in the main PRD AC2 ("section headings
+consistent with GIR skeleton acceptance criteria"):
+
+| AC# | Criterion | Category | Grounded in |
+| --- | --------- | -------- | ----------- |
+| AC2a | Skeleton includes all mandatory GIR sections in the correct order: Document Control, ToC, Client Summary, Sections 1–6, References, Appendix A. No mandatory section is missing or reordered. | Structure | Prior notebook queries; 2023 guideline (confirm with Graeme) |
+| AC2b | "Client Summary" is the default front-matter heading. "Executive Summary" is only used if the LOE extract explicitly contains that term. | Structure | 2023 guideline (prior queries confirmed) |
+| AC2c | Section 2.1.4 (Geotechnical Model Table) is present as a structured table with mandatory column headers: Layer/Unit, Description, Depth, RL, Thickness, Typical Test Values. No text-only soil profile placeholder is used. | Structure | Prior notebook queries |
+| AC2d | Conditional sections (2.4, 3, 3.X, Appendices B/C/D) are included or excluded based on explicit rules (CL-01 through CL-08). Each inclusion/exclusion decision is logged in the generation audit trail. | Structure + Audit | Prior notebook queries |
+| AC2e | Section 2.2 (Seismic hazard) references NZS 1170.5:2004 §3.1.3. Section 2.3 (Liquefaction) references NZGS Module 3. Section 3, when included, references NZS 3604:2011 §3.1.2, §3.2, §3.3.7. | Compliance | Engineering Standards notebook |
+| AC2f | **[PENDING PETER SHAPING — input model required]** The skeleton correctly activates or suppresses conditional sections per Rules CL-G1 through CL-G8 (confirmed from 2023 guideline). Specifically: Section 7 sub-sections 7.1–7.15 appear only when site and development nature warrants (CL-G1); Section 7 full analysis is mandatory when detailed analysis has been performed (CL-G2); Section 8.2 sub-sections 8.2.1–8.2.9 appear only as appropriate (CL-G3); Section 8.3 appears as appropriate (CL-G4); Section 8.4 appears only when retaining walls are present (CL-G5); Section 4.3 is modified when flooding information is uncertain (CL-G6); site plan footprint is included when available at time of reporting (CL-G7a); statement of professional opinion is included when required by client or authority (CL-G7b). Implementation of the "as appropriate" triggers (CL-G1, CL-G3, CL-G4) requires an input model (project type flags, site condition parameters) — this is blocked until Peter shapes the conditional logic approach. | Structure | 2023 EnggNZ/NZGS guideline — confirmed by Graeme 2026-06-09 |
+| AC2g | Section 6 (Applicability) includes SCOPE-CLAUSE-01 (inferred conditions), SCOPE-CLAUSE-05 (third-party reliance), SCOPE-CLAUSE-NEW (temporal validity), and SCOPE-CLAUSE-03 when a Groundwater section is present. Clause wording is retrieved from the Standards Knowledge Store, not LLM-generated. | Liability | Main PRD §Acceptance Criteria, Decision 004 |
+
+---
+
+### Gap summary
+
+| Gap ID | Description | Status | Resolved |
+| ------ | ----------- | ------ | -------- |
+| GBR-STRUCT-01 | Does the 2023 guideline include a GBR template, or is GBR out of scope? | CLOSED | 2026-06-09 — GBR is out of scope for the 2023 guideline. Skeleton generator v1 targets Geotechnical Assessment Report only. |
+| STD-REF-01 | Does the 2023 guideline reference updated or additional standards not in the April 2026 list? | CLOSED | 2026-06-09 — Graeme confirmed 5 standards: NZBC (current), NZS 1170.5, NZGS Field Description, MBIE EGE Practice Module 1, and blanket "most recent NZ guidelines" requirement. |
+| CL-2023-01 | What conditional/branching rules does the 2023 guideline contain beyond CL-01–CL-08? | CLOSED — PENDING PETER SHAPING | 2026-06-09 — 8 rules confirmed (CL-G1–CL-G8). "As appropriate" triggers (CL-G1, CL-G3, CL-G4) require an input model; blocked until Peter shapes the conditional logic approach. |
+
+**Next step**: Peter reviews conditional section logic complexity and writes a Pitch covering
+section logic before it enters SpecKit.
 
 ---
 
@@ -217,12 +522,14 @@ then the skeleton generates with a live progress indicator. The traceability mat
 deferred to Sprint 2. No manual-input form. No fallback form.
 
 **Alternatives rejected**:
+
 - *Manual-input form (Ron's pre-mortem Risk 1 Action A)*: Rejected by founder.
   The form approach is superseded. Two input paths (form + parser) doubles testing
   and signals unreliability. If extraction fails on a particular LOE format, the
   skeleton generates with blank metadata fields — the user edits in Word.
 
 **Rationale (founder)**:
+
 - The document parser scoped to metadata extraction (Step 2) is feasible within
   Sprint 1. Full deliverable parsing (Step 3) is the R&D-grade task — that is what
   gets deferred, not the parser itself.
@@ -234,6 +541,7 @@ that scoping the parser to metadata extraction only is a clean mitigation that
 preserves the pre-mortem's intent (reduce R&D risk) without sacrificing the UX.
 
 **John's marketing assessment**:
+
 - One-click is the only version that supports PLG acquisition — every form field is
   an abandonment point.
 - The progress indicator is marketing copy embedded in the product. It teaches users
@@ -251,6 +559,7 @@ preserves the pre-mortem's intent (reduce R&D risk) without sacrificing the UX.
   vs. what was inferred.
 
 **Artifacts affected**:
+
 - `docs/product/problems/skeleton-manual-input-problem.md` — superseded.
 - `docs/product/strategy/pre-mortems/2026-04-21-sprint-1-pre-mortem.md` — Risk 1
   Action A superseded (addendum added).

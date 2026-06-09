@@ -209,7 +209,7 @@ semantic ones; the principle must be understood, not just obeyed.
   FastAPI* (Iusztin, 2024) and *Modern Software Engineering* (Farley, 2021) and
   *Continuous Delivery* (Humble & Farley, 2010)
 - `docs/architecture/skills-architecture.md` — six-layer stack and handoff chain
-- ADR-008 — SkillX three-tier taxonomy and governance registry (skills as typed assets)
+- ADR-009 — SkillX three-tier taxonomy and governance registry (skills as typed assets)
 - `.agents/skills/writing-skills/SKILL.md` — operational rule: "Never name a skill after an agent"
 - `.agents/skills/hiring-agent-management/SKILL.md` — operational rule: "Skills must never be named after an agent and must never reference a specific agent name inside their content"
 - `.agents/skills/skills-create/SKILL.md` — operational rule: "NEVER name a skill after an agent"

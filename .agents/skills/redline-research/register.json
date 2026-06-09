@@ -157,25 +157,32 @@
       "id": "geotechnical-report-workflows",
       "name": "Geotechnical Engineering Report Workflows and Standard Procedures",
       "url": "https://notebooklm.google.com/notebook/cffffcd3-1c00-4ca7-8ade-c93f20064715",
-      "description": "Professional practice guides, templates, QA checklists, and training materials for geotechnical report structuring, factual/interpretive delineation, and client-centric writing -- compiled from a leading NZ geotechnical consultancy's internal knowledge base.",
+      "description": "Professional practice guides and authoritative references for geotechnical report structuring, factual/interpretive delineation, section-by-section authoring, and client-centric writing. Current sources (4): EnggNZ/NZGS Geotechnical Reports Guideline and Template (August 2023); CEDD GeoGuide 2 — Guide to Site Investigation (2017); CEDD GeoGuide 3 — Guide to Rock and Soil Descriptions (2017); FHWA-NHI-16-072 Geotechnical Engineering Circular No. 5 (2016). Populated 2026-06-09 per Graeme binding domain verdicts.",
       "topic_area": "Geotechnical domain",
       "topics": [
         "geotechnical report structuring",
         "factual vs interpretive reporting",
-        "QA checklists",
+        "section-by-section authoring",
         "client-centric writing",
-        "professional practice"
+        "professional practice",
+        "NZGS guidance",
+        "FHWA guidance",
+        "site investigation",
+        "rock and soil descriptions",
+        "CEDD GeoGuide series"
       ],
       "content_types": [
         "practice guides",
-        "templates",
-        "QA checklists",
-        "training materials"
+        "authoritative references",
+        "report templates",
+        "technical circulars"
       ],
       "use_cases": [
         "Structuring geotechnical engineering reports",
         "Applying factual/interpretive delineation in reports",
-        "Using QA checklists for report review"
+        "Using authoritative guidance for section-by-section report authoring",
+        "Applying NZ professional practice standards for geotechnical reports",
+        "Referencing FHWA or CEDD GeoGuide standards for site investigation and soil/rock description"
       ],
       "access": "open",
       "added": "2026-04-18",

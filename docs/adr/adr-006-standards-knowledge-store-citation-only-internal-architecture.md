@@ -53,8 +53,8 @@ The full Graeme advisory is at
   applicability mappings, and derived guidance summaries only — never full proprietary
   text. Use the index exclusively inside Redline features. Engineer users are directed
   to read the source standard (via clause reference and a "where to find this standard"
-  link). Public-facing SEO tools drawing on the index are a Phase-2 decision
-  (see `docs/product/strategy/decisions/parked-decisions.md` P-019 and P-026).
+  link). Public-facing SEO tools drawing on the index are deferred until the formal
+  licensing review with standards bodies resolves and KR1 is validated.
 
 - **Option D — No internal standards index**: Rely solely on public LLM training data
   for standards awareness. Lowest IP risk. Forfeits Bet 3 — the Standards Knowledge
@@ -108,17 +108,13 @@ quality layer, not an AI assistant).
   use. Direct enquiries to Standards NZ, Standards Australia, NZGS, and ACENZ are
   required before any standards content enters a production system (see P-026).
 - Public-facing Product-Led SEO tools drawing on the Standards Knowledge Store are
-  deferred until the licensing review resolves and KR1 is validated (P-019, P-026).
+  deferred until the formal licensing review with Standards NZ, Standards Australia,
+  NZGS, and ACENZ resolves and KR1 is validated.
 
 ## References
 
 - ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for NZ/AU standards citations and applicability mappings
-- `docs/knowledge/geotechnical/standards-and-codes/nz-au-standards-ip-classification.md`
-  — Graeme's domain advisory (2026-04-19)
-- `docs/product/strategy/positioning.md` — Anti-positioning (chatbot forbidden form)
-- `docs/product/strategy/strategic-bets.md` — Bet 3 (Standards Knowledge Store moat),
-  Bet 4 (Switzerland-neutral), Bet 6 (new-market disruption stealth)
-- `docs/product/strategy/decisions/parked-decisions.md` — P-019 (Product-Led SEO),
-  P-026 (formal licensing enquiries)
-- ADR-004 — Facade primitives-only boundary (related: what passes through internal
-  boundaries)
+- ADR-004 — Facade primitives-only boundary (related: what passes through internal boundaries)
+- Graeme's domain advisory on NZ/AU standards IP classification (2026-04-19) — see `docs/knowledge/geotechnical/standards-and-codes/`
+- Anti-positioning (chatbot forbidden form) — see `docs/product/strategy/`
+- Strategic bets (Bet 3 Standards Knowledge Store moat, Bet 4 Switzerland-neutral, Bet 6 new-market disruption stealth) — see `docs/product/strategy/`

@@ -79,7 +79,7 @@ When placing a new skill, ask:
 │  ceremony-monthly-editorial-session · sync-agent-topology            │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 8: Engineering Workflows                                      │
-│  shaping · arch-engineering · design-eval-rubric · design-eval-pipeline │
+│  shaping · arch-engineering · create-adr · design-eval-rubric · design-eval-pipeline │
 │  define-ai-policy · enforce-ai-batch-discipline                      │
 │  doc-updater · sonarqube-quality-gate                                │
 │  git-push-batched · resolving-pr-issues · skills-create              │
@@ -93,7 +93,7 @@ When placing a new skill, ask:
 │  Layer 6: Python Implementation (volatile)                           │
 │  python-patterns · python-function-design · python-class-design      │
 │  python-module-structure · python-domain-modeling                    │
-│  python-documentation · python-error-handling                        │
+│  python-documentation · python-error-handling · python-fastapi       │
 │  python-data-ingestion · python-crewai                               │
 │  python-script · python-script-numbering                             │
 │  python-pins-data-version-control · python-plot-colors               │
@@ -221,7 +221,7 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 | ------------- | ----------------------------------------------------------------------------------------------------- |
 | Code design   | `python-patterns`, `python-function-design`, `python-class-design`, `python-module-structure` |
 | Domain & data | `python-domain-modeling`, `python-data-ingestion`, `python-crewai`                              |
-| Communication | `python-documentation`, `python-error-handling`                                                   |
+| Communication | `python-documentation`, `python-error-handling`, `python-fastapi`                                 |
 | Scripts       | `python-script`, `python-script-numbering`                                                        |
 | Specialised   | `python-pins-data-version-control`, `python-plot-colors`                                          |
 | Board tooling | `github-projects`                                                                                 |
@@ -247,7 +247,7 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 
 | Group | Skills |
 | --- | --- |
-| Architecture | `shaping`, `arch-engineering`, `design-eval-rubric`, `design-eval-pipeline`, `define-ai-policy`, `enforce-ai-batch-discipline` |
+| Architecture | `shaping`, `arch-engineering`, `create-adr`, `design-eval-rubric`, `design-eval-pipeline`, `define-ai-policy`, `enforce-ai-batch-discipline` |
 | Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`, `sonarqube-quality-gate` |
 | Skill authoring | `skills-create` |
 | Session discipline | `session-handover` |
@@ -311,6 +311,7 @@ graph LR
         pst[python-style]
         du[doc-updater]
         ghp[github-projects]
+        pfa[python-fastapi]
     end
 
     subgraph L7[L7 Applied]
@@ -338,6 +339,7 @@ graph LR
     kab --> cce
     kab --> sh
     kab --> ghp
+    kab --> pfa
 
     pet --> ae
     pet --> shp
