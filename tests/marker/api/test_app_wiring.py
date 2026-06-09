@@ -43,7 +43,7 @@ class TestErrorEnvelope:
 
         response = client.post("/skeletons", json={})
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
         body = response.json()
         assert "detail" not in body
         assert "code" in body
@@ -89,7 +89,7 @@ class TestErrorEnvelope:
         client = TestClient(app, raise_server_exceptions=False)
 
         with patch(
-            "marker.api.routes.build_skeleton_bytes",
+            "marker.api.services.skeletons.build_skeleton_bytes",
             side_effect=RuntimeError("boom internal"),
         ):
             response = client.post(

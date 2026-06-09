@@ -81,7 +81,7 @@ When placing a new skill, ask:
 │  Layer 8: Engineering Workflows                                      │
 │  shaping · arch-engineering · create-adr · design-eval-rubric · design-eval-pipeline │
 │  define-ai-policy · enforce-ai-batch-discipline                      │
-│  doc-updater · sonarqube-quality-gate                                │
+│  doc-updater · sonarqube-find-and-fix                                │
 │  git-push-batched · resolving-pr-issues · skills-create              │
 │  session-handover                                                     │
 ├──────────────────────────────────────────────────────────────────────┤
@@ -248,7 +248,7 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 | Group | Skills |
 | --- | --- |
 | Architecture | `shaping`, `arch-engineering`, `create-adr`, `design-eval-rubric`, `design-eval-pipeline`, `define-ai-policy`, `enforce-ai-batch-discipline` |
-| Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`, `sonarqube-quality-gate` |
+| Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`, `sonarqube-find-and-fix` |
 | Skill authoring | `skills-create` |
 | Session discipline | `session-handover` |
 

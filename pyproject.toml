@@ -179,6 +179,7 @@ sonarqube.exclusions = [
   "src/scripts/**",
   "**/__pycache__/**",
   "**/*.ipynb",
+  "**/__init__.py",
   "docs/**",
   ".agents/**",
   ".github/**",
@@ -199,7 +200,7 @@ root_packages = [ "marker", "rl" ]
 [[tool.importlinter.contracts]]
 name = "rl layers"
 type = "layers"
-layers = [ "functions", "schemas", "domain" ]
+layers = [ "functions", "schemas", "domain", "greeting" ]
 containers = [ "rl" ]
 exhaustive = true
 

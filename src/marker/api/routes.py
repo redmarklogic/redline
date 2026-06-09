@@ -9,8 +9,7 @@ from fastapi.responses import StreamingResponse
 
 from marker.api.dependencies.auth import require_bearer
 from marker.api.schemas import CreateSkeletonRequest
-from marker.domain.models import ProjectMetadata, ReportStructure
-from marker.functions.builders import build_skeleton_bytes
+from marker.api.services.skeletons import create_skeleton_document
 
 DOCX_MEDIA_TYPE = (
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -51,18 +50,7 @@ def create_skeleton(
     Returns:
         StreamingResponse with DOCX bytes and appropriate headers.
     """
-    structure = ReportStructure.model_validate(
-        {"Sections": [{"Heading": s} for s in body.sections]}
-    )
-    metadata = ProjectMetadata.model_validate(
-        {
-            "Project Number": body.project_number,
-            "Client Name": body.client_name,
-            "Site Address": body.site_address,
-            "Date": body.date,
-        }
-    )
-    docx_bytes = build_skeleton_bytes(structure, metadata)
+    docx_bytes = create_skeleton_document(body)
     filename = _safe_filename(body.project_number)
     return StreamingResponse(
         BytesIO(docx_bytes),

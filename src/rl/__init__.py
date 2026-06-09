@@ -1,8 +1,5 @@
 """Redline package."""
 
+from rl.greeting import hello
+
 __all__ = ["hello"]
-
-
-def hello() -> str:
-    """Return a simple package greeting."""
-    return "Hello from redline!"

@@ -139,7 +139,7 @@ def register_exception_handlers(app: FastAPI) -> None:
                 content=_envelope("BAD_REQUEST", "Request body could not be parsed."),
             )
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             content=_envelope(
                 "VALIDATION_ERROR",
                 "Request validation failed.",
@@ -164,7 +164,7 @@ def register_exception_handlers(app: FastAPI) -> None:
             JSONResponse with the error envelope.
         """
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             content=_envelope(
                 "VALIDATION_ERROR",
                 "Request validation failed.",

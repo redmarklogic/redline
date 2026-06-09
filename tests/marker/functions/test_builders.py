@@ -2,7 +2,11 @@ import pytest
 from docx import Document as DocxDocument
 
 from marker.domain.models import ProjectMetadata, ReportStructure
-from marker.functions.builders import build_metadata, build_skeleton, build_skeleton_bytes
+from marker.functions.builders import (
+    build_metadata,
+    build_skeleton,
+    build_skeleton_bytes,
+)
 
 
 def _make_structure(*headings: str) -> ReportStructure:

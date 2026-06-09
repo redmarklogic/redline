@@ -1,9 +1,9 @@
 ---
-name: sonarqube-quality-gate
-description: Use when running the end-to-end SonarQube quality gate for the current branch — from scan trigger through triage, fix, false-positive recording, shift-left prevention, and re-scan verification.
+name: sonarqube-find-and-fix
+description: Use when running the end-to-end SonarQube find-and-fix cycle for the current branch — from scan trigger through triage, fix, false-positive recording, shift-left prevention, and re-scan verification.
 ---
 
-# SonarQube Quality Gate
+# SonarQube Find and Fix
 
 Orchestrates the SonarQube quality-gate sequence for the current branch. Wraps
 the scan sub-skills in a triage → reproduce → fix → prevent loop so findings are
@@ -51,8 +51,6 @@ SSOT scan scope (`sonar.exclusions` / `sonar.test.exclusions` in
 per-issue `falsepositive` / `wontfix` for genuine one-offs (procedure Step 6).
 
 ## Procedure
-
-Run: `procedures/sonarqube-find-and-fix.md`
 
 Steps: script-health → scan → retrieve → triage → reproduce (behavioral) → fix →
 record false positives with rationale → prevent (shift-left) → re-scan verify →

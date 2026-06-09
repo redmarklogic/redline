@@ -22,7 +22,7 @@ class TestSkeletonsRoute:
     ) -> None:
         mock_bytes = b"PK\x03\x04" + b"\x00" * 100
         mocker.patch(
-            "marker.api.routes.build_skeleton_bytes",
+            "marker.api.services.skeletons.build_skeleton_bytes",
             return_value=mock_bytes,
         )
 
@@ -40,14 +40,14 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     def test_rejects_extra_fields(self, client: TestClient) -> None:
         body = {**VALID_BODY, "unexpected_field": "value"}
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     def test_domain_invalid_sections_returns_422_empty(
         self, client: TestClient
@@ -56,7 +56,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     def test_domain_invalid_sections_returns_422_duplicates(
         self, client: TestClient
@@ -65,7 +65,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     def test_domain_invalid_sections_returns_422_blank_heading(
         self, client: TestClient
@@ -74,7 +74,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     def test_skeletons_route_registered_plural_unversioned(self, app) -> None:
         routes = [r.path for r in app.routes]  # type: ignore[attr-defined]
