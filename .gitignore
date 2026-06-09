@@ -234,3 +234,6 @@ data/**/*.html
 
 # Claude Code project-scoped memory (user-local, path-specific)
 .claude/projects/
+
+# Infrastructure: post-apply terraform output capture (may contain live project identifiers)
+specs/005-gcp-project-baseline/verify-output.txt
