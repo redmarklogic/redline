@@ -15,7 +15,7 @@ $MaxAttempts = 30
 $Ready = $false
 for ($Attempt = 0; $Attempt -lt $MaxAttempts; $Attempt++) {
     try {
-        $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -Method Head -TimeoutSec 2 -SkipHttpErrorCheck
+        $response = Invoke-WebRequest -Uri "$Url/health" -UseBasicParsing -Method Get -TimeoutSec 2 -SkipHttpErrorCheck
         if ($response) {
             $Ready = $true
             break
