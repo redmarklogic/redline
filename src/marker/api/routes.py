@@ -4,7 +4,7 @@ import re
 from io import BytesIO
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from fastapi.responses import StreamingResponse
 
 from marker.api.dependencies.auth import require_bearer
@@ -37,7 +37,7 @@ def _safe_filename(project_number: str) -> str:
     return safe or "skeleton"
 
 
-@router.post("/skeletons", status_code=200)
+@router.post("/skeletons", status_code=status.HTTP_200_OK)
 def create_skeleton(
     body: CreateSkeletonRequest,
     _token: Annotated[str, Depends(require_bearer)],

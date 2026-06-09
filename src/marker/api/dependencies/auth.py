@@ -6,7 +6,7 @@ Full SSO-based verification is pending issues #50/#73/#48b.
 
 from typing import Annotated
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 _bearer_scheme = HTTPBearer(auto_error=False)
@@ -33,7 +33,7 @@ def require_bearer(
     """
     if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(
-            status_code=401,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Not authenticated",
             headers={"WWW-Authenticate": "Bearer"},
         )

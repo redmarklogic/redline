@@ -53,7 +53,7 @@ an endpoint can produce.
     def test_500_envelope_contains_no_internal_detail(self, api_v1_client, mocker):
         """Unhandled exception returns 500; message must not leak internals."""
         mocker.patch(
-            "rl.app.api.routers.skeletons.build_skeleton",
+            "marker.api.routers.skeletons.build_skeleton",
             side_effect=RuntimeError("internal DB path /data/db crashed"),
         )
 
@@ -103,7 +103,7 @@ bytes (not a JSON envelope).
         """POST /skeletons returns 200 with raw DOCX bytes and correct headers."""
         fake_docx = b"PK\x03\x04" + b"\x00" * 100  # minimal ZIP/DOCX magic
         mocker.patch(
-            "rl.app.api.routers.skeletons.build_skeleton",
+            "marker.api.routers.skeletons.build_skeleton",
             return_value=fake_docx,
         )
 
@@ -152,7 +152,7 @@ handler returns 500 with the envelope and no internal detail in `message`.
 def test_unhandled_exception_returns_safe_500(self, api_v1_client, mocker):
     """RuntimeError in handler produces 500 envelope with no internal detail."""
     mocker.patch(
-        "rl.app.api.routers.skeletons.build_skeleton",
+        "marker.api.routers.skeletons.build_skeleton",
         side_effect=RuntimeError("pg: connection refused at /var/run/pg"),
     )
 

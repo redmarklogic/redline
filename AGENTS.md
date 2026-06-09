@@ -28,6 +28,8 @@ Domain-specific skills: `redline-research` (knowledge base lookup before online 
 
 **Tool selection — CLI first:** Prefer CLI tools (`gh`, `gws`, `gcloud`) over MCP servers and direct API calls when both options are available. For routing rules and command patterns see `tool-selection` skill (`.agents/skills/tool-selection/SKILL.md`). *Grounded in ADR-016.*
 
+**Shell tools (Windows project):** Use the **PowerShell tool** for shell operations (`Test-Path`, `$env:`, `if (…) {…}`, `Get-ChildItem`). The **Bash tool is POSIX-only** — never put PowerShell syntax in it (it routes to `bash` and errors); reserve it for `git`/`gh`/POSIX one-liners.
+
 - **`session-handover`**: Use when ending a development session to produce a structured handover note, write decisions to CCE, and flag uncommitted work.
 
 <!-- Claude Code: the files below are auto-loaded by Copilot via applyTo globs.

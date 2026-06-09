@@ -23,7 +23,7 @@
         ]
       },
       {
-        "matcher": "",
+        "matcher": "Read|Grep|Glob",
         "hooks": [
           {
             "type": "command",

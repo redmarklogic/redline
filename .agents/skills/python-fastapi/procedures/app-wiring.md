@@ -17,8 +17,8 @@ with dependency overrides.
 # src/rl/app/main.py
 from fastapi import FastAPI
 
-from rl.app.api.exception_handlers import register_exception_handlers
-from rl.app.api.routers import skeletons
+from marker.api.exception_handlers import register_exception_handlers
+from marker.api.routers import skeletons
 
 
 def create_app() -> FastAPI:
@@ -160,7 +160,7 @@ Usage in a router:
 
 ```python
 from fastapi import APIRouter, Depends
-from rl.app.api.dependencies.auth import require_bearer
+from marker.api.dependencies.auth import require_bearer
 
 router = APIRouter()
 

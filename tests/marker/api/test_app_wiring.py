@@ -1,6 +1,7 @@
 """Tests for Phase 1 app wiring: auth seam and error envelope handlers."""
 
 from fastapi.testclient import TestClient
+from fastapi import status
 
 from marker.api.main import create_app
 
@@ -12,7 +13,7 @@ class TestAuthSeam:
 
         response = client.post("/skeletons", json={})
 
-        assert response.status_code == 401
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "www-authenticate" in response.headers
         assert response.headers["www-authenticate"] == "Bearer"
 
@@ -26,7 +27,7 @@ class TestAuthSeam:
             headers={"Authorization": "NotBearer xyz"},
         )
 
-        assert response.status_code in (401, 403)
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
 class TestErrorEnvelope:
@@ -39,7 +40,7 @@ class TestErrorEnvelope:
 
         response = client.post("/skeletons", json={})
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
         body = response.json()
         assert "detail" not in body
         assert "code" in body
@@ -71,7 +72,7 @@ class TestErrorEnvelope:
             headers={"Content-Type": "application/json", "Authorization": "Bearer tok"},
         )
 
-        assert response.status_code == 400
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
         body = response.json()
         assert body["code"] == "BAD_REQUEST"
 
@@ -99,7 +100,7 @@ class TestErrorEnvelope:
                 },
             )
 
-        assert response.status_code == 500
+        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
         body = response.json()
         assert body["code"] == "INTERNAL_ERROR"
         message = body["message"]

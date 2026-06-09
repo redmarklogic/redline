@@ -25,10 +25,10 @@ paths: "src/**/*.py,tests/**/*.py"
 | Clause | FastAPI binding |
 |---|---|
 | §1 — plural-noun URI | `@router.post("/skeletons")` not `/skeleton` or `/generateSkeleton` |
-| §2 — status codes | `status_code=200` on route decorator; see table in procedure |
+| §2 — status codes | `status_code=status.HTTP_200_OK` on route decorator (`from fastapi import status`); see table in procedure |
 | §3 — error envelope | Single `@app.exception_handler` — never per-route try/except |
 | §4 — 422 vs 400 | Custom `RequestValidationError` handler inspects `type == "json_invalid"` |
-| §5 — 200 for sync artifact | `status_code=200`; no `Location` header needed |
+| §5 — 200 for sync artifact | `status_code=status.HTTP_200_OK`; no `Location` header needed |
 | §6 — binary response | `StreamingResponse` with correct `media_type` + `Content-Disposition` |
 | §7 — auth + 401 header | `HTTPBearer(auto_error=False)` dep; raise with `headers={"WWW-Authenticate": "Bearer"}` |
 | §9 — no SSE on sync route | Do not wire an SSE response on this endpoint |
@@ -61,3 +61,27 @@ If a clause in this skill conflicts with the live standard, the live standard wi
 | 401 without `WWW-Authenticate: Bearer` header | Pass `headers={"WWW-Authenticate": "Bearer"}` on every 401 |
 | `RequestValidationError` always → 422 | Inspect `type == "json_invalid"` → 400; otherwise → 422 |
 | Hand-authoring `/openapi.json` | FastAPI auto-generates it; do not touch it manually |
+| Raising a domain `ValidationError` inside the route (e.g. during DTO→domain translation) | Mirror the domain constraints on the request DTO so failures surface as `RequestValidationError`→422; also register a `pydantic.ValidationError`→422 handler. A bare `ValidationError` raised in-route hits the catch-all → **500, not 422**. |
+| Bare integer literals or self-defined constants for status codes | Import `status` from `fastapi` and use `status.HTTP_XXX` (see rule below). |
+
+## Binding Rule — Status Code Imports
+
+Always use `from fastapi import status` and access constants as `status.HTTP_XXX`.
+Never use bare integer literals or self-defined constants anywhere in route definitions, response models, or test assertions.
+
+```python
+# CORRECT
+from fastapi import status
+
+@router.post("/skeletons", status_code=status.HTTP_201_CREATED)
+async def create_skeleton(...): ...
+
+# WRONG — bare integer literal
+@router.post("/skeletons", status_code=201)
+async def create_skeleton(...): ...
+
+# WRONG — self-defined constant
+STATUS_CREATED = 201
+@router.post("/skeletons", status_code=STATUS_CREATED)
+async def create_skeleton(...): ...
+```

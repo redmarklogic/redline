@@ -71,9 +71,9 @@ from io import BytesIO
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 
-from rl.app.api.dependencies.auth import require_bearer
-from rl.app.api.schemas.skeletons import CreateSkeletonRequest
-from rl.skeleton_generator import build_skeleton
+from marker.api.dependencies.auth import require_bearer
+from marker.api.schemas.skeletons import CreateSkeletonRequest
+from marker.functions.builders import build_skeleton
 
 DOCX_MEDIA_TYPE = (
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"

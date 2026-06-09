@@ -1,40 +1,47 @@
 <#
 .SYNOPSIS
-    PreToolUse hook: blocks tool execution when the CCE engine is unhealthy.
+    PreToolUse hook: gates codebase-exploration tools on CCE engine health.
 
 .DESCRIPTION
     Deterministic Swiss-Cheese layer enforcing the AGENTS.md mandate that CCE
-    must be available before any agent does work. On every tool call it verifies
-    the Code Context Engine is usable (binary resolvable + `cce status` exits 0 +
-    an index exists for this project). If unhealthy, it DENIES the tool with a
-    remediation message so work cannot proceed on a broken engine.
+    must be available before the agent explores the codebase. On a gated tool
+    call it verifies the Code Context Engine is usable (binary resolvable +
+    `cce status` exits 0).
 
-    Health is cached for 10 minutes in a per-project temp flag to keep the
-    per-tool-call cost negligible.
+    Anti-wedge design (a flaky/locked engine must never block the whole session):
+    - Tools that do not consume CCE -- mutations and the human-escalation valve
+      (Write/Edit/MultiEdit/NotebookEdit/TodoWrite/ExitPlanMode/AskUserQuestion)
+      -- are ALWAYS allowed.
+    - A failed health check escalates to `ask` (the user decides), never a hard
+      `deny`, and is retried once because `cce status` is not safe under the
+      concurrent invocation that parallel tool calls produce.
+    - Only a positive `ok` verdict is ever cached (10 min). A failure is NEVER
+      persisted, so a transient blip cannot poison subsequent calls.
+    - The `ok` flag is written atomically (temp + move) so concurrent hook
+      processes never read a half-written file.
 
     Escape hatch: repair/diagnostic commands (containing 'cce', 'setup-cce', or
-    'mcp') are always allowed through so the engine can be fixed from inside a
-    gated session.
+    'mcp') are always allowed so the engine can be fixed from inside a session.
 
     Limitation: this checks the LOCAL engine/index health. It cannot observe
-    whether the MCP server is connected inside the Claude session — that is
+    whether the MCP server is connected inside the Claude session -- that is
     handled structurally by `enabledMcpjsonServers` in .claude/settings.json.
 
 .NOTES
-    Hook input  : JSON via stdin (hookEventName, tool_name, tool_input, ...)
+    Hook input  : JSON via stdin (hook_event_name, tool_name, tool_input, ...)
     Hook output : exit 0 with no output = allow; exit 0 with permissionDecision
-                  JSON = deny. Never exit 2 here (keep failures non-fatal/explicit).
+                  JSON = deny/ask. Never exit 2 here (keep failures non-fatal).
     Doc: https://code.claude.com/docs/en/hooks (PreToolUse Decision Control)
 #>
 $ErrorActionPreference = 'Stop'
 
 function Allow { exit 0 }  # no stdout => tool proceeds under normal permissions
 
-function Deny([string]$reason) {
+function Decide([string]$decision, [string]$reason) {
     $out = @{
         hookSpecificOutput = @{
-            hookEventName          = "PreToolUse"
-            permissionDecision     = "deny"
+            hookEventName            = "PreToolUse"
+            permissionDecision       = $decision
             permissionDecisionReason = $reason
         }
     } | ConvertTo-Json -Depth 4 -Compress
@@ -42,10 +49,18 @@ function Deny([string]$reason) {
     exit 0
 }
 
+# Tools that never touch CCE: mutations + the human-escalation valve. Gating
+# these buys nothing, and a gated AskUserQuestion would remove the only way to
+# recover from a wedged session.
+$UNGATED = '^(Write|Edit|MultiEdit|NotebookEdit|TodoWrite|ExitPlanMode|AskUserQuestion)$'
+
 try {
     $raw = [Console]::In.ReadToEnd()
     $evt = $null
     if ($raw) { try { $evt = $raw | ConvertFrom-Json } catch { } }
+
+    # Never gate tools that do not consume CCE.
+    if ($evt.tool_name -match $UNGATED) { Allow }
 
     # Escape hatch: let repair/diagnostic commands through so a gated session
     # can fix CCE itself.
@@ -55,9 +70,10 @@ try {
     }
     if ($cmdText -match '(?i)\b(cce|setup-cce|mcp)\b') { Allow }
 
-    # 10-minute cached health verdict, scoped PER PROJECT so multiple clones
-    # (redline-1/2/3) never share a verdict. Key off CLAUDE_PROJECT_DIR (set by
-    # Claude Code for hook subprocesses), falling back to the current dir.
+    # Positive-only cache: a fresh 'ok' verdict (10 min) short-circuits. A failed
+    # verdict is NEVER cached, so a transient blip cannot poison later calls.
+    # Scoped PER PROJECT so multiple clones never share a verdict; key off
+    # CLAUDE_PROJECT_DIR (set by Claude Code for hook subprocesses).
     $projDir = $env:CLAUDE_PROJECT_DIR
     if (-not $projDir) { $projDir = (Get-Location).Path }
     $projKey = ([System.BitConverter]::ToString(
@@ -67,29 +83,33 @@ try {
     $flag = Join-Path $env:TEMP "cce-health-$($env:USERNAME)-$projKey.flag"
     if (Test-Path $flag) {
         $age = (Get-Date) - (Get-Item $flag).LastWriteTime
-        if ($age.TotalMinutes -lt 10) {
-            if ((Get-Content $flag -Raw).Trim() -eq 'ok') { Allow }
-            else { Deny ((Get-Content $flag -Raw).Trim() -replace '^bad:', '') }
-        }
+        if ($age.TotalMinutes -lt 10 -and (Get-Content $flag -Raw).Trim() -eq 'ok') { Allow }
     }
 
-    # Fresh health check
+    # Fresh health check.
     $cce = (Get-Command cce -ErrorAction SilentlyContinue).Source
     if (-not $cce) { $cce = Join-Path $env:USERPROFILE ".local\bin\cce.exe" }
     if (-not (Test-Path $cce)) {
-        $msg = "CCE blocked: cce binary not found. Run tasks\setup-cce.ps1 to install the Code Context Engine, then retry."
-        Set-Content $flag "bad:$msg"
-        Deny $msg
+        Decide 'ask' "CCE health check: 'cce' binary not found. Run tasks\setup-cce.ps1 to install the Code Context Engine, then approve to proceed."
     }
 
+    # `cce status` is not safe under the concurrent invocation that parallel tool
+    # calls produce -- retry once before escalating.
     & $cce status *> $null
     if ($LASTEXITCODE -ne 0) {
-        $msg = "CCE blocked: 'cce status' failed (exit $LASTEXITCODE). The Code Context Engine index is missing or corrupt. Run tasks\setup-cce.ps1 or 'cce index', then retry."
-        Set-Content $flag "bad:$msg"
-        Deny $msg
+        Start-Sleep -Milliseconds 250
+        & $cce status *> $null
+    }
+    if ($LASTEXITCODE -ne 0) {
+        # Escalate to the user; do NOT cache a 'bad' verdict (no poison).
+        Decide 'ask' "CCE health check failed (exit $LASTEXITCODE): the Code Context Engine is down or busy. Run tasks\setup-cce.ps1 or 'cce index' to repair, or approve to proceed."
     }
 
-    Set-Content $flag "ok"
+    # Cache the positive verdict atomically so concurrent readers never see a
+    # half-written file.
+    $tmp = "$flag.$PID.tmp"
+    Set-Content -Path $tmp -Value 'ok'
+    Move-Item -Path $tmp -Destination $flag -Force
     Allow
 }
 catch {

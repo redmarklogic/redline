@@ -2,6 +2,7 @@
 
 import pytest
 from fastapi.testclient import TestClient
+from fastapi import status
 
 
 VALID_BODY = {
@@ -29,7 +30,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=VALID_BODY)
 
-        assert response.status_code == 200
+        assert response.status_code == status.HTTP_200_OK
         assert DOCX_MEDIA_TYPE in response.headers["content-type"]
         assert response.headers["content-type"] != "text/event-stream"
         assert "attachment" in response.headers["content-disposition"]
@@ -41,14 +42,14 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_rejects_extra_fields(self, client: TestClient) -> None:
         body = {**VALID_BODY, "unexpected_field": "value"}
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_domain_invalid_sections_returns_422_empty(
         self, client: TestClient
@@ -57,7 +58,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_domain_invalid_sections_returns_422_duplicates(
         self, client: TestClient
@@ -66,7 +67,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_domain_invalid_sections_returns_422_blank_heading(
         self, client: TestClient
@@ -75,7 +76,7 @@ class TestSkeletonsRoute:
 
         response = client.post("/skeletons", json=body)
 
-        assert response.status_code == 422
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_skeletons_route_registered_plural_unversioned(
         self, app
@@ -96,4 +97,4 @@ class TestSkeletonsRoute:
             headers={"Authorization": "NotBearer xyz"},
         )
 
-        assert response.status_code in (401, 403)
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)

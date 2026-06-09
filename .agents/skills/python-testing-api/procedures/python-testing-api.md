@@ -195,8 +195,8 @@ testing skill.
 ### `pytest-httpx` -- for outbound HTTP
 
 Use when application code makes HTTP calls (e.g., downloading a file from a URL). The
-`pytest-httpx` library (already in test dependencies) intercepts `httpx` calls without
-hitting the network.
+`pytest-httpx` library (add to the `test` dependency group — not present by default)
+intercepts `httpx` calls without hitting the network.
 
 ```python
 def test_fetch_remote_resource(httpx_mock):
@@ -567,7 +567,7 @@ def test_returns_docx_binary_with_correct_headers(self, api_v1_client, mocker):
     """POST /skeletons returns 200 with raw DOCX bytes and correct download headers."""
     fake_docx = b"PK\x03\x04" + b"\x00" * 100  # ZIP/DOCX magic header
     mocker.patch(
-        "rl.app.api.routers.skeletons.build_skeleton",
+        "marker.api.routers.skeletons.build_skeleton",
         return_value=fake_docx,
     )
 
@@ -654,7 +654,7 @@ def test_openapi_schema_is_valid(api_v1_client):
     validate(response.json())  # raises on invalid schema
 ```
 
-`openapi-spec-validator` is already in the test dependency group. This single test catches
+`openapi-spec-validator` must be added to the `test` dependency group (not present by default — only `schemathesis` ships in `test`). This single test catches
 schema regressions (missing response models, invalid refs, broken examples) automatically.
 
 # API Testing
