@@ -15,6 +15,7 @@ Acceptance scenarios: `specs/spec-kit-command/scenarios.md`
 | --- | --- |
 | (none) | Auto-detect state and resume |
 | `brainstorm [topic]` | Start with brainstorming skill before specifying |
+| `<github-issue-url>` | GitHub issue URL — derive branch name, use issue body as spec input |
 | `<feature-name>` | Start or resume a named feature |
 | `<path/to/doc.md>` | Use existing doc as spec input (arg contains `/` or ends in `.md`) |
 | `plan` / `tasks` / `analyze` | Jump to a specific step (validates prerequisites first) |
@@ -27,8 +28,22 @@ When intent is ambiguous, **ask the user** before acting.
 
 Determine which feature you are working on before any other action.
 
-1. If a feature name, doc path, or `brainstorm` arg was given → use it.
-2. Otherwise scan `specs/` for in-progress dirs (dirs where tasks.md is absent
+1. If the arg matches a GitHub issue URL (contains `github.com` and `/issues/`):
+
+   ```powershell
+   # Extract org/repo and issue number from the URL
+   $issue = gh issue view <number> --repo <org/repo> --json number,title,body | ConvertFrom-Json
+   $slug  = $issue.title.ToLower() -replace '[^a-z0-9]+', '-' -replace '^-|-$', ''
+   $branch = "feature/$($issue.number)-$slug"
+
+   # Create and switch to the branch (from current HEAD if it doesn't exist yet)
+   git checkout -b $branch 2>$null; if ($LASTEXITCODE -ne 0) { git checkout $branch }
+   ```
+
+   Store `$issue.body` as the spec input for Phase 3. Announce the branch name to the user.
+
+2. If a feature name, doc path, or `brainstorm` arg was given → use it.
+3. Otherwise scan `specs/` for in-progress dirs (dirs where tasks.md is absent
    OR analyze has not been completed):
 
    - **No in-progress specs**: ask — "What feature are you working on? Describe it or paste a rough idea." If the answer is vague or exploratory, offer brainstorm mode before proceeding to specify.
@@ -107,9 +122,10 @@ Run `speckit.specify` using the installed agent template
 Determine spec input — in priority order:
 
 1. A `.md` doc path was given → read the doc, use its content.
-2. Brainstorm produced output → use that.
-3. User described the feature in conversation → extract requirements.
-4. None of the above → ask: "Describe the feature. What problem does it solve and what does success look like?"
+2. GitHub issue body was captured in Phase 0 → use that.
+3. Brainstorm produced output → use that.
+4. User described the feature in conversation → extract requirements.
+5. None of the above → ask: "Describe the feature. What problem does it solve and what does success look like?"
 
 After specify completes:
 

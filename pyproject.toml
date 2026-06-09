@@ -12,7 +12,7 @@ description = """\
 readme = "README.md"
 keywords = [ "python" ]
 authors = [
-  { name = "Harel Lustiger", email = "harel.lustiger@gmail.com" },
+  { name = "Harel Lustiger", email = "harel@redmarklogic.com" },
 ]
 requires-python = ">=3.14"
 classifiers = [
@@ -26,8 +26,8 @@ dependencies = [
   "python-docx>=1.2.0",
   "uvicorn>=0.34.0",
 ]
-urls.Documentation = "https://github.com/harell/redline"
-urls.Repository = "https://github.com/harell/redline"
+urls.Documentation = "https://github.com/redmarklogic/redline"
+urls.Repository = "https://github.com/redmarklogic/redline"
 
 [dependency-groups]
 dev = [

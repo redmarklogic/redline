@@ -1,0 +1,169 @@
+name: Spec Archive — post artifacts and queue deletion on PR merge
+# Fires when a feature branch PR merges into main.
+# 1. Posts spec/plan/tasks as a collapsible comment on the linked GitHub issue.
+# 2. Moves the project card to Done.
+# 3. Opens a cleanup PR that deletes the local specs/ directory (auto-merges via CODEOWNERS exemption).
+#
+# Prerequisites (one-time repo setup):
+#   - PROJECT_TOKEN secret must have scopes: repo, project.
+# Note: if branch protection is added later, enable "Allow skipped checks to pass"
+# in the Ruleset so the cleanup PR (which skips CI via paths-ignore) can still merge.
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main, master]
+
+jobs:
+  archive:
+    name: Archive spec artifacts
+    if: |
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'feature/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          token: ${{ secrets.PROJECT_TOKEN }}
+          fetch-depth: 1
+
+      - name: Extract issue number from branch name
+        id: branch
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          ISSUE_NUM=$(echo "$BRANCH" | grep -oE 'feature/[0-9]+' | grep -oE '[0-9]+')
+          if [ -z "$ISSUE_NUM" ]; then
+            echo "Branch '$BRANCH' has no issue number — skipping."
+            echo "issue_number=" >> "$GITHUB_OUTPUT"
+          else
+            echo "issue_number=$ISSUE_NUM" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Find spec directory
+        if: steps.branch.outputs.issue_number != ''
+        id: spec
+        run: |
+          ISSUE_NUM="${{ steps.branch.outputs.issue_number }}"
+          SPEC_DIR=$(find specs/ -maxdepth 1 -type d -name "${ISSUE_NUM}-*" 2>/dev/null | head -1)
+          if [ -z "$SPEC_DIR" ]; then
+            echo "No spec directory for issue #$ISSUE_NUM — skipping."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "dir=$SPEC_DIR" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post spec comment to issue
+        if: steps.spec.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          ISSUE_NUM: ${{ steps.branch.outputs.issue_number }}
+          SPEC_DIR: ${{ steps.spec.outputs.dir }}
+          PR_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, json, subprocess, sys
+
+          issue_num = os.environ["ISSUE_NUM"]
+          spec_dir  = os.environ["SPEC_DIR"]
+          pr_ref    = os.environ["PR_REF"]
+
+          def read(path):
+              try:
+                  return open(path).read().strip()
+              except FileNotFoundError:
+                  return "_Not found._"
+
+          spec  = read(f"{spec_dir}/spec.md")
+          plan  = read(f"{spec_dir}/plan.md")
+          tasks = read(f"{spec_dir}/tasks.md")
+
+          body = (
+              f"<!-- spec-archive -->\n"
+              f"Spec artifacts archived from `{pr_ref}` at merge.\n\n"
+              f"<details>\n<summary>spec.md</summary>\n\n"
+              f"```markdown\n{spec}\n```\n\n</details>\n\n"
+              f"<details>\n<summary>plan.md</summary>\n\n"
+              f"```markdown\n{plan}\n```\n\n</details>\n\n"
+              f"<details>\n<summary>tasks.md</summary>\n\n"
+              f"```markdown\n{tasks}\n```\n\n</details>"
+          )
+
+          payload = json.dumps({"body": body})
+          r = subprocess.run(
+              ["gh", "api", f"repos/redmarklogic/redline/issues/{issue_num}/comments",
+               "--method", "POST", "--input", "-"],
+              input=payload.encode(), capture_output=True
+          )
+          if r.returncode != 0:
+              print(r.stderr.decode(), file=sys.stderr)
+              sys.exit(1)
+          print(f"Comment posted to issue #{issue_num}")
+          PYEOF
+
+      - name: Move project card to Done
+        if: steps.spec.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          ISSUE_NUM: ${{ steps.branch.outputs.issue_number }}
+        run: |
+          PROJECT_ID="PVT_kwDOEUOu2c4BZrkB"
+          STATUS_FIELD_ID="PVTSSF_lADOEUOu2c4BZrkBzhUojY8"
+          DONE_OPT="98236657"
+
+          ITEM_ID=$(gh api graphql -f query="
+          query {
+            repository(owner: \"redmarklogic\", name: \"redline\") {
+              issue(number: $ISSUE_NUM) {
+                projectItems(first: 5) {
+                  nodes { id project { id } }
+                }
+              }
+            }
+          }" --jq ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" 2>/dev/null || true)
+
+          if [ -z "$ITEM_ID" ]; then
+            echo "Issue #$ISSUE_NUM not on the Redline board — skipping card move."
+          else
+            gh api graphql -f query="
+            mutation {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: \"$PROJECT_ID\"
+                itemId: \"$ITEM_ID\"
+                fieldId: \"$STATUS_FIELD_ID\"
+                value: { singleSelectOptionId: \"$DONE_OPT\" }
+              }) { projectV2Item { id } }
+            }" > /dev/null
+            echo "Issue #$ISSUE_NUM moved to Done"
+          fi
+
+      - name: Open cleanup PR to delete spec directory
+        if: steps.spec.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          ISSUE_NUM: ${{ steps.branch.outputs.issue_number }}
+          SPEC_DIR: ${{ steps.spec.outputs.dir }}
+        run: |
+          CLEANUP_BRANCH="chore/archive-spec-${ISSUE_NUM}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$CLEANUP_BRANCH"
+          git rm -rf "$SPEC_DIR"
+          git commit -m "chore: delete archived spec for issue #${ISSUE_NUM}"
+          git push origin "$CLEANUP_BRANCH"
+
+          PR_URL=$(gh pr create \
+            --title "chore: delete archived spec for #${ISSUE_NUM}" \
+            --body "Auto-generated cleanup. Spec artifacts posted to issue #${ISSUE_NUM} at feature branch merge. No review required (specs/ path — see CODEOWNERS)." \
+            --base main \
+            --head "$CLEANUP_BRANCH")
+
+          gh pr merge "$PR_URL" --squash --delete-branch

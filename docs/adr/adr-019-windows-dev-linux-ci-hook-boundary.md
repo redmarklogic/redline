@@ -8,7 +8,7 @@ artifacts must be Linux-compatible, which must be cross-platform, and which are
 legitimately Windows-only — and the implementation rules that follow from each
 classification (accepted 2026-06-09).
 
-**Deciders**: Peter (architecture), Harel Lustiger (founder)
+**Deciders**: Peter (architecture)
 
 ## Status
 

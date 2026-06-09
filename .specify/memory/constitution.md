@@ -122,6 +122,21 @@ annotation backed by a recorded ADR. Stability is negotiated and earned — neve
 
 *Grounded in ADR-017.*
 
+### XV. Infrastructure as Code for GCP Resources
+
+All GCP infrastructure is declared in Terraform HCL under `infra/terraform/`. Two
+resources are exempt: the GCP project and the Terraform state bucket, which are
+created by a one-off bootstrap script (`infra/bootstrap/bootstrap.sh`) because
+Terraform requires them to exist before it can initialise. After the bootstrap runs,
+no human or CI job modifies GCP infrastructure except through a reviewed
+`terraform apply`. The `gcloud` CLI is permitted for read-only operations and
+operational commands (deployments, image pushes) that are not infrastructure
+definitions. Direct GCP Console changes to Terraform-managed resources are
+prohibited — they will be reverted on the next apply. `infra/terraform/terraform.tfvars`
+is the single source of truth for canonical GCP project identifiers.
+
+*Grounded in ADR-020.*
+
 ### XIV. Platform Obligation Follows Deployment Context
 
 Development happens on Windows; CI and production run on Linux. A platform
@@ -168,4 +183,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.5.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-09
+**Version**: 1.6.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-10
