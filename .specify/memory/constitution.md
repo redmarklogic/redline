@@ -122,6 +122,18 @@ annotation backed by a recorded ADR. Stability is negotiated and earned — neve
 
 *Grounded in ADR-017.*
 
+### XIV. Dev-Session Tools Do Not Cross the CI Boundary
+
+Tooling that gates or assists a developer's local session (Claude Code hooks, CCE,
+local index engines) is Windows-only and development-scoped. It is not installed in CI
+or production and must not be expected to run there. Hook tests that depend on
+Windows-only infrastructure skip on non-Windows platforms — this is correct scope
+declaration, not a coverage loss. Hook scripts must guard Windows-only environment
+variables with a `$HOME` fallback and must not re-throw from catch blocks under
+`$ErrorActionPreference = 'Stop'`.
+
+*Grounded in ADR-019.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -154,4 +166,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.4.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-08
+**Version**: 1.5.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-09
