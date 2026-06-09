@@ -1,4 +1,4 @@
-﻿"""Git hook: forbid emoji and emoji-like Unicode in committed files.
+"""Git hook: forbid emoji and emoji-like Unicode in committed files.
 
 Scans .py, .md, .toml, .yml, and .yaml files for emoji characters and
 Unicode symbols that emulate emoji (checkmarks, crosses, stars, etc.).
