@@ -16,31 +16,38 @@ in a version-controlled inventory file that acts as the SSOT for downstream scri
 
 ## Technical Context
 
-**Language/Version**: PowerShell 7+ (dev machine) — per ADR-019, dev scripts run on
-Windows. CI equivalents (if needed) are Bash targeting Linux.
+**Language/Version**: Terraform 1.x (HCL) — platform-agnostic, runs identically on
+Windows (dev) and Linux (CI). Supersedes the PS1/Bash dual-script pattern from ADR-019
+for infrastructure work (ADR-020). Bootstrap step uses a single Bash script (Linux/CI)
+for the two pre-Terraform `gcloud` commands.
 
-**Primary Dependencies**: `gcloud` CLI (google-cloud-sdk) — required by Constitution XII
-(CLI-first tool selection, ADR-016). No Terraform at this stage; `gcloud` imperative
-scripts are sufficient for a single-project bootstrap.
+**Primary Dependencies**:
 
-**Storage**: `infra/inventory.yml` — version-controlled YAML, single source of truth for
-project ID, region, and billing account reference (Constitution I, ADR-001).
+- `terraform` CLI with `hashicorp/google` provider (pinned in `versions.tf`)
+- `gcloud` CLI for bootstrap and operational commands (ADR-016, ADR-020)
 
-**Testing**: `gcloud` read-only verification commands (projects describe, services list,
-billing info). No pytest. Manual verification via `infra/gcp/verify.ps1`.
+**Storage**: `infra/terraform/terraform.tfvars` — version-controlled, SSOT for all
+canonical GCP project identifiers (project_id, region, billing_account, folder_id).
+Replaces the `inventory.yml` concept (Constitution I, ADR-001, ADR-020). Terraform
+remote state stored in a GCS bucket created during bootstrap.
 
-**Target Platform**: GCP `australia-southeast1`. Dev execution: Windows PowerShell 7+.
+**Testing**: `terraform plan` (diff-based verification before every apply). Post-apply
+verification via `gcloud` read-only commands. No pytest.
 
-**Project Type**: Infrastructure provisioning (bootstrap script + inventory).
+**Target Platform**: GCP `australia-southeast1`. HCL is platform-agnostic; bootstrap
+script targets Linux/CI (Bash).
+
+**Project Type**: Infrastructure as Code (Terraform) with one-off bootstrap script.
 
 **Performance Goals**: End-to-end provisioning under 15 minutes from clean state (SC-001).
 
 **Constraints**:
 
-- Idempotent execution -- re-run must produce zero changes on already-configured project
-  (FR-005, SC-004).
-- `gcloud` CLI only -- no GCP Console manual steps, no direct REST calls (Constitution XII).
-- Billing account and organisation/folder must exist before provisioning runs (Assumptions).
+- Idempotent execution -- Terraform handles this automatically via state tracking (FR-005,
+  SC-004). Bootstrap script uses check-before-create guards.
+- No GCP Console changes to Terraform-managed resources (ADR-020, Constitution XV).
+- Billing account and organisation/folder must exist before bootstrap runs (Assumptions).
+- ADR gates: #48 and #63 must be accepted before `terraform apply` runs.
 
 **Scale/Scope**: Single GCP project. Staging/prod separation is deferred.
 
@@ -51,12 +58,13 @@ billing info). No pytest. Manual verification via `infra/gcp/verify.ps1`.
 | Principle | Assessment | Action |
 
 |-----------|-----------|--------|
-| I. SSOT | `infra/inventory.yml` will be the canonical store for project ID, region, billing ref. No other file may define these. | Define schema in Phase 1. |
-| II. Hook-First | No code rules to enforce via pre-commit. Not applicable to infra scripts. | N/A |
-| VI. Data-Driven | Region and API list are configuration values -- must live in `inventory.yml` or a companion config, not hardcoded in the provisioning script. | Parameterise script from config. |
-| XII. CLI-First | `gcloud` is the required tool for all GCP operations. No raw REST calls. | Enforced in script design. |
-| XIV. Platform Obligation | Provisioning scripts run on Windows dev (PowerShell). Any CI equivalent targets Linux (Bash). Scripts separated by platform, not branched within one file. | Two script files per operation. |
-| ADR before code | Cloud Run + Artifact Registry ADR (#63) must be accepted before implementation runs. | Gate task added in tasks.md. |
+| I. SSOT | `infra/terraform/terraform.tfvars` is the canonical store for project ID, region, billing ref. No other file may define these (ADR-001, ADR-020). | Enforced by schema. |
+| II. Hook-First | No application code rules to enforce. Not applicable. | N/A |
+| VI. Data-Driven | Region, API list, and project identifiers live in `terraform.tfvars` — never hardcoded in HCL resource blocks. | Variables declared in `variables.tf`. |
+| XII. CLI-First | `gcloud` used for bootstrap + operational commands. Terraform provider calls same APIs for infra. ADR-016 and ADR-020 are orthogonal (ADR-020 governs infra tooling). | Enforced by ADR-020. |
+| XIV. Platform Obligation | HCL is platform-agnostic — no PS1/Bash split needed for infra. Bootstrap script is Bash (Linux/CI target). ADR-020 supersedes dual-script pattern for infra. | Single bootstrap.sh. |
+| XV. IaC | All GCP infra declared in Terraform post-bootstrap. Console changes prohibited. | Enforced by ADR-020. |
+| ADR before code | #48 and #63 must be accepted before `terraform apply` runs. | Gate task in tasks.md. |
 
 **No constitution violations.** Complexity Tracking section omitted.
 
@@ -66,24 +74,30 @@ billing info). No pytest. Manual verification via `infra/gcp/verify.ps1`.
 
 ```text
 specs/005-gcp-project-baseline/
-├── plan.md                      # This file
-├── research.md                  # Phase 0 output
+├── plan.md                        # This file
+├── research.md                    # Phase 0 output
 ├── contracts/
-│   └── inventory-schema.md      # Phase 1 -- inventory.yml contract
-└── tasks.md                     # Phase 2 output (speckit.tasks)
+│   └── terraform-variables.md    # Phase 1 -- terraform.tfvars schema contract
+└── tasks.md                       # Phase 2 output (speckit.tasks)
 ```
 
 ### Source Code (repository root)
 
 ```text
 infra/
-├── gcp/
-│   ├── bootstrap.ps1     # Provision: create project, set region, enable APIs, link billing
-│   ├── bootstrap.sh      # CI equivalent (Linux/Bash -- mirrors bootstrap.ps1 exactly)
-│   └── verify.ps1        # Verify: read-only checks confirming SC-001 through SC-005
-└── inventory.yml         # SSOT: project_id, region, billing_account, enabled_apis[]
+├── bootstrap/
+│   └── bootstrap.sh      # One-off: gcloud project create + state bucket create (Bash)
+└── terraform/
+    ├── backend.tf         # GCS remote state configuration
+    ├── main.tf            # Google provider config + project data source
+    ├── variables.tf       # Input variable declarations
+    ├── terraform.tfvars   # SSOT: project_id, region, billing_account, folder_id, apis[]
+    ├── outputs.tf         # Exported values (project_number, state_bucket)
+    ├── apis.tf            # google_project_service resources (FR-003 list)
+    └── billing.tf         # google_billing_project_info
 ```
 
-**Structure Decision**: Single `infra/gcp/` directory. No `src/` involvement -- this feature
-has no application code. The `infra/inventory.yml` file is the only cross-feature artifact;
-all other infra files are internal to the provisioning workflow.
+**Structure Decision**: `infra/bootstrap/` for the one-off script; `infra/terraform/` for
+all IaC. No `src/` involvement — this feature has no application code. `terraform.tfvars`
+is the only cross-feature artifact (SSOT per ADR-001, ADR-020); all other files are
+internal to the Terraform module.

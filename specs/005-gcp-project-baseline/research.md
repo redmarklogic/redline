@@ -23,17 +23,23 @@ the deploy chain is stable (see spec Assumption 3).
 
 ### gcloud vs Terraform
 
-**Decision**: `gcloud` imperative scripts for this baseline.
+**Decision**: Terraform for all GCP infrastructure; one-off `gcloud` bootstrap for the
+two resources Terraform needs before it can initialize (GCP project + GCS state bucket).
+Recorded in ADR-020.
 
-**Rationale**: Terraform adds state management overhead (remote state backend, lock
-files, provider versions) that is unnecessary for a one-time project bootstrap.
-The spec requires idempotency; `gcloud` achieves this with `--quiet` flags and
-conditional checks. Terraform can be introduced at a later spec if the number of
-managed resources warrants it.
+**Rationale**: Terraform provides drift detection, automatic idempotency via state
+tracking, platform-agnostic HCL (eliminates the PS1/Bash dual-script overhead from
+ADR-019), and a `terraform plan` diff that satisfies SOC 2 CC8.1 change management at
+zero marginal effort. The state bucket cost is negligible (fractions of a cent/month).
+The only imperative code is two `gcloud` commands in `bootstrap.sh`.
 
 **Alternatives considered**:
-- Terraform — deferred, overhead not justified for single bootstrap.
-- GCP Console manual steps — rejected, not reproducible, violates CLI-first principle.
+
+- `gcloud` scripts only — rejected: hand-coded idempotency, no drift detection,
+  dual PS1/Bash maintenance burden, no audit diff.
+- Pulumi/CDK — rejected: introduce a Python/TypeScript dependency for infra code
+  without benefit at this scale. Terraform HCL is the industry standard for GCP.
+- GCP Console manual steps — rejected: not reproducible, no audit trail.
 
 ---
 

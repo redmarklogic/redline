@@ -1,6 +1,6 @@
 # Feature Specification: GCP Project Baseline
 
-**Feature Branch**: `005-gcp-project-baseline`
+**Feature Branch**: `feature/63-infra-adr-tier-1-gcp-approval-cloud-run-artifact-registry`
 
 **Created**: 2026-06-10
 
@@ -9,6 +9,8 @@
 **Input**: GitHub Issue #64 — Infra: GCP project + region (australia-southeast1) + billing baseline
 
 **Blocked by**: #48 (Cloud Run ratification), #63 (Tier-1 infra ADR)
+
+**Governed by**: ADR-020 (Infrastructure as Code with Terraform for GCP)
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -101,6 +103,9 @@ matches `gcloud config get-value project` in the provisioned environment.
 - **FR-007**: Provisioning steps MUST be executable by a single operator with Owner-level
   IAM on the GCP organisation/folder, without requiring additional human approvals at each
   API-enable step.
+- **FR-008**: All GCP infrastructure (API enablement, billing linkage, and all subsequent
+  deploy-chain resources) MUST be defined as Infrastructure as Code so that every change
+  produces a reviewable diff before it is applied.
 
 ### Key Entities
 
@@ -141,3 +146,6 @@ matches `gcloud config get-value project` in the provisioned environment.
   availability before provisioning).
 - Issue #48 (Cloud Run ratification) and issue #63 (Tier-1 infra ADR) will be resolved
   before implementation begins; this spec is authored ahead of those gates.
+- Infrastructure as Code (Terraform) is the provisioning mechanism per ADR-020. A one-off
+  bootstrap script (two `gcloud` commands) handles the chicken-and-egg step of creating
+  the GCP project and Terraform state bucket before Terraform can initialize.
