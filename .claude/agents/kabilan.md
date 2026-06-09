@@ -180,6 +180,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Function/class design | `python-function-design`, `python-class-design`, `python-module-structure` |
 | Domain modeling | `python-domain-modeling`, `data-tidy` |
 | Testing | `python-testing-unit`, `python-testing-api`, `test-driven-development` |
+| External FastAPI endpoint (implement or test north-south route) | `python-fastapi`, `python-testing-api` |
 | Data ingestion | `python-data-ingestion`, `python-pins-data-version-control` |
 | Error handling | `python-error-handling` |
 | File paths | `python-paths` |

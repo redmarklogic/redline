@@ -28,6 +28,8 @@ Domain-specific skills: `redline-research` (knowledge base lookup before online 
 
 **Tool selection — CLI first:** Prefer CLI tools (`gh`, `gws`, `gcloud`) over MCP servers and direct API calls when both options are available. For routing rules and command patterns see `tool-selection` skill (`.agents/skills/tool-selection/SKILL.md`). *Grounded in ADR-016.*
 
+**Shell tools (Windows project):** Use the **PowerShell tool** for shell operations (`Test-Path`, `$env:`, `if (…) {…}`, `Get-ChildItem`). The **Bash tool is POSIX-only** — never put PowerShell syntax in it (it routes to `bash` and errors); reserve it for `git`/`gh`/POSIX one-liners.
+
 - **`session-handover`**: Use when ending a development session to produce a structured handover note, write decisions to CCE, and flag uncommitted work.
 
 <!-- Claude Code: the files below are auto-loaded by Copilot via applyTo globs.
@@ -75,6 +77,40 @@ permitted only when clearly labelled as such.
 | John | Ron + Mark | monthly signal report | |
 | Kabilan | Peter | architectural escalations | new packages, layer changes, deps |
 | Kabilan | Founder | all code | no push without founder instruction |
+
+## Agent Dispatch Policy
+
+**Circuit breaker:** The platform prevents subagent re-dispatch. An agent invoked as a subagent cannot spawn further subagents — 1-hop limit is enforced automatically.
+
+**Hard rule for all agents:** Never dispatch to Kabilan. Implementation flows through the founder only.
+
+**Approved dispatch routes:**
+
+| Agent | May dispatch to | Gate |
+|---|---|---|
+| **Ron** | Mark, John | Strategy output needs product/marketing alignment |
+| **Ron** | Graeme | Bet touches geotechnical domain — blocking before producing artifact |
+| **Mark** | Ron | No active strategic bet exists — blocking escalation |
+| **Mark** | Graeme | PRD touches geotechnical domain — blocking before acceptance criteria |
+| **Mark** | Peter | Requesting feasibility assessment or Pitch |
+| **Mark** | Matt | PRD ready + Peter's Pitch confirmed in `specs/shaped/` |
+| **Peter** | Graeme | Evaluation rubric needs domain content — blocking gate |
+| **Peter** | Ron | Technical reality diverges from active bet — push proactively, do not wait |
+| **Peter** | Mark | Delivering feasibility verdict or Pitch |
+| **Peter** | Matt | Touch 1 (constraints memo before wireframing) or Touch 2 (architectural compliance of SpecKit output) |
+| **Peter** | John | ADR invalidates a published capability claim — push immediately on ADR acceptance |
+| **John** | Graeme | Content has domain claims — blocking before publishing |
+| **John** | Peter | Content has architecture claims — blocking before publishing |
+| **John** | Ron, Mark | Monthly signal report or Product-Led SEO brief handoff |
+| **Graeme** | Linda | Knowledge gap needs book/notebook sourcing |
+| **Matt** | Graeme | Design has geotechnical terms — blocking before SpecKit handoff |
+| **Matt** | Peter | Touch 2 architectural compliance review |
+| **Linda** | Graeme | Standards triage — structured review template required |
+| **Linda** | Peter | Technical book request (in response to Peter's request only) |
+| **Harriet** | Peter | Engineering skill gap needs architectural scoping |
+| **Harriet** | Mark | Hire scope touches product domain — validate before finalising report |
+
+Any dispatch not in this table is not permitted.
 
 **`/challenge <artifact>`** loads `pm-structural-integrity-auditor` on any document.
 

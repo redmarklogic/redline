@@ -51,7 +51,11 @@ from myapp.main import create_app
 
 @pytest.fixture
 def app() -> Generator[FastAPI, None, None]:
-    """Provide the FastAPI application instance."""
+    """Provide the FastAPI application instance.
+
+    Function scope is mandatory — dependency_overrides.clear() in teardown
+    ensures overrides set by one test cannot leak into the next test.
+    """
     application = create_app()
     yield application
     application.dependency_overrides.clear()
@@ -63,7 +67,19 @@ are applied.
 ### Client fixture
 
 Use `TestClient` from `fastapi.testclient` (sync, built on `requests`) for component
-tests. Reserve `httpx.AsyncClient` for integration tests that hit a running server.
+tests. Reserve `httpx.AsyncClient` with `ASGITransport` for async in-process tests:
+
+```python
+from httpx import ASGITransport, AsyncClient
+
+async def test_async_endpoint(app):
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.get("/health")
+    assert response.status_code == 200
+```
+
+`ASGITransport` runs against the ASGI app in-process — no live server required.
+Do not point `AsyncClient` at a real running server for component tests.
 
 **Bypass authentication via `dependency_overrides`** -- do not read the real API key from
 config files. This decouples tests from deployment configuration and is the idiomatic
@@ -111,6 +127,12 @@ def mock_storage_setup(mocker):
 Place shared fixtures at `tests/<package>/app/conftest.py` so all test modules can use
 them.
 
+**`autouse=True` — when it is legitimate:** Use `autouse=True` only for
+*environmental* setup that must run before every test regardless of what is being
+tested — for example, creating test database tables or seeding a filesystem. For
+*behavioural* dependencies (mocks, patches, return-value overrides), always request
+fixtures by name so the dependency graph is visible at the call site.
+
 ## Mocking Strategy (Hybrid)
 
 This repo uses a hybrid mocking approach:
@@ -120,6 +142,12 @@ This repo uses a hybrid mocking approach:
 | `Depends()` callables (auth, DB sessions)     | `app.dependency_overrides` |
 | Module-level functions in endpoint call chain | `mocker.patch()`           |
 | Outbound HTTP calls made by application code  | `pytest-httpx`             |
+
+**Anti-pattern — over-mocking with `mocker.patch`:** Tests that rely heavily on
+`mocker.patch` couple themselves to internal implementation structure, become brittle
+when internals change, and can mask integration failures. Prefer `dependency_overrides`
+whenever the dependency is declared via `Depends()`. Fall back to `mocker.patch` only
+when DI is not available at that call site.
 
 ### `app.dependency_overrides` -- for FastAPI DI callables
 
@@ -167,8 +195,8 @@ testing skill.
 ### `pytest-httpx` -- for outbound HTTP
 
 Use when application code makes HTTP calls (e.g., downloading a file from a URL). The
-`pytest-httpx` library (already in test dependencies) intercepts `httpx` calls without
-hitting the network.
+`pytest-httpx` library (add to the `test` dependency group — not present by default)
+intercepts `httpx` calls without hitting the network.
 
 ```python
 def test_fetch_remote_resource(httpx_mock):
@@ -467,6 +495,109 @@ returning a non-200 status. Test this by patching the failing dependency:
 Place `parse_sse_events` at module level in the test file that needs it, or in
 conftest for wider reuse across multiple test modules.
 
+### Testing Auth Guards
+
+Every endpoint that requires authentication must have tests that verify the guard
+rejects correctly — not just that the happy path accepts a valid token.
+
+**Pattern 1 — Component-level rejection (one test per router):**
+
+```python
+def test_rejects_unauthenticated(self, app):
+    """Endpoint returns 401 when no bearer token is provided."""
+    client = TestClient(app)  # raw client, no auth override
+
+    response = client.post("/skeletons", json={"project_name": "Acme"})
+
+    assert response.status_code == 401
+    assert response.headers.get("www-authenticate") == "Bearer"
+```
+
+Use a raw `TestClient(app)` — not the `api_v1_client` fixture — so the real
+auth dependency runs. This test confirms the dependency is wired to the router,
+not just that it exists.
+
+**Pattern 2 — Adversarial tests (at least one per security scheme):**
+
+Write at least one test per auth scheme that exercises an invalid credential scenario:
+
+```python
+def test_rejects_malformed_token(self, app):
+    """Endpoint returns 401 when the Authorization header value is not a bearer token."""
+    client = TestClient(app, headers={"Authorization": "NotBearer xyz"})
+
+    response = client.post("/skeletons", json={"project_name": "Acme"})
+
+    # FastAPI's HTTPBearer rejects non-Bearer schemes
+    assert response.status_code in (401, 403)
+```
+
+**Pattern 3 — Property-based auth testing with Schemathesis (gate-pending):**
+
+Schemathesis reads the auto-generated `openapi.json` and generates large volumes of
+test data automatically, including adversarial inputs for authenticated endpoints.
+
+```python
+import schemathesis
+
+schema = schemathesis.from_pytest_fixture("api_v1_client")
+
+@schema.parametrize()
+def test_api_schema_conformance(case):
+    case.call_and_validate()
+```
+
+> **Gate:** Schemathesis (`schemathesis>=3.0`) must be present in the `test` dependency
+> group in `pyproject.toml` before this pattern is used — confirm the declaration exists
+> before implementing (assumption, not yet verified). It also requires **the principal engineer's explicit
+> approval** before being used in active test suites — it touches the OpenAPI contract
+> surface and generates requests that may hit real downstream services if dependency
+> overrides are not set. Add the `@schema.parametrize()` tests only after both the
+> dependency and the gate are confirmed.
+
+---
+
+### Testing Binary File Download Responses
+
+For endpoints returning binary artifacts (e.g., `POST /skeletons` returning a `.docx`),
+status code alone is insufficient. Assert the full download contract.
+
+```python
+def test_returns_docx_binary_with_correct_headers(self, api_v1_client, mocker):
+    """POST /skeletons returns 200 with raw DOCX bytes and correct download headers."""
+    fake_docx = b"PK\x03\x04" + b"\x00" * 100  # ZIP/DOCX magic header
+    mocker.patch(
+        "marker.api.routers.skeletons.build_skeleton",
+        return_value=fake_docx,
+    )
+
+    response = api_v1_client.post("/skeletons", json={"project_name": "Acme"})
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+    assert "attachment" in response.headers["content-disposition"]
+    assert ".docx" in response.headers["content-disposition"]
+    assert len(response.content) > 0
+    # DOCX is a ZIP — PK\x03\x04 is the local file header magic number
+    assert response.content[:4] == b"PK\x03\x04"
+```
+
+**What to assert:**
+
+| Assertion | What it catches |
+|---|---|
+| `response.content[:4] == b"PK\x03\x04"` | Binary bytes in body, not base64/JSON-wrapped |
+| `content-type` exact match | Wrong MIME type (e.g., `application/octet-stream`) |
+| `"attachment" in content-disposition` | Browser download prompt triggered (inline rendering suppressed) |
+| `".docx" in content-disposition` | Filename extension correct |
+| `len(response.content) > 0` | Empty body (generation returned nothing) |
+
+Use `response.content` (bytes) not `response.text` for binary assertions.
+
+---
+
 ### 1. Pydantic DTO validation tests
 
 Test request/response models directly to confirm the contract holds:
@@ -523,7 +654,7 @@ def test_openapi_schema_is_valid(api_v1_client):
     validate(response.json())  # raises on invalid schema
 ```
 
-`openapi-spec-validator` is already in the test dependency group. This single test catches
+`openapi-spec-validator` must be added to the `test` dependency group (not present by default — only `schemathesis` ships in `test`). This single test catches
 schema regressions (missing response models, invalid refs, broken examples) automatically.
 
 # API Testing

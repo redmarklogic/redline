@@ -122,6 +122,20 @@ annotation backed by a recorded ADR. Stability is negotiated and earned — neve
 
 *Grounded in ADR-017.*
 
+### XIV. Platform Obligation Follows Deployment Context
+
+Development happens on Windows; CI and production run on Linux. A platform
+compatibility obligation is set by where an artifact *executes*, not where it is
+authored. Application code (`src/`) deploys to Linux and must be Linux-compatible:
+`pathlib.Path` for all file-system operations, no Windows-only environment variables
+without a POSIX fallback, LF line endings. Enforcement hooks (`hooks/`) run on both
+platforms and must be cross-platform Python. Claude Code hooks (`.claude/hooks/`) run
+only on a Windows developer's machine — they are Windows PowerShell by design and carry
+no portability obligation. Hook tests for Windows-only dev tooling skip on non-Windows
+via `sys.platform != "win32"`; this is accurate scope declaration, not a coverage loss.
+
+*Grounded in ADR-019.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -154,4 +168,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.4.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-08
+**Version**: 1.5.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-09

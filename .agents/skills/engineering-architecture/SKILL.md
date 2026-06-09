@@ -1,6 +1,6 @@
 ---
 name: engineering-architecture
-description: Use when making system-level design decisions, writing ADRs, defining component boundaries, or reviewing architectural compliance of shaped work and SpecKit output.
+description: Use when making system-level design decisions, defining component boundaries, or reviewing architectural compliance of shaped work and SpecKit output.
 ---
 
 # Engineering Architecture
@@ -9,9 +9,11 @@ description: Use when making system-level design decisions, writing ADRs, defini
 
 ### Applies To
 - System-level design decisions (component boundaries, service interfaces, API design)
-- ADR writing and maintenance
 - Technology selection within Redline constraints
 - Architectural compliance review of SpecKit output (Touch 2)
+
+### Does Not Apply To (load the specialised skill instead)
+- ADR structure, link-graph compliance, DAG rule, Status progression — see the ADR authoring skill
 
 ### Produces
 - ADRs in `docs/adr/`

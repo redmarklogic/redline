@@ -19,7 +19,6 @@ import sys
 
 CONSTITUTION_PATH = ".specify/memory/constitution.md"
 ADR_PATH_PREFIX = "docs/adr/adr-"
-ADR_TEMPLATE_MARKER = "adr-template"
 
 
 def get_staged_files() -> list[str]:
@@ -37,11 +36,7 @@ def main() -> int:
     """Entry point."""
     staged = get_staged_files()
 
-    adr_changes = [
-        f
-        for f in staged
-        if f.startswith(ADR_PATH_PREFIX) and ADR_TEMPLATE_MARKER not in f
-    ]
+    adr_changes = [f for f in staged if f.startswith(ADR_PATH_PREFIX)]
     constitution_staged = CONSTITUTION_PATH in staged
 
     if not adr_changes or constitution_staged:

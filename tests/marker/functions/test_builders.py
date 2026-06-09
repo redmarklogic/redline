@@ -2,7 +2,11 @@ import pytest
 from docx import Document as DocxDocument
 
 from marker.domain.models import ProjectMetadata, ReportStructure
-from marker.functions.builders import build_metadata, build_skeleton
+from marker.functions.builders import (
+    build_metadata,
+    build_skeleton,
+    build_skeleton_bytes,
+)
 
 
 def _make_structure(*headings: str) -> ReportStructure:
@@ -182,3 +186,14 @@ class TestBuildMetadata:
         build_metadata(metadata, recording_facade)
 
         assert recording_facade.cell_writes[(0, 3, 1)] == "2026-01-07"
+
+
+class TestBuildSkeletonBytes:
+    def test_build_skeleton_bytes_returns_docx_magic(self) -> None:
+        structure = _make_structure("Introduction", "Conclusions")
+        metadata = _make_metadata()
+
+        result = build_skeleton_bytes(structure, metadata)
+
+        assert len(result) > 0
+        assert result[:4] == b"PK\x03\x04"

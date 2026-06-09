@@ -1,0 +1,34 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "fastapi",
+    "pydantic",
+    "pytest",
+    "uvicorn",
+    "httpx",
+    "asgi",
+    "starlette",
+    "openapi",
+    "schemathesis",
+    "docx",
+    "ooxml",
+    "pyproject",
+    "redmark",
+    "redline",
+    "marker",
+    "importlinter",
+    "mkdocs",
+    "NZGS",
+    "EnggNZ",
+    "geotechnical",
+    "skeletons",
+    "Kabilan"
+  ],
+  "ignorePaths": [
+    "**/*.lock",
+    "**/__pycache__/**",
+    ".venv/**",
+    "**/*.docx"
+  ]
+}

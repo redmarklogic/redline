@@ -24,7 +24,7 @@
       "empty-url": "Notebook approved but not yet created in NotebookLM. Linda creates it on founder go."
     },
     "agent_ids": ["graeme", "peter", "kabilan", "brent", "linda", "harriet", "matt", "ron", "mark", "john"],
-    "last_updated": "2026-06-08",
+    "last_updated": "2026-06-09",
     "maintained_by": "linda"
   },
   "notebooks": [
@@ -157,25 +157,32 @@
       "id": "geotechnical-report-workflows",
       "name": "Geotechnical Engineering Report Workflows and Standard Procedures",
       "url": "https://notebooklm.google.com/notebook/cffffcd3-1c00-4ca7-8ade-c93f20064715",
-      "description": "Professional practice guides, templates, QA checklists, and training materials for geotechnical report structuring, factual/interpretive delineation, and client-centric writing -- compiled from a leading NZ geotechnical consultancy's internal knowledge base.",
+      "description": "Professional practice guides and authoritative references for geotechnical report structuring, factual/interpretive delineation, section-by-section authoring, and client-centric writing. Current sources (4): EnggNZ/NZGS Geotechnical Reports Guideline and Template (August 2023); CEDD GeoGuide 2 — Guide to Site Investigation (2017); CEDD GeoGuide 3 — Guide to Rock and Soil Descriptions (2017); FHWA-NHI-16-072 Geotechnical Engineering Circular No. 5 (2016). Populated 2026-06-09 per Graeme binding domain verdicts.",
       "topic_area": "Geotechnical domain",
       "topics": [
         "geotechnical report structuring",
         "factual vs interpretive reporting",
-        "QA checklists",
+        "section-by-section authoring",
         "client-centric writing",
-        "professional practice"
+        "professional practice",
+        "NZGS guidance",
+        "FHWA guidance",
+        "site investigation",
+        "rock and soil descriptions",
+        "CEDD GeoGuide series"
       ],
       "content_types": [
         "practice guides",
-        "templates",
-        "QA checklists",
-        "training materials"
+        "authoritative references",
+        "report templates",
+        "technical circulars"
       ],
       "use_cases": [
         "Structuring geotechnical engineering reports",
         "Applying factual/interpretive delineation in reports",
-        "Using QA checklists for report review"
+        "Using authoritative guidance for section-by-section report authoring",
+        "Applying NZ professional practice standards for geotechnical reports",
+        "Referencing FHWA or CEDD GeoGuide standards for site investigation and soil/rock description"
       ],
       "access": "open",
       "added": "2026-04-18",
@@ -798,6 +805,74 @@
       "added": "2026-06-07",
       "owner": "brent",
       "consumers": ["peter", "kabilan"]
+    },
+    {
+      "id": "web-api-design",
+      "name": "Web API Design: REST Endpoints, Authentication and File Responses",
+      "url": "https://notebooklm.google.com/notebook/37cd7c6f-673b-41e7-b9d4-4a563c253818",
+      "description": "Framework-agnostic API design knowledge optimised to answer five design questions for issue #51: (1) where auth boundary sits, (2) sync vs async response for file generation, (3) correct HTTP response shape for downloadable DOCX, (4) monolith vs microservice boundary decision, (5) API-to-domain layer dependency structure. Sources: Building Microservices 2e (Newman), Microservices Up and Running (Mitra & Nadareishvili), Strategic Monoliths and Microservices (Vernon), Mastering API Architecture (Gough, Bryant, Auburn).",
+      "topic_area": "Engineering theory & standards",
+      "topics": [
+        "REST endpoints",
+        "authentication boundary",
+        "file responses",
+        "HTTP response design",
+        "monolith vs microservices",
+        "API architecture",
+        "service decomposition",
+        "API gateway",
+        "bounded contexts",
+        "contract testing"
+      ],
+      "content_types": [
+        "architecture books",
+        "design pattern references"
+      ],
+      "use_cases": [
+        "Deciding where the authentication boundary sits in a REST API",
+        "Choosing between sync and async response patterns for file generation endpoints",
+        "Designing the correct HTTP response shape for a downloadable DOCX file",
+        "Making a monolith vs microservice boundary decision for a new service",
+        "Understanding API-to-domain layer dependency structure"
+      ],
+      "access": "open",
+      "added": "2026-06-09",
+      "owner": "peter",
+      "consumers": ["kabilan"]
+    },
+    {
+      "id": "fastapi-implementation",
+      "name": "FastAPI Implementation: Building Python Web APIs",
+      "url": "https://notebooklm.google.com/notebook/6a6ef29b-fb08-4305-baf1-d16aaa5a3ac5",
+      "description": "FastAPI implementation knowledge — endpoint design, dependency injection, auth middleware, request/response models, file responses, and AI service integration with FastAPI. Sources: AI and Microservices (AI into API Design), Building Python Microservices with FastAPI, FastAPI Cookbook (Ferraro), FastAPI Modern Python Web Development, Building Generative AI Services with FastAPI (Foster/Parandeh).",
+      "topic_area": "Engineering theory & standards",
+      "topics": [
+        "FastAPI",
+        "endpoint design",
+        "dependency injection",
+        "auth middleware",
+        "Pydantic",
+        "async Python",
+        "ASGI",
+        "file responses",
+        "AI service integration",
+        "REST APIs"
+      ],
+      "content_types": [
+        "implementation guides",
+        "framework books"
+      ],
+      "use_cases": [
+        "Implementing FastAPI endpoints with Pydantic request/response models",
+        "Configuring auth middleware and dependency injection in FastAPI",
+        "Returning downloadable file responses (StreamingResponse, FileResponse) from FastAPI",
+        "Integrating AI/LLM services into a FastAPI application",
+        "Async endpoint patterns and ASGI concurrency in FastAPI"
+      ],
+      "access": "open",
+      "added": "2026-06-09",
+      "owner": "peter",
+      "consumers": ["kabilan"]
     },
     {
       "id": "django-application-development",
