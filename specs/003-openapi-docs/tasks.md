@@ -17,7 +17,7 @@
 
 **Purpose**: Enable `/docs` and `/openapi.json` in the FastAPI app. Unblocks both user stories.
 
-**⚠️ CRITICAL**: Both user stories depend on this phase.
+**WARNING CRITICAL**: Both user stories depend on this phase.
 
 - [ ] T001 Update `create_app()` in `src/marker/api/main.py` — remove `docs_url=None, redoc_url=None`; add `title="Marker API"`, `version="0.1.0"`
 - [ ] T002 Verify `tests/marker/api/test_openapi.py` passes with docs re-enabled — run `python -m pytest tests/marker/api -v` and fix any assertion that assumed docs were disabled
