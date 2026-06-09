@@ -322,6 +322,16 @@ hooks = [
     priority = 10
   },
   {
+    id = "check-no-functions-in-init",
+    name = "check-no-functions-in-init",
+    entry = "uv run --frozen --offline hooks/check-no-functions-in-init.py",
+    args = ["--dirs=src"],
+    language = "system",
+    files = '^src/.*__init__\.py$',
+    pass_filenames = false,
+    priority = 10
+  },
+  {
     id = "check-no-archive-imports",
     name = "check-no-archive-imports",
     entry = "uv run --frozen --offline hooks/check-no-archive-imports.py",
