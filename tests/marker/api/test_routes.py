@@ -1,9 +1,7 @@
 """Tests for POST /skeletons route — success path, validation, and auth edge cases."""
 
-import pytest
-from fastapi.testclient import TestClient
 from fastapi import status
-
+from fastapi.testclient import TestClient
 
 VALID_BODY = {
     "sections": ["Introduction", "Site Description", "Conclusions"],
@@ -78,9 +76,7 @@ class TestSkeletonsRoute:
 
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
-    def test_skeletons_route_registered_plural_unversioned(
-        self, app
-    ) -> None:
+    def test_skeletons_route_registered_plural_unversioned(self, app) -> None:
         routes = [r.path for r in app.routes]  # type: ignore[attr-defined]
         assert any(r == "/skeletons" for r in routes)
         assert not any("/v1" in r for r in routes)
@@ -97,4 +93,7 @@ class TestSkeletonsRoute:
             headers={"Authorization": "NotBearer xyz"},
         )
 
-        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        assert response.status_code in (
+            status.HTTP_401_UNAUTHORIZED,
+            status.HTTP_403_FORBIDDEN,
+        )

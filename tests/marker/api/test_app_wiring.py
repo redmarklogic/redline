@@ -1,7 +1,7 @@
 """Tests for Phase 1 app wiring: auth seam and error envelope handlers."""
 
-from fastapi.testclient import TestClient
 from fastapi import status
+from fastapi.testclient import TestClient
 
 from marker.api.main import create_app
 
@@ -27,7 +27,10 @@ class TestAuthSeam:
             headers={"Authorization": "NotBearer xyz"},
         )
 
-        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        assert response.status_code in (
+            status.HTTP_401_UNAUTHORIZED,
+            status.HTTP_403_FORBIDDEN,
+        )
 
 
 class TestErrorEnvelope:

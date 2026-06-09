@@ -1,8 +1,8 @@
 """Tests for OpenAPI schema validity."""
 
+from fastapi import status
 from fastapi.testclient import TestClient
 from openapi_spec_validator import validate
-from fastapi import status
 
 
 class TestOpenAPISchema:
