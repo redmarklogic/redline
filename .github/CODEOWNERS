@@ -4,7 +4,7 @@
 # is enabled in branch protection).
 
 # Default: all changes require founder review
-*                   @harel-redmarklogic
+*                   @harell
 
 # Spec planning artifacts are deleted by the automated spec-archive workflow.
 # No human review required — CI still runs (and passes instantly for .md-only changes).

@@ -5,10 +5,9 @@ name: Spec Archive — post artifacts and queue deletion on PR merge
 # 3. Opens a cleanup PR that deletes the local specs/ directory (auto-merges via CODEOWNERS exemption).
 #
 # Prerequisites (one-time repo setup):
-#   - "Allow auto-merge" must be enabled in repo Settings > General.
 #   - PROJECT_TOKEN secret must have scopes: repo, project.
-#   - Branch protection Ruleset: enable "Require status checks to pass" with
-#     "Allow skipped checks to pass" so the cleanup PR auto-merges without CI.
+# Note: if branch protection is added later, enable "Allow skipped checks to pass"
+# in the Ruleset so the cleanup PR (which skips CI via paths-ignore) can still merge.
 
 on:
   pull_request:
@@ -161,10 +160,10 @@ jobs:
           git commit -m "chore: delete archived spec for issue #${ISSUE_NUM}"
           git push origin "$CLEANUP_BRANCH"
 
-          gh pr create \
+          PR_URL=$(gh pr create \
             --title "chore: delete archived spec for #${ISSUE_NUM}" \
             --body "Auto-generated cleanup. Spec artifacts posted to issue #${ISSUE_NUM} at feature branch merge. No review required (specs/ path — see CODEOWNERS)." \
             --base main \
-            --head "$CLEANUP_BRANCH"
+            --head "$CLEANUP_BRANCH")
 
-          gh pr merge "$CLEANUP_BRANCH" --auto --squash
+          gh pr merge "$PR_URL" --squash --delete-branch
