@@ -1,7 +1,7 @@
 # ENZ/NZGS Geotechnical Reports Guideline and Template (August 2023) — Structure, Standards, and Conditional Logic
 
 **Sub-domain**: report-writing
-**Last verified**: 2026-06-09
+**Last verified**: 2026-06-09 (Section 7 sub-sections added 2026-06-09)
 **Confidence**: notebook-grounded
 **Sources**: geotechnical-report-workflows notebook (source 4cc36535-1458-47d8-a7bb-413ca45995f8 = ENZ/NZGS Geotechnical Reports Guideline and Template, August 2023)
 
@@ -49,7 +49,7 @@ blocks are included, excluded, or modified depending on project-specific factors
    5. Geotechnical investigations (5.1 previous investigations; 5.2 current investigations)
    6. Subsurface conditions (6.1 ground model and soil profile; 6.2 groundwater; 6.3 rationale for
       parameters; 6.4 uncertainties and assumptions; 6.5 site subsoil class per NZS 1170.5)
-   7. Geotechnical hazards (7.1–7.15 — see conditional logic below)
+   7. Geotechnical hazards (7.1–7.15 — all conditional; see CL-2023-01 and Section 7 Sub-section Titles below)
    8. Geotechnical recommendations (8.1 Safety in Design; 8.2 Foundations; 8.3 Filling and
       earthworks; 8.4 Retaining walls; 8.5 Slope design; 8.6 Other engineering considerations)
    9. Conclusions
@@ -58,6 +58,36 @@ blocks are included, excluded, or modified depending on project-specific factors
    12. Appendices (drawings, investigation logs, analysis outputs, cross sections, Safety in Design
        risk register, statement of professional opinion)
    [Source: 4cc36535-1458-47d8-a7bb-413ca45995f8, citations 14–23]
+
+---
+
+### Section 7 Sub-section Titles (verbatim from source)
+
+All 15 sub-sections are listed below exactly as they appear in the document.
+[Source: 4cc36535-1458-47d8-a7bb-413ca45995f8, citations 3, 5]
+
+| Sub-section | Verbatim title |
+|---|---|
+| 7.1 | Liquefaction potential and effects |
+| 7.2 | Lateral spreading potential and effects |
+| 7.3 | Expansive soils |
+| 7.4 | Compressible soils |
+| 7.5 | Mass movement, including rockfall and landslide risk |
+| 7.6 | Uncontrolled fill |
+| 7.7 | Stability of existing slopes |
+| 7.8 | Erosion and drainage |
+| 7.9 | Sensitive and collapsible soils |
+| 7.10 | Contamination |
+| 7.11 | Falling debris |
+| 7.12 | Subsidence |
+| 7.13 | Slippage |
+| 7.14 | Inundation |
+| 7.15 | Other relevant information |
+
+**Conditionality (confirmed):** The document states: "These should be included *as appropriate to the site and development*." No sub-section is designated as always mandatory. All 7.1–7.15 are conditional.
+[Source: 4cc36535-1458-47d8-a7bb-413ca45995f8, citation 3]
+
+**7.15 purpose:** The document lists "7.15 Other relevant information" sequentially after 7.14 but provides no explanatory text. The notebook confirms: "Not covered in sources." The title itself implies a practitioner catch-all, but this is inference — the document is silent.
 
 ---
 
