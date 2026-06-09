@@ -29,7 +29,7 @@ for ($Attempt = 0; $Attempt -lt $MaxAttempts; $Attempt++) {
 
 if ($Ready) {
     Write-Host " ready! Opening browser."
-    Start-Process $Url
+    Start-Process "$Url/docs"
 } else {
     Write-Host ""
     Write-Warning "App did not become ready after $MaxAttempts seconds. Check the uvicorn terminal window for errors."

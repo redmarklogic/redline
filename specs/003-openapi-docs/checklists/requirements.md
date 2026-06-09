@@ -1,4 +1,4 @@
-# Specification Quality Checklist: Skeleton Conditional Section Logic — Input Model
+# Specification Quality Checklist: OpenAPI Documentation
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-06-09
@@ -31,7 +31,4 @@
 
 ## Notes
 
-- Pitch is the primary authority — all decisions (enum values, activation mappings, layer placement) are resolved there. Spec focuses on observable behaviour only.
-- Sections 8.5/8.6 conditional status is an open Graeme dependency; spec reflects the Sprint 1 decision (always-present) and notes the deferral explicitly.
-- NZ-specific extension sub-sections (7.NZ-1–7.NZ-3) use placeholder heading text — noted in Assumptions. Does not block implementation or testing.
-- Source reconciliation confirmed no conflicts with `specs/001-skeleton-endpoint/` — this is an extension, not a replacement of that feature's scope.
+All items pass. Ready for `/speckit.plan`.

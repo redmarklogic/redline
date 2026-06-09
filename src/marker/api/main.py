@@ -12,7 +12,7 @@ def create_app() -> FastAPI:
     Returns:
         Configured FastAPI application instance.
     """
-    app = FastAPI(docs_url=None, redoc_url=None)
+    app = FastAPI(title="Marker API", version="0.1.0")
     register_exception_handlers(app)
     app.include_router(routes.router)
     return app

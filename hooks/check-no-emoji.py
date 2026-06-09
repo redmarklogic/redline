@@ -74,6 +74,7 @@ _ALLOWED_CHARS: frozenset[str] = frozenset(
         "\u2705",  # ✅ WHITE HEAVY CHECK MARK  # hook: allow
         "\u274c",  # ❌ CROSS MARK  # hook: allow
         "\u2713",  # ✓ CHECK MARK  # hook: allow
+        "\u26a0",  # ⚠️ WARNING SIGN  # hook: allow
     }
 )
 
