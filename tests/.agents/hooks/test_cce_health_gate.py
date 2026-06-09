@@ -20,13 +20,14 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
 pytestmark = pytest.mark.skipif(
-    shutil.which("powershell") is None and shutil.which("pwsh") is None,
-    reason="PowerShell is required to execute the PreToolUse hook",
+    sys.platform != "win32",
+    reason="cce-health-gate is a Windows-dev hook; CCE is not a CI/Linux concern",
 )
 
 _HOOK_REL = Path(".claude/hooks/cce-health-gate.ps1")
