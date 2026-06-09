@@ -140,4 +140,4 @@ facade consumes.
 - ADR-001: Single Source of Truth — foundational SSOT principle; this ADR records the authoritative location for DocumentFacade method signatures
 - ADR-002: DOCX Generation Engine Selection and Facade Abstraction
 - [Protocol classes (PEP 544)](https://peps.python.org/pep-0544/)
-- **External validation (2026-05-22)**: Microsoft's Legal Agent in Word uses a "purpose-built insertion algorithm" and a "deterministic resolution layer" for document editing rather than relying on an LLM to generate OOXML directly -- confirming the primitives-only boundary principle independently. See the competitor profile in `docs/research/competitors/`.
+- **External validation (2026-05-22)**: Microsoft's Legal Agent in Word uses a "purpose-built insertion algorithm" and a "deterministic resolution layer" for document editing rather than relying on an LLM to generate OOXML directly -- confirming the primitives-only boundary principle independently. See the competitor profile in the research knowledge base.
