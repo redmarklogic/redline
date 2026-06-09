@@ -15,13 +15,16 @@ $MaxAttempts = 30
 $Ready = $false
 for ($Attempt = 0; $Attempt -lt $MaxAttempts; $Attempt++) {
     try {
-        Invoke-WebRequest -Uri $Url -UseBasicParsing -Method Head -TimeoutSec 2 | Out-Null
-        $Ready = $true
-        break
+        $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -Method Head -TimeoutSec 2 -SkipHttpErrorCheck
+        if ($response) {
+            $Ready = $true
+            break
+        }
     } catch {
-        Write-Host "." -NoNewline
-        Start-Sleep -Seconds 1
+        # connection refused — server not up yet
     }
+    Write-Host "." -NoNewline
+    Start-Sleep -Seconds 1
 }
 
 if ($Ready) {
