@@ -7,7 +7,6 @@ from openapi_spec_validator import validate
 
 class TestOpenAPISchema:
     def test_openapi_schema_is_valid(self, app) -> None:
-        app.docs_url = "/docs"
         client = TestClient(app)
 
         response = client.get("/openapi.json")
