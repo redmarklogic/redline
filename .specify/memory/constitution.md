@@ -122,15 +122,17 @@ annotation backed by a recorded ADR. Stability is negotiated and earned — neve
 
 *Grounded in ADR-017.*
 
-### XIV. Dev-Session Tools Do Not Cross the CI Boundary
+### XIV. Platform Obligation Follows Deployment Context
 
-Tooling that gates or assists a developer's local session (Claude Code hooks, CCE,
-local index engines) is Windows-only and development-scoped. It is not installed in CI
-or production and must not be expected to run there. Hook tests that depend on
-Windows-only infrastructure skip on non-Windows platforms — this is correct scope
-declaration, not a coverage loss. Hook scripts must guard Windows-only environment
-variables with a `$HOME` fallback and must not re-throw from catch blocks under
-`$ErrorActionPreference = 'Stop'`.
+Development happens on Windows; CI and production run on Linux. A platform
+compatibility obligation is set by where an artifact *executes*, not where it is
+authored. Application code (`src/`) deploys to Linux and must be Linux-compatible:
+`pathlib.Path` for all file-system operations, no Windows-only environment variables
+without a POSIX fallback, LF line endings. Enforcement hooks (`hooks/`) run on both
+platforms and must be cross-platform Python. Claude Code hooks (`.claude/hooks/`) run
+only on a Windows developer's machine — they are Windows PowerShell by design and carry
+no portability obligation. Hook tests for Windows-only dev tooling skip on non-Windows
+via `sys.platform != "win32"`; this is accurate scope declaration, not a coverage loss.
 
 *Grounded in ADR-019.*
 
