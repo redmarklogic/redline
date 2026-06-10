@@ -258,7 +258,7 @@ Walk the maintainer through each finding. For each finding in the table (group b
 |---|---|
 | Target spec missing | Fail fast with `ERROR: target spec not found at <path>`. No session created. |
 | Lens catalog missing | Fail fast with the minimal-required-shape error printed in §2.2 above (no external doc references). |
-| Catalog unparseable | Fail fast with `ERROR: .specify/extensions/red-team/red-team-lenses.yml failed to parse: <error>`. |
+| Catalog unparsable | Fail fast with `ERROR: .specify/extensions/red-team/red-team-lenses.yml failed to parse: <error>`. |
 | Catalog empty (no `lenses` list) | Fail fast with `ERROR: lens catalog has no lenses defined`. |
 | Individual lens entry malformed | Warn, skip that lens, proceed with the rest. If ALL entries malformed, fail. |
 | Constitution lacks trigger criteria | Warn and proceed in bootstrap mode using the six default categories. UNLESS `--lenses` was passed (bypass). |

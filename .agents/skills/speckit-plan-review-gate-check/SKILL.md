@@ -30,7 +30,7 @@ Run /speckit.specify and /speckit.plan first.
 Determine the default branch name:
 
 ```bash
-git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
+rtk git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
 ```
 
 If that fails, fall back to `main`, then `master`.
@@ -38,8 +38,8 @@ If that fails, fall back to `main`, then `master`.
 For each artifact (`spec.md` and `plan.md`), check whether the file exists on the default branch:
 
 ```bash
-git cat-file -e origin/{default_branch}:{relative_path_to_spec_md} 2>/dev/null
-git cat-file -e origin/{default_branch}:{relative_path_to_plan_md} 2>/dev/null
+rtk git cat-file -e origin/{default_branch}:{relative_path_to_spec_md} 2>/dev/null
+rtk git cat-file -e origin/{default_branch}:{relative_path_to_plan_md} 2>/dev/null
 ```
 
 A non-zero exit code means the file does NOT exist on the default branch — it is a new file that has not been merged.
@@ -47,7 +47,7 @@ A non-zero exit code means the file does NOT exist on the default branch — it 
 Also check for uncommitted changes to the artifacts:
 
 ```bash
-git status --porcelain -- {FEATURE_DIR}/spec.md {FEATURE_DIR}/plan.md
+rtk git status --porcelain -- {FEATURE_DIR}/spec.md {FEATURE_DIR}/plan.md
 ```
 
 ### 3. Gate Decision
