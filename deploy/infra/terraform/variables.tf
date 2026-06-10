@@ -37,3 +37,54 @@ variable "apis" {
   description = "List of GCP service API identifiers to enable on the project (FR-003)"
   type        = list(string)
 }
+
+# ── Cloud Run deployment variables (spec-70) ─────────────────────────────────
+
+variable "image_tag" {
+  description = "Image digest to deploy — must be sha256:DIGEST, not a mutable tag"
+  type        = string
+}
+
+variable "artifact_registry_repo" {
+  description = "Artifact Registry repository name (e.g. redline-repo)"
+  type        = string
+}
+
+variable "image_name" {
+  description = "Container image name within the Artifact Registry repository"
+  type        = string
+  default     = "redline-api"
+}
+
+variable "min_instances_prod" {
+  description = "Minimum warm instances for the production Cloud Run service (FR-004)"
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.min_instances_prod >= 1 && var.min_instances_prod <= 5
+    error_message = "min_instances_prod must be between 1 and 5."
+  }
+}
+
+variable "max_instances_staging" {
+  description = "Maximum instances for the staging Cloud Run service (FR-005)"
+  type        = number
+  default     = 3
+
+  validation {
+    condition     = var.max_instances_staging >= 1
+    error_message = "max_instances_staging must be at least 1."
+  }
+}
+
+variable "max_instances_prod" {
+  description = "Maximum instances for the production Cloud Run service (FR-005)"
+  type        = number
+  default     = 10
+
+  validation {
+    condition     = var.max_instances_prod >= 1
+    error_message = "max_instances_prod must be at least 1."
+  }
+}

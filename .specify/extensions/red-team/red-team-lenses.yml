@@ -1,0 +1,99 @@
+version: "v1"
+
+# Redline adversarial lens catalog.
+# Graeme (geotechnical domain expert) must review first 2-3 outputs on
+# GBR/GIR specs before routine use — see advisory board decision, 2026-06-10.
+
+defaults:
+  finding_bound: 5
+  severity_weight: 5
+
+lenses:
+
+  - name: "AI Output Integrity Adversary"
+    description: "Attacks the spec's correctness assumptions for LLM-generated geotechnical content — looks for places where the AI could produce plausible-but-wrong outputs that an engineer might not catch."
+    core_questions:
+      - "Which outputs does this spec allow the LLM to generate that an engineer could not easily verify for correctness?"
+      - "Where does the spec assume the LLM will follow domain conventions that it has not been explicitly instructed to follow?"
+      - "What failure mode produces output that looks professionally formatted but contains a materially wrong geotechnical claim?"
+      - "Does the spec define what 'wrong' means for each AI-generated field, or does it leave correctness undefined?"
+      - "Does the spec define a mechanism to detect citation-purpose errors — where a real standard is cited for a purpose outside its scope (e.g., a testing standard cited as the compliance framework)?"
+      - "Does the spec require unit validation at the point of data ingestion, and does it prevent the AI from generating quantitative outputs from input data whose unit system has not been confirmed as metric/AS-compliant?"
+    trigger_match: [ai_llm]
+    severity_weight: 9
+
+  - name: "Professional Liability Adversary"
+    description: "Attacks from the perspective of a geotechnical professional licensing body — looks for spec decisions that create professional liability exposure for engineers who rely on Redline outputs."
+    core_questions:
+      - "Which outputs could an engineer sign off on without independent verification, and does the spec prevent this?"
+      - "Where does the spec blur the boundary between AI-generated content and engineer-certified content?"
+      - "What disclaimer or provenance chain is missing that a licensing body would require?"
+      - "Does the spec create any path where a Redline output becomes the basis of a safety-critical decision without explicit engineer sign-off?"
+      - "Does the spec generate an auditable trail that would satisfy an insurer's claim investigation — specifically, can the firm demonstrate what was AI-generated, what was engineer-reviewed, and when each review step occurred?"
+      - "Does the spec account for the distinction between Engineers Australia CPEng accreditation and state statutory registration — particularly in Queensland and Victoria, where signing a report without the correct registration is a statutory breach, not merely a professional standards matter?"
+    trigger_match: [regulatory_path, ai_llm]
+    severity_weight: 9
+
+  - name: "Engineer-in-the-Loop Adversary"
+    description: "Attacks spec decisions that reduce or weaken the engineer's oversight role — looks for friction asymmetries that make the skip path shorter than the review path."
+    core_questions:
+      - "Which steps in this spec could be automated away without the engineer noticing?"
+      - "Where does the spec make it easier for an engineer to skip review than to complete it?"
+      - "Does the spec enforce engineer confirmation at every decision point that affects a safety-relevant output?"
+      - "What happens to the engineer confirmation requirement if the upstream system (LLM or otherwise) produces output that is structurally valid but semantically wrong?"
+      - "Does the spec include a risk-signalling mechanism that distinguishes high-risk AI-generated fields (unsupported conclusions, unverified citations) from low-risk fields (formatting, boilerplate), so the reviewing engineer can allocate scrutiny proportionally?"
+      - "Does the spec create any confirmation step where time pressure on a fee-earning engineer makes rubber-stamp approval the rational choice — even when the review path is technically available?"
+      - "Does the spec account for the small-firm workflow where author and reviewer are the same person, and does it design checkpoints for that context rather than assuming a separate technical reviewer?"
+    trigger_match: [ai_llm, multi_party]
+    severity_weight: 8
+
+  - name: "API Contract Adversary"
+    description: "Attacks implicit interface contracts — across any component boundary (rule engine, LLM layer, output renderer, infrastructure API, Terraform resource binding) — that would silently break under valid inputs."
+    core_questions:
+      - "Which inputs does this spec assume are pre-validated upstream without specifying who validates them?"
+      - "What contract between components is implicit here that would produce a silent failure if violated?"
+      - "Where could a valid but unexpected input cause this component to produce output that downstream consumers treat as correct?"
+      - "Does the spec define error contracts as precisely as success contracts?"
+      - "Where does the spec assume a cloud platform default (Cloud Run ingress, Secret Manager access policy, IAM binding, Terraform backend behaviour) will behave in a specific way without stating that assumption explicitly?"
+    trigger_match: [contracts]
+    severity_weight: 7
+
+  - name: "Infrastructure Security Adversary"
+    description: "Attacks the trust model of the deployed infrastructure — looks for IAM over-provisioning, cloud platform default assumptions, cross-environment secret boundary failures, and Terraform state exposure that a security reviewer would flag."
+    core_questions:
+      - "Which IAM bindings does this spec create or assume, and does any binding grant broader access than the minimum the service requires to function?"
+      - "Where does this spec rely on a cloud platform default (e.g., unauthenticated Cloud Run ingress, default service account, Secret Manager wildcard accessor) that a security reviewer would challenge?"
+      - "Which secrets does this spec bind to this service, and does the spec verify that no secret is reachable by any other service or principal in the same project — including across staging/production environments sharing a GCP project?"
+      - "What is the user-visible failure mode when this spec's infrastructure fails mid-session — and does it produce a clear error state or a silent degradation that the user may mistake for normal operation?"
+    trigger_match: [contracts]
+    severity_weight: 8
+
+  - name: "Cost and Scale Adversary"
+    description: "Attacks specs that set scaling or resource bounds — looks for configurations where a single incorrect value produces unbounded cost with no intermediate alarm, or where a cost-protection cap creates a user-visible failure mode that has not been described."
+    core_questions:
+      - "Which configuration value in this spec, if set incorrectly by one order of magnitude, produces unbounded cost scaling with no alert before the damage is done?"
+      - "Where does this spec set a cost-protection cap, and what happens when that cap is reached — does the spec describe whether requests are queued, dropped, or throttled, and is that response user-legible?"
+      - "Which cost assumption in this spec breaks if the usage pattern differs from the assumed workload (e.g., LLM calls longer than expected, off-hours traffic surge)?"
+      - "Does the spec define a cost alarm or budget alert that fires before the cap is reached, or does the cap act as the first and only cost signal?"
+    trigger_match: [money_path]
+    severity_weight: 6
+
+  - name: "Site Data Integrity Adversary"
+    description: "Attacks assumptions about data isolation between projects — looks for spec decisions that allow borehole log data, stratigraphic descriptions, or test results from one project to silently appear in a report for a different project, whether through session context, shared template carry-forward, or insufficiently scoped data libraries."
+    core_questions:
+      - "Does this spec ensure AI-generated content can only draw on data explicitly scoped to the current project, and is that scope enforced at the data layer rather than assumed by convention?"
+      - "Where could session context, template state, or a shared data store carry site-identifying information (borehole IDs, coordinates, site names) from a prior project into the current output?"
+      - "Does this spec define a mechanism to detect when site-identifying data in the output does not match the declared project record?"
+      - "If the AI draws on a borehole log library, does the spec require that library access is filtered to the current project before any generation step runs?"
+    trigger_match: [ai_llm, data_storage]
+    severity_weight: 8
+
+  - name: "Standards Currency Adversary"
+    description: "Attacks assumptions about which edition of a cited standard is in scope — looks for specs that reference a standard by name without specifying the edition, conflate new-design contexts (current edition) with retrospective assessment contexts (edition at time of original construction), or allow the AI to cite a superseded standard as if it were current."
+    core_questions:
+      - "Does this spec require a fully versioned standards citation (standard code + year, e.g. AS 1726:2017) for every standards reference the AI may generate?"
+      - "Does the spec distinguish between new-design contexts (current edition applies) and retrospective assessment contexts (edition current at time of original construction applies) — and does it constrain the AI accordingly?"
+      - "Where could the AI generate a citation from a superseded edition without flagging that the edition has been replaced?"
+      - "Does the spec define which jurisdiction's Standards apply (AS, NZS, ASTM) to each output field, and does it detect when the AI generates a citation from the wrong jurisdiction?"
+    trigger_match: [ai_llm, regulatory_path]
+    severity_weight: 7

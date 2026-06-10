@@ -124,7 +124,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### A. Duplication Detection
 
 - Identify near-duplicate requirements
-- Mark lower-quality phrasing for consolidation <!-- hook: allow -->
+- Flag lower-quality phrasing for consolidation
 
 #### B. Ambiguity Detection
 

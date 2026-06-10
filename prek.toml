@@ -490,7 +490,10 @@ hooks = [
       "--dirs=scripts",
       "--dirs=src",
       "--dirs=specs",
-      "--dirs=tests"
+      "--dirs=tests",
+      "--exclude=\\.agents/skills/speckit-",
+      "--exclude=\\.specify/extensions/",
+      "--exclude=\\.github/agents/speckit\\."
     ],
     language = "system",
     files = '\.(py|md|toml|yml|yaml)$',

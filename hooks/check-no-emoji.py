@@ -79,7 +79,9 @@ _ALLOWED_CHARS: frozenset[str] = frozenset(
 )
 
 
-def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str]]:
+def find_violations(
+    dirs: list[Path], exclude_patterns: list[re.Pattern[str]]
+) -> list[tuple[Path, int, str]]:
     """Return (file, lineno, line) triples where emoji is detected."""
     violations: list[tuple[Path, int, str]] = []
     for directory in dirs:
@@ -87,6 +89,9 @@ def find_violations(dirs: list[Path]) -> list[tuple[Path, int, str]]:
             continue
         for path in sorted(directory.rglob("*")):
             if not path.is_file():
+                continue
+            rel = path.as_posix()
+            if any(p.search(rel) for p in exclude_patterns):
                 continue
             suppress = _EXT_TO_SUPPRESS.get(path.suffix)
             if suppress is None:
@@ -117,9 +122,17 @@ def main() -> int:
         default=[],
         help="Directory to scan (may be repeated).",
     )
+    parser.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        metavar="PATTERN",
+        help="Regex pattern for paths to exclude (may be repeated).",
+    )
     args = parser.parse_args()
 
-    violations = find_violations([Path(d) for d in args.dirs])
+    compiled = [re.compile(p) for p in args.exclude]
+    violations = find_violations([Path(d) for d in args.dirs], compiled)
     if not violations:
         return 0
 

@@ -10,6 +10,32 @@ Skill for interacting with the Redline GitHub Project board at `github.com/orgs/
 **Steward**: PM agent. Schema changes (new field, renamed option) and Structuring-Doctrine
 changes go to the PM agent before any other agent acts on them.
 
+## Issue Title Convention
+
+Issue titles are a **one-line summary only** — no type prefix, no bet tag.
+
+| Don't | Do |
+|---|---|
+| `Infra: Cloud Run deploy (staging then prod)` | `Cloud Run deploy: staging + prod with Secret Manager` |
+| `CI/CD: GitHub Actions builds + tests + pushes image` | `GitHub Actions pipeline: build, test, push backend image` |
+| `Feature L — audit log wiring + OOXML provenance event` | `Audit log wiring and OOXML provenance event` |
+| `Design session — tech stack + layer responsibilities` | `Tech stack and layer responsibilities` |
+
+The **task type** (infra category, feature, design, etc.) is expressed via a **GitHub label**, not
+the title. Three canonical type labels exist on `redmarklogic/redline`:
+
+| Label | Color | Used for |
+|---|---|---|
+| `ops` | blue | Infrastructure, DevOps, CI/CD, and operational work |
+| `feature` | green | User-facing feature work |
+| `design` | purple | Architecture decisions, design sessions, research |
+
+Apply exactly one type label when creating or updating any task. To filter or group a
+Project board view by type, use the `label:` filter (e.g. `label:ops`) or the **Group by → Label**
+option in the view settings.
+
+**When creating issues via CLI:** pass `--label ops` (or `feature` / `design`) to `gh issue create`.
+
 ## Boundary Contract
 
 ### Applies To
@@ -144,8 +170,8 @@ from datetime import date
 config = resolve_project_config(project_number=N, owner="redmarklogic")
 
 task = TaskCreate(
-    title="Implement skeleton-generator PDF export",
-    task_type="Feature",
+    title="Skeleton-generator PDF export",   # one-line summary, no type prefix
+    task_type="Feature",                     # type goes on the label, not the title
     start_date=date(2026, 6, 9),
     target_date=date(2026, 6, 22),
     purpose="Enables PDF export — serves *free-tier-signal* bet.",

@@ -21,3 +21,7 @@ output "state_bucket" {
   description = "Name of the GCS bucket holding Terraform state"
   value       = var.state_bucket
 }
+
+# ── Cloud Run outputs (spec-70) ───────────────────────────────────────────────
+# staging_url, prod_url   — declared in cloud_run.tf alongside the resource (T021)
+# cloud_run_sa_email      — declared in iam.tf alongside the resource (T011)

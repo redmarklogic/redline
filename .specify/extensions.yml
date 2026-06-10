@@ -1,9 +1,13 @@
 installed:
+- critique
+- plan-review-gate
+- red-team
 - shaping-gate
 - source-reconciliation
 - spike-trivial-hook
 - static-checks
 - verification-gate
+- version-guard
 settings:
   auto_execute_hooks: true
 hooks:
@@ -29,14 +33,20 @@ hooks:
     prompt: Execute speckit.verification-gate.run?
     description: Require evidence of passing verification before claiming completion
     condition: null
+  - extension: version-guard
+    command: speckit.version-guard.validate
+    enabled: true
+    optional: false
+    prompt: Execute speckit.version-guard.validate?
+    description: Scan generated code for version-incompatible API patterns
+    condition: null
   before_specify:
   - extension: shaping-gate
     command: speckit.shaping-gate.check
     enabled: true
     optional: true
     prompt: Execute speckit.shaping-gate.check?
-    description: 'Verify shaped Pitch exists. Flip to optional: false when specs/shaped/
-      has 3+ Pitches (see ADR-013)'
+    description: Verify shaped Pitch exists (ADR-013). Flip to false when specs/shaped/ has 3+ Pitches.
     condition: null
   - extension: source-reconciliation
     command: speckit.source-reconciliation.run
@@ -44,4 +54,50 @@ hooks:
     optional: false
     prompt: Execute speckit.source-reconciliation.run?
     description: Reconcile all source documents before spec writing begins
+    condition: null
+  before_tasks:
+  - extension: plan-review-gate
+    command: speckit.plan-review-gate.check
+    enabled: true
+    optional: true
+    prompt: Execute speckit.plan-review-gate.check?
+    description: Verify spec+plan merged to master before task generation (advisory on feature branches)
+    condition: null
+  - extension: version-guard
+    command: speckit.version-guard.load
+    enabled: true
+    optional: false
+    prompt: Execute speckit.version-guard.load?
+    description: Load version guard constraints into context before task generation
+    condition: null
+  after_plan:
+  - extension: critique
+    command: speckit.critique.run
+    enabled: true
+    optional: true
+    prompt: Run spec critique before proceeding to tasks?
+    description: Challenges the spec and plan through product and engineering lenses
+    condition: null
+  before_plan:
+  - extension: red-team
+    command: speckit.red-team.gate
+    enabled: true
+    optional: true
+    prompt: Execute speckit.red-team.gate?
+    description: Red Team gate — blocks planning if spec triggers adversarial review categories and no findings report exists
+    condition: null
+  - extension: version-guard
+    command: speckit.version-guard.check
+    enabled: true
+    optional: false
+    prompt: Execute speckit.version-guard.check?
+    description: Verify tech stack versions and write constraints before planning
+    condition: null
+  before_implement:
+  - extension: version-guard
+    command: speckit.version-guard.load
+    enabled: true
+    optional: false
+    prompt: Execute speckit.version-guard.load?
+    description: Load version guard constraints into context before code generation
     condition: null
