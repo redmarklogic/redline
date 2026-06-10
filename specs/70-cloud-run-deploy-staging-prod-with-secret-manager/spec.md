@@ -73,10 +73,10 @@ Both staging and production Cloud Run services have a maximum-instance cap confi
 - **FR-003**: The staging service MUST be configured with min-instances = 0 (scales to zero when idle).
 - **FR-004**: The production service MUST be configured with min-instances ≥ 1 to eliminate cold starts for active users.
 - **FR-005**: Both services MUST have a max-instances cap set to prevent unbounded scale-out.
-- **FR-006**: The deployed service MUST expose a health-check endpoint that returns HTTP 200 when the service is ready to accept traffic.
-- **FR-007**: Cloud Run MUST use the health-check endpoint to determine revision readiness before routing traffic to a new deployment.
-- **FR-008**: Staging and production MUST reference separate Secret Manager secret names (or separate versions) so that secrets are environment-isolated.
-- **FR-009**: The deploy procedure MUST be repeatable — running it again with the same image produces the same service configuration (idempotent).
+- **FR-006**: The deployed service MUST expose a health-check endpoint that returns HTTP 200 only when the service is fully ready to accept traffic — including secrets loaded and all downstream dependencies reachable. The endpoint MUST NOT return 200 during partial initialisation.
+- **FR-007**: Cloud Run MUST use the health-check endpoint to determine revision readiness with the following probe parameters: initial delay ≥ 10 s, timeout = 5 s, failure threshold = 3. These values MUST be declared explicitly in Terraform; defaults MUST NOT be relied upon.
+- **FR-008**: Staging and production MUST reference separate Secret Manager secret names using the canonical naming convention `{env}-redline-{credential}` (e.g., `staging-redline-db-password`, `prod-redline-db-password`). The Terraform binding MUST map each secret to an explicit environment variable name declared in a shared `locals` block, so that the application-side env-var name and the Secret Manager secret name are defined in one place and cannot silently diverge.
+- **FR-009**: The deploy procedure MUST be repeatable — running it again with the same image produces the same service configuration (idempotent). Idempotency applies to service configuration only; secret values are not pinned to a specific version and may differ across runs if a secret has been rotated. Secret rotation between deploys is a known deviation from strict idempotency and is accepted.
 - **FR-010**: All infrastructure configuration for both environments MUST be declared as code (Terraform), consistent with ADR-020.
 
 ### Key Entities
@@ -92,8 +92,8 @@ Both staging and production Cloud Run services have a maximum-instance cap confi
 ### Measurable Outcomes
 
 - **SC-001**: A deploy to staging completes and the service is fully available (health check passes) within 3 minutes of triggering the deploy command.
-- **SC-002**: Zero secret values appear in plain text in Terraform state references, Cloud Run service configuration views, or deployment logs (verified by inspection).
-- **SC-003**: The production service responds to its first request within 1 second when min-instances ≥ 1 (no cold-start delay under normal operation).
+- **SC-002**: Zero secret values appear in plain text in Terraform state references, Cloud Run service configuration views, or deployment logs. Verified by running `checkov` or `tfsec` against the Terraform plan output as a pre-apply gate; manual inspection alone does not satisfy this criterion.
+- **SC-003**: The production service responds to its first request within 1 second when min-instances ≥ 1, measured by a `curl` request issued from a GCP Cloud Shell instance in `australia-southeast1` (no cold-start delay under normal operation).
 - **SC-004**: Running the deploy command twice in succession with the same image and configuration produces an identical service state (idempotency verified by diffing the Cloud Run service descriptions).
 - **SC-005**: Both staging and production service configurations show a max-instances value ≤ the agreed cap documented in Terraform variables.
 - **SC-006**: When a new revision fails its health check, the previous revision continues to serve 100% of traffic with no manual intervention.
