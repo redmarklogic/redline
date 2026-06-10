@@ -77,11 +77,12 @@ shaped (no Pitch, no spec), flag it and push it back to shaping.
 
 ## Steward
 
-PM steward, with Principal Engineer consulted for feasibility on any task that hasn't been shaped.
-Founder makes the final call on goal and scope. No task enters the sprint without
-founder confirmation.
+PM steward. Consult the Principal Engineer for feasibility whenever a candidate task
+has not been shaped (no Pitch, no spec) — that is the trigger to push it back to
+shaping rather than into the sprint. The founder makes the final call on goal and
+scope; no task enters the sprint without founder confirmation.
 
-## Prerequisites
+## Prerequisites (abort with clear error if any fails)
 
 - G1: `gh auth status` lists `project` scope
 - G2: `project_config.json` exists and is <= 24 h old
@@ -94,7 +95,7 @@ founder confirmation.
 Read `docs/product/tasks/this-week.md` or query Done tasks from the previous sprint:
 
 ```python
-done_last_sprint = list_tasks(config, sprint="Sprint N-1 ...", status="Done")
+done_last_sprint = list_tasks(config, sprint="Sprint N-1 - [dates]", status="Done")
 capacity = len(done_last_sprint)  # tasks completed last sprint
 ```
 
@@ -176,13 +177,34 @@ explicitly with one sentence explaining why each is deferred.
 
 This step is mandatory. Unnamed out-of-scope items get pulled in during the sprint.
 
-### Step 8 — Build the dependency and sequencing view
+### Step 8 — Build the dependency view and write it back to the board
 
+**8a — Build the sequencing view.**
 Identify the dependency chain across committed tasks. Identify which tasks can run
 in parallel (no shared dependency). This informs the execution order for daily standups.
 
 Generate a dependency diagram using `mermaid-diagrams` → flowchart LR only if there
 are actual dependencies. If all tasks are independent, state that and skip the diagram.
+
+**8b — Write dependency fields back to the board.** For every committed task that has at
+least one predecessor, call `update_task` to set the `depends_on` field (set of
+predecessor issue numbers) on the board item. For tasks that are actively waiting on
+an external condition, also set `blocked_by`. Do not leave these fields empty — the
+daily standup skill reads them to generate Diagram 2 (dependency chain). A planning
+session where `depends_on` is identified but not written to the board is incomplete.
+
+```python
+for task in committed_tasks:
+    if task.predecessors:
+        update = TaskUpdate(
+            item_id=task.item_id,
+            depends_on=frozenset(task.predecessors),
+        )
+        update_task(update, config)
+```
+
+If a task has no predecessors and is not blocked, leave `depends_on` and `blocked_by`
+as None — do not set them to empty strings or placeholder values.
 
 ### Step 9 — Identify sprint risks
 
@@ -202,13 +224,27 @@ Write `docs/product/tasks/sprint-<N>-goal.md`. See Output Format below.
 
 ### Step 11 — Update the board
 
-For each committed task:
+**Before writing:** verify that every committed task exists as a board item, not merely
+as a GitHub issue. A task is a board item only when it appears in `list_tasks()` output
+with a non-null `item_id`. If a committed task is not yet on the board, add it first
+(use `create-task` or `gh project item-add`) before setting the Sprint field.
+
+Confirm the set of updates with the founder before writing any board change. Then,
+for each committed task:
 ```python
 update = TaskUpdate(item_id="...", sprint="Sprint N - [dates]")
 result = update_task(update, config)
 ```
 
-Confirm updates with the founder before writing. Log any failures.
+After writing, call `list_tasks(config, sprint="Sprint N - [dates]")` and confirm the
+returned count matches the number of committed tasks. If the counts differ, identify
+the missing tasks and add them before closing the planning session. Log any failures.
+
+**Board completeness gate (blocking):** Do not proceed to Step 12 until:
+1. All committed tasks have the Sprint field set on the board.
+2. All tasks with identified predecessors have `depends_on` populated (Step 8).
+If either condition is unmet, surface the gap to the founder and resolve it before
+writing the plan document or regenerating `this-week.md`.
 
 ### Step 12 — Regenerate this-week.md
 
@@ -282,8 +318,14 @@ These tasks are NOT being done this sprint. Named to protect the sprint from cre
 
 ## Kickoff Checklist
 
+Items marked **[BLOCKING]** must be resolved before writing the plan document or
+regenerating `this-week.md`. Do not treat them as optional review items.
+
 - [ ] Sprint goal confirmed with founder
-- [ ] Board sprint field updated for all committed tasks
+- [ ] **[BLOCKING]** All committed tasks verified as board items (non-null `item_id` in `list_tasks()` output)
+- [ ] **[BLOCKING]** Sprint field set on every committed board item — count confirmed: `list_tasks(sprint=...)` returns N tasks matching committed list
+- [ ] **[BLOCKING]** `depends_on` populated on the board for every task that has a predecessor
+- [ ] `blocked_by` populated on the board for every task in Blocked status
 - [ ] this-week.md regenerated
 - [ ] Dependencies verified: all prerequisite tasks either Done or committed this sprint
 - [ ] At least one shaping session scheduled for any task flagged as unestimable
@@ -302,3 +344,5 @@ These tasks are NOT being done this sprint. Named to protect the sprint from cre
 | Setting sprint field without founder confirmation | Board changes are visible to the project. Confirm before writing. |
 | Sprint goal that doesn't link to a bet | No bet link = no strategic rationale. Stop and ask which bet this serves. |
 | Tasks that cross sprint boundary | Split before committing. A task that cannot fit in one sprint must become two tasks. |
+| Listing tasks in the plan document without verifying they are on the board | A GitHub issue is not a board item until added to the project. Run `list_tasks()` to confirm before closing the session. This was the Sprint 2 failure mode: 8 of 10 planned tasks never appeared on the board. |
+| Identifying dependencies in prose but not writing them to board fields | The dependency diagram in the daily standup reads `depends_on` and `blocked_by` from the board — not from the plan document. If Step 8 identifies predecessors but Step 8's write-back is skipped, Diagram 2 never appears. |

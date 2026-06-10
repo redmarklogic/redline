@@ -98,10 +98,11 @@ lint.select = [
 lint.ignore = [ "D105", "D107", "D417", "PLR2004", "SIM108" ]
 lint.per-file-ignores."!tests/**/*.py" = [ "PT" ]
 lint.per-file-ignores."!tests/**/{domain,schemas}/**/test_*.py" = [ "TID251" ]
-lint.per-file-ignores.".agents/tools/**" = [ "INP" ]
+lint.per-file-ignores.".agents/tools/**" = [ "D", "INP" ]
 lint.per-file-ignores.".github/scripts/**" = [ "INP" ]
 lint.per-file-ignores."hooks/**" = [ "INP" ]
 lint.per-file-ignores."src/scripts/**" = [ "INP" ]
+lint.per-file-ignores."tasks/tests/**" = [ "D", "INP", "PLR", "SIM117" ]
 lint.per-file-ignores."tests/**" = [ "D", "INP", "SIM117" ]
 lint.flake8-tidy-imports.banned-api."pydantic.ValidationError".msg = """\
   Do not import ValidationError in domain/schema tests. Pydantic validation is tested by Pydantic's own suite. Test \

@@ -80,7 +80,7 @@ Load the appropriate skill at the start of every session based on the requested 
 | Creating, updating, or auditing a skill/JD that may interact with spec-kit workflow | `customization-mechanism-triage` (load `procedures/speckit-extension-triage.md` to evaluate extension candidacy) |
 | Querying a notebook for skill grounding | `notebooklm-cli` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
-| Running the Agent Topology Sync ceremony | `sync-agent-topology` |
+| Running the Agent Topology Sync ceremony | `hr-sync-agent-topology` |
 | Discover existing agent JDs, skill files, or org artifacts before proposing changes | `mcp-cce` |
 | Defer a hire request, org decision, or agent development item to a future date or condition | `task-defer` |
 

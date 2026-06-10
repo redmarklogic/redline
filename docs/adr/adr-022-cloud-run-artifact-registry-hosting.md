@@ -12,7 +12,10 @@ It is the governance gate for the walking-skeleton deploy chain (#63–#72).
 
 ## Status
 
-Accepted — 2026-06-10
+Accepted — 2026-06-10. Partially superseded by ADR-023 — 2026-06-11 (scope statements
+only: the Out-of-Scope items "Multi-environment split" and "Secret Manager entries",
+the related single-environment and no-Secret-Manager statements in Context and
+Consequences, and Decision point 4 (min-instances). The hosting decision stands.)
 
 ## Decision
 

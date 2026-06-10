@@ -5,10 +5,11 @@ Generate a morning brief for today's work using live GitHub Projects board state
 ## What to do
 
 Load and follow the `agile-daily-standup` skill at `.agents/skills/agile-daily-standup/SKILL.md`.
-Run the full workflow (Steps 1–7) and render the brief in this conversation.
+Run the full workflow (Steps 1–8). Write the brief to file — do not render it in the
+conversation.
 
 Use today's date from the session context. Do not ask for clarification — read the
-board, read the sprint context, and generate the brief immediately.
+board, read the sprint context, and write the brief immediately.
 
 ## Preflight checks (abort with clear error if either fails)
 
@@ -21,9 +22,14 @@ generating the brief.
 
 ## Output
 
-Render the full brief as specified in the skill's Output Format section.
+Write the full brief to `docs/standups/YYYY-MM-DD.md` (use today's date).
 Do not summarise, truncate, or skip any section — even empty ones need their
 "✓ Nothing here" confirmation so the founder knows the board was checked.
 
-After the brief, add one line:
+Add one line at the end of the file:
 > Next: [the single most important thing to do right now, from the execution plan]
+
+After writing the file, confirm in conversation with a single line:
+`Brief written to docs/standups/YYYY-MM-DD.md`
+
+Do not render the brief content in the chat.

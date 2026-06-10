@@ -1,19 +1,15 @@
 {
   "mcpServers": {
     "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
-      "env": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
         "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
       }
     },
     "context-engine": {
-      "command": "${USERPROFILE}\\.local\\bin\\cce.exe",
-      "args": [
-        "serve",
-        "--project-dir",
-        "${CLAUDE_PROJECT_DIR:-.}"
-      ]
+      "command": "cce",
+      "args": ["serve"]
     },
     "sonarqube": {
       "command": "docker",
@@ -22,7 +18,6 @@
         "-i",
         "--rm",
         "--init",
-        "--pull=always",
         "-e", "SONARQUBE_TOKEN",
         "-e", "SONARQUBE_URL",
         "mcp/sonarqube"

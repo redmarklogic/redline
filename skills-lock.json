@@ -47,13 +47,35 @@
       "status": "active",
       "layer": 3
     },
-    "ceremony-agent-topology-sync": {
+    "hr-sync-agent-topology": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
       "tier": "planning",
       "owner_agent": [
         "harriet"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "agile-sprint-planning": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "planning",
+      "owner_agent": [
+        "mark"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "agile-daily-standup": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "planning",
+      "owner_agent": [
+        "mark"
       ],
       "status": "active",
       "layer": 9
@@ -168,17 +190,6 @@
       ],
       "status": "active",
       "layer": 7
-    },
-    "arch-engineering": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "peter"
-      ],
-      "status": "active",
-      "layer": 8
     },
     "evaluation-architecture": {
       "source": "local",

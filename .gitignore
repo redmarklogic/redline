@@ -212,6 +212,8 @@ __marimo__/
 # Agent config
 # .agents/skills/*
 # !.agents/skills/redline-*
+# Intermediate inter-dispatch artifacts (see AGENTS.md "Subagent Dispatch")
+.agents/tmp/
 docs/module-tree.txt
 data/projects/
 docs/**/*.html

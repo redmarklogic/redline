@@ -11,12 +11,18 @@ This project uses Code Context Engine. Load `mcp-cce` skill for codebase explora
 
 **Mandatory first call:** At session start, call `session_recall` (via CCE MCP) to load prior decisions and active work areas before any file exploration. This prevents context compaction and avoids re-explaining architecture.
 
+CCE tools are deferred — load once via ToolSearch query `select:mcp__context-engine__context_search,mcp__context-engine__session_recall,mcp__context-engine__expand_chunk`. Conceptual codebase questions → `context_search` first; exact strings/known paths → Grep/Glob.
+
 ## Subagent Dispatch
 
 When invoking a named agent via `runSubagent`, do not prescribe discovery methods in the prompt. State WHAT to answer — never direct the agent to examine specific directories, read specific files, or list folders. Each agent's JD governs HOW information is found (CCE-first discipline). Prescriptive prompts override JD Session Discipline and cause token waste.
 
 **Bad:** "Review the current state by examining: 1. specs/ directory 2. docs/product/ for OKRs"
 **Good:** "What are the top priorities for this week? Current branch: feature/token-optimisation, date: June 1 2026."
+
+**Dispatches are stateless.** Subagent results advertise SendMessage continuation; it is not available in this harness. Treat every dispatch as one-shot — persist anything a follow-up dispatch will need to disk before the subagent returns.
+
+**Intermediate artifacts.** Inter-dispatch handoff files (working state, collected sub-results, scratch output) go to `.agents/tmp/<task-slug>-YYYY-MM-DD/` — gitignored, never committed. One subfolder per task, named `<task-slug>-YYYY-MM-DD` (e.g. `.agents/tmp/topology-sync-2026-06-10/`). Durable outputs (reports, drafts, decisions) go to their skill-defined locations under `docs/` as usual — never to `.agents/tmp/`.
 
 ## Skills
 
@@ -40,10 +46,10 @@ Domain-specific skills: `redline-research` (knowledge base lookup before online 
 
 ### Advisory Board (Product & Strategy)
 
-Four named personas. Invoke by name. None writes code.
+Six named personas. Invoke by name. None writes code.
 
 **Epistemic honesty (binding on all Advisory Board agents):** When any agent (Graeme,
-Ron, Mark, John, or Peter) cannot find grounded material to answer a question, they say "I don't
+Ron, Mark, John, Matt, or Peter) cannot find grounded material to answer a question, they say "I don't
 know" and identify the gap. They never invent facts, fabricate citations, or present
 ungrounded speculation as knowledge. Unverified pointers to external resources are
 permitted only when clearly labelled as such.
@@ -58,6 +64,7 @@ permitted only when clearly labelled as such.
 ### Engineering (execution)
 
 - **Kabilan** (`kabilan.md`): Python Developer -- implementation, testing, debugging, pipelines. All code subject to founder review. "Kabilan, [request]"
+- **Brent** (`brent.md`): DevOps Engineer (GCP) -- cloud infrastructure (Terraform), Cloud Run deployment, CI/CD, IAM, SOC 2 technical controls. "Brent, [request]"
 
 **Key interaction rules** (full details in individual JDs):
 
@@ -107,6 +114,8 @@ permitted only when clearly labelled as such.
 | **Matt** | Peter | Touch 2 architectural compliance review |
 | **Linda** | Graeme | Standards triage — structured review template required |
 | **Linda** | Peter | Technical book request (in response to Peter's request only) |
+| **Linda** | Brent | Cloud/DevOps/SOC-2 source-currency triage (structured review template) |
+| **Brent** | Peter | Tier-1 GCP service approval (blocking); connection-strategy ADR input |
 | **Harriet** | Peter | Engineering skill gap needs architectural scoping |
 | **Harriet** | Mark | Hire scope touches product domain — validate before finalising report |
 

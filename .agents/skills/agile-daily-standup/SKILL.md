@@ -1,52 +1,83 @@
 ---
 name: agile-daily-standup
-description: Use every morning to generate a structured daily brief with three Mermaid diagrams (sprint Gantt, dependency chain, today's execution plan). Reads live GitHub Projects board state. Writes for a first-time reader — no jargon assumed. Output is conversation-only unless this-week.md is stale.
+description: Use every morning to generate a structured daily brief written as SCR narrative (Situation-Complication-Resolution) for an uninitiated reader. Reads live GitHub Projects board state and task content to cast the sprint story. Output always written to docs/standups/YYYY-MM-DD.md — never rendered in conversation.
 ---
 
 # Agile Daily Standup — Morning Brief
 
 ## What This Is
 
-A morning check-in that takes less than 5 minutes to generate and less than 10 minutes
-to read. It answers three questions before you open your first terminal:
+A morning brief that tells the story of where the sprint stands, what is threatening
+it, and what the single right move is — before you open your first terminal.
 
-1. **What moved or shipped since last session?** — so you know where you stand
-2. **What should I work on today, and in what order?** — so you start the right thing
-3. **What is in my way — and can I move it?** — so you're not blocked by something fixable
+It is written for an **uninitiated reader**: someone intelligent but unfamiliar with
+the project, the tech stack, and agile terminology. Every acronym is glossed on first
+use. Every task is described in plain language — what it does, why it matters to the
+product — not just its title. The goal is that anyone could read this brief and
+understand exactly what is happening and why today's actions matter.
 
-The brief is shown in conversation only. It does not write to disk unless
-`docs/product/tasks/this-week.md` is absent or older than 24 hours — in that case,
-`sync-this-week` runs first to pull a fresh snapshot from the board.
+The brief is always written to `docs/standups/YYYY-MM-DD.md` (where `YYYY-MM-DD` is
+today's date). It is never rendered in the conversation — only the file path is
+confirmed in chat. If `docs/product/tasks/this-week.md` is absent or older than 24
+hours, `sync-this-week` runs first to pull a fresh snapshot from the board.
+
+## Narrative Framework: Situation–Complication–Resolution (SCR)
+
+The brief is structured using the **SCR framework** (McKinsey, Barbara Minto). This is
+the right framework for a morning brief because it mirrors how decisions are actually
+made: you need to know where you stand before a complication means anything, and a
+complication must be named before a resolution feels justified. Other frameworks
+(Pyramid Principle: conclusion-first; SPOS: parallel problem/opportunity) either
+obscure situational awareness or create false equivalence between threats and
+opportunities. SCR produces forward momentum — you always end knowing what to do.
+
+**Situation** — What is objectively true right now. Sprint day, tasks done, tasks in
+flight, what shipped. No editorialising. A snapshot a stranger could verify by
+looking at the board.
+
+**Complication** — What threatens the sprint goal or the active bet. Overdue tasks,
+WIP (Work In Progress — too many things active at once) creep, tasks waiting for
+review (finished work that hasn't been closed), blockers, board gaps. The
+complication is cast from the *content* of the tasks — what they actually do and
+why their delay or risk matters to the product — not just their metadata. A task
+titled "Workload Identity Federation for GitHub Actions" is not just a backlog item;
+it is the first time this project has wired keyless authentication to GCP, and if it
+hides a surprise it will cascade into every downstream deployment task. That is the
+complication to name.
+
+**Resolution** — The single right move given the situation and the complication.
+One clear instruction. Not a list of options. Not "consider doing X." The resolution
+is derived from the execution ordering rules (To Review first, then unblockable
+blockers, then riskiest in-progress, then new starts only if WIP permits) but
+expressed as a narrative conclusion, not a numbered list.
 
 ## Why These Agile Principles Are Built In
 
-*Written for someone who hasn't read the agile literature — skip if you already know
-Clean Agile, Shape Up, and Accelerate.*
+*Written for someone who hasn't read the agile literature.*
 
 **Finish before starting (Clean Agile)**
-If you have a task waiting for your review — a PR to check, a result to approve — that
-is your past self's finished investment, sitting idle. Closing it gives you a Done item
-immediately. Starting a new task instead just adds to the pile of half-done work.
-Rule: items in the "To Review" column always come before new starts.
+If you have a task waiting for your review — a pull request (a code change waiting
+for your approval), a design output to accept — that is finished work sitting idle.
+Closing it gives you a Done item immediately. Starting something new instead just
+adds to the pile of half-done work. To Review items always come before new starts.
 
 **Scariest work uphill first (Shape Up)**
-Sprint tasks are not equal. Some are well-understood ("add a field to the config file")
-and some are unknowns ("wire up keyless auth for the first time"). Unknown tasks hide
-surprises. If you do the easy ones first and hit the hard one on day 6 of 7, you have
-no time to recover. This brief orders remaining sprint tasks by risk — hardest and most
-novel work first.
+Sprint tasks are not equal. Some are well-understood ("add a config field") and some
+hide unknowns ("wire up keyless auth for the first time"). Unknown tasks hide
+surprises. If you do the easy ones first and hit the hard one on day 6 of 7, you
+have no time to recover. Remaining tasks are ordered by risk — hardest and most
+novel first.
 
 **WIP limits (Lean / Accelerate)**
 WIP (Work In Progress) is the number of tasks simultaneously in flight. For a solo
-founder, every task in flight competes for your mental context. Research shows throughput
-— tasks actually finished per week — *decreases* when WIP exceeds 2–3 items. The brief
-flags when In Progress exceeds 2 and blocks you from pulling new work until something
-closes.
+founder, every task in flight competes for mental context. Finishing rate drops when
+more than 2–3 items are active at once. When In Progress exceeds 2, the brief names
+this explicitly and the resolution does not add new starts.
 
 **System parallelism — not mental multitasking**
-The brief marks some tasks with a parallel symbol. This does NOT mean "think about
-both at once." It means: task A can safely run in a second terminal (a build, a CI
-pipeline, an AI sub-agent) while you give your full attention to task B.
+Some tasks can run in a second terminal (a build, a CI pipeline, an AI sub-agent)
+while you give full attention to something else. The brief identifies these — but
+this means a *second terminal*, never split human focus.
 
 ## Boundary Contract
 
@@ -60,7 +91,8 @@ pipeline, an AI sub-agent) while you give your full attention to task B.
 
 ### Outputs
 
-- Formatted daily brief with up to three Mermaid diagrams, rendered in conversation
+- Formatted daily brief written as SCR narrative, written to
+  `docs/standups/YYYY-MM-DD.md` (never rendered in conversation)
 - Updated `docs/product/tasks/this-week.md` if stale (side-effect only)
 
 ### Does Not Cover
@@ -132,10 +164,18 @@ For each Blocked task, read its `blocked_by` field and reason:
 See Diagram Rules section below. Generate each diagram unless its skip condition
 applies; replace skipped diagrams with the empty-state line.
 
-### Step 8 — Render brief
+### Step 8 — Compose narrative and write to file
 
-Use the Output Format section below. Write for a first-time reader — define
-every piece of jargon in parentheses on first use.
+Compose the brief using the SCR structure in the Output Format section below.
+Write for an uninitiated reader — define every acronym and term on first use.
+Cast the narrative from task *content*, not just task metadata: read the task
+titles, descriptions, dependencies, and their relationship to the active bet.
+Translate technical tasks into plain-language stakes.
+
+Write the completed brief to: `docs/standups/YYYY-MM-DD.md`
+
+**Do not render the brief content in the conversation.** After writing the file,
+confirm in one line: `Brief written to docs/standups/YYYY-MM-DD.md`
 
 ---
 
@@ -175,6 +215,8 @@ gantt
     title Sprint N Timeline
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
+    section Done
+    #N Completed task title       :done, t0, YYYY-MM-DD, Nd
     section In Progress
     #N Task title                 :active, t1, YYYY-MM-DD, Nd
     section Backlog - Overdue
@@ -184,12 +226,16 @@ gantt
 ```
 
 Rules:
-- **Omit Done tasks** — they are historical record covered by the "Recently Completed" text section; including them adds rows that crowd out the actionable bars
+- **MANDATORY: Include Done tasks** — `section Done` at the top is REQUIRED. Every sprint task
+  with status Done must appear here with the `done` tag. Omitting this section is a skill
+  violation — the Gantt exists precisely to show sprint progress, which is invisible without it.
 - Task labels: max 25 characters total (including `#N ` prefix); truncate with `...` if needed
 - Always prefix each task bar label with `#<issue-number> ` (e.g. `#70 `) — extract the number from `issue_url`
 - Always include `axisFormat %d/%m` so x-axis shows day/month (e.g. `08/06`) instead of full ISO dates
 - No `--`, `—`, `–` inside labels — use plain hyphen
-- Duration `Nd` = number of days from start to target date; use `1d` minimum for same-day tasks
+- Duration `Nd` = number of days from start to target date; use `2d` minimum for all
+  tasks — `1d` bars render as a thin sliver and collapse the chart. Same-day tasks
+  get `2d`. Tasks spanning exactly one calendar day also get `2d`.
 - `crit` = overdue (target date is before today)
 - `active` = In Progress
 - Do NOT add an explicit `Today` milestone — Mermaid draws a red vertical line at the current timestamp automatically; a redundant milestone anchors to midnight and creates a confusing double-marker
@@ -273,132 +319,209 @@ Legend:
 
 ## Output Format
 
-Write for a first-time reader. Define jargon in parentheses on first use.
-Use plain language — no insider shorthand.
+The brief has four parts. The default register is flowing prose — not field dumps or
+status-report bullets. Define every acronym and technical term in parentheses on
+first use. Embed diagrams inline as visual evidence for a claim made in the prose —
+not as standalone sections the reader must decode.
+
+**When to use lists inside prose:** Lists are permitted — and preferred — when the
+content is genuinely enumerable: multiple completed tasks, multiple items waiting
+for review, multiple blockers, a ranked execution order. A list is wrong when it
+fragments a single continuous thought that reads better as a sentence. The test:
+if removing the bullets and joining the items with "and" or "then" reads naturally,
+use prose. If the items are parallel, discrete, and three or more, use a list.
+Never mix list style with prose style in the same paragraph — finish the prose
+sentence, then start the list.
+
+---
+
+### Part 1 — Header (metadata, 3 lines max)
 
 ```
-## Morning Brief — Sprint [N]: [date range] (Day [X] of [Y]) — [Date]
+# Morning Brief — [Date]
+Sprint [N] · Day [X] of [Y] · [days remaining] days left · [X/N tasks Done]
+Bet: [active bet short name] | Goal: [one sentence, or "No sprint goal set — run /sprint-planning"]
+```
 
-Sprint Goal: [one sentence — what success looks like when the sprint ends]
-OR: No sprint goal defined. Run /sprint-planning to set one.
+---
 
-Bet: [active bet name] | Sprint health: on track / at risk / unknown
+### Part 2 — Situation (what is objectively true, ~2–3 short paragraphs)
 
-────────────────────────────────────────────────────────────────
+State the sprint position as a stranger would verify it from the board: what day it
+is, how many tasks are done vs. remaining, what is actively in progress, and what
+the sprint is ultimately building toward. Name the active bet in plain language —
+not its code name, but what it is trying to prove. No editorialising here; this is
+the shared ground.
 
-### Sprint Timeline
+If there are tasks recently completed, name them and say in one plain sentence what
+each one enables. When there are three or more completed tasks, use a short bulleted
+list — one item per task, each item a single sentence of the form
+"**#N Title** — [what it does and what it unlocks]." For one or two tasks, fold
+them into prose. The same rule applies to tasks currently in progress: one or two
+belong in a sentence; three or more belong in a list.
 
-[Diagram 1: Gantt]
-OR: (skipped — 3 or fewer tasks this sprint)
+Example of list form:
+- **#51 Skeleton endpoint** — the core API that turns an uploaded report outline into
+  a Word document is live and running behind authentication.
+- **#70 Cloud Run deploy** — the service is deployed to Google's managed
+  infrastructure and can receive real traffic.
 
-────────────────────────────────────────────────────────────────
+Include Diagram 1 (Sprint Gantt) here, immediately after the Situation prose, as
+visual confirmation of the task timeline. It shows at a glance how much of the
+sprint is done and what remains.
 
-### Task Dependencies (what must happen before what)
+**Diagram placement:**
+```
+[Situation prose]
 
-[Diagram 2: Dependency flowchart]
-OR: No dependencies between tasks — any task can start independently.
+[Diagram 1: Gantt — see Diagram Rules]
+```
 
-────────────────────────────────────────────────────────────────
+---
 
-### 1. ACTION REQUIRED: Under Review ([count])
-  "Under Review" means the task is finished but waiting for you to close it out:
-  check a PR (Pull Request — a code change waiting for your approval), approve
-  a test result, or confirm the work meets the goal. These come first because
-  every hour they sit idle is a completed investment that hasn't paid off yet.
+### Part 3 — Complication (what threatens the sprint, ~2–4 paragraphs)
 
-  [If empty] Nothing waiting for your review.
+Name every active threat to the sprint goal. Write from the *content* of the tasks,
+not just their status fields. For each complication, say what it is, why it matters
+to the product or the bet, and what happens if it is not resolved today.
 
-  (#N) [title] · [type label: ops / feature / design]
-    What it is: [one plain sentence — what this task does and why it matters]
-    In review since: [X days]
-    Your move: [specific action — e.g. "merge PR #N after checking the test output"]
+**Complication types to check and narrate:**
 
-────────────────────────────────────────────────────────────────
+- **Overdue tasks:** Name them, explain what they unblock, and say how many days they
+  have slipped. "GCP project setup (#64) was due June 9 and is now a day overdue.
+  Every deployment task — the Artifact Registry, the Dockerfile, the CI pipeline,
+  the Cloud Run deploy — is downstream of this. One day's slip here risks compressing
+  the entire ops chain into the last two days of the sprint."
 
-### 2. BLOCKED ([count])
-  "Blocked" means the task cannot proceed because something else is in the way.
-  Assess each one: fix the blocker now, escalate, or move the task back to the
-  backlog (the waiting pile of not-yet-started work).
+- **Tasks under review (finished work idle):** Name them and say what closing them
+  unlocks. "The SSO integration (#50) is finished and waiting for review. Until it
+  is accepted, no authenticated endpoint can be tested end-to-end."
 
-  [If empty] Nothing blocked.
+- **WIP (Work In Progress) creep:** If more than 2 tasks are In Progress, name the
+  risk explicitly. "Three tasks are simultaneously in flight. For a solo developer,
+  each active task competes for mental context. One must close before a new one
+  starts."
 
-  (#N) [title] · [type label: ops / feature / design]
-    What it is: [one plain sentence]
-    Blocked by: [exact blocker text from the board]
-    Decision: Unblock now — [specific action to remove the blocker]
-           OR Needs your decision — [what the decision is]
-           OR Return to backlog — [why it cannot move this sprint]
+- **Riskiest unknown task:** Identify the single task with the most hidden unknowns.
+  Name it by title, say what makes it novel, and say what the consequence of a
+  surprise discovery is at this stage of the sprint vs. later.
 
-────────────────────────────────────────────────────────────────
+- **Board gaps:** If the board state is inconsistent with reality (done tasks not
+  marked, sprint tags missing), name the gap and its operational consequence.
 
-### 3. IN PROGRESS ([count])
-  Tasks you are actively working on right now.
+If there is a dependency chain relevant to the complications, include Diagram 2
+(Dependency flowchart) here as evidence of what is blocking what.
 
-  [If count > 2]
-  WIP (Work In Progress) warning: [count] tasks in flight simultaneously.
-  Research shows that for a solo developer, finishing rate drops when more
-  than 2 tasks are active at once. Finish or close one before pulling new work.
+**Diagram placement:**
+```
+[Complication prose]
 
-  [If empty] No tasks actively in progress.
+[Diagram 2: Dependency chain — only if dependencies exist, see Diagram Rules]
+```
 
-  (#N) [title] · [type label: ops / feature / design]
-    What it is: [one plain sentence]
-    Target: [target_date] | Started: [start_date]
-    [Note if start_date is in the future: pre-staged — not yet active]
+If nothing is threatening the sprint, say so plainly: "The sprint is on track. No
+overdue tasks, no WIP creep, no idle review items."
 
-────────────────────────────────────────────────────────────────
+---
 
-### Today's Execution Plan
+### Part 4 — Resolution (the single right move, ~2–3 paragraphs + execution detail)
 
-[Diagram 3: Execution flowchart]
-OR: (skipped — 1-2 tasks; see list below)
+Open with the resolution stated directly: what to do first and why. This is not a
+list of options — it is a conclusion derived from the situation and complication.
+"The right move this morning is X because Y."
 
-Order: finish near-done first, then remove blockers, then the riskiest unknown task.
-Second terminal means: run this in a separate window as automated work — not split focus.
+Then give the execution order for the full day, with a plain-language reason for
+each step's position. If parallel work is possible (task A can run in a second
+terminal while you work on task B), name the tasks and say explicitly what "second
+terminal" means — automated work running independently, not split focus.
 
-1. [title] — [REVIEW / UNBLOCK / CONTINUE / START]
-   Why first: [one sentence]
-2. [title] [second terminal]
-   Why here: [one sentence]
-3. ...
+Include Diagram 3 (Execution flowchart) here if 3 or more tasks are in today's
+plan, as a visual of the parallel/sequential structure.
 
-────────────────────────────────────────────────────────────────
+**Diagram placement:**
+```
+[Resolution opening paragraph]
 
-### Sprint Queue — What's Left ([count] tasks, [Y] days remaining)
-  Tasks not yet started, ordered so the hardest and most unknown work comes first.
-  Why: discovering a hard problem on the last day leaves no time to recover.
-  Pull from the top only when In Progress drops below 2.
+[Diagram 3: Execution plan — only if 3+ tasks, see Diagram Rules]
 
-  [#] (#N) [title] · [type label: ops / feature / design]
-      What it does: [one plain sentence]
-      Risk: High (novel — first time doing this) / Med / Low (routine, well-understood)
-      Needs first: [task it depends on, or "nothing — can start any time"]
-      [Can run in a second terminal once [prerequisite] completes]
+[Execution order with plain-language reasoning]
+```
 
-────────────────────────────────────────────────────────────────
+Close with a single bolded line:
 
-### Recently Completed This Sprint ([count])
-  (#N) [title] · [type label] — Done
-  ...
-  [If none] Sprint just started or no tasks closed yet.
+**Today's first move: [one sentence — the specific action to take right now, with
+the task number and what "done" looks like for that action].**
 
-────────────────────────────────────────────────────────────────
+---
 
-Sprint Health: [X/N tasks Done] | [Y days remaining] | [Z In Progress] | [W Blocked]
-[bet name] — on track / at risk
+### What the Output Looks Like (annotated example structure)
+
+```markdown
+# Morning Brief — 2026-06-10
+Sprint 2 · Day 3 of 7 · 4 days left · 4/10 tasks Done
+Bet: Free Skeleton Wedge | Goal: No sprint goal set — run /sprint-planning
+
+---
+
+## Situation
+
+[2–3 paragraphs: sprint position, what shipped, what it enables, what is in flight]
+
+[Gantt diagram]
+
+---
+
+## Complication
+
+[2–4 paragraphs: threats named from task content — overdue items, idle reviews,
+WIP creep, riskiest unknown, board gaps — each explained in terms of product stakes]
+
+[Dependency diagram, if relevant]
+
+---
+
+## Resolution
+
+[Opening: the single right move stated as a conclusion]
+
+[Execution flowchart, if 3+ tasks]
+
+[Ordered execution steps with plain-language reasoning]
+
+**Today's first move: [specific action].**
 ```
 
 ---
 
 ## Common Mistakes
 
+### Narrative mistakes
+
 | Mistake | Fix |
 |---|---|
+| Using prose for a list of 3+ parallel items | When naming multiple completed tasks, multiple blockers, or multiple in-progress items, use a bulleted list — one item per task, each a single sentence. Prose is harder to scan when items are discrete and parallel. |
+| Using lists for continuous reasoning | If the content is a single argument that builds across sentences, keep it as prose. Bullets fragment reasoning and make the logic invisible. |
+| Writing from metadata instead of content | Task titles and status fields are not the story. Read what the task *does* and why it matters to the active bet. "WIF keyless auth overdue" is metadata. "The first-time OIDC federation to GCP is overdue — every deployment task downstream is now compressed" is narrative. |
+| Producing three SCR sections as bullet lists | SCR is a prose framework. If the output reads like a project management export, it is wrong. Bullets are permitted only inside the execution order steps; everything else is sentences. |
+| Giving the resolution as a list of options | The resolution is a conclusion, not a menu. "You could do X or Y" is not a resolution. "Do X because Y" is. |
+| Defining jargon once and forgetting | Acronyms reintroduced without gloss two paragraphs later lose the uninitiated reader. Define on first use in each major section if the section can be read standalone. |
+| Narrating the sprint goal as absent without consequence | A missing sprint goal is itself a complication — the sprint has no success criterion. Name it as a risk in the Complication section, not just a metadata gap in the header. |
+| Embedding diagrams without prose context | A diagram placed without a preceding sentence explaining what it shows is decoration. Every diagram must be introduced: "The timeline below shows the compression — four remaining tasks must land in two days." |
+
+### Diagram mistakes
+
+| Mistake | Fix |
+|---|---|
+| Using `1d` duration on Gantt bars | `1d` bars render as thin slivers and collapse the chart — all tasks stack into one narrow column. Minimum is `2d` for every bar, including same-day tasks. |
+| Omitting `section Done` from the Gantt | Hard violation. Every Done task must appear at the top of the Gantt with the `done` tag — the chart's purpose is sprint progress, invisible without it. |
 | Generating all three diagrams regardless of sprint size | Apply the skip rules. A two-bar Gantt and a two-node dependency graph are decoration, not communication. |
-| Using `--` inside Mermaid labels | v8.8.0 lexes `--` as an edge token — rephrase the label using a plain hyphen or remove the characters |
-| Using `\n` inside stadium `([...])` shapes | Unreliable in v8.8.0 — use a short single-line label |
-| Writing "WIP" without defining it | Always expand on first use: "WIP (Work In Progress)" |
-| Skipping To Review items to start something new | To Review items are near-done investments. They always come first. |
-| Using the parallel symbol to mean split focus | It means a second terminal running automated work — never split human attention |
+| Using `--` inside Mermaid labels | v8.8.0 lexes `--` as an edge token — rephrase using a plain hyphen. |
+| Using `\n` inside stadium `([...])` shapes | Unreliable in v8.8.0 — use a short single-line label. |
+
+### Ordering mistakes
+
+| Mistake | Fix |
+|---|---|
+| Skipping To Review items to start something new | To Review items are finished investments sitting idle. They always come before new starts. |
+| Using the parallel symbol to mean split focus | It means a second terminal running automated work — never split human attention. |
 | Ordering sprint queue by task number | Task numbers are creation order. Re-order by uncertainty: novel first, routine last. |
-| Leaving sprint goal warning unaddressed | If no goal file exists, surface the gap and direct the founder to /sprint-planning |
