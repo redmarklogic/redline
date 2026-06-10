@@ -15,8 +15,6 @@ codebase and produce deterministic results.
 import importlib.util
 from pathlib import Path
 
-import pytest
-
 # ---------------------------------------------------------------------------
 # Load the hook module once; patch its path globals per-test
 # ---------------------------------------------------------------------------
@@ -88,9 +86,7 @@ def _make_agent_jd(agents_dir: Path, name: str, skills: list[str]) -> None:
 def _make_command(commands_dir: Path, name: str, skills: list[str]) -> None:
     commands_dir.mkdir(parents=True, exist_ok=True)
     refs = "".join(f"`{s}`\n" for s in skills)
-    (commands_dir / f"{name}.md").write_text(
-        f"# {name}\n{refs}", encoding="utf-8"
-    )
+    (commands_dir / f"{name}.md").write_text(f"# {name}\n{refs}", encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -132,7 +128,7 @@ class TestCommandsNotYetASource:
 
         mod = _load_hook()
         _patch_paths(mod, tmp_path)
-        known, reachable = _run_detection(mod)
+        _known, reachable = _run_detection(mod)
 
         assert "agent-owned-skill" in reachable
 
@@ -155,7 +151,7 @@ class TestCommandsAsSource:
         mod = _load_hook()
         _patch_paths(mod, tmp_path)
         mod._COMMANDS_DIR = tmp_path / ".claude" / "commands"
-        known, reachable = _run_detection_with_commands(mod)
+        _known, reachable = _run_detection_with_commands(mod)
 
         assert "prek-find-and-fix" in reachable, (
             "prek-find-and-fix should be reachable once commands are a detection source"

@@ -96,13 +96,19 @@ if (Test-Path '.coverage') {
 $repo = ($PSScriptRoot -replace '\\', '/')
 Write-Host "-- Running $SCANNER_IMAGE --" -ForegroundColor Cyan
 $tempLog = [System.IO.Path]::GetTempFileName()
+# Named volume persists the scanner cache (JRE/engine/plugins, ~150 MB) across
+# the --rm containers; without it every scan re-downloads through the slow
+# host.docker.internal loopback (measured 6m22s on a cold Docker Desktop).
+# skipJreProvisioning uses the image's bundled JRE 17 instead of downloading one.
 docker run --rm `
     -e "SONAR_HOST_URL=$SONAR_HOST_URL" `
     -e "SONAR_TOKEN=$env:SONAR_TOKEN" `
     -v "${repo}:/usr/src" `
+    -v "redmark-sonar-scanner-cache:/opt/sonar-scanner/.sonar" `
     $SCANNER_IMAGE `
     "-Dproject.settings=/usr/src/.cache/sonarqube/sonar-project.properties" `
-    "-Dsonar.branch.name=$BRANCH" | Tee-Object -FilePath $tempLog
+    "-Dsonar.branch.name=$BRANCH" `
+    "-Dsonar.scanner.skipJreProvisioning=true" | Tee-Object -FilePath $tempLog
 if ($LASTEXITCODE -ne 0) {
     Remove-Item $tempLog -Force -ErrorAction SilentlyContinue
     throw "sonar-scanner failed (exit $LASTEXITCODE)."
