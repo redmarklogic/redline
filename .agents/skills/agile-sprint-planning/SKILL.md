@@ -48,7 +48,7 @@ plan based on your actual recent throughput.
 thought through technically should not enter sprint planning. They belong in a design
 or spike session first. Bringing an unresearched task to planning produces
 conservative estimates and wastes the session. If a task in the backlog has not been
-shaped (no Peter Pitch, no spec), flag it and push it back to shaping.
+shaped (no Pitch, no spec), flag it and push it back to shaping.
 
 ## Boundary Contract
 
@@ -72,12 +72,12 @@ shaped (no Peter Pitch, no spec), flag it and push it back to shaping.
 ### Does Not Cover
 
 - Creating new tasks (use `github-projects` → `create-task`)
-- Shaping unrefined tasks (use `shaping` skill + Peter)
+- Shaping unrefined tasks (use `shaping` skill)
 - Retrospective on the previous sprint (use `session-retro`)
 
 ## Steward
 
-Mark (PM), with Peter consulted for feasibility on any task that hasn't been shaped.
+PM steward, with Principal Engineer consulted for feasibility on any task that hasn't been shaped.
 Founder makes the final call on goal and scope. No task enters the sprint without
 founder confirmation.
 

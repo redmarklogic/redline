@@ -71,7 +71,7 @@ pipeline, an AI sub-agent) while you give your full attention to task B.
 
 ## Steward
 
-Mark (PM). In Mark's routing table. Board writes blocked to Mark — this skill reads
+PM steward. Board writes blocked to PM — this skill reads
 only, except for the optional `sync-this-week` write.
 
 ## Prerequisites (abort with clear error if either fails)
@@ -175,24 +175,23 @@ gantt
     title Sprint N Timeline
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
-    section Done
-    #N Task title (max 30 chars)  :done, t1, YYYY-MM-DD, Nd
     section In Progress
-    #N Task title                 :active, t2, YYYY-MM-DD, Nd
+    #N Task title                 :active, t1, YYYY-MM-DD, Nd
+    section Backlog - Overdue
+    #N Overdue task title         :crit, t2, YYYY-MM-DD, Nd
     section Backlog
-    #N Overdue task title         :crit, t3, YYYY-MM-DD, Nd
-    #N Normal task title          :t4, YYYY-MM-DD, Nd
+    #N Normal task title          :t3, YYYY-MM-DD, Nd
 ```
 
 Rules:
-- Task labels: max 30 characters total (including `#N ` prefix); truncate with `...` if needed
+- **Omit Done tasks** — they are historical record covered by the "Recently Completed" text section; including them adds rows that crowd out the actionable bars
+- Task labels: max 25 characters total (including `#N ` prefix); truncate with `...` if needed
 - Always prefix each task bar label with `#<issue-number> ` (e.g. `#70 `) — extract the number from `issue_url`
 - Always include `axisFormat %d/%m` so x-axis shows day/month (e.g. `08/06`) instead of full ISO dates
 - No `--`, `—`, `–` inside labels — use plain hyphen
-- Duration `Nd` = number of days from start to target date
+- Duration `Nd` = number of days from start to target date; use `1d` minimum for same-day tasks
 - `crit` = overdue (target date is before today)
 - `active` = In Progress
-- `done` = Done
 - Do NOT add an explicit `Today` milestone — Mermaid draws a red vertical line at the current timestamp automatically; a redundant milestone anchors to midnight and creates a confusing double-marker
 
 Legend:
