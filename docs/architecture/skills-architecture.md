@@ -76,7 +76,7 @@ When placing a new skill, ask:
 │  Layer 9: Product, Strategy & Organisation                           │
 │  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic    │
 │  marketing-* · hr-hire-agent · hr-audit-agent · hr-maintain-agent-registry    │
-│  ceremony-monthly-editorial-session · sync-agent-topology            │
+│  ceremony-monthly-editorial-session · hr-sync-agent-topology         │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 8: Engineering Workflows                                      │
 │  shaping · arch-engineering · create-adr · design-eval-rubric · design-eval-pipeline │
