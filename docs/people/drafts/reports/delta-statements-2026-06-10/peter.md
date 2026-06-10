@@ -12,7 +12,7 @@
 
 ## 1. What I own today
 
-Architecture decisions as ADRs in `docs/adr/`; shaping (Pitches in `specs/shaped/`); feasibility verdicts; evaluation architecture (Graeme owns domain content — blocking gate); quality-gate thresholds and trend reading; Ubiquitous Language and Context Map stewardship; constitution sync after ADR acceptance; Tier-1 GCP (Google Cloud Platform) approval verdicts on Brent's escalations; authorship of infrastructure ADRs from Brent's analyses (Brent never writes to `docs/adr/`). My JD at `C:\Users\harel\Documents\redmark-logic\redline-1\.claude\agents\peter.md` reflects all of this, including the Brent rows — the facilitator's "routing current" note is correct. **No JD patch required.**
+Architecture decisions as ADRs in `docs/adr/`; shaping (Pitches in `specs/shaped/`); feasibility verdicts; evaluation architecture (Graeme owns domain content — blocking gate); quality-gate thresholds and trend reading; Ubiquitous Language and Context Map stewardship; constitution sync after ADR acceptance; Tier-1 GCP (Google Cloud Platform) approval verdicts on Brent's escalations; authorship of infrastructure ADRs from Brent's analyses (Brent never writes to `docs/adr/`). My JD at `C:\Users\harel\Documents\redmark-logic\redline-1\.claude\agents\peter.md` reflects all of this, including the Brent rows — the facilitator's "routing current" note is correct. **No JD patch required.** <!-- hook: allow -- verbatim agent output quoting repo path -->
 
 ## 2. What changed in my domain (evidence R1–R3)
 

@@ -5,7 +5,7 @@
 
 ## 1. What I own today
 
-Four outcomes per my JD (Job Description, `C:\Users\harel\Documents\redmark-logic\redline-1\.claude\agents\linda.md`): (1) the digital library at `G:\My Drive\Library` curated, indexed, deduplicated, tagged; (2) NotebookLM notebooks populated and maintained — I am the only agent permitted to run `nlm source add`; (3) the notebook register `C:\Users\harel\Documents\redmark-logic\redline-1\.agents\skills\redline-research\register.json` accurate and current (my direct-write file authority, draft-first maturity); (4) standards updates detected and routed — Graeme for geotechnical/engineering standards, Brent for cloud/DevOps/SOC-2 sources. I make no domain judgments; I detect and route.
+Four outcomes per my JD (Job Description, `C:\Users\harel\Documents\redmark-logic\redline-1\.claude\agents\linda.md`): (1) the digital library at `G:\My Drive\Library` curated, indexed, deduplicated, tagged; (2) NotebookLM notebooks populated and maintained — I am the only agent permitted to run `nlm source add`; (3) the notebook register `C:\Users\harel\Documents\redmark-logic\redline-1\.agents\skills\redline-research\register.json` accurate and current (my direct-write file authority, draft-first maturity); (4) standards updates detected and routed — Graeme for geotechnical/engineering standards, Brent for cloud/DevOps/SOC-2 sources. I make no domain judgments; I detect and route. <!-- hook: allow -- verbatim agent output quoting repo paths -->
 
 ## 2. What has changed in my domain since the last sync (evidence R1–R3)
 
@@ -23,7 +23,7 @@ Four outcomes per my JD (Job Description, `C:\Users\harel\Documents\redmark-logi
 ## 3. Where my JD or skills may now be incorrect, incomplete, or outdated
 
 1. **No material JD drift.** All six skills in my JD table exist on disk; `metadata_extractor.py` and `procedures/index-folder.md` resolve; the Brent constraint matches the register. I concur with the facilitator's "no drift repo-evidenced".
-2. **Outcome 4 tooling incompleteness (structural, not JD error):** my JD claims monitoring of "ISO, BSI, Standards NZ, Standards Australia" feeds, but the only feed tooling I find is `C:\Users\harel\Documents\redmark-logic\redline-1\.agents\tools\library\snz_scraper.py` (Standards NZ only). ISO/BSI/Standards Australia monitoring has no permanent tool. Either the tooling should be extended or Outcome 4's wording narrowed to what is operational.
+2. **Outcome 4 tooling incompleteness (structural, not JD error):** my JD claims monitoring of "ISO, BSI, Standards NZ, Standards Australia" feeds, but the only feed tooling I find is `C:\Users\harel\Documents\redmark-logic\redline-1\.agents\tools\library\snz_scraper.py` (Standards NZ only). ISO/BSI/Standards Australia monitoring has no permanent tool. Either the tooling should be extended or Outcome 4's wording narrowed to what is operational. <!-- hook: allow -- verbatim agent output quoting repo path -->
 3. **My owned notebook `technical-communication` is currency-stale by its own admission** (sources 2000–2014). Refreshing it requires a domain decision on what current guidance to add — I will route to its consumers (Graeme, Mark, Matt) and the founder; I do not pick sources on domain judgment.
 4. **Protocol observation for Harriet (not my file):** R2 question 1 ("what has been updated since [date]") is structurally unanswerable by static book corpora — both my notebooks returned explicit nulls. Question 2 produced the usable evidence. The skill may want to acknowledge this so null answers aren't misread as protocol failure.
 
