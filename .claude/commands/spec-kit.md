@@ -35,12 +35,13 @@ Determine which feature you are working on before any other action.
    $issue = gh issue view <number> --repo <org/repo> --json number,title,body | ConvertFrom-Json
    $slug  = $issue.title.ToLower() -replace '[^a-z0-9]+', '-' -replace '^-|-$', ''
    $branch = "feature/$($issue.number)-$slug"
+   $specDir = "specs/$($issue.number)-$slug"
 
    # Create and switch to the branch (from current HEAD if it doesn't exist yet)
    git checkout -b $branch 2>$null; if ($LASTEXITCODE -ne 0) { git checkout $branch }
    ```
 
-   Store `$issue.body` as the spec input for Phase 3. Announce the branch name to the user.
+   Store `$issue.body` as the spec input for Phase 3. Announce the branch name and spec directory (`$specDir`) to the user.
 
 2. If a feature name, doc path, or `brainstorm` arg was given → use it.
 3. Otherwise scan `specs/` for in-progress dirs (dirs where tasks.md is absent
@@ -61,7 +62,7 @@ Check conditions in order. First failing check is the current state.
 | State | Condition |
 | --- | --- |
 | `no-setup` | `.specify/` directory does not exist |
-| `no-spec` | `specs/NNN-feature/spec.md` does not exist |
+| `no-spec` | spec.md does not exist in the target feature directory (`specs/<issue-number>-<slug>/` for GitHub issue URL flow; `specs/NNN-feature/` otherwise) |
 | `needs-clarification` | spec.md exists AND contains `[NEEDS CLARIFICATION]` |
 | `no-plan` | spec.md clean, `plan.md` absent |
 | `no-tasks` | spec.md + plan.md exist, `tasks.md` absent |
@@ -126,6 +127,14 @@ Determine spec input — in priority order:
 3. Brainstorm produced output → use that.
 4. User described the feature in conversation → extract requirements.
 5. None of the above → ask: "Describe the feature. What problem does it solve and what does success look like?"
+
+**Spec directory naming:**
+
+- If `$specDir` was set in Phase 0 (GitHub issue URL flow): pass `SPECIFY_FEATURE_DIRECTORY=$specDir`
+  in the speckit.specify invocation arguments. The agent will use this path as-is instead of
+  auto-generating a sequence-numbered directory.
+- Otherwise (feature name, doc path, or brainstorm flow): omit `SPECIFY_FEATURE_DIRECTORY` and
+  let spec-kit auto-number the directory (`NNN-<short-name>`).
 
 After specify completes:
 
@@ -214,12 +223,14 @@ Output this and stop:
 
 ```text
 Spec complete. Docs:
-  specs/NNN-feature/spec.md
-  specs/NNN-feature/plan.md
-  specs/NNN-feature/tasks.md
+  <feature-dir>/spec.md
+  <feature-dir>/plan.md
+  <feature-dir>/tasks.md
 
-Next: "Kabilan, implement specs/NNN-feature/tasks.md"
+Next: "Kabilan, implement <feature-dir>/tasks.md"
 ```
+
+Where `<feature-dir>` is the resolved feature directory (e.g., `specs/63-infra-adr-cloud-run` for a GitHub issue flow, or `specs/007-user-auth` for an auto-numbered flow).
 
 **Do not call speckit.implement. Do not invoke Kabilan. Do not write any code.**
 
@@ -252,7 +263,7 @@ When the user provides a step name (`plan`, `tasks`, `analyze`):
 
 ## Constraints
 
-- Output location: `specs/NNN-feature/` (auto-numbered by spec-kit CLI).
+- Output location: `specs/<issue-number>-<slug>/` when started from a GitHub issue URL (derived from issue number and title); `specs/NNN-feature/` (auto-numbered by spec-kit CLI) for all other flows.
 - Vendor-generated files in `.github/agents/` and `.github/prompts/` must not be edited manually.
 - Extensions go in `.specify/extensions.yml`, not in vendor files.
 - Never use emoji in any output or document.
