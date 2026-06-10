@@ -12,8 +12,9 @@ Suppression: append `# hook: allow` to a line to exempt it.
 AGENTS.md rule: "NEVER implement custom environment loaders (e.g., manual
 .env file parsers). Assume the environment is correctly configured by the
 caller."
+
+See ADR-021 (docs/adr/adr-021-process-environment-as-sole-config-source.md).
 """
-# no-adr: AGENTS.md style rule; no governing ADR
 
 import argparse
 import re

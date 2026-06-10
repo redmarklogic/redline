@@ -41,8 +41,45 @@ rtk git add <file1> <file2> ...
 rtk git commit -m "<type>(<scope>): <summary>"
 ```
 
-If prek fails with a blocking error (not an auto-fix), stop, report the error,
-and ask the user how to proceed before continuing to the next batch.
+If prek fails with a blocking error (not an auto-fix), apply the **Pre-commit Failure Triage** protocol below before escalating.
+
+## Pre-commit Failure Triage
+
+### Test cases (expected behaviour — the spec)
+
+| # | Failure | Expected outcome |
+|---|---|---|
+| T1 | `ruff` unused import — single file | Auto-fix: remove import, re-stage, retry |
+| T2 | `ruff` line-too-long — single file | Auto-fix: reformat, re-stage, retry |
+| T3 | `ruff` import order wrong — single file | Auto-fix: reorder, re-stage, retry |
+| T4 | Trailing whitespace — single file | Auto-fix: strip, re-stage, retry |
+| T5 | `mypy` type mismatch | **Escalate** — semantic change, intent unclear |
+| T6 | `prek` detects secret/credential | **Escalate** — security domain, never auto-fix |
+| T7 | Lint violation spans 3+ files in batch | **Escalate** — blast radius too wide |
+| T8 | Test file assertion fails | **Escalate** — test expectations encode intent |
+| T9 | Missing type annotation, unambiguous inference | Auto-fix: add annotation, re-stage, retry |
+| T10 | Two valid fixes exist for one error | **Escalate** — ambiguous, ask user to choose |
+| T11 | Auto-fix applied, prek still fails second run | **Escalate** — do not loop; report both errors |
+
+### Blast-radius assessment
+
+Evaluate every failing dimension. One **red** → escalate immediately; skip remaining checks.
+
+| Dimension | Green → auto-fix | Red → escalate |
+|---|---|---|
+| **Change domain** | Style, formatting, imports, whitespace | Logic, types, tests, security, auth, data contracts |
+| **Scope** | Single file needs change | 2+ files need changes to resolve one error |
+| **Ambiguity** | One unambiguous fix | Multiple valid fixes, or correct fix unclear |
+| **Fix mechanism** | Rule-based rewrite (formatter rewrites deterministically) | Judgement-based (semantic understanding required) |
+| **Risk area** | No security/auth/crypto code touched | Secret, credential, permission, or encryption code |
+
+### Protocol
+
+1. Classify the failure against the table above.
+2. **All green** → apply fix, re-stage affected files, re-run `rtk uv run prek run --files <files>`, retry commit.
+   - Second failure for any reason: escalate — do not loop.
+3. **Any red** → stop. Report: (a) error message, (b) which red dimension triggered escalation, (c) what a fix would require. Ask how to proceed.
+4. Never modify test assertions, type signatures, or security-related code without explicit user instruction.
 
 ## Thematic Grouping Heuristics
 

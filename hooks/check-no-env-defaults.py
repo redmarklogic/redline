@@ -15,8 +15,9 @@ Suppression: append `# hook: allow` to a line to exempt it.
 AGENTS.md rule: "NEVER set default values for environment variables in
 scripts (e.g., use os.environ.get('VAR') or a required helper, not
 os.getenv('VAR', 'default')), unless explicitly asked to do so by the user."
+
+See ADR-021 (docs/adr/adr-021-process-environment-as-sole-config-source.md).
 """
-# no-adr: AGENTS.md style rule; no governing ADR
 
 import argparse
 import re

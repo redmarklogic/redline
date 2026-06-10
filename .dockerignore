@@ -1,0 +1,5 @@
+# Closed by default. Every service must define its own Dockerfile.dockerignore
+# alongside its Dockerfile with an explicit whitelist of what the build needs.
+# A build without a Dockerfile.dockerignore will receive an empty context and
+# fail loudly — the correct failure mode for a missing whitelist.
+*

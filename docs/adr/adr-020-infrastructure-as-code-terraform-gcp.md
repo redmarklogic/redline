@@ -19,14 +19,14 @@ Accepted — 2026-06-10
 
 1. **Terraform owns all GCP infrastructure** after the bootstrap step. Every resource
    (API enablement, billing linkage, Cloud Run service, Artifact Registry, IAP, DNS,
-   Secret Manager, IAM bindings, Load Balancer) is declared in HCL under `infra/terraform/`.
+   Secret Manager, IAM bindings, Load Balancer) is declared in HCL under `deploy/infra/terraform/`.
 
 2. **Bootstrap exception** — exactly two resources are created outside Terraform because
    Terraform requires them before it can initialise:
    - The GCP project itself (`gcloud projects create`)
    - The GCS bucket for Terraform remote state (`gcloud storage buckets create`)
 
-   Both are created by `infra/bootstrap/bootstrap.sh`. This script runs once, ever.
+   Both are created by `deploy/infra/bootstrap/bootstrap.sh`. This script runs once, ever.
    Subsequent runs are idempotent (check-before-create guards). After it completes,
    Terraform manages all further configuration of the project.
 
@@ -116,7 +116,7 @@ Three drivers:
 ## Structure
 
 ```text
-infra/
+deploy/infra/
 ├── bootstrap/
 │   └── bootstrap.sh        # One-off: gcloud project create + state bucket create
 └── terraform/
@@ -129,7 +129,7 @@ infra/
     └── billing.tf           # google_billing_project_info
 ```
 
-`infra/terraform/terraform.tfvars` is the SSOT for all canonical project identifiers,
+`deploy/infra/terraform/terraform.tfvars` is the SSOT for all canonical project identifiers,
 replacing the `inventory.yml` concept from earlier drafts (ADR-001 applies).
 
 ## References
