@@ -237,3 +237,19 @@ data/**/*.html
 
 # Infrastructure: post-apply terraform output capture (may contain live project identifiers)
 specs/005-gcp-project-baseline/verify-output.txt
+
+# Daily standups (local only, not for version control)
+docs/standups/
+
+# Terraform local backend override — used for plan assertions during development only
+deploy/infra/terraform/backend_override.tf
+deploy/infra/terraform/.terraform/
+deploy/infra/terraform/.terraform.lock.hcl
+deploy/infra/terraform/tfplan.binary
+deploy/infra/terraform/tfplan.json
+deploy/infra/terraform/terraform.tfstate
+deploy/infra/terraform/terraform.tfstate.backup
+deploy/infra/terraform/override.tf
+deploy/infra/terraform/override.tf.json
+deploy/infra/terraform/*_override.tf
+deploy/infra/terraform/*_override.tf.json

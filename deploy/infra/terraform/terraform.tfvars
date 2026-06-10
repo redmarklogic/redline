@@ -19,6 +19,13 @@ folder_id = "000000000000"
 
 state_bucket = "redmarklogic-tf-state"
 
+# ── Cloud Run deployment variables (spec-70) ─────────────────────────────────
+# image_tag is NOT set here — must be supplied at plan/apply time as a CLI -var
+# to prevent mutable tags being silently accepted.
+artifact_registry_repo = "redline-repo"
+max_instances_staging  = 3
+max_instances_prod     = 10
+
 apis = [
   "run.googleapis.com",
   "artifactregistry.googleapis.com",
