@@ -223,7 +223,7 @@ Executed on branch `chore/topology-sync-2026-06-10`.
 
 | Item | Disposition |
 |---|---|
-| A-1, A-2, A-20, A-21 | **Approved by founder.** Promotion to `.claude/agents/` blocked by the harness permission layer (auto-mode classifier denies JD-file writes); drafts retained in `docs/people/drafts/agents/` pending manual promotion — delete each draft once applied |
+| A-1, A-2, A-20, A-21 | **Promoted 2026-06-11** (founder one-time approval lifted the earlier permission block). All patch edits applied to `.claude/agents/{brent,harriet,john,matt}.md`, incl. Brent's two validated amendments; consumed drafts deleted from `docs/people/drafts/agents/` |
 | A-3 | Applied — Brent roster entry + dispatch rows in AGENTS.md; persona count fixed; Matt added to honesty clause |
 | A-4 | Applied — skip-list: `prek-find-and-fix`, `test-find-and-fix` added as `justified-orchestrator`; stale entry renamed |
 | A-5 | Executed — `arch-engineering` deleted after porting Peter's three salvage items into `engineering-architecture`; both stale pointers fixed |
