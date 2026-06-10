@@ -12,11 +12,15 @@ param([switch]$Quiet)
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$SUPERPOWERS_VERSION = "v5.1.0"
 $SUPERPOWERS_REPO    = "obra/superpowers"
 
-$agentsSkillsDir = ".agents\skills"
-$versionFile     = "$agentsSkillsDir\.superpowers-version"
+$agentsSkillsDir  = ".agents\skills"
+$skillsLockFile   = "skills-lock.json"
+
+# Read pinned version dynamically from skills-lock.json
+$skillsLock          = Get-Content $skillsLockFile -Raw | ConvertFrom-Json
+$SUPERPOWERS_VERSION = $skillsLock.superpowersVersion
+if (-not $SUPERPOWERS_VERSION) { Write-Fail "superpowersVersion not found in $skillsLockFile" }
 
 function Write-Step { param([string]$msg) if (-not $Quiet) { Write-Host "`n>> $msg" -ForegroundColor Cyan } }
 function Write-OK   { param([string]$msg) Write-Host "   OK  $msg" -ForegroundColor Green }
@@ -27,12 +31,9 @@ function Write-Fail { param([string]$msg) Write-Host "   ERR $msg" -ForegroundCo
 
 Write-Step "Checking Superpowers version"
 
-$currentVersion = ""
-if (Test-Path $versionFile) {
-    $currentVersion = (Get-Content $versionFile -Raw).Trim()
-}
+$installedVersion = $skillsLock.installedSuperpowersVersion
 
-if ($currentVersion -eq $SUPERPOWERS_VERSION) {
+if ($installedVersion -eq $SUPERPOWERS_VERSION) {
     Write-Skip "Superpowers $SUPERPOWERS_VERSION already installed"
 } else {
     if ($currentVersion) {
@@ -82,10 +83,11 @@ if ($currentVersion -eq $SUPERPOWERS_VERSION) {
 
     Write-OK "$installed skill(s) installed from $SUPERPOWERS_REPO $SUPERPOWERS_VERSION"
 
-    # ── 4. Write version marker ───────────────────────────────────────────────
+    # ── 4. Record installed version in skills-lock.json ──────────────────────
 
-    Set-Content $versionFile $SUPERPOWERS_VERSION -NoNewline
-    Write-OK "Version marker written ($versionFile)"
+    $skillsLock | Add-Member -MemberType NoteProperty -Name installedSuperpowersVersion -Value $SUPERPOWERS_VERSION -Force
+    $skillsLock | ConvertTo-Json -Depth 10 | Set-Content $skillsLockFile -Encoding UTF8
+    Write-OK "installedSuperpowersVersion updated in $skillsLockFile"
 
     # Cleanup temp
     Remove-Item $tmpDir -Recurse -Force
