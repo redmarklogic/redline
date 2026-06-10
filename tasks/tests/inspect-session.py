@@ -5,13 +5,15 @@ Usage: python inspect-session.py <session-id>
 Transcript dir is derived from the repo root's parent path automatically,
 or override with CCE_TRANSCRIPT_DIR env var.
 """
+
 import json
 import os
 import re
 import sys
 from pathlib import Path
 
-PROJ = Path(__file__).resolve().parents[2]   # repo root
+PROJ = Path(__file__).resolve().parents[2]  # repo root
+
 
 def transcript_dir() -> Path:
     if env := os.environ.get("CCE_TRANSCRIPT_DIR"):
@@ -36,14 +38,15 @@ for ln in tf.open(encoding="utf-8", errors="replace"):
             if isinstance(blk, dict) and blk.get("type") == "tool_use":
                 inp = json.dumps(blk.get("input"))[:100]
                 tools.append(f"{blk.get('name')}  {inp}")
-    else:
-        if "mcp__context-engine" in json.dumps(rec):
-            cce_mentions += 1
+    elif "mcp__context-engine" in json.dumps(rec):
+        cce_mentions += 1
 
 print("TOOL CALLS:")
 for t in tools:
     print("  ", t)
-print(f"\nnon-assistant transcript lines mentioning mcp__context-engine: {cce_mentions}")
+print(
+    f"\nnon-assistant transcript lines mentioning mcp__context-engine: {cce_mentions}"
+)
 
 last_text = ""
 for ln in tf.open(encoding="utf-8", errors="replace"):
