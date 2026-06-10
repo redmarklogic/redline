@@ -93,6 +93,19 @@ Full step-by-step procedure: `procedures/run-topology-sync.md`
 See `procedures/run-topology-sync.md` for the full step-by-step procedure.
 See `procedures/srp-scan-procedure.md` for the SRP Compliance Pass algorithm.
 
+## Platform Constraints (orchestration)
+
+- The facilitating agent runs as a subagent and has NO Agent tool (1-hop circuit
+  breaker) and no SendMessage continuation. Delta collection MUST be orchestrated
+  from the main-thread session: the main thread dispatches each reflecting agent
+  in parallel, persists statements, then re-dispatches the facilitator with the
+  on-disk paths. Plan the ceremony as three passes: facilitate → collect → integrate.
+- Each reflecting agent writes its own Delta Statement to
+  `docs/people/drafts/reports/delta-statements-YYYY-MM-DD/<agent>.md` and returns
+  only the path plus a 5-line summary — never the full statement as chat output.
+- Verify NotebookLM access via `nlm login --check` at dispatch; R2 nulls from
+  static corpora are valid output, not protocol failure.
+
 ## Common Mistakes
 
 | Mistake | Correct behaviour |

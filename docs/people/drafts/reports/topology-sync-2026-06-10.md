@@ -214,3 +214,24 @@ Every item the eight Delta Statements route to the founder or to another agent i
 | Strategy pivot / client feedback batch | On occurrence |
 
 **Note:** A-8 (live Delta collection) completed this sync's deferred reflections on 2026-06-10 — **closed**. The condition it imposed on A-1 (Brent validation before promotion) is satisfied; A-1, A-20, and A-21 now await only founder approval. This sync is complete: trigger validated, all reflections collected (Kabilan excepted by standing rule), gap/overlap/SRP passes done, patches drafted, artifacts updated. The 2026-09-08 quarterly baseline stands.
+
+---
+
+## 14. Resolution Log (founder session, 2026-06-10/11)
+
+Executed on branch `chore/topology-sync-2026-06-10`.
+
+| Item | Disposition |
+|---|---|
+| A-1, A-2, A-20, A-21 | **Approved by founder.** Promotion to `.claude/agents/` blocked by the harness permission layer (auto-mode classifier denies JD-file writes); drafts retained in `docs/people/drafts/agents/` pending manual promotion — delete each draft once applied |
+| A-3 | Applied — Brent roster entry + dispatch rows in AGENTS.md; persona count fixed; Matt added to honesty clause |
+| A-4 | Applied — skip-list: `prek-find-and-fix`, `test-find-and-fix` added as `justified-orchestrator`; stale entry renamed |
+| A-5 | Executed — `arch-engineering` deleted after porting Peter's three salvage items into `engineering-architecture`; both stale pointers fixed |
+| A-6 | Done — ADR-023 authored (Peter), ADR-022 status line updated, reciprocal convention exercised |
+| A-7 | Done — `agile-sprint-planning` + `agile-daily-standup` lock entries (owner: mark); also removed the `arch-engineering` entry and renamed `ceremony-agent-topology-sync` → `hr-sync-agent-topology` |
+| A-9 | Done — sync working tree committed in scoped commits on the branch above |
+| A-11 | **Resolved:** founder ruled the Craig Lewis email is not to be sent; draft deleted. Never published → no AI-content-review gate breach. The other six content artifacts remain pre-publication drafts |
+| A-13 | Ron + Mark consulted — both independently recommend **launch-anchored with a fixed backstop** (Ron: backstop 2026-07-31, "launch = instrumented launch" i.e. B-1b live; replacement wording supplied in their session outputs). **Founder decision pending** at bet review, Peter present |
+| A-19 | Delivered — Touch 1 memo at `specs/shaped/2026-06-11-touch1-skeleton-generator-constraints-memo.md`; Mark's PRD verdict: **conditionally ready** — two founder rulings pending (v1 selector-vs-single-path; boundary-state UX), gap 3 held surface covered by the memo |
+| A-24 | Applied — create-adr reciprocal-status + partial-supersession conventions (Peter-authored text, founder-applied) |
+| Still open | A-10 (terraform-iac, next sprint), A-12 (June signal report retro-file), A-14 (duplicate specs/005-*), A-15 (standup question), A-16/A-17/A-22 (Linda), A-18 (Linda Outcome 4), A-23 (Platform Constraints section added to the skill addresses orchestration; access-path tooling still open), A-25 (persona location), A-26 (marketing corroboration) |
