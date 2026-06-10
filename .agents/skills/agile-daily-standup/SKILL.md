@@ -47,8 +47,9 @@ complication to name.
 
 **Resolution** — The single right move given the situation and the complication.
 One clear instruction. Not a list of options. Not "consider doing X." The resolution
-is derived from the execution ordering rules (To Review first, then unblockable
-blockers, then riskiest in-progress, then new starts only if WIP permits) but
+is derived from the execution ordering rules (information gaps resolved first,
+then To Review, then unblockable blockers, then riskiest in-progress, then new
+starts only if WIP permits) but
 expressed as a narrative conclusion, not a numbered list.
 
 ## Why These Agile Principles Are Built In
@@ -123,13 +124,41 @@ Read `docs/product/tasks/this-week.md`.
 
 ### Step 2 — Fetch live board state
 
+The fetch MUST use the `github-projects` skill's `list-tasks` procedure — never a
+hand-rolled GraphQL query. Hand-rolled queries with a fixed page size (`first: 50`
+against a larger board) silently truncate, and the brief then fabricates
+complications out of its own incomplete data.
+
 ```python
 config = resolve_project_config(project_number=1, owner="redmarklogic")
 tasks  = list_tasks(config, sprint="<current-sprint-name>")
 ```
 
+**Completeness assert (mandatory):** any query must request `totalCount`. Assert
+that the returned item count equals `totalCount`; paginate until exhausted. A
+fetch whose returned count equals the requested page size is **presumed truncated
+until proven complete**.
+
 Group into five buckets: `To Review`, `Blocked`, `In Progress`, `Backlog`, `Done`
 (all sprint-scoped).
+
+### Step 2b — Reconcile snapshot vs live board
+
+Diff the live fetch against `docs/product/tasks/this-week.md`:
+
+- Any task present in the snapshot but missing from the live fetch is a **fetch
+  error until proven otherwise** — re-query before concluding the board changed.
+- Any Done-count mismatch between snapshot and live data **blocks brief
+  composition** until reconciled.
+- Treat dangling references as a third truncation signal: a task whose
+  `depends_on` field names issue numbers absent from the result set means the
+  fetch is incomplete.
+
+**No unresolved unknowns in the brief.** If a task's status is verifiable via
+read-only calls (`gh issue view`, linked PRs, issue timeline), verify it DURING
+brief generation — cap of roughly 5 verification calls. The brief may never
+recommend "investigate/audit X" to the founder where the agent can resolve X
+itself with read-only access.
 
 ### Step 3 — Fetch sprint context
 
@@ -138,6 +167,13 @@ Group into five buckets: `To Review`, `Blocked`, `In Progress`, `Backlog`, `Done
 2. Sprint goal from `docs/product/tasks/sprint-<N>-goal.md` if it exists.
    If absent: surface `No sprint goal defined`.
 3. Active bet from `strategic-bets.md`.
+
+### Step 3b — Dated-commitment linkage
+
+Pull the active bet's dated clocks from `strategic-bets.md` — ship targets, launch
+backstops, kill-criterion checkpoints. State the sprint critical path's slack
+against the **nearest dated commitment**. This sentence is mandatory in the
+Complication section: a complication without a clock is mood, not stakes.
 
 ### Step 4 — Assess parallelism
 
@@ -153,16 +189,39 @@ For each Blocked task, read its `blocked_by` field and reason:
 
 ### Step 6 — Order execution plan
 
+0. Resolve information gaps before ordering anything else — everything ordered
+   after an unknown is ordering noise
 1. To Review items first
 2. Unblockable Blocked items
 3. Riskiest In Progress item (most unknowns)
 4. Other In Progress items
 5. First backlog item only if WIP < 2 after steps 1-4
 
+**Scope filter on To Review items:** an item qualifies for today's plan only if it
+is in the current sprint OR its target date is ≤ today. Otherwise it gets a
+one-line parking note — never a top execution slot.
+
+**Ending WIP:** the execution plan must state what WIP (Work In Progress count)
+will be at end of day. New starts are forbidden while WIP > 2 or while any
+In Progress item's true status is unverified.
+
 ### Step 7 — Generate diagrams
 
 See Diagram Rules section below. Generate each diagram unless its skip condition
 applies; replace skipped diagrams with the empty-state line.
+
+### Step 7.5 — Pre-write audit checklist
+
+Before writing the file, verify every item. Any failure sends you back to the
+step named in parentheses — do not write around it.
+
+- [ ] Counts reconcile — the header `X/N` is derived from the reconciled set (Step 2b)
+- [ ] Every snapshot task is accounted for in the brief (Step 2b)
+- [ ] Zero unresolved unknowns remain (Step 2b rule)
+- [ ] Every To Review item in today's plan is scope-qualified (Step 6 filter)
+- [ ] Gantt includes ALL Done tasks (Diagram Rules)
+- [ ] Every diagram is consistent with the prose claims it accompanies — no chart
+      asserting what the prose disputes
 
 ### Step 8 — Compose narrative and write to file
 
@@ -211,6 +270,7 @@ are coming up, and how much of the sprint window is left — without scanning a 
 of dates.
 
 ```mermaid
+%%{init: {"gantt": {"useWidth": 960, "barHeight": 20, "barGap": 4}}}%%
 gantt
     title Sprint N Timeline
     dateFormat YYYY-MM-DD
@@ -226,10 +286,28 @@ gantt
 ```
 
 Rules:
+
+**Full-width rendering (mandatory):**
+- The `%%{init}%%` directive **must be the first line** inside the fenced code block,
+  before `gantt`. Without it Mermaid calculates a narrow default width that collapses
+  bar area whenever task labels are long or the sprint window is short (≤ 14 days).
+- `useWidth: 960` — forces the SVG to fill the document content column. Keep between
+  800 and 1000; values above 1000 are clipped by some Markdown renderers.
+- `barHeight: 20` and `barGap: 4` are the defaults; include them explicitly so the
+  output is predictable across renderer versions.
+- Task labels: **max 20 characters total** (including `#N ` prefix) — shorter labels
+  widen the bar area relative to the label column. Truncate with `...` if needed.
+  (Prior limit was 25; tightened to improve bar readability.)
+- If the sprint has more than 12 tasks, collapse the Done section to the **3 most
+  recently completed** tasks and add a note line `%% N earlier Done tasks omitted`
+  — too many Done rows compress bar height and make the overdue/in-progress rows
+  illegible. The mandatory Done section rule still applies; 3 is the minimum.
+
+**Content rules:**
 - **MANDATORY: Include Done tasks** — `section Done` at the top is REQUIRED. Every sprint task
-  with status Done must appear here with the `done` tag. Omitting this section is a skill
-  violation — the Gantt exists precisely to show sprint progress, which is invisible without it.
-- Task labels: max 25 characters total (including `#N ` prefix); truncate with `...` if needed
+  with status Done must appear here (or the most recent 3 if >12 total tasks). Omitting
+  this section is a skill violation — the Gantt exists precisely to show sprint progress,
+  which is invisible without it.
 - Always prefix each task bar label with `#<issue-number> ` (e.g. `#70 `) — extract the number from `issue_url`
 - Always include `axisFormat %d/%m` so x-axis shows day/month (e.g. `08/06`) instead of full ISO dates
 - No `--`, `—`, `–` inside labels — use plain hyphen
@@ -240,10 +318,26 @@ Rules:
 - `active` = In Progress
 - Do NOT add an explicit `Today` milestone — Mermaid draws a red vertical line at the current timestamp automatically; a redundant milestone anchors to midnight and creates a confusing double-marker
 
-Legend:
-- Grey bars: Done
-- Blue bars: In Progress (active)
-- Red bars: Overdue (crit) — target date already passed
+**Legend (mandatory — always follows the Gantt):**
+
+Place a color-key mini-Gantt immediately after the main chart. Use the same sprint
+start date and a 7d span so all bars are equal width and directly comparable.
+Set `useWidth: 480` so the legend reads as a supporting element, not a second chart.
+
+```mermaid
+%%{init: {"gantt": {"useWidth": 480, "barHeight": 20, "barGap": 6}}}%%
+gantt
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+    section Colors
+    Done                :done, l1, YYYY-MM-DD, 7d
+    In Progress         :active, l2, YYYY-MM-DD, 7d
+    Overdue             :crit, l3, YYYY-MM-DD, 7d
+    Backlog             :l4, YYYY-MM-DD, 7d
+```
+
+Replace `YYYY-MM-DD` with the sprint start date so the legend sits in the same date
+window as the main chart. No title line — the section label "Colors" is enough.
 
 ---
 
@@ -385,6 +479,11 @@ Name every active threat to the sprint goal. Write from the *content* of the tas
 not just their status fields. For each complication, say what it is, why it matters
 to the product or the bet, and what happens if it is not resolved today.
 
+**Mandatory stakes-clock sentence (from Step 3b):** state the sprint critical
+path's slack against the nearest dated commitment in the active bet (ship target,
+launch backstop, kill-criterion checkpoint). A complication without a clock is
+mood, not stakes.
+
 **Complication types to check and narrate:**
 
 - **Overdue tasks:** Name them, explain what they unblock, and say how many days they
@@ -408,6 +507,18 @@ to the product or the bet, and what happens if it is not resolved today.
 
 - **Board gaps:** If the board state is inconsistent with reality (done tasks not
   marked, sprint tags missing), name the gap and its operational consequence.
+  Before calling anything a board gap, confirm the fetch passed Step 2's
+  completeness assert — a truncated fetch masquerades as a board gap.
+
+- **Dependency completed out of order:** A Done task whose `depends_on` references
+  a non-Done task. This signals hidden manual work — the "Done" likely papers over
+  a step performed by hand (e.g. a deploy marked Done while its CI pipeline is
+  still Backlog). Name it and say what the manual workaround was or must have been.
+
+- **Sprint-tag/target-date contradiction:** A task whose iteration tag and target
+  date fall in different sprint windows. This violates the no-cross-boundary
+  convention in `cadences.md` ("tasks do not cross sprint boundaries") — one of
+  the two fields is wrong, and the brief must say which it believes and why.
 
 If there is a dependency chain relevant to the complications, include Diagram 2
 (Dependency flowchart) here as evidence of what is blocking what.
@@ -434,6 +545,11 @@ Then give the execution order for the full day, with a plain-language reason for
 each step's position. If parallel work is possible (task A can run in a second
 terminal while you work on task B), name the tasks and say explicitly what "second
 terminal" means — automated work running independently, not split focus.
+
+**The plan must state ending WIP:** one sentence naming what the WIP (Work In
+Progress count) will be at end of day if the plan is followed. A plan that ends
+the day above the WIP limit of 2 contradicts the skill's own principles — rework
+the order until it doesn't, or name explicitly why today is an exception.
 
 Include Diagram 3 (Execution flowchart) here if 3 or more tasks are in today's
 plan, as a visual of the parallel/sequential structure.
@@ -507,6 +623,7 @@ WIP creep, riskiest unknown, board gaps — each explained in terms of product s
 | Defining jargon once and forgetting | Acronyms reintroduced without gloss two paragraphs later lose the uninitiated reader. Define on first use in each major section if the section can be read standalone. |
 | Narrating the sprint goal as absent without consequence | A missing sprint goal is itself a complication — the sprint has no success criterion. Name it as a risk in the Complication section, not just a metadata gap in the header. |
 | Embedding diagrams without prose context | A diagram placed without a preceding sentence explaining what it shows is decoration. Every diagram must be introduced: "The timeline below shows the compression — four remaining tasks must land in two days." |
+| Complications with no stakes-clock | Slippage narrated without reference to the active bet's dated commitments (ship target, launch backstop) has no stakes. Always state the critical path's slack against the nearest dated commitment (Step 3b). |
 
 ### Diagram mistakes
 
@@ -523,5 +640,18 @@ WIP creep, riskiest unknown, board gaps — each explained in terms of product s
 | Mistake | Fix |
 |---|---|
 | Skipping To Review items to start something new | To Review items are finished investments sitting idle. They always come before new starts. |
+| Scheduling unknowns last | Resolving information gaps is position 0 of the execution order. Starting new work before resolving "unknown status" tasks means everything ordered after the unknown is ordering noise — and the actually-urgent work may be hiding in the unfetched data. |
+| Out-of-sprint To Review items in top slots | Apply the scope filter: an item qualifies for today's plan only if it is in the current sprint or its target date is ≤ today. A future-sprint review item gets a one-line parking note, never a top execution slot. |
+| Ending WIP never stated | The Resolution must say what WIP will be at end of day. A plan that quietly ends above the WIP limit of 2 contradicts the skill's own principles. |
 | Using the parallel symbol to mean split focus | It means a second terminal running automated work — never split human attention. |
 | Ordering sprint queue by task number | Task numbers are creation order. Re-order by uncertainty: novel first, routine last. |
+
+### Data integrity mistakes
+
+| Mistake | Fix |
+|---|---|
+| Treating a truncated fetch as a board gap | A query whose returned count equals the page size is presumed truncated. Assert against `totalCount` and paginate (Step 2); reconcile against the snapshot (Step 2b) before narrating "missing" or "unaccounted-for" tasks as complications. |
+| Hand-rolling a GraphQL query | Always use the `github-projects` skill's `list-tasks` procedure. Hand-rolled queries skip the completeness guarantees and have already produced a brief with fabricated complications and wrong header math. |
+| Delegating verifiable checks to the founder | If a task's status can be resolved with read-only calls (`gh issue view`, linked PRs, timeline), verify it during brief generation. "Audit #N's board status" is never a valid founder action item when the agent can read the answer itself. |
+| Chart contradicting prose | A Gantt rendering a task as overdue while the prose argues the overdue signal is false asserts two incompatible claims. Resolve the contradiction before writing — every diagram must agree with the prose it accompanies (Step 7.5). |
+| Ignoring contradiction signals | A snapshot task missing from the live fetch, or a `depends_on` referencing issue numbers absent from the result set, are fetch-error signals — stop and reconcile (Step 2b), do not write through them. |
