@@ -18,6 +18,10 @@ Write-Host "   OK  uv sync complete" -ForegroundColor Green
 Write-Banner "Spec Kit"
 & "$root\setup-speckit.ps1"
 
+# Superpowers overrides (remove vendor skills that conflict with Spec-Kit pipeline)
+Write-Banner "Superpowers overrides"
+& "$root\setup-superpowers.ps1"
+
 # CCE (Code Context Engine MCP server)
 Write-Banner "Code Context Engine"
 & "$root\setup-cce.ps1"

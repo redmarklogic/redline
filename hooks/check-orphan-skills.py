@@ -52,8 +52,6 @@ _FRAMEWORK_BOOTSTRAPS: frozenset[str] = frozenset({"using-superpowers"})
 # Skills that are known orphans, accepted or pending deletion.
 # Format: skill_name -> reason (displayed in output so reviewers understand status)
 KNOWN_ORPHANS: dict[str, str] = {
-    "executing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
-    "writing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
     "sonarqube-find-and-fix": "orchestrating skill pending agent JD routing table entry; tracked in spec-016",
     "prek-find-and-fix": "orchestrating skill pending agent JD routing table entry; add to kabilan agent JD",
     "test-find-and-fix": "orchestrating skill pending agent JD routing table entry; add to kabilan agent JD",

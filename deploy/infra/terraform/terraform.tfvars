@@ -5,17 +5,15 @@
 # CI/CD scripts, and Workload Identity config. No script or HCL resource block may
 # hardcode any of these values.
 #
-# TODO (Brent): Replace placeholder values for billing_account and folder_id before
-# running infra/bootstrap/bootstrap.sh. These are Brent's domain (DevOps).
 # Safe to commit — billing_account is an account ID only, not a key.
 
 project_id      = "redmarklogic-prod"
 region          = "australia-southeast1"
-billing_account = "XXXXXX-XXXXXX-XXXXXX"
+billing_account = "017B95-5D02DE-B3B68F"
 
 # Exactly one of folder_id or org_id must be set; comment out the other.
-folder_id = "000000000000"
-# org_id  = "000000000000"
+# folder_id = ""
+org_id = "363330153915"
 
 state_bucket = "redmarklogic-tf-state"
 
