@@ -33,6 +33,16 @@
         ]
       },
       {
+        "matcher": "Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/cce-route-explore.ps1",
+            "timeout": 5
+          }
+        ]
+      },
+      {
         "matcher": "WebSearch",
         "hooks": [
           {
@@ -144,6 +154,16 @@
       }
     ],
     "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/cce-route-explore.ps1",
+            "timeout": 5
+          }
+        ]
+      },
       {
         "matcher": "",
         "hooks": [
