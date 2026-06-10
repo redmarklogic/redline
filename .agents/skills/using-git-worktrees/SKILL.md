@@ -27,7 +27,7 @@ BRANCH=$(git branch --show-current)
 
 ```bash
 # If this returns a path, you're in a submodule, not a worktree — treat as normal repo
-git rev-parse --show-superproject-working-tree 2>/dev/null
+rtk git rev-parse --show-superproject-working-tree 2>/dev/null
 ```
 
 **If `GIT_DIR != GIT_COMMON` (and not a submodule):** You are already in a linked worktree. Skip to Step 3 (Project Setup). Do NOT create another worktree.
@@ -87,7 +87,7 @@ Follow this priority order. Explicit user preference always beats observed files
 **MUST verify directory is ignored before creating worktree:**
 
 ```bash
-git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
+rtk git check-ignore -q .worktrees 2>/dev/null || rtk git check-ignore -q worktrees 2>/dev/null
 ```
 
 **If NOT ignored:** Add to .gitignore, commit the change, then proceed.
@@ -105,7 +105,7 @@ project=$(basename "$(git rev-parse --show-toplevel)")
 # For project-local: path="$LOCATION/$BRANCH_NAME"
 # For global: path="~/.config/superpowers/worktrees/$project/$BRANCH_NAME"
 
-git worktree add "$path" -b "$BRANCH_NAME"
+rtk git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
 

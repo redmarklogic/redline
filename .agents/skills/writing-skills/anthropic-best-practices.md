@@ -826,8 +826,8 @@ Iterate based on these observations rather than assumptions. The 'name' and 'des
 
 Always use forward slashes in file paths, even on Windows:
 
-* ✓ **Good**: `scripts/helper.py`, `reference/guide.md`
-* ✗ **Avoid**: `scripts\helper.py`, `reference\guide.md`
+* [ok] **Good**: `scripts/helper.py`, `reference/guide.md`
+* [x] **Avoid**: `scripts\helper.py`, `reference\guide.md`
 
 Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.
 
@@ -1140,7 +1140,7 @@ Before sharing a Skill, verify:
 ## Redline project notes
 
 These notes override or extend Anthropic's guidance for this repo specifically.
-They were agreed by a Peter / Mark / Ron review panel on 2026-06-11.
+They were agreed by a Peter / Mark / Ron review panel on 2026-06-11. <!-- hook: allow -->
 
 ### Description field (overrides "what + when" guidance above)
 

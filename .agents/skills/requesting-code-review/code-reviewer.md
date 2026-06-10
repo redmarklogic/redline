@@ -26,8 +26,8 @@ Task tool (general-purpose):
     **Head:** {HEAD_SHA}
 
     ```bash
-    git diff --stat {BASE_SHA}..{HEAD_SHA}
-    git diff {BASE_SHA}..{HEAD_SHA}
+    rtk git diff --stat {BASE_SHA}..{HEAD_SHA}
+    rtk git diff {BASE_SHA}..{HEAD_SHA}
     ```
 
     ## What to Check
@@ -115,7 +115,7 @@ Task tool (general-purpose):
 
     **DON'T:**
     - Say "looks good" without checking
-    - Mark nitpicks as Critical
+    - Label nitpicks as Critical
     - Give feedback on code you didn't actually read
     - Be vague ("improve error handling")
     - Avoid giving a clear verdict

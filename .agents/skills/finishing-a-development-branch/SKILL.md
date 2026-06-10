@@ -58,7 +58,7 @@ This determines which menu to show and how cleanup works:
 
 ```bash
 # Try common base branches
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
+rtk git merge-base HEAD main 2>/dev/null || rtk git merge-base HEAD master 2>/dev/null
 ```
 
 Or ask: "This branch split from main - is that correct?"
@@ -102,9 +102,9 @@ MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-tople
 cd "$MAIN_ROOT"
 
 # Merge first — verify success before removing anything
-git checkout <base-branch>
-git pull
-git merge <feature-branch>
+rtk git checkout <base-branch>
+rtk git pull
+rtk git merge <feature-branch>
 
 # Verify tests on merged result
 <test command>
@@ -115,14 +115,14 @@ git merge <feature-branch>
 Then: Cleanup worktree (Step 6), then delete branch:
 
 ```bash
-git branch -d <feature-branch>
+rtk git branch -d <feature-branch>
 ```
 
 #### Option 2: Push and Create PR
 
 ```bash
 # Push branch
-git push -u origin <feature-branch>
+rtk git push -u origin <feature-branch>
 
 # Create PR
 gh pr create --title "<title>" --body "$(cat <<'EOF'
@@ -165,7 +165,7 @@ cd "$MAIN_ROOT"
 
 Then: Cleanup worktree (Step 6), then force-delete branch:
 ```bash
-git branch -D <feature-branch>
+rtk git branch -D <feature-branch>
 ```
 
 ### Step 6: Cleanup Workspace
@@ -185,8 +185,8 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
-git worktree remove "$WORKTREE_PATH"
-git worktree prune  # Self-healing: clean up any stale registrations
+rtk git worktree remove "$WORKTREE_PATH"
+rtk git worktree prune  # Self-healing: clean up any stale registrations
 ```
 
 **Otherwise:** The host environment (harness) owns this workspace. Do NOT remove it. If your platform provides a workspace-exit tool, use it. Otherwise, leave the workspace in place.
