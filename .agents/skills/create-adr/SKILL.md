@@ -81,9 +81,45 @@ A bare `#NNN` reference as the sole expression of a constraint is always a viola
 | `Proposed` | Draft — under review, not yet binding | Author sets on creation |
 | `Accepted` | Decision recorded and binding on the codebase | Set when the founder approves |
 | `Deprecated` | Decision no longer applies; no successor exists | Use when the constraint is lifted and the context has dissolved |
-| `Superseded by ADR-NNN — YYYY-MM-DD` | A newer ADR replaces this one | Set this AND create the successor ADR in the same commit |
+| `Superseded by ADR-NNN — YYYY-MM-DD` | A newer ADR replaces this one in full | Set this AND create the successor ADR in the same commit. The successor's status carries the reciprocal: `Accepted, supersedes ADR-NNN — YYYY-MM-DD` |
+| `Partially superseded by ADR-NNN — YYYY-MM-DD (scope: ...)` | A newer ADR replaces named statements only; all other decisions remain binding | Set this AND create the successor ADR in the same commit. The successor's status carries the reciprocal: `Accepted, partially supersedes ADR-NNN (scope statements only — [what stands])` |
 
 `Proposed → Accepted` is the normal path. `Accepted → Superseded` requires a new ADR authored in the same commit. `Accepted → Deprecated` is used only when there is no replacement decision and the constraint is fully lifted.
+
+### Reciprocal status convention
+
+Supersession is always recorded on both ADRs, in the same commit, and only in `## Status`
+lines (the single permitted immutability exception — Principle 4):
+
+- **Successor**: `Accepted, supersedes ADR-NNN — YYYY-MM-DD` (full) or
+  `Accepted, partially supersedes ADR-NNN (scope statements only — [what stands]) — YYYY-MM-DD` (partial).
+- **Predecessor**: `Superseded by ADR-NNN — YYYY-MM-DD` (full) or, for partial
+  supersession, the original status line retained and extended:
+  `Accepted — [original date]. Partially superseded by ADR-NNN — YYYY-MM-DD (scope: [named statements]. [What stands].)`
+
+A status line naming its superseder is the one permitted back-reference between peer
+ADRs and is not a DAG violation.
+
+### Partial supersession pattern
+
+The published ADR literature contains no convention for partial supersession; this is
+the Redline convention, first exercised by ADR-023 over ADR-022.
+
+Use partial supersession when shipped reality contradicts *scope or context statements*
+of an accepted ADR while its core decisions remain valid. Full supersession would
+wrongly discard valid decisions; body amendment is prohibited (Principle 4); annotation
+is body amendment by another name.
+
+Requirements on the successor ADR:
+
+1. Its `## Context` (or a dedicated subsection) **enumerates verbatim which statements
+   of the predecessor are superseded** — section by section. Everything not enumerated
+   stands. An unenumerated partial supersession is a violation: agents cannot determine
+   which predecessor statements remain binding.
+2. Its `## Status` carries the reciprocal form above, including the parenthetical
+   stating what stands.
+3. The predecessor's `## Status` line is extended in the same commit, naming the
+   superseded items. The predecessor's body is not touched.
 
 ### What to exclude
 
@@ -135,6 +171,7 @@ Scan **all prose sections** — not just `## References` — before saving or co
 - [ ] If this is a constitution-level ADR: no individual domain ADR is named by file reference.
 - [ ] If this ADR supersedes or amends another: the superseded ADR's `## Status` is updated in the same commit.
 - [ ] Every open decision or deferred question states the substance inline (not just a ticket pointer).
+- [ ] If this ADR supersedes another (fully or partially): both status lines carry the reciprocal convention, and — if partial — the superseded statements are enumerated verbatim in this ADR's body.
 
 ---
 
