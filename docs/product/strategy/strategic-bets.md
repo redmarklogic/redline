@@ -5,6 +5,10 @@
 **Constraint**: Founder's first official day is 2026-06-01. All kill-criterion
 timelines count from that date.
 
+**Exception (A-13, decided 2026-06-10)**: Bet 1's kill clock anchors to Launch Day
+as defined in Bet 1, not 2026-06-01. The 2026-07-31 launch backstop preserves
+time-boundedness — the bet cannot drift indefinitely while waiting for launch.
+
 Six bets. Each bet is a falsifiable claim with a kill criterion. If a bet's kill criterion
 trips, the bet is dead — we do not revive it without a new grounding pass.
 
@@ -37,8 +41,18 @@ quota-exhausted user is $0.10–$1.
   MSP-managed firms or firms using Microsoft Defender for Cloud Apps could prevent
   user acquisition. See `enterprise-ai-blocking-risk-assessment.md`.
 
-**Kill criterion**: After 90 days from launch (2026-09-01), fewer than 50 verified-email
-signups. The signup count is the authoritative trigger; the activation rate in KR1 is a
+**Kill criterion** *(re-anchored 2026-06-10, A-13)*: 90 days after Launch Day, fewer
+than 50 verified-email signups. **Launch Day** is the first day the Skeleton Generator
+is publicly reachable in production **AND** the SSO-gated verified-email signup flow
+(B-1b, issue #73) is live — the day the kill metric becomes measurable. The
+skeleton-ship date alone does not start the clock. **Launch backstop**: if Launch Day
+has not occurred by **2026-07-31**, Bet 1 enters a mandatory bet review (founder, Ron,
+Peter) with the same standing as a tripped kill criterion, ending in either a single
+re-committed Launch Day or a kill decision. The 90-day clock starts once and cannot be
+reset by re-launching. *(Ron, 2026-06-11: founder briefly set the backstop to
+2026-06-29; I flagged that date precedes the 2026-06-30 skeleton ship target and would
+fire in every realistic scenario. Founder reverted to 2026-07-31 the same day.)* The signup count is
+the authoritative trigger; the activation rate in KR1 is a
 product-quality metric that informs iteration, not a bet-kill signal. ~~The outbound
 response rate criterion has been removed~~ *(revised 2026-05-09)* — the founder-led
 outbound motion is a co-development partnership recruitment (capped at 10), not a
