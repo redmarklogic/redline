@@ -1,0 +1,9 @@
+# Whitelist for the marker service build.
+# Paths are relative to the build context root (project root), not this file's location.
+# Add an entry here whenever a new COPY is added to the Dockerfile.
+*
+
+!pyproject.toml
+!uv.lock
+!src/
+!src/**
