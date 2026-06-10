@@ -80,6 +80,95 @@
       },
       "registered_skills": [],
       "installed_at": "2026-05-29T10:54:13.497518+00:00"
+    },
+    "plan-review-gate": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:86dad247d74beadc50c18cbadbe730d13d4cc8370110d3082f101fe8295e3d38",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.plan-review-gate.check"
+        ],
+        "codex": [
+          "speckit.plan-review-gate.check"
+        ],
+        "copilot": [
+          "speckit.plan-review-gate.check"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-10T04:19:40.030550+00:00"
+    },
+    "red-team": {
+      "version": "1.0.2",
+      "source": "local",
+      "manifest_hash": "sha256:5bdd672fbde76cd960fb794b4544d49bd0b8bcdca053e04d85c405538e0b7c75",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.red-team.run",
+          "speckit.red-team.gate"
+        ],
+        "codex": [
+          "speckit.red-team.run",
+          "speckit.red-team.gate"
+        ],
+        "copilot": [
+          "speckit.red-team.run",
+          "speckit.red-team.gate"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-10T04:19:44.607735+00:00"
+    },
+    "critique": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:0b63a1835415df730cbd487c90c1252b294980176c10c14a3fa9c31a7cb882e0",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.critique.run"
+        ],
+        "codex": [
+          "speckit.critique.run"
+        ],
+        "copilot": [
+          "speckit.critique.run"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-10T04:19:49.358142+00:00"
+    },
+    "version-guard": {
+      "version": "1.2.0",
+      "source": "local",
+      "manifest_hash": "sha256:e615d115dfbca910d5a3c92ee74296a140c4c7ca3b86e50730e4cffed2509184",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.version-guard.check",
+          "speckit.version-guard.load",
+          "speckit.version-guard.validate"
+        ],
+        "codex": [
+          "speckit.version-guard.check",
+          "speckit.version-guard.load",
+          "speckit.version-guard.validate"
+        ],
+        "copilot": [
+          "speckit.version-guard.check",
+          "speckit.version-guard.load",
+          "speckit.version-guard.validate"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-10T04:19:54.367799+00:00"
     }
   }
 }
