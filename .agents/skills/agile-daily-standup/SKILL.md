@@ -174,24 +174,26 @@ of dates.
 gantt
     title Sprint N Timeline
     dateFormat YYYY-MM-DD
+    axisFormat %d/%m
     section Done
-    Task title (max 30 chars)   :done, t1, YYYY-MM-DD, Nd
+    #N Task title (max 30 chars)  :done, t1, YYYY-MM-DD, Nd
     section In Progress
-    Task title                  :active, t2, YYYY-MM-DD, Nd
+    #N Task title                 :active, t2, YYYY-MM-DD, Nd
     section Backlog
-    Overdue task title          :crit, t3, YYYY-MM-DD, Nd
-    Normal task title           :t4, YYYY-MM-DD, Nd
-    Today                       :milestone, m1, YYYY-MM-DD, 0d
+    #N Overdue task title         :crit, t3, YYYY-MM-DD, Nd
+    #N Normal task title          :t4, YYYY-MM-DD, Nd
 ```
 
 Rules:
-- Task labels: max 30 characters; truncate with `...` if needed
+- Task labels: max 30 characters total (including `#N ` prefix); truncate with `...` if needed
+- Always prefix each task bar label with `#<issue-number> ` (e.g. `#70 `) — extract the number from `issue_url`
+- Always include `axisFormat %d/%m` so x-axis shows day/month (e.g. `08/06`) instead of full ISO dates
 - No `--`, `—`, `–` inside labels — use plain hyphen
 - Duration `Nd` = number of days from start to target date
 - `crit` = overdue (target date is before today)
 - `active` = In Progress
 - `done` = Done
-- Add a `milestone` node for today's date
+- Do NOT add an explicit `Today` milestone — Mermaid draws a red vertical line at the current timestamp automatically; a redundant milestone anchors to midnight and creates a confusing double-marker
 
 Legend:
 - Grey bars: Done
@@ -307,7 +309,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] Nothing waiting for your review.
 
-  [title] · [type label: ops / feature / design]
+  (#N) [title] · [type label: ops / feature / design]
     What it is: [one plain sentence — what this task does and why it matters]
     In review since: [X days]
     Your move: [specific action — e.g. "merge PR #N after checking the test output"]
@@ -321,7 +323,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] Nothing blocked.
 
-  [title] · [type label: ops / feature / design]
+  (#N) [title] · [type label: ops / feature / design]
     What it is: [one plain sentence]
     Blocked by: [exact blocker text from the board]
     Decision: Unblock now — [specific action to remove the blocker]
@@ -340,7 +342,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] No tasks actively in progress.
 
-  [title] · [type label: ops / feature / design]
+  (#N) [title] · [type label: ops / feature / design]
     What it is: [one plain sentence]
     Target: [target_date] | Started: [start_date]
     [Note if start_date is in the future: pre-staged — not yet active]
@@ -368,7 +370,7 @@ Second terminal means: run this in a separate window as automated work — not s
   Why: discovering a hard problem on the last day leaves no time to recover.
   Pull from the top only when In Progress drops below 2.
 
-  [#] [title] · [type label: ops / feature / design]
+  [#] (#N) [title] · [type label: ops / feature / design]
       What it does: [one plain sentence]
       Risk: High (novel — first time doing this) / Med / Low (routine, well-understood)
       Needs first: [task it depends on, or "nothing — can start any time"]
@@ -377,7 +379,7 @@ Second terminal means: run this in a separate window as automated work — not s
 ────────────────────────────────────────────────────────────────
 
 ### Recently Completed This Sprint ([count])
-  [title] · [type label] — Done
+  (#N) [title] · [type label] — Done
   ...
   [If none] Sprint just started or no tasks closed yet.
 
