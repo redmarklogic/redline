@@ -1,7 +1,7 @@
 # Org Chart
 
 **Owner:** Harriet  
-**Last updated:** 2026-06-07  
+**Last updated:** 2026-06-10 *(Topology Sync 2026-06-10)*  
 **Source of truth for:** agent roles, reporting relationships, collaboration patterns, and handoff dependencies.
 
 > Miro is the canonical medium for visual relational artifacts. This file is the Markdown synthesis layer — it captures structure and decisions but is not the visual source of truth.
@@ -10,7 +10,7 @@
 
 ## Organisation Structure
 
-```
+```text
 Founder (you)
 │
 ├── Advisory Board (domain experts — consulted, not executive)
@@ -70,7 +70,7 @@ Founder (you)
 ├── Brent — DevOps Engineer (GCP)  [AUTONOMOUS within JD gates]
 │     Outputs: Cloud Run deployment, .env.example infra contract, IAM config,
 │              CI/CD pipeline, docs/infrastructure/ documentation, infra-ready notes
-│     Writes to: infra/, .github/workflows/, .env.example, docs/infrastructure/
+│     Writes to: deploy/infra/, deploy/docker/, .github/workflows/, .env.example, docs/infrastructure/
 │     Reads: docs/adr/, specs/003-platform-website/, src/rl/settings.py (env-consuming files), tests/
 │     Constraints: no push to origin without founder instruction,
 │                  Tier-1 GCP services require Peter approval (blocking),
@@ -87,7 +87,7 @@ Founder (you)
 
 ## Handoff Chain (delivery flow)
 
-```
+```text
 Graeme ──► Ron ──────────────────────────────────────────────────────────┐
 (domain)  (vision, bets, OKRs,                                           │
            positioning, GTM)                                             ▼
@@ -171,7 +171,7 @@ Who consults whom, and for what.
 | Mark | Autonomous | — (founding member) |
 | John | Autonomous | — (founding member) |
 | Graeme | Autonomous | — (founding member) |
-| Harriet | **Autonomous** *(re-promoted 2026-06-07)* | Pending permanent — re-promoted to complete Brent hire |
+| Harriet | **Draft-first** | Temporary Autonomous grant 2026-06-07 (Brent hire + BOM fix) reverted to Draft-first same day at founder request — see `topology-sync-2026-06-07.md` correction note |
 | Matt | **Draft-first** | Pending — awaiting trust milestone |
 | Linda | **Draft-first** | Hired 2026-04-25 |
 | Kabilan | Autonomous | Hired 2026-05-22 |
@@ -190,3 +190,5 @@ Roles identified as gaps but not yet filled. Harriet maintains this list.
 > Linda (Knowledge Infrastructure Operator) was hired 2026-04-25 to fill the cross-domain knowledge infrastructure gap identified during the issue #13 screening process.
 > Kabilan (Python Developer) was hired 2026-05-22 to fill the engineering execution gap --- 39 orphaned Python skills now have a named agent consumer.
 > Brent (DevOps Engineer, GCP) was hired and promoted live 2026-06-07 to fill the cloud/DevOps execution + cloud-source-currency orphan (blocks Bet 1 Skeleton Generator deploy; underwrites Bets 2/4 SOC 2 controls). JD at `.claude/agents/brent.md`; reciprocal handoffs added to Kabilan, Peter, and Linda.
+> Topology Sync 2026-06-10: Brent JD patch drafted (Terraform authorship per ADR-020, `deploy/infra/` paths, SSO/IAP alignment with ADR-022) — **validated by Brent at the same-day live Delta collection (item A-8 closed; two wording amendments applied); pending founder promotion**. No new headcount triggers.
+> Live Delta collection 2026-06-10 (A-8): all eight reflecting agents submitted verbatim Delta Statements (`docs/people/drafts/reports/delta-statements-2026-06-10/`). Outcome: John and Matt JD patches drafted from self-reported defects (`docs/people/drafts/agents/john.agent.md`, `matt.agent.md`); Ron, Graeme, Peter, Linda confirmed no JD change; Kabilan no-dispatch per standing rule. No reporting-line, maturity, or collaboration-edge changes — structure above remains current. Still no new headcount triggers (the only new orphan-weight work, Terraform authoring, was absorbed by Brent's validated patch).
