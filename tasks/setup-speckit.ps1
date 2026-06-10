@@ -80,7 +80,29 @@ if ($claudeSpeckit.Count -gt 0 -and -not $remaining) {
 if ($moved -gt 0) { Write-OK "$moved skill(s) moved to $agentsSkillsDir" }
 else { Write-Skip "no new skills to move" }
 
-# 5. Verify
+# 6. Install community extensions
+Write-Step "Installing community extensions"
+$communityExtensions = @(
+    @{ Name = "plan-review-gate"; Url = "https://github.com/luno/spec-kit-plan-review-gate/archive/HEAD.zip";     Label = "Plan Review Gate"     },
+    @{ Name = "red-team";         Url = "https://github.com/ashbrener/spec-kit-red-team/archive/HEAD.zip";        Label = "Red Team"             },
+    @{ Name = "critique";         Url = "https://github.com/arunt14/spec-kit-critique/archive/HEAD.zip";          Label = "Spec Critique"        },
+    @{ Name = "version-guard";    Url = "https://github.com/KevinBrown5280/spec-kit-version-guard/archive/HEAD.zip"; Label = "Version Guard"     }
+)
+foreach ($ext in $communityExtensions) {
+    $installed = specify extension list 2>&1 | Select-String -SimpleMatch $ext.Name
+    if ($installed) {
+        $updateOut = specify extension update $ext.Name 2>&1
+        if ($updateOut -match "already") { Write-Skip "$($ext.Label) already up to date" }
+        else { Write-OK "$($ext.Label) updated" }
+    } else {
+        'y' | specify extension add $ext.Name --from $ext.Url 2>&1 | Out-Null
+        $check = specify extension list 2>&1 | Select-String -SimpleMatch $ext.Name
+        if ($check) { Write-OK "$($ext.Label) installed" }
+        else { Write-Fail "$($ext.Label) install failed" }
+    }
+}
+
+# 7. Verify
 Write-Step "Verifying speckit skills"
 $skills = Get-ChildItem $agentsSkillsDir -Filter "speckit-*" -Directory -ErrorAction SilentlyContinue
 if ($skills.Count -ge 1) {
