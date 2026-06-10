@@ -10,8 +10,9 @@ deploy/
     <service-name>/
       Dockerfile        # multi-stage image for that service
       .env.example      # documents required and optional env vars
-  modules/
-    README.md           # see deploy/modules/README.md
+  infra/
+    bootstrap/          # one-off GCP project + state bucket creation
+    terraform/          # all GCP infrastructure as HCL
 ```
 
 ## Adding a second service
