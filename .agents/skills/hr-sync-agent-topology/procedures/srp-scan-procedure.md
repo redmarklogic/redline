@@ -111,8 +111,10 @@ authoritative record. To add a new exception, extend this table directly.
 | `pm-product-strategist` | `justified-pipeline` | JTBD/OST/OKR are sequential steps of one strategy synthesis concern |
 | `library-management` | `justified-pipeline` | All operations serve one concern — digital library maintenance |
 | `linkedin-social-selling` | `domain-compound-noun` | "social selling" is a domain compound noun; "linkedin" is the platform qualifier |
-| `sync-agent-topology` | `justified-orchestrator` | Single concern: topology synchronisation |
+| `hr-sync-agent-topology` | `justified-orchestrator` | Single concern: topology synchronisation |
 | `sonarqube-find-and-fix` | `justified-orchestrator` | All steps serve one concern — end-to-end SonarQube quality gate |
+| `prek-find-and-fix` | `justified-orchestrator` | Mirrors `sonarqube-find-and-fix`: all steps serve one end-to-end prek quality-gate concern (approved 2026-06-10 sync, A-4) |
+| `test-find-and-fix` | `justified-orchestrator` | Mirrors `sonarqube-find-and-fix`: all steps serve one end-to-end test quality-gate concern (approved 2026-06-10 sync, A-4) |
 
 ---
 

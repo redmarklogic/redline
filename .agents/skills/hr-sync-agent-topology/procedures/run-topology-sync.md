@@ -1,6 +1,6 @@
 # Run Agent Topology Sync — Step-by-Step
 
-**See:** `sync-agent-topology/SKILL.md` for boundary contract, triggers, and the
+**See:** `hr-sync-agent-topology/SKILL.md` for boundary contract, triggers, and the
 Reflection Protocol.
 
 ---
