@@ -1,7 +1,7 @@
 name: Board — PR ready for review sets To Review
 # Fires when a non-draft PR is opened, reopened, or converted from draft to ready.
-# Parses the PR body for "Closes/Fixes/Resolves #N" keywords and moves each linked
-# issue's Status field to "To Review" on the GitHub Projects board via GraphQL.
+# Extracts the issue number from the branch name (feature/<N>-description) and moves
+# that issue's Status field to "To Review" on the GitHub Projects board via GraphQL.
 
 on:
   pull_request:
@@ -19,20 +19,22 @@ jobs:
       - name: Move linked issues to To Review
         env:
           GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
-          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
           PROJECT_ID="PVT_kwDOEUOu2c4BZrkB"
           STATUS_FIELD_ID="PVTSSF_lADOEUOu2c4BZrkBzhUojY8"
           TO_REVIEW_OPT="3ced9463"
 
-          # Extract issue numbers from "Closes #N", "Fixes #N", "Resolves #N"
-          ISSUES=$(echo "$PR_BODY" | grep -oiE '(closes|fixes|resolves)\s+#[0-9]+' | grep -oE '[0-9]+' || true)
+          # Extract issue number from branch name (e.g. feature/64-some-description)
+          ISSUES=$(echo "$PR_HEAD_REF" | grep -oE '^(feature|fix|chore|refactor|docs)/([0-9]+)-' | grep -oE '[0-9]+' || true)
 
           if [ -z "$ISSUES" ]; then
-            echo "No linked issues found in PR body."
+            echo "No issue number found in branch name: $PR_HEAD_REF"
             exit 0
           fi
+
+          echo "Branch $PR_HEAD_REF -> issue(s): $ISSUES"
 
           for ISSUE_NUM in $ISSUES; do
             echo "Processing issue #$ISSUE_NUM..."

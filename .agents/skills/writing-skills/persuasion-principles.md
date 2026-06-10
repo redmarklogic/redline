@@ -23,8 +23,8 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 
 **Example:**
 ```markdown
-GOOD: Write code before test? Delete it. Start over. No exceptions.
-BAD: Consider writing tests first when feasible.
+✅ Write code before test? Delete it. Start over. No exceptions.
+❌ Consider writing tests first when feasible.
 ```
 
 ### 2. Commitment
@@ -42,8 +42,8 @@ BAD: Consider writing tests first when feasible.
 
 **Example:**
 ```markdown
-GOOD: When you find a skill, you MUST announce: "I'm using [Skill Name]"
-BAD: Consider letting your partner know which skill you're using.
+✅ When you find a skill, you MUST announce: "I'm using [Skill Name]"
+❌ Consider letting your partner know which skill you're using.
 ```
 
 ### 3. Scarcity
@@ -61,8 +61,8 @@ BAD: Consider letting your partner know which skill you're using.
 
 **Example:**
 ```markdown
-GOOD: After completing a task, IMMEDIATELY request code review before proceeding.
-BAD: You can review code when convenient.
+✅ After completing a task, IMMEDIATELY request code review before proceeding.
+❌ You can review code when convenient.
 ```
 
 ### 4. Social Proof
@@ -80,8 +80,8 @@ BAD: You can review code when convenient.
 
 **Example:**
 ```markdown
-GOOD: Checklists without TodoWrite tracking = steps get skipped. Every time.
-BAD: Some people find TodoWrite helpful for checklists.
+✅ Checklists without TodoWrite tracking = steps get skipped. Every time.
+❌ Some people find TodoWrite helpful for checklists.
 ```
 
 ### 5. Unity
@@ -98,8 +98,8 @@ BAD: Some people find TodoWrite helpful for checklists.
 
 **Example:**
 ```markdown
-GOOD: We're colleagues working together. I need your honest technical judgment.
-BAD: You should probably tell me if I'm wrong.
+✅ We're colleagues working together. I need your honest technical judgment.
+❌ You should probably tell me if I'm wrong.
 ```
 
 ### 6. Reciprocity

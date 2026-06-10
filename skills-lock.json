@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "superpowersVersion": "v5.1.0",
   "skills": {
     "ai-acceptable-use-policy": {
       "source": "local",

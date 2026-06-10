@@ -28,7 +28,8 @@ parse_tfvar() {
   local key="$1"
   grep -E "^${key}\s*=" "${TFVARS}" \
     | head -n 1 \
-    | sed 's/.*=\s*"\(.*\)".*/\1/'
+    | sed 's/.*=\s*"\(.*\)".*/\1/' \
+    || true
 }
 
 # ---------------------------------------------------------------------------
@@ -41,7 +42,7 @@ REGION="${REGION:-$(parse_tfvar region)}"
 # For FOLDER_ID / ORG_ID: use env var if set, else parse tfvars (folder_id preferred)
 if [[ -z "${FOLDER_ID:-}" && -z "${ORG_ID:-}" ]]; then
   FOLDER_ID="$(parse_tfvar folder_id)"
-  ORG_ID=""
+  ORG_ID="$(parse_tfvar org_id)"
 fi
 
 # ---------------------------------------------------------------------------
