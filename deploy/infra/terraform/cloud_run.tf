@@ -1,24 +1,21 @@
 # Cloud Run services for staging and production environments
 # Spec: specs/70-cloud-run-deploy-staging-prod-with-secret-manager/spec.md
-# ADR-020: hashicorp/google ~> 5.0
+# ADR-020: hashicorp/google ~> 6.0
 # Version-guard rules:
-#   1. deletion_protection = false — explicit (5.x requirement)
-#   2. startup_probe — explicit (5.x requirement; liveness_probe intentionally absent per plan.md E2)
-#   3. containers.env — list-style dynamic block iteration (5.x)
+#   1. deletion_protection = false — explicit (6.x default changed to true; must be explicit)
+#   2. startup_probe — explicit (liveness_probe intentionally absent per plan.md E2)
+#   3. containers.env — list-style dynamic block iteration
 
 # ── Cloud Run V2 services (staging + prod via for_each) ──────────────────────
 
 resource "google_cloud_run_v2_service" "api" {
   for_each = toset(local.environments)
 
-  name     = "${each.key}-redline-api"
-  location = var.region
-  project  = var.project_id
-  ingress  = "INGRESS_TRAFFIC_ALL"
-
-  # NOTE: deletion_protection is not a valid attribute in hashicorp/google ~> 5.x
-  # (it was added in 6.x). The version guard requires 5.x. This attribute is omitted
-  # to maintain compatibility. Escalated for Peter's review before 6.x migration.
+  name                = "${each.key}-redline-api"
+  location            = var.region
+  project             = var.project_id
+  ingress             = "INGRESS_TRAFFIC_ALL"
+  deletion_protection = false
 
   template {
     service_account = google_service_account.cloud_run_sa.email
