@@ -253,3 +253,4 @@ deploy/infra/terraform/override.tf
 deploy/infra/terraform/override.tf.json
 deploy/infra/terraform/*_override.tf
 deploy/infra/terraform/*_override.tf.json
+CTempprek_output.txt
