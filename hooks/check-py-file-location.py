@@ -28,6 +28,7 @@ ALLOWED_PREFIXES = (
     ".agents/tools/",
     "scripts/",
     ".github/scripts/",
+    "tasks/tests/",
 )
 
 
