@@ -307,7 +307,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] Nothing waiting for your review.
 
-  [title]
+  [title] · [type label: ops / feature / design]
     What it is: [one plain sentence — what this task does and why it matters]
     In review since: [X days]
     Your move: [specific action — e.g. "merge PR #N after checking the test output"]
@@ -321,7 +321,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] Nothing blocked.
 
-  [title]
+  [title] · [type label: ops / feature / design]
     What it is: [one plain sentence]
     Blocked by: [exact blocker text from the board]
     Decision: Unblock now — [specific action to remove the blocker]
@@ -340,7 +340,7 @@ OR: No dependencies between tasks — any task can start independently.
 
   [If empty] No tasks actively in progress.
 
-  [title]
+  [title] · [type label: ops / feature / design]
     What it is: [one plain sentence]
     Target: [target_date] | Started: [start_date]
     [Note if start_date is in the future: pre-staged — not yet active]
@@ -368,7 +368,7 @@ Second terminal means: run this in a separate window as automated work — not s
   Why: discovering a hard problem on the last day leaves no time to recover.
   Pull from the top only when In Progress drops below 2.
 
-  [#] [title]
+  [#] [title] · [type label: ops / feature / design]
       What it does: [one plain sentence]
       Risk: High (novel — first time doing this) / Med / Low (routine, well-understood)
       Needs first: [task it depends on, or "nothing — can start any time"]
@@ -377,7 +377,7 @@ Second terminal means: run this in a separate window as automated work — not s
 ────────────────────────────────────────────────────────────────
 
 ### Recently Completed This Sprint ([count])
-  [title] — Done
+  [title] · [type label] — Done
   ...
   [If none] Sprint just started or no tasks closed yet.
 

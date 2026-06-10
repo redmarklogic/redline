@@ -70,7 +70,7 @@ You **MUST** consider the user input before proceeding (if not empty).
      | Checklist | Total | Completed | Incomplete | Status |
      |-----------|-------|-----------|------------|--------|
      | ux.md     | 12    | 12        | 0          | ✓ PASS |
-     | test.md   | 8     | 5         | 3          | X FAIL |
+     | test.md   | 8     | 5         | 3          | ✗ FAIL |
      | security.md | 6   | 6         | 0          | ✓ PASS |
      ```
 
@@ -105,7 +105,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
 
      ```sh
-     rtk git rev-parse --git-dir 2>/dev/null
+     git rev-parse --git-dir 2>/dev/null
      ```
 
    - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore

@@ -188,7 +188,7 @@ Given that feature description, do this:
 
    c. **Handle Validation Results**:
 
-      - **If all items pass**: Mark checklist complete and proceed to the Mandatory Post-Execution Hooks section <!-- hook: allow -->
+      - **If all items pass**: Mark checklist complete and proceed to the Mandatory Post-Execution Hooks section
 
       - **If items fail (excluding [NEEDS CLARIFICATION])**:
         1. List the failing items and specific issues

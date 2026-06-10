@@ -62,7 +62,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 1. Get the Git remote by running:
 
 ```bash
-rtk git config --get remote.origin.url
+git config --get remote.origin.url
 ```
 
 > [!CAUTION]
