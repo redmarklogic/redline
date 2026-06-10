@@ -6,8 +6,8 @@
 container image are published (spec 005 / issue #63); Terraform CLI ≥ 1.6 installed;
 `gcloud` CLI authenticated; `checkov` installed.
 
-**Version guard**: `hashicorp/google ~> 5.0` — all HCL must target 5.x API surface.
-No 6.x/7.x patterns. `deletion_protection = false` explicit. `startup_probe` explicit.
+**Version guard**: `hashicorp/google ~> 6.0` — all HCL must target 6.x API surface.
+No 7.x patterns. `deletion_protection = false` explicit (6.x default changed to `true`). `startup_probe` explicit.
 `containers.env` list-style iteration only.
 
 ---
@@ -215,6 +215,6 @@ agreed values in `terraform.tfvars`. Independent test: `gcloud` describe output 
 - T026 and T041 (checkov two-pass gate) are BLOCKING; zero findings required in both passes (SC-002)
 - T027 and T032 (secret version creation) must run before `terraform apply` in their respective phases (E1)
 - No `google_secret_manager_secret_version` resource in Terraform — all secret versions managed out-of-band via `gcloud` (E1 / FR-002)
-- Version guard in effect: `hashicorp/google ~> 5.0` — no 6.x/7.x API patterns; `deletion_protection = false` explicit; `startup_probe` explicit; list-style `containers.env` iteration
+- Version guard in effect: `hashicorp/google ~> 6.0` — no 7.x API patterns; `deletion_protection = false` explicit (6.x changed default to `true`); `startup_probe` explicit; list-style `containers.env` iteration
 - `liveness_probe` intentionally absent (accepted risk E2 per plan.md §Health-Check Probe Configuration)
 - Use `finishing-a-development-branch` skill to complete the work
