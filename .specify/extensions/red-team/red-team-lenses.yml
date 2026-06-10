@@ -1,0 +1,51 @@
+version: "v1"
+
+# Redline adversarial lens catalog.
+# Graeme (geotechnical domain expert) must review first 2-3 outputs on
+# GBR/GIR specs before routine use — see advisory board decision, 2026-06-10.
+
+defaults:
+  finding_bound: 5
+  severity_weight: 5
+
+lenses:
+
+  - name: "AI Output Integrity Adversary"
+    description: "Attacks the spec's correctness assumptions for LLM-generated geotechnical content — looks for places where the AI could produce plausible-but-wrong outputs that an engineer might not catch."
+    core_questions:
+      - "Which outputs does this spec allow the LLM to generate that an engineer could not easily verify for correctness?"
+      - "Where does the spec assume the LLM will follow domain conventions that it has not been explicitly instructed to follow?"
+      - "What failure mode produces output that looks professionally formatted but contains a materially wrong geotechnical claim?"
+      - "Does the spec define what 'wrong' means for each AI-generated field, or does it leave correctness undefined?"
+    trigger_match: [ai_llm]
+    severity_weight: 9
+
+  - name: "Professional Liability Adversary"
+    description: "Attacks from the perspective of a geotechnical professional licensing body — looks for spec decisions that create professional liability exposure for engineers who rely on Redline outputs."
+    core_questions:
+      - "Which outputs could an engineer sign off on without independent verification, and does the spec prevent this?"
+      - "Where does the spec blur the boundary between AI-generated content and engineer-certified content?"
+      - "What disclaimer or provenance chain is missing that a licensing body would require?"
+      - "Does the spec create any path where a Redline output becomes the basis of a safety-critical decision without explicit engineer sign-off?"
+    trigger_match: [regulatory_path, ai_llm]
+    severity_weight: 9
+
+  - name: "Engineer-in-the-Loop Adversary"
+    description: "Attacks spec decisions that reduce or weaken the engineer's oversight role — looks for AI autonomy creep disguised as efficiency improvements."
+    core_questions:
+      - "Which steps in this spec could be automated away without the engineer noticing?"
+      - "Where does the spec make it easier for an engineer to skip review than to complete it?"
+      - "Does the spec enforce engineer confirmation at every decision point that affects a safety-relevant output?"
+      - "What happens to the engineer-in-the-loop requirement if the LLM produces a highly confident-sounding but incorrect output?"
+    trigger_match: [ai_llm, multi_party]
+    severity_weight: 8
+
+  - name: "API Contract Adversary"
+    description: "Attacks interface contracts — looks for implicit assumptions between rule engine, LLM layer, and output renderer that would silently break under valid inputs."
+    core_questions:
+      - "Which inputs does this spec assume are pre-validated upstream without specifying who validates them?"
+      - "What contract between components is implicit here that would produce a silent failure if violated?"
+      - "Where could a valid but unexpected input cause this component to produce output that downstream consumers treat as correct?"
+      - "Does the spec define error contracts as precisely as success contracts?"
+    trigger_match: [contracts]
+    severity_weight: 6
