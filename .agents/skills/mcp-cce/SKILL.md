@@ -5,48 +5,51 @@ description: Use when discovering code or docs/ company memory, starting multi-p
 
 # Code Context Engine MCP
 
-CCE indexes the project so the agent searches instead of reading files. 94% input-token savings. Indexes code, Markdown, YAML, JSON - including `docs/` (ADRs, research, strategy).
+CCE indexes the project so the agent searches instead of reading files. ~94% input-token savings per exploration query. Indexes code, Markdown, YAML, JSON - including `docs/` (ADRs, research, strategy).
 
 ## Prerequisite
 
-CCE tools are deferred. Call `tool_search("code context engine MCP")` before any CCE tool call. Without this step the tools are invisible and the agent falls back to `read_file`.
+CCE tools are deferred. Load them once before any CCE tool call:
+
+```
+ToolSearch query: "select:mcp__context-engine__context_search,mcp__context-engine__session_recall,mcp__context-engine__expand_chunk"
+```
+
+Without this step the tools are invisible and the agent falls back to Read/Grep/Glob sweeps.
 
 ## Session Start
 
-Before any file exploration, call `session_recall` to load prior decisions and active work areas. This prevents context compaction events and avoids re-explaining architecture every session.
+Before any file exploration, call `mcp__context-engine__session_recall` to load prior decisions and active work areas. This prevents context compaction events and avoids re-explaining architecture every session.
 
 ## Boundary Contract
 
-**Applies To:** Discovery, session continuity, file indexing | **Produces:** Indexed codebase via 9 MCP tools | **Does Not Cover:** Terminal compression (`rtk`), external knowledge (use NotebookLM)
+**Applies To:** Discovery, session continuity, file indexing | **Produces:** Indexed codebase via 11 MCP tools | **Does Not Cover:** Terminal compression (`rtk`), external knowledge (use NotebookLM)
 
 ## When to Use
 
-- **Exploring/discovering** → `context_search` (not `read_file`)
-- **Answering a question (no editing)** → `context_search` is the final source. If the returned chunks answer the question, respond directly. Do NOT follow up with `read_file`, `expand_chunk`, `file_search`, or `list_dir` on files CCE already covered.
-- **Full file needed for editing** → `read_file`
+- **Exploring/discovering** (where is X, how does Y work) → `context_search` (not Read/Glob sweeps)
+- **Answering a question (no editing)** → `context_search` is the final source. If the returned chunks answer the question, respond directly. Do NOT follow up with Read, `expand_chunk`, or Glob on files CCE already covered.
+- **Full file needed for editing** → Read
 - **Specific section** → `context_search` + `expand_chunk`
+- **Exact strings / symbol definitions / known paths** → Grep/Glob as usual
 - **Session start** → `session_recall` | **New file** → `reindex`
 
 ### Stop Rule
 
-After `context_search`, check: do chunks answer the question? If yes → respond directly. If no and it's a status/info query → answer from partial chunks (no `read_file`). If no and you're writing an artifact → try `expand_chunk` first, then `read_file` only if needed.
+After `context_search`, check: do chunks answer the question? If yes → respond directly. If no and it's a status/info query → answer from partial chunks (no Read). If no and you're writing an artifact → try `expand_chunk` first, then Read only if needed.
 
-Never use `semantic_search` when CCE is available — `context_search` replaces it.
-
-Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decision` (design choice), `session_recall` (session start), `reindex` (new file). See `procedures/cce-usage.md` for all 9 tools and examples.
+Key tools: `context_search` (explore), `expand_chunk` (full body), `record_decision` (design choice), `session_recall` (session start), `reindex` (new file). All names carry the `mcp__context-engine__` prefix in the tool list. See `procedures/cce-usage.md` for all tools and examples.
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---|---|
-| `read_file` for exploration | `context_search` first; `read_file` only for edits |
-| `semantic_search` when CCE loaded | `context_search` replaces it |
-| `expand_chunk` fails → `read_file` | For info queries, answer from partial chunks |
-| `file_search`/`list_dir` after `context_search` | CCE indexes full tree |
+| Read/Glob sweep for exploration | `context_search` first; Read only for edits |
+| Skipping ToolSearch loading step | CCE tools are deferred - load them or they don't exist |
+| `expand_chunk` fails → Read | For info queries, answer from partial chunks |
+| Glob the tree after `context_search` | CCE indexes the full tree |
 | No `reindex` after creating file | `reindex <file>` immediately |
 
 ## Subagent Usage
 
-Subagents need `context-engine/*` in their frontmatter `tools:` list. The server name must match the key in `.mcp.json` exactly — `context-engin/*` (missing trailing `e`) silently fails with "Unknown tool" warning.
-
-Each agent JD's Session Discipline must instruct: `tool_search('code context engine MCP')` → `session_recall` → `context_search` for discovery.
+Subagents inherit MCP tools and load them the same way (ToolSearch). The SubagentStart hook (`.claude/hooks/cce-inject.ps1`) injects the loading incantation and recent decisions automatically. The server key in `.mcp.json` is exactly `context-engine` - tool names are `mcp__context-engine__<tool>` (a missing trailing `e` in the server name silently fails with "Unknown tool").

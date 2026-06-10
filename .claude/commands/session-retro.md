@@ -40,9 +40,63 @@ Format:
 > Hook: [event] → [shell command]
 > Reason: [what this prevents]
 
+## Section 4 — Session Time Profiler
+
+Reconstruct a time profile of the session by scanning conversation turns, tool calls, and task boundaries.
+
+**Step 1 — Identify tasks.** Group the session into discrete tasks (numbered T01, T02, …). A task is a distinct goal the user asked for, not individual tool calls. Estimate relative time spent on each task based on: number of turns, retries, tool calls, and apparent complexity. Express each as a percentage of total session time.
+
+**Step 2 — Render a Gantt chart.** Produce an ASCII Gantt chart with this layout:
+
+```
+SESSION TIME PROFILER
+=====================
+Total tasks: N  |  Longest: T0X (name)  |  Most retries: T0X (name)
+
+ID   │ Task Name (truncated to 30 chars) │ Timeline (% of session)          │  Time%
+─────┼───────────────────────────────────┼──────────────────────────────────┼───────
+T01  │ Setup / orientation               │ ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │  12%
+T02  │ Implement feature X               │ ░░░░████████████░░░░░░░░░░░░░░░░ │  38%
+T03  │ Debug failing test                │ ░░░░░░░░░░░░░░░░████████░░░░░░░░ │  25%
+T04  │ Code review / retro               │ ░░░░░░░░░░░░░░░░░░░░░░░░████████ │  25%
+─────┴───────────────────────────────────┴──────────────────────────────────┴───────
+     0%                                                                      100%
+
+LEGEND
+══════
+T01  Setup / orientation          — Initial file reads, context loading, task scoping
+T02  Implement feature X          — [brief description of what was done]
+T03  Debug failing test           — [brief description, including retry count if > 1]
+T04  Code review / retro          — [brief description]
+
+KEY OBSERVATIONS
+════════════════
+• Biggest time sink: T0X — [reason, e.g. "3 retry loops due to wrong shell syntax"]
+• Quick wins: T0X, T0X — completed in < 5% each
+• Optimisation target: T0X — [what change would cut this time, e.g. "a hook or memory entry"]
+```
+
+Rules for the chart:
+- Use `█` for active periods and `░` for inactive periods. The timeline column is 32 chars wide (each `█` = ~3%).
+- Tasks are sequential — no overlap unless genuinely parallel tool calls.
+- If a task had > 1 retry loop, append `(×N retries)` to the task name in the legend.
+- If the session was short (< 5 tasks), merge micro-tasks rather than listing one-liners.
+
+**Step 3 — Optimisation table.** After the chart, add a compact table:
+
+```
+OPTIMISATION TARGETS (ranked by impact)
+════════════════════════════════════════
+Rank │ Task │ Time% │ Root cause              │ Suggested fix
+─────┼──────┼───────┼─────────────────────────┼──────────────────────────────────
+  1  │ T03  │  25%  │ Wrong shell syntax       │ Add PowerShell hook
+  2  │ T02  │  38%  │ Large scope, unavoidable │ —
+```
+
 ## Presentation Rules
 
 - Present all three sections before asking for confirmation
 - After presenting, list each proposed change as **[A/B/C][number] — [one-line description]**
 - Ask: "Which of these should I write? (list numbers, or 'none')"
 - Write only confirmed items, one file at a time
+- Section 4 (Time Profiler) is always rendered — no confirmation needed
