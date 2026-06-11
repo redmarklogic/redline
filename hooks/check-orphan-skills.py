@@ -10,6 +10,7 @@ Detection sources (in order):
                                              .claude/agents/*.md)
   Degree-2  skill SKILL.md backtick refs   (.agents/skills/*/SKILL.md)
   Degree-1b AGENTS.md backtick mentions
+  Degree-1c command file backtick mentions (.claude/commands/*.md)
 
 Excluded from orphan detection:
   - Skills with prefix ``speckit-``  (vendor SpecKit extension hooks —
@@ -40,6 +41,7 @@ _AGENTS_DIR = _REPO / ".github" / "agents"
 _CLAUDE_AGENTS_DIR = _REPO / ".claude" / "agents"
 _SKILLS_DIR = _REPO / ".agents" / "skills"
 _AGENTS_MD = _REPO / "AGENTS.md"
+_COMMANDS_DIR = _REPO / ".claude" / "commands"
 
 # ---------------------------------------------------------------------------
 # Exclusions
@@ -52,14 +54,8 @@ _FRAMEWORK_BOOTSTRAPS: frozenset[str] = frozenset({"using-superpowers"})
 # Skills that are known orphans, accepted or pending deletion.
 # Format: skill_name -> reason (displayed in output so reviewers understand status)
 KNOWN_ORPHANS: dict[str, str] = {
-    "executing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
-    "writing-plans": "SUPERSEDED stub (overrides vendor skill); pending deletion per spec-011 T-008",
-    "sonarqube-find-and-fix": "orchestrating skill pending agent JD routing table entry; tracked in spec-016",
-    "prek-find-and-fix": "orchestrating skill pending agent JD routing table entry; add to kabilan agent JD",
-    "test-find-and-fix": "orchestrating skill pending agent JD routing table entry; add to kabilan agent JD",
     "sonarqube-review": "new skill pending agent JD routing table entry; tracked in spec-014",
     "sonarqube-scan": "new skill pending agent JD routing table entry; tracked in spec-014",
-    "agile-daily-standup": "pending agent JD routing table entry; add to standup agent JD",
 }
 
 # ---------------------------------------------------------------------------
@@ -197,6 +193,39 @@ def _agents_md_edges(known: set[str]) -> list[tuple[str, str]]:
     return edges
 
 
+def _commands_edges(known: set[str]) -> tuple[set[str], list[tuple[str, str]]]:
+    """Return (command_ids, edges) from .claude/commands/*.md backtick mentions.
+
+    Detects two reference forms:
+    - Bare backtick names:  `prek-find-and-fix`
+    - Path backtick refs:   `.agents/skills/prek-find-and-fix/SKILL.md`
+
+    command_ids are returned so callers can seed them into the BFS queue.
+    """
+    if not _COMMANDS_DIR.exists():
+        return set(), []
+    command_ids: set[str] = set()
+    edges: list[tuple[str, str]] = []
+    for cmd_file in sorted(_COMMANDS_DIR.glob("*.md")):
+        source = f"commands/{cmd_file.stem}"
+        command_ids.add(source)
+        content = cmd_file.read_text(encoding="utf-8")
+        seen: set[str] = set()
+        for tok in _backtick_tokens(content):
+            tok = tok.strip()
+            # bare skill name
+            if tok in known and tok not in seen:
+                edges.append((source, tok))
+                seen.add(tok)
+                continue
+            # path-style reference: extract skill name from path segments
+            skill = _skill_from_url(tok, known)
+            if skill and skill not in seen:
+                edges.append((source, skill))
+                seen.add(skill)
+    return command_ids, edges
+
+
 def _reachable(agent_ids: set[str], all_edges: list[tuple[str, str]]) -> set[str]:
     """BFS from agent nodes (+ agents.md) to find all reachable skills."""
     adj: dict[str, list[str]] = {}
@@ -230,9 +259,10 @@ def main() -> int:
     d2 = _degree2_edges(known)
     d3 = _degree3_edges(known)
     d1b = _agents_md_edges(known)
+    command_ids, dc = _commands_edges(known)
 
-    all_edges = d1 + d2 + d3 + d1b
-    reached = _reachable(agent_ids, all_edges)
+    all_edges = d1 + d2 + d3 + d1b + dc
+    reached = _reachable(agent_ids | command_ids, all_edges)
 
     # Classify unreachable skills
     unreachable = sorted(known - reached)

@@ -1,1 +1,1 @@
-Load and apply the skill at `.agents/skills/git-push-batched/SKILL.md`.
+Before applying the skill below, first load and fully apply `.agents/skills/prek-find-and-fix/SKILL.md`. Wait for prek to exit 0 before proceeding. Then load and apply the skill at `.agents/skills/git-push-batched/SKILL.md`.

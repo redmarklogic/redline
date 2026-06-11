@@ -119,8 +119,6 @@
 | `mcp-cce` | Code Context Engine (CCE) discovery: semantic codebase/docs search, session decision memory | All |
 | `session-handover` | Structured session close: handover note, CCE decision writes, uncommitted-work flags | All |
 | `github-projects` | Create, update, move, and query tasks on the Redline GitHub Projects board | Mark, Engineering, Founder |
-| `executing-plans` | **Superseded stub** — overrides upstream Superpowers vendor skill; use `subagent-driven-development` + `specs/NNN/tasks.md` | *(stub)* |
-| `writing-plans` | **Superseded stub** — overrides upstream Superpowers vendor skill; use `speckit.plan` + `speckit.tasks` | *(stub)* |
 
 ### Quality Gates & Static Analysis
 

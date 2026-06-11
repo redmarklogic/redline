@@ -157,7 +157,8 @@ ini_options.addopts = [
   "--strict-markers",
   "--strict-config",
   "--cov",
-  "--cov-report=xml"
+  "--cov-report=xml",
+  "--junitxml=.cache/sonarqube/xunit.xml"
 ]
 ini_options.filterwarnings = [ "error" ]
 ini_options.xfail_strict = true
@@ -197,6 +198,10 @@ sonarqube.exclusions = [
 # Ruff findings imported as external issues when ruff-report.json is present
 # (produced by scan.ps1/scan.sh). Absent report does not fail the scan.
 sonarqube.extra-properties."sonar.python.ruff.reportPaths" = ".cache/sonarqube/ruff-report.json"
+# Explicit xunit path stops PythonXUnitSensor's default wildcard hunt
+# (xunit-reports/xunit-result-*.xml), which cost 3m55s on a contended scan.
+# pytest writes this file via --junitxml in addopts; absent file = fast skip.
+sonarqube.extra-properties."sonar.python.xunit.reportPath" = ".cache/sonarqube/xunit.xml"
 # Captured HTML/data fixtures under tests/assets are test ASSETS, not test code.
 # They live in test scope (sonar.tests=./tests), so sonar.exclusions (main scope)
 # does not filter them — their embedded third-party JS raised 27 issues we do not
