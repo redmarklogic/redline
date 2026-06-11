@@ -27,9 +27,9 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 USER appuser
 
-EXPOSE 8000
+EXPOSE 8080
 
 HEALTHCHECK --interval=10s --timeout=3s --retries=3 --start-period=15s \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+  CMD python -c "import os,urllib.request; urllib.request.urlopen(f'http://localhost:{os.environ.get(\"PORT\", \"8080\")}/health')"
 
-CMD ["python", "-m", "uvicorn", "marker.api.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--timeout-graceful-shutdown", "10"]
+CMD ["sh", "-c", "exec python -m uvicorn marker.api.main:create_app --factory --host 0.0.0.0 --port ${PORT:-8080} --timeout-graceful-shutdown 10"]
