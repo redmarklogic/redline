@@ -1022,5 +1022,6 @@
       "status": "active",
       "layer": 8
     }
-  }
+  },
+  "installedSuperpowersVersion": "v5.1.0"
 }

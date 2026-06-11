@@ -183,7 +183,7 @@ Every task MUST strictly follow this format:
      - Services needed for that story
      - Interfaces/UI needed for that story
      - If tests requested: Tests specific to that story
-   - Identify story dependencies (most stories should be independent)
+   - Flag story dependencies (most stories should be independent)
 
 2. **From Contracts**:
    - Map each interface contract → to the user story it serves
