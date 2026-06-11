@@ -126,12 +126,24 @@ equals the requested page size is **presumed truncated until proven complete**.
 Group into five buckets: `To Review`, `Blocked`, `In Progress`, `Backlog`, `Done`
 (all sprint-scoped).
 
+**Then build the dependency map from native issue dependencies — the only dependency
+source (founder ruling 2026-06-12).** The legacy `Depends on` / `Blocked by` text fields
+are deprecated (see `github-projects` → set-dependencies) and must not be read. For every
+sprint task:
+
+```bash
+gh api repos/redmarklogic/redline/issues/<N>/dependencies/blocked_by --jq '.[].number'
+```
+
+Empty result = no predecessors. The resulting map {task → blocker issue numbers} feeds
+Steps 2c, 4, 5, and Diagram 2.
+
 ### Step 2b — Fetch task comments
 
 For every task returned in Step 2, fetch its GitHub issue comments:
 
 ```bash
-gh issue view <number> --repo redmarklogic/redline-1 --comments --json comments
+gh issue view <number> --repo redmarklogic/redline --comments --json comments
 ```
 
 Extract and retain **commentary signals** — text in any of these categories:
@@ -168,8 +180,8 @@ Diff the live fetch against `docs/product/tasks/this-week.md`:
   until proven otherwise** — re-query before concluding the board changed.
 - A Done-count mismatch between snapshot and live data **blocks brief composition**
   until reconciled.
-- A task whose `depends_on` field names issue numbers absent from the result set is a
-  third truncation signal — stop and re-fetch.
+- A task whose native dependency links (blocked-by) name issue numbers absent from the
+  result set is a third truncation signal — stop and re-fetch.
 
 **No unresolved unknowns in the brief.** If a task's status is verifiable via
 read-only calls (`gh issue view`, linked PRs, issue timeline), verify it during brief
@@ -178,8 +190,9 @@ generation — cap of roughly 5 verification calls. The brief may never recommen
 
 ### Step 3 — Fetch sprint context
 
-1. Sprint dates from `cadences.md` → Sprint Conventions → current sprint entry.
-   Compute Day X of Y and days remaining.
+1. Sprint dates from the current Sprint option name in `project_config.json`
+   (format `Sprint N - <dates>`); `cadences.md` holds only the boundary convention,
+   not a per-sprint date table. Compute Day X of Y and days remaining.
 2. Sprint goal from `docs/product/tasks/sprint-<N>-goal.md` if it exists.
    If absent: surface `No sprint goal defined`.
 3. Active bet from `strategic-bets.md`.
@@ -193,12 +206,12 @@ section: a complication without a clock is mood, not stakes.
 
 ### Step 4 — Assess parallelism
 
-For each Backlog task, check `blocked_by` and `depends_on` fields. Tasks with no
-shared dependency are parallel-safe (can run in a separate terminal).
+For each Backlog task, check its native dependency links (Step 2 dependency map).
+Tasks with no shared dependency are parallel-safe (can run in a separate terminal).
 
 ### Step 5 — Assess blockers
 
-For each Blocked task, read its `blocked_by` field and reason:
+For each Blocked task, read its native blockers (Step 2 dependency map) and reason:
 - Third-party / approval needed: Cannot unblock today.
 - Blocker is a task we own that is Done or near-Done: Likely unblockable.
 - Blocker is a decision: Surface to founder.
@@ -262,7 +275,7 @@ scanning. Purely decorative diagrams are not permitted.
 | # | Diagram | Replaces | Skip when |
 |---|---|---|---|
 | 1 | Sprint Gantt (timeline) | Target-date column scanning + overdue detection across many rows | Sprint has <= 3 tasks total |
-| 2 | Dependency chain | Parsing "Depends on:" columns across multiple tasks; critical path invisible in prose | No inter-task dependencies exist (`depends_on` and `blocked_by` both empty for all tasks) |
+| 2 | Dependency chain | Parsing dependency links across multiple tasks; critical path invisible in prose | No native dependency links exist on any sprint task (Step 2 dependency map empty) |
 | 3 | Today's execution plan | Numbered list + parallel annotations; parallel branches invisible as text | Only 1–2 tasks today (a numbered list is cleaner) |
 
 All diagrams use Mermaid <= 8.8.0 syntax (VS Code Office Viewer ceiling). See
@@ -331,8 +344,8 @@ gantt
 ### Diagram 2 — Dependency Chain (flowchart LR)
 
 Shows which tasks must complete before others can start, making the critical path
-visible at a glance. Only generate when at least one task has a non-empty `depends_on`
-or `blocked_by` field.
+visible at a glance. Only generate when at least one sprint task has a native
+dependency link (Step 2 dependency map).
 
 ```mermaid
 flowchart LR
@@ -477,9 +490,9 @@ not stakes.
   calling anything a board gap, confirm the fetch passed Step 2's completeness assert
   — a truncated fetch masquerades as a board gap.
 
-- **Dependency completed out of order:** A Done task whose `depends_on` references a
-  non-Done task signals hidden manual work — the "Done" likely papers over a step
-  performed by hand. Name it and say what the manual workaround was or must have been.
+- **Dependency completed out of order:** A Done task whose native blocked-by links
+  reference a non-Done task signals hidden manual work — the "Done" likely papers over
+  a step performed by hand. Name it and say what the manual workaround was or must have been.
 
 - **Sprint-tag/target-date contradiction:** A task whose iteration tag and target date
   fall in different sprint windows violates the no-cross-boundary convention in

@@ -157,6 +157,12 @@ Redline filter breaks the tie toward **keep flat**.
 the native mechanism for parent/child decomposition (Issues sub-issues feature, GA 2025).
 Founder-accepted decision criteria, Sprint-2 sub-issue analysis, 2026-06-09.
 
+**Sprint-planning WBS exception (founder ruling, 2026-06-12).** Work entering a sprint through
+the start-of-sprint planning ceremony follows the WBS mirror rule instead of the promote/keep
+test above: every level-1 WBS row is a parent issue; every level-2 WBS row is a native
+sub-issue of its parent (`set-parent`). The doctrine continues to govern ad-hoc task creation
+and audits outside that ceremony.
+
 ## Procedures
 
 ### 1. create-task
