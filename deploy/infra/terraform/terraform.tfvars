@@ -35,4 +35,16 @@ apis = [
   "iam.googleapis.com",
   "iamcredentials.googleapis.com",
   "cloudresourcemanager.googleapis.com",
+  # ADR-026: Firebase Hosting as zero-cost API domain front door (issue #111)
+  "firebase.googleapis.com",
+  "firebasehosting.googleapis.com",
 ]
+
+# ── Firebase Hosting + Cloudflare DNS (ADR-026, issue #111) ──────────────────
+# These values are populated in two steps:
+#   Step 1: Apply firebase_hosting.tf resources first (Cloudflare vars left empty).
+#           Then read: terraform output firebase_custom_domain_required_dns_updates
+#   Step 2: Set the values below from that output, then apply cloudflare_dns.tf.
+#
+# firebase_ownership_txt_value = "hosting-site=..."   # from required_dns_updates TXT entry
+# firebase_a_record_ips        = ["199.36.158.100"]   # from required_dns_updates A entry/entries
