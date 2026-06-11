@@ -42,7 +42,7 @@
 **Independent Test**: Secret material only in `australia-southeast1`; every secret has an accessible current version; prod min instances 0 (spec US2).
 
 - [ ] T009 [US2] Targeted reviewed apply creating the four secrets only: `terraform plan/apply -target='google_secret_manager_secret.secrets' -var image_tag=bootstrap` (one-off bootstrap ordering, research D6; review: 4 secrets, nothing else; `bootstrap` tag never reaches a service).
-- [ ] T010 [US2] Populate real values via `gcloud secrets versions add <id> --data-file=-` for the four secret IDs `staging-redline-db_password`, `staging-redline-api_key`, `prod-redline-db_password`, `prod-redline-api_key` — lowercase binding keys per `secrets.tf:27`; the uppercase names are container env vars, not secret IDs (values from founder, stdin only, never on disk — research D2; spec assumption on not-yet-existing backing services).
+- [ ] T010 [US2] Populate real values via `gcloud secrets versions add <id> --data-file=-` for the four secret IDs `staging-redline-db_password`, `staging-redline-api_key`, `prod-redline-db_password`, `prod-redline-api_key` — lowercase binding keys per `secrets.tf:27`; the uppercase names are container env vars, not secret IDs (values from founder, stdin only, never on disk — research D2; spec assumption on not-yet-existing backing services).  # pragma: allowlist secret
 - [ ] T011 [US2] Verify: `gcloud secrets versions list` shows one enabled version per secret; `gcloud secrets describe` shows `user_managed` replication = `australia-southeast1` only. Record outputs as evidence (SC-004).
 
 **Checkpoint**: US2 acceptance scenarios 1 and 3 verifiable (scenario 3 completes at T014).
