@@ -14,13 +14,13 @@ link on the board).
 
 **Purpose**: ADR accepted and pre-change evidence captured — safe to touch infrastructure.
 
-- [ ] T001 [Phase 0] Write ADR `docs/adr/adr-0NN-firebase-hosting-api-domain.md`: D1-D8 from plan.md Design Decisions (Firebase Hosting adoption, 60 s ceiling, grey-cloud rule, run.app bypass, $0 posture + $0.15/GB egress caveat, no-npm constraint); cross-reference ADR-020/021/022 and issue #73; explicitly amend ADR-022's "No Secret Manager entries needed at this stage" statement (the Cloudflare token in T002 is the first entry); run `check-adr-constitution-sync` hook outcome into the same commit if it demands a constitution update
-- [ ] T002 [P] [Phase 0] Create scoped Cloudflare API token (dashboard — documented manual exception): Zone:DNS:Edit + Zone:Zone:Read on redmarklogic.com only; store as Secret Manager entry per ADR-021 naming; record the storage step (not the token) in `docs/infrastructure/domain-dns-runbook.md` draft
-- [ ] T003 [Phase 0] Capture pre-change zone snapshot to `docs/infrastructure/zone-snapshot-pre-2026-06-DD.txt` via `GET /zones/{zone_id}/dns_records/export` (commands in [quickstart.md](quickstart.md)); commit; confirm MX records present in the file AND confirm no pre-existing record of any type exists on `api.redmarklogic.com` (spec edge case — abort and resolve with founder if one is found) (depends on T002)
+- [x] T001 [Phase 0] Write ADR `docs/adr/adr-0NN-firebase-hosting-api-domain.md`: D1-D8 from plan.md Design Decisions (Firebase Hosting adoption, 60 s ceiling, grey-cloud rule, run.app bypass, $0 posture + $0.15/GB egress caveat, no-npm constraint); cross-reference ADR-020/021/022 and issue #73; explicitly amend ADR-022's "No Secret Manager entries needed at this stage" statement (the Cloudflare token in T002 is the first entry); run `check-adr-constitution-sync` hook outcome into the same commit if it demands a constitution update
+- [x] T002 [P] [Phase 0] Create scoped Cloudflare API token (dashboard — documented manual exception): Zone:DNS:Edit + Zone:Zone:Read on redmarklogic.com only; store as Secret Manager entry per ADR-021 naming; record the storage step (not the token) in `docs/infrastructure/domain-dns-runbook.md` draft
+- [x] T003 [Phase 0] Capture pre-change zone snapshot to `docs/infrastructure/zone-snapshot-pre-2026-06-DD.txt` via `GET /zones/{zone_id}/dns_records/export` (commands in [quickstart.md](quickstart.md)); commit; confirm MX records present in the file AND confirm no pre-existing record of any type exists on `api.redmarklogic.com` (spec edge case — abort and resolve with founder if one is found) (depends on T002)
 
 ### Acceptance Gate
 
-- [ ] T004 [Phase 0] Verify: ADR merged with constitution-sync hook green; zone ID + snapshot committed; `curl -s ".../zones?name=redmarklogic.com"` with the stored token returns `success:true`
+- [x] T004 [Phase 0] Verify: ADR merged with constitution-sync hook green; zone ID + snapshot committed; `curl -s ".../zones?name=redmarklogic.com"` with the stored token returns `success:true`
 
 ---
 
@@ -28,15 +28,15 @@ link on the board).
 
 **Purpose**: Hostname attached and certificate provisioning underway, entirely from HCL.
 
-- [ ] T005 [Phase 1] Verify provider schemas against registries before authoring (research.md open item 1): `google_firebase_hosting_version` rewrite `run` block support; `cloudflare_dns_record` (v5) vs `cloudflare_record` (v4) naming; record verdict + chosen pins in `deploy/infra/terraform/versions.tf` and note the D6 path taken (Terraform release vs standalone-binary CI fallback) in the runbook draft
-- [ ] T006 [Phase 1] Author `deploy/infra/terraform/firebase_hosting.tf`: `google_firebase_project` (redmarklogic-prod), `google_firebase_hosting_site` (redmarklogic-api), `google_firebase_hosting_custom_domain` (api.redmarklogic.com, google-beta, `wait_dns_verification = false`), outputs exposing `required_dns_updates`; plus rewrite `hosting_version`/`_release` if T005 confirmed the schema (depends on T005)
-- [ ] T007 [P] [Phase 1] Author `deploy/firebase/firebase.json` (site redmarklogic-api, rewrite `**` -> prod-redline-api @ australia-southeast1) + empty `deploy/firebase/public/.gitkeep`; committed regardless of D6 path (it is the CI-fallback artifact and the human-readable statement of the rewrite)
-- [ ] T008 [Phase 1] Author `deploy/infra/terraform/cloudflare_dns.tf`: cloudflare provider (token via env/Secret Manager, never HCL), `cloudflare_zone` data source by name, ownership TXT + A record(s) for `api` wired from `required_dns_updates` outputs, all `proxied = false` (depends on T005, T006)
-- [ ] T009 [Phase 1] Apply: `terraform plan` (review: additive-only, no resources outside the new files + versions.tf) then `terraform apply`; two-step converge — apply, create records, refresh until domain verification accepted; capture cert state (depends on T006, T007, T008; gate T004 passed)
+- [x] T005 [Phase 1] Verify provider schemas against registries before authoring (research.md open item 1): `google_firebase_hosting_version` rewrite `run` block support; `cloudflare_dns_record` (v5) vs `cloudflare_record` (v4) naming; record verdict + chosen pins in `deploy/infra/terraform/versions.tf` and note the D6 path taken (Terraform release vs standalone-binary CI fallback) in the runbook draft
+- [x] T006 [Phase 1] Author `deploy/infra/terraform/firebase_hosting.tf`: `google_firebase_project` (redmarklogic-prod), `google_firebase_hosting_site` (redmarklogic-api), `google_firebase_hosting_custom_domain` (api.redmarklogic.com, google-beta, `wait_dns_verification = false`), outputs exposing `required_dns_updates`; plus rewrite `hosting_version`/`_release` if T005 confirmed the schema (depends on T005)
+- [x] T007 [P] [Phase 1] Author `deploy/firebase/firebase.json` (site redmarklogic-api, rewrite `**` -> prod-redline-api @ australia-southeast1) + empty `deploy/firebase/public/.gitkeep`; committed regardless of D6 path (it is the CI-fallback artifact and the human-readable statement of the rewrite)
+- [x] T008 [Phase 1] Author `deploy/infra/terraform/cloudflare_dns.tf`: cloudflare provider (token via env/Secret Manager, never HCL), `cloudflare_zone` data source by name, ownership TXT + A record(s) for `api` wired from `required_dns_updates` outputs, all `proxied = false` (depends on T005, T006)
+- [x] T009 [Phase 1] Apply: `terraform plan` (review: additive-only, no resources outside the new files + versions.tf) then `terraform apply`; two-step converge — apply, create records, refresh until domain verification accepted; capture cert state (depends on T006, T007, T008; gate T004 passed)
 
 ### Acceptance Gate
 
-- [ ] T010 [Phase 1] Verify: `Resolve-DnsName api.redmarklogic.com -Type TXT` returns ownership value; re-export zone and `rtk git diff --no-index` vs snapshot shows only `api.*` additions with MX lines byte-identical (FR-004 evidence, commit the diff note); custom-domain resource progressing toward `CERT_ACTIVE`
+- [x] T010 [Phase 1] Verify: `Resolve-DnsName api.redmarklogic.com -Type TXT` returns ownership value; re-export zone and `rtk git diff --no-index` vs snapshot shows only `api.*` additions with MX lines byte-identical (FR-004 evidence, commit the diff note); custom-domain resource progressing toward `CERT_ACTIVE`
 
 ---
 

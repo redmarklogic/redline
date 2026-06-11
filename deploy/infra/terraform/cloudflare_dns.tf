@@ -9,15 +9,15 @@
 # (ADR-021 naming: <env>-redline-<credential>) and injected by the operator before
 # running terraform; never stored in this file or in terraform.tfvars.
 #
-# Two-step converge (ADR-026 D1):
-#   Step 1: terraform apply (firebase_hosting.tf resources only, records don't exist yet)
-#           Read firebase_custom_domain_required_dns_updates output — this is the
-#           authoritative record list. Verify content values below match.
-#   Step 2: terraform apply (this file creates the records) -> Firebase verifies ownership
-#           -> re-apply / terraform refresh until cert_state = CERT_ACTIVE
+# RECORD TYPE (verified 2026-06-11 against the live required_dns_updates output):
+# Firebase's current custom-domain flow for a subdomain requires a SINGLE CNAME —
+#   api.redmarklogic.com CNAME redmarklogic-api.web.app (required_action: ADD)
+# — not the legacy TXT-ownership + A-record pair the original plan assumed.
+# Ownership verification and certificate issuance both ride on this one record.
+# Authoritative source: terraform output firebase_custom_domain_required_dns_updates
 #
-# WARNING: Do NOT change proxied = false on any record in this file. Firebase domain
-# verification and TLS certificate renewal both require DNS-only (grey cloud) mode.
+# WARNING: Do NOT change proxied = false. Firebase domain verification and TLS
+# certificate renewal both require DNS-only (grey cloud) mode.
 
 # ── Provider configuration ────────────────────────────────────────────────────
 #
@@ -36,47 +36,22 @@ data "cloudflare_zone" "redmarklogic" {
   }
 }
 
-# ── Domain ownership TXT record ───────────────────────────────────────────────
+# ── Firebase Hosting CNAME record ─────────────────────────────────────────────
 #
-# IMPORTANT: The `content` value below is a placeholder.
-# After the first `terraform apply` of firebase_hosting.tf, run:
-#   terraform output firebase_custom_domain_required_dns_updates
-# and replace the placeholder with the exact TXT value Firebase requires.
-# Do NOT run `terraform apply` of this file until you have the real value.
-#
-# The content will look like: "hosting-site=redmarklogic-api" or a similar
-# Google-generated ownership token — always use the output, never guess.
+# The content value is transcribed into terraform.tfvars from the authoritative
+# output (firebase_custom_domain_required_dns_updates) — never guessed from docs.
+# It is deliberately a variable, not a direct reference to
+# google_firebase_hosting_custom_domain.api.required_dns_updates, because that
+# attribute empties after verification completes and would break refresh.
 
-resource "cloudflare_dns_record" "firebase_ownership_txt" {
+resource "cloudflare_dns_record" "firebase_cname" {
   zone_id = data.cloudflare_zone.redmarklogic.zone_id
   name    = "api"
-  type    = "TXT"
-  # Replace with value from: terraform output firebase_custom_domain_required_dns_updates
-  content = var.firebase_ownership_txt_value
+  type    = "CNAME"
+  content = var.firebase_cname_target
   ttl     = 3600
   proxied = false # Grey cloud — load-bearing. DO NOT change to true.
 
-  comment = "Firebase Hosting domain ownership verification (ADR-026). proxied=false is required — do not change."
-}
-
-# ── Firebase Hosting A record(s) ──────────────────────────────────────────────
-#
-# Firebase Hosting edge IPs are provided in the required_dns_updates output.
-# Classic value: 199.36.158.100 — however, always use the output-authoritative value.
-# If Firebase returns multiple A records, add one resource block per address or
-# use a for_each over var.firebase_a_record_ips.
-#
-# Both records use proxied = false (grey cloud — see warning above).
-
-resource "cloudflare_dns_record" "firebase_a" {
-  for_each = toset(var.firebase_a_record_ips)
-
-  zone_id = data.cloudflare_zone.redmarklogic.zone_id
-  name    = "api"
-  type    = "A"
-  content = each.value
-  ttl     = 3600
-  proxied = false # Grey cloud — load-bearing. DO NOT change to true.
-
-  comment = "Firebase Hosting edge IP for api.redmarklogic.com (ADR-026). proxied=false is required."
+  # Cloudflare limit: comment <= 100 chars
+  comment = "Firebase Hosting custom domain (ADR-026). proxied=false required - do not change."
 }

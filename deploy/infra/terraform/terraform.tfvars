@@ -41,10 +41,8 @@ apis = [
 ]
 
 # ── Firebase Hosting + Cloudflare DNS (ADR-026, issue #111) ──────────────────
-# These values are populated in two steps:
-#   Step 1: Apply firebase_hosting.tf resources first (Cloudflare vars left empty).
-#           Then read: terraform output firebase_custom_domain_required_dns_updates
-#   Step 2: Set the values below from that output, then apply cloudflare_dns.tf.
-#
-# firebase_ownership_txt_value = "hosting-site=..."   # from required_dns_updates TXT entry
-# firebase_a_record_ips        = ["199.36.158.100"]   # from required_dns_updates A entry/entries
+# Transcribed from the authoritative output after the first apply:
+#   terraform output firebase_custom_domain_required_dns_updates
+#   (check_time 2026-06-11T09:53:31Z — single CNAME, required_action ADD;
+#    Firebase's current subdomain flow uses CNAME, not the legacy TXT + A pair)
+firebase_cname_target = "redmarklogic-api.web.app"

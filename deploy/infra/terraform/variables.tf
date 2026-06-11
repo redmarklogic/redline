@@ -91,38 +91,21 @@ variable "max_instances_prod" {
 
 # ── Firebase Hosting + Cloudflare DNS variables (ADR-026, issue #111) ─────────
 
-variable "firebase_ownership_txt_value" {
+variable "firebase_cname_target" {
   description = <<-EOT
-    The TXT record value Firebase requires to prove domain ownership for api.redmarklogic.com.
+    CNAME target Firebase Hosting requires for api.redmarklogic.com.
     Source: run `terraform output firebase_custom_domain_required_dns_updates` after the
-    first apply of firebase_hosting.tf resources, then set this variable to the exact string
-    Firebase returns in the required_dns_updates output's TXT entry.
-    Format: plain string, e.g. "hosting-site=redmarklogic-api" (exact value varies).
-    This value is NOT secret — it can be committed to terraform.tfvars once known.
+    first apply of firebase_hosting.tf resources, then set this to the rdata of the
+    CNAME entry Firebase returns (e.g. "redmarklogic-api.web.app").
+    Verified 2026-06-11: Firebase's current subdomain flow requires this single CNAME,
+    not the legacy TXT-ownership + A-record pair.
+    This value is NOT secret — it is committed to terraform.tfvars once known.
   EOT
   type    = string
   default = ""
 
   validation {
-    condition     = var.firebase_ownership_txt_value != ""
-    error_message = "firebase_ownership_txt_value must be set before applying cloudflare_dns.tf. Read it from the firebase_custom_domain_required_dns_updates Terraform output."
-  }
-}
-
-variable "firebase_a_record_ips" {
-  description = <<-EOT
-    List of IPv4 addresses for Firebase Hosting edge nodes that api.redmarklogic.com A records must point to.
-    Source: run `terraform output firebase_custom_domain_required_dns_updates` after the
-    first apply of firebase_hosting.tf, then set this list to the A record IPs Firebase returns.
-    Classic value is ["199.36.158.100"] but always use the authoritative output — do NOT hard-code
-    from documentation.
-    These values are NOT secret — commit to terraform.tfvars once confirmed.
-  EOT
-  type    = list(string)
-  default = []
-
-  validation {
-    condition     = length(var.firebase_a_record_ips) > 0
-    error_message = "firebase_a_record_ips must contain at least one IP. Read from firebase_custom_domain_required_dns_updates output after first apply."
+    condition     = var.firebase_cname_target != ""
+    error_message = "firebase_cname_target must be set before applying cloudflare_dns.tf. Read it from the firebase_custom_domain_required_dns_updates Terraform output."
   }
 }

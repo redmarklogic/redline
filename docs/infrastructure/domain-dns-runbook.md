@@ -217,29 +217,37 @@ terraform apply `
 terraform output firebase_custom_domain_required_dns_updates
 ```
 
-This output is the **authoritative source** for the DNS values Firebase needs. Record:
-- The TXT record content (ownership proof) — goes into `firebase_ownership_txt_value` in `terraform.tfvars`
-- The A record IP(s) — goes into `firebase_a_record_ips` in `terraform.tfvars`
+This output is the **authoritative source** for the DNS values Firebase needs.
 
-Update `terraform.tfvars`:
+> **As executed 2026-06-11:** Firebase's current subdomain flow returned a SINGLE
+> CNAME requirement — `api.redmarklogic.com CNAME redmarklogic-api.web.app`
+> (required_action ADD) — not the legacy TXT-ownership + A-record pair the original
+> plan assumed. Ownership verification and certificate issuance ride on that one
+> record. The cert block additionally offers an `_acme-challenge` TXT (dns01) as an
+> alternative to the automatic http01 check; do NOT pin it in Terraform — the value
+> rotates per ACME order and would break renewals.
+
+Record the CNAME rdata into `terraform.tfvars`:
 
 ```hcl
-# Uncomment and set from terraform output above:
-firebase_ownership_txt_value = "<value from required_dns_updates TXT entry>"
-firebase_a_record_ips        = ["<ip from required_dns_updates A entry>"]
+# Set from terraform output above:
+firebase_cname_target = "redmarklogic-api.web.app"
 ```
 
 ---
 
-### Step 6 — Second apply: Cloudflare DNS records created (T008 / T009 Step 3)
+### Step 6 — Second apply: Cloudflare DNS record created (T008 / T009 Step 3)
 
 ```powershell
-# Full plan — now includes Cloudflare DNS records
-terraform plan -var="image_tag=sha256:placeholder"
-# Review: should show cloudflare_dns_record additions only (TXT + A records on api subdomain)
-# Verify: NO existing records modified or deleted; MX records NOT touched.
-
-terraform apply -var="image_tag=sha256:placeholder"
+# Targeted plan/apply — the CNAME record only.
+# As executed 2026-06-11: the FULL plan showed unrelated drift from other specs
+# (secret replacements, IAM member + org-policy destroys, Cloud Run image changes
+# from the placeholder image_tag). Per T009's additive-only review rule, a full
+# apply is NOT safe — target this feature's resources only.
+terraform plan  -target=cloudflare_dns_record.firebase_cname -var="image_tag=sha256:placeholder"
+# Review gate: plan must be exactly "1 to add, 0 to change, 0 to destroy".
+terraform apply -target=cloudflare_dns_record.firebase_cname -var="image_tag=sha256:placeholder"
+# Note: Cloudflare limits record comments to 100 characters (API error 9313 beyond).
 ```
 
 ---
@@ -247,11 +255,11 @@ terraform apply -var="image_tag=sha256:placeholder"
 ### Step 7 — Verify DNS propagation and cert progression (T010)
 
 ```powershell
-# Verify TXT record (ownership) — may take up to TTL (3600 s) to propagate
-Resolve-DnsName api.redmarklogic.com -Type TXT
-
-# Verify A record
-Resolve-DnsName api.redmarklogic.com -Type A
+# Verify the CNAME (authoritative NS first, then public resolver)
+Resolve-DnsName api.redmarklogic.com -Type CNAME -Server eve.ns.cloudflare.com
+Resolve-DnsName api.redmarklogic.com -Server 1.1.1.1
+# Expected: CNAME -> redmarklogic-api.web.app, chaining to Firebase edge
+# (199.36.158.100 / 2620:0:890::100 via the web.app record)
 
 # Check cert + host state via Terraform (output is an object: { cert, host_state })
 # Note: the provider exposes `cert` (with a `state` field) and `host_state`,
@@ -356,10 +364,9 @@ curl.exe -sSi https://api.redmarklogic.com/health | Select-String "X-Forwarded|H
 ### Rollback: Cloudflare DNS records only
 
 ```powershell
-# Remove only the Cloudflare records (leaves Firebase resources in place)
+# Remove only the Cloudflare record (leaves Firebase resources in place)
 terraform destroy `
-  -target=cloudflare_dns_record.firebase_ownership_txt `
-  -target=cloudflare_dns_record.firebase_a `
+  -target=cloudflare_dns_record.firebase_cname `
   -var="image_tag=sha256:placeholder"
 # Verify: api.redmarklogic.com no longer resolves; MX records unaffected
 ```
@@ -373,8 +380,7 @@ terraform destroy `
   -target=google_firebase_hosting_version.api `
   -target=google_firebase_hosting_custom_domain.api `
   -target=google_firebase_hosting_site.api `
-  -target=cloudflare_dns_record.firebase_ownership_txt `
-  -target=cloudflare_dns_record.firebase_a `
+  -target=cloudflare_dns_record.firebase_cname `
   -var="image_tag=sha256:placeholder"
 # Note: google_firebase_project.default is intentionally excluded — removing Firebase
 # from the project is a more destructive action and requires founder approval.
@@ -433,12 +439,12 @@ See also: `specs/111-domain-dns-cloud-run/contracts/api-hostname.md`
 
 | Check | Evidence | Date |
 |-------|---------|------|
-| Pre-change zone snapshot committed | `docs/infrastructure/zone-snapshot-pre-2026-06-11.txt` | |
-| No pre-existing api record found | `curl output showing empty result array` | |
-| ADR-026 merged | PR # _______ | |
-| TXT record resolves | `Resolve-DnsName` output | |
-| Zone diff additive-only | `git diff` output | |
-| Cert state CERT_ACTIVE | `terraform output` | |
+| Pre-change zone snapshot committed | `docs/infrastructure/zone-snapshot-pre-2026-06-11.txt` (MX present; no api record of any type) | 2026-06-11 |
+| No pre-existing api record found | Pre-snapshot contains no `api.*` line; Firebase `discovered` list empty | 2026-06-11 |
+| ADR-026 merged | PR pending on `feature/111-domain-dns-cloud-run` | |
+| CNAME resolves (was: TXT — flow changed) | `Resolve-DnsName api.redmarklogic.com` → CNAME `redmarklogic-api.web.app` on eve.ns.cloudflare.com AND 1.1.1.1 | 2026-06-11 |
+| Zone diff additive-only | `git diff` pre vs `zone-post-phase1-2026-06-11.txt`: single api CNAME added, MX byte-identical, SOA serial bump only | 2026-06-11 |
+| Cert state CERT_ACTIVE | CERT_VALIDATING (TEMPORARY) as of 2026-06-11 10:04Z — http01 auto-completes; recheck within 24 h | pending |
 | Health 200 via branded URL (SC-001) | `curl` output | |
 | TLS cert correct CN | `openssl` output | |
 | HTTP→HTTPS redirect (FR-003) | `curl` output | |
