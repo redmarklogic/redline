@@ -71,7 +71,7 @@ Three steps in this setup cannot be automated in Terraform:
 
 $TOKEN = "<paste-token-here>"
 $PROJECT = "redmarklogic-prod"
-$SECRET_ID = "prod-redline-cloudflare-api-token"
+$SECRET_ID = "prod-redline-cloudflare-api-token"  # pragma: allowlist secret -- secret ID name, not a secret value
 
 # Create the secret shell (Terraform may have already done this — if so, skip)
 gcloud secrets create $SECRET_ID --project=$PROJECT --replication-policy=automatic
