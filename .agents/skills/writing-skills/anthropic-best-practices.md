@@ -826,8 +826,8 @@ Iterate based on these observations rather than assumptions. The 'name' and 'des
 
 Always use forward slashes in file paths, even on Windows:
 
-* [ok] **Good**: `scripts/helper.py`, `reference/guide.md`
-* [x] **Avoid**: `scripts\helper.py`, `reference\guide.md`
+* [GOOD] **Good**: `scripts/helper.py`, `reference/guide.md`
+* [AVOID] **Avoid**: `scripts\helper.py`, `reference\guide.md`
 
 Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.
 
@@ -1126,40 +1126,12 @@ Before sharing a Skill, verify:
 * [ ] Validation/verification steps for critical operations
 * [ ] Feedback loops included for quality-critical tasks
 
-### MCP tools
-
-* [ ] MCP tool references use fully-qualified `ServerName:tool_name` format
-
 ### Testing
 
 * [ ] At least three evaluations created
-* [ ] Tested with Haiku, Sonnet, and Opus *(Redline: skip — single model family; revisit if agents move to a second model tier)*
+* [ ] Tested with Haiku, Sonnet, and Opus
 * [ ] Tested with real usage scenarios
 * [ ] Team feedback incorporated (if applicable)
-
-## Redline project notes
-
-These notes override or extend Anthropic's guidance for this repo specifically.
-They were agreed by a Peter / Mark / Ron review panel on 2026-06-11. <!-- hook: allow -->
-
-### Description field (overrides "what + when" guidance above)
-
-Anthropic recommends `description` include both what the skill does and when to use it.
-Our `writing-skills/procedures/writing-skills.md` uses **triggers-only** (`Use when...`) to prevent Claude from following the description as a shortcut and skipping the skill body — a documented failure mode specific to our harness.
-
-**Status:** triggers-only rule stands pending a RED experiment.
-Experiment: test 3 skills with triggers-only vs. two-sentence descriptions against a fresh agent; measure mis-routing and body-skipping rate. Adopt whichever wins.
-
-### Multi-model testing
-
-The checklist item "Tested with Haiku, Sonnet, and Opus" is intentionally skipped.
-We run a single model family; multi-model portability is not a current strategic bet.
-If agents are ever routed to a second model tier, adopt at that point.
-
-### GREEN checklist reference
-
-Our bespoke creation checklist (`procedures/create-skill.md`) should reference this file's
-checklist as its final gate, skipping the multi-model item. This prevents the two checklists from drifting independently.
 
 ## Next steps
 
