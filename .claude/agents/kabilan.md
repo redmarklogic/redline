@@ -200,7 +200,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Session end — handover note, CCE writes, uncommitted-change flag | `session-handover` |
 | EDA / reporting | `eda-codebook`, `eda-interpreting-data`, `eda-qa`, `eda-visual-design`, `python-plot-colors`, `qmd-tables`, `qmd-narrative-design`, `mermaid-diagrams` |
 | MCP tooling | `python-mcp-tools`, `notebooklm-cli` |
-| Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `resolving-pr-issues` |
+| Branch / PR workflow | `dispatching-parallel-agents`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `requesting-code-review`, `receiving-code-review`, `resolving-pr-issues` |
 | Executing a SpecKit `tasks.md` plan | `spec-kit` (implement phase), `subagent-driven-development` |
 | Documentation maintenance | `doc-updater` |
 | Encounter out-of-scope improvement or scope creep during implementation | `task-defer` |
