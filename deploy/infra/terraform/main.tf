@@ -10,6 +10,15 @@ provider "google" {
   region  = var.region
 }
 
+# google-beta requires user_project_override + billing_project for Firebase APIs
+# (firebase.googleapis.com validates quota against the billing project, not the ADC default)
+provider "google-beta" {
+  project                = var.project_id
+  region                 = var.region
+  user_project_override  = true
+  billing_project        = var.project_id
+}
+
 data "google_project" "project" {
   project_id = var.project_id
 }

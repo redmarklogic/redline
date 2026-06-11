@@ -208,6 +208,10 @@ sonarqube.extra-properties."sonar.python.xunit.reportPath" = ".cache/sonarqube/x
 # does not filter them — their embedded third-party JS raised 27 issues we do not
 # own. sonar.test.exclusions removes them from test analysis at the root.
 sonarqube.extra-properties."sonar.test.exclusions" = "tests/assets/**"
+# Override usethis's hardcoded sonar.sources (./src) to also scan Terraform IaC
+# under deploy/. sonar.language is deprecated/ignored since SonarQube 7.7 — the
+# language is auto-detected from files in scope, so no language property is needed.
+sonarqube.extra-properties."sonar.sources" = "src,deploy"
 
 [tool.importlinter]
 root_packages = [ "marker", "rl" ]

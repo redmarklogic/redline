@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "site": "redmarklogic-api",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "prod-redline-api",
+          "region": "australia-southeast1"
+        }
+      }
+    ]
+  }
+}
