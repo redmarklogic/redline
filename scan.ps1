@@ -93,25 +93,58 @@ if (Test-Path '.coverage') {
 }
 
 # -- 5. Run the scanner container against the local instance ----------------
+# PERFORMANCE: the repo lives on Windows NTFS (C:\). Bind-mounting it into the
+# Linux scanner (-v ${repo}:/usr/src) routes every file stat/read through the
+# Docker Desktop 9p/virtiofs WSL2 boundary. Measured: a Python-only scan took
+# ~9 min, dominated by Cobertura (159s), PythonXUnit (152s) and SCM blame (108s)
+# -- all per-small-file work across that boundary. Flags alone got it to ~8 min.
+# Fix: stage the source into a Linux-NATIVE named volume (overlayfs) via a tar
+# stream, then scan THAT. The scanner never touches NTFS, so sensor I/O collapses.
 $repo = ($PSScriptRoot -replace '\\', '/')
-Write-Host "-- Running $SCANNER_IMAGE --" -ForegroundColor Cyan
+$SRC_VOLUME = 'redmark-sonar-src'
+Write-Host "-- Staging source into native volume '$SRC_VOLUME' (avoids NTFS bind-mount tax) --" -ForegroundColor Cyan
+
+# Fresh volume each run (source is a point-in-time snapshot of the working tree).
+docker volume rm $SRC_VOLUME 2>$null | Out-Null
+docker volume create $SRC_VOLUME | Out-Null
+
+# Stream a filtered tar of the working tree into the volume. Excludes heavy dirs
+# the scanner ignores anyway (.git is safe to drop -- sonar.scm.disabled below) so
+# the copy stays small and fast. tar over stdin is one boundary crossing total
+# instead of tens of thousands of per-file stats.
+$stageSw = [System.Diagnostics.Stopwatch]::StartNew()
+tar -C $PSScriptRoot `
+    --exclude='./.git' --exclude='./.venv' --exclude='./node_modules' `
+    --exclude='./.hypothesis' --exclude='./dist' --exclude='./build' `
+    --exclude='./**/__pycache__' --exclude='./.mypy_cache' --exclude='./.ruff_cache' `
+    --exclude='./**/.terraform' `
+    -cf - . | docker run --rm -i -v "${SRC_VOLUME}:/usr/src" busybox sh -c 'tar -C /usr/src -xf -'
+if ($LASTEXITCODE -ne 0) { throw 'Failed to stage source into the native volume.' }
+$stageSw.Stop()
+Write-Host ("   staged in {0:N1}s" -f $stageSw.Elapsed.TotalSeconds) -ForegroundColor DarkGray
+
+Write-Host "-- Running $SCANNER_IMAGE (against native volume) --" -ForegroundColor Cyan
 $tempLog = [System.IO.Path]::GetTempFileName()
 # Named volume persists the scanner cache (JRE/engine/plugins, ~150 MB) across
-# the --rm containers; without it every scan re-downloads through the slow
-# host.docker.internal loopback (measured 6m22s on a cold Docker Desktop).
-# skipJreProvisioning uses the image's bundled JRE 17 instead of downloading one.
+# the --rm containers. skipJreProvisioning uses the image's bundled JRE 17.
+# scm.disabled: blame only feeds new-code attribution, useless for a local scan.
+# xunit.skipDetails: skips per-testcase drill-down (coverage signal unaffected).
 docker run --rm `
     -e "SONAR_HOST_URL=$SONAR_HOST_URL" `
     -e "SONAR_TOKEN=$env:SONAR_TOKEN" `
-    -v "${repo}:/usr/src" `
+    -v "${SRC_VOLUME}:/usr/src" `
     -v "redmark-sonar-scanner-cache:/opt/sonar-scanner/.sonar" `
     $SCANNER_IMAGE `
     "-Dproject.settings=/usr/src/.cache/sonarqube/sonar-project.properties" `
     "-Dsonar.branch.name=$BRANCH" `
-    "-Dsonar.scanner.skipJreProvisioning=true" | Tee-Object -FilePath $tempLog
-if ($LASTEXITCODE -ne 0) {
+    "-Dsonar.scanner.skipJreProvisioning=true" `
+    "-Dsonar.scm.disabled=true" `
+    "-Dsonar.python.xunit.skipDetails=true" | Tee-Object -FilePath $tempLog
+$scanExit = $LASTEXITCODE
+docker volume rm $SRC_VOLUME 2>$null | Out-Null   # drop the snapshot
+if ($scanExit -ne 0) {
     Remove-Item $tempLog -Force -ErrorAction SilentlyContinue
-    throw "sonar-scanner failed (exit $LASTEXITCODE)."
+    throw "sonar-scanner failed (exit $scanExit)."
 }
 
 # -- 6. Poll compute-engine task (bounded wait, max 60 s) --------------------
