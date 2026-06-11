@@ -75,8 +75,7 @@ Load the appropriate skill at the start of every session based on the requested 
 | Hiring a new agent, onboarding, or refreshing a single agent's JD | `hr-hire-agent` |
 | Auditing an agent, running a PIP, or performing an org audit | `hr-audit-agent` |
 | Updating the org chart, agent register, or skills taxonomy | `hr-maintain-agent-registry` |
-| Writing or auditing a skill file | `writing-skills` |
-| Creating a new skill folder and SKILL.md | `skills-create` |
+| Creating a new skill (folder + SKILL.md), or writing/auditing one | `writing-skills` |
 | Creating, updating, or auditing a skill/JD that may interact with spec-kit workflow | `customization-mechanism-triage` (load `procedures/speckit-extension-triage.md` to evaluate extension candidacy) |
 | Querying a notebook for skill grounding | `notebooklm-cli` |
 | Rendering a visual org artifact (on demand) | `miro-mcp` |
