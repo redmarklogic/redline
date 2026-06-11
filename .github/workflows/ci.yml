@@ -13,8 +13,7 @@ on:
   workflow_call: {}
   push:
     branches:
-      - main
-      - "release/**"
+      - master
 
 permissions:
   id-token: write   # Required for WIF OIDC token request
