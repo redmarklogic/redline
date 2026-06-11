@@ -77,12 +77,13 @@ When placing a new skill, ask:
 │  pm-* · strategy-pre-mortem · strategy-psf-domain · ddd-strategic    │
 │  marketing-* · hr-hire-agent · hr-audit-agent · hr-maintain-agent-registry    │
 │  ceremony-monthly-editorial-session · hr-sync-agent-topology         │
+│  agile-sprint-planning · agile-daily-standup                         │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 8: Engineering Workflows                                      │
 │  shaping · arch-engineering · create-adr · design-eval-rubric · design-eval-pipeline │
 │  define-ai-policy · enforce-ai-batch-discipline                      │
 │  doc-updater · sonarqube-find-and-fix                                │
-│  git-push-batched · resolving-pr-issues · skills-create              │
+│  git-push-batched · resolving-pr-issues                              │
 │  session-handover                                                     │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Applied Capabilities                                       │
@@ -251,7 +252,6 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 | --- | --- |
 | Architecture | `shaping`, `arch-engineering`, `create-adr`, `design-eval-rubric`, `design-eval-pipeline`, `define-ai-policy`, `enforce-ai-batch-discipline` |
 | Release & review | `resolving-pr-issues`, `git-push-batched`, `doc-updater`, `sonarqube-find-and-fix` |
-| Skill authoring | `skills-create` |
 | Session discipline | `session-handover` |
 
 ---
@@ -265,7 +265,8 @@ Transport selection follows the CLI-first policy in ADR-016 (`docs/adr/adr-016-c
 | Product management | `pm-problem-framer`, `pm-hypothesis-builder`, `pm-personas`, `pm-roadmap`, `pm-prioritization`, `pm-decision-architect`, `pm-prd-builder`, `pm-structural-integrity-auditor` |
 | Strategy | `pm-product-strategist`, `strategy-pre-mortem`, `strategy-psf-domain`, `ddd-strategic` |
 | Marketing | `marketing-content-big-5`, `marketing-product-led-seo`, `linkedin-social-selling`, `marketing-ai-content-review` |
-| Organisation | `sync-agent-topology`, `ceremony-monthly-editorial-session`, `hr-hire-agent`, `hr-audit-agent`, `hr-maintain-agent-registry` |
+| Organisation | `hr-sync-agent-topology`, `hr-hire-agent`, `hr-audit-agent`, `hr-maintain-agent-registry` |
+| Ceremonies | `ceremony-monthly-editorial-session`, `agile-sprint-planning`, `agile-daily-standup` |
 
 ---
 
