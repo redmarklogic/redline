@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
-TAXONOMY_PATH = REPO_ROOT / "docs" / "architecture" / "skills-taxonomy.md"
+TAXONOMY_PATH = REPO_ROOT / "docs" / "architecture" / "skills-architecture.md"
 LOCK_PATH = REPO_ROOT / "skills-lock.json"
 
 
