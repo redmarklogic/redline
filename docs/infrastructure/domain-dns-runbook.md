@@ -294,6 +294,22 @@ Before proceeding to Phase 2:
 
 ### Step 8 — Preflight (T011)
 
+> **Preflight findings (2026-06-11, recorded during Phase 1):**
+>
+> - `prod-redline-api` and `staging-redline-api` are deployed and Ready —
+>   the #110 hard dependency is satisfied.
+> - **BLOCKER**: `GET https://prod-redline-api-bfyi7ev63a-ts.a.run.app/` returns
+>   the Google-frontend `403 Forbidden` — prod does NOT allow unauthenticated
+>   invoke (no `allUsers` run.invoker binding; the staging public-invoker binding
+>   is drift pending destroy). Firebase Hosting rewrites are unauthenticated, so
+>   the branded URL will 403 even at CERT_ACTIVE until the founder decides:
+>   (a) grant `allUsers` roles/run.invoker on prod (spec's original assumption,
+>   ADR-022 trust boundary), or (b) keep prod private and abandon the public
+>   branded endpoint. Decision + IAM change belongs to #110 scope — do not
+>   apply IAM from this feature.
+> - Health path: `/health` exists on the app (403 at IAM layer, not 404);
+>   `/healthz` returns 404. Use `/health` in T013 once invoke is permitted.
+
 ```powershell
 # Confirm deployed service name
 gcloud run services list --region australia-southeast1 --project redmarklogic-prod
