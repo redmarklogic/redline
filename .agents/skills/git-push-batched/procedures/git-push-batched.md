@@ -8,7 +8,7 @@
 
 ### Out of Scope
 - Branch management (`version-control`)
-- PR creation (`finishing-a-development-branch`)
+- PR creation (`/make-pr` command)
 - Code review (`requesting-code-review`)
 
 ## Context & Guidelines

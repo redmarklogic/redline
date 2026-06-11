@@ -66,4 +66,4 @@
 - Commit after each task or logical group
 - Use `subagent-driven-development` skill (preferred) or execute tasks directly
 - Run `python-static-checks` before declaring implementation complete
-- Use `finishing-a-development-branch` skill to complete the work
+- Use `/make-pr` command to complete the work

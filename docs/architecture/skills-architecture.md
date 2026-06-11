@@ -36,7 +36,7 @@ All vendor-maintained skills sit at Layer 0. They cannot reference project-owned
 | Vendor                 | Skills                                                                                                                                                                                                                                                                                                                                        |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `specify` (spec-kit) | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
-| `obra/superpowers`   | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
+| `obra/superpowers`   | `brainstorming`, `dispatching-parallel-agents`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
 ### 4. Single Source of Truth (registries at the bottom)
 
@@ -121,8 +121,8 @@ When placing a new skill, ask:
 │  Layer 0: Vendor Primitives (immutable)                              │
 │  specify:     spec-kit                                               │
 │  superpowers: brainstorming · dispatching-parallel-agents            │
-│               finishing-a-development-branch · receiving-code-review │
-│               requesting-code-review · subagent-driven-development   │
+│               receiving-code-review · requesting-code-review         │
+│               subagent-driven-development                            │
 │               systematic-debugging · test-driven-development         │
 │               using-git-worktrees · using-superpowers                │
 │               verification-before-completion · writing-skills        │
@@ -142,7 +142,7 @@ vendor update.
 | Source               | Skills                                                                                                                                                                                                                                                                                                                                        |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `specify`          | `spec-kit`                                                                                                                                                                                                                                                                                                                                  |
-| `obra/superpowers` | `brainstorming`, `dispatching-parallel-agents`, `finishing-a-development-branch`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
+| `obra/superpowers` | `brainstorming`, `dispatching-parallel-agents`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-skills` |
 
 ---
 

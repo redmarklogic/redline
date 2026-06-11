@@ -75,7 +75,7 @@ After Kabilan signals completion, output:
 Implementation complete.
 
 Next steps:
-  1. Run finishing-a-development-branch
+  1. Run /make-pr
   2. Founder review before any push
 ```
 
