@@ -110,7 +110,6 @@
 | `subagent-driven-development` | Fast iteration with two-stage review | Engineering |
 | `dispatching-parallel-agents` | Concurrent subagent workflows | Engineering |
 | `using-git-worktrees` | Parallel development in isolated git worktrees | Engineering |
-| `finishing-a-development-branch` | Merge/PR decision workflow | Engineering |
 | `requesting-code-review` | Pre-review checklist | Engineering |
 | `resolving-pr-issues` | Resolve incoming PR code-review comments (structured triage, fail-first test, fix, CI closure) | Engineering |
 | `verification-before-completion` | Verify errors are truly resolved before claiming done | Engineering |
