@@ -68,13 +68,19 @@ fi
 # -- 5. Run the scanner container against the local instance ----------------
 TEMP_LOG=$(mktemp)
 echo "-- Running $SCANNER_IMAGE --"
+# Named volume persists the scanner cache (JRE/engine/plugins, ~150 MB) across
+# the --rm containers; without it every scan re-downloads through the slow
+# host.docker.internal loopback (measured 6m22s on a cold Docker Desktop).
+# skipJreProvisioning uses the image's bundled JRE 17 instead of downloading one.
 docker run --rm \
   -e "SONAR_HOST_URL=$SONAR_HOST_URL" \
   -e "SONAR_TOKEN=$SONAR_TOKEN" \
   -v "$SCRIPT_DIR:/usr/src" \
+  -v "redmark-sonar-scanner-cache:/opt/sonar-scanner/.sonar" \
   "$SCANNER_IMAGE" \
   "-Dproject.settings=/usr/src/.cache/sonarqube/sonar-project.properties" \
-  "-Dsonar.branch.name=$BRANCH" | tee "$TEMP_LOG"
+  "-Dsonar.branch.name=$BRANCH" \
+  "-Dsonar.scanner.skipJreProvisioning=true" | tee "$TEMP_LOG"
 DOCKER_EXIT="${PIPESTATUS[0]}"
 if [[ "$DOCKER_EXIT" -ne 0 ]]; then
   rm -f "$TEMP_LOG"

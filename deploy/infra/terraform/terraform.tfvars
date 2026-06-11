@@ -33,5 +33,6 @@ apis = [
   "dns.googleapis.com",
   "compute.googleapis.com",
   "iam.googleapis.com",
+  "iamcredentials.googleapis.com",
   "cloudresourcemanager.googleapis.com",
 ]

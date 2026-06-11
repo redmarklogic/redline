@@ -1,0 +1,57 @@
+# CI/CD deploy workflow — keyless GCP auth via Workload Identity Federation (issue #68)
+# WIF provider and SA email must be set as GitHub Actions repository variables: WIF_PROVIDER, GHA_SA_EMAIL
+name: CI/CD Deploy
+
+on:
+  workflow_call: {}
+  push:
+    branches:
+      - main
+      - "release/**"
+
+permissions:
+  id-token: write   # Required for WIF OIDC token request
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false  # Never cancel a running deploy
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests
+        uses: pavelzw/pytest-action@510c5e90c360a185039bea56ce8b3e7e51a16507 # v2.2.0
+        with:
+          emoji: false
+          job-summary: false
+          custom-pytest: uv run --frozen pytest --cov
+
+      - name: Authenticate to GCP via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.GHA_SA_EMAIL }}
+
+      # TODO: build Docker image and push to Artifact Registry (future issue)
+      # See: https://github.com/redmarklogic/redline/issues/69
+      - name: TODO — build and push image
+        run: |
+          echo "Build and push step will be wired in a follow-up issue."
+          echo "Auth step above confirms WIF token exchange is working."
