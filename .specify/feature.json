@@ -1,3 +1,3 @@
 {
-  "feature_directory": "specs/69-github-actions-pipeline-build-test-push-backend-image"
+  "feature_directory": "specs/110-end-to-end-live-health-check-get-health-http-200-on-cloud-run"
 }

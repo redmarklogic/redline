@@ -28,6 +28,10 @@ resource "google_secret_manager_secret" "secrets" {
   project   = var.project_id
 
   replication {
-    auto {}
+    user_managed {
+      replicas {
+        location = var.region
+      }
+    }
   }
 }

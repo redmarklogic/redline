@@ -1,4 +1,4 @@
-# infra/
+# deploy/infra/
 
 GCP infrastructure for Redline. All resources are defined as Infrastructure as Code
 per ADR-020. The GCP Console must not be used to modify Terraform-managed resources —
@@ -7,7 +7,7 @@ any console change will be reverted on the next `terraform apply`.
 ## Directory structure
 
 ```text
-infra/
+deploy/infra/
 ├── bootstrap/
 │   └── bootstrap.sh        # One-off: creates GCP project + Terraform state bucket
 └── terraform/
@@ -33,7 +33,7 @@ Subsequent runs are idempotent — check-before-create guards skip creation if t
 resource already exists.
 
 **Before running bootstrap.sh**, replace the placeholder values in
-`infra/terraform/terraform.tfvars`:
+`deploy/infra/terraform/terraform.tfvars`:
 - `billing_account`: real billing account ID (format `XXXXXX-XXXXXX-XXXXXX`)
 - `folder_id` or `org_id`: the GCP folder or organisation ID that owns the project
 
@@ -47,8 +47,8 @@ All GCP infrastructure after the bootstrap step is managed by Terraform.
 
 | Use case | Where to read |
 |---|---|
-| Project ID, region, billing account (static references in scripts) | `infra/terraform/terraform.tfvars` |
-| Project number, state bucket name (post-apply, GCP-assigned values) | `terraform output <name>` from `infra/terraform/` |
+| Project ID, region, billing account (static references in scripts) | `deploy/infra/terraform/terraform.tfvars` |
+| Project number, state bucket name (post-apply, GCP-assigned values) | `terraform output <name>` from `deploy/infra/terraform/` |
 
 Do not hardcode project ID, region, or billing account in any HCL resource block or
 shell script. Always reference `terraform.tfvars` or `var.*` variables.
@@ -56,12 +56,12 @@ shell script. Always reference `terraform.tfvars` or `var.*` variables.
 ### Workflow
 
 ```bash
-# 1. One-off bootstrap (only needed once per environment)
-cd infra/bootstrap
+# 1. One-off bootstrap (only needed once per environment; from repo root)
+cd deploy/infra/bootstrap
 ./bootstrap.sh
 
-# 2. Initialise Terraform (connects to GCS remote state)
-cd infra/terraform
+# 2. Initialise Terraform (connects to GCS remote state; from repo root)
+cd deploy/infra/terraform
 terraform init
 
 # 3. Preview changes
