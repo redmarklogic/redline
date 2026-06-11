@@ -10,10 +10,10 @@
 #   # export ORG_ID="000000000000"
 #   export STATE_BUCKET="redmarklogic-tf-state"
 #   export REGION="australia-southeast1"
-#   ./infra/bootstrap/bootstrap.sh
+#   ./deploy/infra/bootstrap/bootstrap.sh
 #
-# Alternatively, values are parsed from infra/terraform/terraform.tfvars when env vars
-# are not set.
+# Alternatively, values are parsed from deploy/infra/terraform/terraform.tfvars when
+# env vars are not set.
 
 set -euo pipefail
 
@@ -109,4 +109,4 @@ else
 fi
 
 echo ""
-echo "Bootstrap complete. Run 'terraform init' from infra/terraform/ to continue."
+echo "Bootstrap complete. Run 'terraform init' from deploy/infra/terraform/ to continue."

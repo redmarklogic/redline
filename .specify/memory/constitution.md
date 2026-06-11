@@ -124,16 +124,17 @@ annotation backed by a recorded ADR. Stability is negotiated and earned — neve
 
 ### XV. Infrastructure as Code for GCP Resources
 
-All GCP infrastructure is declared in Terraform HCL under `infra/terraform/`. Two
-resources are exempt: the GCP project and the Terraform state bucket, which are
-created by a one-off bootstrap script (`infra/bootstrap/bootstrap.sh`) because
+All GCP infrastructure is declared in Terraform HCL under `deploy/infra/terraform/`.
+Two resources are exempt: the GCP project and the Terraform state bucket, which are
+created by a one-off bootstrap script (`deploy/infra/bootstrap/bootstrap.sh`) because
 Terraform requires them to exist before it can initialise. After the bootstrap runs,
 no human or CI job modifies GCP infrastructure except through a reviewed
 `terraform apply`. The `gcloud` CLI is permitted for read-only operations and
 operational commands (deployments, image pushes) that are not infrastructure
 definitions. Direct GCP Console changes to Terraform-managed resources are
-prohibited — they will be reverted on the next apply. `infra/terraform/terraform.tfvars`
-is the single source of truth for canonical GCP project identifiers.
+prohibited — they will be reverted on the next apply.
+`deploy/infra/terraform/terraform.tfvars` is the single source of truth for
+canonical GCP project identifiers.
 
 *Grounded in ADR-020.*
 
