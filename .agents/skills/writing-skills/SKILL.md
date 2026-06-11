@@ -119,8 +119,6 @@ What is this? Core principle in 1-2 sentences.
 Bullet list with SYMPTOMS and use cases
 When NOT to use
 
-**Orchestration check (one line, not a procedure):** If the skill describes orchestration that would run *identically every time, at scale* (10+ independent agents, or a repeatable adversarial-verify / cross-file sweep), it may belong as a saved dynamic **workflow** (`/command`), not skill prose. See the Agent Orchestration Tier gate in `tool-selection`. Most skills are judgment or single-pass — this applies to almost none of them; do not add workflow machinery by default.
-
 ## Core Pattern (for techniques/patterns)
 Before/after code comparison
 
@@ -614,7 +612,6 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Address specific baseline failures identified in RED
 - [ ] Code inline OR link to separate file
 - [ ] One excellent example (not multi-language)
-- [ ] If skill references MCP tools: use fully-qualified `ServerName:tool_name` format
 - [ ] Run scenarios WITH skill - verify agents now comply
 
 **REFACTOR Phase - Close Loopholes:**
@@ -623,8 +620,6 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Build rationalization table from all test iterations
 - [ ] Create red flags list
 - [ ] Re-test until bulletproof
-- [ ] Run the Anthropic checklist (`anthropic-best-practices.md`, final section) — skip the "Tested with Haiku, Sonnet, and Opus" item
-- [ ] (Optional) Note which files Claude read, in which order; flag unexpected navigation paths
 
 **Quality Checks:**
 - [ ] Small flowchart only if decision non-obvious

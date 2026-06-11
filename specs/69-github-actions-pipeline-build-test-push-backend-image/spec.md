@@ -22,6 +22,19 @@ ADR-019 (Windows-dev / Linux-CI boundary — CI runs on Linux), ADR-023 (single
 environment for now; staging/prod split is later), and #68 (Workload Identity
 Federation — CI authenticates to the cloud without long-lived keys).
 
+**Existing scaffold (reconciliation, 2026-06-11).** #68 already landed
+`.github/workflows/ci.yml`: a single job that checks out, runs pytest, authenticates to
+the cloud via Workload Identity Federation, and then holds a placeholder step
+explicitly tagged for this issue (`TODO — build and push image … issue #69`). #69
+**completes that job in place** — it appends build + push (emitting the image digest)
+after the existing test and auth steps. It does not introduce a separate workflow.
+
+**Two pre-existing defects #69 also corrects:** (a) both `ci.yml` and `tests.yml`
+trigger on `push: branches: [main]`, but the repository's default branch is `master`,
+so neither fires on trunk merges today — the trunk CI is dormant; #69 corrects both
+triggers to `master`. (b) Per #67's digest-only rule, the deploy step references images
+by **digest**, so the publish step must emit the pushed digest as its primary output.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Tested backend image published on every trunk merge (Priority: P1)
@@ -71,22 +84,24 @@ marked failed, and no new image lands in the registry.
 
 ### User Story 3 - Every published image is traceable to its source commit (Priority: P2)
 
-Each published image carries the commit it was built from, so any deployed artifact can
-be traced back to exact source, and a moving trunk tag always names the latest image.
+Each published image is identified by its content digest and tagged with the commit it
+was built from, so the deploy step can pull an exact digest and any deployed artifact can
+be traced back to source.
 
-**Why this priority**: Provenance is required for debugging, rollback, and the deploy
-step's lookup, but the chain can function for a first demo before tagging is perfected —
-hence P2, not P1.
+**Why this priority**: Provenance and a digest handoff are required for the deploy step's
+lookup, rollback, and debugging, but the chain can run a first demo before traceability
+is perfected — hence P2, not P1.
 
 **Independent Test**: Merge two changes in sequence; confirm each image carries its own
-commit identifier and the moving trunk tag resolves to the most recent.
+commit tag and a distinct digest, and the pipeline surfaces the digest of the image it
+just pushed.
 
 **Acceptance Scenarios**:
 
-1. **Given** a merge to master, **When** the image is pushed, **Then** it is tagged
-   with the immutable commit identifier and with a moving trunk tag.
+1. **Given** a merge to master, **When** the image is pushed, **Then** it is tagged with
+   the immutable commit identifier and the run surfaces the pushed image digest.
 2. **Given** two merges in sequence, **When** both images are published, **Then** each
-   commit tag resolves to its own image and the moving trunk tag resolves to the later.
+   commit tag resolves to its own image and each run reports its own digest.
 
 ---
 
@@ -97,8 +112,9 @@ commit identifier and the moving trunk tag resolves to the most recent.
   mistagged image published; safe to re-run.
 - Two merges land close together → commit-pinned tags never collide; the moving trunk
   tag reflects the most recently completed publish.
-- The same commit is re-run after a successful publish → result is idempotent (the
-  commit-tagged image is unchanged; re-pushing is safe and does not corrupt provenance).
+- The same commit is re-run after a successful publish → re-pushing is safe: the
+  `:<commit>` tag may move to the newly built digest, but already-pushed digests stay
+  immutable and pullable, so digest-pinned deploys are unaffected (FR-011).
 - A required precondition is missing (backend Dockerfile not yet present, registry
   repository not provisioned, or cloud auth not configured) → the run fails with a clear,
   actionable error rather than silently producing nothing or a broken image.
@@ -109,28 +125,41 @@ commit identifier and the moving trunk tag resolves to the most recent.
 
 ### Functional Requirements
 
-- **FR-001**: The pipeline MUST act only on merges to the trunk (master). Pushes to
-  feature branches and pull requests MUST NOT build or publish an image.
-- **FR-002**: The pipeline MUST be gated on the result of the project's existing
-  automated test workflow for the same commit. It MUST proceed to build/push only when
-  that test gate has passed, and MUST NOT run pytest a second time itself.
-- **FR-003**: When the test gate has failed (or did not pass) for the commit, the
-  pipeline MUST NOT build or publish any image.
-- **FR-004**: The pipeline MUST build the backend container image from the backend
-  container definition maintained in this repository (delivered by #67 / B4).
-- **FR-005**: The pipeline MUST publish the built image to the project's image registry
-  repository in `australia-southeast1` (per ADR-022).
-- **FR-006**: Each published image MUST be tagged with the immutable triggering commit
-  identifier, and a moving trunk tag MUST be updated to name the latest published image.
-- **FR-007**: The pipeline MUST authenticate to the cloud using keyless federation (per
-  #68); it MUST NOT store or use long-lived cloud credentials.
+- **FR-001**: The pipeline MUST act only on merges to the trunk (`master`). Pushes to
+  feature branches and pull requests MUST NOT build or publish an image. As part of this
+  work, the existing `ci.yml` and `tests.yml` triggers MUST be corrected from `main` to
+  `master` so trunk CI fires (pre-existing dormant-trigger defect).
+- **FR-002**: The pipeline MUST run the automated test gate (pytest) before any build or
+  push, and MUST proceed to build/push only when that gate passes. This is implemented by
+  completing the existing `ci.yml` job in place (test → auth → build → push), not by a
+  separate workflow. (The existing `tests.yml` continues to provide PR-time feedback.)
+- **FR-003**: When the test gate fails for the commit, the pipeline MUST NOT build or
+  publish any image.
+- **FR-004**: The pipeline MUST build the backend container image from the repository's
+  backend container definition at `deploy/docker/marker/Dockerfile` (delivered by #67).
+- **FR-005**: The pipeline MUST publish the built image to the project's Artifact
+  Registry repository in `australia-southeast1` (per ADR-022), using the image reference
+  established by #67 (`…/redline-repo/redline-api`).
+- **FR-006**: The publish step MUST emit the pushed image **digest** as its primary,
+  machine-readable output for the downstream deploy step (#67 digest-only rule). It MUST
+  also tag the image with the immutable triggering commit identifier for human
+  traceability.
+- **FR-007**: The pipeline MUST authenticate to the cloud using keyless Workload Identity
+  Federation (the auth step already present from #68); it MUST NOT store or use
+  long-lived cloud credentials.
 - **FR-008**: The pipeline MUST run on a Linux execution environment (per ADR-019).
 - **FR-009**: Any failure in the build or publish steps MUST fail the run visibly and
-  MUST NOT leave a partial, broken, or mistagged image published.
-- **FR-010**: The identifier (tag and/or digest) of the published image MUST be
-  discoverable by the downstream deploy step so it can resolve the exact tested artifact.
-- **FR-011**: Re-running the pipeline for an already-published commit MUST be safe and
-  MUST NOT corrupt the provenance of previously published images.
+  MUST NOT leave a partial or broken image published.
+- **FR-010**: The published image digest MUST be discoverable by the downstream deploy
+  step so it can resolve and pull the exact tested artifact without a manual tagging step.
+- **FR-011**: Re-running the pipeline for an already-published commit MUST be safe.
+  **Policy (POC):** a re-run rebuilds and re-pushes; because container builds are not
+  bit-reproducible, the moving `:<commit>` tag MAY be repointed to the newly built digest.
+  Previously pushed **digests remain immutable and pullable**, so any deploy that pinned a
+  digest (FR-006/FR-010) is unaffected — provenance is preserved by the digest, not the
+  tag. No skip-if-exists logic is required for the POC. (If, later, the `:<commit>` tag
+  must be immutable, enforce it via registry tag-immutability rather than pipeline logic —
+  out of scope here.)
 
 ### Key Entities
 
@@ -160,11 +189,14 @@ commit identifier and the moving trunk tag resolves to the most recent.
 - The backend container definition (Dockerfile) exists and builds a runnable image
   (#67 / B4). This pipeline consumes it; it does not author it.
 - An image registry repository is provisioned in `australia-southeast1` and the
-  pipeline's identity has permission to write to it (infra precondition, B3).
+  pipeline's identity has permission to write to it (infra precondition, B3 —
+  `deploy/infra/terraform/artifact_registry.tf`, `workload_identity.tf` grant
+  `roles/artifactregistry.writer`).
 - Keyless cloud federation and a CI identity with registry-writer permission are
-  configured (#68). This pipeline assumes them; it does not provision them.
-- The project's existing automated test workflow is the single authoritative test gate;
-  this pipeline reuses its result rather than re-running tests.
+  configured and applied (#68 — `WIF_PROVIDER`/`GHA_SA_EMAIL` repo vars, auth step already
+  present in `ci.yml`). This pipeline assumes them; it does not provision them.
+- The test gate (pytest) runs inline in the same job as build/push, before them; the
+  existing `tests.yml` continues to provide independent PR-time feedback.
 - A single deployment environment applies for now (ADR-023); the pipeline targets the
   one registry repository. A staging/prod split, if introduced later, is out of scope
   here.
@@ -173,10 +205,12 @@ commit identifier and the moving trunk tag resolves to the most recent.
 
 ## Dependencies
 
-- **#67 (B4)** — backend Dockerfile (image source). Blocking for executable acceptance.
-- **B3** — Artifact Registry repository provisioned (push target). Blocking.
-- **B5 / #68** — Workload Identity Federation + CI service account with registry-writer
-  role (auth). Blocking.
+- **#67 (B4)** — backend Dockerfile at `deploy/docker/marker/Dockerfile` and the
+  `redline-api` image reference / digest-only rule. Blocking for executable acceptance.
+- **B3** — Artifact Registry repository provisioned (push target). Terraform present
+  (`artifact_registry.tf`); blocking on `terraform apply`.
+- **#68** — Workload Identity Federation + CI service account with registry-writer role.
+  **Merged**; the auth step and `ci.yml` scaffold are already in place.
 - **ADR-022** (Cloud Run + Artifact Registry, region), **ADR-019** (Linux CI),
   **ADR-023** (single environment for now) — governing decisions.
 

@@ -31,13 +31,13 @@ function Write-Fail { param([string]$msg) Write-Host "   ERR $msg" -ForegroundCo
 
 Write-Step "Checking Superpowers version"
 
-$installedVersion = $skillsLock.installedSuperpowersVersion
+$installedVersion = $skillsLock.PSObject.Properties['installedSuperpowersVersion']?.Value
 
 if ($installedVersion -eq $SUPERPOWERS_VERSION) {
     Write-Skip "Superpowers $SUPERPOWERS_VERSION already installed"
 } else {
-    if ($currentVersion) {
-        Write-Host "   Upgrading $currentVersion → $SUPERPOWERS_VERSION" -ForegroundColor Yellow
+    if ($installedVersion) {
+        Write-Host "   Upgrading $installedVersion → $SUPERPOWERS_VERSION" -ForegroundColor Yellow
     } else {
         Write-Host "   Installing Superpowers $SUPERPOWERS_VERSION" -ForegroundColor Yellow
     }
