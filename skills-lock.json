@@ -847,18 +847,6 @@
       "status": "active",
       "layer": 8
     },
-    "skills-create": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "harriet",
-        "kabilan"
-      ],
-      "status": "active",
-      "layer": 8
-    },
     "spec-kit": {
       "source": "local",
       "sourceType": "local",

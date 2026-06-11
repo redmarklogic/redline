@@ -1,45 +1,64 @@
-# This Week — Sprint 2: Jun 8-14
+# This Week — Sprint 3: Jun 15–21
 
 _Synced: 2026-06-11_
 
-## Sprint 2 — Jun 8–14
+## Sprint 3 — Jun 15–21
+
+**Goal**: Deploy a Django skeleton website at the company domain — IP-restricted, Google SSO login, post-login landing page, lead capture to Django DB, and a chosen analytics platform wired — proving the web deployment path is technically feasible end-to-end.
+
+**Mid-sprint gate**: Django must be serving at any public URL by Wednesday. If not, stop and diagnose.
+
+---
 
 ### In Progress
 
-| Agent | Title | Issue | Target | Source |
-|---|---|---|---|---|
-| Founder | GCP project and region setup with billing baseline (australia-southeast1) | #64 | 2026-06-09 ⚠ OVERDUE | deploy/infra/terraform/ |
-| Founder | Artifact Registry Docker repository (in-region) | #66 | 2026-06-09 ⚠ OVERDUE | — |
+_Nothing in progress yet — sprint starts Mon Jun 15._
+
+---
 
 ### Blocked
 
-_Nothing blocked._
+_None._
+
+---
 
 ### To Review
 
-_Nothing to review._
+_None._
+
+---
 
 ### Backlog (this sprint)
 
-| Agent | Title | Issue | Target |
-|---|---|---|---|
-| Founder | Dockerfile for FastAPI backend (wraps build_skeleton as API) | #67 | 2026-06-10 ⚠ OVERDUE |
-| Founder | Workload Identity Federation for GitHub Actions (keyless auth) | #68 | 2026-06-10 ⚠ OVERDUE |
-| Founder | GitHub Actions pipeline: build, test, push backend image | #69 | 2026-06-11 |
-| Founder | Lock Cloud Run ingress to founder static IP | #71 | 2026-06-13 |
-| Founder | Boundary contract: .env.example and infra-ready note to #51 | #72 | 2026-06-13 |
-| Peter | Tech stack and layer responsibilities (Django / FastAPI / frontend) | #78 | 2026-06-10 ⚠ OVERDUE |
-| Peter | API design standards → docs/architecture/api/ | #79 | 2026-06-12 |
-| Founder | Skeleton Generator PRD: rule on selector and out-of-scope upload experience | #100 | 2026-06-14 |
+| Agent | Title | Issue | Depends on |
+|-------|-------|-------|------------|
+| Brent | Infra: Cloud DNS + managed TLS cert for company domain | [#75](https://github.com/redmarklogic/redline/issues/75) | — |
+| Peter | Platform P — web scaffold: project init, routing, env config | [#49](https://github.com/redmarklogic/redline/issues/49) | — |
+| Brent | Infra: HTTPS Load Balancer + Cloud Armor IP allowlist | [#74](https://github.com/redmarklogic/redline/issues/74) | #49 |
+| Peter | Platform P — SSO integration: auth provider wired, login/logout | [#50](https://github.com/redmarklogic/redline/issues/50) | #49 |
+| Mark  | Configure and activate product analytics (KR6) | [#22](https://github.com/redmarklogic/redline/issues/22) | — |
+| Peter | Platform P — post-login page: minimal Django view after auth | [#116](https://github.com/redmarklogic/redline/issues/116) | #50 |
+| Mark  | Platform P — lead capture: persist user email and login events to Django DB | [#117](https://github.com/redmarklogic/redline/issues/117) | #50, #116 |
+| Mark  | Platform P — analytics wire: tracking script + post-login events | [#118](https://github.com/redmarklogic/redline/issues/118) | #116, #22 |
 
-### Done
+---
 
-| Title | Issue |
-|---|---|
-| Ratify Cloud Run runtime + Artifact Registry hosting (B-1a) | #48 |
-| Cloud Run + Artifact Registry hosting ADR and Tier-1 GCP approval | #63 |
-| Cost controls and budget cap (denial-of-wallet guard) | #65 |
-| Cloud Run deploy: staging + prod with Secret Manager (HCL scaffold) | #70 |
-| Skeleton endpoint: POST /skeletons returns DOCX behind auth | #51 |
-| Spec-Kit slash command (/spec-kit) | #42 |
-| OpenAPI docs: enable Swagger UI and auto-open browser to /docs | #91 |
+### Sequencing reminder
+
+```text
+Mon: Start DNS (#75) + Django scaffold (#49) immediately
+Wed: GATE — Django must be live at any public URL
+Wed+: LB/IP (#74) and SSO (#50) unblock in parallel after gate
+Wed+: Analytics research (#22) runs independently — hard stop Thu AM
+Fri: Post-login (#116), lead capture (#117), analytics wire (#118)
+```
+
+---
+
+### Key risks this sprint
+
+| Risk | Signal to watch |
+|------|-----------------|
+| OAuth consent screen approval delay (24–48h) | Start Mon AM — do not wait for Wed gate |
+| DNS propagation (24–48h) | Not a gate — use Cloud Run URL directly until DNS resolves |
+| Analytics decision stalls | Default to GA4 if no decision by Thu AM |
