@@ -113,6 +113,7 @@ When placing a new skill, ask:
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 2: Language-Agnostic Standards (polyglot)                     │
 │  data-tidy · security · git-version-control · mermaid-diagrams       │
+│  tool-selection                                                      │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Layer 1: Foundational Registries                                    │
 │  mental-models                                                       │
@@ -165,6 +166,7 @@ vendor update.
 | `security`            | Secrets, configuration, logging — language-agnostic policy        |
 | `git-version-control` | Commit conventions, hygiene — applies to any VCS workflow         |
 | `mermaid-diagrams`    | Diagram syntax and selection — applies to any Markdown document   |
+| `tool-selection`      | CLI/API routing (gh/gws/gcloud) + agent-orchestration tier (solo/dispatch/workflow) — language-agnostic, references nothing upward (ADR-016) |
 
 ---
 

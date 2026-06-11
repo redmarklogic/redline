@@ -1,17 +1,26 @@
 ---
 name: tool-selection
-description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct API call to use for a given operation. Routes GitHub, Google Workspace, and GCP operations to the correct tool.
+description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct API call to use for a given operation, or which agent-orchestration tier (solo, parallel dispatch, dynamic workflow) fits a fan-out task. Routes GitHub, Google Workspace, and GCP operations to the correct tool, and fan-out work to the correct orchestration tier.
 ---
 
-# Tool Selection — CLI and API Routing
+# Tool Selection — Routing
+
+This skill routes two independent decisions:
+
+1. **CLI / API routing** — which tool (`gh`, `gws`, `gcloud`, or a direct API call) performs an operation. The bulk of this skill.
+2. **Agent-orchestration tier** — how many agents hold a task (solo, parallel dispatch, or dynamic workflow). A separate axis, at the end.
+
+Pick the relevant axis; they do not interact.
 
 ## Boundary Contract
 
 ### Inputs
-- An operation the agent needs to perform (e.g., "list open PRs", "send email", "create Cloud SQL instance")
+- An operation to perform (e.g. "list open PRs", "send email", "create Cloud SQL instance"), OR
+- A fan-out task to size (e.g. "audit every endpoint", "fix 12 failing tests")
 
 ### Outputs
-- The correct tool and exact command pattern to use
+- The correct tool + exact command pattern (axis 1), OR
+- The correct orchestration tier + which skill/pattern to apply (axis 2)
 
 ### Out of Scope
 - Authentication setup procedures (see individual tool docs)
@@ -20,7 +29,9 @@ description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct
 
 ---
 
-## General Section — What Each CLI Covers
+## Axis 1 — CLI / API Routing
+
+### What each CLI covers
 
 | CLI | Domain | Scope |
 |---|---|---|
@@ -28,143 +39,41 @@ description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct
 | `gws` | Google Workspace | Gmail, Drive, Calendar, Sheets, Docs, Chat, Admin, Apps Script |
 | `gcloud` | Google Cloud Platform | Compute Engine, Cloud SQL, Cloud Run, Cloud Storage, IAM, projects, services, billing |
 
-**Decision rule — pick the narrowest tool that fits:**
-1. GitHub operation → `gh`
-2. Google Workspace operation (email, files, calendar, docs) → `gws`
-3. GCP infrastructure operation → `gcloud`
-4. Operation unavailable in any CLI, or CLI unavailable in environment → direct API call
+### Decision rule — pick the narrowest tool that fits
+
+1. GitHub operation → `gh` — commands: `procedures/github-routing.md`
+2. Google Workspace operation (email, files, calendar, docs) → `gws` — commands: `procedures/gws-routing.md`
+3. GCP infrastructure operation → `gcloud` — commands: `procedures/gcloud-routing.md`
+4. Operation unavailable in any CLI, or CLI unavailable in environment → direct API call (see below)
 
 **Never use `gcloud` for Gmail or Drive.** `gcloud` is infrastructure; `gws` is productivity/collaboration.
 
----
+### Quick decision tree
 
-## Concrete Routing Table
-
-### GitHub Operations (`gh`)
-
-| Operation | Command |
-|---|---|
-| List open PRs | `gh pr list --state open --repo <owner>/<repo>` |
-| View a PR | `gh pr view <number>` |
-| Create a PR | `gh pr create --title "..." --body "..."` |
-| Merge a PR | `gh pr merge <number> --squash` |
-| Check PR CI status | `gh pr checks <number>` |
-| Create an issue | `gh issue create --title "..." --body "..."` |
-| List issues | `gh issue list --state open` |
-| View an issue | `gh issue view <number>` |
-| Close an issue | `gh issue close <number>` |
-| Clone a repo | `gh repo clone <owner>/<repo>` |
-| View repo | `gh repo view <owner>/<repo>` |
-| List Actions runs | `gh run list` |
-| View a run | `gh run view <run-id>` |
-| Watch a run live | `gh run watch <run-id>` |
-| Re-run failed jobs | `gh run rerun <run-id> --failed` |
-| List releases | `gh release list` |
-| Create a release | `gh release create <tag> --notes "..."` |
-| Check auth status | `gh auth status` |
-
-#### GitHub Projects (board operations)
-
-**Critical:** GitHub Projects requires the `project` OAuth scope, which is NOT included in the default `gh auth login`. Always verify before any board write.
-
-```sh
-gh auth status          # check if 'project' appears in scopes
-gh auth refresh -s project   # add project scope if missing
+```text
+What service?
+├── GitHub (repos, PRs, issues, Actions, Projects) → gh
+│   └── Projects board write? → check gh auth status for 'project' scope first
+├── Google Workspace (Gmail, Drive, Calendar, Sheets, Docs, Chat) → gws
+│   └── Email? → gws gmail      └── Files? → gws drive
+│   └── Spreadsheet? → gws sheets  └── Calendar? → gws calendar
+└── GCP infrastructure (databases, compute, storage, IAM, Run) → gcloud
+    └── Cloud SQL? → gcloud sql  └── VM? → gcloud compute  └── Serverless? → gcloud run
 ```
 
-| Operation | Command |
-|---|---|
-| List project items | `gh project item-list <project-number> --owner <org>` |
-| Add issue to project | `gh project item-add <project-number> --owner <org> --url <issue-url>` |
-| Update a project field | `gh project item-edit --id <item-id> --field-id <field-id> --project-id <proj-id> --text "..."` |
-| List project fields | `gh project field-list <project-number> --owner <org>` |
-| Archive a project item | `gh project item-archive <project-number> --owner <org> --id <item-id>` |
+Concrete command tables live in the `procedures/` files named above — load the one for the resolved tool.
 
-> For complex field updates (custom single-select, iteration fields), prefer the Python tool at `.agents/tools/github_projects/` — it wraps the GraphQL API and handles field type resolution. See `github-projects` skill.
-
----
-
-### Google Workspace Operations (`gws`)
-
-Command pattern: `gws <service> <resource> <method> [flags]`
-Helper shortcuts use `+` prefix: `gws gmail +send`, `gws drive +upload`
-
-**Auth setup (once per environment):**
-```sh
-gws auth setup    # automated, requires gcloud installed
-gws auth login    # manual OAuth fallback
-```
-
-> **Shell requirement:** `gws --params` uses single-quoted JSON. Use Bash, not PowerShell — PS5.1 mangles curly-brace quoting and the command fails with "key must be a string".
-
-| Operation | Command |
-|---|---|
-| Unread inbox summary | `gws gmail +triage` |
-| List Gmail inbox | `gws gmail users messages list --params '{"labelIds":["INBOX"],"maxResults":20}'` |
-| Read a message (extract body/headers) | `gws gmail +read --message-id <id>` |
-| Send email | `gws gmail +send --to user@example.com --subject "Subject" --body "Body"` |
-| Reply to email | `gws gmail +reply --message-id <id> --body "..."` |
-| Reply-all | `gws gmail +reply-all --message-id <id> --body "..."` |
-| Forward a message | `gws gmail +forward --message-id <id> --to user@example.com` |
-| Watch inbox (streaming) | `gws gmail +watch` |
-| List Drive files | `gws drive files list --params '{"pageSize":20}'` |
-| Upload a file | `gws drive +upload --file path/to/file.pdf` |
-| Share a file | `gws drive permissions create --params '{"fileId":"...","role":"reader","type":"user"}'` |
-| List calendar events | `gws calendar events list --params '{"calendarId":"primary","timeMin":"..."}'` |
-| Create calendar event | `gws calendar +insert --summary "Meeting" --start "2026-06-10T10:00:00Z" --end "..."` |
-| Read a Sheet | `gws sheets +read --spreadsheet <id> --range "Sheet1!A1:D10"` |
-| Append to a Sheet | `gws sheets +append --spreadsheet <id> --values "row data"` |
-| Read a Doc | `gws docs documents get --params '{"documentId":"..."}'` |
-| Write to a Doc | `gws docs +write --document <id> --content "..."` |
-| Send Chat message | `gws chat +send --space <space-id> --text "..."` |
-| List Workspace users (Admin) | `gws admin directory users list --params '{"domain":"example.com"}'` |
-
-**Output format flag:** append `--format json` (or `table`, `yaml`, `csv`) to any command.
-**Paginate all results:** append `--page-all` for automatic pagination as NDJSON.
-**Dry run:** append `--dry-run` to preview without executing.
-
----
-
-### GCP Infrastructure Operations (`gcloud`)
-
-| Operation | Command |
-|---|---|
-| **Cloud SQL — create instance** | `gcloud sql instances create <name> --database-version=POSTGRES_15 --tier=db-f1-micro --region=<region>` |
-| **Cloud SQL — list instances** | `gcloud sql instances list` |
-| **Cloud SQL — describe instance** | `gcloud sql instances describe <name>` |
-| **Cloud SQL — create database** | `gcloud sql databases create <db-name> --instance=<instance-name>` |
-| **Cloud SQL — list databases** | `gcloud sql databases list --instance=<instance-name>` |
-| **Cloud SQL — connect** | `gcloud sql connect <instance-name> --user=postgres` |
-| List Compute instances | `gcloud compute instances list` |
-| Create Compute instance | `gcloud compute instances create <name> --zone=<zone> --machine-type=<type> --image-family=debian-12` |
-| List Cloud Run services | `gcloud run services list --region=<region>` |
-| Deploy to Cloud Run | `gcloud run deploy <service> --image=<image> --region=<region>` |
-| List Cloud Storage buckets | `gcloud storage buckets list` |
-| Create bucket | `gcloud storage buckets create gs://<name> --location=<region>` |
-| List IAM service accounts | `gcloud iam service-accounts list` |
-| Create service account | `gcloud iam service-accounts create <name> --display-name="..."` |
-| Bind IAM role | `gcloud projects add-iam-policy-binding <project-id> --member=serviceAccount:<email> --role=roles/<role>` |
-| List enabled APIs | `gcloud services list --enabled` |
-| Enable an API | `gcloud services enable <api>.googleapis.com` |
-| Set active project | `gcloud config set project <project-id>` |
-| Check auth | `gcloud auth list` |
-| Check quotas/billing | `gcloud projects describe <project-id>` (billing via Console or `gcloud billing accounts list`) |
-
----
-
-## When to Use Direct API Calls Instead
+### When to use direct API calls instead
 
 Use direct REST or GraphQL API when:
 - The CLI is not installed in the environment (check with `which gh` / `which gws` / `which gcloud`)
-- The operation requires capabilities not exposed by the CLI (e.g., GitHub GraphQL mutations for Projects field types not supported by `gh project item-edit`)
+- The operation requires capabilities not exposed by the CLI (e.g. GitHub GraphQL mutations for Projects field types not supported by `gh project item-edit`)
 - Rate-limit or batching requirements exceed CLI ergonomics
 - You are inside a Python tool that already has an authenticated HTTP client
 
 **Never invent CLI flags.** If `--help` does not list the flag, use a direct API call or the Python tool wrapper.
 
----
-
-## Common Mistakes
+### Common mistakes (axis 1)
 
 | Mistake | Consequence | Fix |
 |---|---|---|
@@ -178,19 +87,56 @@ Use direct REST or GraphQL API when:
 
 ---
 
-## Quick Decision Tree
+## Axis 2 — Agent Orchestration Tier (Solo vs. Parallel Dispatch vs. Workflow)
 
+A separate axis from CLI routing: once you know *which tool*, decide *how many agents* hold the work. Three tiers, escalating in scale and token cost. **Pick the lowest tier that fits — each step up multiplies token spend.**
+
+| Tier | What it is | Holds the plan | Use when |
+|---|---|---|---|
+| **Solo** | Do it yourself, no subagents | You, this turn | One context can hold the whole task |
+| **Parallel dispatch** | Fan out via Agent tool / `dispatching-parallel-agents` | You, turn by turn; results land in your context | 2–~8 independent tasks, no shared state, results fit one context |
+| **Dynamic workflow** | A JS script the runtime executes (background, resumable) | The script; intermediate results stay in script variables | 10+ independent agents, OR a repeatable adversarial-verify / multi-angle pattern, OR a cross-file sweep too large for one context |
+
+### Decision gate
+
+```text
+Is the work a single pass one context can hold?
+├── yes → SOLO
+└── no → Are the sub-tasks independent (no shared mutable state)?
+    ├── no → SOLO (sequential reasoning; shared state can't fan out safely)
+    └── yes → How many, and is the orchestration worth codifying?
+        ├── few (2–~8), one-off, results fit context → PARALLEL DISPATCH
+        │                                              (dispatching-parallel-agents)
+        └── many (10+) OR repeatable adversarial/multi-angle pattern
+            OR cross-file sweep exceeding one context → DYNAMIC WORKFLOW
 ```
-What service?
-├── GitHub (repos, PRs, issues, Actions, Projects) → gh
-│   └── Projects board write? → check gh auth status for 'project' scope first
-├── Google Workspace (Gmail, Drive, Calendar, Sheets, Docs, Chat) → gws
-│   └── Email? → gws gmail
-│   └── Files? → gws drive
-│   └── Spreadsheet? → gws sheets
-│   └── Calendar? → gws calendar
-└── GCP infrastructure (databases, compute, storage, IAM, Run) → gcloud
-    └── Cloud SQL? → gcloud sql
-    └── VM? → gcloud compute
-    └── Serverless? → gcloud run
-```
+
+**Escalate to a workflow ONLY when at least one holds:**
+- **Scale** — tens to hundreds of independent agents (codebase-wide sweep, large migration).
+- **Adversarial verification** — findings must be independently cross-checked before being reported, or a plan drafted from several angles and weighed. High cost-of-wrong-answer.
+- **Codified + repeatable** — the orchestration runs identically every time and is worth saving as a `/command`.
+
+**Do NOT escalate to a workflow when:**
+- The task is a single pass, or needs mid-run human sign-off (workflows forbid mid-run input — split each gate into its own workflow).
+- The work is judgment, not scale (strategy, PRDs, design, prose) — these stay solo regardless of length.
+- You haven't gauged spend. Run on a small slice first (one directory, one narrow question); workflows are a deliberate token multiplier, never a default.
+
+**Triggering a workflow:** include `ultracode` in the prompt, or ask in plain words ("use a workflow"). Requires Dynamic Workflows enabled in `/config`. Bundled: `/deep-research`. Save a good run as a `/command` for reuse.
+
+**Where saved workflows live** (created on save, not pre-built):
+
+| Scope | Path | Visibility |
+|---|---|---|
+| **Project** | `.claude/workflows/` | Committed, shared with everyone who clones the repo — treat like a skill |
+| **Personal** | `~/.claude/workflows/` | Yours only, available in every project |
+
+Project workflows are shared orchestration — **commit them** (same rationale as skills). If a project and personal workflow share a name, the project one wins.
+
+**Which workflow shape?** Once the gate says "workflow", pick the pattern that fits — see `procedures/workflow-patterns.md`.
+
+### Spec-Kit `[P]`-block trigger
+
+Spec-Kit's `tasks.md` already marks parallelizable tasks with **`[P]`** — its native, upgrade-safe fan-out signal. **Do not teach speckit-plan/speckit-tasks about workflows** (vendor-generated, edit via `.specify/extensions.yml` only). Instead, consume the signal at **implement** time:
+
+- When `speckit-implement` reaches a block of `[P]` tasks, run *this* gate on that block. Count of independent `[P]` tasks + repeatable/adversarial nature → solo / parallel dispatch / workflow.
+- Execution strategy is an **implement-time** decision, not a plan-time one. Planning stays execution-agnostic; the `[P]` marker carries the only signal needed.

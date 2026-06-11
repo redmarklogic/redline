@@ -29,6 +29,8 @@ Service/workflow contracts must name concrete artifacts (file names, paths).
 ## When to Use
 Bullets with symptoms and use cases; when NOT to use.
 
+**Orchestration check (one line, not a procedure):** If the skill describes orchestration that would run *identically every time, at scale* (10+ independent agents, or a repeatable adversarial-verify / cross-file sweep), it may belong as a saved dynamic **workflow** (`/command`), not skill prose. See the Agent Orchestration Tier gate in `tool-selection`. Most skills are judgment or single-pass — this applies to almost none of them; do not add workflow machinery by default.
+
 
 See `procedures/writing-skills.md` for detailed rules, examples, and extended reference.
 
