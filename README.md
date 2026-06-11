@@ -42,6 +42,14 @@ NZS 3910, AS 4000, AS/NZS 4122, NZGS guidance. NZ and AU only.
 
 Phase 1 is a closed cohort of geotechnical firms in NZ and AU. Contact [harel@redmarklogic.com](mailto:harel@redmarklogic.com) for early access.
 
+## API Documentation (Staging)
+
+| | URL |
+|---|---|
+| Swagger UI | <https://staging-redline-api-bfyi7ev63a-ts.a.run.app/docs> |
+| ReDoc | <https://staging-redline-api-bfyi7ev63a-ts.a.run.app/redoc> |
+| OpenAPI JSON | <https://staging-redline-api-bfyi7ev63a-ts.a.run.app/openapi.json> |
+
 ---
 
 Redmark Logic — Redlining meets Markup

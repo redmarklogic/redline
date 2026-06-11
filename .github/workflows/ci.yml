@@ -2,12 +2,18 @@
 # WIF provider and SA email must be set as GitHub Actions repository variables: WIF_PROVIDER, GHA_SA_EMAIL
 name: CI/CD Deploy
 
+# SSOT: deploy/infra/terraform/terraform.tfvars — keep in sync (Constitution I deviation, plan.md Complexity Tracking)
+env:
+  GCP_REGION: australia-southeast1
+  GCP_PROJECT: redmarklogic-prod
+  AR_REPO: redline-repo
+  IMAGE_NAME: redline-api
+
 on:
   workflow_call: {}
   push:
     branches:
-      - main
-      - "release/**"
+      - master
 
 permissions:
   id-token: write   # Required for WIF OIDC token request
@@ -21,6 +27,9 @@ jobs:
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
+    environment: production
+    outputs:
+      image_digest: ${{ steps.build-push.outputs.digest }}
 
     steps:
       - name: Checkout code
@@ -44,14 +53,91 @@ jobs:
           custom-pytest: uv run --frozen pytest --cov
 
       - name: Authenticate to GCP via Workload Identity Federation
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.GHA_SA_EMAIL }}
 
-      # TODO: build Docker image and push to Artifact Registry (future issue)
-      # See: https://github.com/redmarklogic/redline/issues/69
-      - name: TODO — build and push image
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3.0.1
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+
+      - name: Build and push image
+        id: build-push
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: .
+          file: deploy/docker/marker/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.AR_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Write step summary
         run: |
-          echo "Build and push step will be wired in a follow-up issue."
-          echo "Auth step above confirms WIF token exchange is working."
+          echo "image:${{ github.sha }} digest:${{ steps.build-push.outputs.digest }}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Deploy to staging
+        run: |
+          gcloud run services update staging-redline-api \
+            --image ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.AR_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --region ${{ env.GCP_REGION }}
+
+      - name: Health check staging
+        run: |
+          set -euo pipefail
+
+          # Poll until service is Ready (max 60s)
+          echo "Waiting for service to be Ready..."
+          for i in $(seq 1 12); do
+            READY=$(gcloud run services describe staging-redline-api \
+              --region ${{ env.GCP_REGION }} \
+              --format 'value(status.conditions[0].status)')
+            if [ "$READY" = "True" ]; then
+              echo "Service is Ready."
+              break
+            fi
+            echo "  attempt $i: status=$READY — waiting 5s..."
+            sleep 5
+          done
+          if [ "$READY" != "True" ]; then
+            echo "Service did not become Ready within 60s." >&2
+            exit 1
+          fi
+
+          # Fetch service URL
+          SERVICE_URL=$(gcloud run services describe staging-redline-api \
+            --region ${{ env.GCP_REGION }} \
+            --format 'value(status.url)')
+          echo "Service URL: $SERVICE_URL"
+
+          # Poll GET /health (max 120s total, 10s interval = 12 attempts)
+          echo "Polling $SERVICE_URL/health..."
+          for i in $(seq 1 12); do
+            HTTP_CODE=$(curl --silent --output /tmp/health_body.json \
+              --write-out "%{http_code}" \
+              --max-time 10 \
+              "$SERVICE_URL/health" || echo "000")
+            echo "  attempt $i: HTTP $HTTP_CODE"
+            if [ "$HTTP_CODE" = "200" ]; then
+              break
+            fi
+            sleep 10
+          done
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Health check failed: expected HTTP 200, got $HTTP_CODE" >&2
+            exit 1
+          fi
+
+          # Assert JSON body equals {"status":"healthy"} (parse, not byte-match)
+          if ! python3 -c "import json,sys; d=json.load(open('/tmp/health_body.json')); sys.exit(0 if d=={'status':'healthy'} else 1)"; then
+            echo "Health check failed: unexpected body:" >&2
+            cat /tmp/health_body.json >&2
+            exit 1
+          fi
+          echo "Health check passed: HTTP 200, body={\"status\":\"healthy\"}"

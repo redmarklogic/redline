@@ -8,7 +8,83 @@ Reviewed by: Peter (per ADR-020 hard constraint — all exceptions require a rev
 
 ---
 
-## Entry 001 — Cloudflare API token creation (ADR-026, issue #111)
+## Entry 001 — Grant `roles/orgpolicy.policyAdmin` to founder account (2026-06-11)
+
+### Context
+
+Feature #110 required granting `allUsers` the `roles/run.invoker` role on the
+`staging-redline-api` Cloud Run service. The GCP organisation enforces the
+`constraints/iam.allowedPolicyMemberDomains` policy, which blocks `allUsers` by
+default. A project-level `restore_policy` override was written in Terraform
+(`deploy/infra/terraform/org_policy.tf`) to lift this restriction for
+`redmarklogic-prod` only.
+
+Applying that Terraform resource requires the `orgpolicy.setPolicy` permission,
+which is NOT included in `roles/resourcemanager.organizationAdmin`. The permission
+lives exclusively in `roles/orgpolicy.policyAdmin`.
+
+### What was done
+
+`roles/orgpolicy.policyAdmin` was granted to `user:harel@redmarklogic.com` at
+the **organisation level** (`363330153915`) via `gcloud`:
+
+```bash
+gcloud organizations add-iam-policy-binding 363330153915 \
+  --member="user:harel@redmarklogic.com" \
+  --role="roles/orgpolicy.policyAdmin"
+```
+
+Note: this role cannot be granted at the project level
+(`roles/orgpolicy.policyAdmin` is not supported as a project-level binding in GCP).
+Org-level grant is therefore the minimum viable scope.
+
+### Why this is not in Terraform
+
+The `google_organization_iam_member` resource can manage org-level IAM, but adding
+it to Terraform here would create a circular dependency: Terraform needs the
+permission to apply org policy resources, and the permission grant itself would be
+inside Terraform. This is a bootstrap-level concern analogous to the project and
+state-bucket exceptions already documented.
+
+The `deploy/infra/bootstrap/bootstrap.sh` script is the appropriate location for
+bootstrap IAM grants. The next pass should add this grant there.
+
+### Terraform equivalent (for bootstrap.sh or future IaC)
+
+```hcl
+resource "google_organization_iam_member" "orgpolicy_admin" {
+  org_id = var.org_id
+  role   = "roles/orgpolicy.policyAdmin"
+  member = "user:harel@redmarklogic.com"
+}
+```
+
+Or as a `gcloud` command in `bootstrap.sh`:
+
+```bash
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+  --member="user:${FOUNDER_EMAIL}" \
+  --role="roles/orgpolicy.policyAdmin"
+```
+
+### Rollback
+
+To remove the grant if needed (e.g., if a dedicated Terraform SA is used instead):
+
+```bash
+gcloud organizations remove-iam-policy-binding 363330153915 \
+  --member="user:harel@redmarklogic.com" \
+  --role="roles/orgpolicy.policyAdmin"
+```
+
+**Risk of rollback:** removing this grant means `terraform apply` will fail on any
+future run that touches `google_project_organization_policy` resources. Only remove
+if a replacement credential (e.g., a Terraform service account with this role) is
+already in place.
+
+---
+
+## Entry 002 — Cloudflare API token creation (ADR-026, issue #111)
 
 **Date**: 2026-06-11 (executed — token created by founder, stored in Secret Manager version 1)
 **Actor**: Founder (Harel Lustiger)
@@ -17,6 +93,7 @@ Reviewed by: Peter (per ADR-020 hard constraint — all exceptions require a rev
 ### What was done (forward change)
 
 A scoped Cloudflare API token was created in the Cloudflare dashboard with:
+
 - Permission: Zone / DNS / Edit — limited to zone `redmarklogic.com`
 - Permission: Zone / Zone / Read — limited to zone `redmarklogic.com`
 
@@ -50,11 +127,14 @@ To revoke the token (e.g. if compromised):
 1. Log into the Cloudflare dashboard → My Profile → API Tokens
 2. Find the token named for this project and click "Roll" or "Delete"
 3. If rolling: update the Secret Manager secret with the new value:
+
    ```powershell
    $NEW_TOKEN = "<new-token>"
    echo -n $NEW_TOKEN | gcloud secrets versions add prod-redline-cloudflare-api-token --project=redmarklogic-prod --data-file=-
    ```
+
 4. If deleting: remove the Secret Manager secret (only if decommissioning the feature):
+
    ```powershell
    gcloud secrets delete prod-redline-cloudflare-api-token --project=redmarklogic-prod
    ```
@@ -64,7 +144,7 @@ token rotation — Terraform simply uses the new token on the next apply.
 
 ---
 
-## Entry 002 — Secret shell created via gcloud, then imported (ADR-026, issue #111)
+## Entry 003 — Secret shell created via gcloud, then imported (ADR-026, issue #111)
 
 **Date**: 2026-06-11 (executed)
 **Actor**: Claude (gcloud, founder-supervised) + Founder (secret version)
@@ -74,13 +154,13 @@ token rotation — Terraform simply uses the new token on the next apply.
 
 `gcloud secrets create prod-redline-cloudflare-api-token --replication-policy automatic`
 was run before the Terraform resource (`google_secret_manager_secret.cloudflare_api_token`
-in `secrets.tf`) was applied, so the founder could store the token value (Entry 001)
+in `secrets.tf`) was applied, so the founder could store the token value (Entry 002)
 without waiting on the Phase 1 apply. The founder added version 1 manually.
 
 ### Why manual
 
 Sequencing: the token needed safe storage the moment it was created; the Terraform
-apply was blocked at that time on the Firebase ToS exception (Entry 003).
+apply was blocked at that time on the Firebase ToS exception (Entry 004).
 
 ### Terraform equivalent / reconciliation
 
@@ -100,7 +180,7 @@ shell, never the value).
 
 ---
 
-## Entry 003 — Firebase ToS acceptance + addFirebase via console (ADR-026, issue #111)
+## Entry 004 — Firebase ToS acceptance + addFirebase via console (ADR-026, issue #111)
 
 **Date**: 2026-06-11 (executed)
 **Actor**: Founder (Harel Lustiger)
@@ -142,3 +222,14 @@ requires Google support or project deletion — out of scope; acceptance is
 account-level and permanent.
 
 ---
+
+## Bootstrap exceptions (pre-existing)
+
+The following two resources were created by `deploy/infra/bootstrap/bootstrap.sh`
+before Terraform state existed. They are intentionally excluded from Terraform state
+to avoid the chicken-and-egg problem:
+
+1. **GCP project** `redmarklogic-prod` — managed as a `data` source in `main.tf`.
+2. **Terraform state bucket** `redmarklogic-tf-state` — read by `backend.tf`.
+
+These are not drift — they are documented bootstrap exceptions per ADR-020.

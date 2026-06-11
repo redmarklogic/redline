@@ -57,13 +57,13 @@ variable "image_name" {
 }
 
 variable "min_instances_prod" {
-  description = "Minimum warm instances for the production Cloud Run service (FR-004)"
+  description = "Minimum warm instances for the production Cloud Run service (FR-006; scale-to-zero default per ratified cold-start policy)"
   type        = number
-  default     = 1
+  default     = 0
 
   validation {
-    condition     = var.min_instances_prod >= 1 && var.min_instances_prod <= 5
-    error_message = "min_instances_prod must be between 1 and 5."
+    condition     = var.min_instances_prod >= 0 && var.min_instances_prod <= 5
+    error_message = "min_instances_prod must be between 0 and 5."
   }
 }
 
