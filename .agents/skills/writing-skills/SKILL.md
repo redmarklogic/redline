@@ -119,6 +119,8 @@ What is this? Core principle in 1-2 sentences.
 Bullet list with SYMPTOMS and use cases
 When NOT to use
 
+**Orchestration check (one line, not a procedure):** If the skill describes orchestration that would run *identically every time, at scale* (10+ independent agents, or a repeatable adversarial-verify / cross-file sweep), it may belong as a saved dynamic **workflow** (`/command`), not skill prose. See the Agent Orchestration Tier gate in `tool-selection`. Most skills are judgment or single-pass — this applies to almost none of them; do not add workflow machinery by default.
+
 ## Core Pattern (for techniques/patterns)
 Before/after code comparison
 

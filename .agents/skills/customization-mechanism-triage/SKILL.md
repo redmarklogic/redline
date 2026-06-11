@@ -21,7 +21,7 @@ description: >
 
 ---
 
-## The Six Mechanisms
+## The Mechanisms
 
 | Mechanism | File | Invoked | Runs code? | Portable? |
 |---|---|---|---|---|
@@ -29,6 +29,7 @@ description: >
 | **Prompt File** | `.github/prompts/*.prompt.md` | Manual (`/slash`) | No | VS Code only |
 | **Custom Agent** | `.github/agents/*.agent.md` | Manual (agent picker) | Via hooks only | VS Code + GitHub |
 | **Skill** | `.agents/skills/<name>/SKILL.md` | Auto (relevance) or `/slash` | Yes (linked scripts) | Open standard — VS Code, CLI, cloud |
+| **Dynamic Workflow** | `.claude/workflows/<name>` (or `~/.claude/workflows/`) | `/slash`, `ultracode`, or "use a workflow" | Yes — orchestrates subagents at scale | Claude Code (CLI, Desktop, IDE, SDK) |
 | **VS Code Hook** | `.github/hooks/*.json` | Automatic (lifecycle event) | Yes — shell command | VS Code + Claude Code + CLI |
 | **Spec-Kit Extension** | `.specify/extensions/<id>/` | Automatic (spec-kit lifecycle) | Yes — commands + hooks | Spec-kit workflow only |
 | **Plugin** | directory + `plugin.json` | Installed | Yes (bundles above) | Cross-tool |
@@ -93,10 +94,24 @@ Events: `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`,
 
 **Key test**: Is it a *procedure* (how to do X) rather than a *rule* (do/don't)? Does it need more than text? → Skill.
 
-**Cross-check**: If this procedure fires at a specific spec-kit lifecycle point
+**Cross-check (spec-kit)**: If this procedure fires at a specific spec-kit lifecycle point
 (before/after specify, plan, tasks, implement, etc.), also evaluate step 6
 (Spec-Kit Extension) before deciding. A procedure that maps to a lifecycle hook
 may be better served as an extension than a standalone skill.
+
+**Cross-check (scale → Dynamic Workflow)**: A workflow is not a peer of Skill — it is a
+*delivery mode* of a skill-shaped procedure that runs at scale. After landing on Skill, ask:
+does this orchestrate **10+ independent agents**, OR a **repeatable adversarial-verify /
+multi-angle pattern**, OR a **cross-file sweep** too large for one context — *and* run
+identically every time such that it merits a saved `/command`?
+
+→ If yes, it is better delivered as a **Dynamic Workflow** (`.claude/workflows/`), not skill
+prose. Run the Agent Orchestration Tier gate in the `tool-selection` skill to confirm, and
+`tool-selection/procedures/workflow-patterns.md` to pick the shape.
+
+→ If no (judgment, single-pass, or needs mid-run human sign-off), it stays a **Skill**. Most
+procedures stay skills; this applies to almost none of them — do not add workflow machinery
+by default.
 
 ### 5. Is this a one-off task invoked manually, with no scripts and no persistent persona?
 → **Prompt File** (`.github/prompts/*.prompt.md`)
@@ -182,6 +197,8 @@ When a request names a mechanism, verify before proceeding. State the correction
 | "add a skill to verify code after spec-kit implement" | Spec-kit lifecycle gate | **Spec-Kit Extension** (`after_implement`) |
 | "add a skill that MUST run before spec-kit specify" | Spec-kit lifecycle gate | **Spec-Kit Extension** (`before_specify`) |
 | "add a spec-kit extension for Google-style docstrings" | Passive rule, no lifecycle trigger | **Instruction** |
+| "add a skill to audit every endpoint for missing auth checks" | Cross-file sweep at scale, repeatable | **Dynamic Workflow** (saved `/command`) |
+| "add a skill to red-team the spec with N independent adversarial passes" | Repeatable adversarial-verify at scale | **Dynamic Workflow** |
 
 ---
 
@@ -195,6 +212,7 @@ When a request names a mechanism, verify before proceeding. State the correction
    - **VS Code Hook** → create `.github/hooks/<name>.json` with correct lifecycle event
    - **Custom Agent** → draft in `docs/people/drafts/agents/` (people-ops agent draft-first constraint applies)
    - **Skill** → use `skills-create` then `writing-skills`
+   - **Dynamic Workflow** → confirm via `tool-selection` orchestration-tier gate; have Claude write the workflow (`ultracode` / "use a workflow"), then save the run to `.claude/workflows/` (project) once it does what you want
    - **Spec-Kit Extension** → use `procedures/speckit-extension-triage.md`, then draft in `docs/people/drafts/skills/`
    - **Prompt File** → create `.github/prompts/*.prompt.md`
    - **Plugin** → `plugin.json` bundle
