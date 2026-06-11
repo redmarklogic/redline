@@ -30,10 +30,10 @@ No foundational tasks — single-file change surface, no shared prerequisites.
 
 **Independent Test**: `rtk docker run -e PORT=8080 -p 8080:8080 <image>` → `GET localhost:8080/health` returns 200 within 10s of start.
 
-- [ ] T001 [US1] Update `deploy/docker/marker/Dockerfile` CMD per plan D1: `CMD ["sh", "-c", "exec python -m uvicorn marker.api.main:create_app --factory --host 0.0.0.0 --port ${PORT:-8080} --timeout-graceful-shutdown 10"]`. The `exec` keyword is mandatory (uvicorn must be PID 1 for FR-004).
-- [ ] T002 [US1] Update `deploy/docker/marker/Dockerfile` HEALTHCHECK per plan D2 to probe `localhost:${PORT:-8080}/health`, and change `EXPOSE 8000` to `EXPOSE 8080` (plan D4).
-- [ ] T003 [US1] Build for the Cloud Run platform and verify FR-008: `rtk docker build --platform linux/amd64 -f deploy/docker/marker/Dockerfile -t marker:67-dev .` completes successfully.
-- [ ] T004 [US1] Verify port behaviour (SC-001, SC-002; scenarios US1-1, US1-2, edge "arbitrary PORT"):
+- [x] T001 [US1] Update `deploy/docker/marker/Dockerfile` CMD per plan D1: `CMD ["sh", "-c", "exec python -m uvicorn marker.api.main:create_app --factory --host 0.0.0.0 --port ${PORT:-8080} --timeout-graceful-shutdown 10"]`. The `exec` keyword is mandatory (uvicorn must be PID 1 for FR-004).
+- [x] T002 [US1] Update `deploy/docker/marker/Dockerfile` HEALTHCHECK per plan D2 to probe `localhost:${PORT:-8080}/health`, and change `EXPOSE 8000` to `EXPOSE 8080` (plan D4).
+- [x] T003 [US1] Build for the Cloud Run platform and verify FR-008: `rtk docker build --platform linux/amd64 -f deploy/docker/marker/Dockerfile -t marker:67-dev .` completes successfully.
+- [x] T004 [US1] Verify port behaviour (SC-001, SC-002; scenarios US1-1, US1-2, edge "arbitrary PORT"):
   - `PORT=8080` → `/health` 200 on 8080 within 10s of container start
   - no `PORT` env → `/health` 200 on 8080
   - `PORT=9000` → `/health` 200 on 9000
@@ -49,9 +49,9 @@ No foundational tasks — single-file change surface, no shared prerequisites.
 
 **Independent Test**: `rtk docker compose up` → service healthy, `GET localhost:8000/health` reachable from host.
 
-- [ ] T005 [US1] Update `docker-compose.yml` per plan D3: port mapping `"${MARKER_PORT:-8000}:8080"`, healthcheck URL targets port 8080 inside the container.
-- [ ] T006 [P] [US1] Update `deploy/docker/marker/.env.example`: document `PORT` (optional, default 8080, injected by Cloud Run in production; compose maps host `MARKER_PORT` onto it).
-- [ ] T007 [US1] Verify compose flow (edge "compose consistency"): `rtk docker compose up --build -d` → healthcheck reaches healthy; `GET localhost:8000/health` returns 200 from the Windows host; `rtk docker compose down`.
+- [x] T005 [US1] Update `docker-compose.yml` per plan D3: port mapping `"${MARKER_PORT:-8000}:8080"`, healthcheck URL targets port 8080 inside the container.
+- [x] T006 [P] [US1] Update `deploy/docker/marker/.env.example`: document `PORT` (optional, default 8080, injected by Cloud Run in production; compose maps host `MARKER_PORT` onto it).
+- [x] T007 [US1] Verify compose flow (edge "compose consistency"): `rtk docker compose up --build -d` → healthcheck reaches healthy; `GET localhost:8000/health` returns 200 from the Windows host; `rtk docker compose down`.
 
 **Checkpoint**: Local developer flow and production contract agree; FR-001/002/007/008 complete.
 
@@ -63,7 +63,7 @@ No foundational tasks — single-file change surface, no shared prerequisites.
 
 **Independent Test**: `docker stop` during an in-flight request → request completes, exit code 0.
 
-- [ ] T008 [US2] Verify SIGTERM handling (SC-003; scenarios US2-1, US2-2):
+- [x] T008 [US2] Verify SIGTERM handling (SC-003; scenarios US2-1, US2-2):
   - start container; issue an authenticated `POST /skeletons`; run `rtk docker stop <container>` while the request is in flight → response completes successfully, `rtk docker inspect <container> --format '{{.State.ExitCode}}'` shows 0, total stop time < 10s
   - idle container: `rtk docker stop` → exit 0 promptly
   - if uvicorn is NOT PID 1 inside the container (`rtk docker exec <container> ps -o pid,comm` or equivalent), T001 was implemented without `exec` — fix and re-verify
@@ -78,10 +78,10 @@ No foundational tasks — single-file change surface, no shared prerequisites.
 
 **Independent Test**: Image inspection alone; no running container needed (except US1-3 end-to-end check).
 
-- [ ] T009 [P] [US3] Verify non-root (SC-004; scenario US3-1): `rtk docker inspect marker:67-dev --format '{{.Config.User}}'` returns `appuser`; in-container `id -u` returns 1000.
-- [ ] T010 [P] [US3] Verify runtime stage purity (SC-004; scenario US3-3): no `uv` binary present in the final image; no dev/test packages (e.g. pytest, ruff) importable in the runtime venv.
-- [ ] T011 [P] [US3] Verify no secrets in layers (SC-005; scenario US3-2): `rtk docker history marker:67-dev --no-trunc` and a filesystem search of the exported image show no secret values; `.env` confirmed absent (dockerignore whitelist excludes it).
-- [ ] T012 [US3] End-to-end contract check (SC-006; scenario US1-3): authenticated `POST /skeletons` against the running container returns a valid DOCX with the ADR-018 headers (Content-Type, Content-Disposition), matching non-containerised behaviour.
+- [x] T009 [P] [US3] Verify non-root (SC-004; scenario US3-1): `rtk docker inspect marker:67-dev --format '{{.Config.User}}'` returns `appuser`; in-container `id -u` returns 1000.
+- [x] T010 [P] [US3] Verify runtime stage purity (SC-004; scenario US3-3): no `uv` binary present in the final image; no dev/test packages (e.g. pytest, ruff) importable in the runtime venv.
+- [x] T011 [P] [US3] Verify no secrets in layers (SC-005; scenario US3-2): `rtk docker history marker:67-dev --no-trunc` and a filesystem search of the exported image show no secret values; `.env` confirmed absent (dockerignore whitelist excludes it).
+- [x] T012 [US3] End-to-end contract check (SC-006; scenario US1-3): authenticated `POST /skeletons` against the running container returns a valid DOCX with the ADR-018 headers (Content-Type, Content-Disposition), matching non-containerised behaviour.
 
 **Checkpoint**: All user stories verified independently.
 
@@ -89,8 +89,8 @@ No foundational tasks — single-file change surface, no shared prerequisites.
 
 ## Phase 7: Polish
 
-- [ ] T013 [P] Add a one-command local smoke-check comment to `deploy/docker/marker/.env.example` or `deploy/README.md` (plan Should item).
-- [ ] T014 Confirm LF line endings on `deploy/docker/marker/Dockerfile` and `docker-compose.yml` (Constitution XIV) and run `rtk prek run --all-files` clean.
+- [x] T013 [P] Add a one-command local smoke-check comment to `deploy/docker/marker/.env.example` or `deploy/README.md` (plan Should item).
+- [x] T014 Confirm LF line endings on `deploy/docker/marker/Dockerfile` and `docker-compose.yml` (Constitution XIV) and run `rtk prek run --all-files` clean.
 
 ---
 
