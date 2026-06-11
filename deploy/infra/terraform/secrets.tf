@@ -28,7 +28,11 @@ resource "google_secret_manager_secret" "secrets" {
   project   = var.project_id
 
   replication {
-    auto {}
+    user_managed {
+      replicas {
+        location = var.region
+      }
+    }
   }
 }
 
@@ -40,7 +44,7 @@ resource "google_secret_manager_secret" "secrets" {
 # Terraform manages the secret shell only; no secret_version resource here.
 
 resource "google_secret_manager_secret" "cloudflare_api_token" {
-  secret_id = "prod-redline-cloudflare-api-token"
+  secret_id = "prod-redline-cloudflare-api-token"  # pragma: allowlist secret -- resource ID, not a secret value
   project   = var.project_id
 
   replication {

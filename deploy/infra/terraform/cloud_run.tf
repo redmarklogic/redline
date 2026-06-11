@@ -56,6 +56,19 @@ resource "google_cloud_run_v2_service" "api" {
   }
 }
 
+# ── Staging public invoker (FR-011; prod stays IAM-private until #74/#75) ────
+# allUsers invoker is granted on staging ONLY — the entire staging API surface is
+# public by design (no real data in the walking skeleton). Production receives no
+# allUsers binding here; #114 covers the prod grant decision.
+
+resource "google_cloud_run_v2_service_iam_member" "staging_public_invoker" {
+  project  = var.project_id
+  location = var.region
+  name     = google_cloud_run_v2_service.api["staging"].name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
 # ── Cloud Run URL outputs ─────────────────────────────────────────────────────
 
 output "staging_url" {
