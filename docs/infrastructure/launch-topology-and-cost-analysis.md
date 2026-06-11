@@ -176,10 +176,10 @@ The two OAuth client secrets follow the established ADR-023 pattern — **two on
 
 ```hcl
 secret_bindings = {
-  "db_password"             = "DB_PASSWORD"
-  "api_key"                 = "API_KEY"
-  "google_oauth_secret"     = "GOOGLE_OAUTH_CLIENT_SECRET"   # name TBC vs Kabilan's settings.py
-  "microsoft_oauth_secret"  = "MICROSOFT_OAUTH_CLIENT_SECRET" # name TBC vs Kabilan's settings.py
+  "db_password"             = "DB_PASSWORD"             # pragma: allowlist secret
+  "api_key"                 = "API_KEY"                 # pragma: allowlist secret
+  "google_oauth_secret"     = "GOOGLE_OAUTH_CLIENT_SECRET"   # pragma: allowlist secret  # name TBC vs Kabilan's settings.py
+  "microsoft_oauth_secret"  = "MICROSOFT_OAUTH_CLIENT_SECRET" # pragma: allowlist secret  # name TBC vs Kabilan's settings.py
 }
 ```
 

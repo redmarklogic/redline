@@ -345,7 +345,7 @@ When executing the plan:
 1. Use `subagent-driven-development` skill (preferred) or execute tasks directly.
 2. Follow each task exactly as specified.
 3. Run `python-static-checks` before declaring implementation complete.
-4. Use `finishing-a-development-branch` skill to complete the work.
+4. Use `/make-pr` command to complete the work.
 
 ## Relationship to Other Skills
 
@@ -357,7 +357,7 @@ When executing the plan:
 | `python-class-design`        | Plan-template references architectural decisions                |
 | `python-static-checks`       | Run before declaring implement complete                         |
 | `subagent-driven-development`| Preferred execution mode for implement phase                    |
-| `finishing-a-development-branch` | Terminal step after implement phase                          |
+| `/make-pr` command               | Terminal step after implement phase                          |
 | `verification-before-completion` | Gates completion claims on fresh verification               |
 | `mermaid-diagrams`           | pipeline-diagram.md and class-diagram.md (plan phase)           |
 

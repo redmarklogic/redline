@@ -19,6 +19,36 @@ shifts left over time.
 - **Out of scope**: linting, type-check, and coverage-threshold gates; PR review
   (`resolving-pr-issues`); merge/branch decisions.
 
+## Predicate — skip when nothing scannable changed
+
+Before running any gate, check whether the diff contains files SonarQube actually analyses.
+SonarQube's scan scope (from `.cache/sonarqube/sonar-project.properties`):
+- **Included:** `src/**`, `tests/**`
+- **Excluded:** `tests/assets/**`, `src/scripts/**`, `**/*.ipynb`, `**/__init__.py`,
+  `docs/**`, `.agents/**`, `.github/**`, `hooks/**`
+
+```powershell
+# Files changed vs merge-base (staged + unstaged + untracked)
+$changed = git diff --name-only HEAD 2>$null
+$changed += git ls-files --others --exclude-standard 2>$null
+
+$scannable = $changed | Where-Object {
+    ($_ -match '^src/' -or $_ -match '^tests/') -and
+    $_ -notmatch '^tests/assets/' -and
+    $_ -notmatch '^src/scripts/' -and
+    $_ -notmatch '\.ipynb$' -and
+    $_ -notmatch '__init__\.py$'
+}
+
+if (-not $scannable) {
+    Write-Output "SonarQube: no scannable files changed — skipping."
+    # Exit this skill. Caller proceeds without SonarQube gate.
+    return
+}
+```
+
+Only proceed to the gates below when `$scannable` is non-empty.
+
 ## Gates (in order)
 
 | # | Gate | Purpose |

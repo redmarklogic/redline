@@ -18,7 +18,7 @@ description: Use when resolving PR code-review comments, addressing reviewer fee
 
 ### Does Not Cover
 - Conducting a PR review from scratch (use `pr-review`)
-- Merging or branching decisions (use `finishing-a-development-branch`)
+- Merging or branching decisions (use `/make-pr` command)
 - Root-cause logging format (use `python-error-handling`)
 
 

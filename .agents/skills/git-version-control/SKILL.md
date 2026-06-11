@@ -17,7 +17,7 @@ This skill defines version control conventions for this repo.
 
 ### Does Not Cover
 - Batched push workflow (`git-push-batched`)
-- Branch finishing (`finishing-a-development-branch`)
+- Branch finishing (`/make-pr` command)
 - Code review (`requesting-code-review`)
 
 ## PR Discipline
