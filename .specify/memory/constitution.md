@@ -161,9 +161,33 @@ supply a default value to `os.getenv()` / `os.environ.get()`. Use
 with `env_file=None`. `.env` files are a local developer ergonomic tool only;
 they are excluded from the Docker build context and never present at runtime.
 This prevents silent local/CI divergence: a missing var raises `KeyError` at
-startup, not a silent wrong value surfacing at runtime.
+startup, not a silent wrong value surfacing at runtime. Runtime business state
+(e.g. per-user quota caps) is platform data, edited through the application and
+stored in the platform datastore — it is not deployment configuration and does
+not enter the process environment.
 
-*Grounded in ADR-021.*
+*Grounded in ADR-021, ADR-024.*
+
+### XVII. All-Python Toolchain Boundary
+
+The team runs one language toolchain: Python. No technology may be adopted that
+requires a second compiler, package/version manager, or skillset needing a new
+owner. Vendored JavaScript (single static file, no build step), CSS, and Python
+packages that emit JavaScript are acceptable; a Node/npm toolchain is not. The
+test is toolchain and ownership complexity, not file extension.
+
+*Grounded in ADR-024.*
+
+### XVIII. Stateless Core, Stateful Shell — Framework Confined to the Web Shell
+
+The generator core (`domain` and `functions` packages) is stateless, pure Python:
+no web-framework import may appear there, and no geotechnical concept may be
+modelled as a framework ORM model. ORM models hold platform state only (users,
+sessions, quota counters, audit-log rows). The web shell calls the core through
+its facade with typed inputs and receives bytes — it never touches
+document-engine types.
+
+*Grounded in ADR-024; boundary per ADR-002.*
 
 ## Architectural Constraints
 
@@ -197,4 +221,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.7.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-10
+**Version**: 1.8.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-11
