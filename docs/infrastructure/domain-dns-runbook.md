@@ -37,11 +37,12 @@ Bypass path (accepted, documented): https://prod-redline-api-*.run.app
 
 ## Manual exceptions
 
-Two steps in this setup cannot be automated in Terraform:
+Three steps in this setup cannot be automated in Terraform:
 
 | Step | Why manual | Location |
 |------|-----------|---------|
 | **T002** Cloudflare API token creation | Tokens cannot self-provision; Cloudflare dashboard is the only path | See "Phase 0, Step 1" below |
+| Firebase Terms of Service acceptance | Per official Firebase docs: "Accepting the Firebase Terms is not possible using the Firebase CLI, REST API, or Terraform. It can only be done using the Firebase console." One-time, account-level. Symptom before acceptance: `addFirebase` returns 403 PERMISSION_DENIED even for project Owner. | See "Phase 1, Step 3a" below |
 | Console emergency fallback | Last-resort only if Terraform is unavailable | Documented in "Emergency fallback" section below |
 
 ---
@@ -158,6 +159,25 @@ terraform init
 
 ---
 
+### Step 3a — [MANUAL — FOUNDER, ONE-TIME] Accept the Firebase Terms of Service
+
+**Skip if any Firebase project already exists for this Google account.**
+
+Google requires a human to accept the Firebase ToS; there is no API, CLI, or
+Terraform path (see "Manual exceptions" above). Until accepted, every
+`addFirebase` call — including Terraform's — returns `403 PERMISSION_DENIED`
+even for a project Owner. `availableProjects` still lists the project (reads
+are not gated), which distinguishes this from a real IAM problem.
+
+1. Open <https://console.firebase.google.com> signed in as the account that runs Terraform
+2. Click "Create a project" (or "Add project") — on the first screen, tick the
+   "I accept the Firebase terms" checkbox and click Continue
+3. **Cancel the wizard** — do not finish creating anything. Acceptance is
+   recorded at account level the moment you continue past the checkbox.
+   (If you do complete the wizard against `redmarklogic-prod`, no harm:
+   reconcile with `terraform import google_firebase_project.default redmarklogic-prod`.)
+4. Re-run the Step 4 apply below.
+
 ### Step 4 — First apply: Firebase resources only (T006 / T009 Step 1)
 
 The Cloudflare variables (`firebase_ownership_txt_value`, `firebase_a_record_ips`) are left
@@ -233,10 +253,12 @@ Resolve-DnsName api.redmarklogic.com -Type TXT
 # Verify A record
 Resolve-DnsName api.redmarklogic.com -Type A
 
-# Check cert state via Terraform
+# Check cert + host state via Terraform (output is an object: { cert, host_state })
+# Note: the provider exposes `cert` (with a `state` field) and `host_state`,
+# not a flat `cert_state` attribute.
 terraform output firebase_custom_domain_cert_state
-# Target state: CERT_ACTIVE (allow up to 24 h; SC-001 budgets 48 h)
-# Intermediate states: CERT_PENDING, DNS_PENDING — both are normal while propagating
+# Target: cert.state = CERT_ACTIVE / host_state = HOST_ACTIVE (allow up to 24 h; SC-001 budgets 48 h)
+# Intermediate states: CERT_PENDING, DNS_PENDING, HOST_UNHOSTED — normal while propagating
 
 # Verify zone diff is additive-only (FR-004 / SC-002 evidence)
 curl.exe -s "https://api.cloudflare.com/client/v4/zones/$env:CF_ZONE_ID/dns_records/export" `
@@ -280,9 +302,9 @@ If the service name differs from `prod-redline-api`, update `cloudflare_dns.tf` 
 ### Step 9 — Wait for CERT_ACTIVE (T012)
 
 ```powershell
-# Poll cert state (allow up to 24 h)
+# Poll cert state (allow up to 24 h) — output object: { cert, host_state }
 terraform output firebase_custom_domain_cert_state
-# When CERT_ACTIVE, proceed to end-to-end verification.
+# When cert.state = CERT_ACTIVE, proceed to end-to-end verification.
 ```
 
 ### Step 10 — End-to-end verification (T013)

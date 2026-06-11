@@ -117,6 +117,9 @@ output "firebase_custom_domain_required_dns_updates" {
 }
 
 output "firebase_custom_domain_cert_state" {
-  description = "Certificate provisioning state. Target: CERT_ACTIVE (allow up to 24 h; SC-001 budgets 48 h)."
-  value       = google_firebase_hosting_custom_domain.api.cert_state
+  description = "Certificate provisioning state (cert block) and host_state. Target host_state: HOST_ACTIVE (allow up to 24 h; SC-001 budgets 48 h)."
+  value = {
+    cert       = google_firebase_hosting_custom_domain.api.cert
+    host_state = google_firebase_hosting_custom_domain.api.host_state
+  }
 }
