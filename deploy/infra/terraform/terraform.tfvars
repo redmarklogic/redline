@@ -40,9 +40,6 @@ apis = [
   "firebasehosting.googleapis.com",
 ]
 
-# ── Firebase Hosting + Cloudflare DNS (ADR-026, issue #111) ──────────────────
-# Transcribed from the authoritative output after the first apply:
-#   terraform output firebase_custom_domain_required_dns_updates
-#   (check_time 2026-06-11T09:53:31Z — single CNAME, required_action ADD;
-#    Firebase's current subdomain flow uses CNAME, not the legacy TXT + A pair)
-firebase_cname_target = "redmarklogic-api.web.app"
+# Firebase Hosting + Cloudflare DNS front-door variables removed per ADR-027 D2
+# (firebase_cname_target). The api.redmarklogic.com front door was torn down; the
+# POC API address is the raw Cloud Run *.run.app URL (ADR-027 D1).
