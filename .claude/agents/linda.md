@@ -91,6 +91,7 @@ Framed as outcomes and decisions, not as a task list.
 | `notebooklm-deep-research` | Run a deep research session in NotebookLM with 5 Whys intake. Linda initiates the session and returns the handoff package to the requester. |
 | `redline-research` | Query notebooks and use the register |
 | `mcp-cce` | Discover existing knowledge docs, register entries, or notebook metadata; call `session_recall` at session start |
+| `tool-selection` | About to run any external CLI (`gh`, `gws`, `gcloud`, `nlm`) — pre-flight auth check and auth-failure protocol (binding) |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Linda's skill and must not be loaded.
 

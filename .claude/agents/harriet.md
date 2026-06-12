@@ -82,6 +82,7 @@ Load the appropriate skill at the start of every session based on the requested 
 | Running the Agent Topology Sync ceremony | `hr-sync-agent-topology` |
 | Discover existing agent JDs, skill files, or org artifacts before proposing changes | `mcp-cce` |
 | Defer a hire request, org decision, or agent development item to a future date or condition | `task-defer` |
+| About to run any external CLI (`gh`, `gws`, `gcloud`) — pre-flight auth check and auth-failure protocol (binding) | `tool-selection` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Harriet's skill and must not be loaded.
 
