@@ -5,9 +5,10 @@
 > It must never enumerate skills by layer or tier.
 >
 > Authoritative sources:
-> - Layer assignments (L0-L9): [docs/architecture/skills-taxonomy.md](../../architecture/skills-taxonomy.md)
+> - Layer assignments (L0-L9): [docs/architecture/skills-architecture.md](../../architecture/skills-architecture.md)
 > - Tier, ownership, status: `skills-lock.json`
-> - Handoff chain: [docs/architecture/skills-architecture.md](../../architecture/skills-architecture.md)
+> - Category vocabulary + catalog: [docs/people/skills-taxonomy.md](../../people/skills-taxonomy.md)
+> - Gaps and lifecycle ledger: [docs/people/skills-gaps.md](../../people/skills-gaps.md)
 
 **Owner**: Peter (Principal Engineer)
 
@@ -270,11 +271,12 @@ When placing a new skill:
 
 ## References
 
-- [skills-taxonomy.md](../../architecture/skills-taxonomy.md) — authoritative layer map and dependency rules (SOT for layer assignments)
-- [skills-architecture.md](../../architecture/skills-architecture.md) — handoff chain
+- [skills-architecture.md](../../architecture/skills-architecture.md) — dependency rules and layer assignments (SOT for layers)
+- [skills-taxonomy.md](../../people/skills-taxonomy.md) — category vocabulary and skill catalog
+- [skills-gaps.md](../../people/skills-gaps.md) — coverage gaps and lifecycle ledger
 - `AGENTS.md` — agent invocation manifests
 - `skills-lock.json` — machine-readable registry (tier, owner, layer)
-- `hooks/sync-layer-to-lock.py` — derives `layer` field in lock file from taxonomy
+- `hooks/sync-layer-to-lock.py` — derives `layer` field in lock file from the architecture doc
 - ADR-001 — single source of truth policy
 - ADR-009 — skill classification and governance registry
 - [mental-models/general_thinking/deep-modules.md](../../../.agents/skills/mental-models/general_thinking/deep-modules.md)
