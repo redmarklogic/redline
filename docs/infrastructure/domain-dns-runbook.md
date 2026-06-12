@@ -1,8 +1,31 @@
 # Domain DNS Runbook: api.redmarklogic.com
 
+> ## ⚠️ SUPERSEDED — front door torn down (ADR-027, issue #147, 2026-06-12)
+>
+> The Firebase Hosting front door described below was **torn down**. Firebase Hosting
+> caps every request at a hard 60-second ceiling, but the product's core synchronous
+> calls take three minutes or more — so every real call through `api.redmarklogic.com`
+> was a guaranteed failure. **The POC API address is now the raw Cloud Run `*.run.app`
+> service URL** (ADR-027 D1); `api.redmarklogic.com` no longer resolves.
+>
+> **Current state:** the five front-door resources (hosting site, custom domain,
+> rewrite version + release, and the `api` CNAME) are destroyed. The Firebase *project*
+> enablement, the Cloudflare provider + zone data source, the provider pins, and the
+> Cloudflare API token secret are **retained** for the Sprint-3 website (ADR-027 D3).
+>
+> **This document is retained as the authoritative rollback reference.** The "Teardown"
+> section near the end, read in reverse, plus Entry 005 of
+> `manual-steps-to-terraform.md`, is the procedure to re-create the front door if a
+> successor ADR ever reverses ADR-027 (certificate re-issuance ≤ 24 h).
+>
+> Everything below this banner describes the **former** front door (ADR-026, now
+> superseded). Do not treat it as the live architecture.
+
+---
+
 **Feature**: Issue #111 — Connect api.redmarklogic.com to Cloud Run via Firebase Hosting
-**ADR**: ADR-026 — Firebase Hosting as Zero-Cost API Domain Front Door
-**Last updated**: 2026-06-11
+**ADR**: ADR-026 (SUPERSEDED by ADR-027 — front door torn down per issue #147)
+**Last updated**: 2026-06-12 (superseded banner added; front door removed)
 
 This runbook documents every step to create, verify, and (if needed) tear down the
 connection between `api.redmarklogic.com` and the Redline Cloud Run backend.

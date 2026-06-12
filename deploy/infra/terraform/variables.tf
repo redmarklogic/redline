@@ -89,23 +89,5 @@ variable "max_instances_prod" {
   }
 }
 
-# ── Firebase Hosting + Cloudflare DNS variables (ADR-026, issue #111) ─────────
-
-variable "firebase_cname_target" {
-  description = <<-EOT
-    CNAME target Firebase Hosting requires for api.redmarklogic.com.
-    Source: run `terraform output firebase_custom_domain_required_dns_updates` after the
-    first apply of firebase_hosting.tf resources, then set this to the rdata of the
-    CNAME entry Firebase returns (e.g. "redmarklogic-api.web.app").
-    Verified 2026-06-11: Firebase's current subdomain flow requires this single CNAME,
-    not the legacy TXT-ownership + A-record pair.
-    This value is NOT secret — it is committed to terraform.tfvars once known.
-  EOT
-  type    = string
-  default = ""
-
-  validation {
-    condition     = var.firebase_cname_target != ""
-    error_message = "firebase_cname_target must be set before applying cloudflare_dns.tf. Read it from the firebase_custom_domain_required_dns_updates Terraform output."
-  }
-}
+# Firebase Hosting front-door variable (firebase_cname_target) removed per ADR-027 D2.
+# The api.redmarklogic.com front door was torn down; no CNAME target is needed.

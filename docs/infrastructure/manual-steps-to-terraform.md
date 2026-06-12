@@ -223,6 +223,78 @@ account-level and permanent.
 
 ---
 
+## Entry 005 — Firebase API front-door teardown + sanctioned DNS deletion (ADR-027, issue #147)
+
+**Date**: 2026-06-12 (HCL authored; `terraform apply` gated on founder review of the plan diff)
+**Actor**: Brent (DevOps), under founder review of the plan diff
+**ADR**: ADR-027 D2/D3 (supersedes ADR-026)
+
+### What was done (forward change)
+
+The Firebase Hosting front door for `api.redmarklogic.com` was torn down because
+Firebase Hosting caps every request at a hard 60-second ceiling, while the product's
+core synchronous calls take three minutes or more — every real call through the
+branded address was a guaranteed failure (ADR-027). The POC API address is now the
+raw Cloud Run `*.run.app` URL (ADR-027 D1).
+
+Five Terraform resources destroyed in reverse-dependency order (single change set):
+
+1. `google_firebase_hosting_release.api`
+2. `google_firebase_hosting_version.api`
+3. `google_firebase_hosting_custom_domain.api` (`api.redmarklogic.com` + its TLS cert)
+4. `google_firebase_hosting_site.api` (`redmarklogic-api`)
+5. `cloudflare_dns_record.firebase_cname` — the `api CNAME redmarklogic-api.web.app`
+   record (id `6b051d1e36a71373819c95a89d1db64d`), deleted **via Terraform destroy
+   only**, never the Cloudflare dashboard (ADR-020).
+
+Accompanying HCL/config cleanup in the same change set: removed the four `firebase_*`
+output blocks, the `firebase_cname_target` variable and its `terraform.tfvars` value,
+the `cloudflare_dns_record.firebase_cname` block, and the file
+`deploy/firebase/firebase.json` (plus the now-empty `deploy/firebase/` directory). The
+root `.env.example` branded-URL block was replaced with an `API_BASE_URL` (run.app)
+entry.
+
+### Why this is recorded here (not a manual exception)
+
+This change is fully Terraform-applied — it is NOT a manual/out-of-band action. It is
+recorded here because the CNAME deletion is **the single sanctioned exception to the
+additive-only DNS discipline** (ADR-026 D3 / ADR-020): the founder's live email
+(MX/SPF) runs on the same `redmarklogic.com` zone, so the deletion is guarded by a
+mandatory pre-change zone snapshot diffed against a post-change export, and gated on
+founder review of the `terraform plan` diff (must show **exactly 5 destroys, 0 other
+changes** — any deviation is a stop-the-line event).
+
+### What stays (ADR-027 D3 — must NOT be destroyed)
+
+- `google_firebase_project.default` — Firebase project enablement is irreversible
+  (provider implements no delete; ToS acceptance is account-level/permanent), zero
+  cost, and reused by the Sprint-3 website. Retained in HCL and state.
+- `cloudflare` provider + `data.cloudflare_zone.redmarklogic` read-only data source.
+- `google-beta` / `cloudflare` provider pins in `versions.tf`.
+- Cloudflare API token secret `prod-redline-cloudflare-api-token` (Entry 002/003).
+
+### Rollback (re-create the front door)
+
+Recreation is possible at any time — nothing destroyed here is unrecoverable:
+
+1. `git revert` the teardown commit (or check out the pre-teardown HCL), restoring the
+   four hosting resource blocks, the `firebase_cname` record, the `firebase_cname_target`
+   variable + tfvars value, the outputs, and `deploy/firebase/firebase.json`.
+2. Inject the Cloudflare token and run the two-step DNS converge documented in
+   `domain-dns-runbook.md`:
+   - `terraform apply` (creates the site, custom domain with
+     `wait_dns_verification = false`, version, release, and the `api` CNAME),
+   - then `terraform apply`/`refresh` a second time so Firebase verifies ownership and
+     progresses the certificate to `CERT_ACTIVE` / `HOST_ACTIVE`.
+3. **Certificate re-issuance can take up to 24 h** (within the 48 h success-criteria
+   budget, SC-008).
+
+**Risk of rollback:** re-creating the front door restores the 60-second request
+ceiling — the exact guaranteed-failure path ADR-027 removed. Only roll back if ADR-027
+is itself reversed by a successor ADR.
+
+---
+
 ## Bootstrap exceptions (pre-existing)
 
 The following two resources were created by `deploy/infra/bootstrap/bootstrap.sh`
