@@ -1,74 +1,39 @@
-# This Week — Sprint 3: Jun 15–21
+# This Week — Sprint 3 (Jun 15–21, 2026)
 
 _Synced: 2026-06-12_
 
-## Sprint 3 — Jun 15–21
+**Goal**: Deploy the first Django app to staging Cloud Run and prove the SSO-gated signal loop — Google + Microsoft sign-in, 3 auth-gated buttons, click events captured and viewable.
+**Tripwire**: "If by Wednesday we have not seen the Django app running in the cloud, we will change course."
+**Bet**: Bet 1 (Free Skeleton Wedge) → KR1 (signups). Full plan: `docs/product/tasks/sprint-3-goal.md`.
 
-**Goal**: Deploy a Django skeleton website at the company domain — IP-restricted, Google SSO login, post-login landing page, lead capture to Django DB, and a chosen analytics platform wired — proving the web deployment path is technically feasible end-to-end.
+> All work runs on **staging** (`run.app`, IP-restricted to founder). DNS + prod gates are Sprint 4.
 
-**Mid-sprint gate**: Django must be serving at any public URL by Wednesday. If not, stop and diagnose.
+## Start Monday (day-1, High-risk, zero prior art)
 
----
+| Issue | Task | Owner |
+|---|---|---|
+| #159 | Django project skeleton | Peter / Kabilan impl |
+| #163 | Provision staging Cloud SQL (Auth Proxy) | Brent |
+| #165 | User + identity models `(provider,subject)` | Peter / Kabilan impl |
+| #167 | allauth Google sign-in | Peter / Kabilan impl |
+| #168 | allauth Microsoft sign-in | Peter / Kabilan impl |
+| #174 | Analytics platform spike (CLI/MCP/API; pick same-day) | Peter |
 
-### In Progress
+## Backlog — committed this sprint (by parent)
 
-_Nothing in progress yet — sprint starts Mon Jun 15._
+- **#153 Django web shell scaffold** — #159 skeleton · #160 layer-guard · #161 settings · #162 HTMX
+- **#154 Platform-state data layer** — #163 staging Cloud SQL · #164 DATABASES+migrate · #165 models · #166 audit-log
+- **#155 Launch sign-in (allauth)** — #167 Google · #168 Microsoft · #169 session-establish · #170 OAuth secrets
+- **#156 Auth-gated buttons + events** — #171 gated page · #172 click→capture · #173 team viewer
+- **#157 Analytics platform** — #174 spike · #175 wire _(cut line)_
+- **#158 CI/CD + Cloud Run + IP lock** — #176 error middleware _(cut line)_ · #177 deploy-on-merge (★Wed tripwire) · #178 IP lock
 
----
+## Cut line (yield first if the week tightens)
 
-### Blocked
+1. #175 external analytics wiring (DB floor stands) → 2. #176 error middleware → DNS already Sprint 4.
 
-_None._
+## Watch
 
----
-
-### To Review
-
-_None._
-
----
-
-### Done (pre-sprint)
-
-| Agent | Title | Issue |
-|-------|-------|-------|
-| Brent | Infra: Cloud DNS + managed TLS cert for company domain | [#75](https://github.com/redmarklogic/redline/issues/75) |
-
----
-
-### Backlog (this sprint)
-
-Dependencies are native GitHub blocked-by links (board renders the Blocked badge); each parent carries its WBS sub-issues.
-
-| Agent | Title | Issue | Blocked by | Sub-issues |
-|-------|-------|-------|------------|------------|
-| Peter | Platform P — web scaffold: project init, routing, env config | [#49](https://github.com/redmarklogic/redline/issues/49) | — | #123, #124 |
-| Brent | Dockerfile + CI/CD for Django web shell | [#119](https://github.com/redmarklogic/redline/issues/119) | #49 | #125, #126, #127 (GATE) |
-| Brent | Infra: HTTPS Load Balancer + Cloud Armor IP allowlist | [#74](https://github.com/redmarklogic/redline/issues/74) | #119 (+#70, #63 infra) | #128, #129, #130 |
-| Peter | Platform P — SSO integration: auth provider wired, login/logout | [#50](https://github.com/redmarklogic/redline/issues/50) | #119 | #131, #132, #133 |
-| Mark  | Configure and activate product analytics (KR6) | [#22](https://github.com/redmarklogic/redline/issues/22) | — | #139, #140, #141, #142 |
-| Peter | Platform P — post-login page: minimal Django view after auth | [#116](https://github.com/redmarklogic/redline/issues/116) | #50 | #134, #135 |
-| Mark  | Platform P — lead capture: persist user email and login events to Django DB | [#117](https://github.com/redmarklogic/redline/issues/117) | #50 | #136, #137, #138 |
-| Mark  | Platform P — analytics wire: tracking script + post-login events | [#118](https://github.com/redmarklogic/redline/issues/118) | #22 | #143, #144, #145, #146 |
-
----
-
-### Sequencing reminder
-
-```text
-Mon: Django scaffold (#49) immediately; OAuth consent (#131) already in flight
-Wed: GATE — Django must be live at any public URL (#127)
-Wed+: LB/IP (#74) and SSO (#50) unblock in parallel after gate
-Wed+: Analytics research (#22) runs independently — hard stop Thu AM
-Fri: Post-login (#116), lead capture (#117), analytics wire (#118)
-```
-
----
-
-### Key risks this sprint
-
-| Risk | Signal to watch |
-|------|-----------------|
-| OAuth consent screen approval delay (24–48h) | Initiated Fri Jun 12 (#131) — confirm approved before Wed |
-| #74 must reuse the reserved IP that #75's DNS already points at | Fresh IP on the LB silently invalidates the Done DNS work |
-| Analytics decision stalls | Default to GA4 if no decision by Thu AM |
+- **Wed tripwire**: #177 — Django live on staging `run.app`.
+- **Parallel prod-gate**: Peter authors the Cloud SQL connection-strategy ADR (from Brent's analysis) — gates prod, not this sprint.
+- **Cleanup**: close #71 (duplicate of #178).

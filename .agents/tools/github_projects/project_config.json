@@ -41,16 +41,17 @@
       "Research": "a709ee3b"
     },
     "Agent": {
-      "Kabilan": "16b9f565",
-      "Mark": "f65b23a5",
-      "Matt": "8043fcd8",
-      "John": "d306ed42",
-      "Peter": "ca1be753",
-      "Ron": "d546d87b",
-      "Graeme": "f287bdab",
-      "Linda": "0149947b",
-      "Harriet": "6529decf",
-      "Founder": "c3165db9"
+      "Kabilan": "bca04a8e",
+      "Mark": "2f5b07b5",
+      "Matt": "db3d7941",
+      "John": "817f7c42",
+      "Peter": "dc86e6f4",
+      "Ron": "d46c0977",
+      "Graeme": "2bd34ba8",
+      "Linda": "0fd95f3c",
+      "Harriet": "61fd7dc1",
+      "Founder": "d8f958ac",
+      "Brent": "5c71163f"
     },
     "Sprint": {
       "Sprint 2 - Jun 8-14": "a8c49ec8",
@@ -59,5 +60,5 @@
       "Sprint 1 - Jun 1-7": "af810814"
     }
   },
-  "resolved_at": "2026-06-11T07:23:13.306581Z"
+  "resolved_at": "2026-06-12T04:03:12.791088Z"
 }
