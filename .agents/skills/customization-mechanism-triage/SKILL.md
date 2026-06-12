@@ -17,7 +17,7 @@ description: >
 | Input | A request to create any customization artifact |
 |---|---|
 | Output | Identified correct mechanism + correction statement if the wrong one was named |
-| Out of scope | Writing the artifact itself (use `skills-create`, `writing-skills`, or `hiring-agent-management`) |
+| Out of scope | Writing the artifact itself (use `writing-skills` or `hr-hire-agent`) |
 
 ---
 
@@ -211,7 +211,7 @@ When a request names a mechanism, verify before proceeding. State the correction
    - **Instruction** → create `.instructions.md` with correct `applyTo` glob
    - **VS Code Hook** → create `.github/hooks/<name>.json` with correct lifecycle event
    - **Custom Agent** → draft in `docs/people/drafts/agents/` (people-ops agent draft-first constraint applies)
-   - **Skill** → use `skills-create` then `writing-skills`
+   - **Skill** → use `writing-skills` (covers folder creation through TDD verification)
    - **Dynamic Workflow** → confirm via `tool-selection` orchestration-tier gate; have Claude write the workflow (`ultracode` / "use a workflow"), then save the run to `.claude/workflows/` (project) once it does what you want
    - **Spec-Kit Extension** → use `procedures/speckit-extension-triage.md`, then draft in `docs/people/drafts/skills/`
    - **Prompt File** → create `.github/prompts/*.prompt.md`

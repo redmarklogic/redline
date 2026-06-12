@@ -91,8 +91,11 @@ Reflection Protocol.
     - New hire triggers (orphans that cannot be absorbed)
     - List of draft JD patches produced
     - Pending user approvals required before promotion
-23. Update `docs/people/agent-register.md`, `org-chart.md`, and `skills-taxonomy.md`
-    to reflect the post-sync state.
+23. Update `docs/people/agent-register.md`, `org-chart.md`, `skills-taxonomy.md`
+    (catalog rows + categories for live skills), and `skills-gaps.md` (gap rows,
+    lifecycle states, pending actions) to reflect the post-sync state. If a topology
+    visual is wanted, generate it from `skills-lock.json` `owner_agent` data and embed
+    it, dated, in the sync report — never in a living document (ADR-001).
 24. State explicitly: which items require user approval, who owns each next action,
     and the earliest valid date for the next sync.
 

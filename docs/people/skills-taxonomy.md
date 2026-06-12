@@ -1,268 +1,253 @@
-# Skills Taxonomy
+# Skills Taxonomy & Catalog
 
-**Owner:** Harriet  
-**Last updated:** 2026-06-10  
-**Source of truth for:** all skills in `.agents/skills/` and their domain category.
+**Owner (steward):** Harriet
+**Last updated:** 2026-06-12
 
-> Update this file whenever a skill is created, retired, or reassigned.
+> **SOT for the category vocabulary and each skill's category assignment.** Nothing else.
 >
-> **Derived column — Used by:** The "Used by" column is a human-readable derivative of the `owner_agent` arrays in `skills-lock.json` (the authoritative source per ADR-001, ADR-009). It must not be treated as canonical. When `skills-lock.json` and this column disagree, `skills-lock.json` wins.
+> **Read this document to answer one question: "I have task X — which skill do I load?"**
+> Scan the category, read the *Use when* column, load the skill. Everything else lives
+> elsewhere:
 >
-> **Note:** "Engineering" in the Used by column refers to **Kabilan** (Python Developer, hired 2026-05-22; slug: `kabilan` in `skills-lock.json`). Kabilan loads these skills on demand per task type.
+> - *Who owns or uses a skill?* → `skills-lock.json` (`owner_agent`, authoritative per ADR-001/ADR-009) and the agent JDs in `.claude/agents/` (each agent's routing table is that agent's advertised interface)
+> - *What layer is a skill / what may it reference?* → [docs/architecture/skills-architecture.md](../architecture/skills-architecture.md)
+> - *What is missing, pending creation, deprecated, or awaiting a decision?* → [docs/people/skills-gaps.md](skills-gaps.md)
+> - *Why the skills system works this way* → [docs/knowledge/software-engineering/skills-system.md](../knowledge/software-engineering/skills-system.md)
+>
+> **Derived column — Use when:** condensed from each skill's `SKILL.md` frontmatter
+> `description` (the authoritative purpose statement). If this table and a frontmatter
+> description disagree, the frontmatter wins; fix the row here.
+>
+> **Scope:** live, loadable skills only. Pending and deprecated skills are tracked in the
+> gaps ledger, not here. Update this file in the same commit that creates, renames, or
+> retires a skill.
 
 ---
 
-## Taxonomy
+## Category Vocabulary
 
-### Python — Core
+A skill belongs to **exactly one** category — the one matching the task a consumer is
+performing when they reach for it (not its layer, owner, or implementation language).
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `python-style` | General Python style and `uv` usage conventions | Engineering |
-| `python-patterns` | Idiomatic Python patterns (control-flow, iteration, composition) | Engineering |
-| `python-typing` | Type hint standards | Engineering |
-| `python-linting` | Ruff/lint compliance and safe suppressions | Engineering |
-| `python-paths` | File path conventions (pathlib, importlib.resources) | Engineering |
-| `python-error-handling` | Exception handling, error translation, logging | Engineering |
-| `python-documentation` | Docstring standards (Google Style) | Engineering |
-| `python-function-design` | Function decomposition, signatures, side effects | Engineering |
-| `python-class-design` | Class responsibilities, init, composition | Engineering |
-| `python-domain-modeling` | Value objects, Pandera/Pydantic, DataFrame-first APIs | Engineering |
-| `python-module-structure` | Step-down rule, public-before-private ordering, helper extraction | Engineering |
-| `python-fastapi` | External (north-south) FastAPI HTTP endpoints conforming to the HTTP API standard (ADR-018) | Engineering |
+| Category | Definition |
+|---|---|
+| Python | Writing Python in this repo: style, typing, design, structure, documentation, errors, scripts, frameworks |
+| Testing & Quality Gates | Writing tests and driving automated quality cycles: unit/API tests, TDD, static analysis, dependency hygiene, scan-triage-fix loops |
+| Dev Environment | Bootstrapping and maintaining the local toolchain |
+| Data & Datasets | Designing, ingesting, validating, and versioning datasets |
+| EDA & Reporting | Exploring data and communicating results: codebooks, QA, visual design, Quarto outputs, diagrams |
+| Git & Delivery | Version control conventions and the change-delivery path: commits, hooks, worktrees, code review, PR resolution |
+| Security & Compliance | Secure coding policy: secrets, configuration, logging |
+| Platform Adapters | Operating an external platform from this repo: Miro, NotebookLM, CCE, MCP tooling, GitHub Projects |
+| Research & Knowledge | Querying and maintaining the knowledge infrastructure: notebooks, library, research workflows |
+| Engineering Workflow | Cross-cutting engineering process: design exploration, debugging, parallel work, verification, session discipline, deferral |
+| Architecture & Evaluation | System design, ADRs, domain-driven design, shaping, evaluation design, AI engineering policy |
+| Product & Strategy | Product management and strategy artifacts: problems, hypotheses, PRDs, personas, roadmaps, prioritisation, bets |
+| Marketing | Content, SEO, social selling, and AI-content review |
+| Org & People | Hiring, auditing, and maintaining the agent workforce and its registers |
+| Ceremonies | Recurring structured sessions with defined cadence and outputs |
+| Skills System & Meta | Creating, selecting, and governing skills and customization mechanisms themselves |
+| SpecKit (vendor) | Vendor-generated SpecKit command files — discovery listing only, never edited manually |
 
-### Python — Testing
+**Category placement rule:** choose the category whose *task* the consumer is doing.
+Adding a new category requires: at least three live skills that fit no existing category,
+a one-line definition added to this table in the same commit, and founder approval.
+Parallel grouping schemes in other documents are prohibited (ADR-001).
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `python-testing-unit` | Unit testing standards | Engineering |
-| `python-testing-api` | FastAPI component and contract tests | Engineering |
-| `test-driven-development` | RED-GREEN-REFACTOR cycle | Engineering |
+---
 
-### Python — Tooling & Environment
+## Catalog
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `dev-environment` | Bootstrap and maintain dev environment (uv, tasks, prek) | Engineering |
-| `python-usethis` | Add/remove dev tools via usethis CLI | Engineering |
-| `python-static-checks` | Running static checks (ruff, mypy) | Engineering |
-| `python-deptry` | Dependency hygiene with deptry | Engineering |
-| `python-performance` | Profiling and optimisation patterns | Engineering |
+### Python
 
-### Python — Scripts
+| Skill | Use when |
+|---|---|
+| `python-style` | Applying Python style conventions — `uv` usage, formatting rules, idiomatic patterns |
+| `python-typing` | Writing type hints — annotation style, generics, Optional, fixing mypy errors |
+| `python-linting` | Resolving Ruff lint violations or deciding whether a suppression is safe |
+| `python-paths` | Resolving file paths — pathlib vs importlib.resources vs repo helper; banned patterns |
+| `python-patterns` | Writing idiomatic Python — control-flow, iteration, resource management, composition, concurrency |
+| `python-function-design` | Designing functions — decomposing responsibilities, signatures, side effects |
+| `python-class-design` | Designing classes — responsibilities, init patterns, composition over inheritance |
+| `python-module-structure` | Ordering functions within a module — step-down rule, public-before-private |
+| `python-documentation` | Writing docstrings — Google Style, type-hint integration |
+| `python-error-handling` | Writing exception handling, translating errors across layers, structured logging |
+| `python-domain-modeling` | Modeling domain objects — value objects, Pandera/Pydantic contracts, DataFrame-first APIs |
+| `python-fastapi` | Implementing or testing external (north-south) FastAPI endpoints per the HTTP API standard (ADR-018) |
+| `python-crewai` | Building CrewAI agents, tasks, flows, or output models |
+| `python-script` | Writing scripts in `src/scripts/` — thin orchestration, Spyder-style cells |
+| `python-script-numbering` | Naming pipeline scripts and documenting execution order |
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `python-script` | Script conventions (stepdown rule, Spyder-style cells) | Engineering |
-| `python-script-numbering` | Script naming and execution order conventions | Engineering |
+### Testing & Quality Gates
 
-### Data & Domain
+| Skill | Use when |
+|---|---|
+| `python-testing-unit` | Writing unit tests — structure, fixtures, mocking, coverage patterns |
+| `python-testing-api` | Writing API component or contract tests for FastAPI endpoints |
+| `test-driven-development` | Implementing any feature or bugfix — RED-GREEN-REFACTOR before implementation code |
+| `python-static-checks` | Running static checks — linting, type errors, pre-commit validation |
+| `python-deptry` | Fixing deptry dependency-hygiene violations |
+| `python-performance` | Profiling or optimising — tool choice, bottleneck diagnosis, algorithmic fixes |
+| `sonarqube-scan` | Triggering a SonarQube scan and waiting for the compute-engine task to succeed |
+| `sonarqube-review` | Retrieving, triaging, and recording false positives for open SonarQube issues on the branch |
+| `sonarqube-find-and-fix` | Running the end-to-end SonarQube cycle: scan → triage → fix → re-scan |
+| `prek-find-and-fix` | Running the end-to-end prek (pre-commit) cycle: run → triage → fix → re-run |
+| `test-find-and-fix` | Running the end-to-end test-suite cycle: run → triage failures → fix → re-run |
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `data-tidy` | Tidy data principles, DataFrame schema design | Engineering |
-| `python-pins-data-version-control` | Dataset versioning with the pins library | Engineering |
-| `python-data-ingestion` | Data ingestion and validation (import/process/read pattern) | Engineering |
-| `python-crewai` | CrewAI agent, task, flow, and output model conventions | Engineering |
+### Dev Environment
+
+| Skill | Use when |
+|---|---|
+| `dev-environment` | Bootstrapping or maintaining the dev environment — uv, tasks, prek |
+| `python-usethis` | Adding, removing, or inspecting dev tools via the usethis CLI |
+
+### Data & Datasets
+
+| Skill | Use when |
+|---|---|
+| `data-tidy` | Designing DataFrame schemas or value-object models to tidy-data principles |
+| `python-data-ingestion` | Implementing ingestion or validation — import/process/read patterns, Pandera contracts |
+| `python-pins-data-version-control` | Versioning datasets with pins — board layout, naming, read/write patterns |
 
 ### EDA & Reporting
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `eda-codebook` | Generate and update Markdown codebooks for datasets | Engineering / Data |
-| `eda-interpreting-data` | Pre-flight data quality screening and insight writing | Engineering / Data |
-| `eda-qa` | QA against existing codebook + raw dataset | Engineering / Data |
-| `eda-visual-design` | Chart type selection, encoding, cognitive load | Engineering / Data |
-| `python-plot-colors` | Color selection, colormap choice, color-blindness safety | Engineering / Data |
-| `qmd-tables` | Rendering tables in Quarto documents | Engineering / Data |
-| `qmd-narrative-design` | Narrative design (Hook-Problem-Insight-Proof-Action arc) | John, Engineering |
-| `mermaid-diagrams` | Mermaid diagram type selection, syntax constraints (v8.8.0 ceiling), quality guidance | Mark, Ron, John, Matt, Engineering |
+| Skill | Use when |
+|---|---|
+| `eda-codebook` | Generating or updating a Markdown codebook for a CSV/Excel dataset |
+| `eda-interpreting-data` | Screening data quality before plotting, or writing insights after results |
+| `eda-qa` | Auditing an existing codebook plus raw dataset for data-quality problems |
+| `eda-visual-design` | Choosing chart types, encoding data, reducing cognitive load in visualisations |
+| `python-plot-colors` | Selecting plot colors — colormaps, color-blindness safety, cross-figure consistency |
+| `qmd-tables` | Rendering tabular output in Quarto — formatting helpers, table-vs-chart decisions |
+| `qmd-narrative-design` | Designing Quarto reports/presentations — Hook-Problem-Insight-Proof-Action arc |
+| `mermaid-diagrams` | Adding or reviewing Mermaid diagrams — type selection, v8.8.0 syntax ceiling, quality rules |
 
-### Infrastructure & Security
+### Git & Delivery
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `security` | Secure coding (secrets, configuration, logging) | Engineering |
-| `git-version-control` | Commit conventions, hygiene, prek hooks, pre-push | Engineering |
-| `git-push-batched` | Push changes in thematically cohesive commits | Engineering |
-| `git-hooks-create` | Writing bespoke git hooks | Engineering |
-| `tool-selection` | CLI-first routing across `gh`, `gws`, `gcloud`, MCP, and direct API (ADR-016) | All |
-| `python-mcp-tools` | MCP tooling usage in this repo | Engineering |
-| `notebooklm-cli` | Query NotebookLM notebooks via the `nlm` CLI (setup, auth, config) | Harriet, Graeme, Ron, John, Mark, Linda, Peter, Kabilan |
-| `miro-mcp` | Create diagrams and visual artifacts on Miro boards | Mark, John, Ron, Peter |
+| Skill | Use when |
+|---|---|
+| `git-version-control` | Applying version-control conventions — commit hygiene, prek hooks, pre-push checks |
+| `git-push-batched` | Pushing changes — organising dirty files into thematically cohesive commits |
+| `git-hooks-create` | Implementing, registering, or testing project-specific git hooks in `hooks/` |
+| `using-git-worktrees` | Starting feature work needing isolation from the current workspace |
+| `requesting-code-review` | Completing tasks or features — pre-review checklist before merging |
+| `resolving-pr-issues` | Resolving PR review comments — structured triage, fail-first test, fix, CI closure |
+
+### Security & Compliance
+
+| Skill | Use when |
+|---|---|
+| `security` | Writing secure code — secrets handling, configuration safety, structured logging |
+
+### Platform Adapters
+
+| Skill | Use when |
+|---|---|
+| `mcp-cce` | Discovering code/docs/company memory via CCE; persisting context across sessions |
+| `miro-mcp` | Working with Miro boards — creating/reading diagrams, layouts, structured context |
+| `notebooklm-cli` | Setting up, authenticating, or troubleshooting NotebookLM access via the `nlm` CLI |
+| `python-mcp-tools` | Calling MCP tools or servers from Python code |
+| `rag-prompting` | Writing queries for a NotebookLM notebook — prompt anatomy, retrieval rules, extraction |
+| `github-projects` | Creating, updating, moving, or querying tasks on the Redline GitHub Projects board |
 
 ### Research & Knowledge
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `redline-research` | Structured research workflow querying NotebookLM knowledge bases | Graeme, Ron, Mark, John, Peter |
-| `rag-prompting` | Query design for NotebookLM — prompt anatomy, retrieval rules, structured extraction | Graeme, Ron, Mark, John, Linda |
-| `notebooklm-deep-research` | Run NotebookLM deep research with 5 Whys intake, selective source import, and notebook indexing | Ron, Mark, Peter, Linda |
-| `library-management` | Index, rename, and add books to the digital library | Linda |
-| `notebooklm-index` | Index NotebookLM notebooks into the register spreadsheet | Linda |
+| Skill | Use when |
+|---|---|
+| `redline-research` | Asked to research, investigate, or look something up — knowledge base before online search |
+| `notebooklm-deep-research` | Running NotebookLM deep research with 5 Whys intake and notebook indexing |
+| `notebooklm-index` | Adding, updating, or auditing a notebook in the NotebookLM index spreadsheet |
+| `library-management` | Indexing, renaming, or adding books to the digital library |
 
-### Development Workflow
+### Engineering Workflow
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `brainstorming` | Socratic design refinement before implementation | Engineering |
-| `spec-kit` | Specification-driven development (specs, plans, tasks) | Engineering |
-| `subagent-driven-development` | Fast iteration with two-stage review | Engineering |
-| `dispatching-parallel-agents` | Concurrent subagent workflows | Engineering |
-| `using-git-worktrees` | Parallel development in isolated git worktrees | Engineering |
-| `requesting-code-review` | Pre-review checklist | Engineering |
-| `resolving-pr-issues` | Resolve incoming PR code-review comments (structured triage, fail-first test, fix, CI closure) | Engineering |
-| `verification-before-completion` | Verify errors are truly resolved before claiming done | Engineering |
-| `systematic-debugging` | 4-phase root cause debugging process | Engineering |
-| `task-defer` | Defer a task, idea, decision, or knowledge gap to a future date or condition; register in `docs/deferred/` with a mandatory unfreeze condition | Ron, Mark, Peter, Graeme, John, Matt, Harriet, Engineering |
-| `mcp-cce` | Code Context Engine (CCE) discovery: semantic codebase/docs search, session decision memory | All |
-| `session-handover` | Structured session close: handover note, CCE decision writes, uncommitted-work flags | All |
-| `github-projects` | Create, update, move, and query tasks on the Redline GitHub Projects board | Mark, Engineering, Founder |
+| Skill | Use when |
+|---|---|
+| `brainstorming` | Before any creative work — explores intent, requirements, and design first |
+| `systematic-debugging` | Encountering any bug, test failure, or unexpected behavior — before proposing fixes |
+| `subagent-driven-development` | Executing implementation plans with independent tasks in the current session |
+| `dispatching-parallel-agents` | Facing 2+ independent tasks with no shared state or ordering |
+| `verification-before-completion` | About to claim work complete — evidence before assertions |
+| `session-handover` | Ending a development session — handover note, CCE decision writes, uncommitted-work flags |
+| `task-defer` | Deferring a task, idea, or decision — `docs/deferred/` entry with mandatory unfreeze condition |
+| `doc-updater` | Updating codemaps or docs to match the codebase — packages, routes, scripts, README |
+| `spec-kit` | Planning a feature, writing a spec, breaking work into tasks — wraps the SpecKit CLI |
 
-### Quality Gates & Static Analysis
+### Architecture & Evaluation
 
-| Skill | Purpose | Used by |
-|---|---|---|
-| `sonarqube-scan` | Trigger a SonarQube static analysis scan and wait for compute-engine task success | Engineering |
-| `sonarqube-review` | Retrieve, triage, and record false positives for open SonarQube issues on the current branch | Engineering |
-| `sonarqube-find-and-fix` | End-to-end SonarQube quality-gate cycle (scan → triage → fix → re-scan) — SRP known-exception (`justified-orchestrator`) | Engineering |
-| `prek-find-and-fix` | End-to-end prek (pre-commit) triage-and-fix cycle — **SRP new-violation 2026-06-10; skip-list addition proposed** | Engineering |
-| `test-find-and-fix` | End-to-end test-suite triage-and-fix cycle — **SRP new-violation 2026-06-10; skip-list addition proposed** | Engineering |
+| Skill | Use when |
+|---|---|
+| `engineering-architecture` | Making system-level design decisions, defining component boundaries, reviewing architectural compliance |
+| `create-adr` | Writing, extending, or reviewing an ADR — canonical template and content rules |
+| `adr-constitution-sync` | After an ADR is added or amended — checks and executes constitution sync |
+| `ddd-strategic` | Classifying subdomains, context mapping, EventStorming, ACLs, ubiquitous-language stewardship |
+| `shaping` | Translating product intent or a PRD into a scoped Pitch before SpecKit |
+| `design-eval-rubric` | Designing evaluation rubrics — scoring, test formats, LLM-as-judge calibration |
+| `design-eval-pipeline` | Architecting evaluation pipelines — FTI, HITL review, monitoring, ground truth |
+| `define-ai-policy` | Authoring or reviewing AI acceptable-use policy — structure, DORA map, stance |
+| `enforce-ai-batch-discipline` | Configuring PR-size thresholds, AI flagging, deliberate practice, AI-output verification mentoring |
 
-### SpecKit Workflow (Layer 0 — vendor-managed + extensions)
+### Product & Strategy
 
-> Vendor-generated by the `specify` CLI or installed as `.specify/extensions/`. **Never edit manually** — `specify upgrade` overwrites. Redline-specific behaviour belongs in `.specify/extensions.yml`. Listed here for inventory completeness only; Harriet does not govern their content.
+| Skill | Use when |
+|---|---|
+| `pm-problem-framer` | A problem statement is vague, contested, or missing segment/outcome/strategic link |
+| `pm-hypothesis-builder` | Formalising an assumption into a falsifiable hypothesis before any experiment |
+| `pm-prd-builder` | An initiative has a validated hypothesis and engineering/design needs a formal brief |
+| `pm-decision-architect` | A decision is avoided, delayed, or instinct-driven with no explicit options or criteria |
+| `pm-personas` | Defining a customer archetype or GTM segment before PRD, strategy, or campaign work |
+| `pm-roadmap` | Building, refreshing, or auditing roadmaps and opportunity solution trees |
+| `pm-prioritization` | Ranking features or bets at portfolio level — RICE, MoSCoW, Value-Effort |
+| `pm-structural-integrity-auditor` | Auditing any product artifact for structural gaps before it causes misaligned work |
+| `pm-product-strategist` | Starting a product, refreshing strategy, or reconnecting OKRs to customer problems |
+| `strategy-pre-mortem` | Stress-testing an un-implemented plan, launch, or bet before execution |
+| `strategy-psf-domain` | Competitor analysis, market segmentation, or product-market fit for civil-engineering consultancies |
+
+### Marketing
+
+| Skill | Use when |
+|---|---|
+| `marketing-content-big-5` | Planning content topics — They Ask You Answer / Big 5 framework |
+| `marketing-product-led-seo` | Planning SEO beyond blog content — programmatic tools, brief-to-PRD handoff |
+| `linkedin-social-selling` | Building or auditing a LinkedIn presence for B2B social selling |
+| `marketing-ai-content-review` | Drafting AI-assisted content with domain claims — mandatory expert sign-off |
+
+### Org & People
+
+| Skill | Use when |
+|---|---|
+| `hr-hire-agent` | Hiring a new agent — gap identification, JD drafting, onboarding, single-agent refresh |
+| `hr-audit-agent` | Auditing an agent for scope overlaps or skill gaps; running a PIP |
+| `hr-maintain-agent-registry` | Updating org chart, agent register, or this catalog after hires, retirements, or role changes |
+| `hr-sync-agent-topology` | Running the periodic Agent Topology Sync — Reflection Protocol, Delta Statements, SRP pass |
+
+### Ceremonies
+
+| Skill | Use when |
+|---|---|
+| `agile-sprint-planning` | Starting a new sprint, or a sprint is running with no goal on record |
+| `agile-daily-standup` | Every morning — structured daily brief from live board state |
+| `ceremony-monthly-editorial-session` | A new Ground Engineering issue arrives — editorial processing for content and product signals |
+
+### Skills System & Meta
+
+| Skill | Use when |
+|---|---|
+| `using-superpowers` | Starting any conversation — how to find and use skills |
+| `writing-skills` | Creating, editing, or verifying skills — TDD-based authoring (covers folder creation) |
+| `mental-models` | A structured thinking framework is needed — decisions, root cause, risk, communication |
+| `customization-mechanism-triage` | Before creating any customization artifact — selects instruction vs skill vs agent vs hook vs prompt file vs plugin |
+| `tool-selection` | Deciding which CLI (`gh`, `gws`, `gcloud`), MCP, or API to use, and which orchestration tier fits a fan-out task (ADR-016) |
+
+### SpecKit (vendor)
+
+> Vendor-generated by the `specify` CLI or installed as `.specify/extensions/`.
+> **Never edit manually** — `specify upgrade` overwrites. Redline-specific behaviour
+> belongs in `.specify/extensions.yml`. Outside `skills-lock.json` governance; listed for
+> discovery only.
 
 | Skill | Kind |
 |---|---|
 | `speckit-specify`, `speckit-clarify`, `speckit-plan`, `speckit-tasks`, `speckit-implement`, `speckit-analyze`, `speckit-checklist`, `speckit-constitution`, `speckit-taskstoissues` | Vendor core |
 | `speckit-critique-run`, `speckit-red-team-gate`, `speckit-red-team-run`, `speckit-plan-review-gate-check`, `speckit-version-guard-check`, `speckit-version-guard-load`, `speckit-version-guard-validate` | Extension |
 | `speckit-shaping-gate-check`, `speckit-source-reconciliation-run`, `speckit-static-checks-run`, `speckit-verification-gate-run` | Extension (pointer files into `.specify/extensions/`) |
-
-### Product Management
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `pm-problem-framer` | Frame vague problems into testable statements | Mark |
-| `pm-hypothesis-builder` | Formalise assumptions into falsifiable hypotheses | Mark |
-| `pm-prd-builder` | Write Product Requirements Documents | Mark |
-| `pm-decision-architect` | Structure deferred or instinct-driven decisions | Mark, Ron |
-| `pm-personas` | Define customer archetypes and GTM segments | Mark, Ron, John |
-| `pm-roadmap` | Build and refresh roadmaps and opportunity solution trees | Mark, Ron |
-| `pm-prioritization` | Portfolio-level RICE / MoSCoW / Value-Effort ranking | Mark, John |
-| `pm-product-strategist` | Vision, OKRs, strategic bets | Ron |
-| `pm-structural-integrity-auditor` | Audit any product artifact for structural gaps | Mark, Ron, John, Peter |
-| `strategy-pre-mortem` | Pre-mortem stress-testing of un-implemented plans | Ron |
-| `strategy-psf-domain` | PSF/A/E/C domain grounding for competitor analysis, market segmentation, PI insurance | Ron |
-
-### Marketing
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `marketing-content-big-5` | They Ask You Answer / Big 5 content framework | John |
-| `marketing-product-led-seo` | Product-Led SEO strategy and marketing-brief-to-PRD handoff | John |
-| `linkedin-social-selling` | LinkedIn social selling, PIPA profiles, outreach (10:1 LCS rule) — *name corrected 2026-06-10 to match the on-disk folder; the taxonomy previously listed a phantom `marketing-social-selling-linkedin`. Metric-currency annex pending corroboration (gap table)* | John |
-| `marketing-ai-content-review` | AI-assisted content review with mandatory expert sign-off | John |
-
-### Skills Management & Meta
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `skills-create` | Create a new skill folder and SKILL.md | Harriet, Engineering |
-| `writing-skills` | TDD-based skill authoring and testing | Harriet, Engineering |
-| `customization-mechanism-triage` | Select the correct VS Code Copilot customization mechanism (instruction, skill, agent, hook, prompt file, spec-kit extension, or plugin) before creating any artifact; auto-corrects misnamed requests | Harriet, Engineering |
-| `using-superpowers` | Introduction to the skills system | All |
-| `mental-models` | Structured thinking frameworks for decisions, root cause analysis, risk, communication (per `mental-models-protocol` instruction) | All |
-| `doc-updater` | Keep codemaps and docs in sync with the codebase | Engineering |
-| `redline-research` | Query multiple NotebookLM knowledge bases | All |
-
-### Knowledge Infrastructure
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `knowledge-infrastructure` | Digital library curation, notebook maintenance, register.json upkeep, standards monitoring procedures | Linda |
-
-> `knowledge-infrastructure` skill is pending creation. Requires grounding from the "Information Architecture and Knowledge Management" notebook.
-
-### People & Org
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `hr-hire-agent` | Hiring a new agent: gap identification, JD drafting, onboarding, single-agent REFRESH for detected drift | Harriet |
-| `hr-audit-agent` | Agent audits (scope overlaps, skill gaps) and Performance Improvement Plans (PIPs) | Harriet |
-| `hr-maintain-agent-registry` | Updating org chart, agent register, and skills taxonomy after hires, deprecations, role changes, or post-sync promotions | Harriet |
-
-> The former `hiring-agent-management` monolith was split into the `hr-*` family (see also `hr-sync-agent-topology` under Ceremonies). No folder named `hiring-agent-management` exists on disk.
-
-### UX & Design
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `ux-professional-software` | Information-dense UI design for professional/technical software, document-centric interaction patterns, annotation overlays, form design for technical inputs | Matt |
-| `ux-conversion-design` | Co-development partner conversion UX (quota-exhaustion nudges, SSO gate, onboarding friction, 10→100→1000 phased conversion surfaces). Phase 1: founder-led recruitment. Phase 2: self-serve Pro purchase + referral loop | Matt |
-| `ux-document-design` | Document-as-product design: structural hierarchy, placeholder formatting, metadata presentation, and standards citation styling in generated DOCX output | Matt |
-| `ux-design-critique` | Structured self-review checklist: Nielsen heuristics scoring, cognitive load check, AI Language Policy compliance, cross-surface consistency, persona walk-through. Adapted from pbakaus/impeccable/critique framework for Markdown/Miro outputs. *Patch pending founder approval (drafted from Matt's 2026-06-10 Delta — `docs/people/drafts/agents/matt.agent.md`): adds worst-case-data stress check (Step 2b), WCAG 2.2 AA accessibility check (Step 2c), and co-development partner-feedback reconcile (Step 6)* | Matt |
-| Playwright MCP *(built-in)* | Live website review via browser automation: navigate, screenshot, interact, inspect console/network, resize viewports. Governed by Matt's Website Review Protocol (pre-flight check, acceptance criteria loop, stop-on-unavailable). No separate skill file — protocol is embedded in Matt's JD. | Matt |
-
-> `ux-professional-software`, `ux-conversion-design`, and `ux-document-design` are pending creation (see Skills Coverage Gaps below). `ux-design-critique` is embedded in Matt's agent JD (`.claude/agents/matt.md`) — no separate skill file. Playwright MCP is a built-in tool governed by the Website Review Protocol in Matt's JD.
-
-### Engineering — Architecture, Evaluation & Governance
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `ddd-strategic` | Strategic DDD: subdomain classification, context mapping, EventStorming, ACL pattern, UL stewardship, model evolution governance | Peter |
-| `engineering-architecture` | System design, component boundaries, architectural compliance review of shaped work and SpecKit output | Peter |
-| `arch-engineering` | **DUPLICATE** of `engineering-architecture` (frozen since `acba676` 2026-05-31; no JD routes to it; its "writing ADRs" claim also overlaps `create-adr`). **Deprecation CONFIRMED by Peter at the 2026-06-10 live Delta collection**, with a one-commit salvage condition: port the Common Mistakes table, the Decision Persistence section, and the grounding-sources list into `engineering-architecture` before deletion; discard its ADR Conventions (weaker subset of `create-adr`). Founder executes (sync item A-5) | *(none — orphaned)* |
-| `create-adr` | Canonical ADR template and content rules — single source of truth for ADR authoring and review | Peter |
-| `adr-constitution-sync` | Determine whether `.specify/memory/constitution.md` needs updating after an ADR is added/amended, and execute the sync | Peter |
-| `design-eval-rubric` | Evaluation rubric design: scoring systems, test formats, LLM-as-judge patterns, judge calibration | Peter |
-| `design-eval-pipeline` | Evaluation pipeline architecture: FTI pattern, HITL review, production monitoring, ground-truth collection | Peter |
-| `define-ai-policy` | AI acceptable-use policy authoring: policy structure, DORA AI capabilities map, acceptable-use stance | Peter |
-| `enforce-ai-batch-discipline` | PR size thresholds, author-side AI flagging, deliberate practice design, AI output verification mentoring | Peter |
-| `shaping` | Shape Up shaping process adapted for Redline (Pitch format, breadboarding, rabbit hole identification, appetite setting, Two-Touch model) | Peter, Mark |
-
-> `ddd-strategic` is live (promoted May 2026). The former `evaluation-architecture` stub was split into `design-eval-rubric` + `design-eval-pipeline`, and the former `ai-acceptable-use-policy` stub into `define-ai-policy` + `enforce-ai-batch-discipline` (commit `acba676`, 2026-05-31 "skill bloat reduction"). Notebook grounding remains pending where flagged in the Skills Coverage Gaps table. Peter's JD routing table is current with these names; this taxonomy caught up at the 2026-06-10 sync.
-
-### Ceremonies
-
-| Skill | Purpose | Used by |
-|---|---|---|
-| `ceremony-monthly-editorial-session` | Monthly Ground Engineering magazine editorial session | Graeme, John |
-| `hr-sync-agent-topology` | Periodic cross-agent Topology Sync: Reflection Protocol (R1–R4), Delta Statements, orphan/overlap analysis, mandatory SRP Compliance Pass (`violations-list.md`), JD patch drafting — run quarterly or on: new hire, strategy pivot, major milestone, client feedback batch | Harriet (facilitating agent) |
-| `agile-sprint-planning` | Start-of-sprint ceremony: set sprint goal, select and sequence backlog tasks by risk, identify dependencies/parallelism, write sprint plan. PM steward (Mark); Principal Engineer (Peter) consulted for feasibility on unshaped tasks; founder makes final call on goal and scope | Mark (steward), Peter (consulted) |
-| `agile-daily-standup` | Daily standup ceremony: read-only board review, blocker surfacing, optional `sync-this-week` write. PM steward (Mark); board writes blocked to PM | Mark (steward) |
-
-> `hr-sync-agent-topology` is live at `.agents/skills/hr-sync-agent-topology/` — renamed from `sync-agent-topology` to match the `hr-*` family (rename uncommitted as of the 2026-06-10 sync). Harriet's JD routing-table update is staged at `docs/people/drafts/agents/harriet.agent.md`.
-
----
-
-## Skills Coverage Gaps
-
-> Harriet maintains this section. When a gap is identified during a hire or audit, log it here with the proposed remediation.
-
-| Gap | Identified by | Proposed remediation | Status |
-|---|---|---|---|
-| `ux-professional-software` (information-dense UI, document-centric interaction, form design) | Harriet (2026-04-20, Matt hire) | Query `Product Design & UX` and `Information Architecture and Knowledge Management` notebooks; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
-| `ux-conversion-design` (co-development partner conversion UX, 10→100→1000 phasing) | Harriet (2026-04-20, Matt hire; rescoped 2026-05-09) | Route through John for `Monetizing & Scaling Innovation` and `Digital Marketing & Social Selling` notebooks; combine with `Product Design & UX`; draft skill using `writing-skills` TDD cycle | Pending notebook grounding + John consultation |
-| `ux-document-design` (document-as-product design for generated DOCX output) | Harriet (2026-05-09, Matt scope expansion) | Query `Product Design & UX` notebook for document design principles; consider Word/OOXML formatting constraints; draft skill using `writing-skills` TDD cycle | Pending — Sprint 1 priority |
-| `ux-taskpane-design` (Word taskpane add-in interaction patterns) | Harriet (2026-05-09, Matt scope expansion) | Deferred until P-024 unfreezes. Query `Product Design & UX` notebook when ready | Deferred (P-024) |
-| `ux-email-as-interface` (email template design for co-development and impact communication) | Harriet (2026-05-09, Matt scope expansion) | Collaborate with John on email copy patterns; draft skill using `writing-skills` TDD cycle | Deferred — Phase 2 |
-| `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
-| `ddd-strategic` (strategic DDD: subdomain classification, context mapping, EventStorming, ACL, UL stewardship, model evolution governance) | Harriet (2026-05-17, DDD topology sync session) | Grounded via NotebookLM Software Architecture & DDD notebook. Promoted to `.agents/skills/ddd-strategic/` with 3 procedures. | **Live** |
-| `engineering-architecture` (system design, ADRs, component boundaries) | Harriet (2026-05-16, Peter hire) | Strategic DDD content extracted to `ddd-strategic`. System-level architecture content still requires notebook grounding from Software Development Methodology & Engineering Organisation notebook. **2026-06-10 (Peter Delta):** salvage port from `arch-engineering` before its deletion (Common Mistakes table; Decision Persistence / `record_decision` section — AGENTS.md-mandated, absent from this skill; grounding-sources list: Team Topologies, Accelerate, Farley, Larson, Beck) **plus two stale-pointer fixes found live**: "Does Not Cover" cites pre-split `evaluation-architecture` (→ `design-eval-rubric`/`design-eval-pipeline`); cited notebook ID `cdb5e862-…` returns NOT_FOUND (correct register ID `91568710-98b3-4448-b038-04f9b48b7111`). One commit with sync item A-5. | Partially grounded — salvage + pointer fixes pending founder execution |
-| `design-eval-rubric` + `design-eval-pipeline` (formerly `evaluation-architecture`; split 2026-05-31) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` and `AI System Engineering` notebooks; ground both stubs | Stubs live under new names — notebook grounding pending |
-| `shaping` (Shape Up process adapted for Redline) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for Shape Up content; ground stub at `.agents/skills/shaping/` | Stub promoted — notebook grounding pending |
-| `define-ai-policy` + `enforce-ai-batch-discipline` (formerly `ai-acceptable-use-policy`; split 2026-05-31) | Harriet (2026-05-16, Peter hire) | Query `Software Development Methodology & Engineering Organisation` notebook for DORA content; incorporate external DORA 2024-2026 research; ground both stubs | Stubs live under new names — notebook grounding + external research pending |
-| `dev-environment` extension: dependency management guidance | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `dev-environment` skill: `uv add` / `uv remove` patterns, `pyproject.toml` dependency declarations, when to escalate to Peter. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
-| `python-domain-modeling` extension: layer architecture | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `python-domain-modeling` skill: visual reference for Redline's layer architecture (`domain/`, `functions/`, `api/`), what belongs in each layer, prohibited cross-layer imports, escalation triggers. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
-| `version-control` extension: PR discipline thresholds | Peter (2026-05-22, Kabilan hire consultation) | Add to existing `version-control` skill: maximum PR size (lines/files), "one logical change" definition, how to split PRs, SonarQube/Copilot detection, author-side AI feedback window. Peter provides content; Harriet drafts patch. | **Live** (2026-05-23) |
-| `tool-selection` (CLI-first routing: `gh`, `gws`, `gcloud`, MCP, direct API) | ADR-016 (2026-06-06) | Promoted to `.agents/skills/tool-selection/`. Stale draft duplicate deleted — `docs/people/drafts/skills/` verified empty 2026-06-10. | **Live** (2026-06-06; cleanup confirmed 2026-06-10) |
-| 13 GCP/DevOps skills: Cloud Run deploy, CI/CD pipeline, IAM least-privilege, Cloud SQL, IAP/OAuth wiring, observability, cost controls, container tuning, WIF, multi-tenancy, Secret Manager, infra-boundary-contract, **`terraform-iac` (added 2026-06-10 per ADR-020 — HCL authoring, plan/apply discipline, state operations)** | Harriet (2026-06-06, Brent topology screen; +1 at 2026-06-10 sync) | Ground from "DevOps & GCP Infrastructure" (8 books) and "GCP DevOps Tactical Playbook" (promoted to register 2026-06-07); `terraform-iac` additionally from HashiCorp documentation. Author with `writing-skills` TDD cycle. Until written, Brent uses WebFetch + Context7. **Brent's validated Delta (2026-06-10) refines two of the 13:** `terraform-iac` gains state surgery (`import`/`mv`/`rm`), provider-pinning maintenance, and a 6.x→7.x upgrade-evaluation checklist; the IAP/OAuth wiring skill must be updated **before issue #73 work begins** — direct IAP-on-Cloud-Run is GA (no load balancer, different audience handling), staling the JD template's audience format. | Deferred — next sprint (GitHub issue) |
-| `agile-sprint-planning` and `agile-daily-standup` missing from `skills-lock.json` (authoritative source per ADR-001/ADR-009) | Harriet (2026-06-10, taxonomy currency check) | Both skills live on disk (added commit `c6eed1d`) but absent from `skills-lock.json`. Taxonomy entries added with steward mapping (Mark steward, Peter consulted). Lock file is engineering-controlled, not a Harriet artifact — founder/engineering must add the two entries (`owner_agent: ["mark"]`, status `active`) to make the lock authoritative. | Taxonomy fixed; lock-file entry pending engineering |
-| SRP new-violations: `prek-find-and-fix`, `test-find-and-fix` (structural "and" in skill names) | Harriet (2026-06-10, Topology Sync SRP Compliance Pass) | Both mirror the approved `sonarqube-find-and-fix` `justified-orchestrator` pattern. Founder to approve adding both (plus the `sync-agent-topology` → `hr-sync-agent-topology` rename) to the Known Exception Skip-List in `hr-sync-agent-topology/procedures/srp-scan-procedure.md`. Must resolve before next sync. | Pending founder approval |
-| Duplicate skill: `arch-engineering` vs `engineering-architecture` | Harriet (2026-06-10, Topology Sync) | `arch-engineering` frozen since 2026-05-31, unrouted by any JD, and overlaps `create-adr` on ADR authoring. Propose deletion of `.agents/skills/arch-engineering/` (founder approval — outside Harriet's write authority). **Peter confirmed at live Delta collection** — with the salvage condition recorded in the taxonomy row above and in the sync report (V-1/S-7). | Pending founder execution (A-5) |
-| `hr-sync-agent-topology` protocol amendment: R2 question 1 is structurally unanswerable by static book corpora (null answers = valid protocol output, not failure; fall back to R2 question 2 + R3); add dispatched-session prerequisites (NotebookLM path via `nlm`, record CCE/ToolSearch availability) | Linda + Mark Delta Statements (2026-06-10, live collection); 4 of 8 sessions had no NotebookLM path | Harriet supplies amendment text; founder applies (`.agents/skills/` outside Harriet's write authority). Sync items S-5/A-23. | Pending founder approval |
-| `create-adr` extension: reciprocal status convention ("Accepted, supersedes ADR-NNN") + **partial-supersession pattern** (status-line-only update on the partially superseded ADR; body immutable) | Peter Delta (2026-06-10) — R2 verbatim: literature silent on partial supersession; Redline codifies the convention | Peter supplies content; founder approves the edit; ADR-023 is the first exercise. Sync items S-6/A-24. | Pending founder approval |
-| `marketing-product-led-seo` AI-citation-visibility annex (+ Big 5 note) and `linkedin-social-selling` saves/dwell metric update | John Delta (2026-06-10) — R3 findings flagged directional (secondary sources only) | **Corroboration-gated:** Linda sources one primary reference each (LinkedIn engineering 360Brew publication; primary Google AI Overviews/AI Mode source); then John drafts annexes; founder approves. Sync items S-9/A-26. No skill change until corroborated. | Blocked on primary sourcing |
-| `notebooklm-cli` re-verification at `notebooklm-mcp-cli` 0.7.2 (we run 0.7.0; two patch releases in window) | Linda Delta (2026-06-10, PyPI evidence) | Founder approves the upgrade; Linda re-verifies the skill's command table against the new binary (no syntax change identified yet). Sync items S-10/A-22. | Pending founder approval |
-| Standards-monitoring procedure mechanics (Linda): amendment-level tracking, withdrawal flagging, referenced-overseas-standards tracking, standards-body update-service subscription; plus the feed-tooling question (only `snz_scraper.py` exists — ISO/BSI/Standards AU unmonitored by tooling vs Linda's Outcome 4 wording) | Linda Delta (2026-06-10) — citable to `engineering-standards` notebook sources; domain decisions stay routed to Graeme | Bundled with founder decision A-18 (extend tooling vs narrow Outcome 4); Harriet drafts the Linda JD patch only if narrowed. Sync item S-11. | Pending founder decision |

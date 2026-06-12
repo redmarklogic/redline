@@ -7,7 +7,7 @@ description: Use when updating the org chart, agent register, or skills taxonomy
 
 ## Overview
 
-The People artifacts (`agent-register.md`, `org-chart.md`, `skills-taxonomy.md`) are the single source of truth for the current agent topology. They must reflect reality at the end of every session that changes agent scope, hires, or deprecations.
+The People artifacts (`agent-register.md`, `org-chart.md`, `skills-taxonomy.md`, `skills-gaps.md`) are the single source of truth for the current agent topology. They must reflect reality at the end of every session that changes agent scope, hires, or deprecations. Note the split per ADR-001: `skills-taxonomy.md` holds the category vocabulary and live-skill catalog only; gap, pending, and deprecation state goes to `skills-gaps.md`; ownership lives in `skills-lock.json`.
 
 ## Artifacts Owned
 
@@ -15,7 +15,8 @@ The People artifacts (`agent-register.md`, `org-chart.md`, `skills-taxonomy.md`)
 |---|---|---|
 | Agent register | `docs/people/agent-register.md` | Any hire, deprecation, or role boundary change |
 | Org chart | `docs/people/org-chart.md` | Any hire, deprecation, or reporting line change |
-| Skills taxonomy | `docs/people/skills-taxonomy.md` | Any new, deprecated, or reassigned skill |
+| Skills taxonomy & catalog | `docs/people/skills-taxonomy.md` | Any new, renamed, or retired live skill (catalog row + category) |
+| Skills gaps ledger | `docs/people/skills-gaps.md` | Any gap identified, lifecycle state change, or pending action resolved |
 
 ## When to Run
 
@@ -27,7 +28,7 @@ The People artifacts (`agent-register.md`, `org-chart.md`, `skills-taxonomy.md`)
 ## Boundary Contract
 
 - Registry updates reflect promoted state only — draft JDs do not appear in the register
-- All three People artifacts must be updated in the same session (no partial updates)
+- All affected People artifacts must be updated in the same session (no partial updates)
 
 ## Cross-References
 

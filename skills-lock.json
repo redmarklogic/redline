@@ -2,18 +2,6 @@
   "version": 2,
   "superpowersVersion": "v5.1.0",
   "skills": {
-    "ai-acceptable-use-policy": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "peter",
-        "ron"
-      ],
-      "status": "active",
-      "layer": 8
-    },
     "brainstorming": {
       "source": "obra/superpowers",
       "sourceType": "github",
@@ -24,17 +12,6 @@
       ],
       "status": "active",
       "layer": 0
-    },
-    "branching-strategy": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "kabilan"
-      ],
-      "status": "active",
-      "layer": 7
     },
     "mcp-cce": {
       "source": "local",
@@ -192,17 +169,6 @@
       "status": "active",
       "layer": 7
     },
-    "evaluation-architecture": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "peter"
-      ],
-      "status": "active",
-      "layer": 8
-    },
     "git-push-batched": {
       "source": "local",
       "sourceType": "local",
@@ -213,17 +179,6 @@
       ],
       "status": "active",
       "layer": 8
-    },
-    "hiring-agent-management": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "planning",
-      "owner_agent": [
-        "harriet"
-      ],
-      "status": "active",
-      "layer": 9
     },
     "library-management": {
       "source": "local",
@@ -259,17 +214,6 @@
       "layer": 9
     },
     "marketing-product-led-seo": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "john"
-      ],
-      "status": "active",
-      "layer": 9
-    },
-    "marketing-social-selling-linkedin": {
       "source": "local",
       "sourceType": "local",
       "computedHash": null,
@@ -847,18 +791,6 @@
       "status": "active",
       "layer": 8
     },
-    "skills-create": {
-      "source": "local",
-      "sourceType": "local",
-      "computedHash": null,
-      "tier": "functional",
-      "owner_agent": [
-        "harriet",
-        "kabilan"
-      ],
-      "status": "active",
-      "layer": 8
-    },
     "spec-kit": {
       "source": "local",
       "sourceType": "local",
@@ -1021,6 +953,263 @@
       ],
       "status": "active",
       "layer": 8
+    },
+    "adr-constitution-sync": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "create-adr": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "customization-mechanism-triage": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "harriet",
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "define-ai-policy": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter",
+        "ron"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "design-eval-pipeline": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "design-eval-rubric": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "enforce-ai-batch-discipline": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "engineering-architecture": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "peter"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "hr-audit-agent": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "planning",
+      "owner_agent": [
+        "harriet"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "hr-hire-agent": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "planning",
+      "owner_agent": [
+        "harriet"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "hr-maintain-agent-registry": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "harriet"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "linkedin-social-selling": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "john"
+      ],
+      "status": "active",
+      "layer": 9
+    },
+    "mental-models": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "atomic",
+      "owner_agent": [
+        "kabilan",
+        "peter",
+        "harriet",
+        "graeme",
+        "ron",
+        "john",
+        "mark",
+        "matt",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 1
+    },
+    "prek-find-and-fix": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "python-fastapi": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 6
+    },
+    "session-handover": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan",
+        "peter",
+        "harriet",
+        "graeme",
+        "ron",
+        "john",
+        "mark",
+        "matt",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "sonarqube-find-and-fix": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "sonarqube-review": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
+    },
+    "sonarqube-scan": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "atomic",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 5
+    },
+    "test-find-and-fix": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "functional",
+      "owner_agent": [
+        "kabilan"
+      ],
+      "status": "active",
+      "layer": 8
+    },
+    "tool-selection": {
+      "source": "local",
+      "sourceType": "local",
+      "computedHash": null,
+      "tier": "atomic",
+      "owner_agent": [
+        "kabilan",
+        "peter",
+        "harriet",
+        "graeme",
+        "ron",
+        "john",
+        "mark",
+        "matt",
+        "linda"
+      ],
+      "status": "active",
+      "layer": 2
     }
   },
   "installedSuperpowersVersion": "v5.1.0"

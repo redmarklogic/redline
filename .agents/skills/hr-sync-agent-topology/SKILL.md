@@ -86,7 +86,8 @@ Full step-by-step procedure: `procedures/run-topology-sync.md`
 | Draft JD patches | `docs/people/drafts/agents/<agent>.agent.md` | Facilitating agent | Yes |
 | Updated agent register | `docs/people/agent-register.md` | Facilitating agent | Yes |
 | Updated org chart | `docs/people/org-chart.md` | Facilitating agent | Yes |
-| Updated skills taxonomy | `docs/people/skills-taxonomy.md` | Facilitating agent | Yes |
+| Updated skills taxonomy & catalog | `docs/people/skills-taxonomy.md` | Facilitating agent | Yes |
+| Updated skills gaps ledger | `docs/people/skills-gaps.md` | Facilitating agent | Yes |
 | SRP violations list | `docs/people/drafts/reports/violations-list.md` | Facilitating agent | **Yes — sync cannot be marked complete without it** |
 
 

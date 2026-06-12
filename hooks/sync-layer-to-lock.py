@@ -1,17 +1,17 @@
-"""Sync layer field in skills-lock.json from skills-taxonomy.md.
+"""Sync layer field in skills-lock.json from skills-architecture.md.
 
-Parses the Layer Definitions section of skills-taxonomy.md to build a
-skill-to-layer mapping, then writes the derived `layer` field into each
-skill entry in skills-lock.json.
+Parses the Layer Definitions section of docs/architecture/skills-architecture.md
+to build a skill-to-layer mapping, then writes the derived `layer` field into
+each skill entry in skills-lock.json.
 
-skills-taxonomy.md is the SOT for layer assignments (ADR-001).
+skills-architecture.md is the SOT for layer assignments (ADR-001).
 skills-lock.json is the machine-readable registry; `layer` is a derived field.
 
 Usage:
     python hooks/sync-layer-to-lock.py
 
 Run automatically as a pre-commit hook. Exits non-zero if any skill in the
-lock file has no layer assignment in the taxonomy.
+lock file has no layer assignment in the architecture doc.
 """
 
 import json
@@ -20,11 +20,11 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
-TAXONOMY_PATH = REPO_ROOT / "docs" / "architecture" / "skills-taxonomy.md"
+ARCHITECTURE_PATH = REPO_ROOT / "docs" / "architecture" / "skills-architecture.md"
 LOCK_PATH = REPO_ROOT / "skills-lock.json"
 
 
-def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
+def parse_layer_map(architecture_text: str) -> dict[str, int]:
     """Return {skill_name: layer_number} extracted from Layer Definitions section only.
 
     Parsing is restricted to the ``## Layer Definitions`` section so that
@@ -36,7 +36,7 @@ def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
     current_layer: int | None = None
     in_layer_definitions = False
 
-    for line in taxonomy_text.splitlines():
+    for line in architecture_text.splitlines():
         # Enter the Layer Definitions section.
         if re.match(r"^##\s+Layer Definitions", line):
             in_layer_definitions = True
@@ -75,8 +75,8 @@ def parse_layer_map(taxonomy_text: str) -> dict[str, int]:
 
 def main() -> int:
     """Entry point."""
-    taxonomy_text = TAXONOMY_PATH.read_text(encoding="utf-8")
-    layer_map = parse_layer_map(taxonomy_text)
+    architecture_text = ARCHITECTURE_PATH.read_text(encoding="utf-8")
+    layer_map = parse_layer_map(architecture_text)
 
     lock_data = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
     skills = lock_data["skills"]
@@ -91,12 +91,12 @@ def main() -> int:
     if missing:
         print(
             f"ERROR: {len(missing)} skill(s) in skills-lock.json have no layer "
-            f"assignment in skills-taxonomy.md:\n  " + "\n  ".join(missing),
+            f"assignment in skills-architecture.md:\n  " + "\n  ".join(missing),
             file=sys.stderr,
         )
         print(
             "Add each skill to the correct layer in the Layer Definitions section "
-            "of docs/architecture/skills-taxonomy.md, then re-run this script.",
+            "of docs/architecture/skills-architecture.md, then re-run this script.",
             file=sys.stderr,
         )
         return 1
