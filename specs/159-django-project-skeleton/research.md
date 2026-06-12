@@ -3,8 +3,10 @@
 Phase 0 output. Resolves every open point left by spec.md Assumptions. Sources:
 official Django 5.2 docs (via context7 `/websites/djangoproject_en_5_2`), PyPI,
 Django install FAQ, repo `pyproject.toml`, ADR-024, `docs/architecture/layer-responsibilities.md`.
-The registered NotebookLM Django notebook could not ground queries (stub sources —
-see version-guard-report.md Knowledge-source note).
+The registered NotebookLM Django notebook could not ground queries at original
+writing (stub sources — see version-guard-report.md Knowledge-source note).
+**Update 2026-06-12**: notebook rebuilt with full Django 5.2-pinned content; D8 below
+is notebook-grounded (added with red-team session RT-159-django-project-skeleton-2026-06-12).
 
 ## D1 — Django version: 5.2 LTS, constraint `django>=5.2.8,<6`
 
@@ -97,10 +99,10 @@ see version-guard-report.md Knowledge-source note).
   DATABASES wiring is #164's scope; settings-from-env is #161's (sprint WBS).
   `runserver`'s "unapplied migrations" warning is expected and harmless — documented
   in quickstart so nobody "fixes" it early.
-- **Alternatives considered**: delete the DATABASES stanza (rejected: `contrib.admin`
-  + sessions apps in INSTALLED_APPS make several system checks expect a database
-  alias; stripping INSTALLED_APPS to avoid that fights the startproject baseline #161
-  and #164 build on).
+- **Alternatives considered**: delete the DATABASES stanza (rejected: the
+  `contrib.admin` and sessions apps in INSTALLED_APPS make several system checks
+  expect a database alias; stripping INSTALLED_APPS to avoid that fights the
+  startproject baseline #161 and #164 build on).
 
 ## D7 — Lint/packaging seams (mechanical, but recorded)
 
@@ -116,3 +118,35 @@ see version-guard-report.md Knowledge-source note).
   untouched (spec FR-004/FR-005).
 - Windows dev / Linux deploy (Constitution XIV): generated settings use
   `pathlib.Path` BASE_DIR (5.2 default) — compliant; files land with LF endings.
+
+## D8 — Notebook-grounded constraints (added 2026-06-12, post-rebuild)
+
+Facts retrieved from the `django-application-development` notebook (full Django 5.2
+docs + books, rebuilt by Linda 2026-06-12) during red-team session
+RT-159-django-project-skeleton-2026-06-12. These bind implementation and the
+handoffs to #161/#177; findings cross-referenced in
+[red-team-findings-2026-06-12.md](red-team-findings-2026-06-12.md).
+
+- **Plain `check` is not a security gate.** The deploy/security check class
+  (security.W004 HSTS, W008 SSL redirect, W009 SECRET_KEY strength, W012/W016 secure
+  cookies) is raised only by `manage.py check --deploy`. The slice's done-when
+  ("check clean") and the run-app gate are liveness/config-consistency signals only
+  (findings F-001/F-009).
+- **ALLOWED_HOSTS behaviour matrix.** Startproject ships `ALLOWED_HOSTS = []`. With
+  `DEBUG=True`, Django validates Host against localhost variants only; with
+  `DEBUG=False` and an empty list, EVERY request returns 400. The third
+  deploy-blocking default alongside SECRET_KEY/DEBUG — owned by #161 (finding F-006).
+- **URL routing is method-blind.** The URLconf routes all HTTP methods to the same
+  function view; a token-less POST to an undecorated view hits CsrfViewMiddleware
+  first and returns 403, never 405. The root-page contract's "405/404 defaults" row
+  is wrong as designed; `@require_GET` makes it true (finding F-004).
+- **APPEND_SLASH redirects are conditional.** The `/health` → `/health/` redirect
+  exists only while CommonMiddleware is installed and the slashless URL matches no
+  pattern; the docs do not pin the 301 code. Probes must use the literal `/health/`
+  (finding F-003).
+- **pytest-django settings precedence** (from the pytest-django doc source, verbatim
+  order): `--ds` command-line option > `DJANGO_SETTINGS_MODULE` environment variable >
+  config-file value (pyproject/pytest.ini). A developer's inherited env var silently
+  overrides the repo's pyproject wiring (finding F-005). The doc's own hardening:
+  `addopts = --ds=web.settings` promotes the repo value to highest precedence —
+  recommended addition to the existing `[tool.pytest]` addopts when T007 lands.

@@ -94,9 +94,10 @@ issue done-when 2.
 
 - [ ] T014 [Phase 2] Verify working code: `rtk uv run pytest tests/web/ -v` — both
       tests green. Then the manual done-when check per quickstart.md §3:
-      `rtk uv run python manage.py runserver` and `GET http://127.0.0.1:8000/`
-      returns HTTP 200 (the unapplied-migrations warning is expected — quickstart
-      "Expected oddities").
+      `rtk uv run python manage.py runserver 127.0.0.1:8766` and
+      `GET http://127.0.0.1:8766/` returns HTTP 200 (port 8766 is the project
+      convention for the Django app — never 8000; the unapplied-migrations warning
+      is expected — quickstart "Expected oddities").
 - [ ] T015 [Phase 2] Run pytest: `rtk uv run pytest` — full suite green.
 
 ---
@@ -134,6 +135,7 @@ script updated with log-analysis gate (FR-008, SC-005).
 checks before the browser opens (FR-008, SC-005).
 
 Port convention (fixed constants — never use 8000):
+
 - marker (FastAPI): **8765**
 - web (Django): **8766**
 

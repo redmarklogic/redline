@@ -60,7 +60,7 @@ A developer adds the web framework to the project's dependency manifest so any t
 
 - Fresh clone, no prior environment: boot must require only documented standard commands (install, run) — no undocumented setup steps.
 - Headless / no-database environment (CI): the system check must pass without a provisioned database; database wiring belongs to #164.
-- Existing API coexistence: the current walking-skeleton API (`src/marker`) keeps working; its test suite passes unchanged. Both dev servers default to the same local port — only one runs at a time in normal use, and the team docs note the conflict.
+- Existing API coexistence: the current walking-skeleton API (`src/marker`) keeps working; its test suite passes unchanged. Fixed-port convention (FR-008): marker on 8765, Django on 8766, port 8000 never used — both apps run side by side via `tasks/run-app.ps1`.
 - Repeated boots: starting and stopping the dev server repeatedly leaves no state requiring cleanup.
 
 ## Requirements *(mandatory)*

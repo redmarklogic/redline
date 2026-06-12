@@ -68,6 +68,15 @@ placeholder page; every triggering keyword refers to work owned by #160/#161/#16
 Red team re-qualifies when those slices enter spec-kit." Founder may override by
 requesting `/speckit.red-team.run` before implementation.
 
+**Update 2026-06-12 — waiver discharged**: after the spec gained real contract surface
+(FR-007 health endpoint, FR-008 launcher contract, SC-005), session
+RT-159-django-project-skeleton-2026-06-12 ran with the API Contract and Infrastructure
+Security lenses, grounded in the rebuilt Django notebook. Findings (0 CRITICAL /
+4 HIGH / 5 MEDIUM / 1 LOW) and proposed resolutions:
+[red-team-findings-2026-06-12.md](red-team-findings-2026-06-12.md). Gate status:
+SATISFIED. Resolutions await founder categorisation; notebook-grounded constraints
+recorded as research.md D8.
+
 **Deploy-order risk (recorded for the sprint, not this slice)**: WBS dependency
 `1.1 -> 6.2` lets the Cloud Run deploy (#177) ship this skeleton before settings
 hardening (#161). If that ordering occurs, staging serves `DEBUG=True` behind the
@@ -132,7 +141,9 @@ package list is explicit — omitting `"src/web"` means `import web` fails every
 
 Complete: [research.md](research.md). Decisions D1 (version), D2 (placement),
 D3 (generation method), D4 (root view + admin route), D5 (test harness), D6 (no DB),
-D7 (lint/packaging seams). No NEEDS CLARIFICATION remained.
+D7 (lint/packaging seams). No NEEDS CLARIFICATION remained. Post-plan addition:
+D8 (notebook-grounded constraints from the red-team session, 2026-06-12) — binds
+implementation and the #161/#177 handoffs.
 
 ## Phase 1 — Design & Contracts
 
