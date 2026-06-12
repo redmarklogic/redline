@@ -18,7 +18,14 @@ The only external interface this slice exposes. Volatile per Constitution XIII (
 
 - `/admin/` exists (startproject default, kept per ADR-024 admin-at-launch) but is
   non-functional until #164 (database) and #165 (identity) land. Not a promise.
-- No health endpoint is added or moved. The existing API health path is owned by
-  `src/marker` until the pivot reaches it (ADR-018 surface, later tasks).
-- HTTP method behaviour other than GET on `/` follows framework defaults (405/404);
-  downstream tasks may change it without ceremony.
+- The slice's only other unauthenticated endpoint is `GET /health/` — contract in
+  [health-endpoint.md](health-endpoint.md). Together these two files are the complete
+  inventory of the slice's exposed surface. The existing API health path is owned by
+  `src/marker` until the pivot reaches it (ADR-018 surface, later tasks). *(RT F-010.)*
+- HTTP method behaviour other than GET is framework default and explicitly out of
+  contract: Django's URLconf is method-blind (all methods route to the view), and
+  unsafe methods without a CSRF token are rejected with 403 by `CsrfViewMiddleware`
+  before the view runs — there is no 405. #171 (auth-gated page) replaces this view
+  wholesale and defines its own method contract. *(RT F-004 — corrected; the earlier
+  "405/404" claim was wrong, and `@require_GET` was rejected: CSRF fires first and
+  the decorator would 405 HEAD probes.)*

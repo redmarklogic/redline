@@ -55,7 +55,7 @@ file + pyproject wiring. No data model, no auth, no UI beyond one placeholder re
 | V (Facade boundaries) | PASS | No layer crossing added — placeholder view calls nothing in `rl` |
 | X (Raise on failure) | PASS | No failure-signalling code in slice; generated boilerplate returns no sentinels |
 | XIV (Platform by deployment) | PASS | `pathlib.Path` BASE_DIR (5.2 default), LF endings; runs on Windows dev + Linux CI |
-| XVI (Env as sole config) | PASS (letter) / DEFERRED (spirit) | Generated settings read no env vars and use no dotenv — the letter holds. Hard-coded dev `SECRET_KEY` + `DEBUG=True` are the startproject baseline; "boots from env only, DEBUG=False boots" is exactly #161's done-when (sprint WBS 1.3). **Accepted Risk**, owned by #161. |
+| XVI (Env as sole config) | PASS (letter) / DEFERRED (spirit) | Generated settings read no env vars and use no dotenv — the letter holds. The startproject baseline ships THREE deploy-blocking defaults: hard-coded dev `SECRET_KEY` (burned — committed to git, baked into images), `DEBUG=True`, and `ALLOWED_HOSTS = []` (with DEBUG=False this 400s every request; the `'*'` escape hatch is expressly forbidden). "Boots from env only, DEBUG=False boots" is exactly #161's done-when (sprint WBS 1.3). **Accepted Risk**, owned by #161. *(ALLOWED_HOSTS row added per RT F-006.)* |
 | XVII (All-Python) | PASS | Django is Python; no second toolchain |
 | XVIII (Stateless core / framework in shell) | PASS | Django confined to new `src/web`; `rl`/`marker` untouched; no ORM models created at all |
 
@@ -74,14 +74,25 @@ RT-159-django-project-skeleton-2026-06-12 ran with the API Contract and Infrastr
 Security lenses, grounded in the rebuilt Django notebook. Findings (0 CRITICAL /
 4 HIGH / 5 MEDIUM / 1 LOW) and proposed resolutions:
 [red-team-findings-2026-06-12.md](red-team-findings-2026-06-12.md). Gate status:
-SATISFIED. Resolutions await founder categorisation; notebook-grounded constraints
-recorded as research.md D8.
+SATISFIED. Resolutions categorised 2026-06-12 by joint Brent + Peter review (founder
+approved): dispositions and statuses in the findings report §3; notebook-grounded
+constraints recorded as research.md D8.
 
 **Deploy-order risk (recorded for the sprint, not this slice)**: WBS dependency
 `1.1 -> 6.2` lets the Cloud Run deploy (#177) ship this skeleton before settings
-hardening (#161). If that ordering occurs, staging serves `DEBUG=True` behind the
-founder-IP ingress lock (#178). Sprint accepts this for the Wednesday tripwire,
-and #161 is day-1 work specifically to close the window fast.
+hardening (#161). Two amendments from the red-team review (RT F-006/F-007, Brent +
+Peter agreed 2026-06-12): (a) #177 cannot serve a single request without an
+ALLOWED_HOSTS value — the startproject default `[]` 400s everything at the
+`*.run.app` hostname; the deploy-time env value is #177's problem, the durable fix
+is #161's, and `'*'` is forbidden in both. (b) Staging is currently explicitly
+public (`INGRESS_TRAFFIC_ALL` + `allUsers` invoker in `cloud_run.tf`, provisioned
+for the no-data FastAPI skeleton) — #177's acceptance therefore includes revoking
+the `allUsers` invoker grant the moment the Django (DEBUG=True) image deploys;
+the tripwire is verified via authenticated request (`gcloud run services proxy`).
+The agreed sequencing: #178 does NOT block #177 — the IAM gate is the interim
+control, and #178's own mechanism (Cloud Run ingress cannot IP-filter natively;
+Cloud Armor vs app-level middleware) needs Brent's options table when it starts.
+With #161 as day-1 work the window closes naturally if the sprint holds order.
 
 ## Project Structure
 
@@ -91,12 +102,14 @@ and #161 is day-1 work specifically to close the window fast.
 specs/159-django-project-skeleton/
 ├── spec.md
 ├── plan.md                    # this file
-├── research.md                # Phase 0 — decisions D1–D7
+├── research.md                # Phase 0 — decisions D1–D8
 ├── data-model.md              # Phase 1 — records "no entities this slice"
-├── quickstart.md              # Phase 1 — install/run/verify commands
+├── quickstart.md              # Phase 1 — install/boot/verify commands
 ├── version-guard-report.md    # before_plan hook output (binding constraints)
+├── red-team-findings-2026-06-12.md  # RT session artifact (gate SATISFIED)
 ├── contracts/
-│   └── root-page.md           # GET / placeholder contract
+│   ├── root-page.md           # GET / placeholder contract
+│   └── health-endpoint.md     # GET /health/ liveness contract (FR-007)
 ├── checklists/
 │   └── requirements.md
 └── tasks.md                   # Phase 2 (/speckit.tasks — not created by plan)
@@ -123,7 +136,8 @@ tests/
     └── test_skeleton.py       # NEW — smoke: GET / == 200; GET /health/ == 200; check() clean; DB-free
 
 tasks/
-└── run-app.ps1                # MODIFIED — add -App django branch (FR-008)
+└── run-app.ps1                # MODIFIED — always starts BOTH apps, no parameters
+                               # (FR-008; fixed ports 8765/8766; fail-closed guards)
 
 pyproject.toml                 # MODIFIED:
                                #   [project] dependencies += "django>=5.2.8,<6"

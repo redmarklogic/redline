@@ -51,7 +51,10 @@ issue done-when 2.
 - [ ] T007 [Phase 1] In `pyproject.toml`, same commit as T005/T006: append
       `"src/web"` to `tool.hatch.build.targets.wheel.packages`; add
       `ini_options.DJANGO_SETTINGS_MODULE = "web.settings"` under `[tool.pytest]`;
-      re-run `rtk uv sync` to refresh the editable install.
+      append `"--ds=web.settings"` to the existing pytest `addopts` (command-line
+      precedence beats any `DJANGO_SETTINGS_MODULE` inherited from the developer's
+      environment — research.md D8, RT F-005); re-run `rtk uv sync` to refresh the
+      editable install.
 
 ### Acceptance Gate
 
