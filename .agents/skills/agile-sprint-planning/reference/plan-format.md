@@ -28,6 +28,18 @@ Rules: parents bold, sub-tasks plain with leading dash and dot numbering; every 
 
 Task names 2–3 words so they fit the blocks; single-day tasks name the day once (not "Thu – Thu"); parallel tracks on separate rows; blank line between the Gantt block and the task table. Rendered Mermaid diagrams (plan document only) follow `mermaid-diagrams`.
 
+## Schedule table (drives the board Start date / Target date fields)
+
+```text
+| #   | Task            | Track | Start  | Target | Days |
+|-----|-----------------|-------|--------|--------|------|
+| 1.1 | Skeleton        | App   | Jun 15 | Jun 15 | 1    |
+| 2.1 | Staging SQL     | Infra | Jun 15 | Jun 16 | 2    |
+| 6.2 | Deploy on merge | Infra | Jun 16 | Jun 17 | 2    |
+```
+
+One row per committed task (a parent spans its children: min start → max target). `Start` / `Target` are written verbatim to the board's **Start date** / **Target date** fields (commit 5c) and are what position and size each roadmap bar. `Track` groups parallel-safe rows — same days on a different track = work that can run in parallel. `Days` = Target − Start + 1, the duration signal the roadmap shows as bar width. Dates must be distinct across the dependency order (a successor's Start ≥ each predecessor's Target) — never the uniform sprint span. Same task numbers as the WBS table and Gantt.
+
 ## `sprint-<N>-goal.md` template
 
 ```markdown
@@ -66,6 +78,10 @@ This sprint planning for: [N] tasks [+ reason if held below ceiling]
 
 [Dependency diagram per mermaid-diagrams — only if real dependencies exist]
 
+### Schedule
+
+[Schedule table per reference — start/target/days per task. These are written verbatim to the board Start date / Target date fields and drive the roadmap bars.]
+
 ---
 
 ## Explicitly Out of Scope
@@ -87,7 +103,7 @@ This sprint planning for: [N] tasks [+ reason if held below ceiling]
 ## Kickoff Checklist
 
 - [ ] Goal + task list confirmed by founder (Hard Gate 1)
-- [ ] **[BLOCKING]** Close gate passed (Hard Gate 4): item count == WBS level-1 count; Sprint field on all; dependencies written via set-dependencies; every level-2 row linked as a sub-issue (mirror rule)
+- [ ] **[BLOCKING]** Close gate passed (Hard Gate 4): item count == WBS level-1 count; Sprint field on all; Start/Target dates set per the schedule (distinct, not the sprint span); dependencies written via set-dependencies; every level-2 row linked as a sub-issue (mirror rule)
 - [ ] Out-of-scope list ≥ 3 (Hard Gate 3)
 - [ ] this-week.md regenerated
 - [ ] Every prerequisite task Done or committed this sprint

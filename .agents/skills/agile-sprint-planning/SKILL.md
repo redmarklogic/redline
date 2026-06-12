@@ -60,7 +60,7 @@ No prior art in this codebase → mark high-risk, allow extra time.
 1. **Goal confirmation:** founder confirms the goal before any document or board write.
 2. **Goal-first, backlog-second (Lead):** the backlog is read only after the goal and failure tripwire are confirmed. The founder asking to "peek at the board first" is not a waiver — the answer is the next goal question.
 3. **Out-of-scope list:** ≥ 3 named items with reasons (Redline convention; principle per *Shape Up* scope hammering / *Clean Agile* immutable iteration). Draft them yourself if the founder won't.
-4. **Board completeness (close gate):** board items for Sprint N == committed level-1 count; Sprint field set on every item; every identified predecessor written to the board via `github-projects` → set-dependencies; every level-2 WBS row exists as a sub-issue linked to its parent (WBS mirror rule — founder ruling 2026-06-12). Until all four hold, the ceremony is open.
+4. **Board completeness (close gate):** board items for Sprint N == committed level-1 count; Sprint field set on every item; **Start date / Target date set on every item from the schedule (commit step 3) — distinct per task, not the uniform sprint span**; every identified predecessor written to the board via `github-projects` → set-dependencies; every level-2 WBS row exists as a sub-issue linked to its parent (WBS mirror rule — founder ruling 2026-06-12). Until all hold, the ceremony is open.
 
 ## Common Mistakes
 
@@ -68,6 +68,7 @@ No prior art in this codebase → mark high-risk, allow extra time.
 |---|---|
 | Plan doc written, board never updated | **Sprint 2 failure: 8 of 10 planned tasks never reached the board.** Run the close gate; a GitHub issue is not a board item until verified via list-tasks. |
 | Dependencies named in prose but not written to the board | The daily standup reads board dependency data, not the plan doc. Write them via `github-projects` → set-dependencies before closing. |
+| Every roadmap bar spans the whole sprint week — no signal of order, duration, or parallelism | Per-task Start/Target dates were left at the sprint span (or the Roadmap view is positioned by the Sprint iteration field). Set distinct dates from the schedule (commit step 3 → 5c); reconfigure the Roadmap view to Start date → Target date (`github-projects`, one-time). |
 | Planning above last sprint's Done count | Yesterday's weather is the ceiling (*Clean Agile*). A "compromise" above it is still optimism. |
 | Committing a task with no spec/Pitch | Estimable fail → `shaping`. Offer the shaping session a sprint slot instead. |
 | Goal that can't be falsified ("work on X") | Goal = a state at sprint end, linked to a bet, with a failure tripwire (see `procedures/lead.md`). |

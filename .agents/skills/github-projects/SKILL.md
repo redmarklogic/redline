@@ -304,6 +304,15 @@ drive the Blocked badge and filters only. To make the Gantt read left-to-right i
 order, set `start_date` / `target_date` along the dependency chain *in addition to* the
 blocked_by links.
 
+**Roadmap view setup (one-time, manual — not API-scriptable).** The Roadmap view's date-field
+configuration is not exposed by the GraphQL API; set it once in the UI. Open the **Roadmap**
+view → view-name dropdown → **Settings** (or the **⚙️** in the view header) → **Date fields** →
+set the start marker to **Start date** and the target marker to **Target date** — *not* the
+**Sprint** iteration field. With the iteration field selected, every item in a sprint renders as
+one full-week bar regardless of its dates, so per-task `start_date` / `target_date` have no
+visible effect. After this is set once, the dates written above drive each bar's position (start
+= execution order, left→right) and width (Target − Start = duration).
+
 ---
 
 ### 7. set-parent (native sub-issues)
