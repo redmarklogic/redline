@@ -9,17 +9,28 @@ $ScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot   = Split-Path -Parent $ScriptRoot
 
 # --- Port guard: fail hard if occupied -------------------------------------------
+# No -LocalAddress filter: a wildcard bind (0.0.0.0 / ::) occupies the port just as
+# hard as a loopback bind and must trip the guard (RT-159 finding F-002).
 function Assert-PortFree {
     param([int]$Port, [string]$AppName)
-    $occupied = Get-NetTCPConnection -LocalAddress $Host_ -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
+    $occupied = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
     if ($occupied) {
-        Write-Error "Port $Port (reserved for $AppName) is already in use by PID $($occupied.OwningProcess). Free it manually and retry."
+        $pids = ($occupied.OwningProcess | Select-Object -Unique) -join ', '
+        Write-Error "Port $Port (reserved for $AppName) is already in use by PID $pids. Free it manually and retry."
         exit 1
     }
 }
 
 Assert-PortFree -Port $MarkerPort -AppName "marker (FastAPI)"
 Assert-PortFree -Port $DjangoPort  -AppName "web (Django)"
+
+# --- Settings-module guard ---------------------------------------------------------
+# pytest/manage.py give an inherited DJANGO_SETTINGS_MODULE precedence over repo
+# config; a foreign value silently boots the wrong settings (RT-159 finding F-005).
+if ($env:DJANGO_SETTINGS_MODULE -and $env:DJANGO_SETTINGS_MODULE -ne 'web.settings') {
+    Write-Error "DJANGO_SETTINGS_MODULE is set to '$($env:DJANGO_SETTINGS_MODULE)' (expected unset or 'web.settings'). Unset it and retry."
+    exit 1
+}
 
 # --- Django pre-flight: log-analysis gate ----------------------------------------
 # manage.py check runs synchronously and validates all installed apps, URL patterns,
@@ -62,3 +73,6 @@ $djangoReady  = Wait-ForHealth -Url "http://${Host_}:${DjangoPort}/health/" -App
 
 if ($markerReady) { Start-Process "http://${Host_}:${MarkerPort}/docs" }
 if ($djangoReady)  { Start-Process "http://${Host_}:${DjangoPort}/" }
+
+# Fail closed: callers (CI, other scripts) read the exit code (RT-159 finding F-002).
+if (-not ($markerReady -and $djangoReady)) { exit 1 }
