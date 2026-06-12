@@ -43,13 +43,38 @@ git merge origin/master --no-commit --no-ff
 
   Continue to Step 3.
 
-- **Exit non-0 (conflicts):** abort the merge, list conflicting files, then stop.
+- **Exit non-0 (conflicts):** attempt auto-resolution before giving up.
+
+  **Auto-resolvable files (always use ours):** `.specify/feature.json`
+
+  For each conflicting file in the auto-resolvable list:
 
   ```bash
-  git merge --abort
+  git checkout --ours -- <file>
+  git add <file>
   ```
 
-  Output the list of conflicting files, then print: "Merge conflicts detected. Resolve conflicts in the listed files, stage the resolutions, then re-run `/make-pr`." Do not proceed to Step 3.
+  After auto-resolution, check for remaining conflicts:
+
+  ```bash
+  git diff --name-only --diff-filter=U
+  ```
+
+  - **No remaining conflicts:** commit the merge.
+
+    ```bash
+    git commit -m "chore: merge master into <branch-name>"
+    ```
+
+    Continue to Step 3.
+
+  - **Remaining conflicts exist:** abort the merge, list the unresolved files, then stop.
+
+    ```bash
+    git merge --abort
+    ```
+
+    Output the list of conflicting files, then print: "Merge conflicts detected. Resolve conflicts in the listed files, stage the resolutions, then re-run `/make-pr`." Do not proceed to Step 3.
 
 ## Step 3 — Code review gate
 
