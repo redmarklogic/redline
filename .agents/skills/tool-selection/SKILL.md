@@ -1,6 +1,6 @@
 ---
 name: tool-selection
-description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct API call to use for a given operation, or which agent-orchestration tier (solo, parallel dispatch, dynamic workflow) fits a fan-out task. Routes GitHub, Google Workspace, and GCP operations to the correct tool, and fan-out work to the correct orchestration tier.
+description: Use when an agent must decide which CLI (gh, gws, gcloud) or direct API call to use for a given operation, or which agent-orchestration tier (solo, parallel dispatch, dynamic workflow) fits a fan-out task. Routes GitHub, Google Workspace, and GCP operations to the correct tool, and fan-out work to the correct orchestration tier. Also defines the binding CLI pre-flight authentication check and auth-failure protocol — load BEFORE first use of any external CLI in a session.
 ---
 
 # Tool Selection — Routing
@@ -23,9 +23,51 @@ Pick the relevant axis; they do not interact.
 - The correct orchestration tier + which skill/pattern to apply (axis 2)
 
 ### Out of Scope
-- Authentication setup procedures (see individual tool docs)
 - Anything requiring a human UI (GitHub Actions approval gates, GCP Console billing setup)
 - Operations not covered by any CLI — route those to direct REST/GraphQL API calls
+
+---
+
+## CLI Pre-Flight and Auth-Failure Protocol (BINDING)
+
+Single source of truth for what every agent does before and during CLI use. JDs and
+other skills point here — do not restate or override this protocol elsewhere.
+
+### Rule 1 — Pre-flight check
+
+Before the **first** use of a CLI in a session, verify it is installed and authenticated.
+Each `procedures/*-routing.md` file opens with the exact pre-flight commands for its CLI.
+For CLIs without a procedure file (e.g. `nlm`), use that CLI's own skill/doc for the check.
+
+### Rule 2 — Never skip the CLI over auth (HARD RULE)
+
+A missing or broken authentication is **never** a reason to abandon the CLI, silently
+fall back to another method (MCP, direct API, manual instructions to the user), or skip
+the operation. Auth problems are resolved, not routed around.
+
+### Rule 3 — Failure triage
+
+When a CLI call fails:
+
+```text
+Is it an authentication/authorization problem?
+(auth errors, expired tokens, missing scopes, "login required", 401/403)
+├── YES → try to fix it yourself using the remediation patterns in the
+│         CLI's procedure file (e.g. `gh auth refresh -s <scope>`,
+│         `gws auth setup`, `gcloud auth login --update-adc`).
+│   ├── Fixed → re-run the original command and continue.
+│   └── Needs human interaction (browser OAuth consent, button click,
+│       2FA) → STOP and ask the user to complete that exact step;
+│       give them the command/URL, wait, then continue with the CLI.
+└── NO → STOP. Report the failing command, the full error, and what you
+         ruled out. Do not improvise a workaround without the user.
+```
+
+### Rule 4 — Escalation wording
+
+When asking the user to complete an auth step, state: which CLI, the exact command they
+must run or URL to visit, what to click/approve, and that you will resume the CLI
+operation once they confirm.
 
 ---
 
@@ -79,11 +121,13 @@ Use direct REST or GraphQL API when:
 |---|---|---|
 | Using `gcloud` for Gmail | `gcloud` has no Gmail commands — fails immediately | Use `gws gmail` |
 | Using `gh` for Google Drive | No such capability in `gh` | Use `gws drive` |
-| Running `gh project item-edit` without `project` scope | Authentication error | Run `gh auth refresh -s project` first |
 | Using `gws` for Cloud SQL | `gws` covers Workspace productivity, not GCP infra | Use `gcloud sql` |
 | Omitting `--page-all` on `gws` list commands | Returns only first page (default 10–20 items) | Add `--page-all` for full result sets |
 | Hardcoding `userId` in Gmail commands | Breaks on service accounts | Use `me` as userId for authenticated user |
-| Using `gws` without verifying OAuth scope coverage | Unverified apps hit ~25-scope limit; some commands fail silently | Run `gws auth setup` and add test user in OAuth consent screen |
+| Skipping the CLI because auth fails | Violates the binding protocol above | Triage per Rule 3 — fix auth or escalate, never route around |
+
+Auth-specific failures (missing scopes, expired tokens) are covered by the Pre-Flight
+and Auth-Failure Protocol above and the pre-flight blocks in each procedure file.
 
 ---
 

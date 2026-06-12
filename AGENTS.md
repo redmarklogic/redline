@@ -32,7 +32,7 @@ Default agent: load skills matching the current task from `.agents/skills/`. For
 
 Domain-specific skills: `redline-research` (knowledge base lookup before online search).
 
-**Tool selection — CLI first:** Prefer CLI tools (`gh`, `gws`, `gcloud`) over MCP servers and direct API calls when both options are available. For routing rules and command patterns see `tool-selection` skill (`.agents/skills/tool-selection/SKILL.md`). *Grounded in ADR-016.*
+**Tool selection — CLI first:** Prefer CLI tools (`gh`, `gws`, `gcloud`) over MCP servers and direct API calls when both options are available. For routing rules and command patterns see `tool-selection` skill (`.agents/skills/tool-selection/SKILL.md`). Before first CLI use in a session, run the skill's pre-flight auth check; its CLI Pre-Flight and Auth-Failure Protocol is **binding** — never skip a CLI because auth fails. *Grounded in ADR-016.*
 
 **Shell tools (Windows project):** Use the **PowerShell tool** for shell operations (`Test-Path`, `$env:`, `if (…) {…}`, `Get-ChildItem`). The **Bash tool is POSIX-only** — never put PowerShell syntax in it (it routes to `bash` and errors); reserve it for `git`/`gh`/POSIX one-liners.
 
