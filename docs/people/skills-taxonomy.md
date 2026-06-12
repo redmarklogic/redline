@@ -227,6 +227,7 @@ Parallel grouping schemes in other documents are prohibited (ADR-001).
 |---|---|
 | `agile-sprint-planning` | Starting a new sprint, or a sprint is running with no goal on record |
 | `agile-daily-standup` | Every morning — structured daily brief from live board state |
+| `agile-backlog-grooming` | On-demand backlog audit: classify items, produce decision table, execute founder-approved rows |
 | `ceremony-monthly-editorial-session` | A new Ground Engineering issue arrives — editorial processing for content and product signals |
 
 ### Skills System & Meta

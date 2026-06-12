@@ -1,4 +1,4 @@
-You are executing the `make-pr` pipeline. Announce: "Running make-pr: pre-flight → code review → push → PR."
+You are executing the `make-pr` pipeline. Announce: "Running make-pr: pre-flight → conflict check → code review → push → PR."
 
 ## Step 1 — Pre-flight: detect branch and work state
 
@@ -20,19 +20,50 @@ Run `git switch -c <branch-name>`, then continue. Never commit to master.
 | No uncommitted changes AND branch NOT on remote | Skip Step 3. Jump to Step 4. |
 | Uncommitted changes present | Full pipeline. Continue to Step 2. |
 
-## Step 2 — Code review gate
+## Step 2 — Conflict check: merge master into branch
+
+```bash
+git fetch origin master
+git log HEAD..origin/master --oneline
+```
+
+**If no new commits on `origin/master`:** skip the rest of this step, continue to Step 3.
+
+**If new commits exist:** attempt a no-commit merge to detect conflicts.
+
+```bash
+git merge origin/master --no-commit --no-ff
+```
+
+- **Exit 0 (clean merge):** stage the merge and commit.
+
+  ```bash
+  git commit -m "chore: merge master into <branch-name>"
+  ```
+
+  Continue to Step 3.
+
+- **Exit non-0 (conflicts):** abort the merge, list conflicting files, then stop.
+
+  ```bash
+  git merge --abort
+  ```
+
+  Output the list of conflicting files, then print: "Merge conflicts detected. Resolve conflicts in the listed files, stage the resolutions, then re-run `/make-pr`." Do not proceed to Step 3.
+
+## Step 3 — Code review gate
 
 Load and apply `.claude/commands/perform-code-review.md`.
 
-All phases must exit clean before proceeding. If any phase fails and cannot be fixed, abort and report which gate failed. Do not proceed to Step 3.
+All phases must exit clean before proceeding. If any phase fails and cannot be fixed, abort and report which gate failed. Do not proceed to Step 4.
 
-## Step 3 — Push (skip if branch already clean and pushed)
+## Step 4 — Push (skip if branch already clean and pushed)
 
 Load and apply `.claude/commands/git-push-batched.md`.
 
-Branch must be on remote before proceeding to Step 4.
+Branch must be on remote before proceeding to Step 5.
 
-## Step 4 — Generate PR title and body
+## Step 5 — Generate PR title and body
 
 ```powershell
 $commits = git log origin/master..HEAD --oneline
@@ -53,7 +84,7 @@ $branch = git branch --show-current
 - [ ] SonarQube exits 0 (or skipped — no scannable files changed)
 ```
 
-## Step 5 — Create PR
+## Step 6 — Create PR
 
 ```powershell
 gh pr create --base master --title "<title>" --body @'

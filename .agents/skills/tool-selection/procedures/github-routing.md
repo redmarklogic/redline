@@ -2,6 +2,18 @@
 
 Loaded from `SKILL.md` when the routing rule resolves to `gh`.
 
+## Pre-flight (run before first `gh` use in a session)
+
+```sh
+gh auth status          # must show an active account; check scopes line
+```
+
+Remediation (auth failures — per SKILL.md Auth-Failure Protocol):
+
+- Not logged in → `gh auth login` — **requires user browser interaction**; ask the user to complete the device-code flow, then re-check.
+- Missing scope (e.g. `project` for board writes) → `gh auth refresh -s <scope>` — may require user browser confirmation.
+- Token expired → `gh auth refresh`.
+
 | Operation | Command |
 |---|---|
 | List open PRs | `gh pr list --state open --repo <owner>/<repo>` |

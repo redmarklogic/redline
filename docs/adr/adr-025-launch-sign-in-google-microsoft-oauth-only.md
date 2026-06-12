@@ -49,6 +49,83 @@ provider and no transactional email service may join the launch path.
 ## Status
 
 Proposed — 2026-06-11
+Amended — 2026-06-12 (Amendment 1: dual-track session establishment; founder-ratified)
+
+## Amendment 1 — Dual-Track Authentication (2026-06-12)
+
+**Deciders:** Founder (2026-06-12), Peter (architecture).
+**Grounding:** Office Word task-pane authentication research, 2026-06-12 — durable
+copy at
+`docs/research/software-development/20260612-office-taskpane-addin-authentication.md`.
+Companion decision: [ADR-027](adr-027-raw-run-app-poc-front-door.md) (Firebase
+front-door teardown), same change set.
+
+The provider selection above (Google + Microsoft OAuth, self-hosted django-allauth,
+no passwords, no email fallback) is **unchanged**. What this amendment changes is
+the *session-establishment* architecture downstream of OAuth completion.
+
+### A1 — Dual-track authentication is first-class; neither track is dormant
+
+Redline's API supports **two session mechanisms as first-class contract**:
+
+1. **Session cookies** — for the browser website (Django sessions via
+   `django.contrib.sessions`, per ADR-024 decision 5).
+2. **Bearer tokens** (`Authorization: Bearer <token>`) — for the Word task-pane
+   add-in and any machine client.
+
+**Binding rule: session cookies MUST NOT be the only authentication mechanism.**
+The research finding is load-bearing: cookies set by the API's origin are blocked
+or unreliable inside Word task panes — all third-party cookies are blocked in Mac
+WKWebView (ITP, not disableable in the embedded control), the Office-on-the-web
+task pane is a cross-origin iframe where every API cookie is by definition
+third-party, and Chromium is partitioning/phasing out third-party cookies on
+Windows WebView2. Every viable add-in auth path terminates in a bearer header on
+fetch. A cookie-coupled session model would have to be retrofitted later at high
+cost; designing the dual track in now is cheap.
+
+The in-pane sign-in pattern for the add-in is **independent login via the Office
+Dialog API** (`displayDialogAsync` → provider sign-in → redirect landing page →
+`messageParent` hands the token to the pane). This is Microsoft's documented
+first-class pattern for non-Microsoft identity providers and dissolves the
+Google-email-vs-Microsoft-email identity-mismatch problem: the add-in runs the
+product's own sign-in, so the API sees the same identity it sees on the web.
+
+### A2 — OAuth completion is decoupled from "set cookie"
+
+The OAuth callback terminates in a **session-establishment primitive**, not an
+inline `Set-Cookie`. The flow is structured as *authorization-code →
+session-establishment step*, where that step either:
+
+- sets a session cookie (browser website), or
+- hands a token to the Office-dialog `messageParent` landing page (add-in).
+
+This is a design-shape constraint on the Sprint-3 django-allauth implementation —
+near-free now, expensive to retrofit.
+
+### A3 — Stable internal user ID with (provider, subject) identity rows
+
+The user model carries a **stable internal user ID**, with provider identities
+stored as **`(provider, subject)` rows** linked to it — even while every user has
+exactly one row. This one-time schema decision makes future account linking (a
+second provider on the same account) and a future Microsoft-identity row additive
+instead of a migration.
+
+### A4 — The `__session` cookie-name constraint is retired
+
+ADR-026 required any session cookie crossing the branded address to be named
+exactly `__session` (Firebase proxy passed only that literal name). ADR-027 tears
+that proxy down; Cloud Run passes cookies through unaltered. **The constraint is
+void.** Django's default session-cookie naming applies; no Kabilan workaround is
+needed.
+
+### Explicitly deferred (with triggers) under this amendment
+
+| Deferred item | Trigger |
+|---|---|
+| Bearer-token issuance/validation implementation, token format, dialog-page plumbing | Word add-in epic kickoff (first task-pane consumer scheduled) — the *contract* is first-class now; the *implementation* ships with its first consumer |
+| Nested App Authentication (NAA)/Office SSO as a convenience accelerator; Entra app registration | Add-in epic, and only if double sign-in is a measured complaint |
+| Email-matching SSO linking (Microsoft token email → Google-created account) | Deferred indefinitely — **nOAuth account-takeover risk**: Entra ID `email` claims can be unverified/user-mutable; any future matching requires verified-claim gating plus one-time proof of ownership |
+| Account-linking UI (multi-provider per account) | First real support cases of mismatched emails |
 
 ## Context
 

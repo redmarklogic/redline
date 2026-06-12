@@ -11,13 +11,15 @@ operational rule* and link back to the ADR for the "why". They cross-link and ne
 
 | Document | Status | Grounding ADR | Scope |
 |----------|--------|---------------|-------|
-| [`http-api-standard.md`](./http-api-standard.md) | **In force** | ADR-018 | External (north-south) HTTP API conventions: URIs, methods, status codes, error envelope, content negotiation, binary responses, auth pattern, async (`202`+poll) and Server-Sent Events (SSE) progress. |
+| [`http-api-standard.md`](./http-api-standard.md) | **In force (v0.2)** | ADR-018 (core), ADR-024 (framework), ADR-025 as amended (auth), ADR-027 (address, platform errors) | External (north-south) **machine-consumable** HTTP API conventions: URIs, methods, status codes, error envelope, content negotiation, binary responses, dual-track auth, async (`202`+poll) and Server-Sent Events (SSE) progress. Server-rendered HTML/HTMX routes are out of scope. |
 | [`mcp-standard.md`](./mcp-standard.md) | **Target — dormant (not in force)** | ADR-018 (records the deferred tensions) | Model Context Protocol (MCP) surface conventions for a future MCP / AI consumer. Activates only when such a consumer arrives. |
 
 ## How to use this home
 
 - **Building or reviewing an HTTP endpoint?** Follow `http-api-standard.md`. It is the
-  live operational document — every clause is in force for v0.1.
+  live operational document — every clause is in force for v0.2. (Server-rendered
+  HTML/HTMX pages follow Django conventions instead; the standard governs
+  machine-consumable surfaces only.)
 - **Wondering *why* a rule is what it is?** Each clause links to ADR-018. The ADR carries
   the rationale, the options rejected, and the consequences. This directory does not
   repeat that reasoning.

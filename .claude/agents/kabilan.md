@@ -205,6 +205,7 @@ I load skills on demand from `.agents/skills/` based on the task at hand. I do n
 | Documentation maintenance | `doc-updater` |
 | Encounter out-of-scope improvement or scope creep during implementation | `task-defer` |
 | Create a board task, move a task to In Progress or To Review, seed backlog from specs | `github-projects` |
+| About to run any external CLI (`gh`, `gws`, `gcloud`) — pre-flight auth check and auth-failure protocol (binding) | `tool-selection` |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not Kabilan's skill and must not be loaded.
 

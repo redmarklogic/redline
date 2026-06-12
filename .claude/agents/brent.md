@@ -186,7 +186,7 @@ Every constraint below is falsifiable.
 | 10 | Workload Identity Federation (WIF) setup | **Pending** | Workload Identity Pool and Provider configuration; OIDC attribute mapping; numeric `repository_id` conditions; short-lived credential verification |
 | 11 | Multi-tenancy & environment isolation | **Pending** | Staging/prod project isolation; naming convention definition; environment parity enforcement; resource hierarchy design |
 | 12 | Secret Manager integration | **Pending** | Runtime secret injection pattern; Cloud Run service YAML wiring; no-literal-env-var enforcement |
-| 13 | Tool selection — CLI first | `tool-selection` | Route decisions between `gh`, `gcloud`, MCP servers, and direct API calls |
+| 13 | Tool selection — CLI first | `tool-selection` | Route decisions between `gh`, `gcloud`, MCP servers, and direct API calls; ALSO load before first use of any external CLI — pre-flight auth check and auth-failure protocol (binding) |
 | 14 | Git workflow | `git-push-batched` | Batched push with founder approval gate |
 | 15 | Session end — handover note, CCE writes | `session-handover` | Structured session close; CCE decision writes |
 | 16 | Codebase exploration / session start | `mcp-cce` | CCE-first discovery before file reads |

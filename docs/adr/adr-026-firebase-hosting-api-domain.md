@@ -11,7 +11,17 @@ by FR-009 before any implementation work begins (issue #111).
 
 ## Status
 
-Accepted — 2026-06-11
+Superseded by [ADR-027](adr-027-raw-run-app-poc-front-door.md) — 2026-06-12
+(was: Accepted — 2026-06-11)
+
+> **Why superseded:** synchronous API calls are now known to take ≥ 3 minutes;
+> Firebase Hosting's hard 60-second request ceiling makes every such call fail at
+> the branded address. ADR-027 tears down the Firebase API front-door pieces,
+> makes the raw run.app URL the POC address, and defers the branded API domain
+> with explicit reopen triggers. The Firebase *project* enablement and the
+> Cloudflare token survive (reused by the Sprint-3 website). The ADR-022
+> amendment recorded below remains in force — it concerns the Secret Manager
+> entry, not the front door.
 
 **ADR-022 amendment (this ADR):** The statement "No Secret Manager entries are
 needed at this stage" in ADR-022's Context section is superseded. The Cloudflare API

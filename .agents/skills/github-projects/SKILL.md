@@ -64,6 +64,10 @@ gh auth status
 gh auth refresh -s project
 ```
 
+Auth failures beyond the scope refresh: follow the binding CLI Pre-Flight and
+Auth-Failure Protocol in `tool-selection` (`.agents/skills/tool-selection/SKILL.md`) —
+never skip the CLI because auth fails.
+
 `project_config.json` must exist at `.agents/tools/github_projects/project_config.json`.
 If absent, run the `resolve-config` procedure first. Commit the file after it runs — node IDs are not secrets.
 

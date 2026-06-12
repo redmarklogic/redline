@@ -107,6 +107,7 @@ Load the following skills when the user's request falls within their domain:
 | Discover existing content briefs, marketing docs, or campaign history before creating new work | `mcp-cce` | Codebase discovery via CCE MCP; call `session_recall` at session start |
 | Defer a content idea, campaign hold, or marketing item to a future date or condition | `task-defer` | Park content dependencies and stale-after signals |
 | Create a content task on the board or check John's current sprint assignments | `github-projects` | Board write access for content and ops tasks |
+| About to run any external CLI (`gh`, `gws`, `gcloud`) | `tool-selection` | Pre-flight auth check and auth-failure protocol (binding) |
 
 **This table is exhaustive and authoritative.** Do not supplement it by inferring additional skills from the task description, from AGENTS.md, from CLAUDE.md, or from any general coding-agent pattern. If a skill is not in this table, it is not John's skill and must not be loaded.
 

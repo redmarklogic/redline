@@ -5,11 +5,16 @@ Loaded from `SKILL.md` when the routing rule resolves to `gws`.
 Command pattern: `gws <service> <resource> <method> [flags]`
 Helper shortcuts use `+` prefix: `gws gmail +send`, `gws drive +upload`
 
-**Auth setup (once per environment):**
+## Pre-flight (run before first `gws` use in a session)
+
 ```sh
-gws auth setup    # automated, requires gcloud installed
-gws auth login    # manual OAuth fallback
+gws auth status   # verify authenticated account and scopes
 ```
+
+Remediation (auth failures — per SKILL.md Auth-Failure Protocol):
+
+- Not set up → `gws auth setup` (automated, requires gcloud installed) or `gws auth login` (manual OAuth fallback) — **both require user browser interaction**; ask the user to complete consent, then re-check.
+- Scope-limited / silent failures → unverified apps hit ~25-scope limit; user must add themselves as test user in the OAuth consent screen, then re-run `gws auth setup`.
 
 > **Shell requirement:** `gws --params` uses single-quoted JSON. Use Bash, not PowerShell — PS5.1 mangles curly-brace quoting and the command fails with "key must be a string".
 

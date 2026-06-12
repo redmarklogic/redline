@@ -2,6 +2,20 @@
 
 Loaded from `SKILL.md` when the routing rule resolves to `gcloud`.
 
+## Pre-flight (run before first `gcloud` use in a session)
+
+```sh
+gcloud auth list                      # an account must show ACTIVE
+gcloud config get-value project       # correct project must be set
+```
+
+Remediation (auth failures — per SKILL.md Auth-Failure Protocol):
+
+- No active account → `gcloud auth login` — **requires user browser interaction**; ask the user to complete consent, then re-check.
+- Application-default credentials missing (client libraries / Terraform) → `gcloud auth application-default login` — also browser-interactive.
+- Wrong project → `gcloud config set project <project-id>`.
+- Token expired → re-run `gcloud auth login`.
+
 | Operation | Command |
 |---|---|
 | **Cloud SQL — create instance** | `gcloud sql instances create <name> --database-version=POSTGRES_15 --tier=db-f1-micro --region=<region>` |
