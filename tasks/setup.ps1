@@ -26,4 +26,8 @@ Write-Banner "Superpowers overrides"
 Write-Banner "Code Context Engine"
 & "$root\setup-cce.ps1"
 
+# GPU embedding offload (optional - skips on machines without NVIDIA GPU)
+Write-Banner "GPU embedding (Ollama)"
+& "$root\setup-gpu-embedding.ps1"
+
 Write-Host "`nAll done. Restart Claude Code to activate the CCE MCP server.`n" -ForegroundColor Yellow
