@@ -191,8 +191,9 @@ task = TaskCreate(
     status="Backlog",
 )
 result = create_task(task, config)
-# result.ok == True → result.issue_url, result.item_id populated
-# result.status_code == 207 → issue created but some fields failed; check result.message
+# result.ok == True → fully succeeded (status_code 200)
+# result.status_code == 207 → ok=False BUT the issue exists (issue_url/item_id
+#   populated) — repair the named fields via update-task; NEVER recreate
 ```
 
 Issue body is auto-generated with `## Purpose`, `## Source`, `## Done when`, `## Agents`,
@@ -415,3 +416,4 @@ Steps:
 | Passing the issue *number* (or a string) to the dependencies or sub-issues API | `422 ... not of type integer` | Send the internal DB `id` (`gh api .../issues/N --jq .id`) as a typed integer via `gh api -F` — `issue_id` for `set-dependencies`, `sub_issue_id` for `set-parent` |
 | Creating a parent + sub-issues when K1–K4 hold | Shallow, context-poor shards; tracking overhead with no payoff | Apply the Structuring Doctrine; default to one issue with a checklist |
 | Recording dependencies in the `Depends on` text field | No Blocked badge, no `is:blocked` filter | Use native `set-dependencies` (procedure 6); leave the legacy text field blank |
+| Editing a single-select field's options via `updateProjectV2Field` | **ALL option IDs regenerate and every item's value for that field is WIPED** (no name-based migration — verified live 2026-06-12, Agent field) | Snapshot every item's value first (`gh project item-list --format json`), apply the mutation, restore values from the snapshot, then `resolve_project_config(force_refresh=True)` and commit the config |

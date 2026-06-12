@@ -40,6 +40,11 @@ from .schema import (
 _CONFIG_PATH: Path = Path(__file__).parent / "project_config.json"
 _CACHE_TTL: timedelta = timedelta(hours=24)
 
+# gh project item-list truncates at --limit (default 30). The board passed 100
+# items during Sprint-3 planning and the old hardcoded limit silently hid new
+# issues. Fetch generously; _fetch_items refetches if totalCount exceeds this.
+_ITEM_LIST_LIMIT = 500
+
 # Custom field name constants — defined once to avoid duplicated string literals.
 _FIELD_STATUS = "Status"
 _FIELD_TYPE = "Task Type"
@@ -94,8 +99,19 @@ _VALID_STATUSES: frozenset[str] = frozenset(
 
 
 def _run_gh(*args: str) -> tuple[int, Any, str]:
-    """Shell out to gh. Returns (returncode, parsed_json_or_None, stderr)."""
-    result = subprocess.run(["gh", *args], capture_output=True, text=True, check=False)
+    """Shell out to gh. Returns (returncode, parsed_json_or_None, stderr).
+
+    encoding is pinned to UTF-8: on Windows, text=True alone decodes with
+    cp1252 and crashes (UnicodeDecodeError) on emoji/en-dash in issue bodies.
+    """
+    result = subprocess.run(
+        ["gh", *args],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
     if result.returncode != 0:
         return result.returncode, None, result.stderr.strip()
     if not result.stdout.strip():
@@ -382,6 +398,8 @@ def _resolve_iteration_ids(
         input=body,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     if result.returncode != 0:
@@ -489,7 +507,9 @@ def create_task(task: TaskCreate, config: ProjectConfig) -> TaskResult:
     """Create a GitHub issue and add it to the project board.
 
     Returns TaskResult with issue_url and item_id on success.
-    status_code 207 means the issue was created but some fields failed to set.
+    status_code 207 means the issue was created but some fields failed to set;
+    ok is False in that case — the item exists, so repair the named fields via
+    update_task rather than recreating (consistent with update_task's 207).
     """
     # Use REST API — gh issue create dropped --json support in v2.x
     api_args = [
@@ -537,7 +557,7 @@ def create_task(task: TaskCreate, config: ProjectConfig) -> TaskResult:
     _write_all_fields(ctx, errors, fields)
     if errors:
         return TaskResult(
-            ok=True,
+            ok=False,
             status_code=207,
             message=f"Task created ({issue_url}) but some fields failed: {'; '.join(errors)}",
             issue_url=issue_url,
@@ -671,20 +691,40 @@ def delete_task(item_id: str, config: ProjectConfig) -> TaskResult:
     )
 
 
+def _fetch_items(config: ProjectConfig) -> list[dict[str, Any]]:
+    """Fetch ALL board items, refetching if the first page was truncated.
+
+    gh project item-list silently truncates at --limit; the JSON payload's
+    totalCount reveals the true board size, so a single refetch at that size
+    guarantees completeness.
+    """
+
+    def _page(limit: int) -> tuple[list[dict[str, Any]], int]:
+        rc, data, stderr = _run_gh(
+            "project",
+            "item-list",
+            str(config.project_number),
+            "--owner",
+            config.owner,
+            "--format",
+            "json",
+            "--limit",
+            str(limit),
+        )
+        if rc != 0:
+            raise RuntimeError(f"gh project item-list failed: {stderr}")
+        payload = data or {}
+        return payload.get("items", []), int(payload.get("totalCount", 0))
+
+    items, total = _page(_ITEM_LIST_LIMIT)
+    if total > len(items):
+        items, _ = _page(total)
+    return items
+
+
 def get_task(item_id: str, config: ProjectConfig) -> TaskRecord | None:
     """Fetch a single project item by its node ID. Returns None if not found."""
-    rc, data, stderr = _run_gh(
-        "project",
-        "item-list",
-        str(config.project_number),
-        "--owner",
-        config.owner,
-        "--format",
-        "json",
-    )
-    if rc != 0:
-        raise RuntimeError(f"gh project item-list failed: {stderr}")
-    for item in (data or {}).get("items", []):
+    for item in _fetch_items(config):
         if item.get("id") == item_id:
             return _item_to_record(item)
     return None
@@ -698,20 +738,7 @@ def list_tasks(
     sprint: str | None = None,
 ) -> list[TaskRecord]:
     """List project items, optionally filtered by status, agent, or sprint."""
-    rc, data, stderr = _run_gh(
-        "project",
-        "item-list",
-        str(config.project_number),
-        "--owner",
-        config.owner,
-        "--format",
-        "json",
-        "--limit",
-        "100",
-    )
-    if rc != 0:
-        raise RuntimeError(f"gh project item-list failed: {stderr}")
-    records = [_item_to_record(item) for item in (data or {}).get("items", [])]
+    records = [_item_to_record(item) for item in _fetch_items(config)]
     if status is not None:
         records = [r for r in records if r.status == status]
     if agent is not None:

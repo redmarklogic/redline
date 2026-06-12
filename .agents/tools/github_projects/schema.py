@@ -38,6 +38,7 @@ type StatusValue = Literal["Backlog", "In Progress", "Blocked", "To Review", "Do
 # Closed set of valid agent names — must match the options configured on the
 # GitHub Projects 'Agent' custom field and the agent register in docs/people/.
 type AgentName = Literal[
+    "Brent",
     "Kabilan",
     "Mark",
     "Matt",
@@ -550,7 +551,8 @@ class TaskResult(BaseModel):
 
     HTTP-style status codes:
         200  Success
-        207  Partial success (task created/updated but some field writes failed)
+        207  Partial success (item exists but some field writes failed —
+             ok=False; repair via update_task, never recreate)
         400  Bad input (Pydantic ValidationError before reaching gh)
         401  Authentication error (gh auth not configured or missing project scope)
         403  Forbidden (e.g., agent attempted to set status to 'Done')
@@ -566,7 +568,11 @@ class TaskResult(BaseModel):
         Field(
             alias="ok",
             title="Success flag",
-            description="True when the operation completed without errors (status_code 200 or 207).",
+            description=(
+                "True only when the operation fully succeeded (status_code 200). "
+                "False on 207: the item exists (issue_url/item_id populated) but "
+                "some field writes failed — repair, don't recreate."
+            ),
             examples=[True],
         ),
     ]

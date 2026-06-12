@@ -899,6 +899,79 @@
       "added": "2026-06-08",
       "owner": "kabilan",
       "consumers": ["peter", "brent", "matt"]
+    },
+    {
+      "id": "ooxml-file-formats",
+      "name": "Office Open XML (OOXML) File Formats",
+      "url": "https://notebooklm.google.com/notebook/f9538bd7-45b1-49e1-bdec-7256d74fd36a",
+      "description": "The Office Open XML (OOXML) / ECMA-376 file format and its programmatic manipulation in Python. Covers the ZIP-package structure, parts, relationships, content types, and the WordprocessingML hierarchy (paragraphs, runs, text), plus python-docx for creating and modifying .docx files. Sources (6): ECMA-376 standard landing page; python-docx docs and source repo; the van Vugt 'Open XML: The Markup Explained' PDF (live brandwares.com copy — original openlibra host dead); Microsoft's WordprocessingML structure doc; and the officeopenxml.com anatomy reference added via a stable Wayback snapshot (host currently unreachable).",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "Office Open XML (OOXML)",
+        "ECMA-376",
+        "WordprocessingML",
+        "Open Packaging Conventions",
+        "ZIP package structure",
+        "XML parts and relationships",
+        "content types",
+        "python-docx",
+        "document object model"
+      ],
+      "content_types": [
+        "standards",
+        "official-docs",
+        "free-book",
+        "library-docs",
+        "source-repo"
+      ],
+      "use_cases": [
+        "Understanding the OOXML / ECMA-376 package and part structure",
+        "Generating and modifying .docx files with python-docx",
+        "Mapping the WordprocessingML element hierarchy (paragraphs, runs, text)",
+        "Looking up content-types and relationship conventions for a Word document",
+        "Grounding the geotechnical compliance tool's Word document-generation backend"
+      ],
+      "access": "open",
+      "added": "2026-06-12",
+      "owner": "peter",
+      "consumers": ["kabilan"]
+    },
+    {
+      "id": "word-taskpane-addin-development",
+      "name": "MS Word Taskpane Add-in Development",
+      "url": "https://notebooklm.google.com/notebook/890339b4-9e31-44e2-8ccc-8dce7c7ad1b6",
+      "description": "Modern web-based Microsoft Office Add-in development for Word task panes, built with the Office JavaScript API (Office.js), HTML/CSS/JS, the unified manifest, Fluent UI, and a Python backend pattern. Sources (9): Office Add-ins platform overview, Word task-pane tutorial, and UX design patterns (Microsoft Learn); Fluent 2 Design System; OfficeDev repos generator-office, Office-Add-in-samples, and office-js-snippets (Script Lab); the Masterjx9 Python/Flask TaskPane template; and CaseStrainer as a Python-backed add-in blueprint. EXCLUDED per founder flag: 'Building Office Add-ins using Office.js' (Zlatkovsky, paid + predates the unified manifest).",
+      "topic_area": "AI & software architecture",
+      "topics": [
+        "Office Add-ins platform",
+        "Office JavaScript API (Office.js)",
+        "Word task pane add-ins",
+        "unified manifest",
+        "Fluent UI",
+        "UX design patterns for add-ins",
+        "generator-office scaffolding",
+        "Script Lab snippets",
+        "Python/Flask add-in backend",
+        "single sign-on (SSO)",
+        "content controls"
+      ],
+      "content_types": [
+        "official-docs",
+        "design-system",
+        "code-sample-repos",
+        "scaffolding-tools"
+      ],
+      "use_cases": [
+        "Building a Word task-pane add-in with the Office JavaScript API",
+        "Scaffolding an Office add-in project with generator-office",
+        "Wiring a Python/Flask backend to an Office task pane",
+        "Applying Fluent UI and Office UX design patterns to a task pane",
+        "Looking up Office.js snippets and Microsoft 365 code samples"
+      ],
+      "access": "open",
+      "added": "2026-06-12",
+      "owner": "peter",
+      "consumers": ["kabilan", "matt"]
     }
   ]
 }

@@ -4,6 +4,7 @@
 
 - Never tell me what I want to hear. I want you to look at things objectively, contradict me when needed. If you think otherwise, go with your strong opinion.
 - For lessons (reusable observations from LLM conversations and review sessions), see `docs/lessons/lesson_template.md` for format and filing rules.
+- Git staging with deletions: stage via `git add -A -- <paths>` (or `git add -u`), then confirm `git status --short` shows no unstaged `D` entries before committing.
 
 ## Context Engine (CCE)
 
