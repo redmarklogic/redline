@@ -72,4 +72,6 @@ The hire report must include the Step 1 task table, Step 0 screening result, Tea
 
 ## Step 8 — After user approval
 
-Update `docs/people/agent-register.md`, `org-chart.md`, and `skills-taxonomy.md`.
+Update `docs/people/agent-register.md`, `org-chart.md`, and `skills-taxonomy.md`
+(catalog rows for any skills created with the hire). Log identified-but-not-yet-created
+skills in `docs/people/skills-gaps.md` with proposed remediation and status.
