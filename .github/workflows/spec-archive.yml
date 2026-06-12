@@ -149,6 +149,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
           ISSUE_NUM: ${{ steps.branch.outputs.issue_number }}
           SPEC_DIR: ${{ steps.spec.outputs.dir }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           CLEANUP_BRANCH="chore/archive-spec-${ISSUE_NUM}"
 
@@ -163,7 +164,7 @@ jobs:
           PR_URL=$(gh pr create \
             --title "chore: delete archived spec for #${ISSUE_NUM}" \
             --body "Auto-generated cleanup. Spec artifacts posted to issue #${ISSUE_NUM} at feature branch merge. No review required (specs/ path — see CODEOWNERS)." \
-            --base main \
+            --base "$BASE_REF" \
             --head "$CLEANUP_BRANCH")
 
           gh pr merge "$PR_URL" --squash --delete-branch
