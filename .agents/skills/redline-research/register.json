@@ -24,7 +24,7 @@
       "empty-url": "Notebook approved but not yet created in NotebookLM. Linda creates it on founder go."
     },
     "agent_ids": ["graeme", "peter", "kabilan", "brent", "linda", "harriet", "matt", "ron", "mark", "john"],
-    "last_updated": "2026-06-09",
+    "last_updated": "2026-06-12",
     "maintained_by": "linda"
   },
   "notebooks": [
@@ -457,7 +457,7 @@
       "id": "org-design-team-topologies",
       "name": "Organisational Design & Team Topologies",
       "url": "https://notebooklm.google.com/notebook/52b9befe-c464-4bd7-b87a-7e5f5d89e2e8",
-      "description": "A curated collection of books on modern organisational leadership, team design, and workforce development. Covers Team Topologies (stream-aligned, platform, enabling teams), Conway's Law, cognitive load management, AI/RPA task deconstruction, deliberate practice, skills-based organisations, and Domain-Driven Design (DDD) for software teams. Case studies from Google, GE, and large healthcare providers.",
+      "description": "A curated collection of books and frameworks on modern organisational leadership, team design, and workforce development. Covers Team Topologies (stream-aligned, platform, enabling teams), Conway's Law, cognitive load management, AI/RPA task deconstruction, deliberate practice, skills-based organisations, and Domain-Driven Design (DDD) for software teams. Case studies from Google, GE, and large healthcare providers. Also contains The Pillars (ACE New Zealand, 2024) — a non-technical competency framework for the NZ engineering and consulting sector, covering four pillars: Relationship Management, Talent Management, Operational Excellence, and Professionalism and Culture.",
       "topic_area": "Process & product",
       "topics": [
         "team topologies",
@@ -469,7 +469,11 @@
         "organizational design",
         "Domain-Driven Design",
         "talent development",
-        "performance management"
+        "performance management",
+        "competency frameworks",
+        "non-technical skills",
+        "engineering consulting capability",
+        "ACE New Zealand"
       ],
       "content_types": [
         "management books",
@@ -482,7 +486,8 @@
         "Deciding which tasks to automate with AI or RPA versus retain for human workers",
         "Designing deliberate practice programs to develop world-class technical talent",
         "Transitioning from role-based to skills-based hiring and performance management",
-        "Applying Conway's Law and DDD to align team structure with software architecture"
+        "Applying Conway's Law and DDD to align team structure with software architecture",
+        "Assessing non-technical competency gaps in NZ engineering and consulting staff using the ACE Pillars framework"
       ],
       "access": "open",
       "added": "2026-04-20",
