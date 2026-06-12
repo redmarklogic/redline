@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from web import views
+
 urlpatterns = [
+    path('', views.root),
+    # admin/ kept per ADR-024 (admin-at-launch); non-functional until #164/#165.
     path('admin/', admin.site.urls),
 ]
