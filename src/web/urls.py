@@ -20,6 +20,7 @@ from django.urls import path
 from web import views
 
 urlpatterns = [
+    path('health/', views.health),
     path('', views.root),
     # admin/ kept per ADR-024 (admin-at-launch); non-functional until #164/#165.
     path('admin/', admin.site.urls),
