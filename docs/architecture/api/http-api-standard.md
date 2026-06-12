@@ -1,17 +1,37 @@
 # HTTP API Standard
 
-**Status:** In force (v0.1)
-**Grounding decision:** [ADR-018 — External HTTP API Contract Conventions](../../adr/adr-018-external-http-api-contract-conventions.md)
-**Scope:** Every external (north-south) HTTP API surface Redline exposes.
-**Framework binding:** Framework-agnostic at v0.1. FastAPI-specific bindings (global
-exception handler wiring, streaming response, SSE channel implementation) are **pending
-the #78 tech-stack session** and will be added as a "FastAPI bindings" appendix once that
-session lands.
+**Status:** In force (v0.2 — 2026-06-12)
+**Grounding decisions:**
+[ADR-018 — External HTTP API Contract Conventions](../../adr/adr-018-external-http-api-contract-conventions.md)
+(every clause's core rationale), plus
+[ADR-024](../../adr/adr-024-django-web-stack-single-service.md) (framework binding),
+[ADR-025 as amended](../../adr/adr-025-launch-sign-in-google-microsoft-oauth-only.md)
+(authentication), and
+[ADR-027](../../adr/adr-027-raw-run-app-poc-front-door.md) (canonical address,
+platform-error surface).
+**Scope:** Every external (north-south) **machine-consumable** HTTP API surface
+Redline exposes — today: the skeletons resource and `/health`. **Server-rendered
+HTML/HTMX routes (pages, partials, form posts) are out of scope** — they follow
+Django conventions, not this standard. (ADR-024 makes the launch product a
+server-rendered web page; dragging login pages and HTMX partials under
+resource-naming and error-envelope rules written for machine consumers would serve
+no consumer.)
+**Framework binding:** **Django, plain views, no DRF** (ADR-024 decisions 1–2). The
+FastAPI walking-skeleton bindings of the v0.1 era are historical and retire with
+the pivot (ADR-024 decision 9); the framework-neutral contract tests are the
+durable enforcement artifact. A "Django bindings" appendix lands with issue #124.
 
-This document is the **operational** standard — the clause text agents, reviewers, and
-code follow. Each clause links to ADR-018 for the decision and rationale; this document
-does not repeat the "why" (ADR-001, Single Source of Truth). If a clause and ADR-018
-appear to disagree, that is a drift defect to fix, not a choice.
+This document is the **operational** standard — the clause text agents, reviewers,
+and code follow. Each clause links to its ADR for the decision and rationale; this
+document does not repeat the "why" (ADR-001, Single Source of Truth). If a clause
+and its ADR appear to disagree, that is a drift defect to fix, not a choice.
+
+### Version history
+
+| Version | Date | Change |
+|---|---|---|
+| v0.1 | 2026-06-09 | Initial standard (ADR-018). |
+| v0.2 | 2026-06-12 | Issue #79 revisit: canonical address = run.app (ADR-027); synchronous budget = Cloud Run timeout, not 60 s; dual-track auth (ADR-025 Amendment 1); Django bindings replace pending-FastAPI note (ADR-024); platform-error tolerance clause; `trace_id` platform correlation; health endpoint clause; scope narrowed to machine-consumable surfaces; OpenAPI generation requirement suspended for Django. |
 
 ### Terms (for the uninitiated)
 
@@ -30,6 +50,23 @@ appear to disagree, that is a drift defect to fix, not a choice.
   grants access by mere possession (the holder "bears" it).
 
 ---
+
+## 0. Canonical address
+
+The API's contractual address for the POC is the **raw Cloud Run `*.run.app` URL**
+of the `prod-redline-api` service (ADR-027 D1). There is no branded API hostname;
+the Firebase front door of the v0.1 era is torn down (ADR-027 D2).
+
+- **Accepted instability:** the run.app hostname changes if the service is deleted
+  and recreated. All current consumers are under Redline's control; this risk is
+  re-evaluated at the first external consumer (ADR-027 D4 reopen trigger).
+- **Branded domain deferral:** a branded API hostname returns when one of the
+  ADR-027 D4 triggers fires (Sprint-3 website DNS work touching the domain; first
+  external consumer; income enabling the ~USD 18–25/month load balancer, which
+  also unlocks control over client-visible platform error pages). Until then, do
+  not introduce one ad hoc.
+
+Rationale → ADR-027.
 
 ## 1. Resource-based, verb-free, plural-noun URIs
 
@@ -59,8 +96,8 @@ Status codes in scope:
 | `201` | Created | An addressable resource was created. MUST include a `Location` header (§5). |
 | `202` | Accepted | Work accepted for asynchronous processing; client polls a job (§8). |
 | `400` | Bad Request | Request is malformed or unparsable — bad JSON, wrong content type (§4). |
-| `401` | Unauthorized | No/invalid credentials. MUST set `WWW-Authenticate: Bearer` (§7). |
-| `403` | Forbidden | Authenticated but not permitted. |
+| `401` | Unauthorized | No/invalid credentials. Semantics per auth track (§7). |
+| `403` | Forbidden | Authenticated but not permitted. May also arrive from the platform in Google's format (§3a). |
 | `422` | Unprocessable Content | Request is well-formed but fails semantic / body validation (§4). |
 | `500` | Internal Server Error | Unhandled server fault. Body uses the error envelope (§3); `message` carries no internal detail. |
 
@@ -68,7 +105,8 @@ Rationale → ADR-018 decision 2.
 
 ## 3. Error envelope
 
-Every error response body has this shape:
+Every error response body **generated by the application** has this shape (see §3a
+for the platform-error exception):
 
 ```json
 {
@@ -82,24 +120,58 @@ Every error response body has this shape:
 - `message` **MUST NOT** contain stack traces, exception class names, file paths, SQL, or
   any internal implementation detail. It is safe to show an end user.
 - The envelope is produced by **a single global exception handler** — a framework-level
-  binding, not per-route `try/except`. This is what makes "no internal leakage" a
-  structural guarantee testable against one handler rather than a per-route discipline.
+  binding, not per-route `try/except`. Under Django (plain views, no DRF) this is
+  **not a framework default**: it must be realised explicitly as middleware /
+  handler wiring, in one place. The carried-over framework-neutral contract tests
+  (ADR-024 decision 9) are the enforcement. Lands in issue #124.
+- **`trace_id` MUST correlate with the platform trace.** It is derived from the
+  inbound platform trace context (`X-Cloud-Trace-Context`, or W3C `traceparent`)
+  when present; a random ID is the fallback **only** when no platform trace exists
+  (e.g. local development). A `trace_id` that cannot be pasted into Cloud Logging
+  to find the matching request defeats the field's stated purpose. (The current
+  `uuid4()` behaviour is a known defect; the fix is implementation work landing in
+  issue #124, not this document.)
 - `details` is the place for machine-actionable specifics (e.g. a list of validation
   failures). For domain-specific validation payloads (the "violations" contract, §10), the
   concrete schema of `details` is **owned by Graeme** (see Open Decisions).
 
 Rationale → ADR-018 decision 3. Envelope informed by RFC 9457 (Problem Details).
 
+### 3a. Platform-emitted errors — tolerance clause (binding on clients)
+
+The envelope is guaranteed **only for errors generated by the application**. Layers
+in front of the application emit errors with their own bodies, which Redline does
+not control:
+
+- **Google Front End `403`** — the IAM/invoker layer (e.g. while no public-invoker
+  binding exists, issue #114).
+- **Cloud Run `429` / `503`** — instance-cap or scaling errors.
+- **Cloud Run `504`** — request-timeout breach (§8).
+
+**Clients MUST NOT assume the §3 envelope on `403`, `429`, `503`, or `504`** —
+those responses may arrive in Google's formats. Client error handling must tolerate
+a non-envelope body on these codes (do not unconditionally parse the error body as
+the envelope; a secondary parse error at exactly the moment the system is unhealthy
+is the failure mode this clause exists to prevent).
+
+Rationale → ADR-027 D5 (the v0.1-era Firebase proxy-504 class is gone; the codes
+above are inherent to the Cloud Run platform).
+
 ## 4. Validation: `422` vs `400`
 
 - **`422 Unprocessable Content`** — the request was parsed successfully but failed
   semantic or body validation (a required field missing, a value out of range, a type
-  mismatch caught by the schema). This is the FastAPI + Pydantic default and is core HTTP
-  per RFC 9110 §15.5.21.
+  mismatch caught by the schema). Core HTTP per RFC 9110 §15.5.21.
 - **`400 Bad Request`** — the request could not be parsed at all (malformed JSON, wrong or
   missing content type, an unreadable body).
 
 Decision rule: *parsed but invalid → `422`; could not parse → `400`.*
+
+**Django binding note:** plain Django views provide no schema-validation default —
+the 422 behaviour is something the implementation **must build explicitly** (it was
+a framework freebie under FastAPI + Pydantic; it is not under Django). The decision
+rule itself is framework-agnostic and unchanged; the contract tests enforce it
+across the pivot.
 
 Rationale → ADR-018 decision 4.
 
@@ -129,16 +201,22 @@ Content-Disposition: attachment; filename="<name>.docx"
 The bytes are streamed as the body. Binary is **never** base64-encoded and wrapped inside
 a JSON envelope.
 
+**Size bound:** request and inline response bodies are bounded at ~32 MB by the
+Cloud Run platform. An artifact approaching this bound is a concrete activation
+signal for the by-reference path (§6a).
+
 Rationale → ADR-018 decision 6.
 
 ### 6a. By-reference artifact exchange — TARGET (deferred)
 
-> **Status: TARGET / deferred — not Sprint-2.** Inline binary (§6) is the v0.1 rule. The
+> **Status: TARGET / deferred.** Inline binary (§6) is the operative rule. The
 > by-reference path below activates only when the async (`202`+poll) path (§8) or an
 > external / MCP consumer needs the `.docx` delivered by reference rather than in the
-> response body. It is tracked in a dedicated infra issue and is **gated by a future infra
-> ADR plus Peter's documented Tier-1 approval before any service is provisioned.** Do not
-> implement ahead of that gate.
+> response body, or an artifact approaches the ~32 MB bound (§6). It is tracked in a
+> dedicated infra issue and is **gated by a future infra ADR plus Peter's documented
+> Tier-1 approval before any service is provisioned.** Do not implement ahead of that
+> gate. ADR-024 decision 7 ("no document blob storage at launch") reinforces the
+> deferral.
 
 When activated, a generated `.docx` is delivered by reference (a `result_ref`, §9) backed
 by Google Cloud Storage, under these binding constraints (Brent consult, 2026-06-09):
@@ -165,34 +243,87 @@ by Brent and recorded in a **future infra ADR** (distinct from ADR-018, which is
 contract). This standard fixes only the *envelope* expectation (`result_ref` points at a
 signed-URL-fetchable artifact); the infra ADR fixes the *mechanism*.
 
-## 7. Authentication
+## 7. Authentication — dual-track, both first-class
 
-- The contract requires a **bearer token in the `Authorization` header**:
-  `Authorization: Bearer <token>`.
-- The standard is **format-agnostic** — it does not mandate JWT or any specific token
-  format. An identity header injected by Google Identity-Aware Proxy (IAP) is an acceptable
-  carrier of identity.
-- A `401` response **MUST** set `WWW-Authenticate: Bearer` (RFC 9110 §11.6.1).
-- The concrete provider and token format are **deferred to the SSO decision** (issues #73 /
-  #48b). This standard fixes the *pattern*; the SSO decision fixes the *mechanism*.
+Redline's API supports **two authentication tracks as first-class contract**
+(ADR-025 Amendment 1). Neither is dormant. **Session cookies MUST NOT be the only
+mechanism.**
 
-Rationale → ADR-018 decision 7.
+### 7.1 Session-cookie track (browser website)
 
-## 8. Long-running operations: `202`+poll
+- The browser website authenticates via **Django sessions** established by
+  django-allauth OAuth sign-in (Google / Microsoft, ADR-025).
+- **CSRF (cross-site request forgery) protection per Django's framework default**
+  applies to all session-authenticated state-changing requests.
+- Django's default session-cookie naming applies. (The v0.1-era `__session`
+  cookie-name constraint died with the Firebase proxy — ADR-027 D5 / ADR-025
+  Amendment 1 A4. Do not reintroduce it.)
 
-For work that can take on the order of minutes:
+### 7.2 Bearer-token track (Word task pane, machine clients)
+
+- Machine clients and the Word task-pane add-in authenticate with a **bearer token
+  in the `Authorization` header**: `Authorization: Bearer <token>`.
+- The standard is **format-agnostic** — it does not mandate JWT or any specific
+  token format. Token format and issuance mechanics are fixed when the
+  implementation ships (Word add-in epic — see sequencing note below).
+- A `401` response on this track **MUST** set `WWW-Authenticate: Bearer`
+  (RFC 9110 §11.6.1).
+- **Why this track is first-class even before its first consumer ships:** cookies
+  are blocked or unreliable in Word task panes on two of three platforms (Mac
+  WKWebView ITP; Office-on-the-web cross-origin iframe) and on a deprecation path
+  on the third. Every viable add-in auth path terminates in a bearer header. See
+  the durable research record:
+  `docs/research/software-development/20260612-office-taskpane-addin-authentication.md`.
+
+### 7.3 Cross-track design constraints (bind the Sprint-3 implementation now)
+
+- **OAuth completion is decoupled from "set cookie":** the callback terminates in a
+  session-establishment primitive that can either set a cookie (web) or hand a
+  token to the Office-dialog landing page (add-in). (ADR-025 Amendment 1 A2.)
+- **Stable internal user ID with `(provider, subject)` identity rows.** (ADR-025
+  Amendment 1 A3.)
+- The auth layer is structured so the bearer validator is an additive component —
+  no code path may assume "authenticated ⇒ session cookie exists".
+
+**Sequencing note:** the *contract* (both tracks) is in force now; the
+bearer-issuance *implementation* ships with its first consumer (the Word add-in
+epic). Cookie-session implementation is Sprint-3 work.
+
+Rationale → ADR-018 decision 7 (pattern); ADR-025 as amended (mechanism).
+
+## 7a. Health endpoint
+
+- Path: **`/health`** (the deployed reality; `/healthz` is not served and returns 404).
+- **Unauthenticated** and excluded from all auth gating (§7) — uptime checks and
+  Cloud Run probes depend on it.
+- Response: `200 OK` with a minimal JSON body (status, optionally version). It
+  carries no internal detail.
+- The Django port (issue #124) implements this same path; the path is contract,
+  not implementation preference.
+
+## 8. Long-running operations: synchronous budget and `202`+poll
+
+- **The synchronous request budget is Cloud Run's configured request timeout:
+  300 seconds today, configurable up to 3600 seconds (60 minutes).** There is no
+  lower front-door ceiling — the v0.1-era 60-second Firebase limit is gone
+  (ADR-027). The known ≥ 3-minute synchronous calls fit inside the current 300 s
+  configuration; raising the configured timeout is an infrastructure change
+  (Brent), not a contract change.
+- A request that breaches the configured timeout returns a **platform `504`**
+  (Google's format — §3a tolerance clause applies).
+
+For work that may approach or exceed the configured budget:
 
 1. The trigger request returns `202 Accepted` and a job identifier (`job_id`).
 2. The client polls a job-status resource until the job reaches a terminal state.
 3. The intermediate result is **persisted / checkpointed** so the operation survives a
    dropped connection or a server restart.
-4. A synchronous connection is **never** held open for minutes. Google Cloud Run enforces a
-   per-request timeout (default 300 seconds, configurable up to 3600), so a long
-   synchronous hold is not a reliable contract.
+4. A synchronous connection is **never** held open beyond the configured timeout —
+   that is not a reliable contract; `202`+poll is the documented escalation.
 
 The durable store used for the checkpoint is an **Open Decision** (below).
 
-Rationale → ADR-018 decision 9.
+Rationale → ADR-018 decision 9; ADR-027 D5.
 
 ## 9. Progress over SSE — event envelope
 
@@ -226,12 +357,12 @@ added later from real run-time data.
 emits **no client-facing SSE** and **MUST NOT** present a UI that implies real-time server
 progress — no determinate percentage, no ticking checkmarks, no per-step server timers.
 Those assert a real-time server channel that synchronous endpoints deliberately do not have.
-A v0.1 "working" state is permitted only as an **illustrative client-side** indicator (no
+A "working" state is permitted only as an **illustrative client-side** indicator (no
 implied SSE); see Open Decisions.
 
 **Phase-driven upgrade seam.** The client progress indicator is modelled from day one as a
 **phase-driven component**: it renders the *current phase* from a phase descriptor and is
-agnostic to where that descriptor comes from. In v0.1 the phases are supplied on a
+agnostic to where that descriptor comes from. Today the phases are supplied on a
 **client timer** (illustrative). When the Pre-Review pipeline (Bet 2) lands, the **same
 component** swaps its data source to the **real SSE phase events** (§9) — and only then may
 a *determinate* representation be unlocked. The data source is the seam; the component does
@@ -260,21 +391,22 @@ Rigour is tiered by where the surface sits relative to the system's trust bounda
 **Classifier — is a surface external (north-south) or internal (east-west)?**
 
 - **External (north-south):** the caller is outside the monorepo / outside the trust
-  boundary — a browser, an external integration, an AI/MCP consumer, an IAP-fronted client.
+  boundary — a browser, an external integration, an AI/MCP consumer.
   → **High rigour.**
 - **Internal (east-west):** the caller is another Redline-owned service inside the trust
   boundary. → **Volatile per ADR-017.**
 
 | Tier | Rigour | Rules |
 |------|--------|-------|
-| External / north-south | High | OpenAPI description generated (§12); versioning once stable (§14); `# stable:` annotation per ADR-017 before any consumer may rely on it; breaking changes require a recorded decision. |
+| External / north-south | High | Machine-readable description once the generation mechanism returns (§12); versioning once stable (§14); `# stable:` annotation per ADR-017 before any consumer may rely on it; breaking changes require a recorded decision. |
 | Internal / east-west | Volatile (ADR-017) | No stability guarantee unless explicitly declared. **Currently empty** — see note. |
 
-> **Dated note (2026-06-09):** Redline currently runs as a **single Cloud Run service**.
-> There is **no east-west HTTP** today, so the internal tier is **empty**. When a second
-> service is introduced and an east-west boundary appears, this note is removed and the
-> internal-tier rules (including the deferred east-west security mechanism, Open Decisions)
-> take effect.
+> **Dated note (2026-06-09, still true 2026-06-12):** Redline runs as a **single
+> Cloud Run service** per environment (re-confirmed by ADR-024 decision 8: no second
+> runtime service without a new ADR). There is **no east-west HTTP** today, so the
+> internal tier is **empty**. When a second service is introduced and an east-west
+> boundary appears, this note is removed and the internal-tier rules (including the
+> deferred east-west security mechanism, Open Decisions) take effect.
 
 **Security note:** the *mechanism* for east-west authentication is deferred until an
 east-west boundary exists, but the *principle* — no implicit internal trust — binds now and
@@ -282,14 +414,21 @@ applies to whatever mechanism is later chosen.
 
 Rationale → ADR-018 decision 14.
 
-## 12. OpenAPI — generated, format-only
+## 12. OpenAPI — generated, format-only; generation requirement suspended
 
-The OpenAPI 3.x document is **generated from the implementation** and used as a description
-and client-generation artifact only. It is not hand-authored as a source of truth.
-Contract-first authoring (writing the OpenAPI document first, generating server stubs from
-it) is rejected at this stage.
+The *principle* stands: any OpenAPI 3.x document is **generated from the
+implementation** and used as a description and client-generation artifact only — never
+hand-authored as a source of truth. Contract-first authoring remains rejected.
 
-Rationale → ADR-018 decision 13.
+The *generation requirement* is **suspended** under the Django plain-views binding:
+generation was free under FastAPI; plain Django generates nothing, no consumer reads
+the document today, and choosing a Django generation mechanism now would be
+speculative tooling. **Reopen trigger:** the first consumer that needs a
+machine-readable description — Phase-2 API mode, an MCP server, or a client-codegen
+need. On trigger, curated Django-API material is sourced first (Linda), then the
+mechanism is decided (Peter).
+
+Rationale → ADR-018 decision 13; ADR-024 (framework binding).
 
 ## 13. Internal event model — client-facing SSE is a projection
 
@@ -339,7 +478,7 @@ arrives.
      Tracked as a standalone UX task; design spec authored by Matt in `docs/product/design/`.
 2. **ETA calibration approach.** How `eta_seconds` (§9) is computed once it ships. Until a
    calibration approach exists, the field is omitted. ETA is never a contract regardless.
-   *Moot for v0.1:* the synchronous indicator surfaces no ETA at all (entry 1).
+   *Moot for now:* the synchronous indicator surfaces no ETA at all (entry 1).
 3. **Durable store for the checkpoint.** The persistence mechanism backing the `202`+poll
    intermediate result (§8) is not yet chosen.
 4. **East-west security mechanism.** The concrete authentication mechanism for internal
@@ -368,13 +507,25 @@ arrives.
    - *Open OOXML gap (owned by Peter / Kabilan, not Graeme):* **location-anchoring** — how a
      violation anchors to a span in the `.docx` so a Word comment attaches — is an open
      Office Open XML design question and is **not** a domain decision.
-6. **FastAPI bindings.** Framework-specific realisations (global exception handler wiring,
-   streaming response, SSE channel) are pending the #78 tech-stack session.
+6. **Django bindings appendix.** Framework-specific realisations under Django plain
+   views — global exception-handler middleware (§3), explicit 422 validation (§4),
+   `trace_id` platform-trace derivation (§3), `/health` (§7a), streaming binary
+   response (§6) — land with issue #124. The contract clauses above are already
+   binding; the appendix records *how* Django satisfies them.
+7. **Bearer-token format and issuance mechanics (§7.2).** Decided when the Word
+   add-in epic kicks off (the track's first consumer). The contract (header pattern,
+   401 semantics, first-class status) is already binding.
 
 ## References
 
 - [ADR-018 — External HTTP API Contract Conventions](../../adr/adr-018-external-http-api-contract-conventions.md)
-  (the decision and rationale behind every clause here)
+  (the decision and rationale behind the core clauses)
+- [ADR-024 — Django Web Stack, Server-Rendered Frontend, Single Service](../../adr/adr-024-django-web-stack-single-service.md)
+  (framework binding; single-service topology; walking-skeleton disposition)
+- [ADR-025 — Launch Sign-In, as amended 2026-06-12](../../adr/adr-025-launch-sign-in-google-microsoft-oauth-only.md)
+  (dual-track authentication; session-establishment decoupling; identity rows)
+- [ADR-027 — Raw run.app URL as POC Front Door](../../adr/adr-027-raw-run-app-poc-front-door.md)
+  (canonical address; branded-domain deferral; platform-error surface; synchronous budget)
 - ADR-001 — Single Source of Truth (the ADR/doc split this document observes)
 - ADR-017 — Interface Volatility by Default (tiering and deferral logic)
 - RFC 9110, *HTTP Semantics* — methods, status codes, `422`, `WWW-Authenticate`:
@@ -385,9 +536,11 @@ arrives.
   https://html.spec.whatwg.org/multipage/server-sent-events.html
 - OpenAPI Specification 3.x: https://spec.openapis.org/oas/latest.html
 - Google Cloud Run request timeout: https://cloud.google.com/run/docs/configuring/request-timeout
-- Google Cloud IAP signed identity headers: https://cloud.google.com/iap/docs/signed-headers-howto
+- Google Cloud trace context (`X-Cloud-Trace-Context`):
+  https://cloud.google.com/trace/docs/trace-context
 - Office Open XML `.docx` MIME type (Office.js / OOXML):
   https://learn.microsoft.com/en-us/office/open-xml/spreadsheet/working-with-the-shared-string-table
+- Office task-pane authentication research (durable record, 2026-06-12):
+  `docs/research/software-development/20260612-office-taskpane-addin-authentication.md`
 - NotebookLM: *Web API Design* (resource modelling, content negotiation, versioning)
-- NotebookLM: *FastAPI Implementation* (validation defaults, exception handling, streaming)
 - NotebookLM: *AI System Engineering* (event vocabulary, async lifecycle, observability)
