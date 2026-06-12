@@ -17,7 +17,7 @@ set -euo pipefail
 
 PHASE="${1:?usage: capture-zone-snapshot.sh <pre|post>}"
 PROJECT="redmarklogic-prod"
-SECRET="prod-redline-cloudflare-api-token"
+SECRET="prod-redline-cloudflare-api-token"  # pragma: allowlist secret
 OUTDIR="$(cd "$(dirname "$0")" && pwd)"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUT="${OUTDIR}/redmarklogic-zone-${PHASE}-${STAMP}.json"
