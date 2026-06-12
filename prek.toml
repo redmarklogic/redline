@@ -199,6 +199,15 @@ hooks = [
   },
   # --- agent / skill integrity checks ---
   {
+    id = "sync-layer-to-lock",
+    name = "sync-layer-to-lock",
+    entry = "uv run --frozen --offline hooks/sync-layer-to-lock.py",
+    language = "system",
+    files = '(^docs/architecture/skills-architecture\.md$|^skills-lock\.json$)',
+    pass_filenames = false,
+    priority = 10
+  },
+  {
     id = "check-skills-documented",
     name = "check-skills-documented",
     entry = "uv run --frozen --offline hooks/check-skills-documented.py",
