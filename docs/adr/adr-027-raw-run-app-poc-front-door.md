@@ -133,7 +133,7 @@ when **any** of these fires:
    unlocks **control over client-visible platform error pages** (custom error
    responses at the edge), which no $0 option offers.
 
-On reopen, the decision is a new ADR; nothing here pre-selects the mechanism.
+On reopen, the decision is a new ADR; nothing here preselects the mechanism.
 
 ### D5 — Consequences for the HTTP API standard (v0.2, same change set)
 
