@@ -21,10 +21,16 @@ _REQUIRED_ENV = {
 
 
 def _set_env(monkeypatch, overrides: dict | None = None, omit: set | None = None):
-    """Apply _REQUIRED_ENV minus *omit*, then apply *overrides*."""
+    """Apply _REQUIRED_ENV minus *omit*, then apply *overrides*.
+
+    Keys in *omit* are explicitly removed from the process environment so
+    that any value already present (e.g. from the settings_test.py bootstrap)
+    does not silently satisfy a "missing var" test case.
+    """
     env = dict(_REQUIRED_ENV)
     for key in omit or set():
         env.pop(key, None)
+        monkeypatch.delenv(key, raising=False)
     env.update(overrides or {})
     for k, v in env.items():
         monkeypatch.setenv(k, v)

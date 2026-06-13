@@ -7,10 +7,19 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
+
+All environment-varying configuration is read through web.config.Settings.
+No literal secrets, host lists, debug flags, or database credentials appear
+in this file (ADR-021, FR-001). Missing required variables raise
+pydantic.ValidationError at import time (FR-002).
 """
 
-import os
 from pathlib import Path
+
+from web.config import Settings
+
+# Instantiate once at module import; raises ValidationError on misconfiguration.
+_settings = Settings()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ql2$-gjhyjwygz&@)uxs4(bba=5a&q5auyv^ka!vzwcbfo!h99"  # pragma: allowlist secret
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = _settings.django_secret_key
+DEBUG = _settings.django_debug
+ALLOWED_HOSTS = _settings.django_allowed_hosts
 
 
 # Application definition
@@ -72,26 +77,17 @@ WSGI_APPLICATION = "web.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# PostgreSQL via docker-compose `db` service in dev; Cloud SQL injects the same
-# env vars in staging/production. Defaults match docker-compose.yml defaults.
+# PostgreSQL via docker-compose `db` service in dev; Cloud SQL injects the
+# same env vars in staging/production. All values are required — no defaults
+# (FR-006). Database migrations and connectivity are owned by #164.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get(
-            "POSTGRES_DB", "redline"
-        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
-        "USER": os.environ.get(
-            "POSTGRES_USER", "redline"
-        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
-        "PASSWORD": os.environ.get(
-            "POSTGRES_PASSWORD", "redline"
-        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
-        "HOST": os.environ.get(
-            "POSTGRES_HOST", "127.0.0.1"
-        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
-        "PORT": os.environ.get(
-            "POSTGRES_PORT", "5433"
-        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
+        "NAME": _settings.postgres_db,
+        "USER": _settings.postgres_user,
+        "PASSWORD": _settings.postgres_password,
+        "HOST": _settings.postgres_host,
+        "PORT": _settings.postgres_port,
     }
 }
 
@@ -136,3 +132,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Transport security — environment-driven, default-off for staging window.
+# Risk-accepted per founder decision (2026-06-13); enabled per environment
+# at #177. Each generates a check --deploy warning; disposition: D7/D8 in
+# specs/161-settings-12-factor-config/research.md.
+SECURE_SSL_REDIRECT = _settings.django_secure_ssl_redirect
+SECURE_HSTS_SECONDS = _settings.django_secure_hsts_seconds
+SESSION_COOKIE_SECURE = _settings.django_session_cookie_secure
+CSRF_COOKIE_SECURE = _settings.django_csrf_cookie_secure
