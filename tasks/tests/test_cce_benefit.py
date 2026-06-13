@@ -174,6 +174,24 @@ EXPLORE_PROMPTS = [
 ]
 
 
+def _tools_used_in_transcript(sid) -> list:
+    tools_used = []
+    tf = TRANSCRIPTS / f"{sid}.jsonl"
+    if not sid or not tf.exists():
+        return tools_used
+    for ln in tf.open(encoding="utf-8", errors="replace"):
+        try:
+            rec = json.loads(ln)
+        except Exception:
+            continue
+        if rec.get("type") != "assistant":
+            continue
+        for blk in (rec.get("message") or {}).get("content") or []:
+            if isinstance(blk, dict) and blk.get("type") == "tool_use":
+                tools_used.append(blk.get("name"))
+    return tools_used
+
+
 def run_headless(prompt: str):
     r = subprocess.run(
         [
@@ -195,20 +213,7 @@ def run_headless(prompt: str):
         timeout=600,
     )
     out = json.loads(r.stdout)
-    sid = out.get("session_id")
-    tools_used = []
-    tf = TRANSCRIPTS / f"{sid}.jsonl"
-    if sid and tf.exists():
-        for ln in tf.open(encoding="utf-8", errors="replace"):
-            try:
-                rec = json.loads(ln)
-            except Exception:
-                continue
-            if rec.get("type") == "assistant":
-                for blk in (rec.get("message") or {}).get("content") or []:
-                    if isinstance(blk, dict) and blk.get("type") == "tool_use":
-                        tools_used.append(blk.get("name"))
-    return out, tools_used
+    return out, _tools_used_in_transcript(out.get("session_id"))
 
 
 @pytest.mark.behavioral
