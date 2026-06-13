@@ -20,7 +20,7 @@ line shapes are defined in
 
 - **Word build** (`File > Account > About Word`): Microsoft 365 MSO, Version 2605 (Build 16.0.20026.20166), 64-bit
 - **Platform**: Windows desktop Word (Microsoft 365), Current Channel
-- **Requirement sets relied on**: WordApi 1.1 only (content controls, search, font highlight; no 1.4 fallback needed)
+- **Requirement sets relied on**: WordApi 1.3 floor. Most primitives are 1.1 (search, content controls, `font.highlightColor`, `getByTag`, `insertText`), but `ContentControl.getRange()` in the Replace stage requires WordApi 1.3 — so the declared floor was raised from 1.1 to 1.3 to honestly match the code (founder decision). **Client-version mapping** (Microsoft official requirement-set table, verified 2026-04-21): WordApi 1.1 = Word 2016; WordApi **1.3 = Word 2019**. So the **minimum supported version is Word 2019** (or any Microsoft 365 subscription); Word 2016 / 2013 / 2010 are unsupported. No 1.4 fallback needed.
 - **Observed search semantics**: `matchWholeWord=true matchCase=false` confirmed — the two `utilise` occurrences each matched as whole words; no partial/substring hits reported.
 - **Marking mechanism that worked**: content control (`insertContentControl` + `BoundingBox` + title) PAIRED with a text highlight (`font.highlightColor`). The highlight makes marks visible in normal reading view; the control carries the bounded box + replacement metadata. Comments fallback (T010) not needed.
 - **Snippet version**: this evidence is the v2 (patched) run. The first run (v1) surfaced two findings — marks invisible outside Design Mode, and ambiguous post-replace state reporting from a word-level tag. Both were fixed in `snippet.yaml` (reading-view highlight + per-occurrence tags) and re-verified; the read-offs below are the patched run.
@@ -102,7 +102,8 @@ The replacement is readable on each control's title in Design Mode (`commence` �
 
 Marks now use a **paired mechanism**: a BoundingBox content control (bounded box +
 title + per-occurrence tag metadata) AND a `font.highlightColor` text highlight
-(always visible in normal reading view). WordApi 1.1 throughout; comments fallback
+(always visible in normal reading view). WordApi 1.3 floor (1.1 for marking; 1.3 only
+for `getRange()` in Replace); comments fallback
 (T010, 1.4) NOT needed. The v1 constraint (controls invisible outside Design Mode)
 is closed — the highlight gives the user-facing signal, the control carries the
 structured metadata.

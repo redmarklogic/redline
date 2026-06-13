@@ -4,11 +4,13 @@ description: >-
   find a listed word, mark it visibly, replace it — entirely inside Script Lab
   with zero infrastructure. Four buttons run the four stages (Seed, Find, Mark,
   Replace); every acceptance check is read off the console section below per
-  contracts/console-output.md. WordApi 1.1 floor (compatibility rules in
+  contracts/console-output.md. WordApi 1.3 floor — most primitives are 1.1, but
+  ContentControl.getRange() (used in Replace) requires 1.3, so the declared floor is
+  raised to 1.3 to honestly match the code (compatibility rules in
   version-guard-report.md are binding).
 host: WORD
 api_set:
-  WordApi: '1.1'
+  WordApi: '1.3'
 script:
   content: |-
     // ---------------------------------------------------------------------------
@@ -28,7 +30,7 @@ script:
 
     // Color used both for the content-control bounding box AND for a text
     // highlight, so a mark is visible in normal reading view (not only in
-    // Word's Design Mode — see evidence.md #187 finding). WordApi 1.1.
+    // Word's Design Mode — see evidence.md #187 finding). highlightColor is 1.1.
     const MARK_HIGHLIGHT = "Yellow";
 
     // Per-occurrence tag: TAG_PREFIX + word + ":" + occurrenceIndex. A

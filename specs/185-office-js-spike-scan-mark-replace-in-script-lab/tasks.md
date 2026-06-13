@@ -66,11 +66,11 @@ visible in the document and the before/after pair logged.
 
 - [x] T015 [P] [Phase Z] Fill evidence.md "Environment": Word build (`File > Account > About Word`), requirement sets relied on (WordApi 1.1; 1.4 only if fallback used), and observed search semantics (case/whole-word behavior)
 - [x] T016 [Phase Z] Run the quickstart.md verification checklist end-to-end on a clean document — all 7 boxes checked
-- [ ] T017 [Phase Z] Comment evidence links on #186, #187, #188 and a summary on #185 via `gh issue comment` (founder review precedes any push, per repo policy)
+- [x] T017 [Phase Z] Comment evidence links on #186, #187, #188 and a summary on #185 via `gh issue comment` (founder review precedes any push, per repo policy)
 
 ### Acceptance Gate
 
-- [ ] T018 [Phase Z] All quickstart boxes checked; `snippet.yaml` + `evidence.md` committed on this feature branch
+- [x] T018 [Phase Z] All quickstart boxes checked; `snippet.yaml` + `evidence.md` committed on this feature branch
 
 ---
 
