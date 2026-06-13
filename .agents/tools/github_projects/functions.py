@@ -691,12 +691,13 @@ def delete_task(item_id: str, config: ProjectConfig) -> TaskResult:
     )
 
 
-def _fetch_items(config: ProjectConfig) -> list[dict[str, Any]]:
-    """Fetch ALL board items, refetching if the first page was truncated.
+def _fetch_items_with_total(config: ProjectConfig) -> tuple[list[dict[str, Any]], int]:
+    """Fetch ALL board items plus the authoritative totalCount.
 
     gh project item-list silently truncates at --limit; the JSON payload's
     totalCount reveals the true board size, so a single refetch at that size
-    guarantees completeness.
+    guarantees completeness. Returns ``(items, total)`` where ``total`` is the
+    board's reported totalCount after any refetch.
     """
 
     def _page(limit: int) -> tuple[list[dict[str, Any]], int]:
@@ -718,8 +719,25 @@ def _fetch_items(config: ProjectConfig) -> list[dict[str, Any]]:
 
     items, total = _page(_ITEM_LIST_LIMIT)
     if total > len(items):
-        items, _ = _page(total)
-    return items
+        items, total = _page(total)
+    return items, total
+
+
+def _fetch_items(config: ProjectConfig) -> list[dict[str, Any]]:
+    """Fetch ALL board items, refetching if the first page was truncated."""
+    return _fetch_items_with_total(config)[0]
+
+
+def count_tasks(config: ProjectConfig) -> int:
+    """Return the authoritative total number of items on the board.
+
+    Use this for the standup completeness assert instead of hand-rolling a
+    `gh api graphql` query: in PowerShell the GraphQL ``$variable`` syntax
+    collides with shell interpolation (``query($id: ID!)`` fails to parse).
+    `_fetch_items` already guarantees a complete fetch, so
+    ``len(list_tasks(config)) == count_tasks(config)`` by construction.
+    """
+    return _fetch_items_with_total(config)[1]
 
 
 def get_task(item_id: str, config: ProjectConfig) -> TaskRecord | None:

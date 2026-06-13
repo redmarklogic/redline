@@ -117,6 +117,7 @@ lint.pydocstyle.convention = "google"
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
 ignore-words-list = [
   "aci",
+  "addin",
   "ags",
   "als",
   "bund",

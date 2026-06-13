@@ -23,6 +23,7 @@ Agent assignment design:
   name not in the closed set at construction time.
 """
 
+import re
 from datetime import date, datetime
 from typing import Annotated, Literal, Self
 
@@ -778,6 +779,18 @@ class TaskRecord(BaseModel):
         if not self.agents:
             return None
         return min(self.agents)  # type: ignore[return-value]
+
+    @property
+    def issue_number(self) -> int | None:
+        """The GitHub issue number parsed from ``issue_url``, or None if absent.
+
+        ``issue_url`` has the form
+        ``https://github.com/<owner>/<repo>/issues/<n>`` (optionally
+        trailing-slashed). Callers should read this instead of hand-parsing
+        the URL — ``url.split('/')[-1]`` breaks on the trailing-slash variant.
+        """
+        match = re.search(r"/issues/(\d+)", self.issue_url)
+        return int(match.group(1)) if match else None
 
 
 # ---------------------------------------------------------------------------

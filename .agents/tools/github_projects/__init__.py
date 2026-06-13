@@ -1,6 +1,7 @@
 """GitHub Projects CLI tool — Pydantic-typed wrappers around `gh project` commands."""
 
 from .functions import (
+    count_tasks,
     create_task,
     delete_task,
     get_task,
@@ -29,6 +30,7 @@ __all__ = [
     "TaskType",
     "TaskUpdate",
     # Functions
+    "count_tasks",
     "create_task",
     "delete_task",
     "get_task",
