@@ -14,15 +14,15 @@ needed for Phase 2's trust-store step). No Node.js is required or permitted in
 **Purpose**: Read the template's real serving and certificate code, name the actual
 certificate library, and stub the README — so later phases adapt real code, not guesses.
 
-- [ ] T001 [Phase 0] Obtain the Masterjx9 Outlook-Addin-TaskPane template (clone or download to a scratch location outside `src/`); locate its Flask serving entry point and its `office-addin-dev-certs` Python port; record the file paths.
-- [ ] T002 [Phase 0] Identify the exact certificate-generation library the template's cert port imports (expected `cryptography`; confirm) and its public entry function(s).
-- [ ] T002a [Phase 0] Name the trust-store install mechanism the template uses (expected Windows `certutil -addstore -user Root <cert>` or PowerShell `Import-Certificate`); record it. Scenario 2 depends on this — it must be a named mechanism, not a black box.
-- [ ] T003 [Phase 0] Create `src/addin/README.md` stub recording: template source URL, which template files are reused, the confirmed certificate library, the trust-store mechanism (T002a), and a placeholder for the two run commands + chosen port.
+- [x] T001 [Phase 0] Obtain the Masterjx9 Outlook-Addin-TaskPane template (clone or download to a scratch location outside `src/`); locate its Flask serving entry point and its `office-addin-dev-certs` Python port; record the file paths.
+- [x] T002 [Phase 0] Identify the exact certificate-generation library the template's cert port imports (expected `cryptography`; confirm) and its public entry function(s).
+- [x] T002a [Phase 0] Name the trust-store install mechanism the template uses (expected Windows `certutil -addstore -user Root <cert>` or PowerShell `Import-Certificate`); record it. Scenario 2 depends on this — it must be a named mechanism, not a black box.
+- [x] T003 [Phase 0] Create `src/addin/README.md` stub recording: template source URL, which template files are reused, the confirmed certificate library, the trust-store mechanism (T002a), and a placeholder for the two run commands + chosen port.
 
 ### Acceptance Gate
 
-- [ ] T004 [Phase 0] Verify the confirmed cert library resolves under uv: `uv pip show <cert-library>` prints a version (not "not found"). If the template uses a library not in the environment, add it via `uv add <lib>` and record in plan.md D5 note.
-- [ ] T005 [Phase 0] No pytest yet (no function files). Gate is the README stub naming the real cert library and entry points.
+- [x] T004 [Phase 0] Verify the confirmed cert library resolves under uv: `uv pip show <cert-library>` prints a version (not "not found"). If the template uses a library not in the environment, add it via `uv add <lib>` and record in plan.md D5 note.
+- [x] T005 [Phase 0] No pytest yet (no function files). Gate is the README stub naming the real cert library and entry points.
 
 ---
 
@@ -33,18 +33,18 @@ returning 200 with hello-world HTML — Scenario 1 end-to-end (with `curl -k`).
 
 ### Tests (write first -- must fail before implementation begins)
 
-- [ ] T006 [Phase 1] Write failing tests in `tests/addin/test_server.py` using Flask's test client: (a) `GET /taskpane.html` returns 200; (b) body contains the hello-world marker text; (c) an unknown path returns 404.
-- [ ] T007 [Phase 1] Confirm tests fail (no server module yet): `.venv\Scripts\activate; python -m pytest tests/addin/test_server.py -v`
+- [x] T006 [Phase 1] Write failing tests in `tests/addin/test_server.py` using Flask's test client: (a) `GET /taskpane.html` returns 200; (b) body contains the hello-world marker text; (c) an unknown path returns 404.
+- [x] T007 [Phase 1] Confirm tests fail (no server module yet): `.venv\Scripts\activate; python -m pytest tests/addin/test_server.py -v`
 
 ### Implementation
 
-- [ ] T008 [P] [Phase 1] Create `src/addin/__init__.py` (package marker) and `src/addin/static/taskpane.html` (hello-world page, no app logic, no API calls, no auth — FR-005).
-- [ ] T009 [Phase 1] Implement `src/addin/server.py`: `Flask(__name__, static_folder="static", static_url_path="")`, route `/taskpane.html` returning `send_static_file`, `app.run(host="localhost", port=3000, ssl_context=("certs/cert.pem","certs/key.pem"))` with cert paths resolved relative to the package dir (not CWD). Make T006 tests pass.
+- [x] T008 [P] [Phase 1] Create `src/addin/__init__.py` (package marker) and `src/addin/static/taskpane.html` (hello-world page, no app logic, no API calls, no auth — FR-005).
+- [x] T009 [Phase 1] Implement `src/addin/server.py`: `Flask(__name__, static_folder="static", static_url_path="")`, route `/taskpane.html` returning `send_static_file`, `app.run(host="localhost", port=3000, ssl_context=("certs/cert.pem","certs/key.pem"))` with cert paths resolved relative to the package dir (not CWD). Make T006 tests pass.
 
 ### Acceptance Gate
 
-- [ ] T010 [Phase 1] Verify working code (server running in a second shell, using a cert from Phase 2 or a temporary adhoc cert): `curl -k -s -o /dev/null -w "%{http_code}" https://localhost:3000/taskpane.html` prints `200`; `curl -k -s https://localhost:3000/taskpane.html | findstr /i "hello"` shows the hello text.
-- [ ] T011 [Phase 1] Run pytest: `.venv\Scripts\activate; python -m pytest tests/addin -v` — all green.
+- [x] T010 [Phase 1] Verify working code (server running in a second shell, using a cert from Phase 2 or a temporary adhoc cert): `curl -k -s -o /dev/null -w "%{http_code}" https://localhost:3000/taskpane.html` prints `200`; `curl -k -s https://localhost:3000/taskpane.html | findstr /i "hello"` shows the hello text.
+- [x] T011 [Phase 1] Run pytest: `.venv\Scripts\activate; python -m pytest tests/addin -v` — all green.
 
 ---
 
@@ -55,18 +55,18 @@ so the page opens in a browser with no warning — Scenario 2.
 
 ### Tests (write first -- must fail before implementation begins)
 
-- [ ] T012 [Phase 2] Write failing tests in `tests/addin/test_make_cert.py`: running generation against a temp directory produces non-empty `cert.pem` and `key.pem`, and the parsed certificate has Subject Alternative Name (SAN) `localhost` and is currently valid. Do NOT assert the OS trust-store install (not portably testable).
-- [ ] T013 [Phase 2] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/addin/test_make_cert.py -v`
+- [x] T012 [Phase 2] Write failing tests in `tests/addin/test_make_cert.py`: running generation against a temp directory produces non-empty `cert.pem` and `key.pem`, and the parsed certificate has Subject Alternative Name (SAN) `localhost` and is currently valid. Do NOT assert the OS trust-store install (not portably testable).
+- [x] T013 [Phase 2] Confirm tests fail: `.venv\Scripts\activate; python -m pytest tests/addin/test_make_cert.py -v`
 
 ### Implementation
 
-- [ ] T014 [Phase 2] Implement `src/addin/make_cert.py` adapting the template's cert port: write `cert.pem`/`key.pem` into `src/addin/certs/`; attempt Windows trust-store install; on failure print an actionable message naming the elevated-shell requirement (edge case). Make T012 tests pass.
-- [ ] T015 [P] [Phase 2] Add `src/addin/certs/` to `.gitignore` (generated secrets must not be committed).
+- [x] T014 [Phase 2] Implement `src/addin/make_cert.py` adapting the template's cert port: write `cert.pem`/`key.pem` into `src/addin/certs/`; attempt Windows trust-store install; on failure print an actionable message naming the elevated-shell requirement (edge case). Make T012 tests pass.
+- [x] T015 [P] [Phase 2] Add `src/addin/certs/` to `.gitignore` (generated secrets must not be committed).
 
 ### Acceptance Gate
 
-- [ ] T016 [Phase 2] Verify working code: `python -m addin.make_cert` generates the cert and trusts it (run from an elevated shell on Windows); then open `https://localhost:3000/taskpane.html` in a desktop browser and confirm NO certificate warning + padlock present `[human-verify: browser padlock]`.
-- [ ] T017 [Phase 2] Run pytest: `.venv\Scripts\activate; python -m pytest tests/addin -v` — all green.
+- [x] T016 [Phase 2] Verify working code: `python -m addin.make_cert` generates the cert and trusts it (run from an elevated shell on Windows); then open `https://localhost:3000/taskpane.html` in a desktop browser and confirm NO certificate warning + padlock present `[human-verify: browser padlock]`. **Cert generation + HTTPS serving verified by live curl (200 + hello). The trust-store install and browser-padlock confirmation are HUMAN-VERIFY and PENDING — the agent did not install a CA into the Windows trust store (a security-relevant action gated by the harness). Run `python -m addin.make_cert` from an elevated PowerShell, then confirm the padlock.**
+- [x] T017 [Phase 2] Run pytest: `.venv\Scripts\activate; python -m pytest tests/addin -v` — all green.
 
 ---
 
@@ -75,24 +75,24 @@ so the page opens in a browser with no warning — Scenario 2.
 **Purpose**: Prove the no-Node.js premise (FR-004) and make both scenarios reproducible
 by an uninitiated reviewer from the documented commands (FR-007, SC-005).
 
-- [ ] T018 [Phase 3] Complete `src/addin/README.md`: the two commands (generate cert; start server), the chosen port, and the elevated-shell note — written for a reviewer who has never seen the template.
-- [ ] T019 [Phase 3] Run the Node-artifact audit: `git ls-files src/addin | findstr /i "package.json node_modules"` — confirm NO output (FR-004, SC-004).
+- [x] T018 [Phase 3] Complete `src/addin/README.md`: the two commands (generate cert; start server), the chosen port, and the elevated-shell note — written for a reviewer who has never seen the template.
+- [x] T019 [Phase 3] Run the Node-artifact audit: `git ls-files src/addin | findstr /i "package.json node_modules"` — confirm NO output (FR-004, SC-004).
 
 ### Acceptance Gate
 
-- [ ] T020 [Phase 3] `git ls-files src/addin` shows no `package.json` and no `node_modules`; README reproduces both acceptance scenarios using only the documented commands.
+- [x] T020 [Phase 3] `git ls-files src/addin` shows no `package.json` and no `node_modules`; README reproduces both acceptance scenarios using only the documented commands.
 
 ---
 
 ## Phase Z: Polish
 
-- [ ] T021 [P] [Phase Z] Confirm `src/addin` is NOT added to `[tool.importlinter] root_packages` and NOT added to wheel build targets in `pyproject.toml` (it is a non-shipped Generic dev harness — plan D3).
-- [ ] T022 [Phase Z] Run full add-in suite and lint: `.venv\Scripts\activate; python -m pytest tests/addin -v; python -m ruff check src/addin`
-- [ ] T023 [Phase Z] Run `python-static-checks` over `src/addin` before declaring complete.
+- [x] T021 [P] [Phase Z] Confirm `src/addin` is NOT added to `[tool.importlinter] root_packages` and NOT added to wheel build targets in `pyproject.toml` (it is a non-shipped Generic dev harness — plan D3).
+- [x] T022 [Phase Z] Run full add-in suite and lint: `.venv\Scripts\activate; python -m pytest tests/addin -v; python -m ruff check src/addin`
+- [x] T023 [Phase Z] Run `python-static-checks` over `src/addin` before declaring complete.
 
 ### Acceptance Gate
 
-- [ ] T024 [Phase Z] All `tests/addin` tests green, lint clean, and both live acceptance checks (Scenario 1 `curl` 200; Scenario 2 browser padlock [human-verify]) confirmed.
+- [x] T024 [Phase Z] All `tests/addin` tests green, lint clean, and both live acceptance checks (Scenario 1 `curl` 200; Scenario 2 browser padlock [human-verify]) confirmed. **Scenario 1 (`curl` 200 + hello over HTTPS) confirmed by the agent. Scenario 2 browser padlock remains HUMAN-VERIFY/PENDING (see T016) — the CA trust-store install must be run by a person from an elevated shell.**
 
 ## Execution Notes
 
