@@ -124,6 +124,7 @@ ignore-words-list = [
   "bunds",
   "constructure",
   "ege",
+  "fo",
   "gage",
   "gir",
   "linz",
@@ -133,7 +134,8 @@ ignore-words-list = [
   "sme",
   "strat",
   "statics",
-  "te"
+  "te",
+  "unparseable"
 ]
 skip = [ "tests/assets/html/*.html" ]
 

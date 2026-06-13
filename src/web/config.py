@@ -9,7 +9,7 @@ from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # The burned key is committed in git history and in already-built images; it
-# must never be re-used. The constant is the rejection target, not a live
+# must never be reused. The constant is the rejection target, not a live
 # credential. pragma suppresses detect-secrets false-positive (FR-005).
 _BURNED_SECRET_KEY = (  # pragma: allowlist secret
     "django-insecure-ql2$-gjhyjwygz&@)uxs4(bba=5a&q5auyv^ka!vzwcbfo!h99"
@@ -79,7 +79,7 @@ class Settings(BaseSettings):
         return value
 
     @model_validator(mode="after")
-    def _require_hosts_when_debug_off(self) -> "Settings":
+    def _require_hosts_when_debug_off(self) -> Settings:
         """Require at least one ALLOWED_HOST when DEBUG is False (FR-004 / RT-159 F-001).
 
         An empty ALLOWED_HOSTS with DEBUG=False causes every request — including

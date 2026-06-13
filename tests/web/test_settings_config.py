@@ -7,6 +7,8 @@ project-wide TID251 ban; raises() uses the base Exception with a match.
 
 import pytest
 
+from web.config import Settings
+
 # Minimal required env shared by multiple tests (everything except what the
 # individual test deliberately omits or overrides).
 _REQUIRED_ENV = {
@@ -44,8 +46,6 @@ class TestSettingsConfig:
         _set_env(monkeypatch, omit={"DJANGO_SECRET_KEY"})
 
         with pytest.raises(Exception, match="django_secret_key"):
-            from web.config import Settings  # noqa: PLC0415
-
             Settings()
 
     def test_missing_required_aggregates(self, monkeypatch):
@@ -55,9 +55,7 @@ class TestSettingsConfig:
             omit={"DJANGO_SECRET_KEY", "DJANGO_ALLOWED_HOSTS", "POSTGRES_DB"},
         )
 
-        with pytest.raises(Exception) as exc_info:
-            from web.config import Settings  # noqa: PLC0415
-
+        with pytest.raises(Exception, match="django_secret_key") as exc_info:
             Settings()
 
         error_text = str(exc_info.value)
@@ -70,9 +68,8 @@ class TestSettingsConfig:
         _set_env(monkeypatch)
         monkeypatch.delenv("DJANGO_DEBUG", raising=False)
 
-        from web.config import Settings  # noqa: PLC0415
-
         settings = Settings()
+
         assert settings.django_debug is False
 
     def test_wildcard_host_rejected(self, monkeypatch):
@@ -80,8 +77,6 @@ class TestSettingsConfig:
         _set_env(monkeypatch, overrides={"DJANGO_ALLOWED_HOSTS": "*"})
 
         with pytest.raises(Exception, match="wildcard"):
-            from web.config import Settings  # noqa: PLC0415
-
             Settings()
 
     def test_allowed_hosts_comma_split(self, monkeypatch):
@@ -91,9 +86,8 @@ class TestSettingsConfig:
             overrides={"DJANGO_ALLOWED_HOSTS": "localhost, example.com"},
         )
 
-        from web.config import Settings  # noqa: PLC0415
-
         settings = Settings()
+
         assert settings.django_allowed_hosts == ["localhost", "example.com"]
 
     def test_debug_off_requires_host(self, monkeypatch):
@@ -104,8 +98,6 @@ class TestSettingsConfig:
         )
 
         with pytest.raises(Exception, match="ALLOWED_HOSTS"):
-            from web.config import Settings  # noqa: PLC0415
-
             Settings()
 
     def test_burned_secret_key_rejected(self, monkeypatch):
@@ -114,8 +106,6 @@ class TestSettingsConfig:
         _set_env(monkeypatch, overrides={"DJANGO_SECRET_KEY": burned})
 
         with pytest.raises(Exception, match="burned"):
-            from web.config import Settings  # noqa: PLC0415
-
             Settings()
 
     def test_fresh_secret_key_accepted(self, monkeypatch):
@@ -125,7 +115,6 @@ class TestSettingsConfig:
             overrides={"DJANGO_SECRET_KEY": "a-completely-fresh-key-xyz-987654321"},
         )
 
-        from web.config import Settings  # noqa: PLC0415
-
         settings = Settings()
+
         assert settings.django_secret_key == "a-completely-fresh-key-xyz-987654321"

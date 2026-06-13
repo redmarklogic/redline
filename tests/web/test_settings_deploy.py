@@ -33,14 +33,19 @@ _RESOLVED_IDS = {"security.W009", "security.W018", "security.W020"}
 # IDs risk-accepted (D7/D8): transport-security, default-off for staging.
 # Enabled per environment at #177. Listed here so their presence is asserted
 # (accepted-not-silenced), documenting that no warning is undocumented.
-_RISK_ACCEPTED_IDS = {"security.W004", "security.W008", "security.W012", "security.W016"}
+_RISK_ACCEPTED_IDS = {
+    "security.W004",
+    "security.W008",
+    "security.W012",
+    "security.W016",
+}
 
 
 def test_deploy_check_resolved_warnings_absent():
     """Resolved check classes W009/W018/W020 absent in production-like env (FR-007)."""
     with override_settings(**_PROD_LIKE):
         django.setup()
-        from django.core.checks import run_checks  # noqa: PLC0415
+        from django.core.checks import run_checks
 
         messages = run_checks(include_deployment_checks=True)
 
@@ -62,7 +67,7 @@ def test_deploy_check_risk_accepted_warnings_present():
     """
     with override_settings(**_PROD_LIKE):
         django.setup()
-        from django.core.checks import run_checks  # noqa: PLC0415
+        from django.core.checks import run_checks
 
         messages = run_checks(include_deployment_checks=True)
 

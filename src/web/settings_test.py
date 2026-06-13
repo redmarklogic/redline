@@ -44,7 +44,7 @@ os.environ.setdefault(  # hook: allow -- test fixture (ADR-021 escape hatch)
     "5432",
 )
 
-from web.settings import *  # noqa: E402, F403
+from web.settings import *  # noqa: F403
 
 DATABASES = {
     "default": {
