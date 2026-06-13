@@ -412,6 +412,42 @@ Steps:
 
 ---
 
+## Sprint Field Mutations (Destructive)
+
+The Sprint field is an **iteration** field (`PVTIF_lADOEUOu2c4BZrkBzhUokG0` on project
+`PVT_kwDOEUOu2c4BZrkB`). Like single-select options (see Common Mistakes, last row),
+`updateProjectV2Field` with `iterationConfiguration` is a **full replace**: every iteration
+ID regenerates, `completedIterations` are dropped unless re-supplied, and every item's
+sprint assignment orphans silently. Verified live 2026-06-13 (Sprint 1 wiped, ~50
+assignments orphaned).
+
+The Sprint field is board schema — its mutations route through the PM agent steward
+gate like any other schema change.
+
+**Procedure — adding, renaming, or re-dating sprints:**
+
+1. **Snapshot (mandatory, paginated).** Query `items(first: 100, after: $cursor)` looping
+   on `pageInfo.hasNextPage` until exhausted — `first: 100` alone silently truncates.
+   Persist the full `{itemId, issueNumber, iterationId, iterationTitle}` list to
+   `.agents/tmp/sprint-ops-YYYY-MM-DD/snapshot.json`. Verify the count matches the
+   board's item count before proceeding.
+2. **Mutate.** Pass ALL iterations — past, current, and new — each with explicit
+   `title`, `startDate`, `duration`. Past-dated iterations auto-classify as completed
+   on save; omitting them deletes them. Capture the returned new IDs.
+3. **Remap.** Build the old-ID → new-ID map by title; layer any intentional moves on top.
+4. **Reassign.** For every snapshotted item, call `updateProjectV2ItemFieldValue` with
+   the new iteration ID.
+5. **Verify.** Re-paginate, group items by sprint title, diff against expected. Then
+   `resolve_project_config(force_refresh=True)` and commit the config.
+
+**PowerShell + `gh api graphql` pitfalls (cost 52 failed calls live):**
+
+- Never interpolate values into the query string — unquoted `PVTI_...` IDs parse as
+  GraphQL tokens (`UNKNOWN_CHAR`). Always declare GraphQL variables and pass via `-f`.
+- `-f itemId=$item.id` sends the literal string `System.Collections.Hashtable.id` —
+  PowerShell does not expand member access inside flag arguments. Extract to plain
+  string variables first (`$itemId = [string]$item.id`) or use `$($item.id)`.
+
 ## Common Mistakes
 
 | Mistake | Consequence | Fix |
@@ -426,3 +462,5 @@ Steps:
 | Creating a parent + sub-issues when K1–K4 hold | Shallow, context-poor shards; tracking overhead with no payoff | Apply the Structuring Doctrine; default to one issue with a checklist |
 | Recording dependencies in the `Depends on` text field | No Blocked badge, no `is:blocked` filter | Use native `set-dependencies` (procedure 6); leave the legacy text field blank |
 | Editing a single-select field's options via `updateProjectV2Field` | **ALL option IDs regenerate and every item's value for that field is WIPED** (no name-based migration — verified live 2026-06-12, Agent field) | Snapshot every item's value first (`gh project item-list --format json`), apply the mutation, restore values from the snapshot, then `resolve_project_config(force_refresh=True)` and commit the config |
+| Editing the Sprint iteration field via `updateProjectV2Field` | **ALL iteration IDs regenerate, completed iterations are DELETED, every item's sprint orphans** (verified live 2026-06-13, Sprint field) | Follow the Sprint Field Mutations procedure above — paginated snapshot first, include past iterations in the new config, reassign every item |
+| Snapshotting board items with a single `items(first: 100)` query | Items beyond 100 silently missing from the snapshot — unrecoverable after a destructive mutation | Always paginate on `pageInfo.hasNextPage` and verify the count against the board total |
