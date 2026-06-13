@@ -44,10 +44,6 @@ class Settings(BaseSettings):
     django_session_cookie_secure: bool = False
     django_csrf_cookie_secure: bool = False
 
-    # ------------------------------------------------------------------
-    # Validators
-    # ------------------------------------------------------------------
-
     @field_validator("django_allowed_hosts", mode="before")
     @classmethod
     def _split_and_validate_hosts(cls, value: object) -> list[str]:
