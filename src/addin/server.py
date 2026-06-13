@@ -27,7 +27,7 @@ PORT = 3000  # Office add-in convention; single documented value (FR-006, plan D
 app = Flask(__name__, static_folder="static", static_url_path="")
 
 
-@app.route("/taskpane.html")
+@app.route("/taskpane.html", methods=["GET"])
 def taskpane():
     """Serve the static hello-world taskpane page (FR-001).
 
