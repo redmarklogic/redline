@@ -1,7 +1,7 @@
 # Skills Taxonomy & Catalog
 
 **Owner (steward):** Harriet
-**Last updated:** 2026-06-12
+**Last updated:** 2026-06-13
 
 > **SOT for the category vocabulary and each skill's category assignment.** Nothing else.
 >
