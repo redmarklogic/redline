@@ -12,11 +12,11 @@ from web.config import Settings
 # Minimal required env shared by multiple tests (everything except what the
 # individual test deliberately omits or overrides).
 _REQUIRED_ENV = {
-    "DJANGO_SECRET_KEY": "test-key-that-is-not-the-burned-literal-abc123",
+    "DJANGO_SECRET_KEY": "test-key-that-is-not-the-burned-literal-abc123",  # pragma: allowlist secret
     "DJANGO_ALLOWED_HOSTS": "testserver,localhost",
     "POSTGRES_DB": "testdb",
     "POSTGRES_USER": "testuser",
-    "POSTGRES_PASSWORD": "testpass",
+    "POSTGRES_PASSWORD": "testpass",  # pragma: allowlist secret
     "POSTGRES_HOST": "127.0.0.1",
     "POSTGRES_PORT": "5432",
 }
@@ -112,9 +112,14 @@ class TestSettingsConfig:
         """A key that is not the burned literal is accepted without error (FR-005)."""
         _set_env(
             monkeypatch,
-            overrides={"DJANGO_SECRET_KEY": "a-completely-fresh-key-xyz-987654321"},
+            overrides={
+                "DJANGO_SECRET_KEY": "a-completely-fresh-key-xyz-987654321"  # pragma: allowlist secret
+            },
         )
 
         settings = Settings()
 
-        assert settings.django_secret_key == "a-completely-fresh-key-xyz-987654321"
+        assert (
+            settings.django_secret_key  # pragma: allowlist secret
+            == "a-completely-fresh-key-xyz-987654321"  # pragma: allowlist secret
+        )
