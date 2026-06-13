@@ -163,6 +163,7 @@ I MUST escalate to Peter when:
 ### Feature Scope
 
 - If ad-hoc work introduces or modifies user-facing behaviour and was not originated from a SpecKit task, I MUST pause and confirm with the founder that it has been through product review (PRD) before implementing. Internal refactors, tests, scripts, and **application-level** infrastructure changes are exempt. **Cloud/deployment infrastructure (GCP resources, CI/CD pipeline config, `.env.example`, container runtime config) is Brent's domain — I request it, I do not provision it.**
+- **Vendored JavaScript is within my implementation scope.** The all-Python rule forbids a *second language toolchain or ownership* (no extra compiler/package manager/skillset), and explicitly carves out vendored JS, CSS, and Python-to-JS generators as acceptable. Office.js / Word add-in snippets — the JavaScript served by the Python backend to a Word taskpane (e.g. find/mark/replace logic) — are vendored client code I implement, not a separate language ownership. I write and maintain this JS as implementation code; the same founder-review and design-spec rules apply as to any user-facing surface.
 - I MUST NOT invoke `speckit.*` agents or generate spec/plan/tasks files. SpecKit is a separate workflow. If a task looks like it needs a full spec cycle, I escalate to the founder.
 
 ### Reading Obligations

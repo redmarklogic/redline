@@ -1,0 +1,337 @@
+name: 'Redline spike #185 — scan, mark, replace'
+description: >-
+  Office.js spike for sprint 4 (issue #185). Proves three Word primitives —
+  find a listed word, mark it visibly, replace it — entirely inside Script Lab
+  with zero infrastructure. Four buttons run the four stages (Seed, Find, Mark,
+  Replace); every acceptance check is read off the console section below per
+  contracts/console-output.md. WordApi 1.3 floor — most primitives are 1.1, but
+  ContentControl.getRange() (used in Replace) requires 1.3, so the declared floor is
+  raised to 1.3 to honestly match the code (compatibility rules in
+  version-guard-report.md are binding).
+host: WORD
+api_set:
+  WordApi: '1.3'
+script:
+  content: |-
+    // ---------------------------------------------------------------------------
+    // Hard-coded placeholder dictionary (spec FR-001; real registry = issue #195).
+    // word -> suggested replacement. Lowercase single words; whole-word search.
+    // The seed paragraph uses "utilise" twice and "commence" once = exactly 3
+    // occurrences of listed words (spec FR-002, plan D6).
+    // ---------------------------------------------------------------------------
+    const TABOO = [
+      { word: "utilise", replacement: "use" },
+      { word: "commence", replacement: "start" },
+      { word: "terminate", replacement: "end" },
+      { word: "ascertain", replacement: "find out" },
+    ];
+
+    const TAG_PREFIX = "redline-taboo:";
+
+    // Color used both for the content-control bounding box AND for a text
+    // highlight, so a mark is visible in normal reading view (not only in
+    // Word's Design Mode — see evidence.md #187 finding). highlightColor is 1.1.
+    const MARK_HIGHLIGHT = "Yellow";
+
+    // Per-occurrence tag: TAG_PREFIX + word + ":" + occurrenceIndex. A
+    // word-level tag alone is ambiguous when a word occurs more than once (it
+    // made Replace re-query a sibling control — see evidence.md #188 caveat).
+    // The occurrence index disambiguates so Replace can target one exact mark.
+    function occurrenceTag(word, index) {
+      return TAG_PREFIX + word + ":" + index;
+    }
+
+    // True if a tag belongs to `word` (matches TAG_PREFIX + word + ":<n>").
+    function tagIsForWord(tag, word) {
+      return tag.indexOf(TAG_PREFIX + word + ":") === 0;
+    }
+
+    // NOTE: Mark applies BOTH a content control (BoundingBox + title metadata,
+    // visible in Design Mode) and a text highlight (MARK_HIGHLIGHT, visible in
+    // normal reading view). Tags are per-occurrence (occurrenceTag) so Replace
+    // can target one exact mark. Both refinements came out of the v1 spike run
+    // (see evidence.md findings for #187 visibility and #188 tag ambiguity).
+
+    // Plain-prose seed paragraph. "utilise" appears twice, "commence" once;
+    // no other listed word appears. No punctuation adjacent to the seeded words
+    // that could perturb whole-word search (data-model SeedText rule).
+    const SEED_PARAGRAPH =
+      "The crew will utilise the new rig before they commence the survey " +
+      "and will utilise the same approach throughout the works.";
+
+    // Replacement lookup keyed by lowercased listed word.
+    function replacementFor(word) {
+      const entry = TABOO.find(function (t) { return t.word === word; });
+      return entry ? entry.replacement : "";
+    }
+
+    // ---------------------------------------------------------------------------
+    // Stage 1 — Seed: insert one plain-prose paragraph with exactly 3 listed-word
+    // occurrences. Logs the [seed] contract line (T004).
+    // ---------------------------------------------------------------------------
+    async function seed() {
+      await Word.run(async (context) => {
+        try {
+          context.document.body.insertParagraph(SEED_PARAGRAPH, "End");
+          await context.sync();
+          console.log(
+            '[seed] inserted sample text with 3 occurrences ' +
+            '(utilise x2, commence x1)'
+          );
+        } catch (error) {
+          console.log('[seed] ERROR: ' + error);
+        }
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Stage 2 — Find: locate every occurrence of every listed word in the body.
+    // Load all collections, ONE context.sync(), then read text (compatibility
+    // rule 1). matchWildcards stays false (rule 3). Logs one [find] match line
+    // per occurrence + [find] options + [find] total (T005).
+    // ---------------------------------------------------------------------------
+    async function find() {
+      await Word.run(async (context) => {
+        try {
+          const body = context.document.body;
+          const searches = TABOO.map(function (entry) {
+            const results = body.search(entry.word, {
+              matchWholeWord: true,
+              matchCase: false,
+              matchWildcards: false,
+            });
+            results.load("items/text");
+            return { word: entry.word, results: results };
+          });
+
+          await context.sync();
+
+          console.log(
+            '[find] options: matchWholeWord=true matchCase=false'
+          );
+
+          let total = 0;
+          searches.forEach(function (s) {
+            s.results.items.forEach(function (range) {
+              total += 1;
+              console.log(
+                '[find] match ' + total + ': "' + range.text +
+                '" (word: ' + s.word + ')'
+              );
+            });
+          });
+
+          console.log('[find] total: ' + total);
+        } catch (error) {
+          console.log('[find] ERROR: ' + error);
+        }
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Stage 3 — Mark: wrap each found range in a rich-text content control with a
+    // bounding box, distinct color, replacement as title, redline-taboo:<word>
+    // as tag (plan D3). Idempotency guard first: count existing controls per tag
+    // via getByTag (plan D4); only wrap ranges that are not already inside a mark
+    // of that tag. Logs [mark] created/existing/total marked (T008).
+    // ---------------------------------------------------------------------------
+    async function mark() {
+      await Word.run(async (context) => {
+        try {
+          const body = context.document.body;
+
+          // 1) Idempotency baseline: load every existing redline mark and bucket
+          //    the per-word occurrence indexes already taken. Scan all content
+          //    controls once and read each tag (a word-level getByTag can't see
+          //    the per-occurrence suffix, so read tags directly).
+          const allControls = context.document.contentControls;
+          allControls.load("items/tag");
+          await context.sync();
+
+          const takenIndexes = {}; // word -> Set of occurrence indexes already marked
+          TABOO.forEach(function (entry) { takenIndexes[entry.word] = {}; });
+          allControls.items.forEach(function (cc) {
+            TABOO.forEach(function (entry) {
+              if (tagIsForWord(cc.tag, entry.word)) {
+                const idx = cc.tag.split(":").pop();
+                takenIndexes[entry.word][idx] = true;
+              }
+            });
+          });
+
+          // 2) Find current occurrences of each word.
+          const searches = TABOO.map(function (entry) {
+            const results = body.search(entry.word, {
+              matchWholeWord: true,
+              matchCase: false,
+              matchWildcards: false,
+            });
+            results.load("items");
+            return { word: entry.word, results: results };
+          });
+          await context.sync();
+
+          // 3) For each occurrence, mark it with a UNIQUE per-occurrence tag if
+          //    that index isn't already taken. Each mark gets a content control
+          //    (BoundingBox + title metadata, visible in Design Mode) AND a text
+          //    highlight (visible in normal reading view). Re-runs skip indexes
+          //    already taken, so the total mark count stays stable (idempotency).
+          let created = 0;
+          let existing = 0;
+          searches.forEach(function (s) {
+            s.results.items.forEach(function (range, index) {
+              if (takenIndexes[s.word][String(index)]) {
+                existing += 1;
+                return; // this occurrence already marked on a prior run
+              }
+              range.font.highlightColor = MARK_HIGHLIGHT;
+              const cc = range.insertContentControl();
+              cc.appearance = "BoundingBox";
+              cc.color = "red";
+              cc.title = replacementFor(s.word);
+              cc.tag = occurrenceTag(s.word, index);
+              created += 1;
+            });
+          });
+
+          await context.sync();
+
+          const totalMarked = created + existing;
+          console.log(
+            '[mark] created: ' + created +
+            ', existing: ' + existing +
+            ', total marked: ' + totalMarked
+          );
+        } catch (error) {
+          console.log('[mark] ERROR: ' + error);
+        }
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Stage 4 — Replace: take the first mark, read its current text as `before`,
+    // insertText(replacement, "Replace"), then observe what happened to the
+    // control wrapper and report it (plan D5; #188 rabbit hole — outcome observed,
+    // not prescribed). Logs [replace] before/after + [replace] control state
+    // (T012).
+    // ---------------------------------------------------------------------------
+    async function replace() {
+      await Word.run(async (context) => {
+        try {
+          // Target ONE exact occurrence: the first listed word, occurrence 0.
+          // The per-occurrence tag is unique, so the post-replace re-query reads
+          // THIS control's true state — not a sibling occurrence of the same word
+          // (the ambiguity recorded in evidence.md #188).
+          const firstWord = TABOO[0].word;
+          const targetTag = occurrenceTag(firstWord, 0);
+
+          const controls = context.document.contentControls.getByTag(targetTag);
+          controls.load("items");
+          await context.sync();
+
+          if (controls.items.length === 0) {
+            console.log(
+              '[replace] control state: no mark with tag ' + targetTag +
+              ' found — run Mark first'
+            );
+            return;
+          }
+
+          const control = controls.items[0];
+          const range = control.getRange();
+          range.load("text");
+          control.load("title");
+          await context.sync();
+
+          const before = range.text;
+          const after = replacementFor(firstWord);
+
+          range.insertText(after, "Replace");
+          await context.sync();
+
+          console.log(
+            '[replace] before: "' + before + '" after: "' + after + '"'
+          );
+
+          // Re-query THIS occurrence's unique tag to see whether its control
+          // survived the replace, and read its text if it did.
+          const stillThere = context.document.contentControls.getByTag(targetTag);
+          stillThere.load("items");
+          await context.sync();
+
+          let stateNote;
+          if (stillThere.items.length === 0) {
+            stateNote =
+              "control removed after replace (tag " + targetTag + " gone)";
+          } else {
+            const remaining = stillThere.items[0];
+            const remainingRange = remaining.getRange();
+            remainingRange.load("text");
+            await context.sync();
+            stateNote =
+              'control kept, wrapper text now "' + remainingRange.text + '"';
+          }
+
+          console.log('[replace] control state: ' + stateNote);
+        } catch (error) {
+          console.log('[replace] ERROR: ' + error);
+        }
+      });
+    }
+
+    // Wire buttons (ids must match template).
+    document.getElementById("seed").addEventListener("click", () => tryCatch(seed));
+    document.getElementById("find").addEventListener("click", () => tryCatch(find));
+    document.getElementById("mark").addEventListener("click", () => tryCatch(mark));
+    document.getElementById("replace").addEventListener("click", () => tryCatch(replace));
+
+    // Standard Script Lab error wrapper: surfaces any platform error verbatim.
+    async function tryCatch(callback) {
+      try {
+        await callback();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  language: typescript
+template:
+  content: |-
+    <section class="ms-Fabric ms-font-m">
+      <p class="ms-font-l">
+        Redline spike #185 — run the stages in order on a blank document.
+      </p>
+      <button id="seed" class="ms-Button">
+        <span class="ms-Button-label">1. Seed</span>
+      </button>
+      <button id="find" class="ms-Button">
+        <span class="ms-Button-label">2. Find</span>
+      </button>
+      <button id="mark" class="ms-Button">
+        <span class="ms-Button-label">3. Mark</span>
+      </button>
+      <button id="replace" class="ms-Button">
+        <span class="ms-Button-label">4. Replace</span>
+      </button>
+    </section>
+  language: html
+style:
+  content: |-
+    section {
+      margin: 0 auto;
+      max-width: 480px;
+    }
+
+    button {
+      display: block;
+      margin: 8px 0;
+    }
+  language: css
+libraries: |-
+  https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+  @types/office-js
+
+  office-ui-fabric-js@1.4.0/dist/css/fabric.min.css
+  office-ui-fabric-js@1.4.0/dist/css/fabric.components.min.css
+
+  core-js@2.4.1/client/core.min.js
+  @types/core-js

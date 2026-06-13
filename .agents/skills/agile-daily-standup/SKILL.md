@@ -349,7 +349,8 @@ dependency link (Step 2 dependency map).
 
 ```mermaid
 flowchart LR
-    A[Task A - short name] --> B[Task B]
+    classDef done fill:#22c55e,stroke:#16a34a,color:#fff
+    A[Task A - done]:::done --> B[Task B]
     A --> C[Task C - parallel path]
     B --> D[Task D]
     C --> D
@@ -362,11 +363,14 @@ Rules:
 - Parallel branches: fan out from a common predecessor, converge at a common successor
 - Every path must end at a terminal node
 - No `--` in labels
+- **Done tasks: always include in the chart** — apply `:::done` class (green fill). Never remove Done tasks; seeing resolved nodes makes the critical path readable and shows sprint progress at a glance.
+- Add `classDef done fill:#22c55e,stroke:#16a34a,color:#fff` as the first line inside the flowchart block whenever any Done task appears.
 
 Legend:
 - Left-to-right arrow = must finish before next task starts
 - Branching paths = tasks that can run in parallel terminals
 - Converging arrows = both prerequisites must complete before proceeding
+- **Green node** = task already Done (completed)
 
 ---
 
@@ -610,6 +614,7 @@ WIP creep, riskiest unknown, board gaps — each explained in terms of product s
 | Generating all three diagrams regardless of sprint size | Apply the skip rules. A two-bar Gantt and a two-node dependency graph are decoration, not communication. |
 | Using `--` inside Mermaid labels | v8.8.0 lexes `--` as an edge token — use a plain hyphen. |
 | Using `\n` inside stadium `([...])` shapes | Unreliable in v8.8.0 — use a short single-line label. |
+| Removing Done tasks from Diagram 2 | Done tasks must stay in the dependency chain — apply `:::done` (green) class instead. Removing them hides resolved work and breaks the critical path visualization. |
 
 ### Ordering mistakes
 
