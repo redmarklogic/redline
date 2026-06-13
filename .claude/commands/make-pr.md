@@ -6,6 +6,7 @@ You are executing the `make-pr` pipeline. Announce: "Running make-pr: pre-flight
 $branch = git branch --show-current
 $dirty = git status --porcelain
 $onRemote = git ls-remote --exit-code origin $branch 2>$null
+$existingPrUrl = gh pr view --json url --jq .url 2>$null
 ```
 
 **If on `master` or `main`:**
@@ -16,7 +17,8 @@ Run `git switch -c <branch-name>`, then continue. Never commit to master.
 
 | State | Action |
 |---|---|
-| No uncommitted changes AND branch already on remote | Abort. Output: "Nothing to push — branch is clean and already on remote. If PR is missing, run `gh pr create` directly." Stop. |
+| No uncommitted changes AND branch already on remote AND PR exists | Continue full pipeline. Step 6 will skip creation and output existing PR URL instead. |
+| No uncommitted changes AND branch already on remote AND no PR | Abort. Output: "Nothing to push — branch is clean and already on remote. If PR is missing, run `gh pr create` directly." Stop. |
 | No uncommitted changes AND branch NOT on remote | Skip Step 3. Jump to Step 4. |
 | Uncommitted changes present | Full pipeline. Continue to Step 2. |
 
@@ -109,7 +111,12 @@ $branch = git branch --show-current
 - [ ] SonarQube exits 0 (or skipped — no scannable files changed)
 ```
 
-## Step 6 — Create PR
+## Step 6 — Create or surface PR
+
+**If `$existingPrUrl` is set (PR already exists):**
+Output: "PR already exists: `$existingPrUrl` — skipping creation." Continue to Step 7.
+
+**Otherwise:**
 
 ```powershell
 gh pr create --base master --title "<title>" --body @'
@@ -122,3 +129,22 @@ Base branch is always `master`. No draft mode.
 If `gh pr create` fails with "already exists", output the existing PR URL and stop — do not error.
 
 Output the PR URL on success.
+
+## Step 7 — Quality gate summary
+
+After the PR URL, output a table summarising every check run during this pipeline.
+
+| Check | Violations | Details | Fixed |
+|---|---|---|---|
+| prek | Yes / No | List each hook that failed, or — | Yes / No / N/A |
+| pytest | Yes / No | Number of failures, or — | Yes / No / N/A |
+| SonarQube | Yes / No / Skipped | Each issue (rule, file:line), or — | Yes / No / N/A |
+
+Rules:
+
+- Include a row for every check that ran, even if clean.
+- If a check was skipped (e.g. SonarQube predicate not met), set Violations to `Skipped` and Details/Fixed to `—`.
+- Details for prek: list each failing hook by name (e.g. `ruff-format`, `fix-doc-sync`).
+- Details for pytest: `N failed, M passed` or `all passed`.
+- Details for SonarQube: each finding as `rule @ file:line`, or `—`.
+- Fixed = `Yes` when the pipeline resolved it before pushing; `No` if it was suppressed or deferred; `N/A` if no violations.
