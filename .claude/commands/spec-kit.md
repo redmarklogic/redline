@@ -136,6 +136,15 @@ Determine spec input — in priority order:
 - Otherwise (feature name, doc path, or brainstorm flow): omit `SPECIFY_FEATURE_DIRECTORY` and
   let spec-kit auto-number the directory (`NNN-<short-name>`).
 
+**Writing style (applies to spec.md):** Write spec.md in plain English for an
+uninitiated reader — someone who has not seen the source issue or sat in the
+discussion. Use flowing narrative prose, not terse fragments or note form, so the
+document reads as a self-contained explanation of the problem, the users, and what
+success looks like. The first time any acronym or abbreviation appears, write the
+full term followed by the acronym in parentheses (for example, "Architecture
+Decision Record (ADR)"), then use the short form thereafter. Define project- and
+domain-specific terms on first use. See **Writing Style for Generated Documents** below.
+
 After specify completes:
 
 **Incremental analysis — spec vs source:**
@@ -258,6 +267,28 @@ When the user provides a step name (`plan`, `tasks`, `analyze`):
 - Ask the architecture question on first setup only.
 - Do NOT ask about things the preset fills automatically (tech context, RICE, MoSCoW).
 - Batch multiple questions into one ask per phase. Never ask one question at a time across multiple turns when they can be combined.
+
+---
+
+## Writing Style for Generated Documents
+
+These rules govern the prose in every document this command produces (spec.md,
+plan.md, tasks.md). They override the compressed working style used elsewhere — the
+generated documents are read by people who were not in the room.
+
+- **Plain English, for the uninitiated.** Assume the reader has not seen the source
+  issue, brainstorm, or conversation. Explain the problem and the solution from
+  first principles. Avoid insider shorthand.
+- **Expand acronyms on first use.** The first time an acronym or abbreviation appears
+  in a document, write the full term with the acronym in parentheses — for example,
+  "Test-Driven Development (TDD)" — then use the short form for the rest of that
+  document. Define domain-specific jargon on first use.
+- **Narrative in spec.md.** Write spec.md as flowing narrative prose. The problem
+  statement, user context, and success criteria should read as connected paragraphs
+  that tell a coherent story, not as disconnected bullet fragments. (plan.md and
+  tasks.md may stay structured, but still expand acronyms and read clearly.)
+- **Self-contained.** A reader should understand each document without needing the
+  source issue or any prior context open beside it.
 
 ---
 
