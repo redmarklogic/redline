@@ -1,7 +1,7 @@
 # Skills Gaps & Lifecycle Ledger
 
 **Owner (steward):** Harriet
-**Last updated:** 2026-06-12
+**Last updated:** 2026-06-13
 
 > **SOT for skill coverage gaps and pending lifecycle actions.** This is the capability
 > governor's working ledger — consulted at hires, audits, topology syncs, and sprint
@@ -27,6 +27,7 @@
 | `ux-email-as-interface` (email template design for co-development and impact communication) | Harriet (2026-05-09, Matt scope expansion) | Collaborate with John on email copy patterns; draft skill using `writing-skills` TDD cycle | Deferred — Phase 2 |
 | `knowledge-infrastructure` (library curation, notebook maintenance, register upkeep, standards monitoring) | Harriet (2026-04-25, Linda hire) | Query `Information Architecture and Knowledge Management` notebook; draft skill using `writing-skills` TDD cycle | Pending notebook grounding |
 | 13 GCP/DevOps skills: Cloud Run deploy, CI/CD pipeline, IAM least-privilege, Cloud SQL, IAP/OAuth wiring, observability, cost controls, container tuning, WIF, multi-tenancy, Secret Manager, infra-boundary-contract, `terraform-iac` (added 2026-06-10 per ADR-020) | Harriet (2026-06-06, Brent topology screen; +1 at 2026-06-10 sync) | Ground from "DevOps & GCP Infrastructure" and "GCP DevOps Tactical Playbook"; `terraform-iac` additionally from HashiCorp documentation. Author with `writing-skills` TDD cycle. Until written, Brent uses WebFetch + Context7. Brent's validated Delta (2026-06-10): `terraform-iac` gains state surgery (`import`/`mv`/`rm`), provider-pinning maintenance, 6.x→7.x upgrade checklist; IAP/OAuth wiring skill must be updated **before issue #73 work begins** — direct IAP-on-Cloud-Run is GA, staling the JD template's audience format | Deferred — next sprint (GitHub issue) |
+| `office-js-word-addin` (Office.js find/mark/replace; content-control marking; reader-visible highlight pairing; per-occurrence tagging; human-in-the-loop snippet verification; WordApi 1.1 floor) | Harriet (2026-06-13, #185 Office.js spike capability-gap assessment; founder-approved) | **Draft authored** at `docs/people/drafts/skills/office-js-word-addin/SKILL.md`, grounded in #185 v2 spike evidence + Microsoft Learn API reference (Context7/WebFetch, 2026-05 docs). RED→GREEN verified via `writing-skills` TDD: 2 baseline probes failed (missed paired highlight, missed per-occurrence tag, over-reached for raw-XML proof); same 2 probes pass with skill present. **Owner = Kabilan** (vendored-JS implementation scope, per his JD patch 2026-06-13). **BLOCKING: Peter or Kabilan must validate the engineering substance** (API calls, requirement-set claims, gotcha framing) before promotion to `.agents/skills/` and registration in `skills-lock.json` + taxonomy | Draft — pending engineering sign-off |
 
 ## Grounding & extension work on live skills
 
