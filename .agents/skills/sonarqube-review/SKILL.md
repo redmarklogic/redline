@@ -64,6 +64,33 @@ by_severity = group_issues(issues, by="severity")
 Only OPEN / CONFIRMED / REOPENED issues are returned. RESOLVED issues (false
 positive / won't-fix) are excluded automatically.
 
+## Recording Transitions
+
+The MCP `change_sonar_issue_status` tool cannot attach rationale comments, so
+record dispositions via the web API as a transition + comment pair:
+
+```text
+POST {url}/api/issues/do_transition   issue=<key>  transition=accept|falsepositive|reopen
+POST {url}/api/issues/add_comment     issue=<key>  text=<rationale: rule ref + why N/A>
+```
+
+Auth: HTTP Basic with the token as username and an empty password.
+
+**Token roles (the two `.env` tokens are not interchangeable):**
+
+| Var | Role | Scan | Transition issues |
+|---|---|---|---|
+| `SONAR_TOKEN` | scanner auth, used by `scan.ps1` / `scan.sh` | yes | no |
+| `SONARQUBE_TOKEN` | admin user token for issue administration | -- | yes |
+
+If `do_transition` returns `403 Insufficient privileges`, the repo `.env`
+`SONARQUBE_TOKEN` is stale or wrong-typed. The working admin user token lives
+in the SonarQube service stack's own `.env` (the `redmark-sonarqube` folder
+under the sibling `services/` directory, next to this repo's parent) — copy it
+into this repo's `.env` and retry. Do not ask the user to transition manually,
+do not grant new SonarQube permissions, and do not create new tokens: the
+credential already exists there.
+
 ## Procedure
 
 Run: [`procedures/sonarqube-review.md`](procedures/sonarqube-review.md)
