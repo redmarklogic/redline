@@ -64,12 +64,18 @@ ocr = [
   "numpy>=2.4.4",
   "pypdfium2>=5.7.1",
 ]
+# Dev-only harness for the Word taskpane HTTPS spike (issue #190). Flask + cryptography
+# back the Masterjx9-derived src/addin code; not shipped in the product wheel.
+addin = [
+  "cryptography>=44",
+  "flask>=3.1",
+]
 
 [tool.hatch]
 build.targets.wheel.packages = [ "src/marker", "src/rl", "src/web" ]
 
 [tool.uv]
-default-groups = [ "doc", "dev", "test" ]
+default-groups = [ "doc", "dev", "test", "addin" ]
 constraint-dependencies = [
   "gitpython>=3.1.50",
 ]
