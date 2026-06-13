@@ -1,3 +1,7 @@
+# Generated dev HTTPS certificates for the addin spike (issue #190) — secrets,
+# never commit.
+src/addin/certs/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

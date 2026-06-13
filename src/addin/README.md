@@ -58,10 +58,62 @@ with a legacy fallback using `System.Security.Cryptography.X509Certificates.X509
 > in which case `make_cert.py` prints an actionable "re-run from an administrator shell"
 > message. This is the step Scenario 2 (no browser warning) hinges on.
 
-## Run commands and port
+## Reproducing both acceptance scenarios
 
-<!-- Completed in Phase 3. -->
+Run from the repository root with the project virtual environment active. The
+`addin` package resolves because `src/` is on the Python path (the repo's
+`.pth` entry); no install step is needed. The Flask and `cryptography`
+dependencies come from the `addin` dependency group (in `default-groups`, so
+`uv sync` installs them).
 
-- **Listening port**: `3000` (the Office add-in convention; see plan D6).
-- Generate + trust the certificate: _(documented in Phase 3)_
-- Start the server: _(documented in Phase 3)_
+**Listening port: `3000`** (the Office add-in convention; plan D6). It is the
+single documented value the acceptance `curl` and the future #191 manifest both
+target.
+
+### Command 1 — generate and trust the certificate (Scenario 2)
+
+```powershell
+python -m addin.make_cert
+```
+
+Generates `certs/cert.pem` (the `localhost` leaf certificate Flask serves),
+`certs/key.pem` (its private key) and `certs/ca.pem` (the signing CA), then
+installs the CA into the Windows **CurrentUser `Root`** trust store via
+`Import-Certificate`. If the trust-store write is denied (a hardened/managed
+machine), the command prints an actionable message — **re-run it from an elevated
+(Administrator) PowerShell.** The `certs/` directory is gitignored.
+
+> Installing a certificate authority into your trust store is a security-relevant
+> action; run this command yourself and only on a development machine.
+
+### Command 2 — start the HTTPS server (Scenario 1)
+
+```powershell
+python -m addin.server
+```
+
+Serves `https://localhost:3000/taskpane.html`. Run Command 1 first — the server
+exits with a clear message if `certs/cert.pem` / `certs/key.pem` are missing.
+
+### Verify
+
+```powershell
+# Scenario 1 — serving (certificate validation skipped with -k):
+curl -k -s -o NUL -w "%{http_code}" https://localhost:3000/taskpane.html   # expect: 200
+curl -k -s https://localhost:3000/taskpane.html | findstr /i "hello"        # expect: hello-world text
+
+# Scenario 2 — trust [human-verify]:
+# Open https://localhost:3000/taskpane.html in a desktop browser and confirm
+# the padlock shows with NO "your connection is not private" warning.
+```
+
+## Unit tests
+
+```powershell
+python -m pytest tests/addin -v
+```
+
+The tests cover routing/body (`test_server.py`) and certificate
+generation/SAN/validity (`test_make_cert.py`). The OS trust-store install and the
+browser padlock are side effects that cannot be asserted portably — they are
+human-verified, not unit-tested.
