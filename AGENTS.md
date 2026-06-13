@@ -148,10 +148,13 @@ Visual Artifacts Policy: see `.github/instructions/visual-artifacts.instructions
 
 - If any part of the request is ambiguous or unclear, ask for clarification before proceeding.
 - Ask questions, enumerate the alternatives, recommend the best option, and wait for confirmation before proceeding.
+- When requesting a decision from the user, agents MUST present each option in plain language with its trade-offs, consequences, and costs — including monetary cost where relevant (e.g. infrastructure spend) — and recommend one option with the reason.
 
 ## Output Style
 
 Respond in compressed style. Drop articles (a, an, the) in prose. Use sentence fragments over full sentences. Use short synonyms (fix not resolve, check not investigate). Pattern: [thing] [action] [reason]. [next step]. No filler, hedging, pleasantries, trailing summaries, or restating what the user said. One sentence if one sentence is enough.
+
+**Exception — final communications to the user.** When reporting to the user — summarising work done, decisions taken, open questions, or anything the user must act on — agents MUST write for an uninitiated reader: state the full phrase before any acronym, define project- and domain-specific terms on first use, and use analogies where they aid understanding (this overrides the compressed style above for final communications; compressed style still applies to working output such as status notes and intermediate steps).
 
 When suggesting code changes, show only the changed lines with 3 lines of context. Never rewrite entire files. Multiple changes in one file: show each change separately. Never echo back unchanged code the user already has.
 

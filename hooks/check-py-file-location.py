@@ -4,7 +4,10 @@ Two rules:
 
 1. Location — Python source belongs in src/ (production) or tests/
    (verification). Files in hooks/ are exempt. Any .py file elsewhere is a
-   misplacement that should be moved or deleted.
+   misplacement that should be moved or deleted. Exactly one root-level
+   entrypoint is permitted: manage.py, the Django CLI entry, which the
+   framework requires at the repository root (see specs/159, ADR-024). It is
+   matched by exact path, not prefix — no other root-level .py is admitted.
 
 2. Naming — module filenames must not start with a single underscore.
    Double-underscore names (e.g. __init__.py, __main__.py) are fine.
@@ -13,7 +16,8 @@ Two rules:
 
 Suppression: not supported — rename or move the file instead.
 
-AGENTS.md rule: Python files belong in src/ or tests/.
+Convention: Python source lives under src/ or tests/; hooks/ and tooling dirs
+are exempt; root manage.py is the sole framework-mandated entrypoint exception.
 """
 # no-adr: AGENTS.md architectural rule; no governing ADR
 
@@ -30,6 +34,10 @@ ALLOWED_PREFIXES = (
     ".github/scripts/",
     "tasks/tests/",
 )
+
+# Framework-mandated root entrypoint(s). Exact match only, never a prefix —
+# a prefix would also admit a directory named "manage.py-anything/".
+ALLOWED_EXACT_PATHS = ("manage.py",)
 
 
 def _tracked_py_files() -> list[str]:
@@ -48,7 +56,12 @@ def _tracked_py_files() -> list[str]:
 
 def find_location_violations(paths: list[str]) -> list[str]:
     """Return paths outside allowed directories."""
-    return [p for p in paths if not any(p.startswith(pfx) for pfx in ALLOWED_PREFIXES)]
+    return [
+        p
+        for p in paths
+        if p not in ALLOWED_EXACT_PATHS
+        and not any(p.startswith(pfx) for pfx in ALLOWED_PREFIXES)
+    ]
 
 
 def find_naming_violations(paths: list[str]) -> list[str]:

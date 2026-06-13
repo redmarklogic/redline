@@ -60,7 +60,7 @@ uv run ruff check . --output-format=json -o .cache/sonarqube/ruff-report.json 2>
 
 echo "-- Producing coverage report if data exists (best-effort) --"
 if [[ -f .coverage ]]; then
-  uv run coverage xml -o coverage.xml 2>/dev/null || echo "  coverage xml failed -- continuing."
+  uv run coverage xml -o .cache/sonarqube/coverage.xml 2>/dev/null || echo "  coverage xml failed -- continuing."
 else
   echo "  No .coverage data found -- skipping coverage."
 fi
