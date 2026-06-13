@@ -32,6 +32,34 @@ if ($env:DJANGO_SETTINGS_MODULE -and $env:DJANGO_SETTINGS_MODULE -ne 'web.settin
     exit 1
 }
 
+# --- Load .env into process environment (ADR-021 / research.md D4) ---------------
+# Application source must never load .env files (ADR-021). The launcher does it
+# here so that manage.py check (below) has the required vars in the process env
+# before Django's settings module is imported for the first time.
+#
+# Parse rules: split on the FIRST '=' only (secret values may contain '=' padding);
+# skip blank lines and '#' comments; do not override vars already set in the shell.
+$EnvFile = Join-Path $RepoRoot ".env"
+if (Test-Path $EnvFile) {
+    Write-Host "Loading .env into process environment..."
+    Get-Content $EnvFile | ForEach-Object {
+        $line = $_.Trim()
+        if ($line -and -not $line.StartsWith('#')) {
+            $idx = $line.IndexOf('=')
+            if ($idx -gt 0) {
+                $key   = $line.Substring(0, $idx).Trim()
+                $value = $line.Substring($idx + 1)
+                if (-not [System.Environment]::GetEnvironmentVariable($key)) {
+                    [System.Environment]::SetEnvironmentVariable($key, $value)
+                    Set-Item "Env:$key" $value
+                }
+            }
+        }
+    }
+} else {
+    Write-Warning ".env not found at $EnvFile. Required vars must already be in the shell environment. Copy .env.example to .env and fill in secret values."
+}
+
 # --- Database pre-flight: fail fast if Postgres is unreachable --------------------
 # Connects with psycopg using the same env-var defaults as web/settings.py. A dead
 # database otherwise surfaces late (mid-migrate) with a raw traceback.
@@ -39,13 +67,19 @@ Write-Host "Checking database availability..."
 $dbCheck = @'
 import os, sys
 import psycopg
+# No dev-default fallbacks: all vars are required (ADR-021 / #161 FR-006).
+# The .env loader above must have supplied them before this point.
+missing = [v for v in ("POSTGRES_HOST", "POSTGRES_PORT", "POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD") if not os.environ.get(v)]
+if missing:
+    print(f"Missing required env vars: {', '.join(missing)}. Set them in .env and retry.", file=sys.stderr)
+    sys.exit(1)
 try:
     psycopg.connect(
-        host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
-        port=os.environ.get("POSTGRES_PORT", "5433"),
-        dbname=os.environ.get("POSTGRES_DB", "redline"),
-        user=os.environ.get("POSTGRES_USER", "redline"),
-        password=os.environ.get("POSTGRES_PASSWORD", "redline"),
+        host=os.environ["POSTGRES_HOST"],
+        port=os.environ["POSTGRES_PORT"],
+        dbname=os.environ["POSTGRES_DB"],
+        user=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
         connect_timeout=3,
     ).close()
 except psycopg.OperationalError as exc:
