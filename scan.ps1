@@ -87,7 +87,7 @@ if ($ruffIssues.Count -gt 0) {
 
 Write-Host '-- Producing coverage report if data exists (best-effort) --' -ForegroundColor Cyan
 if (Test-Path '.coverage') {
-    try { uv run coverage xml -o coverage.xml 2>$null } catch { Write-Host '  coverage xml failed -- continuing without coverage.' -ForegroundColor Yellow }
+    try { uv run coverage xml -o .cache/sonarqube/coverage.xml 2>$null } catch { Write-Host '  coverage xml failed -- continuing without coverage.' -ForegroundColor Yellow }
 } else {
     Write-Host '  No .coverage data found -- skipping coverage (run tests with coverage first to include it).' -ForegroundColor Yellow
 }
