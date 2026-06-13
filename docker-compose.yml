@@ -1,4 +1,22 @@
 services:
+  db:
+    image: postgres:17-alpine
+    ports:
+      # Host port 5433: 5432 is taken by the SonarQube Postgres container.
+      - "${POSTGRES_PORT:-5433}:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-redline}
+      - POSTGRES_USER=${POSTGRES_USER:-redline}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-redline}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-redline} -d $${POSTGRES_DB:-redline}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
   marker:
     build:
       context: .
@@ -14,3 +32,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 15s
+
+volumes:
+  pgdata:

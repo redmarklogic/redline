@@ -32,6 +32,40 @@ if ($env:DJANGO_SETTINGS_MODULE -and $env:DJANGO_SETTINGS_MODULE -ne 'web.settin
     exit 1
 }
 
+# --- Database pre-flight: fail fast if Postgres is unreachable --------------------
+# Connects with psycopg using the same env-var defaults as web/settings.py. A dead
+# database otherwise surfaces late (mid-migrate) with a raw traceback.
+Write-Host "Checking database availability..."
+$dbCheck = @'
+import os, sys
+import psycopg
+try:
+    psycopg.connect(
+        host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
+        port=os.environ.get("POSTGRES_PORT", "5433"),
+        dbname=os.environ.get("POSTGRES_DB", "redline"),
+        user=os.environ.get("POSTGRES_USER", "redline"),
+        password=os.environ.get("POSTGRES_PASSWORD", "redline"),
+        connect_timeout=3,
+    ).close()
+except psycopg.OperationalError as exc:
+    print(f"Database unreachable: {exc}", file=sys.stderr)
+    sys.exit(1)
+'@
+& "$RepoRoot\.venv\Scripts\python" -c $dbCheck
+if ($LASTEXITCODE -ne 0) {
+    Write-Error @"
+PostgreSQL is not available. The Django app cannot start without its database.
+Spin it up with:
+
+    docker compose up -d db
+
+then wait a few seconds for the container healthcheck and re-run this script.
+"@
+    exit 1
+}
+Write-Host "Database reachable."
+
 # --- Django pre-flight: log-analysis gate ----------------------------------------
 # manage.py check runs synchronously and validates all installed apps, URL patterns,
 # and settings before any socket opens. Non-zero exit = abort before touching ports.
@@ -43,6 +77,18 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host ($checkOutput | Out-String)
+
+# --- Database migrations -----------------------------------------------------------
+# Postgres runs in docker-compose (`db` service); a fresh clone has an empty
+# database. migrate is idempotent: creates schema on first run, no-ops after.
+Write-Host "Applying database migrations..."
+$migrateOutput = & "$RepoRoot\.venv\Scripts\python" "$RepoRoot\manage.py" migrate --no-input 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Database migration failed. Is the Postgres container running? Start it with: docker compose up -d db"
+    Write-Host ($migrateOutput | Out-String)
+    exit 1
+}
+Write-Host ($migrateOutput | Out-String)
 
 # --- Start both servers -----------------------------------------------------------
 $MarkerCommand = "& { Set-Location '$RepoRoot'; .\.venv\Scripts\python -m uvicorn marker.api.main:create_app --factory --host $Host_ --port $MarkerPort --reload }"

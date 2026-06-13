@@ -9,6 +9,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -71,10 +72,26 @@ WSGI_APPLICATION = "web.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# PostgreSQL via docker-compose `db` service in dev; Cloud SQL injects the same
+# env vars in staging/production. Defaults match docker-compose.yml defaults.
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get(
+            "POSTGRES_DB", "redline"
+        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
+        "USER": os.environ.get(
+            "POSTGRES_USER", "redline"
+        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
+        "PASSWORD": os.environ.get(
+            "POSTGRES_PASSWORD", "redline"
+        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
+        "HOST": os.environ.get(
+            "POSTGRES_HOST", "127.0.0.1"
+        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
+        "PORT": os.environ.get(
+            "POSTGRES_PORT", "5433"
+        ),  # hook: allow -- dev default; 12-factor settings deferred to #161
     }
 }
 
