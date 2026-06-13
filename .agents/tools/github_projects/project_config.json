@@ -23,7 +23,8 @@
     "Blocked by": "PVTF_lADOEUOu2c4BZrkBzhUoj_M",
     "Source": "PVTF_lADOEUOu2c4BZrkBzhUokA4",
     "Depends on": "PVTF_lADOEUOu2c4BZrkBzhUokA8",
-    "Sprint": "PVTIF_lADOEUOu2c4BZrkBzhUokG0"
+    "Sprint": "PVTIF_lADOEUOu2c4BZrkBzhUokG0",
+    "Execution Order": "PVTF_lADOEUOu2c4BZrkBzhVUkMM"
   },
   "option_ids": {
     "Status": {
@@ -54,11 +55,15 @@
       "Brent": "5c71163f"
     },
     "Sprint": {
-      "Sprint 2 - Jun 8-14": "a8c49ec8",
-      "Sprint 3 - Jun 15-21": "9894385c",
-      "Sprint 4 - Jun 22-28": "2a9943f7",
-      "Sprint 1 - Jun 1-7": "af810814"
+      "Sprint 2 - Jun 8-14": "499e1649",
+      "Sprint 3 - Jun 15-21": "c1ddd346",
+      "Sprint 4 - Jun 22-28": "fb0f09a1",
+      "Sprint 5 - Jun 29-Jul 5": "ec06d389",
+      "Sprint 6 - Jul 6-12": "c8e1346a",
+      "Sprint 7 - Jul 13-19": "3cc9aa8b",
+      "Sprint 8 - Jul 20-26": "56d0243d",
+      "Sprint 1 - Jun 1-7": "38051c46"
     }
   },
-  "resolved_at": "2026-06-12T04:03:12.791088Z"
+  "resolved_at": "2026-06-13T00:53:41.849602Z"
 }

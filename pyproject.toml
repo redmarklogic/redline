@@ -218,6 +218,10 @@ sonarqube.extra-properties."sonar.test.exclusions" = "tests/assets/**"
 # deprecated/ignored since SonarQube 7.7 — language is auto-detected from files
 # in scope, so no language property is needed.
 sonarqube.extra-properties."sonar.sources" = "src,deploy,tasks"
+# Coverage is measured on src/ only (coverage run.source above). tasks/ holds
+# developer scripts that are analyzed for issues but never exercised by pytest;
+# without this they surface as 0%-covered files and drag the project metric.
+sonarqube.extra-properties."sonar.coverage.exclusions" = "tasks/**"
 
 [tool.importlinter]
 root_packages = [ "marker", "rl" ]
