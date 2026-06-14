@@ -66,9 +66,17 @@ Run from the repository root with the project virtual environment active. The
 dependencies come from the `addin` dependency group (in `default-groups`, so
 `uv sync` installs them).
 
-**Listening port: `3000`** (the Office add-in convention; plan D6). It is the
-single documented value the acceptance `curl` and the future #191 manifest both
-target.
+**Listening port: `8767`** — the `addin` surface in `config/dev-endpoints.json`, the
+committed single source of truth. The launcher (`tasks/run-app.ps1`) projects it into
+`ADDIN_PORT`, and the #191 manifest build derives the same value, so the manifest
+address can never drift from what the server binds. Running `python -m addin.server`
+on its own falls back to the `ADDIN_PORT` env var (and a `3000` default if unset), so
+set `$env:ADDIN_PORT='8767'` — or just use `tasks/run-app.ps1` — to match the manifest.
+
+> **Manifest & sideload (issue #191):** `python -m addin.build_manifest` renders
+> `manifest.template.xml` into `src/addin/catalog/manifest.xml`, taking the port from
+> `config/dev-endpoints.json`. To load it into desktop Word via a trusted catalog,
+> follow `specs/191-word-manifest-desktop-sideload-via-trusted-catalog/spike-notes.md`.
 
 ### Command 1 — generate and trust the certificate (Scenario 2)
 
@@ -89,21 +97,21 @@ machine), the command prints an actionable message — **re-run it from an eleva
 ### Command 2 — start the HTTPS server (Scenario 1)
 
 ```powershell
-python -m addin.server
+$env:ADDIN_PORT='8767'; python -m addin.server
 ```
 
-Serves `https://localhost:3000/taskpane.html`. Run Command 1 first — the server
+Serves `https://localhost:8767/taskpane.html`. Run Command 1 first — the server
 exits with a clear message if `certs/cert.pem` / `certs/key.pem` are missing.
 
 ### Verify
 
 ```powershell
 # Scenario 1 — serving (certificate validation skipped with -k):
-curl -k -s -o NUL -w "%{http_code}" https://localhost:3000/taskpane.html   # expect: 200
-curl -k -s https://localhost:3000/taskpane.html | findstr /i "hello"        # expect: hello-world text
+curl -k -s -o NUL -w "%{http_code}" https://localhost:8767/taskpane.html   # expect: 200
+curl -k -s https://localhost:8767/taskpane.html | findstr /i "hello"        # expect: hello-world text
 
 # Scenario 2 — trust [human-verify]:
-# Open https://localhost:3000/taskpane.html in a desktop browser and confirm
+# Open https://localhost:8767/taskpane.html in a desktop browser and confirm
 # the padlock shows with NO "your connection is not private" warning.
 ```
 

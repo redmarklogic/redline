@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="TaskPaneApp">
+  <Id>954abf42-47ef-4a32-a705-933e1fb46c57</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Redmark Logic</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Redline (dev)"/>
+  <Description DefaultValue="Redline taskpane — local development build (issue #191)."/>
+  <SupportUrl DefaultValue="https://www.redmarklogic.com/"/>
+  <AppDomains>
+    <AppDomain>__ADDIN_BASE_URL__</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.3">
+      <Set Name="WordApi" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="__ADDIN_BASE_URL__/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+</OfficeApp>
