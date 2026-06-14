@@ -40,7 +40,17 @@ def taskpane():
     file handle, so no dangling file descriptor is finalized after the request
     (which trips ``filterwarnings=error`` under pytest).
     """
-    return TASKPANE.read_text(encoding="utf-8"), 200, {"Content-Type": "text/html"}
+    return (
+        TASKPANE.read_text(encoding="utf-8"),
+        200,
+        {
+            "Content-Type": "text/html",
+            # Force a fresh fetch every reload so the WebView2 cache never serves
+            # a stale edit during the dev loop (FR-001, SC-001 — issue #192).
+            "Cache-Control": "no-store",
+            "Pragma": "no-cache",
+        },
+    )
 
 
 def main() -> None:

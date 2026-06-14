@@ -24,3 +24,15 @@ def test_unknown_path_returns_404():
     """An unknown path returns 404, not a crash (edge case)."""
     response = app.test_client().get("/no-such-page.html")
     assert response.status_code == 404
+
+
+def test_taskpane_sends_no_cache_headers():
+    """The page is served uncacheable so the web view never shows a stale edit.
+
+    The embedded WebView2 caches the taskpane; ``Cache-Control: no-store`` plus
+    ``Pragma: no-cache`` force a fresh fetch on every reload (FR-001, FR-002,
+    SC-001 — issue #192).
+    """
+    response = app.test_client().get("/taskpane.html")
+    assert "no-store" in response.headers.get("Cache-Control", "")
+    assert response.headers.get("Pragma") == "no-cache"
