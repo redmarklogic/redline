@@ -11,6 +11,7 @@ Run::
 Generate the certificate first with ``python -m addin.make_cert``.
 """
 
+import os
 from pathlib import Path
 
 from flask import Flask
@@ -22,7 +23,11 @@ CERT = HERE / "certs" / "cert.pem"
 KEY = HERE / "certs" / "key.pem"
 TASKPANE = HERE / "static" / "taskpane.html"
 
-PORT = 3000  # Office add-in convention; single documented value (FR-006, plan D6).
+PORT = int(
+    os.environ.get(
+        "ADDIN_PORT", 3000
+    )  # hook: allow -- Office-standard port (FR-006, plan D6); default is spec-mandated, not arbitrary
+)
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 
@@ -50,7 +55,13 @@ def main() -> None:
             f"Certificate not found at {CERT} / {KEY}. "
             "Run `python -m addin.make_cert` first."
         )
-    app.run(host="localhost", port=PORT, ssl_context=(str(CERT), str(KEY)))
+    app.run(
+        host="localhost",
+        port=PORT,
+        ssl_context=(str(CERT), str(KEY)),
+        debug=True,
+        use_reloader=True,
+    )
 
 
 if __name__ == "__main__":
