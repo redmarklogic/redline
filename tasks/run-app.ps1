@@ -1,12 +1,22 @@
-# Fixed ports — project convention (never 8000; that port is reserved by common tools).
-# marker (FastAPI): 8765   web (Django): 8766
-# If either port is occupied by any process, the script fails. Free it manually.
-$MarkerPort = 8765
-$DjangoPort  = 8766
-$Host_       = "127.0.0.1"
-
 $ScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot   = Split-Path -Parent $ScriptRoot
+
+# --- Endpoints: single source of truth -------------------------------------------
+# All ports/URLs for every surface live in config/dev-endpoints.json (committed,
+# non-secret). This launcher is the ONLY component that reads it; app source reads
+# process env only (ADR-021). The #191 Word manifest build reads the same file, so
+# the addin URL can never drift from what the server binds.
+# Convention: never 8000 (reserved by common tools).
+$EndpointsFile = Join-Path $RepoRoot "config\dev-endpoints.json"
+if (-not (Test-Path $EndpointsFile)) {
+    Write-Error "Endpoints config not found at $EndpointsFile. Cannot resolve service ports."
+    exit 1
+}
+$Endpoints  = Get-Content $EndpointsFile -Raw | ConvertFrom-Json
+$Host_      = $Endpoints.host
+$MarkerPort = $Endpoints.surfaces.marker.port
+$DjangoPort = $Endpoints.surfaces.web.port
+$AddinPort  = $Endpoints.surfaces.addin.port
 
 # --- Port guard: fail hard if occupied -------------------------------------------
 # No -LocalAddress filter: a wildcard bind (0.0.0.0 / ::) occupies the port just as
@@ -23,6 +33,7 @@ function Assert-PortFree {
 
 Assert-PortFree -Port $MarkerPort -AppName "marker (FastAPI)"
 Assert-PortFree -Port $DjangoPort  -AppName "web (Django)"
+Assert-PortFree -Port $AddinPort   -AppName "addin (Flask HTTPS)"
 
 # --- Settings-module guard ---------------------------------------------------------
 # pytest/manage.py give an inherited DJANGO_SETTINGS_MODULE precedence over repo
@@ -127,17 +138,21 @@ Write-Host ($migrateOutput | Out-String)
 # --- Start both servers -----------------------------------------------------------
 $MarkerCommand = "& { Set-Location '$RepoRoot'; .\.venv\Scripts\python -m uvicorn marker.api.main:create_app --factory --host $Host_ --port $MarkerPort --reload }"
 $DjangoCommand  = "& { Set-Location '$RepoRoot'; .\.venv\Scripts\python manage.py runserver ${Host_}:${DjangoPort} }"
+$AddinCommand   = "& { Set-Location '$RepoRoot'; `$env:ADDIN_PORT='$AddinPort'; .\.venv\Scripts\python -m addin.server }"
 
 Start-Process pwsh -ArgumentList @("-NoExit", "-Command", $MarkerCommand) -WindowStyle Normal
 Start-Process pwsh -ArgumentList @("-NoExit", "-Command", $DjangoCommand)  -WindowStyle Normal
+Start-Process pwsh -ArgumentList @("-NoExit", "-Command", $AddinCommand)   -WindowStyle Normal
 
 # --- Liveness polling ------------------------------------------------------------
 function Wait-ForHealth {
-    param([string]$Url, [string]$AppName)
+    param([string]$Url, [string]$AppName, [switch]$SkipCertCheck)
     Write-Host "Waiting for $AppName at $Url ..." -NoNewline
     for ($i = 0; $i -lt 30; $i++) {
         try {
-            $r = Invoke-WebRequest -Uri $Url -UseBasicParsing -Method Get -TimeoutSec 2 -SkipHttpErrorCheck
+            $opts = @{ Uri = $Url; UseBasicParsing = $true; Method = 'Get'; TimeoutSec = 2; SkipHttpErrorCheck = $true }
+            if ($SkipCertCheck) { $opts['SkipCertificateCheck'] = $true }
+            $r = Invoke-WebRequest @opts
             if ($r.StatusCode -eq 200) { Write-Host " ready!"; return $true }
         } catch {}
         Write-Host "." -NoNewline
@@ -148,11 +163,18 @@ function Wait-ForHealth {
     return $false
 }
 
-$markerReady = Wait-ForHealth -Url "http://${Host_}:${MarkerPort}/health"  -AppName "marker (FastAPI)"
-$djangoReady  = Wait-ForHealth -Url "http://${Host_}:${DjangoPort}/health/" -AppName "web (Django)"
+# URLs derived from the single-source endpoints config (scheme + health/path).
+$MarkerUrl = "$($Endpoints.surfaces.marker.scheme)://${Host_}:${MarkerPort}$($Endpoints.surfaces.marker.health)"
+$DjangoUrl = "$($Endpoints.surfaces.web.scheme)://${Host_}:${DjangoPort}$($Endpoints.surfaces.web.health)"
+$AddinUrl  = "$($Endpoints.surfaces.addin.scheme)://${Host_}:${AddinPort}$($Endpoints.surfaces.addin.path)"
 
-if ($markerReady) { Start-Process "http://${Host_}:${MarkerPort}/docs" }
-if ($djangoReady)  { Start-Process "http://${Host_}:${DjangoPort}/" }
+$markerReady = Wait-ForHealth -Url $MarkerUrl -AppName "marker (FastAPI)"
+$djangoReady  = Wait-ForHealth -Url $DjangoUrl -AppName "web (Django)"
+$addinReady   = Wait-ForHealth -Url $AddinUrl  -AppName "addin (Flask HTTPS)" -SkipCertCheck
+
+if ($markerReady) { Start-Process "$($Endpoints.surfaces.marker.scheme)://${Host_}:${MarkerPort}/docs" }
+if ($djangoReady)  { Start-Process "$($Endpoints.surfaces.web.scheme)://${Host_}:${DjangoPort}/" }
+if ($addinReady)   { Start-Process $AddinUrl }
 
 # Fail closed: callers (CI, other scripts) read the exit code (RT-159 finding F-002).
-if (-not ($markerReady -and $djangoReady)) { exit 1 }
+if (-not ($markerReady -and $djangoReady -and $addinReady)) { exit 1 }
