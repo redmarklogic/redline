@@ -162,7 +162,7 @@ In the project settings or the board UI, create two saved views:
 ### 1.8 — Resolve and commit project config
 
 ```python
-from agents.tools.github_projects import resolve_project_config
+from github_projects import resolve_project_config
 
 config = resolve_project_config(
     project_number=N,       # replace N with the actual project number

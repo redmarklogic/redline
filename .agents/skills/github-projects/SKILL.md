@@ -74,10 +74,16 @@ If absent, run the `resolve-config` procedure first. Commit the file after it ru
 ## Python Tool
 
 All procedures invoke the Python package at `.agents/tools/github_projects/`.
+`.agents/tools` is on `pythonpath` (see `pyproject.toml` → `[tool.pytest]`), so the
+package name is `github_projects` — **not** `agents.tools.github_projects` (a leading-dot
+directory is not an importable package). Under pytest the path is already set; from an
+ad-hoc `python -c` at repo root, prepend it first: `import sys; sys.path.insert(0, ".agents/tools")`.
+
 Import pattern:
 
 ```python
-from agents.tools.github_projects import (
+from github_projects import (
+    count_tasks,
     resolve_project_config,
     create_task,
     get_task,
@@ -86,8 +92,15 @@ from agents.tools.github_projects import (
     move_task,
     delete_task,
 )
-from agents.tools.github_projects.schema import TaskCreate, TaskUpdate
+from github_projects.schema import TaskCreate, TaskUpdate
 ```
+
+`list_tasks()` / `get_task()` return `TaskRecord`. Useful fields/properties:
+`item_id`, `issue_url`, `issue_number` (parsed from the URL — do **not** hand-split),
+`title`, `status`, `task_type`, `start_date`, `target_date`, `source`, `sprint`,
+`agents` (frozenset|None), `primary_agent`, `labels`. For the completeness assert call
+`count_tasks(config)` — never hand-roll `gh api graphql` (its `$var` syntax breaks under
+PowerShell).
 
 ## Guard Conditions
 
@@ -208,7 +221,7 @@ Update one or more fields on an existing board item. Only non-`None` fields are 
 **Guards**: G1, G2, G4, G6 (when both dates are in the payload)
 
 ```python
-from agents.tools.github_projects.schema import TaskUpdate
+from github_projects.schema import TaskUpdate
 update = TaskUpdate(
     item_id="PVTI_lADOANN5s84ACbL0zgBVd94",
     sprint="Sprint 2 - Jun 15-28",

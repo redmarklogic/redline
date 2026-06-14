@@ -190,6 +190,15 @@ document-engine types.
 
 *Grounded in ADR-024; boundary per ADR-002.*
 
+### XIX. Office.js API Floor Is a Commercial Commitment
+
+The Word taskpane declares **WordApi 1.3** as its minimum. This floor is set by
+`ContentControl.getRange()` (Replace primitive). It may only increase by ADR
+amendment — never by implementation drift. Any new Office.js call must be
+pre-checked against the current floor before it ships.
+
+*Grounded in ADR-028.*
+
 ## Architectural Constraints
 
 All new features must be assessed against the following before entering SpecKit:
@@ -222,4 +231,4 @@ require:
 The principal engineer is the sole custodian of this constitution. The sync procedure
 is defined in `.agents/skills/adr-constitution-sync/SKILL.md`.
 
-**Version**: 1.8.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-11
+**Version**: 1.9.0 | **Ratified**: 2026-05-31 | **Last Amended**: 2026-06-14

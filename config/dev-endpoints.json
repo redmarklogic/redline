@@ -1,0 +1,9 @@
+{
+  "_comment": "Single source of truth for local dev ports/URLs across all surfaces. Committed, non-secret. Read by tasks/run-app.ps1 (launcher) and future #191 manifest build. App source MUST NOT read this file (ADR-021); the launcher projects values into process env (e.g. ADDIN_PORT) and CLI args.",
+  "host": "127.0.0.1",
+  "surfaces": {
+    "marker": { "port": 8765, "scheme": "http",  "health": "/health"  },
+    "web":    { "port": 8766, "scheme": "http",  "health": "/health/" },
+    "addin":  { "port": 8767, "scheme": "https", "path": "/taskpane.html" }
+  }
+}

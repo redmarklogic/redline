@@ -57,6 +57,12 @@ test = [
   "pytest-mock>=3.14.0",
   "schemathesis>=3.0",
 ]
+# Dev-only harness for the Word taskpane HTTPS spike (issue #190). Flask + cryptography
+# back the Masterjx9-derived src/addin code; not shipped in the product wheel.
+addin = [
+  "cryptography>=44",
+  "flask>=3.1",
+]
 doc = [
   "mkdocs>=1.6.1",
 ]
@@ -70,7 +76,7 @@ ocr = [
 build.targets.wheel.packages = [ "src/marker", "src/rl", "src/web" ]
 
 [tool.uv]
-default-groups = [ "doc", "dev", "test" ]
+default-groups = [ "doc", "dev", "test", "addin" ]
 constraint-dependencies = [
   "gitpython>=3.1.50",
 ]
@@ -118,6 +124,7 @@ lint.pydocstyle.convention = "google"
 ignore-regex = [ "[A-Za-z0-9+/]{100,}" ]
 ignore-words-list = [
   "aci",
+  "addin",
   "ags",
   "als",
   "bund",
@@ -150,6 +157,11 @@ exclude = "\\.git|\\.tox|tests"
 [tool.deptry]
 ignore_notebooks = false
 per_rule_ignores.DEP002 = [ "psycopg", "python-docx", "schemathesis", "uvicorn" ]
+# src/addin is a non-shipped dev harness (issue #190); its flask + cryptography deps
+# live in the optional `addin` dependency group by design, so deptry's DEP004
+# (prod code importing a dev dependency) misfires here. Exclude the harness from
+# dependency analysis rather than declaring its deps as runtime requirements.
+extend_exclude = [ "src/addin" ]
 
 [tool.pyproject-fmt]
 keep_full_version = true
