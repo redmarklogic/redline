@@ -1,0 +1,20 @@
+{% extends "web/base.html" %}
+
+{% comment %}
+Throwaway htmx demonstration page (#162, deleted by #171). The button performs a
+server round trip: htmx POSTs to /htmx-demo/action/ and swaps the returned HTML
+fragment into #result. The CSRF token rides on every htmx request via the body's
+hx-headers (D5) — Django's CsrfViewMiddleware accepts the X-CSRFToken header.
+{% endcomment %}
+
+{% block title %}htmx demo — Redline{% endblock %}
+
+{% block body_attrs %}hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'{% endblock %}
+
+{% block content %}
+  <h1>htmx demo</h1>
+  <button hx-post="/htmx-demo/action/" hx-target="#result" hx-swap="innerHTML">
+    Click me
+  </button>
+  <div id="result"></div>
+{% endblock %}

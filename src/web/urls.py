@@ -18,11 +18,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from web import views
+from web import demo, views
 
 urlpatterns = [
     path("health/", views.health),
     path("", views.root),
+    # Throwaway htmx demo (#162); deleted by #171. Own namespace, no collision
+    # with the root/health routes (D4, FR-007).
+    path("htmx-demo/", demo.htmx_demo),
+    path("htmx-demo/action/", demo.htmx_demo_action),
     # admin/ kept per ADR-024 (admin-at-launch); non-functional until #164/#165.
     path("admin/", admin.site.urls),
 ]

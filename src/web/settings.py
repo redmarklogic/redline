@@ -46,6 +46,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # WhiteNoise serves collected static files in production (DEBUG=False); it
+    # must sit immediately after SecurityMiddleware (D2, FR-004).
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -59,7 +62,7 @@ ROOT_URLCONF = "web.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "web" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -127,6 +130,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+# The web shell is appless (#159), so the app-directories finder would not pick
+# up src/web/static — list it explicitly (D3).
+STATICFILES_DIRS = [BASE_DIR / "web" / "static"]
+
+# collectstatic target (build artifact, gitignored — D7); the deploy image build
+# (#177) must run `collectstatic --noinput` before serving.
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Production static serving via WhiteNoise. The STORAGES dict (Django 4.2+) is
+# used instead of the deprecated STATICFILES_STORAGE string (D2). The compressed-
+# manifest backend content-hashes filenames for cache-busting and REQUIRES
+# collectstatic to have run before it serves (test settings override this — D6).
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

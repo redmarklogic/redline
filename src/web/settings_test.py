@@ -52,3 +52,23 @@ DATABASES = {
         "NAME": ":memory:",
     }
 }
+
+# The compressed-manifest staticfiles backend (web.settings, D2) raises
+# "Missing staticfiles manifest entry" when a {% static %} tag renders before
+# collectstatic runs; with filterwarnings=["error"] that breaks template tests.
+# Swap in the non-manifest backend so template tests render {% static %} without
+# collectstatic. The manifest/production path is covered by test_static_serving
+# (#161 D6 pattern; #162 D6).
+STORAGES = {
+    **STORAGES,  # noqa: F405
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# WhiteNoiseMiddleware scans STATIC_ROOT at init; in tests collectstatic has not
+# run, so that directory is absent and WhiteNoise emits a "No directory at"
+# UserWarning that filterwarnings=["error"] turns fatal. AUTOREFRESH=True is
+# WhiteNoise's documented test setting: it skips the start-up scan and serves
+# lazily, leaving middleware behaviour otherwise unchanged.
+WHITENOISE_AUTOREFRESH = True

@@ -64,6 +64,8 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+# collectstatic output — build artifact, not source (#162 D7)
+src/staticfiles/
 
 # Flask stuff:
 instance/

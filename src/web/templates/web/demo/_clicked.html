@@ -1,0 +1,6 @@
+{% comment %}
+Server-rendered fragment returned by /htmx-demo/action/ and swapped into #result.
+Static content only — it echoes no request input, so it is XSS-safe by construction
+(D8 scope guard / FR-006).
+{% endcomment %}
+<p>Clicked — this fragment came from the server.</p>
