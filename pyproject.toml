@@ -28,6 +28,7 @@ dependencies = [
   "pydantic-settings>=2.7",
   "python-docx>=1.2.0",
   "uvicorn>=0.34.0",
+  "whitenoise>=6.12,<7",
 ]
 urls.Documentation = "https://github.com/redmarklogic/redline"
 urls.Repository = "https://github.com/redmarklogic/redline"
@@ -144,7 +145,7 @@ ignore-words-list = [
   "te",
   "unparseable"
 ]
-skip = [ "tests/assets/html/*.html" ]
+skip = [ "tests/assets/html/*.html", "src/web/static/web/vendor/*" ]
 
 [tool.pydoclint]
 style = "google"
@@ -156,7 +157,7 @@ exclude = "\\.git|\\.tox|tests"
 
 [tool.deptry]
 ignore_notebooks = false
-per_rule_ignores.DEP002 = [ "psycopg", "python-docx", "schemathesis", "uvicorn" ]
+per_rule_ignores.DEP002 = [ "psycopg", "python-docx", "schemathesis", "uvicorn", "whitenoise" ]
 # src/addin is a non-shipped dev harness (issue #190); its flask + cryptography deps
 # live in the optional `addin` dependency group by design, so deptry's DEP004
 # (prod code importing a dev dependency) misfires here. Exclude the harness from
