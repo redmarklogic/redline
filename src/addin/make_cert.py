@@ -17,6 +17,7 @@ Run::
 """
 
 import datetime
+import ipaddress
 import subprocess
 import sys
 from pathlib import Path
@@ -70,7 +71,12 @@ def _localhost_certificate(
     ca_cert: x509.Certificate,
     ca_key: rsa.RSAPrivateKey,
 ) -> x509.Certificate:
-    """Build a `localhost` leaf certificate signed by the CA, with SAN localhost."""
+    """Build a `localhost` leaf certificate signed by the CA.
+
+    SAN covers both the ``localhost`` hostname and the ``127.0.0.1`` loopback IP so
+    the cert validates whether the browser is pointed at the name or the address
+    (run-app.ps1 opens the IP form).
+    """
     subject = x509.Name(
         [
             x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
@@ -89,7 +95,12 @@ def _localhost_certificate(
         .not_valid_before(_now())
         .not_valid_after(_now() + datetime.timedelta(days=_VALID_DAYS))
         .add_extension(
-            x509.SubjectAlternativeName([x509.DNSName("localhost")]),
+            x509.SubjectAlternativeName(
+                [
+                    x509.DNSName("localhost"),
+                    x509.IPAddress(ipaddress.ip_address("127.0.0.1")),
+                ]
+            ),
             critical=False,
         )
         .sign(ca_key, hashes.SHA256())
