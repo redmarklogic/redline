@@ -135,6 +135,20 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host ($migrateOutput | Out-String)
 
+# --- Word manifest build (issue #191) --------------------------------------------
+# Regenerate the add-in manifest from the same config this launcher read, so the
+# catalog manifest's taskpane URL always matches the port the addin server binds.
+# Build-time tooling (not app source) — reading the config here is the same pattern
+# this launcher already uses (ADR-021 targets the deployed app, not dev generators).
+Write-Host "Building Word add-in manifest..."
+$manifestOutput = & "$RepoRoot\.venv\Scripts\python" -m addin.build_manifest 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Manifest build failed. Fix the errors below, then retry."
+    Write-Host ($manifestOutput | Out-String)
+    exit 1
+}
+Write-Host ($manifestOutput | Out-String)
+
 # --- Start both servers -----------------------------------------------------------
 $MarkerCommand = "& { Set-Location '$RepoRoot'; .\.venv\Scripts\python -m uvicorn marker.api.main:create_app --factory --host $Host_ --port $MarkerPort --reload }"
 $DjangoCommand  = "& { Set-Location '$RepoRoot'; .\.venv\Scripts\python manage.py runserver ${Host_}:${DjangoPort} }"
